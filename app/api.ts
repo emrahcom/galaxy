@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std/http/server.ts";
-import { about, notFound } from "./modules/helper.ts";
+import { about, notFound } from "./modules/helpers.ts";
+import apiUser from "./modules/user.ts";
 
 const HOSTNAME = "127.0.0.1";
 const PORT = 8000;
@@ -13,7 +14,7 @@ for await (const req of app) {
   if (req.url === "/about") {
     about(req);
   } else if (req.url === "/user/") {
-    console.log("user");
+    apiUser(req);
   } else {
     notFound(req);
   }
