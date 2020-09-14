@@ -9,5 +9,11 @@ const s = serve({
 });
 
 for await (const req of s) {
-  req.respond({ body: "Hello World\\n" });
+  if (req.url === "/server") {
+    console.log("server");
+  } else if (req.url === "/user") {
+    console.log("user");
+  } else {
+    console.log("not found");
+  }
 }
