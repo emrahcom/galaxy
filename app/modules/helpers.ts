@@ -10,3 +10,9 @@ export const notFound = (req: ServerRequest) =>
     status: 404,
     body: "not found",
   });
+
+export const forbidden = (req: ServerRequest) =>
+  req.respond({
+    status: 403,
+    body: "forbidden",
+  });
