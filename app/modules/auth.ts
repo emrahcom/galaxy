@@ -10,7 +10,7 @@ const header: Jose = {
 };
 
 export function isAuthenticated(req: ServerRequest): boolean {
-  return false;
+  return true;
 }
 
 export default function (req: ServerRequest) {

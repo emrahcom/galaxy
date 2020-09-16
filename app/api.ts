@@ -16,7 +16,7 @@ for await (const req of app) {
     about(req);
   } else if (!isAuthenticated(req)) {
     forbidden(req);
-  } else if (req.url === "/user/") {
+  } else if (req.url.match("^/user/")) {
     apiUser(req);
   } else {
     notFound(req);
