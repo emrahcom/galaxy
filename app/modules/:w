@@ -4,9 +4,9 @@ import { validateJwt } from "https://deno.land/x/djwt/validate.ts";
 import { makeJwt, setExpiration } from "https://deno.land/x/djwt/create.ts";
 import { Jose, Payload } from "https://deno.land/x/djwt/create.ts";
 
-const iss: string = "myapp";
-const key: string = "mysecret";
-const header: Jose = {
+const ISS: string = "mtapp";
+const KEY: string = "mysecret";
+const JWT-HEADER: Jose = {
   alg: "HS256",
   typ: "JWT",
 };
@@ -16,12 +16,13 @@ export function isAuthenticated(req: ServerRequest) {
 }
 
 export async function login(req: ServerRequest) {
-  const payload: Payload = {
-    iss,
-    exp: setExpiration(8 * 60 * 60),
+  let payload: Payload = {
+    iss: ISS,
+    exp: setExpiration(8*60*60),
     userid: 1000,
   };
-  const jwt = await makeJwt({ header, payload, key });
+
+  let jwt = await makeJwt({ JWT-HEADER, payload, KEY });
 
   req.respond({ body: encode(jwt + "\n") });
 }

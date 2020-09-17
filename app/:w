@@ -14,7 +14,7 @@ const app: Server = serve({
 for await (const req of app) {
   if (req.url === "/about") {
     about(req);
-  } else if (req.url === "/auth/login") {
+  } else if (req.url.match("^/auth/login")) {
     login(req);
   } else if (!isAuthenticated(req)) {
     forbidden(req);
@@ -22,6 +22,5 @@ for await (const req of app) {
     apiUser(req);
   } else {
     notFound(req);
-    console.log(req.url);
   }
 }
