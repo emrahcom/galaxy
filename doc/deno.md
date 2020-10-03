@@ -21,6 +21,7 @@ help
 ====
 ```bash
 deno help
+deno help run
 ```
 
 run
