@@ -1,5 +1,5 @@
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
-import { encode, decode } from "https://deno.land/std@0.69.0/encoding/utf8.ts";
+import { decode, encode } from "https://deno.land/std@0.69.0/encoding/utf8.ts";
 import { validateJwt } from "https://deno.land/x/djwt/validate.ts";
 import { makeJwt, setExpiration } from "https://deno.land/x/djwt/create.ts";
 import { Jose, Payload } from "https://deno.land/x/djwt/create.ts";
@@ -16,6 +16,14 @@ export function isAuthenticated(req: ServerRequest) {
 }
 
 export async function login(req: ServerRequest) {
+  if (req.method !== "POST") {
+    req.respond({
+      status: 405,
+      body: "Method Not Allowed",
+    });
+  }
+
+
   const payload: Payload = {
     iss,
     exp: setExpiration(8 * 60 * 60),

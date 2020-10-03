@@ -1,6 +1,6 @@
-import { Server, serve } from "https://deno.land/std/http/server.ts";
-import { about, notFound, forbidden } from "./modules/helpers.ts";
-import { login, isAuthenticated } from "./modules/auth.ts";
+import { serve, Server } from "https://deno.land/std/http/server.ts";
+import { about, forbidden, notFound } from "./modules/helpers.ts";
+import { isAuthenticated, login } from "./modules/auth.ts";
 import apiUser from "./modules/user.ts";
 
 const HOSTNAME: string = "127.0.0.1";

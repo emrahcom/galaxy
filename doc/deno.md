@@ -26,6 +26,8 @@ deno help run
 
 run
 ===
+`--watch` is not working correctly.
+
 ```bash
 deno run --allow-net api.ts
 deno run --watch --unstable --allow-net api.ts

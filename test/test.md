@@ -19,6 +19,8 @@ curl http://127.0.0.1:8000/user/id
 post
 ====
 ```bash
+curl -X POST -H "Content-Type: application/json" -d login.json \
+    http://127.0.0.1:8000/auth/login
 curl -X POST -H "Content-Type: application/json" -d user.json \
     http://127.0.0.1:8000/user/create
 ```
