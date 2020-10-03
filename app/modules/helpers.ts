@@ -2,17 +2,17 @@ import { ServerRequest } from "https://deno.land/std/http/server.ts";
 
 export const about = (req: ServerRequest) =>
   req.respond({
-    body: "galaxy",
+    body: JSON.stringify({ message: "galaxy" }),
   });
 
 export const notFound = (req: ServerRequest) =>
   req.respond({
     status: 404,
-    body: "not found",
+    body: JSON.stringify({ message: "not found" }),
   });
 
 export const forbidden = (req: ServerRequest) =>
   req.respond({
     status: 403,
-    body: "forbidden",
+    body: JSON.stringify({ message: "forbidden" }),
   });

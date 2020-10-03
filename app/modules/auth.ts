@@ -19,10 +19,9 @@ export async function login(req: ServerRequest) {
   if (req.method !== "POST") {
     req.respond({
       status: 405,
-      body: "Method Not Allowed",
+      body: JSON.stringify({ message: "Method Not Allowed" }),
     });
   }
-
 
   const payload: Payload = {
     iss,
@@ -31,5 +30,7 @@ export async function login(req: ServerRequest) {
   };
   const jwt = await makeJwt({ header, payload, key });
 
-  req.respond({ body: encode(jwt + "\n") });
+  req.respond({
+    body: JSON.stringify({ jwt: jwt }),
+  });
 }
