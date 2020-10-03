@@ -28,6 +28,7 @@ run
 ===
 ```bash
 deno run --allow-net api.ts
+deno run --watch --unstable --allow-net api.ts
 ```
 
 format check
