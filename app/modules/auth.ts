@@ -11,10 +11,35 @@ const header: Jose = {
   typ: "JWT",
 };
 
+interface Credential {
+  username: string;
+  passwd: string;
+}
+
+// ----------------------------------------------------------------------------
+const parseRequestBody = async <T>(req: ServerRequest): Promise<T> => {
+  const buf = new Uint8Array(req.contentLength || 0);
+  let bufSlice = buf;
+  let totalRead = 0;
+
+  while (true) {
+    const nread = await req.body.read(bufSlice);
+    if (nread === null) break;
+    totalRead += nread;
+    if (totalRead >= req.contentLength!) break;
+    bufSlice = bufSlice.subarray(nread);
+  }
+
+  const str = new TextDecoder("utf-8").decode(bufSlice);
+  return JSON.parse(str) as T;
+};
+
+// ----------------------------------------------------------------------------
 export function isAuthenticated(req: ServerRequest) {
   return true;
 }
 
+// ----------------------------------------------------------------------------
 export async function login(req: ServerRequest) {
   if (req.method !== "POST") {
     req.respond({
@@ -22,6 +47,10 @@ export async function login(req: ServerRequest) {
       body: JSON.stringify({ message: "Method Not Allowed" }),
     });
   }
+
+  const credential = await parseRequestBody<Credential>(req);
+  console.log(credential);
+  console.log(credential.username);
 
   const payload: Payload = {
     iss,
