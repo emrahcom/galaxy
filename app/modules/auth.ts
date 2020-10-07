@@ -3,6 +3,7 @@ import { decode, encode } from "https://deno.land/std@0.69.0/encoding/utf8.ts";
 import { validateJwt } from "https://deno.land/x/djwt/validate.ts";
 import { makeJwt, setExpiration } from "https://deno.land/x/djwt/create.ts";
 import { Jose, Payload } from "https://deno.land/x/djwt/create.ts";
+import { parseRequestBody } from "./helpers.ts";
 
 const iss: string = "myapp";
 const key: string = "mysecret";
@@ -17,30 +18,12 @@ interface Credential {
 }
 
 // ----------------------------------------------------------------------------
-const parseRequestBody = async <T>(req: ServerRequest): Promise<T> => {
-  const buf = new Uint8Array(req.contentLength || 0);
-  let bufSlice = buf;
-  let totalRead = 0;
-
-  while (true) {
-    const nread = await req.body.read(bufSlice);
-    if (nread === null) break;
-    totalRead += nread;
-    if (totalRead >= req.contentLength!) break;
-    bufSlice = bufSlice.subarray(nread);
-  }
-
-  const str = new TextDecoder("utf-8").decode(bufSlice);
-  return JSON.parse(str) as T;
+export const isAuthenticated = async (req: ServerRequest) => {
+  return true;
 };
 
 // ----------------------------------------------------------------------------
-export function isAuthenticated(req: ServerRequest) {
-  return true;
-}
-
-// ----------------------------------------------------------------------------
-export async function login(req: ServerRequest) {
+export const login = async (req: ServerRequest) => {
   if (req.method !== "POST") {
     req.respond({
       status: 405,
@@ -62,4 +45,4 @@ export async function login(req: ServerRequest) {
   req.respond({
     body: JSON.stringify({ jwt: jwt }),
   });
-}
+};
