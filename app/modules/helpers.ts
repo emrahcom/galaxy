@@ -22,18 +22,11 @@ export const forbidden = (req: ServerRequest) =>
 
 // ----------------------------------------------------------------------------
 export const parseRequestBody = async <T>(req: ServerRequest): Promise<T> => {
-  const buf = new Uint8Array(req.contentLength || 0);
-  let bufSlice = buf;
-  let totalRead = 0;
-
-  while (true) {
-    const nread = await req.body.read(bufSlice);
-    if (nread === null) break;
-    totalRead += nread;
-    if (totalRead >= req.contentLength!) break;
-    bufSlice = bufSlice.subarray(nread);
+  const buf: Uint8Array = await Deno.readAll(req.body);
+  const str = new TextDecoder("utf-8").decode(buf);
+  try {
+    return JSON.parse(str) as T;
+  } catch (error) {
+    return "{}" as unknown as T;
   }
-
-  const str = new TextDecoder("utf-8").decode(bufSlice);
-  return JSON.parse(str) as T;
 };
