@@ -7,13 +7,6 @@ export const about = (req: ServerRequest) =>
   });
 
 // ----------------------------------------------------------------------------
-export const notFound = (req: ServerRequest) =>
-  req.respond({
-    status: 404,
-    body: JSON.stringify({ message: "not found" }),
-  });
-
-// ----------------------------------------------------------------------------
 export const forbidden = (req: ServerRequest) =>
   req.respond({
     status: 403,
@@ -21,12 +14,47 @@ export const forbidden = (req: ServerRequest) =>
   });
 
 // ----------------------------------------------------------------------------
+export const internalServerError = (req: ServerRequest) =>
+  req.respond({
+    status: 500,
+    body: JSON.stringify({ message: "internal server error" }),
+  });
+
+// ----------------------------------------------------------------------------
+export const ok = (req: ServerRequest, resBody: string) =>
+  req.respond({
+    status: 200,
+    body: resBody,
+  });
+
+// ----------------------------------------------------------------------------
+export const methodNotAllowed = (req: ServerRequest) =>
+  req.respond({
+    status: 405,
+    body: JSON.stringify({ message: "method not allowed" }),
+  });
+
+// ----------------------------------------------------------------------------
+export const notFound = (req: ServerRequest) =>
+  req.respond({
+    status: 404,
+    body: JSON.stringify({ message: "not found" }),
+  });
+
+// ----------------------------------------------------------------------------
+export const unauthorized = (req: ServerRequest) =>
+  req.respond({
+    status: 401,
+    body: JSON.stringify({ message: "unauthorized" }),
+  });
+
+// ----------------------------------------------------------------------------
 export const parseRequestBody = async <T>(req: ServerRequest): Promise<T> => {
   const buf: Uint8Array = await Deno.readAll(req.body);
   const str = new TextDecoder("utf-8").decode(buf);
   try {
-    return JSON.parse(str) as T;
+    return JSON.parse(str);
   } catch (error) {
-    return "{}" as unknown as T;
+    return {} as T;
   }
 };

@@ -3,7 +3,8 @@ import { decode, encode } from "https://deno.land/std@0.69.0/encoding/utf8.ts";
 import { validateJwt } from "https://deno.land/x/djwt/validate.ts";
 import { makeJwt, setExpiration } from "https://deno.land/x/djwt/create.ts";
 import { Jose, Payload } from "https://deno.land/x/djwt/create.ts";
-import { parseRequestBody } from "./helpers.ts";
+import { internalServerError, methodNotAllowed, ok } from "./helpers.ts";
+import { parseRequestBody, unauthorized } from "./helpers.ts";
 
 const iss: string = "myapp";
 const key: string = "mysecret";
@@ -18,31 +19,52 @@ interface Credential {
 }
 
 // ----------------------------------------------------------------------------
-export const isAuthenticated = async (req: ServerRequest) => {
+const isAuthenticated = async (credential: Credential): Promise<boolean> => {
+  if (credential.username === undefined) return false;
+  if (credential.passwd === undefined) return false;
+
   return true;
 };
 
 // ----------------------------------------------------------------------------
-export const login = async (req: ServerRequest) => {
-  if (req.method !== "POST") {
-    req.respond({
-      status: 405,
-      body: JSON.stringify({ message: "Method Not Allowed" }),
-    });
-  }
-
-  const credential = await parseRequestBody<Credential>(req);
-  console.log(credential);
-  console.log(credential.username);
-
+const createToken = async (credential: Credential): Promise<string> => {
   const payload: Payload = {
     iss,
     exp: setExpiration(8 * 60 * 60),
-    userid: 1000,
+    user: credential.username,
   };
-  const jwt = await makeJwt({ header, payload, key });
 
-  req.respond({
-    body: JSON.stringify({ jwt: jwt }),
-  });
+  try {
+    const token = await makeJwt({ header, payload, key });
+    return token;
+  } catch (error) {
+    return "";
+  }
+};
+
+// ----------------------------------------------------------------------------
+export const hasToken = async (req: ServerRequest): Promise<boolean> => {
+  return true;
+};
+
+// ----------------------------------------------------------------------------
+export const login = async (req: ServerRequest): Promise<void> => {
+  console.log(0);
+  if (req.method !== "POST") {
+    methodNotAllowed(req);
+    return;
+  }
+
+  console.log(1);
+  const credential = await parseRequestBody<Credential>(req);
+  if (!await isAuthenticated(credential)) {
+    console.log(11);
+    unauthorized(req);
+    return;
+  }
+  console.log(credential);
+
+  console.log(2);
+  const jwt = await createToken(credential);
+  (jwt) ? ok(req, JSON.stringify({ jwt: jwt })) : internalServerError(req);
 };
