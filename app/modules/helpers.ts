@@ -50,9 +50,8 @@ export const unauthorized = (req: ServerRequest) =>
 
 // ----------------------------------------------------------------------------
 export const parseRequestBody = async <T>(req: ServerRequest): Promise<T> => {
-  const buf: Uint8Array = await Deno.readAll(req.body);
-  const str = new TextDecoder("utf-8").decode(buf);
   try {
+    const str = new TextDecoder("utf-8").decode(await Deno.readAll(req.body));
     return JSON.parse(str);
   } catch (error) {
     return {} as T;
