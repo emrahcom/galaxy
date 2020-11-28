@@ -1,12 +1,10 @@
 import { serve, Server } from "https://deno.land/std/http/server.ts";
 import { about, notFound, unauthorized } from "./modules/helpers.ts";
+import { HOSTNAME, PORT } from "./config.ts";
 import { hasToken, login } from "./modules/auth.ts";
 import apiUser from "./modules/user.ts";
 
-const HOSTNAME: string = "127.0.0.1";
-const PORT: number = 8000;
 const PREFIX: string = "/api";
-
 const app: Server = serve({
   hostname: HOSTNAME,
   port: PORT,
