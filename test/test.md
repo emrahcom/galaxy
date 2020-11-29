@@ -10,49 +10,54 @@ save output
 curl -o /tmp/out.json http://127.0.0.1:8000/api/about
 ```
 
+get token (create credential)
+=============================
+```bash
+curl -X POST -H "Content-Type: application/json" -d @login.json \
+    http://127.0.0.1:8000/api/auth/login
+
+curl -sX POST -H "Content-Type: application/json" -d @login.json \
+    http://127.0.0.1:8000/api/auth/login | jq '.jwt' | cut -d '"' -f2
+
+TOKEN=$(curl -sX POST -H "Content-Type: application/json" -d @login.json \
+        http://127.0.0.1:8000/api/auth/login | jq '.jwt' | cut -d '"' -f2)
+echo $TOKEN
+```
+
 get (read or list)
 ==================
 ```bash
-curl http://127.0.0.1:8000/api/user/id
+curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8000/api/user/id
+curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8000/api/user/
 ```
 
 post (create)
 =============
 ```bash
-curl -X POST -H "Content-Type: application/json" -d @user.json \
+curl -X POST -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" -d @user.json \
     http://127.0.0.1:8000/api/user/
-```
-
-login => "create the credential"
-
-```bash
-curl -X POST -H "Content-Type: application/json" -d @login.json \
-    http://127.0.0.1:8000/api/auth/login
 ```
 
 delete
 ======
 ```bash
-curl -X DELETE http://127.0.0.1:8000/api/user/id
+curl -X DELETE -H "Authorization: Bearer $TOKEN" \
+    http://127.0.0.1:8000/api/user/id
 ```
 
 put (update)
 ============
 ```bash
-curl -X PUT -H "Content-Type: application/json" -d @user.json \
+curl -X PUT -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" -d @user.json \
     http://127.0.0.1:8000/api/user/id
 ```
 
 patch (partial update)
 ======================
 ```bash
-curl -X PATCH -H "Content-Type: application/json" -d @email.json \
-    http://127.0.0.1:8000/api/user/id
-```
-
-JWT
-===
-```bash
-curl -X DELETE -H "Authorization: Bearer $TOKEN" \
+curl -X PATCH -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" -d @email.json \
     http://127.0.0.1:8000/api/user/id
 ```
