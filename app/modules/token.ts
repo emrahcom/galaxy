@@ -7,21 +7,21 @@ import { JWT_AUD, JWT_ISS, JWT_TIMEOUT } from "../config.ts";
 import { internalServerError, methodNotAllowed, ok } from "./helpers.ts";
 import { parseRequestBody, unauthorized } from "./helpers.ts";
 
-interface Credential {
+interface TokenReq {
   username: string;
   passwd: string;
 }
 
 // ----------------------------------------------------------------------------
-const isAuthenticated = async (credential: Credential): Promise<boolean> => {
-  if (credential.username === undefined) return false;
-  if (credential.passwd === undefined) return false;
+const isAuthenticated = async (treq: TokenReq): Promise<boolean> => {
+  if (treq.username === undefined) throw new Error("missing username");
+  if (treq.passwd === undefined) throw new Error("missing password");
 
   return true;
 };
 
 // ----------------------------------------------------------------------------
-const createToken = async (credential: Credential): Promise<string> => {
+const createJWT = async (treq: TokenReq): Promise<string> => {
   const header: Header = {
     alg: JWT_ALG,
     typ: "JWT",
@@ -31,45 +31,38 @@ const createToken = async (credential: Credential): Promise<string> => {
     iss: JWT_ISS,
     aud: JWT_AUD,
     exp: getNumericDate(JWT_TIMEOUT),
-    user: credential.username,
+    user: treq.username,
   };
 
-  try {
-    const token = await create(header, payload, JWT_SECRET);
-    return token;
-  } catch (error) {
+  const jwt = await create(header, payload, JWT_SECRET).catch(() => {
     return "";
-  }
+  });
+
+  return jwt;
 };
 
 // ----------------------------------------------------------------------------
-export const login = async (req: ServerRequest): Promise<void> => {
-  if (req.method !== "POST") {
-    methodNotAllowed(req);
-    return;
-  }
+export const createToken = async (req: ServerRequest): Promise<void> => {
+  if (req.method !== "POST") return methodNotAllowed(req);
 
-  const credential = await parseRequestBody<Credential>(req);
-  if (!await isAuthenticated(credential)) {
+  const treq = await parseRequestBody<TokenReq>(req);
+  const res = await isAuthenticated(treq).then(async () => {
+    const jwt = await createJWT(treq);
+    (jwt) ? ok(req, JSON.stringify({ jwt: jwt })) : internalServerError(req);
+  }).catch(() => {
     unauthorized(req);
-    return;
-  }
+  });
 
-  const jwt = await createToken(credential);
-  (jwt) ? ok(req, JSON.stringify({ jwt: jwt })) : internalServerError(req);
+  return res;
 };
 
 // ----------------------------------------------------------------------------
 export const hasValidToken = async (req: ServerRequest): Promise<boolean> => {
   const authorization = req.headers.get("authorization");
-  if (!authorization) {
-    return false;
-  }
+  if (!authorization) return false;
 
   const token = authorization.match("Bearer\\s+([0-9a-zA-Z.=_-]+)$");
-  if (!token) {
-    return false;
-  }
+  if (!token) return false;
 
   const isValid = await verify(token[1], JWT_SECRET, JWT_ALG).then(() => {
     return true;
