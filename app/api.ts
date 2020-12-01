@@ -18,9 +18,8 @@ for await (const req of app) {
   } else if (!await hasValidToken(req)) {
     unauthorized(req);
   } else if (req.url.match(`^${PREFIX}/user/`)) {
-    userApi(req);
+    await userApi(req);
   } else {
     notFound(req);
-    console.log(req.url);
   }
 }

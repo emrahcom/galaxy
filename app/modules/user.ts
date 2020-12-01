@@ -1,30 +1,54 @@
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
+import { methodNotAllowed } from "./helpers.ts";
 
 // ----------------------------------------------------------------------------
-export default function (req: ServerRequest) {
+async function getUser(req: ServerRequest) {
+  req.respond({
+    body: JSON.stringify({ message: "user, get" }),
+  });
+}
+
+// ----------------------------------------------------------------------------
+async function createUser(req: ServerRequest) {
+  req.respond({
+    body: JSON.stringify({ message: "user, post" }),
+  });
+}
+
+// ----------------------------------------------------------------------------
+async function deleteUser(req: ServerRequest) {
+  req.respond({
+    body: JSON.stringify({ message: "user, delete" }),
+  });
+}
+
+// ----------------------------------------------------------------------------
+async function updateUser(req: ServerRequest) {
+  req.respond({
+    body: JSON.stringify({ message: "user, patch" }),
+  });
+}
+
+// ----------------------------------------------------------------------------
+async function replaceUser(req: ServerRequest) {
+  req.respond({
+    body: JSON.stringify({ message: "user, put" }),
+  });
+}
+
+// ----------------------------------------------------------------------------
+export default async function (req: ServerRequest) {
   if (req.method === "GET") {
-    req.respond({
-      body: JSON.stringify({ message: "user, get" }),
-    });
+    await getUser(req);
   } else if (req.method === "POST") {
-    req.respond({
-      body: JSON.stringify({ message: "user, post" }),
-    });
+    await createUser(req);
   } else if (req.method === "DELETE") {
-    req.respond({
-      body: JSON.stringify({ message: "user, delete" }),
-    });
-  } else if (req.method === "PUT") {
-    req.respond({
-      body: JSON.stringify({ message: "user, put" }),
-    });
+    await deleteUser(req);
   } else if (req.method === "PATCH") {
-    req.respond({
-      body: JSON.stringify({ message: "user, patch" }),
-    });
+    await updateUser(req);
+  } else if (req.method === "PUT") {
+    await replaceUser(req);
   } else {
-    req.respond({
-      body: JSON.stringify({ message: "user, unsupported method" }),
-    });
+    methodNotAllowed(req);
   }
 }

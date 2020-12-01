@@ -55,3 +55,9 @@ curl -sX PATCH -H "Authorization: Bearer $TOKEN" \
     http://127.0.0.1:8000/api/user/id | tee $out
 [[ "$(jq '.message' $out)" != '"user, patch"' ]] && echo " <<< error" && false
 echo; echo
+
+echo '>>>  user UNKNOWN METHOD'
+curl -sX UNKNOWN -H "Authorization: Bearer $TOKEN" \
+    http://127.0.0.1:8000/api/user/id | tee $out
+[[ "$(jq '.message' $out)" != '"method not allowed"' ]] && echo " <<< error" && false
+echo; echo

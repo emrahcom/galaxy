@@ -13,15 +13,15 @@ interface TokenReq {
 }
 
 // ----------------------------------------------------------------------------
-const isAuthenticated = async (treq: TokenReq): Promise<boolean> => {
+async function isAuthenticated(treq: TokenReq): Promise<boolean> {
   if (treq.username === undefined) throw new Error("missing username");
   if (treq.passwd === undefined) throw new Error("missing password");
 
   return true;
-};
+}
 
 // ----------------------------------------------------------------------------
-const createJWT = async (treq: TokenReq): Promise<string> => {
+async function createJWT(treq: TokenReq): Promise<string> {
   const header: Header = {
     alg: JWT_ALG,
     typ: "JWT",
@@ -39,10 +39,10 @@ const createJWT = async (treq: TokenReq): Promise<string> => {
   });
 
   return jwt;
-};
+}
 
 // ----------------------------------------------------------------------------
-export const createToken = async (req: ServerRequest): Promise<void> => {
+export async function createToken(req: ServerRequest): Promise<void> {
   if (req.method !== "POST") return methodNotAllowed(req);
 
   const treq = await parseRequestBody<TokenReq>(req);
@@ -54,10 +54,10 @@ export const createToken = async (req: ServerRequest): Promise<void> => {
   });
 
   return res;
-};
+}
 
 // ----------------------------------------------------------------------------
-export const hasValidToken = async (req: ServerRequest): Promise<boolean> => {
+export async function hasValidToken(req: ServerRequest): Promise<boolean> {
   const authorization = req.headers.get("authorization");
   if (!authorization) return false;
 
@@ -71,4 +71,4 @@ export const hasValidToken = async (req: ServerRequest): Promise<boolean> => {
   });
 
   return isValid;
-};
+}

@@ -49,11 +49,11 @@ export const unauthorized = (req: ServerRequest) =>
   });
 
 // ----------------------------------------------------------------------------
-export const parseRequestBody = async <T>(req: ServerRequest): Promise<T> => {
+export async function parseRequestBody<T>(req: ServerRequest): Promise<T> {
   try {
     const str = new TextDecoder("utf-8").decode(await Deno.readAll(req.body));
     return JSON.parse(str);
   } catch (error) {
     return {} as T;
   }
-};
+}
