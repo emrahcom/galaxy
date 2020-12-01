@@ -4,6 +4,7 @@ set -e
 # -----------------------------------------------------------------------------
 # test user api
 # -----------------------------------------------------------------------------
+out=/tmp/out
 
 echo '>>> TOKEN'
 TOKEN=$(curl -sX POST -H "Content-Type: application/json" -d @json/login.json \
@@ -11,37 +12,46 @@ TOKEN=$(curl -sX POST -H "Content-Type: application/json" -d @json/login.json \
 echo $TOKEN; echo
 
 echo '>>>  user GET (id)'
-curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8000/api/user/123
+curl -s -H "Authorization: Bearer $TOKEN" \
+    http://127.0.0.1:8000/api/user/123 | tee $out
+[[ "$(jq '.message' $out)" != '"user, get"' ]] && echo " <<< error" && false
 echo; echo
 
 echo '>>>  user GET (no id)'
-curl -H "Authorization: Bearer $TOKEN" http://127.0.0.1:8000/api/user/
+curl -s -H "Authorization: Bearer $TOKEN" \
+    http://127.0.0.1:8000/api/user/ | tee $out
+[[ "$(jq '.message' $out)" != '"user, get"' ]] && echo " <<< error" && false
 echo; echo
 
 echo '>>>  user GET (invalid token)'
-curl -H "Authorization: Bearer invalid-token" \
-    http://127.0.0.1:8000/api/user/123
+curl -s -H "Authorization: Bearer invalid-token" \
+    http://127.0.0.1:8000/api/user/123 | tee $out
+[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && echo " <<< error" && false
 echo; echo
 
 echo '>>>  user POST'
-curl -X POST -H "Authorization: Bearer $TOKEN" \
+curl -sX POST -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" -d @json/user.json \
-    http://127.0.0.1:8000/api/user/
+    http://127.0.0.1:8000/api/user/ | tee $out
+[[ "$(jq '.message' $out)" != '"user, post"' ]] && echo " <<< error" && false
 echo; echo
 
 echo '>>>  user DELETE'
-curl -X DELETE -H "Authorization: Bearer $TOKEN" \
-    http://127.0.0.1:8000/api/user/123
+curl -sX DELETE -H "Authorization: Bearer $TOKEN" \
+    http://127.0.0.1:8000/api/user/123 | tee $out
+[[ "$(jq '.message' $out)" != '"user, delete"' ]] && echo " <<< error" && false
 echo; echo
 
 echo '>>>  user PUT'
-curl -X PUT -H "Authorization: Bearer $TOKEN" \
+curl -sX PUT -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" -d @json/user.json \
-    http://127.0.0.1:8000/api/user/id
+    http://127.0.0.1:8000/api/user/id | tee $out
+[[ "$(jq '.message' $out)" != '"user, put"' ]] && echo " <<< error" && false
 echo; echo
 
 echo '>>>  user PATCH'
-curl -X PATCH -H "Authorization: Bearer $TOKEN" \
+curl -sX PATCH -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" -d @json/email.json \
-    http://127.0.0.1:8000/api/user/id
+    http://127.0.0.1:8000/api/user/id | tee $out
+[[ "$(jq '.message' $out)" != '"user, patch"' ]] && echo " <<< error" && false
 echo; echo
