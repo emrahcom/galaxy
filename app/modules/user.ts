@@ -1,4 +1,5 @@
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
+import { Payload } from "https://deno.land/x/djwt/mod.ts";
 import { methodNotAllowed } from "./helpers.ts";
 
 // ----------------------------------------------------------------------------
@@ -37,7 +38,7 @@ async function replaceUser(req: ServerRequest) {
 }
 
 // ----------------------------------------------------------------------------
-export default async function (req: ServerRequest) {
+export default async function (req: ServerRequest, payload: Payload) {
   if (req.method === "GET") {
     await getUser(req);
   } else if (req.method === "POST") {
