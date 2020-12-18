@@ -11,20 +11,24 @@ const app: Server = serve({
   port: PORT,
 });
 
-for await (const req of app) {
-  if (req.url === `${PRE}/about`) {
-    about(req);
-    continue;
-  } else if (req.url === `${PRE}/token/` && req.method === "POST") {
-    await sendToken(req);
-    continue;
+async function main() {
+  for await (const req of app) {
+    if (req.url === `${PRE}/about`) {
+      about(req);
+      continue;
+    } else if (req.url === `${PRE}/token/` && req.method === "POST") {
+      await sendToken(req);
+      continue;
+    }
+
+    const payload: Payload | undefined = await getPayload(req).catch(() => {
+      return undefined;
+    });
+
+    if (!payload) unauthorized(req);
+    else if (req.url.match(`^${PRE}/user/`)) await userApi(req, payload);
+    else notFound(req);
   }
-
-  const payload: Payload | undefined = await getPayload(req).catch(() => {
-    return undefined;
-  });
-
-  if (!payload) unauthorized(req);
-  else if (req.url.match(`^${PRE}/user/`)) await userApi(req, payload);
-  else notFound(req);
 }
+
+main();

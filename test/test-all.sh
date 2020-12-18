@@ -14,3 +14,6 @@ bash test-token.sh
 
 echo '>>>>>>>>>> USER <<<<<<<<<<<'
 bash test-user.sh
+
+echo
+echo COMPLETED
