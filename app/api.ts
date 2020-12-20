@@ -11,6 +11,7 @@ const app: Server = serve({
   port: PORT,
 });
 
+// ----------------------------------------------------------------------------
 async function main() {
   for await (const req of app) {
     if (req.url === `${PRE}/about`) {
@@ -31,4 +32,5 @@ async function main() {
   }
 }
 
+// ----------------------------------------------------------------------------
 main();

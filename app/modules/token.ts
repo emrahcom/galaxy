@@ -2,10 +2,12 @@ import { ServerRequest } from "https://deno.land/std/http/server.ts";
 import { Header, Payload } from "https://deno.land/x/djwt/mod.ts";
 import { create, verify } from "https://deno.land/x/djwt/mod.ts";
 import { getNumericDate } from "https://deno.land/x/djwt/mod.ts";
+import { QueryResult } from "https://deno.land/x/postgres/query.ts";
 import { JWT_ALG, JWT_SECRET } from "../config.ts";
 import { JWT_AUD, JWT_ISS, JWT_TIMEOUT } from "../config.ts";
 import { internalServerError, methodNotAllowed, ok } from "./helpers.ts";
 import { parseRequestBody, unauthorized } from "./helpers.ts";
+import { query } from "./database.ts";
 
 interface TokenReq {
   username: string;
@@ -17,7 +19,22 @@ async function isAuthenticated(treq: TokenReq): Promise<boolean> {
   if (treq.username === undefined) throw new Error("missing username");
   if (treq.passwd === undefined) throw new Error("missing password");
 
-  return true;
+  let sql = {
+    text: `
+      SELECT *
+      FROM account
+      WHERE (name = $1 OR email = $1)
+        AND passwd = $2
+        AND active = true`,
+    args: [
+      treq.username,
+      treq.passwd,
+    ],
+  };
+
+  const rst: QueryResult = await query(sql);
+
+  return rst.rowCount && rst.rowCount > 0 ? true : false;
 }
 
 // ----------------------------------------------------------------------------
@@ -50,7 +67,9 @@ export async function sendToken(req: ServerRequest): Promise<void> {
   if (req.method !== "POST") return methodNotAllowed(req);
 
   const treq = await parseRequestBody<TokenReq>(req);
-  const res = await isAuthenticated(treq).then(async () => {
+  const res = await isAuthenticated(treq).then(async (authenticated) => {
+    if (!authenticated) return unauthorized(req);
+
     const jwt = await createToken(treq);
     (jwt) ? ok(req, JSON.stringify({ jwt: jwt })) : internalServerError(req);
   }).catch(() => {
