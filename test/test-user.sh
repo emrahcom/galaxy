@@ -8,8 +8,9 @@ out=/tmp/out
 [[ -z "$apilink" ]] && apilink="http://127.0.0.1:8000"
 
 echo '>>> TOKEN'
-TOKEN=$(curl -sX POST -H "Content-Type: application/json" -d @json/login.json \
-    $apilink/api/token/ | jq '.jwt' | cut -d '"' -f2)
+TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
+    -d @json/account-valid.json $apilink/api/token/ | \
+    jq '.jwt' | cut -d '"' -f2)
 echo $TOKEN; echo
 
 echo '>>>  user GET (id)'

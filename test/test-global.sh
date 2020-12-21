@@ -17,8 +17,9 @@ curl -s $apilink/api/not-exist-method | tee $out
 [[ "$(jq '.message' $out)" != '"unauthorized"' ]] && echo " <<< error" && false
 echo; echo
 
-TOKEN=$(curl -sX POST -H "Content-Type: application/json" -d @json/login.json \
-    $apilink/api/token/ | jq '.jwt' | cut -d '"' -f2)
+TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
+    -d @json/account-valid.json $apilink/api/token/ | \
+    jq '.jwt' | cut -d '"' -f2)
 
 echo '>>> not found (with invalid token)'
 curl -s -H "Authorization: Bearer invalid-token" \
