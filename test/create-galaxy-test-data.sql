@@ -14,7 +14,7 @@
 
 BEGIN;
 
-INSERT INTO account VALUES (DEFAULT, 'myemail@mydomain.com', 'mypasswd',
-    'myname', DEFAULT, True, DEFAULT);
+INSERT INTO account VALUES (DEFAULT, 'myemail@mydomain.com', 'mypasswd', True,
+    DEFAULT);
 
 COMMIT;

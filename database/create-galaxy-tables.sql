@@ -38,8 +38,6 @@ INSERT INTO param VALUES (DEFAULT, 'admin-passwd',
 -- id                   : the record id
 -- email                : the email address (unique)
 -- passwd               : the password hash
--- name                 : the account name (unique)
--- avatar               : the relative path of the avatar
 -- active               : is active
 -- created_at           : the account creation time
 -- ----------------------------------------------------------------------------
@@ -47,16 +45,33 @@ CREATE TABLE account (
     "id" serial NOT NULL PRIMARY KEY,
     "email" varchar(250) NOT NULL,
     "passwd" varchar(250) NOT NULL,
-    "name" varchar(250) NOT NULL,
-    "avatar" varchar(250) NOT NULL DEFAULT '',
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE UNIQUE INDEX ON account("email");
-CREATE UNIQUE INDEX ON account("name");
 CREATE INDEX ON account("active");
 CREATE INDEX ON account("created_at");
 ALTER TABLE account OWNER TO galaxy;
+-- ----------------------------------------------------------------------------
+-- IDENTITY
+-- ----------------------------------------------------------------------------
+-- avatar               : the relative path of the avatar or gravatar
+-- ----------------------------------------------------------------------------
+CREATE TABLE identity (
+    "id" serial NOT NULL PRIMARY KEY,
+    "account_id" integer NOT NULL REFERENCES account(id)
+        ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
+    "email" varchar(250) NOT NULL,
+    "avatar" varchar(250) NOT NULL DEFAULT '',
+    "active" boolean NOT NULL DEFAULT TRUE,
+    "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
+);
+CREATE INDEX ON identity("name");
+CREATE INDEX ON identity("email");
+CREATE INDEX ON identity("active");
+CREATE INDEX ON identity("created_at");
+ALTER TABLE identity OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- DOMAIN
 -- ----------------------------------------------------------------------------
@@ -98,13 +113,13 @@ CREATE INDEX ON room("active");
 CREATE INDEX ON room("created_at");
 ALTER TABLE room OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
--- ACCOUNT-ROOM
+-- IDENTITY-ROOM
 -- ----------------------------------------------------------------------------
--- (account, room) pairs
+-- (identity, room) pairs
 -- ----------------------------------------------------------------------------
-CREATE TABLE account_room (
+CREATE TABLE identity_room (
     "id" serial NOT NULL PRIMARY KEY,
-    "account_id" integer NOT NULL REFERENCES account(id)
+    "identity_id" integer NOT NULL REFERENCES identity(id)
         ON DELETE CASCADE,
     "room_id" integer NOT NULL REFERENCES room(id)
         ON DELETE CASCADE,
@@ -116,20 +131,20 @@ CREATE TABLE account_room (
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
-CREATE UNIQUE INDEX ON account_room("account_id", "room_id");
-CREATE INDEX ON account_room("account_id");
-CREATE INDEX ON account_room("room_id");
-CREATE INDEX ON account_room("active");
-CREATE INDEX ON account_room("created_at");
-ALTER TABLE account_room OWNER TO galaxy;
+CREATE UNIQUE INDEX ON identity_room("identity_id", "room_id");
+CREATE INDEX ON identity_room("identity_id");
+CREATE INDEX ON identity_room("room_id");
+CREATE INDEX ON identity_room("active");
+CREATE INDEX ON identity_room("created_at");
+ALTER TABLE identity_room OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- MEMBERSHIP-REQUEST
--- account -> room
+-- account or identity -> room
 -- keep status (seen, deny, deny permanently, allow etc)
 -- maybe timeout for a second request
 -- ----------------------------------------------------------------------------
 -- MEMBERSHIP-PASSPORT
--- owner -> account (for room)
+-- owner -> account or identity (for room)
 -- ----------------------------------------------------------------------------
 
 COMMIT;
