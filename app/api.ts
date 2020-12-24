@@ -3,7 +3,7 @@ import { Payload } from "https://deno.land/x/djwt/mod.ts";
 import { HOSTNAME, PORT } from "./config.ts";
 import { about, notFound, unauthorized } from "./modules/helpers.ts";
 import { getPayload, sendToken } from "./modules/token.ts";
-import userApi from "./modules/user.ts";
+import accountApi from "./modules/account.ts";
 
 const PRE: string = "/api";
 const app: Server = serve({
@@ -27,7 +27,7 @@ async function main() {
     });
 
     if (!payload) unauthorized(req);
-    else if (req.url.match(`^${PRE}/user/`)) await userApi(req, payload);
+    else if (req.url.match(`^${PRE}/account/`)) await accountApi(req, payload);
     else notFound(req);
   }
 }

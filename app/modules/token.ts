@@ -10,24 +10,24 @@ import { parseRequestBody, unauthorized } from "./helpers.ts";
 import { query } from "./database.ts";
 
 interface TokenReq {
-  username: string;
+  email: string;
   passwd: string;
 }
 
 // ----------------------------------------------------------------------------
 async function isAuthenticated(treq: TokenReq): Promise<boolean> {
-  if (treq.username === undefined) throw new Error("missing username");
+  if (treq.email === undefined) throw new Error("missing email");
   if (treq.passwd === undefined) throw new Error("missing password");
 
   let sql = {
     text: `
       SELECT *
       FROM account
-      WHERE (name = $1 OR email = $1)
+      WHERE email = $1
         AND passwd = $2
         AND active = true`,
     args: [
-      treq.username,
+      treq.email,
       treq.passwd,
     ],
   };
@@ -48,10 +48,9 @@ async function createToken(treq: TokenReq): Promise<string> {
     iss: JWT_ISS,
     aud: JWT_AUD,
     exp: getNumericDate(JWT_TIMEOUT),
-    user: {
+    account: {
       id: 123,
-      name: treq.username,
-      admin: true,
+      name: treq.email,
     },
   };
 

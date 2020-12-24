@@ -3,52 +3,52 @@ import { Payload } from "https://deno.land/x/djwt/mod.ts";
 import { methodNotAllowed } from "./helpers.ts";
 
 // ----------------------------------------------------------------------------
-async function getUser(req: ServerRequest) {
+async function getAccount(req: ServerRequest) {
   req.respond({
-    body: JSON.stringify({ message: "user, get" }),
+    body: JSON.stringify({ message: "account, get" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function createUser(req: ServerRequest) {
+async function createAccount(req: ServerRequest) {
   req.respond({
-    body: JSON.stringify({ message: "user, post" }),
+    body: JSON.stringify({ message: "account, post" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function deleteUser(req: ServerRequest) {
+async function deleteAccount(req: ServerRequest) {
   req.respond({
-    body: JSON.stringify({ message: "user, delete" }),
+    body: JSON.stringify({ message: "account, delete" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function updateUser(req: ServerRequest) {
+async function updateAccount(req: ServerRequest) {
   req.respond({
-    body: JSON.stringify({ message: "user, patch" }),
+    body: JSON.stringify({ message: "account, patch" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function replaceUser(req: ServerRequest) {
+async function replaceAccount(req: ServerRequest) {
   req.respond({
-    body: JSON.stringify({ message: "user, put" }),
+    body: JSON.stringify({ message: "account, put" }),
   });
 }
 
 // ----------------------------------------------------------------------------
 export default async function (req: ServerRequest, payload: Payload) {
   if (req.method === "GET") {
-    await getUser(req);
+    await getAccount(req);
   } else if (req.method === "POST") {
-    await createUser(req);
+    await createAccount(req);
   } else if (req.method === "DELETE") {
-    await deleteUser(req);
+    await deleteAccount(req);
   } else if (req.method === "PATCH") {
-    await updateUser(req);
+    await updateAccount(req);
   } else if (req.method === "PUT") {
-    await replaceUser(req);
+    await replaceAccount(req);
   } else {
     methodNotAllowed(req);
   }
