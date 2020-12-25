@@ -125,6 +125,7 @@ ALTER TABLE room OWNER TO galaxy;
 -- IDENTITY-ROOM
 -- ----------------------------------------------------------------------------
 -- (identity, room) pairs
+-- special case for a random named room (member to member call)
 -- ----------------------------------------------------------------------------
 CREATE TABLE identity_room (
     "id" serial NOT NULL PRIMARY KEY,
