@@ -7,9 +7,15 @@ set -e
 out=/tmp/out
 [[ -z "$apilink" ]] && apilink="http://127.0.0.1:8000"
 
+echo '>>> ADMIN TOKEN'
+ADMIN_TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
+    -d @json/login-admin-valid.json $apilink/api/admin/ | \
+    jq '.jwt' | cut -d '"' -f2)
+echo $ADMIN_TOKEN; echo
+
 echo '>>> TOKEN'
 TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
-    -d @json/account-valid.json $apilink/api/token/ | \
+    -d @json/login-account-valid.json $apilink/api/token/ | \
     jq '.jwt' | cut -d '"' -f2)
 echo $TOKEN; echo
 
@@ -35,10 +41,18 @@ curl -s -H "Authorization: Bearer invalid-token" \
 echo; echo
 
 echo '>>>  account POST'
-curl -sX POST -H "Authorization: Bearer $TOKEN" \
+curl -sX POST -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json" -d @json/account.json \
     $apilink/api/account/ | tee $out
 [[ "$(jq '.message' $out)" != '"account, post"' ]] && echo " <<< error" && \
+    false
+echo; echo
+
+echo '>>>  account POST (invalid token)'
+curl -sX POST -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" -d @json/account.json \
+    $apilink/api/account/ | tee $out
+[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && echo " <<< error" && \
     false
 echo; echo
 

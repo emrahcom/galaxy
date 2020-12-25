@@ -18,7 +18,7 @@ curl -s $apilink/api/not-exist-method | tee $out
 echo; echo
 
 TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
-    -d @json/account-valid.json $apilink/api/token/ | \
+    -d @json/login-account-valid.json $apilink/api/token/ | \
     jq '.jwt' | cut -d '"' -f2)
 
 echo '>>> not found (with invalid token)'

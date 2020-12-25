@@ -1,8 +1,7 @@
 import { serve, Server } from "https://deno.land/std/http/server.ts";
-import { Payload } from "https://deno.land/x/djwt/mod.ts";
 import { HOSTNAME, PORT } from "./config.ts";
 import { about, notFound, unauthorized } from "./modules/helpers.ts";
-import { getPayload, sendToken } from "./modules/token.ts";
+import { getPayload, sendToken, UserPayload } from "./modules/token.ts";
 import { sendAdminToken } from "./modules/admin.ts";
 import accountApi from "./modules/account.ts";
 
@@ -26,12 +25,12 @@ async function main() {
       continue;
     }
 
-    const payload: Payload | undefined = await getPayload(req).catch(() => {
+    const upl: UserPayload | undefined = await getPayload(req).catch(() => {
       return undefined;
     });
 
-    if (!payload) unauthorized(req);
-    else if (req.url.match(`^${PRE}/account/`)) await accountApi(req, payload);
+    if (!upl) unauthorized(req);
+    else if (req.url.match(`^${PRE}/account/`)) await accountApi(req, upl);
     else notFound(req);
   }
 }

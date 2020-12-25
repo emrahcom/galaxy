@@ -1,6 +1,6 @@
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
-import { Payload } from "https://deno.land/x/djwt/mod.ts";
-import { methodNotAllowed } from "./helpers.ts";
+import { UserPayload } from "./token.ts";
+import { methodNotAllowed, unauthorized } from "./helpers.ts";
 
 // ----------------------------------------------------------------------------
 async function getAccount(req: ServerRequest) {
@@ -38,11 +38,11 @@ async function replaceAccount(req: ServerRequest) {
 }
 
 // ----------------------------------------------------------------------------
-export default async function (req: ServerRequest, payload: Payload) {
+export default async function (req: ServerRequest, upl: UserPayload) {
   if (req.method === "GET") {
     await getAccount(req);
   } else if (req.method === "POST") {
-    await createAccount(req);
+    upl.account.admin ? await createAccount(req) : unauthorized(req);
   } else if (req.method === "DELETE") {
     await deleteAccount(req);
   } else if (req.method === "PATCH") {

@@ -9,6 +9,17 @@ import { internalServerError, methodNotAllowed, ok } from "./helpers.ts";
 import { parseRequestBody, unauthorized } from "./helpers.ts";
 import { query } from "./database.ts";
 
+export interface UserPayload {
+  iss: string;
+  aud: string;
+  exp: number;
+  account: {
+    id: number;
+    email: string;
+    admin: boolean;
+  };
+}
+
 interface TokenReq {
   email: string;
   passwd: string;
@@ -50,7 +61,7 @@ async function createToken(treq: TokenReq): Promise<string> {
     exp: getNumericDate(JWT_TIMEOUT),
     account: {
       id: 123,
-      name: treq.email,
+      email: treq.email,
     },
   };
 
@@ -79,12 +90,15 @@ export async function sendToken(req: ServerRequest): Promise<void> {
 }
 
 // ----------------------------------------------------------------------------
-export async function getPayload(req: ServerRequest): Promise<Payload> {
+export async function getPayload(req: ServerRequest): Promise<UserPayload> {
   const authorization = req.headers.get("authorization");
   if (!authorization) throw new Error("missing authorization header");
 
   const token = authorization.match("Bearer\\s+([0-9a-zA-Z.=_-]+)$");
   if (!token) throw new Error("missing bearer");
 
-  return await verify(token[1], JWT_SECRET, JWT_ALG);
+  const payload = await verify(token[1], JWT_SECRET, JWT_ALG);
+  const userPayload: UserPayload = JSON.parse(JSON.stringify(payload));
+
+  return userPayload;
 }
