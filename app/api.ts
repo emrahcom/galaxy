@@ -3,6 +3,7 @@ import { Payload } from "https://deno.land/x/djwt/mod.ts";
 import { HOSTNAME, PORT } from "./config.ts";
 import { about, notFound, unauthorized } from "./modules/helpers.ts";
 import { getPayload, sendToken } from "./modules/token.ts";
+import { sendAdminToken } from "./modules/admin.ts";
 import accountApi from "./modules/account.ts";
 
 const PRE: string = "/api";
@@ -19,6 +20,9 @@ async function main() {
       continue;
     } else if (req.url === `${PRE}/token/` && req.method === "POST") {
       await sendToken(req);
+      continue;
+    } else if (req.url === `${PRE}/admin/` && req.method === "POST") {
+      await sendAdminToken(req);
       continue;
     }
 

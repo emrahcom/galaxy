@@ -40,17 +40,20 @@ INSERT INTO param VALUES (DEFAULT, 'admin-passwd',
 -- passwd               : the password hash
 -- active               : is active
 -- created_at           : the account creation time
+-- updated_at           : the account update time
 -- ----------------------------------------------------------------------------
 CREATE TABLE account (
     "id" serial NOT NULL PRIMARY KEY,
     "email" varchar(250) NOT NULL,
     "passwd" varchar(250) NOT NULL,
     "active" boolean NOT NULL DEFAULT TRUE,
-    "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
+    "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE UNIQUE INDEX ON account("email");
 CREATE INDEX ON account("active");
 CREATE INDEX ON account("created_at");
+CREATE INDEX ON account("updated_at");
 ALTER TABLE account OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- IDENTITY
@@ -65,12 +68,14 @@ CREATE TABLE identity (
     "email" varchar(250) NOT NULL,
     "avatar" varchar(250) NOT NULL DEFAULT '',
     "active" boolean NOT NULL DEFAULT TRUE,
-    "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
+    "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE INDEX ON identity("name");
 CREATE INDEX ON identity("email");
 CREATE INDEX ON identity("active");
 CREATE INDEX ON identity("created_at");
+CREATE INDEX ON identity("updated_at");
 ALTER TABLE identity OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- DOMAIN
@@ -86,12 +91,14 @@ CREATE TABLE domain (
     "token_key" varchar(250) NOT NULL,
     "token_exp" integer NOT NULL DEFAULT 3600,
     "active" boolean NOT NULL DEFAULT TRUE,
-    "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
+    "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE UNIQUE INDEX ON domain("account_id", "name");
 CREATE INDEX ON domain("name");
 CREATE INDEX ON domain("active");
 CREATE INDEX ON domain("created_at");
+CREATE INDEX ON domain("updated_at");
 ALTER TABLE domain OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- ROOM
@@ -105,12 +112,14 @@ CREATE TABLE room (
     "name" varchar(250) NOT NULL,
     "public" boolean NOT NULL DEFAULT FALSE,
     "active" boolean NOT NULL DEFAULT TRUE,
-    "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
+    "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE UNIQUE INDEX ON room("domain_id", "name");
 CREATE INDEX ON room("name");
 CREATE INDEX ON room("active");
 CREATE INDEX ON room("created_at");
+CREATE INDEX ON room("updated_at");
 ALTER TABLE room OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- IDENTITY-ROOM
@@ -129,13 +138,15 @@ CREATE TABLE identity_room (
     "token_user_avatar" varchar(250) NOT NULL DEFAULT '',
     "token_user_affiliation" varchar(250) NOT NULL DEFAULT 'member',
     "active" boolean NOT NULL DEFAULT TRUE,
-    "created_at" timestamp with time zone NOT NULL DEFAULT NOW()
+    "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE UNIQUE INDEX ON identity_room("identity_id", "room_id");
 CREATE INDEX ON identity_room("identity_id");
 CREATE INDEX ON identity_room("room_id");
 CREATE INDEX ON identity_room("active");
 CREATE INDEX ON identity_room("created_at");
+CREATE INDEX ON identity_room("updated_at");
 ALTER TABLE identity_room OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- MEMBERSHIP-REQUEST
