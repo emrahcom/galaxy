@@ -1,11 +1,11 @@
 -- ----------------------------------------------------------------------------
--- CREATE-GALAXY-DATABASE.SQL
+-- 01-CREATE-GALAXY-DATABASE.SQL
 -- ----------------------------------------------------------------------------
 -- This script creates the database and the database user.
 -- Tested on Postgresql 11.
 --
 -- Usage:
---     su -l postgres -c "psql -e -f /tmp/create-galaxy-database.sql"
+--     su -l postgres -c "psql -e -f /tmp/01-create-galaxy-database.sql"
 --
 -- ----------------------------------------------------------------------------
 

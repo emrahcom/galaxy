@@ -1,14 +1,14 @@
 -- ----------------------------------------------------------------------------
--- CREATE-GALAXY-TABLES.SQL
+-- 02-CREATE-GALAXY-TABLES.SQL
 -- ----------------------------------------------------------------------------
 -- This script creates the database tables.
 -- Tested on Postgresql 11.
 --
 -- Usage:
 --     psql -l postgres -c \
---             "psql -d galaxy -e -f /tmp/create-galaxy-tables.sql"
+--             "psql -d galaxy -e -f /tmp/02-create-galaxy-tables.sql"
 --
---     psql -U galaxy -h postgres -d galaxy -e -f create-galaxy-tables.sql
+--     psql -U galaxy -h postgres -d galaxy -e -f 02-create-galaxy-tables.sql
 --
 -- ----------------------------------------------------------------------------
 
@@ -30,8 +30,6 @@ CREATE TABLE param (
 );
 CREATE UNIQUE INDEX ON param("key");
 ALTER TABLE param OWNER TO galaxy;
-INSERT INTO param VALUES (DEFAULT, 'admin-passwd',
-    crypt('admin', gen_salt('bf', 8)));
 -- ----------------------------------------------------------------------------
 -- ACCOUNT
 -- ----------------------------------------------------------------------------
