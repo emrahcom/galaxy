@@ -4,37 +4,34 @@ import {
   getNumericDate,
   Header,
   Payload,
-  verify,
 } from "https://deno.land/x/djwt/mod.ts";
 import { QueryResult } from "https://deno.land/x/postgres/query.ts";
 import {
+  JWT_ADMIN_TIMEOUT,
   JWT_ALG,
   JWT_AUD,
   JWT_ISS,
   JWT_SECRET,
-  JWT_TIMEOUT,
 } from "../config.ts";
-import { query } from "./database.ts";
+import { query } from "../modules/database.ts";
 
-export interface TokenReq {
-  email: string;
+export interface AdminTokenReq {
   passwd: string;
 }
 
 // ----------------------------------------------------------------------------
-export async function isAuthenticated(treq: TokenReq): Promise<boolean> {
-  if (treq.email === undefined) throw new Error("missing email");
+export async function isAdminAuthenticated(
+  treq: AdminTokenReq,
+): Promise<boolean> {
   if (treq.passwd === undefined) throw new Error("missing password");
 
   let sql = {
     text: `
       SELECT *
-      FROM account
-      WHERE email = $1
-        AND passwd = $2
-        AND active = true`,
+      FROM param
+      WHERE key = 'admin-passwd'
+        AND value = crypt($1, value)`,
     args: [
-      treq.email,
       treq.passwd,
     ],
   };
@@ -45,7 +42,7 @@ export async function isAuthenticated(treq: TokenReq): Promise<boolean> {
 }
 
 // ----------------------------------------------------------------------------
-export async function createToken(treq: TokenReq): Promise<string> {
+export async function createAdminToken(treq: AdminTokenReq): Promise<string> {
   const header: Header = {
     alg: JWT_ALG,
     typ: "JWT",
@@ -54,10 +51,9 @@ export async function createToken(treq: TokenReq): Promise<string> {
   const payload: Payload = {
     iss: JWT_ISS,
     aud: JWT_AUD,
-    exp: getNumericDate(JWT_TIMEOUT),
+    exp: getNumericDate(JWT_ADMIN_TIMEOUT),
     account: {
-      id: 123,
-      email: treq.email,
+      admin: true,
     },
   };
 

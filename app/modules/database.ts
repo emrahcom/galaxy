@@ -1,9 +1,17 @@
 import { Pool } from "https://deno.land/x/postgres/mod.ts";
 import { PoolClient } from "https://deno.land/x/postgres/client.ts";
-import { QueryConfig } from "https://deno.land/x/postgres/query.ts";
-import { QueryResult } from "https://deno.land/x/postgres/query.ts";
-import { DB_NAME, DB_PASSWD, DB_USER } from "../config.ts";
-import { DB_HOST, DB_POOL_SIZE, DB_PORT } from "../config.ts";
+import {
+  QueryConfig,
+  QueryResult,
+} from "https://deno.land/x/postgres/query.ts";
+import {
+  DB_HOST,
+  DB_NAME,
+  DB_PASSWD,
+  DB_POOL_SIZE,
+  DB_PORT,
+  DB_USER,
+} from "../config.ts";
 
 const dbPool = new Pool({
   user: DB_USER,

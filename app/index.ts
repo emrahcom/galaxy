@@ -1,9 +1,9 @@
 import { serve, Server } from "https://deno.land/std/http/server.ts";
 import { HOSTNAME, PORT } from "./config.ts";
-import { about, notFound, unauthorized } from "./modules/helpers.ts";
-import { getPayload, sendToken, UserPayload } from "./modules/token.ts";
-import { sendAdminToken } from "./modules/admin.ts";
-import accountApi from "./modules/account.ts";
+import { about, notFound, unauthorized } from "./api/helpers.ts";
+import { getPayload, sendToken, UserPayload } from "./api/token.ts";
+import { sendAdminToken } from "./api/admin_token.ts";
+import accountApi from "./api/account.ts";
 
 const PRE: string = "/api";
 const app: Server = serve({
@@ -20,7 +20,7 @@ async function main() {
     } else if (req.url === `${PRE}/token/` && req.method === "POST") {
       await sendToken(req);
       continue;
-    } else if (req.url === `${PRE}/admin/` && req.method === "POST") {
+    } else if (req.url === `${PRE}/admin_token/` && req.method === "POST") {
       await sendAdminToken(req);
       continue;
     }
