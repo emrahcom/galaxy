@@ -1,4 +1,3 @@
-// @ts-ignore
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
 import {
   create,
@@ -6,9 +5,7 @@ import {
   Header,
   Payload,
   verify,
-  // @ts-ignore
 } from "https://deno.land/x/djwt/mod.ts";
-// @ts-ignore
 import { QueryResult } from "https://deno.land/x/postgres/query.ts";
 import {
   JWT_ALG,
@@ -16,9 +13,7 @@ import {
   JWT_ISS,
   JWT_SECRET,
   JWT_TIMEOUT,
-  // @ts-ignore
 } from "../config.ts";
-// @ts-ignore
 import { query } from "./database.ts";
 
 export interface TokenReq {

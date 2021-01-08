@@ -1,8 +1,5 @@
-// @ts-ignore
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
-// @ts-ignore
 import { methodNotAllowed, unauthorized } from "./helpers.ts";
-// @ts-ignore
 import { UserPayload } from "./token.ts";
 
 // ----------------------------------------------------------------------------

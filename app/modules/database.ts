@@ -1,11 +1,8 @@
-// @ts-ignore
 import { Pool } from "https://deno.land/x/postgres/mod.ts";
-// @ts-ignore
 import { PoolClient } from "https://deno.land/x/postgres/client.ts";
 import {
   QueryConfig,
   QueryResult,
-  // @ts-ignore
 } from "https://deno.land/x/postgres/query.ts";
 import {
   DB_HOST,
@@ -14,7 +11,6 @@ import {
   DB_POOL_SIZE,
   DB_PORT,
   DB_USER,
-  // @ts-ignore
 } from "../config.ts";
 
 const dbPool = new Pool({
