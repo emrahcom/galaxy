@@ -1,10 +1,13 @@
+// @ts-ignore
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
 import {
   create,
   getNumericDate,
   Header,
   Payload,
+  // @ts-ignore
 } from "https://deno.land/x/djwt/mod.ts";
+// @ts-ignore
 import { QueryResult } from "https://deno.land/x/postgres/query.ts";
 import {
   JWT_ADMIN_TIMEOUT,
@@ -12,7 +15,9 @@ import {
   JWT_AUD,
   JWT_ISS,
   JWT_SECRET,
+  // @ts-ignore
 } from "../config.ts";
+// @ts-ignore
 import { query } from "../modules/database.ts";
 
 export interface AdminTokenReq {

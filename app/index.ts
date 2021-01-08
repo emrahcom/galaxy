@@ -1,8 +1,14 @@
+// @ts-ignore
 import { serve, Server } from "https://deno.land/std/http/server.ts";
+// @ts-ignore
 import { HOSTNAME, PORT } from "./config.ts";
+// @ts-ignore
 import { about, notFound, unauthorized } from "./api/helpers.ts";
+// @ts-ignore
 import { getPayload, sendToken, UserPayload } from "./api/token.ts";
+// @ts-ignore
 import { sendAdminToken } from "./api/admin_token.ts";
+// @ts-ignore
 import accountApi from "./api/account.ts";
 
 const PRE: string = "/api";
