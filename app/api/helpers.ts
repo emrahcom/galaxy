@@ -54,6 +54,6 @@ export async function parseRequestBody<T>(req: ServerRequest): Promise<T> {
     const str = new TextDecoder("utf-8").decode(await Deno.readAll(req.body));
     return JSON.parse(str);
   } catch (error) {
-    return {} as T;
+    return JSON.parse("");
   }
 }
