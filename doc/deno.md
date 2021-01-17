@@ -5,8 +5,8 @@ curl -sSf https://github.com/denoland/deno/releases | \
     grep -o "/denoland/deno/releases/download/.*/deno-.*linux.*\.zip"
 
 LATEST=$(curl -sSf https://github.com/denoland/deno/releases | \
-         grep -o "/denoland/deno/releases/download/.*/deno-.*linux.*\.zip" | \
-         head -n1)
+    grep -o "/denoland/deno/releases/download/.*/deno-.*linux.*\.zip" | \
+    head -n1)
 
 cd /tmp
 wget -O deno.zip https://github.com/$LATEST
