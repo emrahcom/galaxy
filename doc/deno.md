@@ -40,3 +40,9 @@ format check
 deno fmt --check
 deno fmt --check index.ts
 ```
+
+lint
+====
+```bash
+deno lint --unstable index.ts
+```
