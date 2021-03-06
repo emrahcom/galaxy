@@ -5,7 +5,7 @@ import { getPayload, sendToken, UserPayload } from "./api/token.ts";
 import { sendAdminToken } from "./api/admin_token.ts";
 import accountApi from "./api/account.ts";
 
-const PRE: string = "/api";
+const PRE = "/api";
 const app: Server = serve({
   hostname: HOSTNAME,
   port: PORT,

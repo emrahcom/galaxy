@@ -25,7 +25,7 @@ export async function isAdminAuthenticated(
 ): Promise<boolean> {
   if (treq.passwd === undefined) throw new Error("missing password");
 
-  let sql = {
+  const sql = {
     text: `
       SELECT *
       FROM param

@@ -26,7 +26,7 @@ export async function isAuthenticated(treq: TokenReq): Promise<boolean> {
   if (treq.email === undefined) throw new Error("missing email");
   if (treq.passwd === undefined) throw new Error("missing password");
 
-  let sql = {
+  const sql = {
     text: `
       SELECT *
       FROM account

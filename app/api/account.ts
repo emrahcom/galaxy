@@ -3,35 +3,35 @@ import { methodNotAllowed, unauthorized } from "./helpers.ts";
 import { UserPayload } from "./token.ts";
 
 // ----------------------------------------------------------------------------
-async function getAccount(req: ServerRequest) {
+function getAccount(req: ServerRequest) {
   req.respond({
     body: JSON.stringify({ message: "account, get" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function createAccount(req: ServerRequest) {
+function createAccount(req: ServerRequest) {
   req.respond({
     body: JSON.stringify({ message: "account, post" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function deleteAccount(req: ServerRequest) {
+function deleteAccount(req: ServerRequest) {
   req.respond({
     body: JSON.stringify({ message: "account, delete" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function updateAccount(req: ServerRequest) {
+function updateAccount(req: ServerRequest) {
   req.respond({
     body: JSON.stringify({ message: "account, patch" }),
   });
 }
 
 // ----------------------------------------------------------------------------
-async function replaceAccount(req: ServerRequest) {
+function replaceAccount(req: ServerRequest) {
   req.respond({
     body: JSON.stringify({ message: "account, put" }),
   });
