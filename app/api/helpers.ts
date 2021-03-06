@@ -1,4 +1,13 @@
 import { ServerRequest } from "https://deno.land/std/http/server.ts";
+import { Status } from "https://deno.land/std/http/http_status.ts";
+
+// ----------------------------------------------------------------------------
+class BadRequest extends Error {
+  constructor(msg: string) {
+    super(msg);
+    this.name = "BadRequest";
+  }
+}
 
 // ----------------------------------------------------------------------------
 export const about = (req: ServerRequest) =>
@@ -9,51 +18,55 @@ export const about = (req: ServerRequest) =>
 // ----------------------------------------------------------------------------
 export const forbidden = (req: ServerRequest) =>
   req.respond({
-    status: 403,
-    body: JSON.stringify({ message: "forbidden" }),
+    status: Status.Forbidden,
+    body: JSON.stringify({ message: "Forbidden" }),
   });
 
 // ----------------------------------------------------------------------------
 export const internalServerError = (req: ServerRequest) =>
   req.respond({
-    status: 500,
-    body: JSON.stringify({ message: "internal server error" }),
+    status: Status.InternalServerError,
+    body: JSON.stringify({ message: "InternalServerError" }),
   });
 
 // ----------------------------------------------------------------------------
 export const ok = (req: ServerRequest, resBody: string) =>
   req.respond({
-    status: 200,
+    status: Status.OK,
     body: resBody,
   });
 
 // ----------------------------------------------------------------------------
 export const methodNotAllowed = (req: ServerRequest) =>
   req.respond({
-    status: 405,
-    body: JSON.stringify({ message: "method not allowed" }),
+    status: Status.MethodNotAllowed,
+    body: JSON.stringify({ message: "MethodNotAllowed" }),
   });
 
 // ----------------------------------------------------------------------------
 export const notFound = (req: ServerRequest) =>
   req.respond({
-    status: 404,
-    body: JSON.stringify({ message: "not found" }),
+    status: Status.NotFound,
+    body: JSON.stringify({ message: "NotFound" }),
   });
 
 // ----------------------------------------------------------------------------
 export const unauthorized = (req: ServerRequest) =>
   req.respond({
-    status: 401,
-    body: JSON.stringify({ message: "unauthorized" }),
+    status: Status.Unauthorized,
+    body: JSON.stringify({ message: "Unauthorized" }),
   });
 
 // ----------------------------------------------------------------------------
+export function parseQueryString(req: ServerRequest): URLSearchParams {
+  const qs = req.url.match("[?].*$");
+  if (!qs) throw new BadRequest("no query string");
+
+  return new URLSearchParams(qs[0]);
+}
+
+// ----------------------------------------------------------------------------
 export async function parseRequestBody<T>(req: ServerRequest): Promise<T> {
-  try {
-    const str = new TextDecoder("utf-8").decode(await Deno.readAll(req.body));
-    return JSON.parse(str);
-  } catch (error) {
-    return JSON.parse("");
-  }
+  const str = new TextDecoder("utf-8").decode(await Deno.readAll(req.body));
+  return JSON.parse(str);
 }

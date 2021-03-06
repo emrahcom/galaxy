@@ -39,7 +39,7 @@ echo; echo
 echo '>>>  account GET (invalid token)'
 curl -s -H "Authorization: Bearer invalid-token" \
     $apilink/api/account/123 | tee $out
-[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && \
+[[ "$(jq '.message' $out)" != '"Unauthorized"' ]] && \
     echo " <<< error" && false
 echo; echo
 
@@ -55,7 +55,7 @@ echo '>>>  account POST (invalid token)'
 curl -sX POST -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" -d @json/account.json \
     $apilink/api/account/ | tee $out
-[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && \
+[[ "$(jq '.message' $out)" != '"Unauthorized"' ]] && \
     echo " <<< error" && false
 echo; echo
 
@@ -85,6 +85,6 @@ echo; echo
 echo '>>>  account UNKNOWN METHOD'
 curl -sX UNKNOWN -H "Authorization: Bearer $TOKEN" \
     $apilink/api/account/id | tee $out
-[[ "$(jq '.message' $out)" != '"method not allowed"' ]] && \
+[[ "$(jq '.message' $out)" != '"MethodNotAllowed"' ]] && \
     echo " <<< error" && false
 echo; echo

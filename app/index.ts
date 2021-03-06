@@ -18,19 +18,19 @@ async function main() {
       about(req);
       continue;
     } else if (req.url === `${PRE}/token/` && req.method === "POST") {
-      await sendToken(req);
+      sendToken(req);
       continue;
     } else if (req.url === `${PRE}/admin_token/` && req.method === "POST") {
-      await sendAdminToken(req);
+      sendAdminToken(req);
       continue;
     }
 
-    const upl: UserPayload | undefined = await getPayload(req).catch(() => {
+    const pl: UserPayload | undefined = await getPayload(req).catch(() => {
       return undefined;
     });
 
-    if (!upl) unauthorized(req);
-    else if (req.url.match(`^${PRE}/account/`)) await accountApi(req, upl);
+    if (!pl) unauthorized(req);
+    else if (req.url.match(`^${PRE}/account/`)) accountApi(req, pl);
     else notFound(req);
   }
 }

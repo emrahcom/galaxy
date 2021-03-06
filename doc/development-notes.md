@@ -1,19 +1,19 @@
-refactoring
-===========
-* best expire time for token?
-* check await again. maybe more "then, catch"
+# refactoring
 
-research
-========
-* query strings
-* database modules
-* database codes
+- best expire time for token?
+- check await again. maybe more "then, catch"
 
-design
-======
-* database
-* distributed authentication system
-* user roles
-* authorization system
-* calling system
-* spam filter for the calling system
+# research
+
+- query strings
+- database modules
+- database codes
+
+# design
+
+- database
+- distributed authentication system
+- user roles
+- authorization system
+- calling system
+- spam filter for the calling system

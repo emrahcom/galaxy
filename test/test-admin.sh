@@ -27,7 +27,7 @@ echo '>>> admin POST (invalid password)'
 curl -sX POST -H "Content-Type: application/json" \
     -d @json/login-admin-invalid.json $apilink/api/admin_token/ | tee $out
 [[ "$(jq '.jwt' $out)" != 'null' ]] && echo " <<< error 1" && false
-[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && \
+[[ "$(jq '.message' $out)" != '"Unauthorized"' ]] && \
     echo " <<< error 2" && false
 echo; echo
 
@@ -35,6 +35,6 @@ echo '>>> admin DELETE (unsupported method)'
 curl -sX DELETE -H "Content-Type: application/json" \
     -d @json/login-admin-valid.json $apilink/api/admin_token/ | tee $out
 [[ "$(jq '.jwt' $out)" != 'null' ]] && echo " <<< error 1" && false
-[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && \
+[[ "$(jq '.message' $out)" != '"Unauthorized"' ]] && \
     echo " <<< error 2" && false
 echo; echo

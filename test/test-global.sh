@@ -30,20 +30,20 @@ echo; echo
 
 echo '>>> not found (without token)'
 curl -s $apilink/api/not-exist-method | tee $out
-[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && \
+[[ "$(jq '.message' $out)" != '"Unauthorized"' ]] && \
     echo " <<< error" && false
 echo; echo
 
 echo '>>> not found (with invalid token)'
 curl -s -H "Authorization: Bearer invalid-token" \
     $apilink/api/not-exist-method | tee $out
-[[ "$(jq '.message' $out)" != '"unauthorized"' ]] && \
+[[ "$(jq '.message' $out)" != '"Unauthorized"' ]] && \
     echo " <<< error" && false
 echo; echo
 
 echo '>>> not found (with token)'
 curl -s -H "Authorization: Bearer $TOKEN" \
     $apilink/api/not-exist-method | tee $out
-[[ "$(jq '.message' $out)" != '"not found"' ]] && \
+[[ "$(jq '.message' $out)" != '"NotFound"' ]] && \
     echo " <<< error" && false
 echo; echo
