@@ -1,3 +1,9 @@
+# run test
+
+```bash
+bash test-all.sh
+```
+
 # verbose curl
 
 ```bash
