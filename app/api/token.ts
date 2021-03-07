@@ -39,19 +39,21 @@ export interface UserPayload {
 export async function sendToken(req: ServerRequest): Promise<void> {
   if (req.method !== "POST") return methodNotAllowed(req);
 
+  let treq: TokenReq;
   try {
-    const treq = await parseRequestBody<TokenReq>(req);
+    treq = await parseRequestBody<TokenReq>(req);
     if (!await isAuthenticated(treq)) throw new Error("unknown user");
-
-    const jwt = await createToken(treq);
-    if (jwt) {
-      return ok(req, JSON.stringify({ jwt: jwt }));
-    } else {
-      return internalServerError(req);
-    }
   } catch (e) {
     return unauthorized(req);
   }
+
+  await createToken(treq)
+    .then((jwt) => {
+      return ok(req, JSON.stringify({ jwt: jwt }));
+    })
+    .catch((e) => {
+      return internalServerError(req);
+    });
 }
 
 // ----------------------------------------------------------------------------

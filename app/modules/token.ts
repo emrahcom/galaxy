@@ -61,9 +61,5 @@ export async function createToken(treq: TokenReq): Promise<string> {
     },
   };
 
-  const jwt = await create(header, payload, JWT_SECRET).catch(() => {
-    return "";
-  });
-
-  return jwt;
+  return await create(header, payload, JWT_SECRET);
 }
