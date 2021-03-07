@@ -58,14 +58,12 @@ export async function sendToken(req: ServerRequest): Promise<void> {
 
 // ----------------------------------------------------------------------------
 export async function getPayload(req: ServerRequest): Promise<UserPayload> {
-  const authorization = req.headers.get("authorization");
-  if (!authorization) throw new Error("missing authorization header");
+  const auth = req.headers.get("authorization");
+  if (!auth) throw new Error("missing authorization header");
 
-  const token = authorization.match("Bearer\\s+([0-9a-zA-Z.=_-]+)$");
+  const token = auth.match("Bearer\\s+([0-9a-zA-Z.=_-]+)$");
   if (!token) throw new Error("missing bearer");
 
-  const payload = await verify(token[1], JWT_SECRET, JWT_ALG);
-  const userPayload: UserPayload = JSON.parse(JSON.stringify(payload));
-
-  return userPayload;
+  const pl = await verify(token[1], JWT_SECRET, JWT_ALG);
+  return JSON.parse(JSON.stringify(pl));
 }

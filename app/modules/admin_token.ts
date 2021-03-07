@@ -53,6 +53,7 @@ export async function createAdminToken(treq: AdminTokenReq): Promise<string> {
     aud: JWT_AUD,
     exp: getNumericDate(JWT_ADMIN_TIMEOUT),
     account: {
+      id: 1,
       admin: true,
     },
   };

@@ -14,6 +14,7 @@ const app: Server = serve({
 // ----------------------------------------------------------------------------
 async function main() {
   for await (const req of app) {
+    // publicly accessable methods
     if (req.url === `${PRE}/about`) {
       about(req);
       continue;
@@ -25,12 +26,18 @@ async function main() {
       continue;
     }
 
-    const pl: UserPayload | undefined = await getPayload(req).catch(() => {
-      return undefined;
-    });
+    // validate token
+    let pl: UserPayload;
+    try {
+      pl = await getPayload(req);
+      if (!pl.account.id) throw new Error("unknown user id");
+    } catch (e) {
+      unauthorized(req);
+      continue;
+    }
 
-    if (!pl) unauthorized(req);
-    else if (req.url.match(`^${PRE}/account/`)) accountApi(req, pl);
+    // methods which need authentication
+    if (req.url.match(`^${PRE}/account/`)) accountApi(req, pl);
     else notFound(req);
   }
 }
