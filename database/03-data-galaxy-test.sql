@@ -21,8 +21,6 @@ INSERT INTO param VALUES (DEFAULT, 'system-prod', '0');
 
 -- param
 DELETE FROM param WHERE key != 'system-prod';
-INSERT INTO param VALUES (DEFAULT, 'admin-passwd',
-    crypt('test', gen_salt('bf', 8)));
 
 -- account
 DELETE FROM account;

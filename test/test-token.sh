@@ -7,12 +7,6 @@ set -e
 out=/tmp/out
 [[ -z "$apilink" ]] && apilink="http://127.0.0.1:8000"
 
-ADMIN_TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
-    -d @json/login-admin-valid.json $apilink/api/admin_token/ | \
-    jq '.jwt' | cut -d '"' -f2)
-[[ "$ADMIN_TOKEN" = "null" ]] && echo "admin token error" && false
-[[ -z "$ADMIN_TOKEN" ]] && echo "admin token error" && false
-
 # -----------------------------------------------------------------------------
 # token
 # -----------------------------------------------------------------------------

@@ -38,11 +38,11 @@ function replaceAccount(req: ServerRequest) {
 }
 
 // ----------------------------------------------------------------------------
-export default async function (req: ServerRequest, upl: UserPayload) {
+export default async function (req: ServerRequest, pl: UserPayload) {
   if (req.method === "GET") {
     await getAccount(req);
   } else if (req.method === "POST") {
-    upl.account.admin ? await createAccount(req) : unauthorized(req);
+    await createAccount(req);
   } else if (req.method === "DELETE") {
     await deleteAccount(req);
   } else if (req.method === "PATCH") {

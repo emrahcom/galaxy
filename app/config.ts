@@ -7,7 +7,6 @@ export const JWT_AUD = "myapp";
 export const JWT_ISS = "myapp";
 export const JWT_SECRET = "mysecret";
 export const JWT_TIMEOUT = 8 * 60 * 60;
-export const JWT_ADMIN_TIMEOUT = 2 * 60;
 
 export const DB_USER = "galaxy";
 export const DB_PASSWD = "galaxy";

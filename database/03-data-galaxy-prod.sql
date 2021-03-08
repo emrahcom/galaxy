@@ -15,7 +15,5 @@
 BEGIN;
 
 INSERT INTO param VALUES (DEFAULT, 'system-prod', '1');
-INSERT INTO param VALUES (DEFAULT, 'admin-passwd',
-    crypt('admin', gen_salt('bf', 8)));
 
 COMMIT;
