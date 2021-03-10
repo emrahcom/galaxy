@@ -1,11 +1,9 @@
 # refactoring
 
 - best expire time for token?
-- check await again. maybe more "then, catch"
 
 # research
 
-- query strings
 - database modules
 - database codes
 
