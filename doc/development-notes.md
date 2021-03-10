@@ -10,6 +10,7 @@
 # design
 
 - database
+- database, unpredictable id
 - distributed authentication system
 - user roles
 - authorization system

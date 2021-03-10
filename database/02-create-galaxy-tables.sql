@@ -18,10 +18,6 @@ BEGIN;
 -- PARAM
 -- ----------------------------------------------------------------------------
 -- The (key, value) pairs.
---
--- id                   : the record id
--- key                  : the param name (unique)
--- value                : the param value
 -- ----------------------------------------------------------------------------
 CREATE TABLE param (
     "id" serial NOT NULL PRIMARY KEY,
@@ -32,13 +28,6 @@ CREATE UNIQUE INDEX ON param("key");
 ALTER TABLE param OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- ACCOUNT
--- ----------------------------------------------------------------------------
--- id                   : the record id
--- email                : the email address (unique)
--- passwd               : the password hash
--- active               : is active
--- created_at           : the account creation time
--- updated_at           : the account update time
 -- ----------------------------------------------------------------------------
 CREATE TABLE account (
     "id" serial NOT NULL PRIMARY KEY,
@@ -56,8 +45,6 @@ ALTER TABLE account OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- IDENTITY
 -- ----------------------------------------------------------------------------
--- avatar               : the relative path of the avatar or gravatar
--- ----------------------------------------------------------------------------
 CREATE TABLE identity (
     "id" serial NOT NULL PRIMARY KEY,
     "account_id" integer NOT NULL REFERENCES account(id)
@@ -65,12 +52,14 @@ CREATE TABLE identity (
     "name" varchar(250) NOT NULL,
     "email" varchar(250) NOT NULL,
     "avatar" varchar(250) NOT NULL DEFAULT '',
+    "default" boolean NOT NULL DEFAULT FALSE,
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE INDEX ON identity("name");
 CREATE INDEX ON identity("email");
+CREATE INDEX ON identity("default");
 CREATE INDEX ON identity("active");
 CREATE INDEX ON identity("created_at");
 CREATE INDEX ON identity("updated_at");
@@ -80,50 +69,67 @@ ALTER TABLE identity OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- Each domain should have an owner.
 -- ----------------------------------------------------------------------------
+CREATE TYPE domain_auth_type AS ENUM ('public', 'token', 'custom');
 CREATE TABLE domain (
     "id" serial NOT NULL PRIMARY KEY,
     "account_id" integer NOT NULL REFERENCES account(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
-    "token_aud" varchar(250) NOT NULL,
-    "token_key" varchar(250) NOT NULL,
-    "token_exp" integer NOT NULL DEFAULT 3600,
+    "link" varchar(250) NOT NULL,
+    "auth_type" domain_auth_type NOT NULL DEFAULT 'public',
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE UNIQUE INDEX ON domain("account_id", "name");
 CREATE INDEX ON domain("name");
+CREATE INDEX ON domain("auth_type");
 CREATE INDEX ON domain("active");
 CREATE INDEX ON domain("created_at");
 CREATE INDEX ON domain("updated_at");
 ALTER TABLE domain OWNER TO galaxy;
+
+--     "token_aud" varchar(250) NOT NULL DEFAULT '',
+--     "token_key" varchar(250) NOT NULL DEFAULT '',
+--     "token_exp" integer NOT NULL DEFAULT 3600,
+
 -- ----------------------------------------------------------------------------
 -- ROOM
 -- ----------------------------------------------------------------------------
 -- Each room should have a domain.
+-- ?when room name will be changed in randomized mode (X min after last access)
 -- ----------------------------------------------------------------------------
+CREATE TYPE room_name_type AS ENUM ('static', 'randomized');
+CREATE TYPE room_visibility AS ENUM ('public', 'members', 'hidden');
+CREATE TYPE room_accessibility AS ENUM ('everyone', 'allowed');
 CREATE TABLE room (
     "id" serial NOT NULL PRIMARY KEY,
     "domain_id" integer NOT NULL REFERENCES domain(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
-    "public" boolean NOT NULL DEFAULT FALSE,
+    "name_type" room_name_type NOT NULL DEFAULT 'static',
+    "visibility" room_visibility NOT NULL DEFAULT 'public',
+    "accessibility" room_accessibility NOT NULL DEFAULT 'everyone',
+    "requestable" boolean NOT NULL DEFAULT TRUE,
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
+    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW(),
+    "accessed_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
 CREATE UNIQUE INDEX ON room("domain_id", "name");
 CREATE INDEX ON room("name");
+CREATE INDEX ON room("visibility");
+CREATE INDEX ON room("accessibility");
+CREATE INDEX ON room("requestable");
 CREATE INDEX ON room("active");
 CREATE INDEX ON room("created_at");
 CREATE INDEX ON room("updated_at");
+CREATE INDEX ON room("accessed_at");
 ALTER TABLE room OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- IDENTITY-ROOM
 -- ----------------------------------------------------------------------------
 -- (identity, room) pairs
--- special case for a random named room (member to member call)
 -- ----------------------------------------------------------------------------
 CREATE TABLE identity_room (
     "id" serial NOT NULL PRIMARY KEY,
@@ -131,11 +137,6 @@ CREATE TABLE identity_room (
         ON DELETE CASCADE,
     "room_id" integer NOT NULL REFERENCES room(id)
         ON DELETE CASCADE,
-    "token_exp" integer NOT NULL DEFAULT 0,
-    "token_user_name" varchar(250) NOT NULL DEFAULT '',
-    "token_user_email" varchar(250) NOT NULL DEFAULT '',
-    "token_user_avatar" varchar(250) NOT NULL DEFAULT '',
-    "token_user_affiliation" varchar(250) NOT NULL DEFAULT 'member',
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
@@ -147,6 +148,13 @@ CREATE INDEX ON identity_room("active");
 CREATE INDEX ON identity_room("created_at");
 CREATE INDEX ON identity_room("updated_at");
 ALTER TABLE identity_room OWNER TO galaxy;
+
+--    "token_exp" integer NOT NULL DEFAULT 0,
+--    "token_user_name" varchar(250) NOT NULL DEFAULT '',
+--    "token_user_email" varchar(250) NOT NULL DEFAULT '',
+--    "token_user_avatar" varchar(250) NOT NULL DEFAULT '',
+--    "token_user_affiliation" varchar(250) NOT NULL DEFAULT 'member',
+
 -- ----------------------------------------------------------------------------
 -- MEMBERSHIP-REQUEST
 -- account or identity -> room
