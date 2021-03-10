@@ -11,8 +11,11 @@
 
 - database
 - database, unpredictable id
+- database, room scheduler, publishing time
+  - always on
+  - periodic
+  - oneshot, unregular
 - distributed authentication system
-- user roles
-- authorization system
+- distributed database
 - calling system
 - spam filter for the calling system
