@@ -25,6 +25,12 @@ DELETE FROM param WHERE key != 'system-prod';
 -- account
 DELETE FROM account;
 INSERT INTO account VALUES (DEFAULT, 'myemail@mydomain.com', 'mypasswd', True,
-    DEFAULT);
+    DEFAULT, DEFAULT);
+
+-- identity
+DELETE FROM identity;
+INSERT INTO identity VALUES (DEFAULT,
+    (SELECT id FROM ACCOUNT WHERE email = 'myemail@mydomain.com'),
+    'myname', 'myemail@mydomain.com', '', True, True, DEFAULT, DEFAULT);
 
 COMMIT;

@@ -14,11 +14,16 @@
 
 BEGIN;
 
-DROP TABLE identity_room;
-DROP TABLE room;
-DROP TABLE domain;
-DROP TABLE identity;
-DROP TABLE account;
-DROP TABLE param;
+DROP TABLE IF EXISTS identity_room;
+DROP TABLE IF EXISTS room;
+DROP TABLE IF EXISTS domain;
+DROP TABLE IF EXISTS identity;
+DROP TABLE IF EXISTS account;
+DROP TABLE IF EXISTS param;
+
+DROP TYPE IF EXISTS room_accessibility;
+DROP TYPE IF EXISTS room_visibility;
+DROP TYPE IF EXISTS room_name_type;
+DROP TYPE IF EXISTS domain_auth_type;
 
 COMMIT;
