@@ -30,7 +30,7 @@ ALTER TABLE param OWNER TO galaxy;
 -- ACCOUNT
 -- ----------------------------------------------------------------------------
 CREATE TABLE account (
-    "id" serial NOT NULL PRIMARY KEY,
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "email" varchar(250) NOT NULL,
     "passwd" varchar(250) NOT NULL,
     "active" boolean NOT NULL DEFAULT TRUE,
@@ -46,8 +46,8 @@ ALTER TABLE account OWNER TO galaxy;
 -- IDENTITY
 -- ----------------------------------------------------------------------------
 CREATE TABLE identity (
-    "id" serial NOT NULL PRIMARY KEY,
-    "account_id" integer NOT NULL REFERENCES account(id)
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "account_id" uuid NOT NULL REFERENCES account(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "email" varchar(250) NOT NULL,
@@ -71,8 +71,8 @@ ALTER TABLE identity OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 CREATE TYPE domain_auth_type AS ENUM ('none', 'token', 'custom');
 CREATE TABLE domain (
-    "id" serial NOT NULL PRIMARY KEY,
-    "account_id" integer NOT NULL REFERENCES account(id)
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "account_id" uuid NOT NULL REFERENCES account(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "link" varchar(250) NOT NULL,
@@ -103,8 +103,8 @@ CREATE TYPE room_name_type AS ENUM ('static', 'randomized');
 CREATE TYPE room_visibility AS ENUM ('public', 'members', 'hidden');
 CREATE TYPE room_accessibility AS ENUM ('everyone', 'allowed');
 CREATE TABLE room (
-    "id" serial NOT NULL PRIMARY KEY,
-    "domain_id" integer NOT NULL REFERENCES domain(id)
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "domain_id" uuid NOT NULL REFERENCES domain(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "name_type" room_name_type NOT NULL DEFAULT 'randomized',
@@ -132,10 +132,10 @@ ALTER TABLE room OWNER TO galaxy;
 -- (identity, room) pairs
 -- ----------------------------------------------------------------------------
 CREATE TABLE identity_room (
-    "id" serial NOT NULL PRIMARY KEY,
-    "identity_id" integer NOT NULL REFERENCES identity(id)
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id)
         ON DELETE CASCADE,
-    "room_id" integer NOT NULL REFERENCES room(id)
+    "room_id" uuid NOT NULL REFERENCES room(id)
         ON DELETE CASCADE,
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
