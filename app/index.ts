@@ -26,7 +26,7 @@ async function main() {
     let pl: UserPayload;
     try {
       pl = await getPayload(req);
-      if (!pl.account.id) throw new Error("unknown user id");
+      if (!pl.uid) throw new Error("unknown user id");
     } catch (e) {
       unauthorized(req);
       continue;

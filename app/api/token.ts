@@ -6,7 +6,6 @@ import {
   Payload,
   verify,
 } from "https://deno.land/x/djwt/mod.ts";
-import { QueryResult } from "https://deno.land/x/postgres/query.ts";
 import {
   JWT_ALG,
   JWT_AUD,
@@ -22,32 +21,28 @@ import {
   unauthorized,
 } from "./helpers.ts";
 import { query } from "../modules/database.ts";
-import { createToken, isAuthenticated, TokenReq } from "../modules/token.ts";
+import { createToken, getUserId, TokenReq } from "../modules/token.ts";
 
 export interface UserPayload {
   iss: string;
   aud: string;
   exp: number;
-  account: {
-    id: number;
-    email: string;
-    admin: boolean;
-  };
+  uid: string;
 }
 
 // ----------------------------------------------------------------------------
 export async function sendToken(req: ServerRequest): Promise<void> {
   if (req.method !== "POST") return methodNotAllowed(req);
 
-  let treq: TokenReq;
+  let uid: string;
   try {
-    treq = await parseRequestBody<TokenReq>(req);
-    if (!await isAuthenticated(treq)) throw new Error("unknown user");
+    const treq = await parseRequestBody<TokenReq>(req);
+    uid = await getUserId(treq);
   } catch (e) {
     return unauthorized(req);
   }
 
-  await createToken(treq)
+  await createToken(uid)
     .then((jwt) => {
       return ok(req, JSON.stringify({ jwt: jwt }));
     })

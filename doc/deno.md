@@ -47,3 +47,9 @@ deno fmt --check index.ts
 deno lint --unstable
 deno lint --unstable index.ts
 ```
+
+# cache
+
+```bash
+rm -rf .cache/deno
+```

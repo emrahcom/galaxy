@@ -6,7 +6,6 @@ import {
   Payload,
   verify,
 } from "https://deno.land/x/djwt/mod.ts";
-import { QueryResult } from "https://deno.land/x/postgres/query.ts";
 import {
   JWT_ALG,
   JWT_AUD,
@@ -22,13 +21,13 @@ export interface TokenReq {
 }
 
 // ----------------------------------------------------------------------------
-export async function isAuthenticated(treq: TokenReq): Promise<boolean> {
+export async function getUserId(treq: TokenReq): Promise<string> {
   if (treq.email === undefined) throw new Error("missing email");
   if (treq.passwd === undefined) throw new Error("missing password");
 
   const sql = {
     text: `
-      SELECT *
+      SELECT id
       FROM account
       WHERE email = $1
         AND passwd = $2
@@ -39,13 +38,16 @@ export async function isAuthenticated(treq: TokenReq): Promise<boolean> {
     ],
   };
 
-  const rst: QueryResult = await query(sql);
+  const uid = await query(sql)
+    .then((rst) => {
+      return String(rst.rows[0].id);
+    });
 
-  return rst.rowCount && rst.rowCount > 0 ? true : false;
+  return uid;
 }
 
 // ----------------------------------------------------------------------------
-export async function createToken(treq: TokenReq): Promise<string> {
+export async function createToken(uid: string): Promise<string> {
   const header: Header = {
     alg: JWT_ALG,
     typ: "JWT",
@@ -55,10 +57,7 @@ export async function createToken(treq: TokenReq): Promise<string> {
     iss: JWT_ISS,
     aud: JWT_AUD,
     exp: getNumericDate(JWT_TIMEOUT),
-    account: {
-      id: 123,
-      email: treq.email,
-    },
+    uid: uid,
   };
 
   return await create(header, payload, JWT_SECRET);
