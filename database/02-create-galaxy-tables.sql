@@ -69,14 +69,14 @@ ALTER TABLE identity OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- Each domain should have an owner.
 -- ----------------------------------------------------------------------------
-CREATE TYPE domain_auth_type AS ENUM ('public', 'token', 'custom');
+CREATE TYPE domain_auth_type AS ENUM ('none', 'token', 'custom');
 CREATE TABLE domain (
     "id" serial NOT NULL PRIMARY KEY,
     "account_id" integer NOT NULL REFERENCES account(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "link" varchar(250) NOT NULL,
-    "auth_type" domain_auth_type NOT NULL DEFAULT 'public',
+    "auth_type" domain_auth_type NOT NULL DEFAULT 'none',
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
@@ -107,7 +107,7 @@ CREATE TABLE room (
     "domain_id" integer NOT NULL REFERENCES domain(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
-    "name_type" room_name_type NOT NULL DEFAULT 'static',
+    "name_type" room_name_type NOT NULL DEFAULT 'randomized',
     "visibility" room_visibility NOT NULL DEFAULT 'public',
     "accessibility" room_accessibility NOT NULL DEFAULT 'everyone',
     "requestable" boolean NOT NULL DEFAULT TRUE,
