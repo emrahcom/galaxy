@@ -10,7 +10,6 @@
 # design
 
 - database
-- database, unpredictable id
 - database, room scheduler, publishing time
   - always on
   - periodic
@@ -19,3 +18,6 @@
 - distributed database
 - calling system
 - spam filter for the calling system
+- groups (domain or room groups according to subject)
+- subcription to the groups
+- categories and tags
