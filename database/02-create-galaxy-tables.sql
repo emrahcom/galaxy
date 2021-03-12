@@ -20,7 +20,7 @@ BEGIN;
 -- The (key, value) pairs.
 -- ----------------------------------------------------------------------------
 CREATE TABLE param (
-    "id" serial NOT NULL PRIMARY KEY,
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "key" varchar(50) NOT NULL,
     "value" varchar(250) NOT NULL
 );
