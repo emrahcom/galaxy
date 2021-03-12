@@ -98,6 +98,8 @@ ALTER TABLE domain OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- Each room should have a domain.
 -- ?when room name will be changed in randomized mode (X min after last access)
+-- requestable: people can send the subscribtion request
+-- hidden: the owner may send the invite to the people
 -- ----------------------------------------------------------------------------
 CREATE TYPE room_name_type AS ENUM ('static', 'randomized');
 CREATE TYPE room_visibility AS ENUM ('public', 'members', 'hidden');
@@ -161,7 +163,7 @@ ALTER TABLE identity_room OWNER TO galaxy;
 -- keep status (seen, deny, deny permanently, allow etc)
 -- maybe timeout for a second request
 -- ----------------------------------------------------------------------------
--- MEMBERSHIP-PASSPORT
+-- MEMBERSHIP-INVITE
 -- owner -> account or identity (for room)
 -- ----------------------------------------------------------------------------
 
