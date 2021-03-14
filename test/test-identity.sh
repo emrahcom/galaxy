@@ -2,67 +2,67 @@
 set -e
 
 # -----------------------------------------------------------------------------
-# test-account
+# test-identity
 # -----------------------------------------------------------------------------
 out=/tmp/out
 [[ -z "$apilink" ]] && apilink="http://127.0.0.1:8000"
 
 TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
-    -d @json/login-account-valid.json $apilink/api/token/ | \
+    -d @json/credential-valid.json $apilink/api/token/ | \
     jq '.jwt' | cut -d '"' -f2)
 [[ "$TOKEN" = "null" ]] && echo "user token error" && false
 [[ -z "$TOKEN" ]] && echo "user token error" && false
 
 # -----------------------------------------------------------------------------
-# account
+# identity
 # -----------------------------------------------------------------------------
-echo '>>>  account GET (id)'
+echo '>>>  identity GET (id)'
 curl -s -H "Authorization: Bearer $TOKEN" \
-    $apilink/api/account/123 | tee $out
-[[ "$(jq '.message' $out)" != '"account, get"' ]] && \
+    $apilink/api/identity/123 | tee $out
+[[ "$(jq '.message' $out)" != '"identity, get"' ]] && \
     echo " <<< error" && false
 echo; echo
 
-echo '>>>  account GET (no id)'
+echo '>>>  identity GET (no id)'
 curl -s -H "Authorization: Bearer $TOKEN" \
-    $apilink/api/account/ | tee $out
-[[ "$(jq '.message' $out)" != '"account, get"' ]] && \
+    $apilink/api/identity/ | tee $out
+[[ "$(jq '.message' $out)" != '"identity, get"' ]] && \
     echo " <<< error" && false
 echo; echo
 
-echo '>>>  account GET (invalid token)'
+echo '>>>  identity GET (invalid token)'
 curl -s -H "Authorization: Bearer invalid-token" \
-    $apilink/api/account/123 | tee $out
+    $apilink/api/identity/123 | tee $out
 [[ "$(jq '.message' $out)" != '"Unauthorized"' ]] && \
     echo " <<< error" && false
 echo; echo
 
-echo '>>>  account DELETE'
+echo '>>>  identity DELETE'
 curl -sX DELETE -H "Authorization: Bearer $TOKEN" \
-    $apilink/api/account/123 | tee $out
-[[ "$(jq '.message' $out)" != '"account, delete"' ]] && \
+    $apilink/api/identity/123 | tee $out
+[[ "$(jq '.message' $out)" != '"identity, delete"' ]] && \
     echo " <<< error" && false
 echo; echo
 
-echo '>>>  account PUT'
+echo '>>>  identity PUT'
 curl -sX PUT -H "Authorization: Bearer $TOKEN" \
-    -H "Content-Type: application/json" -d @json/account.json \
-    $apilink/api/account/id | tee $out
-[[ "$(jq '.message' $out)" != '"account, put"' ]] && \
+    -H "Content-Type: application/json" -d @json/identity.json \
+    $apilink/api/identity/id | tee $out
+[[ "$(jq '.message' $out)" != '"identity, put"' ]] && \
     echo " <<< error" && false
 echo; echo
 
-echo '>>>  account PATCH'
+echo '>>>  identity PATCH'
 curl -sX PATCH -H "Authorization: Bearer $TOKEN" \
     -H "Content-Type: application/json" -d @json/email.json \
-    $apilink/api/account/id | tee $out
-[[ "$(jq '.message' $out)" != '"account, patch"' ]] && \
+    $apilink/api/identity/id | tee $out
+[[ "$(jq '.message' $out)" != '"identity, patch"' ]] && \
     echo " <<< error" && false
 echo; echo
 
-echo '>>>  account UNKNOWN METHOD'
+echo '>>>  identity UNKNOWN METHOD'
 curl -sX UNKNOWN -H "Authorization: Bearer $TOKEN" \
-    $apilink/api/account/id | tee $out
+    $apilink/api/identity/id | tee $out
 [[ "$(jq '.message' $out)" != '"MethodNotAllowed"' ]] && \
     echo " <<< error" && false
 echo; echo

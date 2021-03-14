@@ -8,7 +8,7 @@ out=/tmp/out
 [[ -z "$apilink" ]] && apilink="http://127.0.0.1:8000"
 
 TOKEN=$(curl -sX POST -H "Content-Type: application/json" \
-    -d @json/login-account-valid.json $apilink/api/token/ | \
+    -d @json/credential-valid.json $apilink/api/token/ | \
     jq '.jwt' | cut -d '"' -f2)
 [[ "$TOKEN" = "null" ]] && echo "token error" && false
 [[ -z "$TOKEN" ]] && echo "token error" && false

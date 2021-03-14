@@ -28,7 +28,7 @@ export async function getUserId(treq: TokenReq): Promise<string> {
   const sql = {
     text: `
       SELECT id
-      FROM account
+      FROM identity
       WHERE email = $1
         AND passwd = $2
         AND active = true`,

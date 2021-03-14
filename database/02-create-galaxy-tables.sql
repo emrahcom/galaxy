@@ -27,9 +27,9 @@ CREATE TABLE param (
 CREATE UNIQUE INDEX ON param("key");
 ALTER TABLE param OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
--- ACCOUNT
+-- IDENTITY
 -- ----------------------------------------------------------------------------
-CREATE TABLE account (
+CREATE TABLE identity (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "email" varchar(250) NOT NULL,
     "passwd" varchar(250) NOT NULL,
@@ -37,17 +37,17 @@ CREATE TABLE account (
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
-CREATE UNIQUE INDEX ON account("email");
-CREATE INDEX ON account("active");
-CREATE INDEX ON account("created_at");
-CREATE INDEX ON account("updated_at");
-ALTER TABLE account OWNER TO galaxy;
+CREATE UNIQUE INDEX ON identity("email");
+CREATE INDEX ON identity("active");
+CREATE INDEX ON identity("created_at");
+CREATE INDEX ON identity("updated_at");
+ALTER TABLE identity OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
--- IDENTITY
+-- PROFILE
 -- ----------------------------------------------------------------------------
-CREATE TABLE identity (
+CREATE TABLE profile (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "account_id" uuid NOT NULL REFERENCES account(id)
+    "identity_id" uuid NOT NULL REFERENCES identity(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "email" varchar(250) NOT NULL,
@@ -57,13 +57,13 @@ CREATE TABLE identity (
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
-CREATE INDEX ON identity("name");
-CREATE INDEX ON identity("email");
-CREATE INDEX ON identity("default");
-CREATE INDEX ON identity("active");
-CREATE INDEX ON identity("created_at");
-CREATE INDEX ON identity("updated_at");
-ALTER TABLE identity OWNER TO galaxy;
+CREATE INDEX ON profile("name");
+CREATE INDEX ON profile("email");
+CREATE INDEX ON profile("default");
+CREATE INDEX ON profile("active");
+CREATE INDEX ON profile("created_at");
+CREATE INDEX ON profile("updated_at");
+ALTER TABLE profile OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
 -- DOMAIN
 -- ----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ ALTER TABLE identity OWNER TO galaxy;
 CREATE TYPE domain_auth_type AS ENUM ('none', 'token', 'custom');
 CREATE TABLE domain (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "account_id" uuid NOT NULL REFERENCES account(id)
+    "identity_id" uuid NOT NULL REFERENCES identity(id)
         ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "link" varchar(250) NOT NULL,
@@ -81,7 +81,7 @@ CREATE TABLE domain (
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
-CREATE UNIQUE INDEX ON domain("account_id", "name");
+CREATE UNIQUE INDEX ON domain("identity_id", "name");
 CREATE INDEX ON domain("name");
 CREATE INDEX ON domain("auth_type");
 CREATE INDEX ON domain("active");
@@ -129,13 +129,13 @@ CREATE INDEX ON room("updated_at");
 CREATE INDEX ON room("accessed_at");
 ALTER TABLE room OWNER TO galaxy;
 -- ----------------------------------------------------------------------------
--- IDENTITY-ROOM
+-- PROFILE-ROOM
 -- ----------------------------------------------------------------------------
--- (identity, room) pairs
+-- (profile, room) pairs
 -- ----------------------------------------------------------------------------
-CREATE TABLE identity_room (
+CREATE TABLE profile_room (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "identity_id" uuid NOT NULL REFERENCES identity(id)
+    "profile_id" uuid NOT NULL REFERENCES profile(id)
         ON DELETE CASCADE,
     "room_id" uuid NOT NULL REFERENCES room(id)
         ON DELETE CASCADE,
@@ -143,13 +143,13 @@ CREATE TABLE identity_room (
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
 );
-CREATE UNIQUE INDEX ON identity_room("identity_id", "room_id");
-CREATE INDEX ON identity_room("identity_id");
-CREATE INDEX ON identity_room("room_id");
-CREATE INDEX ON identity_room("active");
-CREATE INDEX ON identity_room("created_at");
-CREATE INDEX ON identity_room("updated_at");
-ALTER TABLE identity_room OWNER TO galaxy;
+CREATE UNIQUE INDEX ON profile_room("profile_id", "room_id");
+CREATE INDEX ON profile_room("profile_id");
+CREATE INDEX ON profile_room("room_id");
+CREATE INDEX ON profile_room("active");
+CREATE INDEX ON profile_room("created_at");
+CREATE INDEX ON profile_room("updated_at");
+ALTER TABLE profile_room OWNER TO galaxy;
 
 --    "token_exp" integer NOT NULL DEFAULT 0,
 --    "token_user_name" varchar(250) NOT NULL DEFAULT '',
@@ -159,12 +159,12 @@ ALTER TABLE identity_room OWNER TO galaxy;
 
 -- ----------------------------------------------------------------------------
 -- MEMBERSHIP-REQUEST
--- account or identity -> room
+-- identity or profile -> room
 -- keep status (seen, deny, deny permanently, allow etc)
 -- maybe timeout for a second request
 -- ----------------------------------------------------------------------------
 -- MEMBERSHIP-INVITE
--- owner -> account or identity (for room)
+-- owner -> identity or profile (for room)
 -- ----------------------------------------------------------------------------
 
 COMMIT;

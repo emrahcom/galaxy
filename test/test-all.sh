@@ -12,8 +12,8 @@ bash test-global.sh
 echo '>>>>>>>>> TOKEN <<<<<<<<<<<'
 bash test-token.sh
 
-echo '>>>>>>>> ACCOUNT <<<<<<<<<<'
-bash test-account.sh
+echo '>>>>>>>> IDENTITY <<<<<<<<<'
+bash test-identity.sh
 
 echo
 echo COMPLETED

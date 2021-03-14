@@ -2,7 +2,7 @@ import { serve, Server } from "https://deno.land/std/http/server.ts";
 import { HOSTNAME, PORT } from "./config.ts";
 import { about, notFound, unauthorized } from "./api/helpers.ts";
 import { getPayload, sendToken, UserPayload } from "./api/token.ts";
-import accountApi from "./api/account.ts";
+import identityApi from "./api/identity.ts";
 
 const PRE = "/api";
 const app: Server = serve({
@@ -33,7 +33,7 @@ async function main() {
     }
 
     // methods which need authentication
-    if (req.url.match(`^${PRE}/account/`)) accountApi(req, pl);
+    if (req.url.match(`^${PRE}/identity/`)) identityApi(req, pl);
     else notFound(req);
   }
 }
