@@ -1,0 +1,20 @@
+[Unit]
+Description=SecureApp UI
+After=network-online.target
+
+[Service]
+Environment=KRATOS_ADMIN_URL=http://eb-kratos:4434/
+Environment=KRATOS_PUBLIC_URL=http://eb-kratos:4433/
+Environment=KRATOS_BROWSER_URL=https://___KRATOS_FQDN___/
+Environment=BASE_URL=https://___SECUREAPP_FQDN___/
+Environment=PORT=4455
+Environment=SECURITY_MODE=cookie
+User=secureapp-ui
+Group=secureapp-ui
+WorkingDirectory=/home/secureapp-ui/kratos-selfservice-ui-node
+ExecStart=npm run serve
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,94 @@
+version: v0.7.1-alpha.1
+
+dsn: "postgres://kratos:___DB_PASSWD___@eb-postgres:5432/kratos?\
+      sslmode=disable&max_conns=20&max_idle_conns=4"
+
+serve:
+  public:
+    base_url: https://___KRATOS_FQDN___/
+    cors:
+      enabled: true
+      allowed_origins:
+        - https://___SECUREAPP_FQDN___
+  admin:
+    base_url: https://___KRATOS_FQDN___:4434/
+
+selfservice:
+  default_browser_return_url: https://___SECUREAPP_FQDN___/
+  whitelisted_return_urls:
+    - https://___SECUREAPP_FQDN___
+
+  methods:
+    password:
+      enabled: true
+
+  flows:
+    error:
+      ui_url: https://___SECUREAPP_FQDN___/error
+
+    settings:
+      ui_url: https://___SECUREAPP_FQDN___/settings
+      privileged_session_max_age: 15m
+
+    recovery:
+      enabled: true
+      ui_url: https://___SECUREAPP_FQDN___/recovery
+
+    verification:
+      enabled: true
+      ui_url: https://___SECUREAPP_FQDN___/verify
+      after:
+        default_browser_return_url: https://___SECUREAPP_FQDN___/
+
+    logout:
+      after:
+        default_browser_return_url: https://___SECUREAPP_FQDN___/auth/login
+
+    login:
+      ui_url: https://___SECUREAPP_FQDN___/auth/login
+      lifespan: 10m
+
+    registration:
+      lifespan: 10m
+      ui_url: https://___SECUREAPP_FQDN___/auth/registration
+      after:
+        password:
+          hooks:
+            -
+              hook: session
+
+log:
+  level: debug
+  format: text
+  leak_sensitive_values: true
+
+secrets:
+  cookie:
+    - ___COOKIE_SECRET___
+
+cookies:
+  domain: ___BASE_DOMAIN___
+  path: /
+  same_site: Strict
+
+session:
+  cookie:
+    domain: ___BASE_DOMAIN___
+    path: /
+    same_site: Strict
+
+hashers:
+  argon2:
+    parallelism: 1
+    memory: 128MB
+    iterations: 2
+    salt_length: 16
+    key_length: 16
+
+identity:
+  default_schema_url: file:///home/kratos/config/identity.schema.json
+
+courier:
+  smtp:
+    connection_uri: smtps://username:password@eb-mailslurper:1025/?skip_ssl_verify=true&legacy_ssl=true
+    from_address: no-reply@___SECUREAPP_FQDN___

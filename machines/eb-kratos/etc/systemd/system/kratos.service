@@ -1,0 +1,14 @@
+[Unit]
+Description=Kratos
+After=network-online.target
+
+[Service]
+User=kratos
+Group=kratos
+WorkingDirectory=/home/kratos
+ExecStart=kratos serve -c /home/kratos/config/kratos.yml
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target
