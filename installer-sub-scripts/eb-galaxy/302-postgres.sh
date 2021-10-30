@@ -11,7 +11,7 @@ MACH="eb-postgres"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
-DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-ory-kratos | head -n1)
+DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
 echo POSTGRES="$IP" >> $INSTALLER/000-source

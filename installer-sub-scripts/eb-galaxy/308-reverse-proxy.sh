@@ -11,7 +11,7 @@ MACH="eb-reverse-proxy"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
-DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-ory-kratos | head -n1)
+DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
 echo REVERSE_PROXY="$IP" >> $INSTALLER/000-source
@@ -155,8 +155,8 @@ EOS
 # SYSTEM CONFIGURATION
 # ------------------------------------------------------------------------------
 # eb-cert
-cp /root/eb-ssl/eb-ory-kratos.key $ROOTFS/etc/ssl/private/eb-cert.key
-cp /root/eb-ssl/eb-ory-kratos.pem $ROOTFS/etc/ssl/certs/eb-cert.pem
+cp /root/eb-ssl/eb-galaxy.key $ROOTFS/etc/ssl/private/eb-cert.key
+cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/etc/ssl/certs/eb-cert.pem
 
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
@@ -164,17 +164,13 @@ cp etc/nginx/sites-available/eb-default.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/eb-default.conf $ROOTFS/etc/nginx/sites-enabled/
 cp etc/nginx/sites-available/eb-kratos.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/eb-kratos.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/eb-secureapp.conf \
-    $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-secureapp.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/eb-secureapp-wss.conf \
-    $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-secureapp-wss.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-enabled/
 
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/nginx/sites-available/*
-sed -i "s/___SECUREAPP_FQDN___/$SECUREAPP_FQDN/g" \
-    $ROOTFS/etc/nginx/sites-available/*
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service

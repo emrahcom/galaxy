@@ -11,7 +11,7 @@ MACH="eb-kratos"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
-DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-ory-kratos | head -n1)
+DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
 echo KRATOS="$IP" >> $INSTALLER/000-source
@@ -140,8 +140,7 @@ EOS
 # kratos user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser kratos --system --group --disabled-password --shell /bin/zsh \
-    --gecos ''
+adduser kratos --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
 cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/kratos/
@@ -178,7 +177,7 @@ while true; do
     K=$(echo $KRATOS_FQDN | rev | cut -d. -f $i)
     [[ -z "$K" ]] && break
 
-    S=$(echo $SECUREAPP_FQDN | rev | cut -d. -f $i)
+    S=$(echo $APP_FQDN | rev | cut -d. -f $i)
     [[ -z "$S" ]] && break
 
     [[ "$K" = "$S" ]] && BASE_DOMAIN=$(echo $BASE_DOMAIN $S) || break
@@ -190,7 +189,7 @@ echo BASE_DOMAIN="$BASE_DOMAIN" >> $INSTALLER/000-source
 COOKIE_SECRET=$(openssl rand -hex 30)
 sed -i "s/___COOKIE_SECRET___/$COOKIE_SECRET/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/home/kratos/config/*
-sed -i "s/___SECUREAPP_FQDN___/$SECUREAPP_FQDN/g" $ROOTFS/home/kratos/config/*
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___BASE_DOMAIN___/$BASE_DOMAIN/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___DB_PASSWD___/$DB_PASSWD/g" $ROOTFS/home/kratos/config/*
 

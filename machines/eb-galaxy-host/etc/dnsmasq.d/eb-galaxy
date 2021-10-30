@@ -1,6 +1,6 @@
 address=/eb-postgres/172.22.22.11
 address=/eb-kratos/172.22.22.16
-address=/eb-secureapp-api/172.22.22.17
-address=/eb-secureapp-ui/172.22.22.18
+address=/eb-app-api/172.22.22.17
+address=/eb-app-ui/172.22.22.18
 address=/eb-mailslurper/172.22.22.19
 address=/eb-reverse-proxy/172.22.22.20

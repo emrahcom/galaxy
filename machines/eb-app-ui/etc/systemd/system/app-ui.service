@@ -1,0 +1,14 @@
+[Unit]
+Description=App UI
+After=network-online.target
+
+[Service]
+User=app-ui
+Group=app-ui
+WorkingDirectory=/home/app-ui/kratos-selfservice-svelte-node
+ExecStart=npm run dev -- --host --port 4455
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target

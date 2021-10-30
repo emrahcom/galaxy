@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# SECUREAPP-UI.SH
+# APP-UI.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,14 +7,14 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-secureapp-ui"
+MACH="eb-app-ui"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
-DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-ory-kratos | head -n1)
+DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
-echo SECUREAPP_UI="$IP" >> $INSTALLER/000-source
+echo APP_UI="$IP" >> $INSTALLER/000-source
 
 # ------------------------------------------------------------------------------
 # NFTABLES RULES
@@ -28,7 +28,7 @@ nft add element eb-nat tcp2port { $SSH_PORT : 22 }
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_SECUREAPP_UI" = true ]] && exit
+[[ "$DONT_RUN_APP_UI" = true ]] && exit
 
 echo
 echo "-------------------------- $MACH --------------------------"
@@ -37,13 +37,13 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_SECUREAPP_UI_IF_EXISTS" != true ]]
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_APP_UI_IF_EXISTS" != true ]]
 then
-    echo SECUREAPP_UI_SKIPPED=true >> $INSTALLER/000-source
+    echo APP_UI_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
     echo
-    echo "Please set REINSTALL_SECUREAPP_UI_IF_EXISTS in $APP_CONFIG"
+    echo "Please set REINSTALL_APP_UI_IF_EXISTS in $APP_CONFIG"
     echo "if you want to reinstall this container"
     exit
 fi
@@ -156,38 +156,37 @@ EOS
 # ------------------------------------------------------------------------------
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/eb-secureapp.conf \
+cp etc/nginx/sites-available/eb-app.conf \
     $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-secureapp.conf $ROOTFS/etc/nginx/sites-enabled/
+ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
 
 # ------------------------------------------------------------------------------
-# SECUREAPP UI
+# APP UI
 # ------------------------------------------------------------------------------
-# secureapp-ui user
+# app-ui user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser secureapp-ui --system --group --disabled-password --shell /bin/zsh \
-    --gecos ''
+adduser app-ui --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
-cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/secureapp-ui/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/secureapp-ui/
-cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/secureapp-ui/
+cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/app-ui/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/app-ui/
+cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/app-ui/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown secureapp-ui:secureapp-ui /home/secureapp-ui/.tmux.conf
-chown secureapp-ui:secureapp-ui /home/secureapp-ui/.vimrc
-chown secureapp-ui:secureapp-ui /home/secureapp-ui/.zshrc
+chown app-ui:app-ui /home/app-ui/.tmux.conf
+chown app-ui:app-ui /home/app-ui/.vimrc
+chown app-ui:app-ui /home/app-ui/.zshrc
 EOS
 
-# secureapp-ui application (ory)
+# app-ui application (ory)
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-su -l secureapp-ui <<EOSS
+su -l app-ui <<EOSS
     set -e
     git clone https://github.com/ory/kratos-selfservice-ui-node.git
     cd kratos-selfservice-ui-node
@@ -198,10 +197,17 @@ su -l secureapp-ui <<EOSS
 EOSS
 EOS
 
-# secureapp-ui application (svelte)
+# app-ui systemd service (ory)
+cp etc/systemd/system/app-ui-ory.service $ROOTFS/etc/systemd/system/
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
+    $ROOTFS/etc/systemd/system/app-ui-ory.service
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
+    $ROOTFS/etc/systemd/system/app-ui-ory.service
+
+# app-ui application (svelte)
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-su -l secureapp-ui <<EOSS
+su -l app-ui <<EOSS
     set -e
     git clone https://github.com/emrahcom/kratos-selfservice-svelte-node.git
     cd kratos-selfservice-svelte-node
@@ -211,22 +217,18 @@ EOSS
 EOS
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/home/secureapp-ui/kratos-selfservice-svelte-node/src/lib/config.ts
-sed -i "s/___SECUREAPP_FQDN___/$SECUREAPP_FQDN/g" \
-    $ROOTFS/home/secureapp-ui/kratos-selfservice-svelte-node/src/lib/config.ts
+    $ROOTFS/home/app-ui/kratos-selfservice-svelte-node/src/lib/config.ts
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
+    $ROOTFS/home/app-ui/kratos-selfservice-svelte-node/src/lib/config.ts
 
-# secureapp-ui systemd service
-cp etc/systemd/system/secureapp-ui.service $ROOTFS/etc/systemd/system/
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/systemd/system/secureapp-ui.service
-sed -i "s/___SECUREAPP_FQDN___/$SECUREAPP_FQDN/g" \
-    $ROOTFS/etc/systemd/system/secureapp-ui.service
+# app-ui systemd service
+cp etc/systemd/system/app-ui.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable secureapp-ui.service
-systemctl start secureapp-ui.service
+systemctl enable app-ui.service
+systemctl start app-ui.service
 EOS
 
 # ------------------------------------------------------------------------------

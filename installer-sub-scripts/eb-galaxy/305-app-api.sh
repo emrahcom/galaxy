@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# SECUREAPP-API.SH
+# APP-API.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,14 +7,14 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-secureapp-api"
+MACH="eb-app-api"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
-DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-ory-kratos | head -n1)
+DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
-echo SECUREAPP_API="$IP" >> $INSTALLER/000-source
+echo APP_API="$IP" >> $INSTALLER/000-source
 
 # ------------------------------------------------------------------------------
 # NFTABLES RULES
@@ -28,7 +28,7 @@ nft add element eb-nat tcp2port { $SSH_PORT : 22 }
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_SECUREAPP_API" = true ]] && exit
+[[ "$DONT_RUN_APP_API" = true ]] && exit
 
 echo
 echo "-------------------------- $MACH --------------------------"
@@ -37,13 +37,13 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_SECUREAPP_API_IF_EXISTS" != true ]]
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_APP_API_IF_EXISTS" != true ]]
 then
-    echo SECUREAPP_API_SKIPPED=true >> $INSTALLER/000-source
+    echo APP_API_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
     echo
-    echo "Please set REINSTALL_SECUREAPP_API_IF_EXISTS in $APP_CONFIG"
+    echo "Please set REINSTALL_APP_API_IF_EXISTS in $APP_CONFIG"
     echo "if you want to reinstall this container"
     exit
 fi
@@ -151,24 +151,23 @@ deno --version
 EOS
 
 # ------------------------------------------------------------------------------
-# SECUREAPP API
+# APP API
 # ------------------------------------------------------------------------------
-# secureapp-api user
+# app-api user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser secureapp-api --system --group --disabled-password --shell /bin/zsh \
-    --gecos ''
+adduser app-api --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
-cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/secureapp-api/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/secureapp-api/
-cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/secureapp-api/
+cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/app-api/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/app-api/
+cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/app-api/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown secureapp-api:secureapp-api /home/secureapp-api/.tmux.conf
-chown secureapp-api:secureapp-api /home/secureapp-api/.vimrc
-chown secureapp-api:secureapp-api /home/secureapp-api/.zshrc
+chown app-api:app-api /home/app-api/.tmux.conf
+chown app-api:app-api /home/app-api/.vimrc
+chown app-api:app-api /home/app-api/.zshrc
 EOS
 
 # ------------------------------------------------------------------------------

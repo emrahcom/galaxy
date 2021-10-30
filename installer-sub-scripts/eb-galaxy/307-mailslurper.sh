@@ -11,7 +11,7 @@ MACH="eb-mailslurper"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
-DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-ory-kratos | head -n1)
+DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
 echo MAILSLURPER="$IP" >> $INSTALLER/000-source
@@ -190,8 +190,8 @@ EOS
 
 # mailslurper config
 mkdir $ROOTFS/home/mailslurper/config
-cp /root/eb-ssl/eb-ory-kratos.key $ROOTFS/home/mailslurper/config/eb-cert.key
-cp /root/eb-ssl/eb-ory-kratos.pem $ROOTFS/home/mailslurper/config/eb-cert.pem
+cp /root/eb-ssl/eb-galaxy.key $ROOTFS/home/mailslurper/config/eb-cert.key
+cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/home/mailslurper/config/eb-cert.pem
 cp home/mailslurper/config/config.json $ROOTFS/home/mailslurper/config/
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
     $ROOTFS/home/mailslurper/config/config.json
