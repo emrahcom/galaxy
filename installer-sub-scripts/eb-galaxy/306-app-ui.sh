@@ -156,8 +156,8 @@ EOS
 # ------------------------------------------------------------------------------
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/ui.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/ui.conf $ROOTFS/etc/nginx/sites-enabled/
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
