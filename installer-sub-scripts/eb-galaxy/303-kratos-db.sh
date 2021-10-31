@@ -24,7 +24,8 @@ echo "------------------------ KRATOS DB ------------------------"
 # BACKUP
 # ------------------------------------------------------------------------------
 [[ -f $ROOTFS//etc/postgresql/13/main/pg_hba.conf ]] && \
-    cp $ROOTFS/etc/postgresql/13/main/pg_hba.conf $OLD_FILES/
+    cp $ROOTFS/etc/postgresql/13/main/pg_hba.conf \
+        $OLD_FILES/pg_hba.conf.before_kratos
 
 # ------------------------------------------------------------------------------
 # DROP DATABASE & ROLE
