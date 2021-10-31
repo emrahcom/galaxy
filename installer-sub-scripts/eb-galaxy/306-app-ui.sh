@@ -185,7 +185,7 @@ EOS
 # kratos ui
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-su -l app-ui <<EOSS
+su -l ui <<EOSS
     set -e
     git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos
     cd kratos
