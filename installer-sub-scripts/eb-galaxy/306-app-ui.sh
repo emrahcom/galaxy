@@ -204,7 +204,7 @@ sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/etc/systemd/system/kratos-ui.service
 
 # galaxy ui
-cp -arp /home/ui/galaxy $ROOTFS/home/ui/
+cp -arp home/ui/galaxy $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 chown ui:ui /home/ui/galaxy -R
