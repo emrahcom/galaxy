@@ -133,8 +133,23 @@ lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
 apt-get $APT_PROXY_OPTION -y install nginx
-apt-get $APT_PROXY_OPTION -y install git patch npm unzip
 apt-get $APT_PROXY_OPTION -y install postgresql-client
+apt-get $APT_PROXY_OPTION -y install gnupg git build-essential
+apt-get $APT_PROXY_OPTION -y install unzip
+EOS
+
+# nodejs
+cp etc/apt/sources.list.d/nodesource.list $ROOTFS/etc/apt/sources.list.d/
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+apt-get $APT_PROXY_OPTION update
+EOS
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+export DEBIAN_FRONTEND=noninteractive
+apt-get $APT_PROXY_OPTION -y install nodejs
 EOS
 
 # deno
