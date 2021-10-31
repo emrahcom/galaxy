@@ -1,0 +1,14 @@
+[Unit]
+Description=Galaxy UI
+After=network-online.target
+
+[Service]
+User=ui
+Group=ui
+WorkingDirectory=/home/ui/galaxy
+ExecStart=npm run dev -- --host --port 3000
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target

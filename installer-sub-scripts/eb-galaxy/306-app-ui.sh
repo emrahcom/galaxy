@@ -156,41 +156,39 @@ EOS
 # ------------------------------------------------------------------------------
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/eb-app.conf \
-    $ROOTFS/etc/nginx/sites-available/
+cp etc/nginx/sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
 
 # ------------------------------------------------------------------------------
-# APP UI
+# UI
 # ------------------------------------------------------------------------------
-# app-ui user
+# ui user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser app-ui --system --group --disabled-password --shell /bin/zsh --gecos ''
+adduser ui --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
-cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/app-ui/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/app-ui/
-cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/app-ui/
+cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/ui/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/ui/
+cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/ui/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown app-ui:app-ui /home/app-ui/.tmux.conf
-chown app-ui:app-ui /home/app-ui/.vimrc
-chown app-ui:app-ui /home/app-ui/.zshrc
+chown ui:ui /home/ui/.tmux.conf
+chown ui:ui /home/ui/.vimrc
+chown ui:ui /home/ui/.zshrc
 EOS
 
-# kratos-ory-ui
+# kratos ui
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 su -l app-ui <<EOSS
     set -e
-    git clone https://github.com/ory/kratos-selfservice-ui-node.git \
-        kratos-ory-ui
-    cd kratos-ory-ui
+    git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos
+    cd kratos
     git checkout $KRATOS_VERSION
 
     npm ci
@@ -198,39 +196,37 @@ su -l app-ui <<EOSS
 EOSS
 EOS
 
-# kratos-ory-ui systemd service (disabled by default)
-cp etc/systemd/system/kratos-ory-ui.service $ROOTFS/etc/systemd/system/
+# kratos-ui systemd service (disabled by default)
+cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ory-ui.service
+    $ROOTFS/etc/systemd/system/kratos-ui.service
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ory-ui.service
+    $ROOTFS/etc/systemd/system/kratos-ui.service
 
-# kratos-ui
+# galaxy ui
+cp -arp /home/ui/galaxy $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-su -l app-ui <<EOSS
-    set -e
-    git clone https://github.com/emrahcom/kratos-selfservice-svelte-node.git \
-        kratos-ui
-    cd kratos-ui
-
+chown ui:ui /home/ui/galaxy -R
+su -l ui <<EOSS
+    cd /home/ui/galaxy
     npm install
 EOSS
 EOS
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/home/app-ui/kratos-ui/src/lib/config.ts
+    $ROOTFS/home/ui/galaxy/src/lib/config.ts
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/app-ui/kratos-ui/src/lib/config.ts
+    $ROOTFS/home/ui/galaxy/src/lib/config.ts
 
-# kratos-ui systemd service
-cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
+# galaxy-ui systemd service
+cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable kratos-ui.service
-systemctl start kratos-ui.service
+systemctl enable galaxy-ui.service
+systemctl start galaxy-ui.service
 EOS
 
 # ------------------------------------------------------------------------------

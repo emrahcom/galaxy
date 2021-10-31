@@ -153,21 +153,21 @@ EOS
 # ------------------------------------------------------------------------------
 # APP API
 # ------------------------------------------------------------------------------
-# app-api user
+# api user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser app-api --system --group --disabled-password --shell /bin/zsh --gecos ''
+adduser api --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
-cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/app-api/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/app-api/
-cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/app-api/
+cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/api/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/api/
+cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/api/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown app-api:app-api /home/app-api/.tmux.conf
-chown app-api:app-api /home/app-api/.vimrc
-chown app-api:app-api /home/app-api/.zshrc
+chown api:api /home/api/.tmux.conf
+chown api:api /home/api/.vimrc
+chown api:api /home/api/.zshrc
 EOS
 
 # ------------------------------------------------------------------------------
