@@ -1,5 +1,5 @@
 [Unit]
-Description=App UI Ory
+Description=Kratos Ory UI
 After=network-online.target
 
 [Service]
@@ -11,7 +11,7 @@ Environment=PORT=4455
 Environment=SECURITY_MODE=cookie
 User=app-ui
 Group=app-ui
-WorkingDirectory=/home/app-ui/kratos-selfservice-ui-node
+WorkingDirectory=/home/app-ui/kratos-ory-ui
 ExecStart=npm run serve
 Restart=always
 RestartSec=2s

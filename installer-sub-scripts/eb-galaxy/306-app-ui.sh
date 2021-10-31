@@ -183,13 +183,14 @@ chown app-ui:app-ui /home/app-ui/.vimrc
 chown app-ui:app-ui /home/app-ui/.zshrc
 EOS
 
-# app-ui application (ory)
+# kratos-ory-ui
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 su -l app-ui <<EOSS
     set -e
-    git clone https://github.com/ory/kratos-selfservice-ui-node.git
-    cd kratos-selfservice-ui-node
+    git clone https://github.com/ory/kratos-selfservice-ui-node.git \
+        kratos-ory-ui
+    cd kratos-ory-ui
     git checkout $KRATOS_VERSION
 
     npm ci
@@ -197,38 +198,39 @@ su -l app-ui <<EOSS
 EOSS
 EOS
 
-# app-ui systemd service (ory)
-cp etc/systemd/system/app-ui-ory.service $ROOTFS/etc/systemd/system/
+# kratos-ory-ui systemd service (disabled by default)
+cp etc/systemd/system/kratos-ory-ui.service $ROOTFS/etc/systemd/system/
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/systemd/system/app-ui-ory.service
+    $ROOTFS/etc/systemd/system/kratos-ory-ui.service
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/etc/systemd/system/app-ui-ory.service
+    $ROOTFS/etc/systemd/system/kratos-ory-ui.service
 
-# app-ui application (svelte)
+# kratos-ui
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 su -l app-ui <<EOSS
     set -e
-    git clone https://github.com/emrahcom/kratos-selfservice-svelte-node.git
-    cd kratos-selfservice-svelte-node
+    git clone https://github.com/emrahcom/kratos-selfservice-svelte-node.git \
+        kratos-ui
+    cd kratos-ui
 
     npm install
 EOSS
 EOS
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/home/app-ui/kratos-selfservice-svelte-node/src/lib/config.ts
+    $ROOTFS/home/app-ui/kratos-ui/src/lib/config.ts
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/app-ui/kratos-selfservice-svelte-node/src/lib/config.ts
+    $ROOTFS/home/app-ui/kratos-ui/src/lib/config.ts
 
-# app-ui systemd service
-cp etc/systemd/system/app-ui.service $ROOTFS/etc/systemd/system/
+# kratos-ui systemd service
+cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable app-ui.service
-systemctl start app-ui.service
+systemctl enable kratos-ui.service
+systemctl start kratos-ui.service
 EOS
 
 # ------------------------------------------------------------------------------
