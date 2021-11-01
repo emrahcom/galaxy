@@ -34,11 +34,11 @@ nft delete element eb-nat tcp2ip { 443 } 2>/dev/null || true
 nft add element eb-nat tcp2ip { 443 : $IP }
 nft delete element eb-nat tcp2port { 443 } 2>/dev/null || true
 nft add element eb-nat tcp2port { 443 : 443 }
-# tcp/24678 sveltekit wss
-nft delete element eb-nat tcp2ip { 24678 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 24678 : $IP }
-nft delete element eb-nat tcp2port { 24678 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 24678 : 24678 }
+# tcp/3000 sveltekit wss (only for development environment)
+nft delete element eb-nat tcp2ip { 3000 } 2>/dev/null || true
+nft add element eb-nat tcp2ip { 3000 : $IP }
+nft delete element eb-nat tcp2port { 3000 } 2>/dev/null || true
+nft add element eb-nat tcp2port { 3000 : 3000 }
 
 # ------------------------------------------------------------------------------
 # INIT
