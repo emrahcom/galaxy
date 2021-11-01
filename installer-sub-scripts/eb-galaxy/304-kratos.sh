@@ -187,7 +187,7 @@ BASE_DOMAIN=$(echo $BASE_DOMAIN | rev | tr ' ' '.')
 echo BASE_DOMAIN="$BASE_DOMAIN" >> $INSTALLER/000-source
 
 COOKIE_SECRET=$(openssl rand -hex 32)
-CIPHER_SECRET=$(openssl rand -hex 32)
+CIPHER_SECRET=$(openssl rand -hex 16)
 sed -i "s/___COOKIE_SECRET___/$COOKIE_SECRET/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___CIPHER_SECRET___/$CIPHER_SECRET/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/home/kratos/config/*
