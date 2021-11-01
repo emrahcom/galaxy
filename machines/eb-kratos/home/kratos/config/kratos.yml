@@ -1,4 +1,4 @@
-version: v0.7.1-alpha.1
+version: v0.8.0-alpha.3
 
 dsn: "postgres://kratos:___DB_PASSWD___@eb-postgres:5432/kratos?\
       sslmode=disable&max_conns=20&max_idle_conns=4"
@@ -27,16 +27,16 @@ selfservice:
       ui_url: https://___APP_FQDN___/error
 
     settings:
-      ui_url: https://___APP_FQDN___/settings
+      ui_url: https://___APP_FQDN___/auth/settings
       privileged_session_max_age: 15m
 
     recovery:
       enabled: true
-      ui_url: https://___APP_FQDN___/recovery
+      ui_url: https://___APP_FQDN___/auth/recovery
 
     verification:
       enabled: true
-      ui_url: https://___APP_FQDN___/verify
+      ui_url: https://___APP_FQDN___/auth/verification
       after:
         default_browser_return_url: https://___APP_FQDN___/
 
@@ -65,6 +65,8 @@ log:
 secrets:
   cookie:
     - ___COOKIE_SECRET___
+  cipher:
+    - ___CIPHER_SECRET___
 
 cookies:
   domain: ___BASE_DOMAIN___
@@ -76,6 +78,9 @@ session:
     domain: ___BASE_DOMAIN___
     path: /
     same_site: Strict
+
+ciphers:
+  algorithm: xchacha20-poly1305
 
 hashers:
   argon2:

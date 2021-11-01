@@ -9,5 +9,5 @@
 <!-- -------------------------------------------------------------------------->
 <h2>Dashboard</h2>
 <p>Hello {identity.traits.name.first}</p>
-<a href="{APP}/settings">Settings</a>
+<a href="{APP}/auth/settings">Settings</a>
 <a href="{APP}/auth/logout">Logout</a>
