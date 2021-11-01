@@ -14,8 +14,8 @@
 
 BEGIN;
 
--- keep these two lines always at the top
--- rollback if this is a prod server
+-- keep these two lines always at the top.
+-- rollback if this is a prod server.
 DELETE FROM param WHERE key = 'system-prod' AND value = '0';
 INSERT INTO param VALUES (DEFAULT, 'system-prod', '0');
 
