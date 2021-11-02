@@ -8,6 +8,6 @@
 
 <!-- -------------------------------------------------------------------------->
 <h2>Dashboard</h2>
-<p>Hello {identity.traits.name.first}</p>
+<p>Hello {identity.traits.email}</p>
 <a href="{APP}/settings">Settings</a>
 <a href="{APP}/logout">Logout</a>
