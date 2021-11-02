@@ -27,30 +27,30 @@ selfservice:
       ui_url: https://___APP_FQDN___/error
 
     settings:
-      ui_url: https://___APP_FQDN___/auth/settings
+      ui_url: https://___APP_FQDN___/settings
       privileged_session_max_age: 15m
 
     recovery:
       enabled: true
-      ui_url: https://___APP_FQDN___/auth/recovery
+      ui_url: https://___APP_FQDN___/recovery
 
     verification:
       enabled: true
-      ui_url: https://___APP_FQDN___/auth/verification
+      ui_url: https://___APP_FQDN___/verification
       after:
         default_browser_return_url: https://___APP_FQDN___/
 
     logout:
       after:
-        default_browser_return_url: https://___APP_FQDN___/auth/login
+        default_browser_return_url: https://___APP_FQDN___/login
 
     login:
-      ui_url: https://___APP_FQDN___/auth/login
+      ui_url: https://___APP_FQDN___/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: https://___APP_FQDN___/auth/registration
+      ui_url: https://___APP_FQDN___/registration
       after:
         password:
           hooks:
@@ -95,5 +95,5 @@ identity:
 
 courier:
   smtp:
-    connection_uri: smtps://username:password@eb-mailslurper:1025/?skip_ssl_verify=true&legacy_ssl=true
+    connection_uri: smtps://username:password@eb-mailslurper:1025/?skip_ssl_verify=true
     from_address: no-reply@___APP_FQDN___

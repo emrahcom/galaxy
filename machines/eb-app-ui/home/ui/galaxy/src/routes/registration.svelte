@@ -28,7 +28,7 @@
     <hr class="divider" />
 
     <div class="alternative-actions">
-      <a href="{APP}/auth/login">Already have an account? Log in instead</a>
+      <a href="{APP}/login">Already have an account? Log in instead</a>
     </div>
   </div>
 {:else}

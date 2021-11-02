@@ -193,7 +193,7 @@ mkdir $ROOTFS/home/mailslurper/config
 cp /root/eb-ssl/eb-galaxy.key $ROOTFS/home/mailslurper/config/eb-cert.key
 cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/home/mailslurper/config/eb-cert.pem
 cp home/mailslurper/config/config.json $ROOTFS/home/mailslurper/config/
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/home/mailslurper/config/config.json
 
 lxc-attach -n $MACH -- zsh <<EOS

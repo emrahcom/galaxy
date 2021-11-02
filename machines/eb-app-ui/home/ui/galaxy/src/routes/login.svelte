@@ -28,8 +28,8 @@
     <hr class="divider" />
 
     <div class="alternative-actions">
-      <a href="{APP}/auth/registration">Register new account</a>
-      <a href="{APP}/auth/recovery">Reset password</a>
+      <a href="{APP}/registration">Register new account</a>
+      <a href="{APP}/recovery">Reset password</a>
     </div>
   </div>
 {:else}

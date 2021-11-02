@@ -1,10 +1,10 @@
 {
   "wwwAddress": "0.0.0.0",
   "wwwPort": 4436,
-  "wwwPublicURL": "https://___KRATOS_FQDN___:4436",
+  "wwwPublicURL": "https://___APP_FQDN___:4436",
   "serviceAddress": "0.0.0.0",
   "servicePort": 4437,
-  "servicePublicURL": "https://___KRATOS_FQDN___:4437",
+  "servicePublicURL": "https://___APP_FQDN___:4437",
   "smtpAddress": "0.0.0.0",
   "smtpPort": 1025,
   "dbEngine": "SQLite",
