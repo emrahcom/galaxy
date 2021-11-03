@@ -151,7 +151,7 @@ deno --version
 EOS
 
 # ------------------------------------------------------------------------------
-# APP API
+# API
 # ------------------------------------------------------------------------------
 # api user
 lxc-attach -n $MACH -- zsh <<EOS
@@ -168,6 +168,23 @@ set -e
 chown api:api /home/api/.tmux.conf
 chown api:api /home/api/.vimrc
 chown api:api /home/api/.zshrc
+EOS
+
+# galaxy api
+cp -arp home/api/galaxy $ROOTFS/home/api/
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+chown api:api /home/api/galaxy -R
+EOS
+
+# galaxy-api systemd service
+cp etc/systemd/system/galaxy-api.service $ROOTFS/etc/systemd/system/
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+systemctl daemon-reload
+systemctl enable galaxy-api.service
+systemctl start galaxy-api.service
 EOS
 
 # ------------------------------------------------------------------------------

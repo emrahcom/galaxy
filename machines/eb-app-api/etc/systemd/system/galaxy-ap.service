@@ -1,0 +1,14 @@
+[Unit]
+Description=Galaxy API
+After=network-online.target
+
+[Service]
+User=ui
+Group=ui
+WorkingDirectory=/home/api/galaxy
+ExecStart=deno run --allow-net index.ts
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target
