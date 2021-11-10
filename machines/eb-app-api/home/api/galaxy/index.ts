@@ -1,21 +1,16 @@
-import { HOSTNAME, KRATOS, PORT } from "./config.ts";
+import { HOSTNAME, PORT } from "./config.ts";
+import { getIdentity, unauthorized } from "./lib/helpers.ts";
 
 // ----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
   const http = Deno.serveHttp(cnn);
-  const whoami = `${KRATOS}/sessions/whoami`;
 
   for await (const req of http) {
-    const cookie = req.request.headers.get("cookie");
-    const res = await fetch(whoami, {
-      credentials: "include",
-      headers: {
-        "Accept": "application/json",
-        "Cookie": `${cookie}`,
-      },
-      mode: "cors",
-    });
-    const identityId = res.headers.get("x-kratos-authenticated-identity-id");
+    const identityId = await getIdentity(req);
+    if (!identityId) {
+      unauthorized(req);
+      continue;
+    }
 
     req.respondWith(
       new Response(`hello ${identityId}`, {
