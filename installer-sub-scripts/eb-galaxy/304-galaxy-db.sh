@@ -34,16 +34,16 @@ echo "------------------------ GALAXY DB ------------------------"
 if [[ "$RECREATE_GALAXY_DB_IF_EXISTS" = true ]]; then
     lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres <<EOP
+su -l postgres <<EOSS
     dropdb -f --if-exists galaxy
-EOP
+EOSS
 EOS
 
     lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres <<EOP
+su -l postgres <<EOSS
     dropuser --if-exists galaxy
-EOP
+EOSS
 EOS
 fi
 
@@ -52,17 +52,17 @@ fi
 # ------------------------------------------------------------------------------
 IS_DB_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres <<EOP
+su -l postgres <<EOSS
     psql -At <<< '\l galaxy'
-EOP
+EOSS
 EOS
 )
 
 IS_ROLE_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres <<EOP
+su -l postgres <<EOSS
     psql -At <<< '\dg galaxy'
-EOP
+EOSS
 EOS
 )
 
@@ -71,19 +71,19 @@ EOS
 # ------------------------------------------------------------------------------
 [[ -z "$IS_ROLE_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres <<EOP
+su -l postgres <<EOSS
     createuser -l galaxy
-EOP
+EOSS
 EOS
 
 cp $MACHINES/eb-app-api/home/api/galaxy/database/*.sql $ROOTFS/tmp/
 
 [[ -z "$IS_DB_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres <<EOP
+su -l postgres <<EOSS
     createdb -T template0 -O galaxy -E UTF-8 -l en_US.UTF-8 galaxy
     psql -d galaxy -e -f /tmp/02-create-galaxy-tables.sql
-EOP
+EOSS
 EOS
 
 # ------------------------------------------------------------------------------
