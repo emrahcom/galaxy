@@ -1,6 +1,7 @@
 // server
 export const HOSTNAME = "0.0.0.0";
-export const PORT = 8000;
+export const PORT_PRIVATE = 8000;
+export const PORT_PUBLIC = 8001;
 // kratos
 export const KRATOS = "http://eb-kratos:4433";
 // database

@@ -1,4 +1,4 @@
-import { HOSTNAME, PORT } from "./config.ts";
+import { HOSTNAME, PORT_PRIVATE } from "./config.ts";
 import { getIdentity, unauthorized } from "./lib/helpers.ts";
 
 // ----------------------------------------------------------------------------
@@ -27,7 +27,7 @@ async function handle(cnn: Deno.Conn) {
 async function main() {
   const server = Deno.listen({
     hostname: HOSTNAME,
-    port: PORT,
+    port: PORT_PRIVATE,
   });
 
   for await (const cnn of server) {
