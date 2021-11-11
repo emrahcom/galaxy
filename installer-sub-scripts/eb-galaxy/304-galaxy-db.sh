@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# KRATOS-DB.SH
+# GALAXY-DB.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -15,34 +15,34 @@ ROOTFS="/var/lib/lxc/$MACH/rootfs"
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_KRATOS_DB" = true ]] && exit
+[[ "$DONT_RUN_GALAXY_DB" = true ]] && exit
 
 echo
-echo "------------------------ KRATOS DB ------------------------"
+echo "------------------------ GALAXY DB ------------------------"
 
 # ------------------------------------------------------------------------------
 # BACKUP
 # ------------------------------------------------------------------------------
 [[ -f $ROOTFS/etc/postgresql/13/main/pg_hba.conf ]] && \
     cp $ROOTFS/etc/postgresql/13/main/pg_hba.conf \
-        $OLD_FILES/pg_hba.conf.before_kratos
+        $OLD_FILES/pg_hba.conf.before_galaxy
 
 # ------------------------------------------------------------------------------
 # DROP DATABASE & ROLE
 # ------------------------------------------------------------------------------
-# drop the old database if RECREATE_KRATOS_DB_IF_EXISTS is set
-if [[ "$RECREATE_KRATOS_DB_IF_EXISTS" = true ]]; then
+# drop the old database if RECREATE_GALAXY_DB_IF_EXISTS is set
+if [[ "$RECREATE_GALAXY_DB_IF_EXISTS" = true ]]; then
     lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOP
-    dropdb -f --if-exists kratos
+    dropdb -f --if-exists galaxy
 EOP
 EOS
 
     lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOP
-    dropuser --if-exists kratos
+    dropuser --if-exists galaxy
 EOP
 EOS
 fi
@@ -53,7 +53,7 @@ fi
 IS_DB_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOP
-    psql -At <<< '\l kratos'
+    psql -At <<< '\l galaxy'
 EOP
 EOS
 )
@@ -61,7 +61,7 @@ EOS
 IS_ROLE_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOP
-    psql -At <<< '\dg kratos'
+    psql -At <<< '\dg galaxy'
 EOP
 EOS
 )
@@ -72,14 +72,17 @@ EOS
 [[ -z "$IS_ROLE_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOP
-    createuser -l kratos
+    createuser -l galaxy
 EOP
 EOS
+
+cp $MACHINES/eb-app-api/home/api/galaxy/database/*.sql $ROOTFS/tmp/
 
 [[ -z "$IS_DB_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOP
-    createdb -T template0 -O kratos -E UTF-8 -l en_US.UTF-8 kratos
+    createdb -T template0 -O galaxy -E UTF-8 -l en_US.UTF-8 galaxy
+    psql -d galaxy -e -f /tmp/02-create-galaxy-tables.sql
 EOP
 EOS
 
@@ -87,22 +90,22 @@ EOS
 # UPDATE PASSWD
 # ------------------------------------------------------------------------------
 # get current passwd if exists
-DB_KRATOS_PASSWD=$(egrep '^kratos:' $ROOTFS/root/postgresql-passwd.txt | \
+DB_GALAXY_PASSWD=$(egrep '^galaxy:' $ROOTFS/root/postgresql-passwd.txt | \
     tail -n1 | cut -d: -f2)
 
 # generate a new one if there is no passwd
-if [[ -z "$DB_KRATOS_PASSWD" ]]; then
-    DB_KRATOS_PASSWD=$(openssl rand -hex 20)
-    echo "kratos:$DB_KRATOS_PASSWD" >> $ROOTFS/root/postgresql-passwd.txt
+if [[ -z "$DB_GALAXY_PASSWD" ]]; then
+    DB_GALAXY_PASSWD=$(openssl rand -hex 20)
+    echo "galaxy:$DB__GALAXY_PASSWD" >> $ROOTFS/root/postgresql-passwd.txt
 fi
 
 chmod 600 $ROOTFS/root/postgresql-passwd.txt
-echo "DB_KRATOS_PASSWD=$DB_KRATOS_PASSWD" >> $INSTALLER/000-source
+echo "DB_GALAXY_PASSWD=$DB_GALAXY_PASSWD" >> $INSTALLER/000-source
 
 lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres -s /usr/bin/psql <<PSQL
-    ALTER ROLE kratos WITH PASSWORD '$DB_KRATOS_PASSWD';
+    ALTER ROLE galaxy WITH PASSWORD '$DB_GALAXY_PASSWD';
 PSQL
 EOS
 
@@ -111,10 +114,10 @@ EOS
 # ------------------------------------------------------------------------------
 lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-sed -i '/kratos/d' /etc/postgresql/13/main/pg_hba.conf
+sed -i '/galaxy/d' /etc/postgresql/13/main/pg_hba.conf
 EOS
 
-cat etc/postgresql/13/main/pg_hba.conf.kratos \
+cat etc/postgresql/13/main/pg_hba.conf.galaxy \
     >>$ROOTFS/etc/postgresql/13/main/pg_hba.conf
 
 # ------------------------------------------------------------------------------

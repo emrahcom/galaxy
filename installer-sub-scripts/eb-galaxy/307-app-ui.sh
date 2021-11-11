@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# MAILSLURPER.SH
+# APP-UI.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,14 +7,14 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-mailslurper"
+MACH="eb-app-ui"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
 DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
-echo MAILSLURPER="$IP" >> $INSTALLER/000-source
+echo APP_UI="$IP" >> $INSTALLER/000-source
 
 # ------------------------------------------------------------------------------
 # NFTABLES RULES
@@ -24,21 +24,11 @@ nft delete element eb-nat tcp2ip { $SSH_PORT } 2>/dev/null || true
 nft add element eb-nat tcp2ip { $SSH_PORT : $IP }
 nft delete element eb-nat tcp2port { $SSH_PORT } 2>/dev/null || true
 nft add element eb-nat tcp2port { $SSH_PORT : 22 }
-# tcp/4436
-nft delete element eb-nat tcp2ip { 4436 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 4436 : $IP }
-nft delete element eb-nat tcp2port { 4436 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 4436 : 4436 }
-# tcp/4437
-nft delete element eb-nat tcp2ip { 4437 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 4437 : $IP }
-nft delete element eb-nat tcp2port { 4437 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 4437 : 4437 }
 
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_MAILSLURPER" = true ]] && exit
+[[ "$DONT_RUN_APP_UI" = true ]] && exit
 
 echo
 echo "-------------------------- $MACH --------------------------"
@@ -47,12 +37,13 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_MAILSLURPER_IF_EXISTS" != true ]]; then
-    echo MAILSLURPER_SKIPPED=true >> $INSTALLER/000-source
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_APP_UI_IF_EXISTS" != true ]]
+then
+    echo APP_UI_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
     echo
-    echo "Please set REINSTALL_MAILSLURPER_IF_EXISTS in $APP_CONFIG"
+    echo "Please set REINSTALL_APP_UI_IF_EXISTS in $APP_CONFIG"
     echo "if you want to reinstall this container"
     exit
 fi
@@ -141,80 +132,118 @@ EOS
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION --install-recommends -y install git golang
+apt-get $APT_PROXY_OPTION -y install nginx
+apt-get $APT_PROXY_OPTION -y install postgresql-client
+apt-get $APT_PROXY_OPTION -y install gnupg git build-essential
+apt-get $APT_PROXY_OPTION -y install unzip
+EOS
+
+# nodejs
+cp etc/apt/sources.list.d/nodesource.list $ROOTFS/etc/apt/sources.list.d/
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+wget -qO /tmp/nodesource.gpg.key \
+    https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+cat /tmp/nodesource.gpg.key | gpg --dearmor >/usr/share/keyrings/nodesource.gpg
+apt-get $APT_PROXY_OPTION update
+EOS
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+export DEBIAN_FRONTEND=noninteractive
+apt-get $APT_PROXY_OPTION -y install nodejs
+EOS
+
+# deno
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+LATEST=$(curl -sSf https://github.com/denoland/deno/releases | \
+    grep -o "/denoland/deno/releases/download/.*/deno-.*linux.*\.zip" | \
+    head -n1)
+
+cd /tmp
+wget -O deno.zip https://github.com/\$LATEST
+unzip deno.zip
+cp /tmp/deno /usr/local/bin/
+deno --version
 EOS
 
 # ------------------------------------------------------------------------------
-# MAILSLURPER
+# SYSTEM CONFIGURATION
 # ------------------------------------------------------------------------------
-# mailslurper user
+# nginx
+rm $ROOTFS/etc/nginx/sites-enabled/default
+cp etc/nginx/sites-available/ui.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/ui.conf $ROOTFS/etc/nginx/sites-enabled/
+
+lxc-attach -n $MACH -- systemctl stop nginx.service
+lxc-attach -n $MACH -- systemctl start nginx.service
+
+# ------------------------------------------------------------------------------
+# UI
+# ------------------------------------------------------------------------------
+# ui user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser mailslurper --system --group --disabled-password --shell /bin/zsh \
-    --gecos ''
+adduser ui --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
-cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/mailslurper/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/mailslurper/
-cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/mailslurper/
+cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/ui/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/ui/
+cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/ui/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown mailslurper:mailslurper /home/mailslurper/.tmux.conf
-chown mailslurper:mailslurper /home/mailslurper/.vimrc
-chown mailslurper:mailslurper /home/mailslurper/.zshrc
+chown ui:ui /home/ui/.tmux.conf
+chown ui:ui /home/ui/.vimrc
+chown ui:ui /home/ui/.zshrc
 EOS
 
-# mailslurper application
+# kratos ui
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-su -l mailslurper <<EOSS
+su -l ui <<EOSS
     set -e
-    mkdir /home/mailslurper/src
-    cd /home/mailslurper/src
-    git clone https://github.com/mailslurper/mailslurper.git
+    git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos
+    cd kratos
+    git checkout $KRATOS_VERSION
 
-    export CGO_CFLAGS="-g -O2 -Wno-return-local-addr"
-    export PATH=$PATH:/home/mailslurper/go/bin
-    cd /home/mailslurper/src/mailslurper/cmd/mailslurper/
-    go get github.com/mjibson/esc
-    go get
-    go generate
-    go build
-
-    rm -rf /home/mailslurper/app
-    cp -arp /home/mailslurper/src/mailslurper/cmd/mailslurper/ \
-        /home/mailslurper/app
+    npm ci
+    npm run build
 EOSS
 EOS
 
-# mailslurper config
-mkdir $ROOTFS/home/mailslurper/config
-cp /root/eb-ssl/eb-galaxy.key $ROOTFS/home/mailslurper/config/eb-cert.key
-cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/home/mailslurper/config/eb-cert.pem
-cp home/mailslurper/config/config.json $ROOTFS/home/mailslurper/config/
+# kratos-ui systemd service (disabled by default)
+cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
+    $ROOTFS/etc/systemd/system/kratos-ui.service
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/mailslurper/config/config.json
+    $ROOTFS/etc/systemd/system/kratos-ui.service
 
+# galaxy ui
+cp -arp home/ui/galaxy $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown mailslurper:mailslurper /home/mailslurper/config -R
-chmod 700 /home/mailslurper/config
-chmod 644 /home/mailslurper/config/eb-cert.pem
-chmod 640 /home/mailslurper/config/eb-cert.key
-
-mkdir /home/mailslurper/data
-chown mailslurper:mailslurper /home/mailslurper/data
+chown ui:ui /home/ui/galaxy -R
+su -l ui <<EOSS
+    cd /home/ui/galaxy
+    npm install
+EOSS
 EOS
 
-# mailslurper systemd service
-cp etc/systemd/system/mailslurper.service $ROOTFS/etc/systemd/system/
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
+    $ROOTFS/home/ui/galaxy/src/lib/config.ts
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
+    $ROOTFS/home/ui/galaxy/src/lib/config.ts
+
+# galaxy-ui systemd service
+cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable mailslurper.service
-systemctl start mailslurper.service
+systemctl enable galaxy-ui.service
+systemctl start galaxy-ui.service
 EOS
 
 # ------------------------------------------------------------------------------

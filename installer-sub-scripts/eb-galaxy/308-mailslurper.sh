@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# REVERSE-PROXY.SH
+# MAILSLURPER.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,14 +7,14 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-reverse-proxy"
+MACH="eb-mailslurper"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
 DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
-echo REVERSE_PROXY="$IP" >> $INSTALLER/000-source
+echo MAILSLURPER="$IP" >> $INSTALLER/000-source
 
 # ------------------------------------------------------------------------------
 # NFTABLES RULES
@@ -24,26 +24,21 @@ nft delete element eb-nat tcp2ip { $SSH_PORT } 2>/dev/null || true
 nft add element eb-nat tcp2ip { $SSH_PORT : $IP }
 nft delete element eb-nat tcp2port { $SSH_PORT } 2>/dev/null || true
 nft add element eb-nat tcp2port { $SSH_PORT : 22 }
-# the public http
-nft delete element eb-nat tcp2ip { 80 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 80 : $IP }
-nft delete element eb-nat tcp2port { 80 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 80 : 80 }
-# the public https
-nft delete element eb-nat tcp2ip { 443 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 443 : $IP }
-nft delete element eb-nat tcp2port { 443 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 443 : 443 }
-# tcp/3000 sveltekit wss (only for development environment)
-nft delete element eb-nat tcp2ip { 3000 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 3000 : $IP }
-nft delete element eb-nat tcp2port { 3000 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 3000 : 3000 }
+# tcp/4436
+nft delete element eb-nat tcp2ip { 4436 } 2>/dev/null || true
+nft add element eb-nat tcp2ip { 4436 : $IP }
+nft delete element eb-nat tcp2port { 4436 } 2>/dev/null || true
+nft add element eb-nat tcp2port { 4436 : 4436 }
+# tcp/4437
+nft delete element eb-nat tcp2ip { 4437 } 2>/dev/null || true
+nft add element eb-nat tcp2ip { 4437 : $IP }
+nft delete element eb-nat tcp2port { 4437 } 2>/dev/null || true
+nft add element eb-nat tcp2port { 4437 : 4437 }
 
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_REVERSE_PROXY" = true ]] && exit
+[[ "$DONT_RUN_MAILSLURPER" = true ]] && exit
 
 echo
 echo "-------------------------- $MACH --------------------------"
@@ -52,13 +47,12 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_REVERSE_PROXY_IF_EXISTS" != true ]]
-then
-    echo REVERSE_PROXY_SKIPPED=true >> $INSTALLER/000-source
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_MAILSLURPER_IF_EXISTS" != true ]]; then
+    echo MAILSLURPER_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
     echo
-    echo "Please set REINSTALL_REVERSE_PROXY_IF_EXISTS in $APP_CONFIG"
+    echo "Please set REINSTALL_MAILSLURPER_IF_EXISTS in $APP_CONFIG"
     echo "if you want to reinstall this container"
     exit
 fi
@@ -147,33 +141,81 @@ EOS
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION -y install ssl-cert ca-certificates certbot
-apt-get $APT_PROXY_OPTION -y install nginx
+apt-get $APT_PROXY_OPTION --install-recommends -y install git golang
 EOS
 
 # ------------------------------------------------------------------------------
-# SYSTEM CONFIGURATION
+# MAILSLURPER
 # ------------------------------------------------------------------------------
-# eb-cert
-cp /root/eb-ssl/eb-galaxy.key $ROOTFS/etc/ssl/private/eb-cert.key
-cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/etc/ssl/certs/eb-cert.pem
+# mailslurper user
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+adduser mailslurper --system --group --disabled-password --shell /bin/zsh \
+    --gecos ''
+EOS
 
-# nginx
-rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/eb-default.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-default.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/eb-kratos.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-kratos.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-enabled/
+cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/mailslurper/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/mailslurper/
+cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/mailslurper/
 
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
-sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+chown mailslurper:mailslurper /home/mailslurper/.tmux.conf
+chown mailslurper:mailslurper /home/mailslurper/.vimrc
+chown mailslurper:mailslurper /home/mailslurper/.zshrc
+EOS
 
-lxc-attach -n $MACH -- systemctl stop nginx.service
-lxc-attach -n $MACH -- systemctl start nginx.service
+# mailslurper application
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l mailslurper <<EOSS
+    set -e
+    mkdir /home/mailslurper/src
+    cd /home/mailslurper/src
+    git clone https://github.com/mailslurper/mailslurper.git
+
+    export CGO_CFLAGS="-g -O2 -Wno-return-local-addr"
+    export PATH=$PATH:/home/mailslurper/go/bin
+    cd /home/mailslurper/src/mailslurper/cmd/mailslurper/
+    go get github.com/mjibson/esc
+    go get
+    go generate
+    go build
+
+    rm -rf /home/mailslurper/app
+    cp -arp /home/mailslurper/src/mailslurper/cmd/mailslurper/ \
+        /home/mailslurper/app
+EOSS
+EOS
+
+# mailslurper config
+mkdir $ROOTFS/home/mailslurper/config
+cp /root/eb-ssl/eb-galaxy.key $ROOTFS/home/mailslurper/config/eb-cert.key
+cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/home/mailslurper/config/eb-cert.pem
+cp home/mailslurper/config/config.json $ROOTFS/home/mailslurper/config/
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
+    $ROOTFS/home/mailslurper/config/config.json
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+chown mailslurper:mailslurper /home/mailslurper/config -R
+chmod 700 /home/mailslurper/config
+chmod 644 /home/mailslurper/config/eb-cert.pem
+chmod 640 /home/mailslurper/config/eb-cert.key
+
+mkdir /home/mailslurper/data
+chown mailslurper:mailslurper /home/mailslurper/data
+EOS
+
+# mailslurper systemd service
+cp etc/systemd/system/mailslurper.service $ROOTFS/etc/systemd/system/
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+systemctl daemon-reload
+systemctl enable mailslurper.service
+systemctl start mailslurper.service
+EOS
 
 # ------------------------------------------------------------------------------
 # CONTAINER SERVICES

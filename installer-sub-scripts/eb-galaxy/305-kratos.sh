@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# APP-UI.SH
+# KRATOS.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,14 +7,14 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-app-ui"
+MACH="eb-kratos"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
 DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
-echo APP_UI="$IP" >> $INSTALLER/000-source
+echo KRATOS="$IP" >> $INSTALLER/000-source
 
 # ------------------------------------------------------------------------------
 # NFTABLES RULES
@@ -28,7 +28,7 @@ nft add element eb-nat tcp2port { $SSH_PORT : 22 }
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_APP_UI" = true ]] && exit
+[[ "$DONT_RUN_KRATOS" = true ]] && exit
 
 echo
 echo "-------------------------- $MACH --------------------------"
@@ -37,13 +37,12 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_APP_UI_IF_EXISTS" != true ]]
-then
-    echo APP_UI_SKIPPED=true >> $INSTALLER/000-source
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_KRATOS_IF_EXISTS" != true ]]; then
+    echo KRATOS_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
     echo
-    echo "Please set REINSTALL_APP_UI_IF_EXISTS in $APP_CONFIG"
+    echo "Please set REINSTALL_KRATOS_IF_EXISTS in $APP_CONFIG"
     echo "if you want to reinstall this container"
     exit
 fi
@@ -90,7 +89,7 @@ lxc.net.0.ipv4.gateway = auto
 
 # Start options
 lxc.start.auto = 1
-lxc.start.order = 306
+lxc.start.order = 305
 lxc.start.delay = 2
 lxc.group = eb-group
 lxc.group = onboot
@@ -132,118 +131,97 @@ EOS
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION -y install nginx
 apt-get $APT_PROXY_OPTION -y install postgresql-client
-apt-get $APT_PROXY_OPTION -y install gnupg git build-essential
-apt-get $APT_PROXY_OPTION -y install unzip
-EOS
-
-# nodejs
-cp etc/apt/sources.list.d/nodesource.list $ROOTFS/etc/apt/sources.list.d/
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-wget -qO /tmp/nodesource.gpg.key \
-    https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-cat /tmp/nodesource.gpg.key | gpg --dearmor >/usr/share/keyrings/nodesource.gpg
-apt-get $APT_PROXY_OPTION update
-EOS
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION -y install nodejs
-EOS
-
-# deno
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-LATEST=$(curl -sSf https://github.com/denoland/deno/releases | \
-    grep -o "/denoland/deno/releases/download/.*/deno-.*linux.*\.zip" | \
-    head -n1)
-
-cd /tmp
-wget -O deno.zip https://github.com/\$LATEST
-unzip deno.zip
-cp /tmp/deno /usr/local/bin/
-deno --version
 EOS
 
 # ------------------------------------------------------------------------------
-# SYSTEM CONFIGURATION
+# KRATOS
 # ------------------------------------------------------------------------------
-# nginx
-rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/ui.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/ui.conf $ROOTFS/etc/nginx/sites-enabled/
-
-lxc-attach -n $MACH -- systemctl stop nginx.service
-lxc-attach -n $MACH -- systemctl start nginx.service
-
-# ------------------------------------------------------------------------------
-# UI
-# ------------------------------------------------------------------------------
-# ui user
+# kratos user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser ui --system --group --disabled-password --shell /bin/zsh --gecos ''
+adduser kratos --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
-cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/ui/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/ui/
-cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/ui/
+cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/kratos/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/kratos/
+cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/kratos/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown ui:ui /home/ui/.tmux.conf
-chown ui:ui /home/ui/.vimrc
-chown ui:ui /home/ui/.zshrc
+chown kratos:kratos /home/kratos/.tmux.conf
+chown kratos:kratos /home/kratos/.vimrc
+chown kratos:kratos /home/kratos/.zshrc
 EOS
 
-# kratos ui
+# kratos app
+mkdir $ROOTFS/root/tools
+cp root/tools/kratos-download.sh $ROOTFS/root/tools/
+
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-su -l ui <<EOSS
-    set -e
-    git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos
-    cd kratos
-    git checkout $KRATOS_VERSION
+bash /root/tools/kratos-download.sh -b /usr/local/bin $KRATOS_VERSION
+kratos version
 
-    npm ci
-    npm run build
+bash /root/tools/kratos-download.sh -b /usr/local/bin -s $KRATOS_VERSION
+kratos-sqlite version
+EOS
+
+# kratos config
+mkdir $ROOTFS/home/kratos/config
+cp home/kratos/config/* $ROOTFS/home/kratos/config/
+
+BASE_DOMAIN=
+i=1
+while true; do
+    K=$(echo $KRATOS_FQDN | rev | cut -d. -f $i)
+    [[ -z "$K" ]] && break
+
+    S=$(echo $APP_FQDN | rev | cut -d. -f $i)
+    [[ -z "$S" ]] && break
+
+    [[ "$K" = "$S" ]] && BASE_DOMAIN=$(echo $BASE_DOMAIN $S) || break
+    (( i += 1 ))
+done
+BASE_DOMAIN=$(echo $BASE_DOMAIN | rev | tr ' ' '.')
+echo BASE_DOMAIN="$BASE_DOMAIN" >> $INSTALLER/000-source
+
+COOKIE_SECRET=$(openssl rand -hex 32)
+CIPHER_SECRET=$(openssl rand -hex 16)
+sed -i "s/___COOKIE_SECRET___/$COOKIE_SECRET/g" $ROOTFS/home/kratos/config/*
+sed -i "s/___CIPHER_SECRET___/$CIPHER_SECRET/g" $ROOTFS/home/kratos/config/*
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/home/kratos/config/*
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/home/kratos/config/*
+sed -i "s/___BASE_DOMAIN___/$BASE_DOMAIN/g" $ROOTFS/home/kratos/config/*
+sed -i "s/___DB_PASSWD___/$DB_KRATOS_PASSWD/g" $ROOTFS/home/kratos/config/*
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+chmod 700 /home/kratos/config
+chown kratos:kratos /home/kratos/config -R
+EOS
+
+# kratos database migration
+if [[ "$DONT_RUN_KRATOS_DB" != true ]]; then
+    lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l kratos <<EOSS
+    kratos migrate sql -c /home/kratos/config/kratos.yml -e --yes
 EOSS
 EOS
+fi
 
-# kratos-ui systemd service (disabled by default)
-cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ui.service
-sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ui.service
-
-# galaxy ui
-cp -arp home/ui/galaxy $ROOTFS/home/ui/
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-chown ui:ui /home/ui/galaxy -R
-su -l ui <<EOSS
-    cd /home/ui/galaxy
-    npm install
-EOSS
-EOS
-
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/home/ui/galaxy/src/lib/config.ts
-sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/ui/galaxy/src/lib/config.ts
-
-# galaxy-ui systemd service
-cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
+# kratos systemd service
+cp etc/systemd/system/kratos.service $ROOTFS/etc/systemd/system/
+cp etc/systemd/system/kratos-courier.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable galaxy-ui.service
-systemctl start galaxy-ui.service
+systemctl enable kratos.service
+systemctl start kratos.service
+systemctl enable kratos-courier.service
+systemctl start kratos-courier.service
 EOS
 
 # ------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 # ------------------------------------------------------------------------------
-# KRATOS.SH
+# REVERSE-PROXY.SH
 # ------------------------------------------------------------------------------
 set -e
 source $INSTALLER/000-source
@@ -7,14 +7,14 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-kratos"
+MACH="eb-reverse-proxy"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
 DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
-echo KRATOS="$IP" >> $INSTALLER/000-source
+echo REVERSE_PROXY="$IP" >> $INSTALLER/000-source
 
 # ------------------------------------------------------------------------------
 # NFTABLES RULES
@@ -24,11 +24,26 @@ nft delete element eb-nat tcp2ip { $SSH_PORT } 2>/dev/null || true
 nft add element eb-nat tcp2ip { $SSH_PORT : $IP }
 nft delete element eb-nat tcp2port { $SSH_PORT } 2>/dev/null || true
 nft add element eb-nat tcp2port { $SSH_PORT : 22 }
+# the public http
+nft delete element eb-nat tcp2ip { 80 } 2>/dev/null || true
+nft add element eb-nat tcp2ip { 80 : $IP }
+nft delete element eb-nat tcp2port { 80 } 2>/dev/null || true
+nft add element eb-nat tcp2port { 80 : 80 }
+# the public https
+nft delete element eb-nat tcp2ip { 443 } 2>/dev/null || true
+nft add element eb-nat tcp2ip { 443 : $IP }
+nft delete element eb-nat tcp2port { 443 } 2>/dev/null || true
+nft add element eb-nat tcp2port { 443 : 443 }
+# tcp/3000 sveltekit wss (only for development environment)
+nft delete element eb-nat tcp2ip { 3000 } 2>/dev/null || true
+nft add element eb-nat tcp2ip { 3000 : $IP }
+nft delete element eb-nat tcp2port { 3000 } 2>/dev/null || true
+nft add element eb-nat tcp2port { 3000 : 3000 }
 
 # ------------------------------------------------------------------------------
 # INIT
 # ------------------------------------------------------------------------------
-[[ "$DONT_RUN_KRATOS" = true ]] && exit
+[[ "$DONT_RUN_REVERSE_PROXY" = true ]] && exit
 
 echo
 echo "-------------------------- $MACH --------------------------"
@@ -37,12 +52,13 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_KRATOS_IF_EXISTS" != true ]]; then
-    echo KRATOS_SKIPPED=true >> $INSTALLER/000-source
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_REVERSE_PROXY_IF_EXISTS" != true ]]
+then
+    echo REVERSE_PROXY_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
     echo
-    echo "Please set REINSTALL_KRATOS_IF_EXISTS in $APP_CONFIG"
+    echo "Please set REINSTALL_REVERSE_PROXY_IF_EXISTS in $APP_CONFIG"
     echo "if you want to reinstall this container"
     exit
 fi
@@ -89,7 +105,7 @@ lxc.net.0.ipv4.gateway = auto
 
 # Start options
 lxc.start.auto = 1
-lxc.start.order = 304
+lxc.start.order = 309
 lxc.start.delay = 2
 lxc.group = eb-group
 lxc.group = onboot
@@ -131,98 +147,33 @@ EOS
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION -y install postgresql-client
+apt-get $APT_PROXY_OPTION -y install ssl-cert ca-certificates certbot
+apt-get $APT_PROXY_OPTION -y install nginx
 EOS
 
 # ------------------------------------------------------------------------------
-# KRATOS
+# SYSTEM CONFIGURATION
 # ------------------------------------------------------------------------------
-# kratos user
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-adduser kratos --system --group --disabled-password --shell /bin/zsh --gecos ''
-EOS
+# eb-cert
+cp /root/eb-ssl/eb-galaxy.key $ROOTFS/etc/ssl/private/eb-cert.key
+cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/etc/ssl/certs/eb-cert.pem
 
-cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/kratos/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/kratos/
-cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/kratos/
+# nginx
+rm $ROOTFS/etc/nginx/sites-enabled/default
+cp etc/nginx/sites-available/eb-default.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-default.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/eb-kratos.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-kratos.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-enabled/
 
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-chown kratos:kratos /home/kratos/.tmux.conf
-chown kratos:kratos /home/kratos/.vimrc
-chown kratos:kratos /home/kratos/.zshrc
-EOS
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
 
-# kratos app
-mkdir $ROOTFS/root/tools
-cp root/tools/kratos-download.sh $ROOTFS/root/tools/
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-bash /root/tools/kratos-download.sh -b /usr/local/bin $KRATOS_VERSION
-kratos version
-
-bash /root/tools/kratos-download.sh -b /usr/local/bin -s $KRATOS_VERSION
-kratos-sqlite version
-EOS
-
-# kratos config
-mkdir $ROOTFS/home/kratos/config
-cp home/kratos/config/* $ROOTFS/home/kratos/config/
-
-BASE_DOMAIN=
-i=1
-while true; do
-    K=$(echo $KRATOS_FQDN | rev | cut -d. -f $i)
-    [[ -z "$K" ]] && break
-
-    S=$(echo $APP_FQDN | rev | cut -d. -f $i)
-    [[ -z "$S" ]] && break
-
-    [[ "$K" = "$S" ]] && BASE_DOMAIN=$(echo $BASE_DOMAIN $S) || break
-    (( i += 1 ))
-done
-BASE_DOMAIN=$(echo $BASE_DOMAIN | rev | tr ' ' '.')
-echo BASE_DOMAIN="$BASE_DOMAIN" >> $INSTALLER/000-source
-
-COOKIE_SECRET=$(openssl rand -hex 32)
-CIPHER_SECRET=$(openssl rand -hex 16)
-sed -i "s/___COOKIE_SECRET___/$COOKIE_SECRET/g" $ROOTFS/home/kratos/config/*
-sed -i "s/___CIPHER_SECRET___/$CIPHER_SECRET/g" $ROOTFS/home/kratos/config/*
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/home/kratos/config/*
-sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/home/kratos/config/*
-sed -i "s/___BASE_DOMAIN___/$BASE_DOMAIN/g" $ROOTFS/home/kratos/config/*
-sed -i "s/___DB_PASSWD___/$DB_PASSWD/g" $ROOTFS/home/kratos/config/*
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-chmod 700 /home/kratos/config
-chown kratos:kratos /home/kratos/config -R
-EOS
-
-# kratos database migration
-if [[ "$DONT_RUN_KRATOS_DB" != true ]]; then
-    lxc-attach -n $MACH -- zsh <<EOS
-set -e
-su -l kratos <<EOSS
-    kratos migrate sql -c /home/kratos/config/kratos.yml -e --yes
-EOSS
-EOS
-fi
-
-# kratos systemd service
-cp etc/systemd/system/kratos.service $ROOTFS/etc/systemd/system/
-cp etc/systemd/system/kratos-courier.service $ROOTFS/etc/systemd/system/
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-systemctl daemon-reload
-systemctl enable kratos.service
-systemctl start kratos.service
-systemctl enable kratos-courier.service
-systemctl start kratos-courier.service
-EOS
+lxc-attach -n $MACH -- systemctl stop nginx.service
+lxc-attach -n $MACH -- systemctl start nginx.service
 
 # ------------------------------------------------------------------------------
 # CONTAINER SERVICES
