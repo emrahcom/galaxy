@@ -172,6 +172,8 @@ EOS
 
 # galaxy api
 cp -arp home/api/galaxy $ROOTFS/home/api/
+sed -i "s/___DB_PASSWD___/$DB_GALAXY_PASSWD/" $ROOTFS/home/api/galaxy/config.ts
+
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 chown api:api /home/api/galaxy -R
