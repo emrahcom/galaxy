@@ -54,8 +54,12 @@ selfservice:
       after:
         password:
           hooks:
-            -
-              hook: session
+            - hook: web_hook
+              config:
+                url: http://eb-app-api:8000/api/hook/add-identity
+                method: POST
+                body: /home/kratos/jsonnet/identity-id.jsonnet
+            - hook: session
 
 log:
   level: debug

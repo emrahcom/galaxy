@@ -167,9 +167,9 @@ bash /root/tools/kratos-download.sh -b /usr/local/bin -s $KRATOS_VERSION
 kratos-sqlite version
 EOS
 
-# kratos config
-mkdir $ROOTFS/home/kratos/config
-cp home/kratos/config/* $ROOTFS/home/kratos/config/
+# kratos files
+cp -arp home/kratos/config $ROOTFS/home/kratos/
+cp -arp home/kratos/jsonnet $ROOTFS/home/kratos/
 
 BASE_DOMAIN=
 i=1
@@ -199,6 +199,7 @@ lxc-attach -n $MACH -- zsh <<EOS
 set -e
 chmod 700 /home/kratos/config
 chown kratos:kratos /home/kratos/config -R
+chown kratos:kratos /home/kratos/jsonnet -R
 EOS
 
 # kratos database migration
