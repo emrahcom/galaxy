@@ -16,7 +16,7 @@ async function handle(cnn: Deno.Conn) {
     if (path === `${PRE}/hello`) {
       hello(req);
     } else if (path === `${PRE}/add-identity`) {
-      addIdentity(req);
+      await addIdentity(req);
     } else {
       notFound(req);
     }
