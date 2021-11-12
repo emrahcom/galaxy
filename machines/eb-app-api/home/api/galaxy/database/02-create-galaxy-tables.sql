@@ -31,7 +31,7 @@ ALTER TABLE param OWNER TO galaxy;
 -- IDENTITY
 -- ----------------------------------------------------------------------------
 CREATE TABLE identity (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "id" uuid NOT NULL PRIMARY KEY,
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
