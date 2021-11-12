@@ -1,5 +1,6 @@
 import { HOSTNAME, PORT_PRIVATE } from "./config.ts";
-import { getIdentity, notFound, unauthorized } from "./lib/helpers.ts";
+import { notFound, unauthorized } from "./lib/helper.ts";
+import { getIdentity, hello } from "./lib/private.ts";
 
 const PRE = "/api/private";
 
@@ -20,11 +21,7 @@ async function handle(cnn: Deno.Conn) {
 
     // routing
     if (path === `${PRE}/hello`) {
-      req.respondWith(
-        new Response(`hello ${identityId}`, {
-          status: 200,
-        }),
-      );
+      hello(req, identityId);
     } else {
       notFound(req);
     }

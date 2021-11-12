@@ -1,5 +1,6 @@
 import { HOSTNAME, PORT_HOOK } from "./config.ts";
-import { notFound } from "./lib/helpers.ts";
+import { notFound } from "./lib/helper.ts";
+import { addIdentity, hello } from "./lib/hook.ts";
 
 const PRE = "/api/hook";
 
@@ -12,15 +13,13 @@ async function handle(cnn: Deno.Conn) {
     const path = url.pathname;
 
     // routing
-    if (path === `${PRE}/add-identity`) {
+    if (path === `${PRE}/hello`) {
+      hello(req);
+    } else if (path === `${PRE}/add-identity`) {
       const pl = await req.request.json();
       const identityId = pl.identity_id;
 
-      req.respondWith(
-        new Response(`${identityId} added`, {
-          status: 200,
-        }),
-      );
+      addIdentity(req, identityId);
     } else {
       notFound(req);
     }

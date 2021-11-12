@@ -1,5 +1,6 @@
 import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
-import { notFound } from "./lib/helpers.ts";
+import { notFound } from "./lib/helper.ts";
+import { hello } from "./lib/public.ts";
 
 const PRE = "/api/public";
 
@@ -13,11 +14,7 @@ async function handle(cnn: Deno.Conn) {
 
     // routing
     if (path === `${PRE}/hello`) {
-      req.respondWith(
-        new Response(`hello public`, {
-          status: 200,
-        }),
-      );
+      hello(req);
     } else {
       notFound(req);
     }

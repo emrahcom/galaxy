@@ -17,19 +17,10 @@ export async function getIdentity(req: Deno.RequestEvent) {
 }
 
 // ----------------------------------------------------------------------------
-export function unauthorized(req: Deno.RequestEvent) {
+export function hello(req: Deno.RequestEvent, identityId: string) {
   req.respondWith(
-    new Response("Unauthorized", {
-      status: 401,
-    }),
-  );
-}
-
-// ----------------------------------------------------------------------------
-export function notFound(req: Deno.RequestEvent) {
-  req.respondWith(
-    new Response("Not Found", {
-      status: 404,
+    new Response(`hello ${identityId}`, {
+      status: 200,
     }),
   );
 }
