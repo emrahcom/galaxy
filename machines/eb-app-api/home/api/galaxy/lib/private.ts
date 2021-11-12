@@ -1,6 +1,6 @@
 import { KRATOS } from "../config.ts";
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 export async function getIdentity(req: Deno.RequestEvent) {
   const whoami = `${KRATOS}/sessions/whoami`;
   const cookie = req.request.headers.get("cookie") || "";
@@ -16,7 +16,7 @@ export async function getIdentity(req: Deno.RequestEvent) {
   return res.headers.get("x-kratos-authenticated-identity-id");
 }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 export function hello(req: Deno.RequestEvent, identityId: string) {
   req.respondWith(
     new Response(`hello ${identityId}`, {

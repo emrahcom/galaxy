@@ -6,8 +6,11 @@ export function hello(req: Deno.RequestEvent) {
   );
 }
 
-// -----------------------------------------------------------------------------
-export function addIdentity(req: Deno.RequestEvent, identityId: string) {
+// ------------------------------------------------------------------------------
+export function addIdentity(req: Deno.RequestEvent) {
+  const pl = await req.request.json();
+  const identityId = pl.identity_id;
+
   req.respondWith(
     new Response(`${identityId} added`, {
       status: 200,

@@ -4,7 +4,7 @@ import { addIdentity, hello } from "./lib/hook.ts";
 
 const PRE = "/api/hook";
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
   const http = Deno.serveHttp(cnn);
 
@@ -16,17 +16,14 @@ async function handle(cnn: Deno.Conn) {
     if (path === `${PRE}/hello`) {
       hello(req);
     } else if (path === `${PRE}/add-identity`) {
-      const pl = await req.request.json();
-      const identityId = pl.identity_id;
-
-      addIdentity(req, identityId);
+      addIdentity(req);
     } else {
       notFound(req);
     }
   }
 }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 async function main() {
   const server = Deno.listen({
     hostname: HOSTNAME,
@@ -38,5 +35,5 @@ async function main() {
   }
 }
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 main();
