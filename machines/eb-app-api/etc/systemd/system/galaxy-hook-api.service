@@ -1,0 +1,14 @@
+[Unit]
+Description=Galaxy Hook API
+After=network-online.target
+
+[Service]
+User=api
+Group=api
+WorkingDirectory=/home/api/galaxy
+ExecStart=deno run --allow-net hook.ts
+Restart=always
+RestartSec=2s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,7 +1,7 @@
-import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
+import { HOSTNAME, PORT_HOOK } from "./config.ts";
 import { notFound } from "./lib/helpers.ts";
 
-const PRE = "/api/public";
+const PRE = "/api/hook";
 
 // ----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
@@ -12,9 +12,12 @@ async function handle(cnn: Deno.Conn) {
     const path = url.pathname;
 
     // routing
-    if (path === `${PRE}/hello`) {
+    if (path === `${PRE}/add-identity`) {
+      const pl = await req.request.json();
+      const identityId = pl.identity_id;
+
       req.respondWith(
-        new Response(`hello public`, {
+        new Response(`${identityId} added`, {
           status: 200,
         }),
       );
@@ -28,7 +31,7 @@ async function handle(cnn: Deno.Conn) {
 async function main() {
   const server = Deno.listen({
     hostname: HOSTNAME,
-    port: PORT_PUBLIC,
+    port: PORT_HOOK,
   });
 
   for await (const cnn of server) {

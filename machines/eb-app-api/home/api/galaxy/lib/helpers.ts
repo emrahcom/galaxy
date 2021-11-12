@@ -24,3 +24,12 @@ export function unauthorized(req: Deno.RequestEvent) {
     }),
   );
 }
+
+// ----------------------------------------------------------------------------
+export function notFound(req: Deno.RequestEvent) {
+  req.respondWith(
+    new Response("Not Found", {
+      status: 404,
+    }),
+  );
+}
