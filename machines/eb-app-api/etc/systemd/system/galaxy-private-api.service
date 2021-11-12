@@ -6,7 +6,7 @@ After=network-online.target
 User=api
 Group=api
 WorkingDirectory=/home/api/galaxy
-ExecStart=deno run --allow-net private.ts
+ExecStart=deno run --allow-net index-private.ts
 Restart=always
 RestartSec=2s
 
