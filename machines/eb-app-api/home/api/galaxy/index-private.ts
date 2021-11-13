@@ -1,5 +1,5 @@
 import { HOSTNAME, PORT_PRIVATE } from "./config.ts";
-import { notFound, unauthorized } from "./lib/helper.ts";
+import { methodNotAllowed, notFound, unauthorized } from "./lib/helper.ts";
 import { getIdentity, hello } from "./lib/private.ts";
 
 const PRE = "/api/pri";
@@ -9,6 +9,9 @@ async function handle(cnn: Deno.Conn) {
   const http = Deno.serveHttp(cnn);
 
   for await (const req of http) {
+    // check method
+    if (req.request.method !== `POST`) methodNotAllowed(req);
+
     // check credential
     const identityId = await getIdentity(req);
     if (!identityId) {

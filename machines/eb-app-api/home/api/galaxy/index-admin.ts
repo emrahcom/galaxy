@@ -1,5 +1,5 @@
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
-import { notFound } from "./lib/helper.ts";
+import { methodNotAllowed, notFound } from "./lib/helper.ts";
 import { addIdentity, hello } from "./lib/admin.ts";
 
 const PRE = "/api/admin";
@@ -9,6 +9,9 @@ async function handle(cnn: Deno.Conn) {
   const http = Deno.serveHttp(cnn);
 
   for await (const req of http) {
+    // check method
+    if (req.request.method !== `POST`) methodNotAllowed(req);
+
     const url = new URL(req.request.url);
     const path = url.pathname;
 
