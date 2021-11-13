@@ -2,7 +2,7 @@ import { HOSTNAME, PORT_PRIVATE } from "./config.ts";
 import { notFound, unauthorized } from "./lib/helper.ts";
 import { getIdentity, hello } from "./lib/private.ts";
 
-const PRE = "/api/private";
+const PRE = "/api/pri";
 
 // -----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {

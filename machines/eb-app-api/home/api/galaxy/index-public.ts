@@ -2,7 +2,7 @@ import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
 import { notFound } from "./lib/helper.ts";
 import { hello } from "./lib/public.ts";
 
-const PRE = "/api/public";
+const PRE = "/api/pub";
 
 // -----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
