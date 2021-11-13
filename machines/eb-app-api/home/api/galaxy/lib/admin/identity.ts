@@ -1,13 +1,7 @@
-import { query } from "./database.ts";
+import { query } from "../common/database.ts";
+import { notFound } from "../common/helper.ts";
 
-// ------------------------------------------------------------------------------
-export function hello(req: Deno.RequestEvent) {
-  req.respondWith(
-    new Response(`hello admin`, {
-      status: 200,
-    }),
-  );
-}
+const PRE = "/api/admin/identity";
 
 // ------------------------------------------------------------------------------
 export async function addIdentity(req: Deno.RequestEvent) {
@@ -29,4 +23,13 @@ export async function addIdentity(req: Deno.RequestEvent) {
       status: 200,
     }),
   );
+}
+
+// ------------------------------------------------------------------------------
+export default async function (req: Deno.RequestEvent, path: string) {
+  if (path === `${PRE}/add`) {
+    await addIdentity(req);
+  } else {
+    notFound(req);
+  }
 }

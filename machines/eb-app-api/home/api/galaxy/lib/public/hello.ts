@@ -1,4 +1,4 @@
-export function hello(req: Deno.RequestEvent) {
+export default function (req: Deno.RequestEvent) {
   req.respondWith(
     new Response(`hello public`, {
       status: 200,

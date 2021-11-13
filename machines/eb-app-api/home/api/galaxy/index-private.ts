@@ -1,6 +1,11 @@
 import { HOSTNAME, PORT_PRIVATE } from "./config.ts";
-import { methodNotAllowed, notFound, unauthorized } from "./lib/helper.ts";
-import { getIdentity, hello } from "./lib/private.ts";
+import {
+  methodNotAllowed,
+  notFound,
+  unauthorized,
+} from "./lib/common/helper.ts";
+import hello from "./lib/private/hello.ts";
+import { getIdentity } from "./lib/private/identity.ts";
 
 const PRE = "/api/pri";
 

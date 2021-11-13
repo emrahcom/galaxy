@@ -6,7 +6,7 @@ import {
   DB_POOL_SIZE,
   DB_PORT,
   DB_USER,
-} from "../config.ts";
+} from "../../config.ts";
 
 const dbPool = new Pool({
   user: DB_USER,

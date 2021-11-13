@@ -1,6 +1,7 @@
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
-import { methodNotAllowed, notFound } from "./lib/helper.ts";
-import { addIdentity, hello } from "./lib/admin.ts";
+import { methodNotAllowed, notFound } from "./lib/common/helper.ts";
+import hello from "./lib/admin/hello.ts";
+import identity from "./lib/admin/identity.ts";
 
 const PRE = "/api/admin";
 
@@ -18,8 +19,8 @@ async function handle(cnn: Deno.Conn) {
     // routing
     if (path === `${PRE}/hello`) {
       hello(req);
-    } else if (path === `${PRE}/add-identity`) {
-      await addIdentity(req);
+    } else if (path.match(`^${PRE}/identity/`)) {
+      await identity(req, path);
     } else {
       notFound(req);
     }
