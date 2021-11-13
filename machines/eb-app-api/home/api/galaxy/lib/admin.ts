@@ -3,7 +3,7 @@ import { query } from "./database.ts";
 // ------------------------------------------------------------------------------
 export function hello(req: Deno.RequestEvent) {
   req.respondWith(
-    new Response(`hello public`, {
+    new Response(`hello admin`, {
       status: 200,
     }),
   );
