@@ -1,6 +1,6 @@
 // server
 export const HOSTNAME = "0.0.0.0";
-export const PORT_HOOK = 8000;
+export const PORT_ADMIN = 8000;
 export const PORT_PRIVATE = 8001;
 export const PORT_PUBLIC = 8002;
 

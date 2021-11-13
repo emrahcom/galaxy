@@ -1,8 +1,8 @@
-import { HOSTNAME, PORT_HOOK } from "./config.ts";
+import { HOSTNAME, PORT_ADMIN } from "./config.ts";
 import { notFound } from "./lib/helper.ts";
-import { addIdentity, hello } from "./lib/hook.ts";
+import { addIdentity, hello } from "./lib/admin.ts";
 
-const PRE = "/api/hook";
+const PRE = "/api/admin";
 
 // -----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
@@ -27,7 +27,7 @@ async function handle(cnn: Deno.Conn) {
 async function main() {
   const server = Deno.listen({
     hostname: HOSTNAME,
-    port: PORT_HOOK,
+    port: PORT_ADMIN,
   });
 
   for await (const cnn of server) {

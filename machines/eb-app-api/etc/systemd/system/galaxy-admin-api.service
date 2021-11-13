@@ -1,12 +1,12 @@
 [Unit]
-Description=Galaxy Hook API
+Description=Galaxy Admin API
 After=network-online.target
 
 [Service]
 User=api
 Group=api
 WorkingDirectory=/home/api/galaxy
-ExecStart=deno run --allow-net index-hook.ts
+ExecStart=deno run --allow-net index-admin.ts
 Restart=always
 RestartSec=2s
 
