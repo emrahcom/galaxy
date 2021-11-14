@@ -1,7 +1,10 @@
+import { ok } from "../common/http-response.ts";
+
+// -----------------------------------------------------------------------------
 export default function (req: Deno.RequestEvent, identityId: string) {
-  req.respondWith(
-    new Response(`hello ${identityId}`, {
-      status: 200,
-    }),
-  );
+  const body = {
+    text: `hello ${identityId}`,
+  };
+
+  ok(req, JSON.stringify(body));
 }

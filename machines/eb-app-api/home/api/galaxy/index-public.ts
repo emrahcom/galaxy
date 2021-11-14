@@ -1,5 +1,5 @@
 import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
-import { methodNotAllowed, notFound } from "./lib/common/helper.ts";
+import { methodNotAllowed, notFound } from "./lib/common/http-response.ts";
 import hello from "./lib/public/hello.ts";
 
 const PRE = "/api/pub";

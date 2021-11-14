@@ -3,7 +3,7 @@ import {
   methodNotAllowed,
   notFound,
   unauthorized,
-} from "./lib/common/helper.ts";
+} from "./lib/common/http-response.ts";
 import hello from "./lib/private/hello.ts";
 import { getIdentity } from "./lib/private/identity.ts";
 

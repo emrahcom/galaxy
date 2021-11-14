@@ -1,5 +1,5 @@
 import { query } from "../common/database.ts";
-import { notFound } from "../common/helper.ts";
+import { notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/admin/identity";
 
@@ -18,11 +18,11 @@ export async function addIdentity(req: Deno.RequestEvent) {
 
   await query(sql);
 
-  req.respondWith(
-    new Response(`${identityId} added`, {
-      status: 200,
-    }),
-  );
+  const body = {
+    identityId: `${identityId}`,
+  };
+
+  ok(req, JSON.stringify(body));
 }
 
 // ------------------------------------------------------------------------------
