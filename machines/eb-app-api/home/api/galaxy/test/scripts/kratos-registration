@@ -1,0 +1,42 @@
+#!/bin/bash
+set -e
+
+[[ -z "KRATOS_FQDN" ]] || KRATOS_FQDN=kratos.galaxy.corp
+rm -f kratos-registration-*
+
+# ------------------------------------------------------------------------------
+cookieJar=$(mktemp --suffix .kratos)
+
+curl -ks https://$KRATOS_FQDN/self-service/registration/browser \
+    --output-dir /tmp --output kratos-registration-flow \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json"
+actionUrl=$(jq -r .ui.action /tmp/kratos-registration-flow)
+csrfToken=$(jq -r \
+    '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
+    /tmp/kratos-registration-flow)
+
+echo ">>> Registration action URL: $actionUrl"
+echo ">>> Registration CSRF token: $csrfToken"
+
+# ------------------------------------------------------------------------------
+email=user.$(date +%s)@galaxy.corp
+passwd=$(openssl rand -base64 12)
+
+curl -ks -X POST "$actionUrl" \
+    --output-dir /tmp --output kratos-registration-session \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    --data @- << EOF
+    {
+        "csrf_token": "'$csrfToken'",
+        "traits.email": "'$email'",
+        "password": "'$passwd'",
+        "method": "password"
+    }
+EOF
+userId=$(jq -r .id /tmp/kratos-registration-session)
+
+echo ">>> Registration user ID: $userId"
+echo ">>> Registration user email: $email"
+echo ">>> Registration user passwd: $passwd"
