@@ -16,7 +16,7 @@ const dbPool = new Pool({
   port: DB_PORT,
 }, DB_POOL_SIZE);
 
-// ----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 export async function query(sql: QueryObjectConfig) {
   const db = await dbPool.connect();
   let rst;

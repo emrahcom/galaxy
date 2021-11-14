@@ -3,7 +3,7 @@ import { notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/admin/identity";
 
-// ------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 export async function addIdentity(req: Deno.RequestEvent) {
   const pl = await req.request.json();
   const identityId = pl.identity_id;
@@ -25,7 +25,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
   ok(req, JSON.stringify(body));
 }
 
-// ------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 export default async function (req: Deno.RequestEvent, path: string) {
   if (path === `${PRE}/add`) {
     await addIdentity(req);
