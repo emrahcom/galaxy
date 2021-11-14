@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/common
+
+header <<< "API public started"
+rm -f /tmp/api-public-*
+
+# ------------------------------------------------------------------------------
+# hello
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pub/hello \
+    --output-dir /tmp --output api-public-hello \
+    -H "Accept: application/json"
+res=$(jq -r .text /tmp/api-public-hello)
+[[ "$res" = "null" ]] && exit 1
+
+out <<< "API public hello: $res"
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "API public completed"

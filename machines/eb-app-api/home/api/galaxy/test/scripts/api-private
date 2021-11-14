@@ -1,0 +1,92 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# this script needs the registration to be completed successfully
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/common
+
+header <<< "API private started"
+rm -f /tmp/api-private-*
+rm -f /tmp/kratos-login-*
+rm -f /tmp/*.kratos.login
+
+# ------------------------------------------------------------------------------
+# hello without authentication
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/hello \
+    --output-dir /tmp --output api-private-hello \
+    -H "Accept: application/json"
+res=$(jq -r .text /tmp/api-private-hello)
+[[ "$res" != "null" ]] && exit 1
+
+out <<< "API private hello (no authentication): $res"
+
+# ------------------------------------------------------------------------------
+# login flow
+# ------------------------------------------------------------------------------
+cookieJar=$(mktemp --suffix .kratos.login)
+
+curl -ks https://$KRATOS_FQDN/self-service/login/browser \
+    --output-dir /tmp --output kratos-login-flow \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json"
+actionUrl=$(jq -r .ui.action /tmp/kratos-login-flow)
+csrfToken=$(jq -r \
+    '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
+    /tmp/kratos-login-flow)
+
+out <<< "Login action URL: $actionUrl"
+out <<< "Login CSRF token: $csrfToken"
+
+# ------------------------------------------------------------------------------
+# credential
+# ------------------------------------------------------------------------------
+email=$(grep email /tmp/kratos-credential | cut -d= -f2)
+passwd=$(grep passwd /tmp/kratos-credential | cut -d= -f2)
+
+out <<< "API private user email: $email"
+out <<< "API private user passwd: $passwd"
+
+# ------------------------------------------------------------------------------
+# login
+# ------------------------------------------------------------------------------
+curl -ks -X POST "$actionUrl" \
+    --output-dir /tmp --output kratos-login-session \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "csrf_token": "$csrfToken",
+        "password_identifier": "$email",
+        "password": "$passwd",
+        "method": "password"
+    }
+EOF
+userId=$(jq -r .session.identity.id /tmp/kratos-login-session)
+[[ "$userId" = "null" ]] && exit 1
+
+out <<< "Login user ID: $userId"
+
+# ------------------------------------------------------------------------------
+# hello with authentication
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/hello \
+    --output-dir /tmp --output api-private-hello \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json"
+res=$(jq -r .text /tmp/api-private-hello)
+[[ "$res" = "null" ]] && exit 1
+
+out <<< "API private hello (with authentication): $res"
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "API private completed"

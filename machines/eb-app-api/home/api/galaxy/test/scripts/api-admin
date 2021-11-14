@@ -2,35 +2,30 @@
 set -e
 
 # ------------------------------------------------------------------------------
+# this works only in trusted network
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 # environment
 # ------------------------------------------------------------------------------
-[[ -z "$KRATOS_FQDN" ]] && KRATOS_FQDN=kratos.galaxy.corp
-[[ -z "$APP_FQDN" ]] && APP_FQDN=app.galaxy.corp
+BASEDIR=$(dirname $0)
+source $BASEDIR/common
+
+header <<< "API admin started"
+rm -f /tmp/api-admin-*
 
 # ------------------------------------------------------------------------------
-# header
+# hello
 # ------------------------------------------------------------------------------
-header() {
-    while IFS= read -r line; do
-        printf "\033[0;31m>>> %s\033[0m\n" "$line"
-    done
-}
+curl -ks -X POST https://$APP_FQDN/api/admin/hello \
+    --output-dir /tmp --output api-admin-hello \
+    -H "Accept: application/json"
+res=$(jq -r .text /tmp/api-admin-hello)
+[[ "$res" = "null" ]] && exit 1
+
+out <<< "API admin hello: $res"
 
 # ------------------------------------------------------------------------------
-# footer
+# completed
 # ------------------------------------------------------------------------------
-footer() {
-    while IFS= read -r line; do
-        printf "\033[0;31m>>>\033[0m \033[0;31m%s\033[0m\n" "$line"
-        printf "\n"
-    done
-}
-
-# ------------------------------------------------------------------------------
-# out
-# ------------------------------------------------------------------------------
-out() {
-    while IFS= read -r line; do
-        printf "\033[0;31m>>>\033[0m \033[0;38m%s\033[0m\n" "$line"
-    done
-}
+footer <<< "API admin completed"

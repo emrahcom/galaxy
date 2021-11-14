@@ -4,18 +4,18 @@ set -e
 # ------------------------------------------------------------------------------
 # environment
 # ------------------------------------------------------------------------------
-BASEDIR=$(pwd)
+BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
 header <<< "Registration started"
-
+rm -f /tmp/kratos-credential
 rm -f /tmp/kratos-registration-*
-[[ -z "$KRATOS_FQDN" ]] && KRATOS_FQDN=kratos.galaxy.corp
+rm -f /tmp/*.kratos.registration
 
 # ------------------------------------------------------------------------------
-# start flow
+# registration flow
 # ------------------------------------------------------------------------------
-cookieJar=$(mktemp --suffix .kratos)
+cookieJar=$(mktemp --suffix .kratos.registration)
 
 curl -ks https://$KRATOS_FQDN/self-service/registration/browser \
     --output-dir /tmp --output kratos-registration-flow \
@@ -30,7 +30,7 @@ out <<< "Registration action URL: $actionUrl"
 out <<< "Registration CSRF token: $csrfToken"
 
 # ------------------------------------------------------------------------------
-# register
+# registration
 # ------------------------------------------------------------------------------
 email=user.$(date +%s)@galaxy.corp
 passwd=$(openssl rand -base64 12)
@@ -50,6 +50,9 @@ curl -ks -X POST "$actionUrl" \
 EOF
 userId=$(jq -r .identity.id /tmp/kratos-registration-session)
 [[ "$userId" = "null" ]] && exit 1
+
+echo "email=$email" >/tmp/kratos-credential
+echo "passwd=$passwd" >>/tmp/kratos-credential
 
 out <<< "Registration user ID: $userId"
 out <<< "Registration user email: $email"
