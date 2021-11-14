@@ -1,9 +1,19 @@
 #!/bin/bash
 set -e
 
-[[ -z "KRATOS_FQDN" ]] || KRATOS_FQDN=kratos.galaxy.corp
-rm -f kratos-registration-*
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(pwd)
+source $BASEDIR/common
 
+header <<< "Registration started"
+
+rm -f /tmp/kratos-registration-*
+[[ -z "$KRATOS_FQDN" ]] && KRATOS_FQDN=kratos.galaxy.corp
+
+# ------------------------------------------------------------------------------
+# start flow
 # ------------------------------------------------------------------------------
 cookieJar=$(mktemp --suffix .kratos)
 
@@ -16,9 +26,11 @@ csrfToken=$(jq -r \
     '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
     /tmp/kratos-registration-flow)
 
-echo ">>> Registration action URL: $actionUrl"
-echo ">>> Registration CSRF token: $csrfToken"
+out <<< "Registration action URL: $actionUrl"
+out <<< "Registration CSRF token: $csrfToken"
 
+# ------------------------------------------------------------------------------
+# register
 # ------------------------------------------------------------------------------
 email=user.$(date +%s)@galaxy.corp
 passwd=$(openssl rand -base64 12)
@@ -27,16 +39,23 @@ curl -ks -X POST "$actionUrl" \
     --output-dir /tmp --output kratos-registration-session \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "csrf_token": "'$csrfToken'",
-        "traits.email": "'$email'",
-        "password": "'$passwd'",
+        "csrf_token": "$csrfToken",
+        "traits.email": "$email",
+        "password": "$passwd",
         "method": "password"
     }
 EOF
-userId=$(jq -r .id /tmp/kratos-registration-session)
+userId=$(jq -r .identity.id /tmp/kratos-registration-session)
+[[ "$userId" = "null" ]] && exit 1
 
-echo ">>> Registration user ID: $userId"
-echo ">>> Registration user email: $email"
-echo ">>> Registration user passwd: $passwd"
+out <<< "Registration user ID: $userId"
+out <<< "Registration user email: $email"
+out <<< "Registration user passwd: $passwd"
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "Registration completed"
