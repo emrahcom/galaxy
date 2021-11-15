@@ -18,14 +18,21 @@ const dbPool = new Pool({
 
 // -----------------------------------------------------------------------------
 export async function query(sql: QueryObjectConfig) {
-  const db = await dbPool.connect();
   let rst;
+  let error: Error;
 
   try {
+    const db = await dbPool.connect();
     rst = await db.queryObject(sql);
+  } catch (e) {
+    error = e;
   } finally {
-    db.release();
+    await db.release().catch();
   }
 
-  return rst;
+  if (error) {
+    throw new Error(error);
+  } else {
+    return rst;
+  }
 }

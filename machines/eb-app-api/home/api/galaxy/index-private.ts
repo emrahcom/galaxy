@@ -4,7 +4,7 @@ import {
   notFound,
   unauthorized,
 } from "./lib/common/http-response.ts";
-import { getIdentity } from "./lib/private/kratos.ts";
+import { getIdentityId } from "./lib/private/kratos.ts";
 import hello from "./lib/private/hello.ts";
 import domain from "./lib/private/domain.ts";
 
@@ -30,7 +30,7 @@ async function handle(cnn: Deno.Conn) {
     if (req.request.method !== `POST`) methodNotAllowed(req);
 
     // check credential
-    const identityId = await getIdentity(req);
+    const identityId = await getIdentityId(req);
     if (!identityId) {
       unauthorized(req);
       continue;
