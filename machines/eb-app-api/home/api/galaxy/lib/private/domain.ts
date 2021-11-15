@@ -34,7 +34,11 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export default function (req: Deno.RequestEvent, identityId: string) {
+export default function (
+  req: Deno.RequestEvent,
+  path: string,
+  identityId: string,
+) {
   if (path === `${PRE}/add`) {
     addDomain(req, identityId);
   } else {

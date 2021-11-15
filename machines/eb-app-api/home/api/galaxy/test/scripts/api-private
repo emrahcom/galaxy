@@ -23,7 +23,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/hello \
     --output-dir /tmp --output api-private-hello \
     -H "Accept: application/json"
 res=$(jq -r .text /tmp/api-private-hello)
-[[ "$res" != "null" ]] && exit 1
+[[ "$res" != "hello null" ]] && exit 1
 
 out <<< "API private hello (no authentication): $res"
 
@@ -82,7 +82,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/hello \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json"
 res=$(jq -r .text /tmp/api-private-hello)
-[[ "$res" = "null" ]] && exit 1
+[[ "$res" = "hello null" ]] && exit 1
 
 out <<< "API private hello (with authentication): $res"
 
