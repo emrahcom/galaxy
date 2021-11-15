@@ -40,6 +40,28 @@ CREATE INDEX ON identity("active");
 CREATE INDEX ON identity("created_at");
 CREATE INDEX ON identity("updated_at");
 ALTER TABLE identity OWNER TO galaxy;
--- -----------------------------------------------------------------------------
 
+-- -----------------------------------------------------------------------------
+-- DOMAIN
+-- -----------------------------------------------------------------------------
+CREATE TYPE domain_auth_type AS ENUM ('none', 'token', 'moderated');
+CREATE TABLE domain (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
+    "auth_type" domain_auth_type NOT NULL DEFAULT 'none',
+    "attributes" jsonb NOT NULL,
+    "active" boolean NOT NULL DEFAULT TRUE,
+    "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()
+);
+CREATE UNIQUE INDEX ON domain("identity_id", "name");
+CREATE INDEX ON domain("name");
+CREATE INDEX ON domain("auth_type");
+CREATE INDEX ON domain("active");
+CREATE INDEX ON domain("created_at");
+CREATE INDEX ON domain("updated_at");
+ALTER TABLE domain OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 COMMIT;
