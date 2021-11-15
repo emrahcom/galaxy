@@ -1,4 +1,4 @@
-import { ServerRequest } from "https://deno.land/std/http/server.ts";
+import { ServerRequest } from "https://deno.land/std/http/server_legacy.ts";
 import { Status } from "https://deno.land/std/http/http_status.ts";
 
 // ----------------------------------------------------------------------------

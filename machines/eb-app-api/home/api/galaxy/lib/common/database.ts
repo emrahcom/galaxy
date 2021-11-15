@@ -16,23 +16,26 @@ const dbPool = new Pool({
   port: DB_PORT,
 }, DB_POOL_SIZE);
 
+export interface idRows {
+  [index: number]: {
+    id: string;
+  };
+}
+
 // -----------------------------------------------------------------------------
 export async function query(sql: QueryObjectConfig) {
-  let rst;
-  let error: Error;
+  const db = await dbPool.connect();
 
   try {
-    const db = await dbPool.connect();
-    rst = await db.queryObject(sql);
-  } catch (e) {
-    error = e;
-  } finally {
-    await db.release().catch();
-  }
-
-  if (error) {
-    throw new Error(error);
-  } else {
+    const rst = await db.queryObject(sql);
     return rst;
+  } catch (e) {
+    throw e;
+  } finally {
+    try {
+      db.release();
+    } catch {
+      // do nothing
+    }
   }
 }

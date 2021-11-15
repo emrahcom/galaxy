@@ -1,4 +1,4 @@
-import { ServerRequest } from "https://deno.land/std/http/server.ts";
+import { ServerRequest } from "https://deno.land/std/http/server_legacy.ts";
 import { methodNotAllowed, unauthorized } from "./helpers.ts";
 import { UserPayload } from "./token.ts";
 

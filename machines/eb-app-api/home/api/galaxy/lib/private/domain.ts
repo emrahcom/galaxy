@@ -1,4 +1,4 @@
-import { query } from "../common/database.ts";
+import { idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/private/domain";
@@ -10,7 +10,8 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         INSERT INTO domain (identity_id, name, auth_type, attributes)
-        VALUES ($1, $2, $3, $4::jsonb)`,
+        VALUES ($1, $2, $3, $4::jsonb)
+        RETURNING id`,
       args: [
         identityId,
         pl.name,
@@ -18,12 +19,12 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
         pl.attributes,
       ],
     };
-    const id = await query(sql)
+    const rows = await query(sql)
       .then((rst) => {
-        return rst.rows[0].id;
+        return rst.rows as idRows;
       });
     const body = {
-      domainId: `${id}`,
+      domainId: rows[0].id,
     };
 
     ok(req, JSON.stringify(body));

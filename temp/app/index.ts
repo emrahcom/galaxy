@@ -1,4 +1,4 @@
-import { serve, Server } from "https://deno.land/std/http/server.ts";
+import { serve, Server } from "https://deno.land/std/http/server_legacy.ts";
 import { HOSTNAME, PORT } from "./config.ts";
 import { about, notFound, unauthorized } from "./api/helpers.ts";
 import { getPayload, sendToken, UserPayload } from "./api/token.ts";
