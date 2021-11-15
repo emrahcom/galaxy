@@ -5,6 +5,15 @@ import hello from "./lib/public/hello.ts";
 const PRE = "/api/pub";
 
 // -----------------------------------------------------------------------------
+function route(req: Deno.RequestEvent, path: string) {
+  if (path === `${PRE}/hello`) {
+    hello(req);
+  } else {
+    notFound(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
   const http = Deno.serveHttp(cnn);
 
@@ -14,13 +23,7 @@ async function handle(cnn: Deno.Conn) {
 
     const url = new URL(req.request.url);
     const path = url.pathname;
-
-    // routing
-    if (path === `${PRE}/hello`) {
-      hello(req);
-    } else {
-      notFound(req);
-    }
+    route(req, path);
   }
 }
 

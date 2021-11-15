@@ -6,6 +6,17 @@ import identity from "./lib/admin/identity.ts";
 const PRE = "/api/admin";
 
 // -----------------------------------------------------------------------------
+function route(req: Deno.RequestEvent, path: string) {
+  if (path === `${PRE}/hello`) {
+    hello(req);
+  } else if (path.match(`^${PRE}/identity/`)) {
+    identity(req, path);
+  } else {
+    notFound(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
   const http = Deno.serveHttp(cnn);
 
@@ -15,15 +26,7 @@ async function handle(cnn: Deno.Conn) {
 
     const url = new URL(req.request.url);
     const path = url.pathname;
-
-    // routing
-    if (path === `${PRE}/hello`) {
-      hello(req);
-    } else if (path.match(`^${PRE}/identity/`)) {
-      await identity(req, path);
-    } else {
-      notFound(req);
-    }
+    route(req, path);
   }
 }
 

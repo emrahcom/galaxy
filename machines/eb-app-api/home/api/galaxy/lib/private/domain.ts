@@ -1,18 +1,20 @@
 import { query } from "../common/database.ts";
 import { notFound, ok } from "../common/http-response.ts";
 
-const PRE = "/api/admin/identity";
+const PRE = "/api/private/domain";
 
 // -----------------------------------------------------------------------------
-export async function addIdentity(req: Deno.RequestEvent) {
+export async function addDomain(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
-  const identityId = pl.identity_id;
   const sql = {
     text: `
-      INSERT INTO identity (id)
-      VALUES ($1)`,
+      INSERT INTO domain (identity_id, name, auth_type, attributes)
+      VALUES ($1, $2, $3, $4::jsonb)`,
     args: [
       identityId,
+      pl.name,
+      pl.auth_type,
+      pl.attributes,
     ],
   };
   const id = await query(sql)
@@ -20,16 +22,16 @@ export async function addIdentity(req: Deno.RequestEvent) {
       return rst.rows[0].id;
     });
   const body = {
-    identityId: `${id}`,
+    domainId: `${id}`,
   };
 
   ok(req, JSON.stringify(body));
 }
 
 // -----------------------------------------------------------------------------
-export default function (req: Deno.RequestEvent, path: string) {
+export default function (req: Deno.RequestEvent, identityId: string) {
   if (path === `${PRE}/add`) {
-    addIdentity(req);
+    addDomain(req, identityId);
   } else {
     notFound(req);
   }

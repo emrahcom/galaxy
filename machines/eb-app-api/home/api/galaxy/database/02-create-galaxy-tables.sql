@@ -50,7 +50,7 @@ CREATE TABLE domain (
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "auth_type" domain_auth_type NOT NULL DEFAULT 'none',
-    "attributes" jsonb NOT NULL,
+    "attributes" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "active" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW()

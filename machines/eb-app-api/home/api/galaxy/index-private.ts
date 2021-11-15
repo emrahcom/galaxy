@@ -4,10 +4,22 @@ import {
   notFound,
   unauthorized,
 } from "./lib/common/http-response.ts";
+import { getIdentity } from "./lib/private/kratos.ts";
 import hello from "./lib/private/hello.ts";
-import { getIdentity } from "./lib/private/identity.ts";
+import domain from "./lib/private/domain.ts";
 
 const PRE = "/api/pri";
+
+// -----------------------------------------------------------------------------
+function route(req: Deno.RequestEvent, path: string, identityId: string) {
+  if (path === `${PRE}/hello`) {
+    hello(req, identityId);
+  } else if (path.match(`^${PRE}/domain/`)) {
+    domain(req, path, identityId);
+  } else {
+    notFound(req);
+  }
+}
 
 // -----------------------------------------------------------------------------
 async function handle(cnn: Deno.Conn) {
@@ -26,13 +38,7 @@ async function handle(cnn: Deno.Conn) {
 
     const url = new URL(req.request.url);
     const path = url.pathname;
-
-    // routing
-    if (path === `${PRE}/hello`) {
-      hello(req, identityId);
-    } else {
-      notFound(req);
-    }
+    route(req, path, identityId);
   }
 }
 
