@@ -8,15 +8,15 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
 header <<< "/api/pri/hello"
-rm -f /tmp/api-private-hello
+rm -f /tmp/api-pri-hello
 
 # ------------------------------------------------------------------------------
 # /api/pri/hello (no authentication)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/hello \
-    --output-dir /tmp --output api-private-hello \
+    --output-dir /tmp --output api-pri-hello \
     -H "Accept: application/json"
-res=$(jq . /tmp/api-private-hello)
+res=$(jq . /tmp/api-pri-hello)
 out <<< "no authentication:"
 out <<< "$res"
 
@@ -28,10 +28,10 @@ out <<< "$res"
 cookieJar=$(cat /tmp/kratos-login-cookie)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/hello \
-    --output-dir /tmp --output api-private-hello \
+    --output-dir /tmp --output api-pri-hello \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json"
-res=$(jq . /tmp/api-private-hello)
+res=$(jq . /tmp/api-pri-hello)
 out <<< "with authentication:"
 out <<< "$res"
 

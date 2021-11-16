@@ -8,16 +8,16 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
 header <<< "/api/pri/domain/del"
-rm -f /tmp/api-private-domain-del-*
+rm -f /tmp/api-pri-domain-del-*
 
 # ------------------------------------------------------------------------------
 # /api/pri/domain/del (exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
-domain_id=$(jq -r .domainId /tmp/api-private-domain-add-0)
+domain_id=$(jq -r .domainId /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
-    --output-dir /tmp --output api-private-domain-del-0 \
+    --output-dir /tmp --output api-pri-domain-del-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -26,7 +26,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
         "id": "$domain_id"
     }
 EOF
-res=$(jq . /tmp/api-private-domain-del-0)
+res=$(jq . /tmp/api-pri-domain-del-0)
 out <<< "exists"
 out <<< "$res"
 
@@ -36,7 +36,7 @@ out <<< "$res"
 # /api/pri/domain/del (not exists)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
-    --output-dir /tmp --output api-private-domain-del-1 \
+    --output-dir /tmp --output api-pri-domain-del-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -45,7 +45,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
         "id": "$domain_id"
     }
 EOF
-res=$(jq . /tmp/api-private-domain-del-1)
+res=$(jq . /tmp/api-pri-domain-del-1)
 out <<< "not exists"
 out <<< "$res"
 
