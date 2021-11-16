@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/common
+
+header <<< "/api/pri/hello"
+rm -f /tmp/api-private-hello
+
+# ------------------------------------------------------------------------------
+# /api/pri/hello (no authentication)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/hello \
+    --output-dir /tmp --output api-private-hello \
+    -H "Accept: application/json"
+res=$(jq . /tmp/api-private-hello)
+out <<< "no authentication:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .text)" != "hello null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/hello (with authentication)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/hello \
+    --output-dir /tmp --output api-private-hello \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json"
+res=$(jq . /tmp/api-private-hello)
+out <<< "with authentication:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .text)" = "hello null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "/api/pri/hello"

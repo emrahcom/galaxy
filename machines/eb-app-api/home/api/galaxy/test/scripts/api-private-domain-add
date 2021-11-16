@@ -1,0 +1,62 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/common
+
+header <<< "/api/pri/domain/add"
+rm -f /tmp/api-private-domain-add-*
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/add (not exists)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
+    --output-dir /tmp --output api-private-domain-add-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "name": "jitsi.mydomain.corp",
+        "auth_type": "none",
+        "attributes": {
+        }
+    }
+EOF
+res=$(jq . /tmp/api-private-domain-add-0)
+out <<< "not exists:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .domainId)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/add (already exists)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
+    --output-dir /tmp --output api-private-domain-add-1 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "name": "jitsi.mydomain.corp",
+        "auth_type": "none",
+        "attributes": {
+        }
+    }
+EOF
+res=$(jq . /tmp/api-private-domain-add-1)
+out <<< "already exists:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .domainId)" != "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "/api/pri/domain/add"

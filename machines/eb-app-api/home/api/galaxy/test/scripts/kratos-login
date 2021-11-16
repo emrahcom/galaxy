@@ -2,69 +2,73 @@
 set -e
 
 # ------------------------------------------------------------------------------
+# this script needs the registration to be completed successfully
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "kratos registration"
-rm -f /tmp/kratos-credential
-rm -f /tmp/kratos-registration-*
-rm -f /tmp/*.kratos.registration
+header <<< "kratos login"
+rm -f /tmp/kratos-login-*
+rm -f /tmp/*.kratos.login
 
 # ------------------------------------------------------------------------------
-# kratos registration flow
+# kratos login flow
 # ------------------------------------------------------------------------------
-cookieJar=$(mktemp --suffix .kratos.registration)
-echo $cookieJar >/tmp/kratos-registration-cookie
+cookieJar=$(mktemp --suffix .kratos.login)
+echo $cookieJar >/tmp/kratos-login-cookie
 
-curl -ks https://$KRATOS_FQDN/self-service/registration/browser \
-    --output-dir /tmp --output kratos-registration-flow \
+curl -ks https://$KRATOS_FQDN/self-service/login/browser \
+    --output-dir /tmp --output kratos-login-flow \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json"
-actionUrl=$(jq -r .ui.action /tmp/kratos-registration-flow)
+actionUrl=$(jq -r .ui.action /tmp/kratos-login-flow)
 csrfToken=$(jq -r \
     '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
-    /tmp/kratos-registration-flow)
+    /tmp/kratos-login-flow)
 
 out <<< "flow, action URL:"
 out <<< "  $actionUrl"
-out <<< "flow, CSRF token:"
+out <<< "login flow, CSRF token:"
 out <<< "  $csrfToken"
 
 # ------------------------------------------------------------------------------
-# kratos registration
+# kratos credential
 # ------------------------------------------------------------------------------
-email=user.$(date +%s)@galaxy.corp
-passwd=$(openssl rand -base64 12)
+email=$(grep email /tmp/kratos-credential | cut -d= -f2)
+passwd=$(grep passwd /tmp/kratos-credential | cut -d= -f2)
 
-curl -ks -X POST "$actionUrl" \
-    --output-dir /tmp --output kratos-registration-session \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "csrf_token": "$csrfToken",
-        "traits.email": "$email",
-        "password": "$passwd",
-        "method": "password"
-    }
-EOF
-userId=$(jq -r .identity.id /tmp/kratos-registration-session)
-[[ "$userId" = "null" ]] && exit 1
-
-echo "email=$email" >/tmp/kratos-credential
-echo "passwd=$passwd" >>/tmp/kratos-credential
-
-out <<< "user id:"
-out <<< "  $userId"
 out <<< "email:"
 out <<< "  $email"
 out <<< "passwd:"
 out <<< "  $passwd"
 
 # ------------------------------------------------------------------------------
+# kratos login
+# ------------------------------------------------------------------------------
+curl -ks -X POST "$actionUrl" \
+    --output-dir /tmp --output kratos-login-session \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "csrf_token": "$csrfToken",
+        "password_identifier": "$email",
+        "password": "$passwd",
+        "method": "password"
+    }
+EOF
+userId=$(jq -r .session.identity.id /tmp/kratos-login-session)
+[[ "$userId" = "null" ]] && exit 1
+
+out <<< "user id:"
+out <<< "  $userId"
+
+# ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "kratos registration"
+footer <<< "kratos login"

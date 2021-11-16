@@ -2,31 +2,26 @@
 set -e
 
 # ------------------------------------------------------------------------------
-# this works only in trusted network
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "/api/admin started"
-rm -f /tmp/api-admin-*
+header <<< "/api/pub/hello"
+rm -f /tmp/api-public-hello
 
 # ------------------------------------------------------------------------------
-# /api/admin/hello
+# /api/pub/hello
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/admin/hello \
-    --output-dir /tmp --output api-admin-hello \
+curl -ks -X POST https://$APP_FQDN/api/pub/hello \
+    --output-dir /tmp --output api-public-hello \
     -H "Accept: application/json"
-res=$(jq -r .text /tmp/api-admin-hello)
-[[ "$res" = "null" ]] && exit 1
+res=$(jq . /tmp/api-public-hello)
+out <<< "$res"
 
-out <<< "/api/admin/hello"
-out <<< "  $res"
+[[ "$(echo $res | jq -r .text)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/admin completed"
+footer <<< "/api/pub/hello"

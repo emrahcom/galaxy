@@ -1,0 +1,57 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/common
+
+header <<< "/api/pri/domain/del"
+rm -f /tmp/api-private-domain-del-*
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/del (exists)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+domain_id=$(jq -r .domainId /tmp/api-private-domain-add-0)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
+    --output-dir /tmp --output api-private-domain-del-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "id": "$domain_id"
+    }
+EOF
+res=$(jq . /tmp/api-private-domain-del-0)
+out <<< "exists"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .domainId)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/del (not exists)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
+    --output-dir /tmp --output api-private-domain-del-1 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "id": "$domain_id"
+    }
+EOF
+res=$(jq . /tmp/api-private-domain-del-1)
+out <<< "not exists"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .domainId)" != "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "/api/pri/domain/del"
