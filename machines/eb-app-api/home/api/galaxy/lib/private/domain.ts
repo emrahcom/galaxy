@@ -1,7 +1,7 @@
 import { idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
-const PRE = "/api/private/domain";
+const PRE = "/api/pri/domain";
 
 // -----------------------------------------------------------------------------
 export async function addDomain(req: Deno.RequestEvent, identityId: string) {

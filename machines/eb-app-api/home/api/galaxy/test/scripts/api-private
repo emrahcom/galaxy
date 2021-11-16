@@ -17,7 +17,7 @@ rm -f /tmp/kratos-login-*
 rm -f /tmp/*.kratos.login
 
 # ------------------------------------------------------------------------------
-# /api/pri/hello without authentication
+# /api/pri/hello (no authentication)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/hello \
     --output-dir /tmp --output api-private-hello \
@@ -77,11 +77,11 @@ EOF
 userId=$(jq -r .session.identity.id /tmp/kratos-login-session)
 [[ "$userId" = "null" ]] && exit 1
 
-out <<< "kratos login, user ID:"
+out <<< "kratos login, user id:"
 out <<< "  $userId"
 
 # ------------------------------------------------------------------------------
-# /api/pri/hello with authentication
+# /api/pri/hello (with authentication)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/hello \
     --output-dir /tmp --output api-private-hello \
@@ -91,6 +91,50 @@ res=$(jq -r .text /tmp/api-private-hello)
 [[ "$res" = "hello null" ]] && exit 1
 
 out <<< "/api/pri/hello (with authentication):"
+out <<< "  $res"
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/add
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
+    --output-dir /tmp --output api-private-domain-add-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "name": "jitsi.mydomain.corp",
+        "auth_type": "none",
+        "attributes": {
+        }
+    }
+EOF
+res=$(jq -r .domainId /tmp/api-private-domain-add-0)
+[[ "$res" = "null" ]] && exit 1
+
+out <<< "/api/pri/domain/add domain id:"
+out <<< "  $res"
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/add (already exists)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
+    --output-dir /tmp --output api-private-domain-add-1 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "name": "jitsi.mydomain.corp",
+        "auth_type": "none",
+        "attributes": {
+        }
+    }
+EOF
+res=$(jq -r .domainId /tmp/api-private-domain-add-1)
+[[ "$res" != "null" ]] && exit 1
+
+out <<< "/api/pri/domain/add (already exists) domain id:"
 out <<< "  $res"
 
 # ------------------------------------------------------------------------------

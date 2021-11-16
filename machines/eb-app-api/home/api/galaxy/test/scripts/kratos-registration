@@ -56,7 +56,7 @@ userId=$(jq -r .identity.id /tmp/kratos-registration-session)
 echo "email=$email" >/tmp/kratos-credential
 echo "passwd=$passwd" >>/tmp/kratos-credential
 
-out <<< "kratos registration, user ID:"
+out <<< "kratos registration, user id:"
 out <<< "  $userId"
 out <<< "kratos registration, user email:"
 out <<< "  $email"
