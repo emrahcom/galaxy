@@ -9,7 +9,7 @@ BASEDIR=$(dirname $0)
 # ------------------------------------------------------------------------------
 # scripts
 # ------------------------------------------------------------------------------
-bash scripts/kratos-registration
-bash scripts/api-admin
-bash scripts/api-private
-bash scripts/api-public
+bash $BASEDIR/scripts/kratos-registration
+bash $BASEDIR/scripts/api-admin
+bash $BASEDIR/scripts/api-private
+bash $BASEDIR/scripts/api-public

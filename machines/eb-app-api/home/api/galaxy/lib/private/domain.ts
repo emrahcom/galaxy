@@ -24,6 +24,36 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
     const body = {
+      action: "add",
+      domainId: rows[0].id,
+    };
+
+    ok(req, JSON.stringify(body));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
+export async function delDomain(req: Deno.RequestEvent, identityId: string) {
+  try {
+    const pl = await req.request.json();
+    const sql = {
+      text: `
+        DELETE FROM domain
+        WHERE id = $1 and identity_id = $2
+        RETURNING id`,
+      args: [
+        pl.id,
+        identityId,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as idRows;
+      });
+    const body = {
+      action: "del",
       domainId: rows[0].id,
     };
 
@@ -41,6 +71,8 @@ export default function (
 ) {
   if (path === `${PRE}/add`) {
     addDomain(req, identityId);
+  } else if (path === `${PRE}/del`) {
+    delDomain(req, identityId);
   } else {
     notFound(req);
   }

@@ -138,6 +138,26 @@ out <<< "/api/pri/domain/add (already exists) domain id:"
 out <<< "  $res"
 
 # ------------------------------------------------------------------------------
+# /api/pri/domain/del
+# ------------------------------------------------------------------------------
+domain_id=$(jq -r .domainId /tmp/api-private-domain-add-0)
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
+    --output-dir /tmp --output api-private-domain-del-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "id": "$domain_id"
+    }
+EOF
+res=$(jq . /tmp/api-private-domain-del-0)
+[[ "$res" = "null" ]] && exit 1
+
+out <<< "/api/pri/domain/del"
+out <<< "$res"
+
+# ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
 footer <<< "/api/pri completed"
