@@ -27,18 +27,20 @@ async function handle(cnn: Deno.Conn) {
 
   for await (const req of http) {
     // check method
-    if (req.request.method !== `POST`) methodNotAllowed(req);
+    if (req.request.method === "POST") {
+      // check credential
+      const identityId = await getIdentityId(req);
+      if (identityId) {
+        const url = new URL(req.request.url);
+        const path = url.pathname;
 
-    // check credential
-    const identityId = await getIdentityId(req);
-    if (!identityId) {
-      unauthorized(req);
-      continue;
+        route(req, path, identityId);
+      } else {
+        unauthorized(req);
+      }
+    } else {
+      methodNotAllowed(req);
     }
-
-    const url = new URL(req.request.url);
-    const path = url.pathname;
-    route(req, path, identityId);
   }
 }
 

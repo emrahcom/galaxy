@@ -22,11 +22,14 @@ async function handle(cnn: Deno.Conn) {
 
   for await (const req of http) {
     // check method
-    if (req.request.method !== `POST`) methodNotAllowed(req);
+    if (req.request.method === "POST") {
+      const url = new URL(req.request.url);
+      const path = url.pathname;
 
-    const url = new URL(req.request.url);
-    const path = url.pathname;
-    route(req, path);
+      route(req, path);
+    } else {
+      methodNotAllowed(req);
+    }
   }
 }
 
