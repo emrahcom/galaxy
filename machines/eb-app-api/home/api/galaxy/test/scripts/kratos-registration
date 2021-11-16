@@ -7,13 +7,13 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "Registration started"
+header <<< "kratos registration started"
 rm -f /tmp/kratos-credential
 rm -f /tmp/kratos-registration-*
 rm -f /tmp/*.kratos.registration
 
 # ------------------------------------------------------------------------------
-# registration flow
+# kratos registration flow
 # ------------------------------------------------------------------------------
 cookieJar=$(mktemp --suffix .kratos.registration)
 
@@ -26,11 +26,13 @@ csrfToken=$(jq -r \
     '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
     /tmp/kratos-registration-flow)
 
-out <<< "Registration action URL: $actionUrl"
-out <<< "Registration CSRF token: $csrfToken"
+out <<< "kratos registration flow, action URL:"
+out <<< "  $actionUrl"
+out <<< "kratos registration flow, CSRF token:"
+out <<< "  $csrfToken"
 
 # ------------------------------------------------------------------------------
-# registration
+# kratos registration
 # ------------------------------------------------------------------------------
 email=user.$(date +%s)@galaxy.corp
 passwd=$(openssl rand -base64 12)
@@ -54,11 +56,14 @@ userId=$(jq -r .identity.id /tmp/kratos-registration-session)
 echo "email=$email" >/tmp/kratos-credential
 echo "passwd=$passwd" >>/tmp/kratos-credential
 
-out <<< "Registration user ID: $userId"
-out <<< "Registration user email: $email"
-out <<< "Registration user passwd: $passwd"
+out <<< "kratos registration, user ID:"
+out <<< "  $userId"
+out <<< "kratos registration, user email:"
+out <<< "  $email"
+out <<< "kratos registration, user passwd:"
+out <<< "  $passwd"
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "Registration completed"
+footer <<< "kratos registration completed"

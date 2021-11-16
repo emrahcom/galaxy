@@ -11,11 +11,11 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "API admin started"
+header <<< "/api/admin started"
 rm -f /tmp/api-admin-*
 
 # ------------------------------------------------------------------------------
-# hello
+# /api/admin/hello
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/admin/hello \
     --output-dir /tmp --output api-admin-hello \
@@ -23,9 +23,10 @@ curl -ks -X POST https://$APP_FQDN/api/admin/hello \
 res=$(jq -r .text /tmp/api-admin-hello)
 [[ "$res" = "null" ]] && exit 1
 
-out <<< "API admin hello: $res"
+out <<< "/api/admin/hello"
+out <<< "  $res"
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "API admin completed"
+footer <<< "/api/admin completed"

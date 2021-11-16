@@ -11,13 +11,13 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "API private started"
+header <<< "/api/pri started"
 rm -f /tmp/api-private-*
 rm -f /tmp/kratos-login-*
 rm -f /tmp/*.kratos.login
 
 # ------------------------------------------------------------------------------
-# hello without authentication
+# /api/pri/hello without authentication
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/hello \
     --output-dir /tmp --output api-private-hello \
@@ -25,10 +25,11 @@ curl -ks -X POST https://$APP_FQDN/api/pri/hello \
 res=$(jq -r .text /tmp/api-private-hello)
 [[ "$res" != "hello null" ]] && exit 1
 
-out <<< "API private hello (no authentication): $res"
+out <<< "/api/pri/hello (no authentication)"
+out <<< "  $res"
 
 # ------------------------------------------------------------------------------
-# login flow
+# kratos login flow
 # ------------------------------------------------------------------------------
 cookieJar=$(mktemp --suffix .kratos.login)
 
@@ -41,20 +42,24 @@ csrfToken=$(jq -r \
     '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
     /tmp/kratos-login-flow)
 
-out <<< "Login action URL: $actionUrl"
-out <<< "Login CSRF token: $csrfToken"
+out <<< "kratos login flow, action URL:"
+out <<< "  $actionUrl"
+out <<< "kratos login flow, CSRF token:"
+out <<< "  $csrfToken"
 
 # ------------------------------------------------------------------------------
-# credential
+# kratos credential
 # ------------------------------------------------------------------------------
 email=$(grep email /tmp/kratos-credential | cut -d= -f2)
 passwd=$(grep passwd /tmp/kratos-credential | cut -d= -f2)
 
-out <<< "API private user email: $email"
-out <<< "API private user passwd: $passwd"
+out <<< "kratos credential, email:"
+out <<< "  $email"
+out <<< "kratos credential, passwd:"
+out <<< "  $passwd"
 
 # ------------------------------------------------------------------------------
-# login
+# kratos login
 # ------------------------------------------------------------------------------
 curl -ks -X POST "$actionUrl" \
     --output-dir /tmp --output kratos-login-session \
@@ -72,10 +77,11 @@ EOF
 userId=$(jq -r .session.identity.id /tmp/kratos-login-session)
 [[ "$userId" = "null" ]] && exit 1
 
-out <<< "Login user ID: $userId"
+out <<< "kratos login, user ID:"
+out <<< "  $userId"
 
 # ------------------------------------------------------------------------------
-# hello with authentication
+# /api/pri/hello with authentication
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/hello \
     --output-dir /tmp --output api-private-hello \
@@ -84,9 +90,10 @@ curl -ks -X POST https://$APP_FQDN/api/pri/hello \
 res=$(jq -r .text /tmp/api-private-hello)
 [[ "$res" = "hello null" ]] && exit 1
 
-out <<< "API private hello (with authentication): $res"
+out <<< "/api/pri/hello (with authentication):"
+out <<< "  $res"
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "API private completed"
+footer <<< "/api/pri completed"

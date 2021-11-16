@@ -7,11 +7,11 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "API public started"
+header <<< "/api/pub started"
 rm -f /tmp/api-public-*
 
 # ------------------------------------------------------------------------------
-# hello
+# /api/pub/hello
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/hello \
     --output-dir /tmp --output api-public-hello \
@@ -19,9 +19,10 @@ curl -ks -X POST https://$APP_FQDN/api/pub/hello \
 res=$(jq -r .text /tmp/api-public-hello)
 [[ "$res" = "null" ]] && exit 1
 
-out <<< "API public hello: $res"
+out <<< "/api/pub/hello"
+out <<< "  $res"
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "API public completed"
+footer <<< "/api/pub completed"
