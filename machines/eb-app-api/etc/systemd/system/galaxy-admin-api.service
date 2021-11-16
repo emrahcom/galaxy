@@ -3,8 +3,8 @@ Description=Galaxy Admin API
 After=network-online.target
 
 [Service]
-User=api
-Group=api
+User=api-adm
+Group=api-adm
 WorkingDirectory=/home/api/galaxy
 ExecStart=deno run --allow-net index-admin.ts
 Restart=always

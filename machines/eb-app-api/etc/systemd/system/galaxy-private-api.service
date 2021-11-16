@@ -3,8 +3,8 @@ Description=Galaxy Private API
 After=network-online.target
 
 [Service]
-User=api
-Group=api
+User=api-pri
+Group=api-pri
 WorkingDirectory=/home/api/galaxy
 ExecStart=deno run --allow-net index-private.ts
 Restart=always

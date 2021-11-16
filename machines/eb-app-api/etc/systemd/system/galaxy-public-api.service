@@ -3,8 +3,8 @@ Description=Galaxy Public API
 After=network-online.target
 
 [Service]
-User=api
-Group=api
+User=api-pub
+Group=api-pub
 WorkingDirectory=/home/api/galaxy
 ExecStart=deno run --allow-net index-public.ts
 Restart=always
