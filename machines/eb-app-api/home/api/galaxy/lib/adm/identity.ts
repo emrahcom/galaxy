@@ -1,7 +1,7 @@
 import { idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
-const PRE = "/api/admin/identity";
+const PRE = "/api/adm/identity";
 
 // -----------------------------------------------------------------------------
 export async function addIdentity(req: Deno.RequestEvent) {

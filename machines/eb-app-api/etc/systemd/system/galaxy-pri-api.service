@@ -1,12 +1,12 @@
 [Unit]
-Description=Galaxy Public API
+Description=Galaxy Private API
 After=network-online.target
 
 [Service]
-User=api-pub
-Group=api-pub
+User=api-pri
+Group=api-pri
 WorkingDirectory=/home/api/galaxy
-ExecStart=deno run --allow-net index-public.ts
+ExecStart=deno run --allow-net index-pri.ts
 Restart=always
 RestartSec=2s
 

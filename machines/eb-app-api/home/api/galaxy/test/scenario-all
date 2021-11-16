@@ -11,7 +11,7 @@ BASEDIR=$(dirname $0)
 # ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/kratos-registration
 bash $BASEDIR/scripts/kratos-login
-bash $BASEDIR/scripts/api-admin-hello
+bash $BASEDIR/scripts/api-adm-hello
 bash $BASEDIR/scripts/api-pri-hello
 bash $BASEDIR/scripts/api-pri-domain-add
 bash $BASEDIR/scripts/api-pri-domain-del

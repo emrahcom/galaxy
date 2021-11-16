@@ -11,16 +11,16 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "/api/admin/hello"
-rm -f /tmp/api-admin-hello
+header <<< "/api/adm/hello"
+rm -f /tmp/api-adm-hello
 
 # ------------------------------------------------------------------------------
-# /api/admin/hello
+# /api/adm/hello
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/admin/hello \
-    --output-dir /tmp --output api-admin-hello \
+curl -ks -X POST https://$APP_FQDN/api/adm/hello \
+    --output-dir /tmp --output api-adm-hello \
     -H "Accept: application/json"
-res=$(jq . /tmp/api-admin-hello)
+res=$(jq . /tmp/api-adm-hello)
 out <<< "$res"
 
 [[ "$(echo $res | jq -r .text)" = "null" ]] && exit 1
@@ -28,4 +28,4 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/admin/hello"
+footer <<< "/api/adm/hello"

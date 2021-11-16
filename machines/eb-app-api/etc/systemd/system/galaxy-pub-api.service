@@ -1,12 +1,12 @@
 [Unit]
-Description=Galaxy Admin API
+Description=Galaxy Public API
 After=network-online.target
 
 [Service]
-User=api-adm
-Group=api-adm
+User=api-pub
+Group=api-pub
 WorkingDirectory=/home/api/galaxy
-ExecStart=deno run --allow-net index-admin.ts
+ExecStart=deno run --allow-net index-pub.ts
 Restart=always
 RestartSec=2s
 

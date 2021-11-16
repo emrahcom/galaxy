@@ -1,16 +1,13 @@
-import { HOSTNAME, PORT_ADMIN } from "./config.ts";
+import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/common/http-response.ts";
-import hello from "./lib/admin/hello.ts";
-import identity from "./lib/admin/identity.ts";
+import hello from "./lib/pub/hello.ts";
 
-const PRE = "/api/admin";
+const PRE = "/api/pub";
 
 // -----------------------------------------------------------------------------
 function route(req: Deno.RequestEvent, path: string) {
   if (path === `${PRE}/hello`) {
     hello(req);
-  } else if (path.match(`^${PRE}/identity/`)) {
-    identity(req, path);
   } else {
     notFound(req);
   }
@@ -37,7 +34,7 @@ async function handle(cnn: Deno.Conn) {
 async function main() {
   const server = Deno.listen({
     hostname: HOSTNAME,
-    port: PORT_ADMIN,
+    port: PORT_PUBLIC,
   });
 
   for await (const cnn of server) {

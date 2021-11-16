@@ -4,9 +4,9 @@ import {
   notFound,
   unauthorized,
 } from "./lib/common/http-response.ts";
-import { getIdentityId } from "./lib/private/kratos.ts";
-import hello from "./lib/private/hello.ts";
-import domain from "./lib/private/domain.ts";
+import { getIdentityId } from "./lib/pri/kratos.ts";
+import hello from "./lib/pri/hello.ts";
+import domain from "./lib/pri/domain.ts";
 
 const PRE = "/api/pri";
 
