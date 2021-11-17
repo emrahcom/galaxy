@@ -14,7 +14,7 @@ rm -f /tmp/api-pri-domain-del-*
 # /api/pri/domain/del (exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
-domain_id=$(jq -r .domainId /tmp/api-pri-domain-add-0)
+domain_id=$(jq -r .id /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
     --output-dir /tmp --output api-pri-domain-del-0 \

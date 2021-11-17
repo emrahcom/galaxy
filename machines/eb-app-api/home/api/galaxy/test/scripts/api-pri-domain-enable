@@ -36,7 +36,7 @@ out <<< "$res"
 # /api/pri/domain/enable (already exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
-domainId=$(jq -r .domainId /tmp/api-pri-domain-add-0)
+domainId=$(jq -r .id /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
     --output-dir /tmp --output api-pri-domain-enable-1 \

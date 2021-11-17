@@ -12,7 +12,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
       text: `
         INSERT INTO identity (id)
         VALUES ($1)
-        RETURNING id, created_at`,
+        RETURNING id, created_at as at`,
       args: [
         identityId,
       ],

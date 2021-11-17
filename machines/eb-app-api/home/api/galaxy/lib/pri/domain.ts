@@ -11,7 +11,7 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         INSERT INTO domain (identity_id, name, auth_type, attributes)
         VALUES ($1, $2, $3, $4::jsonb)
-        RETURNING id, created_at`,
+        RETURNING id, created_at as at`,
       args: [
         identityId,
         pl.name,
@@ -43,7 +43,7 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         DELETE FROM domain
         WHERE id = $1 and identity_id = $2
-        RETURNING id, now() as deleted_at`,
+        RETURNING id, now() as at`,
       args: [
         pl.id,
         identityId,
@@ -78,7 +78,7 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
           enabled = $6,
           updated_at = now()
         WHERE id = $1 and identity_id = $2
-        RETURNING id, updated_at`,
+        RETURNING id, updated_at as at`,
       args: [
         pl.id,
         identityId,
@@ -116,7 +116,7 @@ export async function updateEnabled(
         enabled = $3,
         updated_at = now()
       WHERE id = $1 and identity_id = $2
-      RETURNING id, updated_at`,
+      RETURNING id, updated_at as at`,
     args: [
       domainId,
       identityId,
