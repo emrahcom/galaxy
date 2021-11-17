@@ -17,13 +17,6 @@ const dbPool = new Pool({
 }, DB_POOL_SIZE);
 
 // -----------------------------------------------------------------------------
-export interface idRows {
-  [index: number]: {
-    id: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
 export async function query(sql: QueryObjectConfig) {
   const db = await dbPool.connect();
 
@@ -39,4 +32,19 @@ export async function query(sql: QueryObjectConfig) {
       // do nothing
     }
   }
+}
+
+// -----------------------------------------------------------------------------
+export interface idRows {
+  [index: number]: {
+    id: string;
+  };
+}
+
+// -----------------------------------------------------------------------------
+export interface enabledRows {
+  [index: number]: {
+    id: string;
+    enabled: boolean;
+  };
 }

@@ -7,56 +7,54 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
-header <<< "/api/pri/domain/add"
-rm -f /tmp/api-pri-domain-add-*
+header <<< "/api/pri/domain/enable"
+rm -f /tmp/api-pri-domain-enable-*
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/add (not exists)
+# /api/pri/domain/enable (not exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
+domainId=$(uuidgen)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
-    --output-dir /tmp --output api-pri-domain-add-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
+    --output-dir /tmp --output api-pri-domain-enable-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "name": "jitsi.mydomain.corp",
-        "auth_type": "none",
-        "attributes": {
-        }
+        "id": "$domainId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-add-0)
+res=$(jq . /tmp/api-pri-domain-enable-0)
 out <<< "not exists:"
-out <<< "$res"
-
-[[ "$(echo $res | jq -r .domainId)" = "null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# /api/pri/domain/add (already exists)
-# ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
-    --output-dir /tmp --output api-pri-domain-add-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "name": "jitsi.mydomain.corp",
-        "auth_type": "none",
-        "attributes": {
-        }
-    }
-EOF
-res=$(jq . /tmp/api-pri-domain-add-1)
-out <<< "exists:"
 out <<< "$res"
 
 [[ "$(echo $res | jq -r .domainId)" != "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
+# /api/pri/domain/enable (already exists)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+domainId=$(jq -r .domainId /tmp/api-pri-domain-add-0)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
+    --output-dir /tmp --output api-pri-domain-enable-1 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "id": "$domainId"
+    }
+EOF
+res=$(jq . /tmp/api-pri-domain-enable-1)
+out <<< "exists:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .domainId)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/add"
+footer <<< "/api/pri/domain/enable"

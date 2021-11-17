@@ -1,4 +1,4 @@
-import { idRows, query } from "../common/database.ts";
+import { enabledRows, idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pri/domain";
@@ -64,6 +64,69 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function updateEnabled(
+  domainId: string,
+  identityId: string,
+  value = true,
+) {
+  const sql = {
+    text: `
+      UPDATE domain
+      SET enabled = $3
+      WHERE id = $1 and identity_id = $2
+      RETURNING id, enabled`,
+    args: [
+      domainId,
+      identityId,
+      value,
+    ],
+  };
+  const rows = await query(sql)
+    .then((rst) => {
+      return rst.rows as enabledRows;
+    });
+
+  return rows;
+}
+
+// -----------------------------------------------------------------------------
+export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
+  try {
+    const pl = await req.request.json();
+    const rows = await updateEnabled(pl.id, identityId, true);
+    const body = {
+      action: "enable",
+      domainId: rows[0].id,
+      enabled: rows[0].enabled,
+    };
+
+    ok(req, JSON.stringify(body));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
+export async function disableDomain(
+  req: Deno.RequestEvent,
+  identityId: string,
+) {
+  try {
+    const pl = await req.request.json();
+    const rows = await updateEnabled(pl.id, identityId, false);
+    const body = {
+      action: "disable",
+      domainId: rows[0].id,
+      enabled: rows[0].enabled,
+    };
+
+    ok(req, JSON.stringify(body));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export default function (
   req: Deno.RequestEvent,
   path: string,
@@ -73,6 +136,10 @@ export default function (
     addDomain(req, identityId);
   } else if (path === `${PRE}/del`) {
     delDomain(req, identityId);
+  } else if (path === `${PRE}/enable`) {
+    enableDomain(req, identityId);
+  } else if (path === `${PRE}/disable`) {
+    disableDomain(req, identityId);
   } else {
     notFound(req);
   }
