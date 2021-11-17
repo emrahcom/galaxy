@@ -26,7 +26,7 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
     const body = {
       action: "add",
       domainId: rows[0].id,
-      createdAt: rows[0].created,
+      createdAt: rows[0].created_at,
     };
 
     ok(req, JSON.stringify(body));
