@@ -71,7 +71,7 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updatedomain(req: Deno.RequestEvent, identityId: string) {
+export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
     const sql = {
@@ -144,7 +144,6 @@ export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
     const body = {
       action: "enable",
       domainId: rows[0].id,
-      enabled: rows[0].enabled,
       updatedAt: rows[0].updated_at,
     };
 
@@ -165,7 +164,6 @@ export async function disableDomain(
     const body = {
       action: "disable",
       domainId: rows[0].id,
-      enabled: rows[0].enabled,
       updatedAt: rows[0].updated_at,
     };
 

@@ -1,4 +1,4 @@
-import { idRows, query } from "../common/database.ts";
+import { createdRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/adm/identity";
@@ -19,7 +19,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as idRows;
+        return rst.rows as createdRows;
       });
     const body = {
       identityId: rows[0].id,

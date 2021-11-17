@@ -14,6 +14,7 @@ rm -f /tmp/api-pri-domain-update-*
 # /api/pri/domain/update (valid)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
+domainId=$(jq -r .domainId /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
     --output-dir /tmp --output api-pri-domain-update-0 \
@@ -22,8 +23,10 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
+        "id": "$domainId",
         "name": "meet.mydomain.corp",
         "auth_type": "token",
+        "enabled": true,
         "attributes": {
            "app_id": "myappid",
            "app_key": "myappsecret"
@@ -46,8 +49,10 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
+        "id": "$domainId",
         "name": "meet.mydomain.corp",
         "auth_type": "invalid",
+        "enabled": true,
         "attributes": {
            "app_id": "myappid",
            "app_key": "myappsecret"
