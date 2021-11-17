@@ -37,7 +37,7 @@ res=$(jq . /tmp/api-pri-domain-update-0)
 out <<< "valid:"
 out <<< "$res"
 
-[[ "$(echo $res | jq -r .domainId)" = "null" ]] && exit 1
+[[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # /api/pri/domain/update (invalid)
@@ -63,7 +63,7 @@ res=$(jq . /tmp/api-pri-domain-update-1)
 out <<< "invalid:"
 out <<< "$res"
 
-[[ "$(echo $res | jq -r .domainId)" != "null" ]] && exit 1
+[[ "$(echo $res | jq -r .id)" != "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed

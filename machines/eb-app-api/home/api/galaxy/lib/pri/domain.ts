@@ -1,9 +1,4 @@
-import {
-  createdRows,
-  deletedRows,
-  query,
-  updatedRows,
-} from "../common/database.ts";
+import { idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pri/domain";
@@ -26,12 +21,12 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as createdRows;
+        return rst.rows as idRows;
       });
     const body = {
       action: "add",
-      domainId: rows[0].id,
-      createdAt: rows[0].created_at,
+      id: rows[0].id,
+      at: rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -48,7 +43,7 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         DELETE FROM domain
         WHERE id = $1 and identity_id = $2
-        RETURNING id, now()`,
+        RETURNING id, now() as deleted_at`,
       args: [
         pl.id,
         identityId,
@@ -56,12 +51,12 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as deletedRows;
+        return rst.rows as idRows;
       });
     const body = {
       action: "del",
-      domainId: rows[0].id,
-      deletedAt: rows[0].deleted_at,
+      id: rows[0].id,
+      at: rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -95,12 +90,12 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as updatedRows;
+        return rst.rows as idRows;
       });
     const body = {
       action: "update",
-      domainId: rows[0].id,
-      updatedAt: rows[0].updated_at,
+      id: rows[0].id,
+      at: rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -130,7 +125,7 @@ export async function updateEnabled(
   };
   const rows = await query(sql)
     .then((rst) => {
-      return rst.rows as updatedRows;
+      return rst.rows as idRows;
     });
 
   return rows;
@@ -143,8 +138,8 @@ export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
     const rows = await updateEnabled(pl.id, identityId, true);
     const body = {
       action: "enable",
-      domainId: rows[0].id,
-      updatedAt: rows[0].updated_at,
+      id: rows[0].id,
+      at: rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -163,8 +158,8 @@ export async function disableDomain(
     const rows = await updateEnabled(pl.id, identityId, false);
     const body = {
       action: "disable",
-      domainId: rows[0].id,
-      updatedAt: rows[0].updated_at,
+      id: rows[0].id,
+      at: rows[0].at,
     };
 
     ok(req, JSON.stringify(body));

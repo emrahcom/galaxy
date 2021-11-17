@@ -30,7 +30,7 @@ res=$(jq . /tmp/api-pri-domain-del-0)
 out <<< "exists"
 out <<< "$res"
 
-[[ "$(echo $res | jq -r .domainId)" = "null" ]] && exit 1
+[[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # /api/pri/domain/del (not exists)
@@ -49,7 +49,7 @@ res=$(jq . /tmp/api-pri-domain-del-1)
 out <<< "not exists"
 out <<< "$res"
 
-[[ "$(echo $res | jq -r .domainId)" != "null" ]] && exit 1
+[[ "$(echo $res | jq -r .id)" != "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed
