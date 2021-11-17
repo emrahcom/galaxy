@@ -35,7 +35,7 @@ export async function query(sql: QueryObjectConfig) {
 }
 
 // -----------------------------------------------------------------------------
-export interface idRows {
+export interface createdRows {
   [index: number]: {
     id: string;
     "created_at": string;
@@ -43,10 +43,17 @@ export interface idRows {
 }
 
 // -----------------------------------------------------------------------------
-export interface enabledRows {
+export interface deletedRows {
   [index: number]: {
     id: string;
-    enabled: boolean;
+    "deleted_at": string;
+  };
+}
+
+// -----------------------------------------------------------------------------
+export interface updatedRows {
+  [index: number]: {
+    id: string;
     "updated_at": string;
   };
 }

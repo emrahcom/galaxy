@@ -1,4 +1,9 @@
-import { enabledRows, idRows, query } from "../common/database.ts";
+import {
+  createdRows,
+  deletedRows,
+  query,
+  updatedRows,
+} from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pri/domain";
@@ -21,7 +26,7 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as idRows;
+        return rst.rows as createdRows;
       });
     const body = {
       action: "add",
@@ -43,7 +48,7 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         DELETE FROM domain
         WHERE id = $1 and identity_id = $2
-        RETURNING id`,
+        RETURNING id, now()`,
       args: [
         pl.id,
         identityId,
@@ -51,11 +56,51 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as idRows;
+        return rst.rows as deletedRows;
       });
     const body = {
       action: "del",
       domainId: rows[0].id,
+      deletedAt: rows[0].deleted_at,
+    };
+
+    ok(req, JSON.stringify(body));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
+export async function updatedomain(req: Deno.RequestEvent, identityId: string) {
+  try {
+    const pl = await req.request.json();
+    const sql = {
+      text: `
+        UPDATE domain SET
+          name = $3,
+          auth_type = $4,
+          attributes = $5::jsonb,
+          enabled = $6,
+          updated_at = now()
+        WHERE id = $1 and identity_id = $2
+        RETURNING id, updated_at`,
+      args: [
+        pl.id,
+        identityId,
+        pl.name,
+        pl.auth_type,
+        pl.attributes,
+        pl.enabled,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as updatedRows;
+      });
+    const body = {
+      action: "update",
+      domainId: rows[0].id,
+      updatedAt: rows[0].updated_at,
     };
 
     ok(req, JSON.stringify(body));
@@ -72,11 +117,11 @@ export async function updateEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE domain
-      SET enabled = $3,
+      UPDATE domain SET
+        enabled = $3,
         updated_at = now()
       WHERE id = $1 and identity_id = $2
-      RETURNING id, enabled, updated_at`,
+      RETURNING id, updated_at`,
     args: [
       domainId,
       identityId,
@@ -85,7 +130,7 @@ export async function updateEnabled(
   };
   const rows = await query(sql)
     .then((rst) => {
-      return rst.rows as enabledRows;
+      return rst.rows as updatedRows;
     });
 
   return rows;
@@ -140,6 +185,8 @@ export default function (
     addDomain(req, identityId);
   } else if (path === `${PRE}/del`) {
     delDomain(req, identityId);
+  } else if (path === `${PRE}/update`) {
+    updateDomain(req, identityId);
   } else if (path === `${PRE}/enable`) {
     enableDomain(req, identityId);
   } else if (path === `${PRE}/disable`) {
