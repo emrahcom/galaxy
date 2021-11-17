@@ -38,6 +38,7 @@ export async function query(sql: QueryObjectConfig) {
 export interface idRows {
   [index: number]: {
     id: string;
+    createdAt: string;
   };
 }
 
@@ -46,5 +47,6 @@ export interface enabledRows {
   [index: number]: {
     id: string;
     enabled: boolean;
+    updatedAt: string;
   };
 }

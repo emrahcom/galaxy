@@ -11,7 +11,7 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         INSERT INTO domain (identity_id, name, auth_type, attributes)
         VALUES ($1, $2, $3, $4::jsonb)
-        RETURNING id`,
+        RETURNING id, created_at`,
       args: [
         identityId,
         pl.name,
@@ -26,6 +26,7 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
     const body = {
       action: "add",
       domainId: rows[0].id,
+      createdAt: rows[0].created,
     };
 
     ok(req, JSON.stringify(body));
@@ -72,9 +73,10 @@ export async function updateEnabled(
   const sql = {
     text: `
       UPDATE domain
-      SET enabled = $3
+      SET enabled = $3,
+        updated_at = now()
       WHERE id = $1 and identity_id = $2
-      RETURNING id, enabled`,
+      RETURNING id, enabled, updated_at`,
     args: [
       domainId,
       identityId,
@@ -98,6 +100,7 @@ export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
       action: "enable",
       domainId: rows[0].id,
       enabled: rows[0].enabled,
+      updatedAt: rows[0].updated_at,
     };
 
     ok(req, JSON.stringify(body));
@@ -118,6 +121,7 @@ export async function disableDomain(
       action: "disable",
       domainId: rows[0].id,
       enabled: rows[0].enabled,
+      updatedAt: rows[0].updated_at,
     };
 
     ok(req, JSON.stringify(body));

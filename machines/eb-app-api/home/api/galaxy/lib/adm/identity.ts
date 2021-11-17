@@ -12,7 +12,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
       text: `
         INSERT INTO identity (id)
         VALUES ($1)
-        RETURNING id`,
+        RETURNING id, created_at`,
       args: [
         identityId,
       ],
@@ -23,6 +23,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
       });
     const body = {
       identityId: rows[0].id,
+      createdAt: rows[0].created_at,
     };
 
     ok(req, JSON.stringify(body));
