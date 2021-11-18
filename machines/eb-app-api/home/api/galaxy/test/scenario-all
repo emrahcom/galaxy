@@ -17,6 +17,7 @@ bash $BASEDIR/scripts/api-pri-domain-add
 bash $BASEDIR/scripts/api-pri-domain-get
 bash $BASEDIR/scripts/api-pri-domain-update
 bash $BASEDIR/scripts/api-pri-domain-disable
+bash $BASEDIR/scripts/api-pri-domain-get
 bash $BASEDIR/scripts/api-pri-domain-enable
 bash $BASEDIR/scripts/api-pri-domain-del
 bash $BASEDIR/scripts/api-pub-hello

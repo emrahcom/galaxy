@@ -23,7 +23,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId",
+        "id": "$domainId"
     }
 EOF
 res=$(jq . /tmp/api-pri-domain-get-0)
@@ -44,7 +44,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId",
+        "id": "$domainId"
     }
 EOF
 res=$(jq . /tmp/api-pri-domain-get-1)
