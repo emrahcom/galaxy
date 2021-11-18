@@ -1,4 +1,4 @@
-import { idRows, query } from "../common/database.ts";
+import { domainRows, idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pri/domain";
@@ -19,14 +19,17 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as idRows;
+        return rst.rows as domainRows;
       });
     const body = {
       "action": "get",
       "id": rows[0].id,
       "name": rows[0].name,
       "auth_type": rows[0].auth_type,
+      "attributes": rows[0].attributes,
       "enabled": rows[0].enabled,
+      "created_at": rows[0].created_at,
+      "updated_at": rows[0].updated_at,
     };
 
     ok(req, JSON.stringify(body));
