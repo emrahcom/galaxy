@@ -16,7 +16,7 @@ export async function getIdentityId(req: Deno.RequestEvent) {
     });
     const identityId = res.headers.get("x-kratos-authenticated-identity-id");
 
-    return `${identityId}`;
+    return identityId;
   } catch {
     return undefined;
   }
