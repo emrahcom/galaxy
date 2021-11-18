@@ -29,6 +29,30 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function listDomain(req: Deno.RequestEvent, identityId: string) {
+  try {
+    //const pl = await req.request.json();
+    const sql = {
+      text: `
+        SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
+        FROM domain
+        WHERE identity_id = $1`,
+      args: [
+        identityId,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as domainRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export async function addDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
@@ -176,6 +200,8 @@ export default function (
 ) {
   if (path === `${PRE}/get`) {
     getDomain(req, identityId);
+  } else if (path === `${PRE}/list`) {
+    listDomain(req, identityId);
   } else if (path === `${PRE}/add`) {
     addDomain(req, identityId);
   } else if (path === `${PRE}/del`) {
