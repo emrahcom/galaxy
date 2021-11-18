@@ -1,4 +1,4 @@
-import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../config.ts";
+import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../../config.ts";
 import { domainRows, idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
