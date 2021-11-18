@@ -14,3 +14,5 @@ export const DB_PASSWD = "___DB_PASSWD___";
 export const DB_HOST = "eb-postgres";
 export const DB_PORT = 5432;
 export const DB_POOL_SIZE = 8;
+export const DEFAULT_LIST_SIZE = 10;
+export const MAX_LIST_SIZE = 100;

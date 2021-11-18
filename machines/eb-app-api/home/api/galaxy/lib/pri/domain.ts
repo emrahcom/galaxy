@@ -1,3 +1,4 @@
+import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../config.ts";
 import { domainRows, idRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
@@ -35,9 +36,9 @@ export async function listDomain(req: Deno.RequestEvent, identityId: string) {
 
     let limit = pl.limit;
     if (!limit) {
-      limit = 10;
-    } else if (limit > 100) {
-      limit = 100;
+      limit = DEFAULT_LIST_SIZE;
+    } else if (limit > MAX_LIST_SIZE) {
+      limit = MAX_LIST_SIZE;
     }
 
     let offset = pl.offset;
