@@ -1,0 +1,100 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/common
+
+header <<< "/api/pri/domain/list"
+rm -f /tmp/api-pri-domain-list-*
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/list (no limit, no offset)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
+    --output-dir /tmp --output api-pri-domain-list-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+    }
+EOF
+res=$(jq . /tmp/api-pri-domain-list-0)
+out <<< "no limit, no offset:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/list (limit 2, no offset)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
+    --output-dir /tmp --output api-pri-domain-list-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "limit": 2
+    }
+EOF
+res=$(jq . /tmp/api-pri-domain-list-0)
+out <<< "limit 2, no offset:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/list (limit 2 offset 1)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
+    --output-dir /tmp --output api-pri-domain-list-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "limit": 2,
+        "offset": 1
+    }
+EOF
+res=$(jq . /tmp/api-pri-domain-list-0)
+out <<< "limit 2 offset 1:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/domain/list (no limit, offset 100)
+# ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
+    --output-dir /tmp --output api-pri-domain-list-0 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "offset": 100
+    }
+EOF
+res=$(jq . /tmp/api-pri-domain-list-0)
+out <<< "limit 2 offset 1:"
+out <<< "$res"
+
+[[ "$res" != "[]" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "/api/pri/domain/list"

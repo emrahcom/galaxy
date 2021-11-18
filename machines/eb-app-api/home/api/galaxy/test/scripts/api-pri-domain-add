@@ -14,6 +14,7 @@ rm -f /tmp/api-pri-domain-add-*
 # /api/pri/domain/add (not exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
+name="$RANDOM.$(date +'%s').mydomain.corp"
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     --output-dir /tmp --output api-pri-domain-add-0 \
@@ -22,7 +23,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "name": "jitsi.mydomain.corp",
+        "name": "$name",
         "auth_type": "none",
         "attributes": {
         }
@@ -46,7 +47,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "name": "jitsi.mydomain.corp",
+        "name": "$name",
         "auth_type": "none",
         "attributes": {
         }

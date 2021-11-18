@@ -5,6 +5,7 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+source $BASEDIR/scripts/common
 
 # ------------------------------------------------------------------------------
 # scripts
@@ -17,7 +18,13 @@ bash $BASEDIR/scripts/api-pri-domain-add
 bash $BASEDIR/scripts/api-pri-domain-get
 bash $BASEDIR/scripts/api-pri-domain-update
 bash $BASEDIR/scripts/api-pri-domain-disable
-bash $BASEDIR/scripts/api-pri-domain-get
 bash $BASEDIR/scripts/api-pri-domain-enable
 bash $BASEDIR/scripts/api-pri-domain-del
 bash $BASEDIR/scripts/api-pub-hello
+
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/api-pri-domain-add
+done
+bash $BASEDIR/scripts/api-pri-domain-list
+
+footer <<< completed successfully

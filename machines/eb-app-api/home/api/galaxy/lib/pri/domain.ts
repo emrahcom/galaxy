@@ -31,14 +31,29 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
 // -----------------------------------------------------------------------------
 export async function listDomain(req: Deno.RequestEvent, identityId: string) {
   try {
-    //const pl = await req.request.json();
+    const pl = await req.request.json();
+
+    let limit = pl.limit;
+    if (!limit) {
+      limit = 10;
+    } else if (limit > 100) {
+      limit = 100;
+    }
+
+    let offset = pl.offset;
+    if (!offset) offset = 0;
+
     const sql = {
       text: `
         SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
         FROM domain
-        WHERE identity_id = $1`,
+        WHERE identity_id = $1
+        ORDER BY name
+        LIMIT $2 OFFSET $3`,
       args: [
         identityId,
+        limit,
+        offset,
       ],
     };
     const rows = await query(sql)
