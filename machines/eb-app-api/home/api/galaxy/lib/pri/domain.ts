@@ -9,8 +9,7 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT id, identity_id, name, auth_type, attributes, enabled,
-            created_at, updated_at
+        SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
         FROM domain
         WHERE id = $1 and identity_id = $2`,
       args: [
@@ -23,12 +22,11 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
     const body = {
-      action: "get",
-      id: rows[0].id,
-      identityId: rows[0].identity_id,
-      name: rows[0].name,
-      authType: rows[0].auth_type,
-      enabled: rows[0].enabled,
+      "action": "get",
+      "id": rows[0].id,
+      "name": rows[0].name,
+      "auth_type": rows[0].auth_type,
+      "enabled": rows[0].enabled,
     };
 
     ok(req, JSON.stringify(body));
@@ -58,9 +56,9 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
     const body = {
-      action: "add",
-      id: rows[0].id,
-      at: rows[0].at,
+      "action": "add",
+      "id": rows[0].id,
+      "at": rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -88,9 +86,9 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
     const body = {
-      action: "del",
-      id: rows[0].id,
-      at: rows[0].at,
+      "action": "del",
+      "id": rows[0].id,
+      "at": rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -127,9 +125,9 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
     const body = {
-      action: "update",
-      id: rows[0].id,
-      at: rows[0].at,
+      "action": "update",
+      "id": rows[0].id,
+      "at": rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -171,9 +169,9 @@ export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const rows = await updateEnabled(pl.id, identityId, true);
     const body = {
-      action: "enable",
-      id: rows[0].id,
-      at: rows[0].at,
+      "action": "enable",
+      "id": rows[0].id,
+      "at": rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
@@ -191,9 +189,9 @@ export async function disableDomain(
     const pl = await req.request.json();
     const rows = await updateEnabled(pl.id, identityId, false);
     const body = {
-      action: "disable",
-      id: rows[0].id,
-      at: rows[0].at,
+      "action": "disable",
+      "id": rows[0].id,
+      "at": rows[0].at,
     };
 
     ok(req, JSON.stringify(body));
