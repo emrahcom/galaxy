@@ -22,6 +22,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
         return rst.rows as idRows;
       });
     const body = {
+      action: "add",
       id: rows[0].id,
       at: rows[0].at,
     };

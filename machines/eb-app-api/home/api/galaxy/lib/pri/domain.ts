@@ -4,6 +4,40 @@ import { internalServerError, notFound, ok } from "../common/http-response.ts";
 const PRE = "/api/pri/domain";
 
 // -----------------------------------------------------------------------------
+export async function getDomain(req: Deno.RequestEvent, identityId: string) {
+  try {
+    const pl = await req.request.json();
+    const sql = {
+      text: `
+        SELECT id, identity_id, name, auth_type, attributes, enabled,
+            created_at, updated_at
+        FROM domain
+        WHERE id = $1 and identity_id = $2`,
+      args: [
+        pl.id,
+        identityId,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as idRows;
+      });
+    const body = {
+      action: "get",
+      id: rows[0].id,
+      identityId: rows[0].identity_id,
+      name: rows[0].name,
+      authType: rows[0].auth_type,
+      enabled: rows[0].enabled,
+    };
+
+    ok(req, JSON.stringify(body));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export async function addDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
@@ -174,7 +208,9 @@ export default function (
   path: string,
   identityId: string,
 ) {
-  if (path === `${PRE}/add`) {
+  if (path === `${PRE}/get`) {
+    getDomain(req, identityId);
+  } else if (path === `${PRE}/add`) {
     addDomain(req, identityId);
   } else if (path === `${PRE}/del`) {
     delDomain(req, identityId);
