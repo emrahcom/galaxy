@@ -8,19 +8,7 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/common
 
 header <<< "/api/pri/hello"
-rm -f /tmp/api-pri-hello
-
-# ------------------------------------------------------------------------------
-# /api/pri/hello (no authentication)
-# ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/hello \
-    --output-dir /tmp --output api-pri-hello \
-    -H "Accept: application/json"
-res=$(jq . /tmp/api-pri-hello)
-out <<< "no authentication:"
-out <<< "$res"
-
-[[ "$(echo $res | jq -r .text)" != "hello null" ]] && exit 1
+rm -f /tmp/api-pri-hello-*
 
 # ------------------------------------------------------------------------------
 # /api/pri/hello (with authentication)
@@ -28,14 +16,26 @@ out <<< "$res"
 cookieJar=$(cat /tmp/kratos-login-cookie)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/hello \
-    --output-dir /tmp --output api-pri-hello \
+    --output-dir /tmp --output api-pri-hello-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json"
-res=$(jq . /tmp/api-pri-hello)
+res=$(jq . /tmp/api-pri-hello-0)
 out <<< "with authentication:"
 out <<< "$res"
 
 [[ "$(echo $res | jq -r .text)" = "hello null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/hello (no authentication)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/hello \
+    --output-dir /tmp --output api-pri-hello-1 \
+    -H "Accept: application/json"
+res=$(jq . /tmp/api-pri-hello-1)
+out <<< "no authentication:"
+out <<< "$res"
+
+[[ "$(echo $res | jq -r .text)" != "hello null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed

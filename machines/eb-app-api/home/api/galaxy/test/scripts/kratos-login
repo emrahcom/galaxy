@@ -49,6 +49,8 @@ out <<< "  $passwd"
 # ------------------------------------------------------------------------------
 # kratos login
 # ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
 curl -ks -X POST "$actionUrl" \
     --output-dir /tmp --output kratos-login-session \
     --cookie $cookieJar --cookie-jar $cookieJar \

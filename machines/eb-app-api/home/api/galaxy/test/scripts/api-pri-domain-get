@@ -35,6 +35,7 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/get (not exists)
 # ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \

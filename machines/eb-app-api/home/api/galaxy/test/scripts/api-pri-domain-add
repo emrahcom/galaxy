@@ -35,8 +35,10 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/add (already exists)
+# /api/pri/domain/add (exists)
 # ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     --output-dir /tmp --output api-pri-domain-add-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \

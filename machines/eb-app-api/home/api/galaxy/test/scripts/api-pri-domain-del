@@ -35,6 +35,9 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/del (not exists)
 # ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-login-cookie)
+domainId=$(uuidgen)
+
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
     --output-dir /tmp --output api-pri-domain-del-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -49,7 +52,7 @@ res=$(jq . /tmp/api-pri-domain-del-1)
 out <<< "not exists"
 out <<< "$res"
 
-[[ "$(echo $res | jq -r .id)" != "null" ]] && exit 1
+[[ -n "$(echo $res | jq -r .id)" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed

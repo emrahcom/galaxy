@@ -35,6 +35,7 @@ out <<< "  $csrfToken"
 # ------------------------------------------------------------------------------
 # kratos registration
 # ------------------------------------------------------------------------------
+cookieJar=$(cat /tmp/kratos-registration-cookie)
 email=user.$(date +%s)@galaxy.corp
 passwd=$(openssl rand -base64 12)
 
