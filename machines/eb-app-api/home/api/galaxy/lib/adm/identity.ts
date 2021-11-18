@@ -21,13 +21,8 @@ export async function addIdentity(req: Deno.RequestEvent) {
       .then((rst) => {
         return rst.rows as idRows;
       });
-    const body = {
-      action: "add",
-      id: rows[0].id,
-      at: rows[0].at,
-    };
 
-    ok(req, JSON.stringify(body));
+    ok(req, JSON.stringify(rows[0]));
   } catch {
     internalServerError(req);
   }

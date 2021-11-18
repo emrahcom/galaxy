@@ -21,18 +21,8 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
       .then((rst) => {
         return rst.rows as domainRows;
       });
-    const body = {
-      "action": "get",
-      "id": rows[0].id,
-      "name": rows[0].name,
-      "auth_type": rows[0].auth_type,
-      "attributes": rows[0].attributes,
-      "enabled": rows[0].enabled,
-      "created_at": rows[0].created_at,
-      "updated_at": rows[0].updated_at,
-    };
 
-    ok(req, JSON.stringify(body));
+    ok(req, JSON.stringify(rows[0]));
   } catch {
     internalServerError(req);
   }
@@ -58,13 +48,8 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
       .then((rst) => {
         return rst.rows as idRows;
       });
-    const body = {
-      "action": "add",
-      "id": rows[0].id,
-      "at": rows[0].at,
-    };
 
-    ok(req, JSON.stringify(body));
+    ok(req, JSON.stringify(rows[0]));
   } catch {
     internalServerError(req);
   }
@@ -88,13 +73,8 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
       .then((rst) => {
         return rst.rows as idRows;
       });
-    const body = {
-      "action": "del",
-      "id": rows[0].id,
-      "at": rows[0].at,
-    };
 
-    ok(req, JSON.stringify(body));
+    ok(req, JSON.stringify(rows[0]));
   } catch {
     internalServerError(req);
   }
@@ -127,13 +107,8 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
       .then((rst) => {
         return rst.rows as idRows;
       });
-    const body = {
-      "action": "update",
-      "id": rows[0].id,
-      "at": rows[0].at,
-    };
 
-    ok(req, JSON.stringify(body));
+    ok(req, JSON.stringify(rows[0]));
   } catch {
     internalServerError(req);
   }
@@ -171,13 +146,8 @@ export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
     const rows = await updateEnabled(pl.id, identityId, true);
-    const body = {
-      "action": "enable",
-      "id": rows[0].id,
-      "at": rows[0].at,
-    };
 
-    ok(req, JSON.stringify(body));
+    ok(req, JSON.stringify(rows[0]));
   } catch {
     internalServerError(req);
   }
@@ -191,13 +161,8 @@ export async function disableDomain(
   try {
     const pl = await req.request.json();
     const rows = await updateEnabled(pl.id, identityId, false);
-    const body = {
-      "action": "disable",
-      "id": rows[0].id,
-      "at": rows[0].at,
-    };
 
-    ok(req, JSON.stringify(body));
+    ok(req, JSON.stringify(rows[0]));
   } catch {
     internalServerError(req);
   }

@@ -51,7 +51,7 @@ res=$(jq . /tmp/api-pri-domain-get-1)
 out <<< "not exists:"
 out <<< "$res"
 
-[[ "$(echo $res | jq -r .id)" != "null" ]] && exit 1
+[[ -n "$(echo $res | jq -r .id)" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed
