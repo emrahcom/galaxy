@@ -23,6 +23,7 @@ res=$(jq . /tmp/api-pri-hello-0)
 out <<< "with authentication:"
 out <<< "$res"
 
+[[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ "$(echo $res | jq -r .text)" = "hello null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -35,6 +36,7 @@ res=$(jq . /tmp/api-pri-hello-1)
 out <<< "no authentication:"
 out <<< "$res"
 
+[[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ "$(echo $res | jq -r .text)" != "hello null" ]] && exit 1
 
 # ------------------------------------------------------------------------------

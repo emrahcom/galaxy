@@ -23,6 +23,7 @@ curl -ks -X POST https://$APP_FQDN/api/adm/hello \
 res=$(jq . /tmp/api-adm-hello)
 out <<< "$res"
 
+[[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ "$(echo $res | jq -r .text)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
