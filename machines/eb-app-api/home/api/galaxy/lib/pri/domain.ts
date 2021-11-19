@@ -23,7 +23,7 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as domainRows;
       });
 
-    ok(req, JSON.stringify(rows[0]));
+    ok(req, JSON.stringify(rows));
   } catch {
     internalServerError(req);
   }
@@ -89,7 +89,7 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
 
-    ok(req, JSON.stringify(rows[0]));
+    ok(req, JSON.stringify(rows));
   } catch {
     internalServerError(req);
   }
@@ -114,7 +114,7 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
 
-    ok(req, JSON.stringify(rows[0]));
+    ok(req, JSON.stringify(rows));
   } catch {
     internalServerError(req);
   }
@@ -148,7 +148,7 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
         return rst.rows as idRows;
       });
 
-    ok(req, JSON.stringify(rows[0]));
+    ok(req, JSON.stringify(rows));
   } catch {
     internalServerError(req);
   }
@@ -187,7 +187,7 @@ export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const rows = await updateEnabled(pl.id, identityId, true);
 
-    ok(req, JSON.stringify(rows[0]));
+    ok(req, JSON.stringify(rows));
   } catch {
     internalServerError(req);
   }
@@ -202,7 +202,7 @@ export async function disableDomain(
     const pl = await req.request.json();
     const rows = await updateEnabled(pl.id, identityId, false);
 
-    ok(req, JSON.stringify(rows[0]));
+    ok(req, JSON.stringify(rows));
   } catch {
     internalServerError(req);
   }

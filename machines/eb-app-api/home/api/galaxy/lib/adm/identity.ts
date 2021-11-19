@@ -22,7 +22,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
         return rst.rows as idRows;
       });
 
-    ok(req, JSON.stringify(rows[0]));
+    ok(req, JSON.stringify(rows));
   } catch {
     internalServerError(req);
   }
