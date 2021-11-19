@@ -2,10 +2,13 @@ import { KRATOS } from "../../config.ts";
 
 // -----------------------------------------------------------------------------
 export async function getIdentityId(req: Deno.RequestEvent) {
-  const whoami = `${KRATOS}/sessions/whoami`;
-  const cookie = req.request.headers.get("cookie") || "";
+  const cookie = req.request.headers.get("cookie");
+  if (!cookie) return undefined;
+  if (!cookie.match("csrf_token")) return undefined;
+  if (!cookie.match("ory_kratos_session")) return undefined;
 
   try {
+    const whoami = `${KRATOS}/sessions/whoami`;
     const res = await fetch(whoami, {
       credentials: "include",
       headers: {
