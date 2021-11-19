@@ -10,21 +10,21 @@ source $BASEDIR/scripts/common
 # ------------------------------------------------------------------------------
 # scripts
 # ------------------------------------------------------------------------------
-bash $BASEDIR/scripts/kratos-registration
-bash $BASEDIR/scripts/kratos-login
-bash $BASEDIR/scripts/api-adm-hello
-bash $BASEDIR/scripts/api-pri-hello
-bash $BASEDIR/scripts/api-pri-domain-add
-bash $BASEDIR/scripts/api-pri-domain-get
-bash $BASEDIR/scripts/api-pri-domain-update
-bash $BASEDIR/scripts/api-pri-domain-disable
-bash $BASEDIR/scripts/api-pri-domain-enable
-bash $BASEDIR/scripts/api-pri-domain-del
-bash $BASEDIR/scripts/api-pub-hello
+bash $BASEDIR/scripts/kratos/registration
+bash $BASEDIR/scripts/kratos/login
+bash $BASEDIR/scripts/adm/hello
+bash $BASEDIR/scripts/pri/hello
+bash $BASEDIR/scripts/pri/domain/add
+bash $BASEDIR/scripts/pri/domain/get
+bash $BASEDIR/scripts/pri/domain/update
+bash $BASEDIR/scripts/pri/domain/disable
+bash $BASEDIR/scripts/pri/domain/enable
+bash $BASEDIR/scripts/pri/domain/del
+bash $BASEDIR/scripts/pub/hello
 
 for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/api-pri-domain-add
+    bash $BASEDIR/scripts/pri/domain/add
 done
-bash $BASEDIR/scripts/api-pri-domain-list
+bash $BASEDIR/scripts/pri/domain/list
 
 footer <<< completed successfully

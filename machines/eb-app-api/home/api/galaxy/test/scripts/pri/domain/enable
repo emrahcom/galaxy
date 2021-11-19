@@ -5,72 +5,57 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
-source $BASEDIR/common
+source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/update"
-rm -f /tmp/api-pri-domain-update-*
+header <<< "/api/pri/domain/enable"
+rm -f /tmp/api-pri-domain-enable-*
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/update (valid post)
+# /api/pri/domain/enable (exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(jq -r .id /tmp/api-pri-domain-add-0)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
-    --output-dir /tmp --output api-pri-domain-update-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
+    --output-dir /tmp --output api-pri-domain-enable-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId",
-        "name": "meet.mydomain.corp",
-        "auth_type": "token",
-        "enabled": true,
-        "attributes": {
-           "app_id": "myappid",
-           "app_key": "myappsecret"
-        }
+        "id": "$domainId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-update-0)
-out <<< "valid post:"
+res=$(jq . /tmp/api-pri-domain-enable-0)
+out <<< "exists:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/update (invalid post)
+# /api/pri/domain/enable (not exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(uuidgen)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
-    --output-dir /tmp --output api-pri-domain-update-1 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
+    --output-dir /tmp --output api-pri-domain-enable-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId",
-        "name": "meet.mydomain.corp",
-        "auth_type": "invalid",
-        "enabled": true,
-        "attributes": {
-           "app_id": "myappid",
-           "app_key": "myappsecret"
-        }
+        "id": "$domainId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-update-1)
-out <<< "invalid post:"
+res=$(jq . /tmp/api-pri-domain-enable-1)
+out <<< "not exists:"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
+[[ -n "$res" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/update"
+footer <<< "/api/pri/domain/enable"

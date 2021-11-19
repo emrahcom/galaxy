@@ -5,19 +5,19 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
-source $BASEDIR/common
+source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/disable"
-rm -f /tmp/api-pri-domain-disable-*
+header <<< "/api/pri/domain/get"
+rm -f /tmp/api-pri-domain-get-*
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/disable (exists)
+# /api/pri/domain/get (exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(jq -r .id /tmp/api-pri-domain-add-0)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
-    --output-dir /tmp --output api-pri-domain-disable-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
+    --output-dir /tmp --output api-pri-domain-get-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -26,7 +26,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
         "id": "$domainId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-disable-0)
+res=$(jq . /tmp/api-pri-domain-get-0)
 out <<< "exists:"
 out <<< "$res"
 
@@ -34,13 +34,13 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/disable (not exists)
+# /api/pri/domain/get (not exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(uuidgen)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
-    --output-dir /tmp --output api-pri-domain-disable-1 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
+    --output-dir /tmp --output api-pri-domain-get-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -49,7 +49,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
         "id": "$domainId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-disable-1)
+res=$(jq . /tmp/api-pri-domain-get-1)
 out <<< "not exists:"
 out <<< "$res"
 
@@ -58,4 +58,4 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/disable"
+footer <<< "/api/pri/domain/get"

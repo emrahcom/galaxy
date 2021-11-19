@@ -5,57 +5,63 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
-source $BASEDIR/common
+source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/enable"
-rm -f /tmp/api-pri-domain-enable-*
+header <<< "/api/pri/domain/add"
+rm -f /tmp/api-pri-domain-add-*
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/enable (exists)
+# /api/pri/domain/add (not exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
-domainId=$(jq -r .id /tmp/api-pri-domain-add-0)
+name="$RANDOM.$(date +'%s').mydomain.corp"
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
-    --output-dir /tmp --output api-pri-domain-enable-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
+    --output-dir /tmp --output api-pri-domain-add-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId"
+        "name": "$name",
+        "auth_type": "none",
+        "attributes": {
+        }
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-enable-0)
-out <<< "exists:"
+res=$(jq . /tmp/api-pri-domain-add-0)
+out <<< "not exists:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/enable (not exists)
+# /api/pri/domain/add (exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
-domainId=$(uuidgen)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
-    --output-dir /tmp --output api-pri-domain-enable-1 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
+    --output-dir /tmp --output api-pri-domain-add-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId"
+        "name": "$name",
+        "auth_type": "none",
+        "attributes": {
+        }
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-enable-1)
-out <<< "not exists:"
+res=$(jq . /tmp/api-pri-domain-add-1)
+out <<< "exists:"
 out <<< "$res"
 
-[[ -n "$res" ]] && exit 1
+[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/enable"
+footer <<< "/api/pri/domain/add"

@@ -5,52 +5,52 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
-source $BASEDIR/common
+source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/del"
-rm -f /tmp/api-pri-domain-del-*
+header <<< "/api/pri/domain/disable"
+rm -f /tmp/api-pri-domain-disable-*
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/del (exists)
+# /api/pri/domain/disable (exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
-domain_id=$(jq -r .id /tmp/api-pri-domain-add-0)
+domainId=$(jq -r .id /tmp/api-pri-domain-add-0)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
-    --output-dir /tmp --output api-pri-domain-del-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
+    --output-dir /tmp --output api-pri-domain-disable-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domain_id"
+        "id": "$domainId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-del-0)
-out <<< "exists"
+res=$(jq . /tmp/api-pri-domain-disable-0)
+out <<< "exists:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/del (not exists)
+# /api/pri/domain/disable (not exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(uuidgen)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
-    --output-dir /tmp --output api-pri-domain-del-1 \
+curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
+    --output-dir /tmp --output api-pri-domain-disable-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domain_id"
+        "id": "$domainId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-del-1)
-out <<< "not exists"
+res=$(jq . /tmp/api-pri-domain-disable-1)
+out <<< "not exists:"
 out <<< "$res"
 
 [[ -n "$res" ]] && exit 1
@@ -58,4 +58,4 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/del"
+footer <<< "/api/pri/domain/disable"

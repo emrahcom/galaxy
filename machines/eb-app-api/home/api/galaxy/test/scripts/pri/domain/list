@@ -5,7 +5,7 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
-source $BASEDIR/common
+source $BASEDIR/../../common
 
 header <<< "/api/pri/domain/list"
 rm -f /tmp/api-pri-domain-list-*
