@@ -28,7 +28,7 @@ res=$(jq . /tmp/api-pri-domain-list-0)
 out <<< "no limit, no offset:"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ res=$(jq . /tmp/api-pri-domain-list-0)
 out <<< "limit 2, no offset:"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ res=$(jq . /tmp/api-pri-domain-list-0)
 out <<< "limit 2 offset 1:"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -95,7 +95,6 @@ res=$(jq . /tmp/api-pri-domain-list-0)
 out <<< "limit 2 offset 1000000:"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ "$res" != "[]" ]] && exit 1
 
 # ------------------------------------------------------------------------------

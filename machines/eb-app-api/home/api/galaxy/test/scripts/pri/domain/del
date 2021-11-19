@@ -14,7 +14,7 @@ rm -f /tmp/api-pri-domain-del-*
 # /api/pri/domain/del (exists)
 # ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
-domain_id=$(jq -r .id /tmp/api-pri-domain-add-0)
+domain_id=$(jq -r .[0].id /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
     --output-dir /tmp --output api-pri-domain-del-0 \
@@ -30,8 +30,8 @@ res=$(jq . /tmp/api-pri-domain-del-0)
 out <<< "exists"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ "$(echo $res | jq -r .id)" = "null" ]] && exit 1
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # /api/pri/domain/del (not exists)
@@ -53,7 +53,7 @@ res=$(jq . /tmp/api-pri-domain-del-1)
 out <<< "not exists"
 out <<< "$res"
 
-[[ -n "$res" ]] && exit 1
+[[ "$res" != "[]" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed
