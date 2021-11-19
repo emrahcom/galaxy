@@ -175,6 +175,7 @@ EOS
 
 # galaxy-api
 cp -arp home/api/galaxy $ROOTFS/home/api/
+rm -rf $ROOTFS/home/api/galaxy/database
 rm -rf $ROOTFS/home/api/galaxy/test
 sed -i "s/___DB_PASSWD___/$DB_GALAXY_PASSWD/" $ROOTFS/home/api/galaxy/config.ts
 
