@@ -83,6 +83,8 @@ CREATE TABLE room (
     "title" varchar(250) NOT NULL,
     "has_suffix" boolean NOT NULL DEFAULT TRUE,
     "suffix" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "schedule_type" room_schedule_type NOT NULL,
+    "schedule" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "enabled" boolean NOT NULL DEFAULT TRUE,
     "created_at" timestamp with time zone NOT NULL DEFAULT NOW(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT NOW(),
