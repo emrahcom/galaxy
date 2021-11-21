@@ -41,8 +41,9 @@ CREATE INDEX ON identity("created_at");
 CREATE INDEX ON identity("updated_at");
 ALTER TABLE identity OWNER TO galaxy;
 
-INSERT INTO identity
-    ('00000000-0000-0000-0000-000000000000', true, default, default);
+INSERT INTO identity VALUES (
+    '00000000-0000-0000-0000-000000000000', true, default, default
+);
 
 -- -----------------------------------------------------------------------------
 -- DOMAIN
@@ -71,9 +72,10 @@ CREATE INDEX ON domain("created_at");
 CREATE INDEX ON domain("updated_at");
 ALTER TABLE domain OWNER TO galaxy;
 
-INSERT INTO domain
-    (default, '00000000-0000-0000-0000-000000000000', 'meet.jit.si', 'none',
-     '{"url": "https://meet.jit.si"}'::jsonb, true, true, default, default);
+INSERT INTO domain VALUES (
+    default, '00000000-0000-0000-0000-000000000000', 'meet.jit.si', 'none',
+    '{"url": "https://meet.jit.si"}'::jsonb, true, true, default, default
+);
 
 -- -----------------------------------------------------------------------------
 -- ROOM
