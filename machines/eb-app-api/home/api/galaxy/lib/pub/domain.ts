@@ -12,7 +12,7 @@ export async function getDomain(req: Deno.RequestEvent) {
       text: `
         SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
         FROM domain
-        WHERE id = $1 and public = true`,
+        WHERE id = $1 AND public = true`,
       args: [
         pl.id,
       ],
@@ -67,11 +67,51 @@ export async function listDomain(req: Deno.RequestEvent) {
 }
 
 // -----------------------------------------------------------------------------
+export async function enabledDomain(req: Deno.RequestEvent) {
+  try {
+    const pl = await req.request.json();
+
+    let limit = pl.limit;
+    if (!limit) {
+      limit = DEFAULT_LIST_SIZE;
+    } else if (limit > MAX_LIST_SIZE) {
+      limit = MAX_LIST_SIZE;
+    }
+
+    let offset = pl.offset;
+    if (!offset) offset = 0;
+
+    const sql = {
+      text: `
+        SELECT id, name, auth_type, attributes, created_at, updated_at
+        FROM domain
+        WHERE public = true AND enabled = true
+        ORDER BY name
+        LIMIT $1 OFFSET $2`,
+      args: [
+        limit,
+        offset,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as domainRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export default function (req: Deno.RequestEvent, path: string) {
   if (path === `${PRE}/get`) {
     getDomain(req);
   } else if (path === `${PRE}/list`) {
     listDomain(req);
+  } else if (path === `${PRE}/enabled`) {
+    enabledDomain(req);
   } else {
     notFound(req);
   }

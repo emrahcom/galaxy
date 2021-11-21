@@ -12,7 +12,7 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
         FROM domain
-        WHERE id = $1 and identity_id = $2`,
+        WHERE id = $1 AND identity_id = $2`,
       args: [
         pl.id,
         identityId,
@@ -69,6 +69,48 @@ export async function listDomain(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function enabledDomain(
+  req: Deno.RequestEvent,
+  identityId: string,
+) {
+  try {
+    const pl = await req.request.json();
+
+    let limit = pl.limit;
+    if (!limit) {
+      limit = DEFAULT_LIST_SIZE;
+    } else if (limit > MAX_LIST_SIZE) {
+      limit = MAX_LIST_SIZE;
+    }
+
+    let offset = pl.offset;
+    if (!offset) offset = 0;
+
+    const sql = {
+      text: `
+        SELECT id, name, auth_type, attributes, created_at, updated_at
+        FROM domain
+        WHERE identity_id = $1 AND enabled = true
+        ORDER BY name
+        LIMIT $2 OFFSET $3`,
+      args: [
+        identityId,
+        limit,
+        offset,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as domainRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export async function addDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
@@ -102,7 +144,7 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         DELETE FROM domain
-        WHERE id = $1 and identity_id = $2
+        WHERE id = $1 AND identity_id = $2
         RETURNING id, now() as at`,
       args: [
         pl.id,
@@ -132,7 +174,7 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
           attributes = $5::jsonb,
           enabled = $6,
           updated_at = now()
-        WHERE id = $1 and identity_id = $2
+        WHERE id = $1 AND identity_id = $2
         RETURNING id, updated_at as at`,
       args: [
         pl.id,
@@ -165,7 +207,7 @@ export async function updateEnabled(
       UPDATE domain SET
         enabled = $3,
         updated_at = now()
-      WHERE id = $1 and identity_id = $2
+      WHERE id = $1 AND identity_id = $2
       RETURNING id, updated_at as at`,
     args: [
       domainId,
@@ -218,6 +260,8 @@ export default function (
     getDomain(req, identityId);
   } else if (path === `${PRE}/list`) {
     listDomain(req, identityId);
+  } else if (path === `${PRE}/enabled`) {
+    enabledDomain(req, identityId);
   } else if (path === `${PRE}/add`) {
     addDomain(req, identityId);
   } else if (path === `${PRE}/del`) {
