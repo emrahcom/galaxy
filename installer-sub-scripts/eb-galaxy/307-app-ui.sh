@@ -226,6 +226,7 @@ lxc-attach -n $MACH -- zsh <<EOS
 set -e
 chown ui:ui /home/ui/galaxy -R
 su -l ui <<EOSS
+    set -e
     cd /home/ui/galaxy
     npm install
 EOSS

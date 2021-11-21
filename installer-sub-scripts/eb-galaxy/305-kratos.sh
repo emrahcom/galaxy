@@ -207,6 +207,7 @@ if [[ "$DONT_RUN_KRATOS_DB" != true ]]; then
     lxc-attach -n $MACH -- zsh <<EOS
 set -e
 su -l kratos <<EOSS
+    set -e
     kratos migrate sql -c /home/kratos/config/kratos.yml -e --yes
 EOSS
 EOS
