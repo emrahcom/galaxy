@@ -1,0 +1,71 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/../../common
+
+header <<< "/api/pub/domain/enabled"
+rm -f /tmp/api-pub-domain-enabled-*
+
+# ------------------------------------------------------------------------------
+# /api/pub/domain/enabled (no limit, no offset)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pub/domain/enabled \
+    --output-dir /tmp --output api-pub-domain-enabled-0 \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+    }
+EOF
+res=$(jq . /tmp/api-pub-domain-enabled-0)
+out <<< "no limit, no offset:"
+out <<< "$res"
+
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pub/domain/enabled (limit 2, no offset)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pub/domain/enabled \
+    --output-dir /tmp --output api-pub-domain-enabled-1 \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "limit": 2
+    }
+EOF
+res=$(jq . /tmp/api-pub-domain-enabled-1)
+out <<< "limit 2, no offset:"
+out <<< "$res"
+
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pub/domain/enabled (no limit, offset 1000000)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pub/domain/enabled \
+    --output-dir /tmp --output api-pub-domain-enabled-2 \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "offset": 1000000
+    }
+EOF
+res=$(jq . /tmp/api-pub-domain-enabled-2)
+out <<< "limit 2 offset 1000000:"
+out <<< "$res"
+
+[[ "$res" != "[]" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
+footer <<< "/api/pub/domain/enabled"
