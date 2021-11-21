@@ -53,7 +53,7 @@ fi
 IS_DB_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
-    psql -At <<< '\l kratos'
+    psql -v ON_ERROR_STOP=1 -At <<< '\l kratos'
 EOSS
 EOS
 )
@@ -61,7 +61,7 @@ EOS
 IS_ROLE_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
-    psql -At <<< '\dg kratos'
+    psql -v ON_ERROR_STOP=1 -At <<< '\dg kratos'
 EOSS
 EOS
 )
@@ -101,7 +101,7 @@ echo "DB_KRATOS_PASSWD=$DB_KRATOS_PASSWD" >> $INSTALLER/000-source
 
 lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres -s /usr/bin/psql <<PSQL
+su -l postgres -s /usr/bin/psql -- -v ON_ERROR_STOP=1 <<PSQL
     ALTER ROLE kratos WITH PASSWORD '$DB_KRATOS_PASSWD';
 PSQL
 EOS

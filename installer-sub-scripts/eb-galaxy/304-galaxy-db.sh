@@ -53,7 +53,7 @@ fi
 IS_DB_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
-    psql -At <<< '\l galaxy'
+    psql -v ON_ERROR_STOP=1 -At <<< '\l galaxy'
 EOSS
 EOS
 )
@@ -61,7 +61,7 @@ EOS
 IS_ROLE_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
-    psql -At <<< '\dg galaxy'
+    psql -v ON_ERROR_STOP=1 -At <<< '\dg galaxy'
 EOSS
 EOS
 )
@@ -82,7 +82,7 @@ cp $MACHINES/eb-app-api/home/api/galaxy/database/*.sql $ROOTFS/tmp/
 set -e
 su -l postgres <<EOSS
     createdb -T template0 -O galaxy -E UTF-8 -l en_US.UTF-8 galaxy
-    psql -d galaxy -e -f /tmp/02-create-galaxy-tables.sql
+    psql -v ON_ERROR_STOP=1 -d galaxy -e -f /tmp/02-create-galaxy-tables.sql
 EOSS
 EOS
 
@@ -104,7 +104,7 @@ echo "DB_GALAXY_PASSWD=$DB_GALAXY_PASSWD" >> $INSTALLER/000-source
 
 lxc-attach -n eb-postgres -- zsh <<EOS
 set -e
-su -l postgres -s /usr/bin/psql <<PSQL
+su -l postgres -s /usr/bin/psql -- -v ON_ERROR_STOP=1 <<PSQL
     ALTER ROLE galaxy WITH PASSWORD '$DB_GALAXY_PASSWD';
 PSQL
 EOS
