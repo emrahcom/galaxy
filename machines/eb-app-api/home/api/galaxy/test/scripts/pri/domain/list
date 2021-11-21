@@ -37,7 +37,7 @@ out <<< "$res"
 cookieJar=$(cat /tmp/kratos-login-cookie)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
-    --output-dir /tmp --output api-pri-domain-list-0 \
+    --output-dir /tmp --output api-pri-domain-list-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -46,7 +46,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
         "limit": 2
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-list-0)
+res=$(jq . /tmp/api-pri-domain-list-1)
 out <<< "limit 2, no offset:"
 out <<< "$res"
 
@@ -59,7 +59,7 @@ out <<< "$res"
 cookieJar=$(cat /tmp/kratos-login-cookie)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
-    --output-dir /tmp --output api-pri-domain-list-0 \
+    --output-dir /tmp --output api-pri-domain-list-2 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -69,7 +69,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
         "offset": 1
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-list-0)
+res=$(jq . /tmp/api-pri-domain-list-2)
 out <<< "limit 2 offset 1:"
 out <<< "$res"
 
@@ -82,7 +82,7 @@ out <<< "$res"
 cookieJar=$(cat /tmp/kratos-login-cookie)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
-    --output-dir /tmp --output api-pri-domain-list-0 \
+    --output-dir /tmp --output api-pri-domain-list-3 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -91,7 +91,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
         "offset": 1000000
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-list-0)
+res=$(jq . /tmp/api-pri-domain-list-3)
 out <<< "limit 2 offset 1000000:"
 out <<< "$res"
 

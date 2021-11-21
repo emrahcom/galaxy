@@ -20,11 +20,14 @@ bash $BASEDIR/scripts/pri/domain/update
 bash $BASEDIR/scripts/pri/domain/disable
 bash $BASEDIR/scripts/pri/domain/enable
 bash $BASEDIR/scripts/pri/domain/del
-bash $BASEDIR/scripts/pub/hello
 
 for i in $(seq 1 10); do
     bash $BASEDIR/scripts/pri/domain/add
 done
 bash $BASEDIR/scripts/pri/domain/list
+
+bash $BASEDIR/scripts/pub/hello
+bash $BASEDIR/scripts/pub/domain/list
+bash $BASEDIR/scripts/pub/domain/get
 
 footer <<< completed successfully
