@@ -124,7 +124,7 @@ CREATE TABLE meeting (
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "title" varchar(250) NOT NULL,
     "duration" integer NOT NULL DEFAULT 0,
-    "schedule_type" room_schedule_type NOT NULL DEFAULT 'permanent',
+    "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
     "attributes" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
