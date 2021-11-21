@@ -128,7 +128,7 @@ CREATE TABLE meeting (
     "attributes" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON meeting("access_key");
 CREATE INDEX ON meeting("room_id");
