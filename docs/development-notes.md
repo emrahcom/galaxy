@@ -1,10 +1,10 @@
-# research
+## research
 
 - ory kratos
 - database modules
 - database codes
 
-# design
+## design
 
 - database
 - database, room scheduler, publishing time
@@ -17,3 +17,9 @@
 - subcription to the groups
 - categories and tags
 - meeting reservation and invite system
+
+## guest
+
+- a guest can only create meetings on public domains.
+- an ephemeral meeting has always a random room name without a suffix. use
+  `uuid` inside the name to avoid the unique key constraint.
