@@ -135,7 +135,7 @@ CREATE TABLE schedule (
     "meeting_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
     "ended_at" timestamp GENERATED ALWAYS AS
-        (meeting_at + duration * interval '1 min') STORED,
+        (meeting_at + duration * interval '1 min') STORED
 );
 CREATE INDEX ON schedule(meeting_id);
 ALTER TABLE schedule OWNER TO galaxy;
