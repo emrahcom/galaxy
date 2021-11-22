@@ -128,14 +128,14 @@ ALTER TABLE meeting OWNER TO galaxy;
 -- SCHEDULE
 -- -----------------------------------------------------------------------------
 -- - schedule doesn't contain permanent meetings
+-- - ended_at = meeting_at + duration * interval '1 min'
 -- -----------------------------------------------------------------------------
 CREATE TABLE schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "meeting_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
-    "ended_at" timestamp GENERATED ALWAYS AS
-        (meeting_at + duration * interval '1 min') STORED
+    "ended_at" timestamp with time zone NOT NULL
 );
 CREATE INDEX ON schedule(meeting_id);
 ALTER TABLE schedule OWNER TO galaxy;
