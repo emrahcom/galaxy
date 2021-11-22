@@ -10,7 +10,7 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
+        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
         WHERE id = $1 AND identity_id = $2`,
       args: [
@@ -46,7 +46,7 @@ export async function listDomain(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
+        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
         WHERE identity_id = $1
         ORDER BY name
@@ -88,7 +88,7 @@ export async function enabledDomain(
 
     const sql = {
       text: `
-        SELECT id, name, auth_type, attributes, created_at, updated_at
+        SELECT id, name, auth_type, auth_attr, created_at, updated_at
         FROM domain
         WHERE identity_id = $1 AND enabled = true
         ORDER BY name
@@ -116,14 +116,14 @@ export async function addDomain(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        INSERT INTO domain (identity_id, name, auth_type, attributes)
+        INSERT INTO domain (identity_id, name, auth_type, auth_attr)
         VALUES ($1, $2, $3, $4::jsonb)
         RETURNING id, created_at as at`,
       args: [
         identityId,
         pl.name,
         pl.auth_type,
-        pl.attributes,
+        pl.auth_attr,
       ],
     };
     const rows = await query(sql)
@@ -171,7 +171,7 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
         UPDATE domain SET
           name = $3,
           auth_type = $4,
-          attributes = $5::jsonb,
+          auth_attr = $5::jsonb,
           enabled = $6,
           updated_at = now()
         WHERE id = $1 AND identity_id = $2
@@ -181,7 +181,7 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
         identityId,
         pl.name,
         pl.auth_type,
-        pl.attributes,
+        pl.auth_attr,
         pl.enabled,
       ],
     };

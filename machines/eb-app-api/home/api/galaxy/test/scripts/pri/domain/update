@@ -26,11 +26,11 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
         "id": "$domainId",
         "name": "meet.mydomain.corp",
         "auth_type": "token",
-        "enabled": true,
-        "attributes": {
+        "auth_attr": {
            "app_id": "myappid",
            "app_key": "myappsecret"
-        }
+        },
+        "enabled": true
     }
 EOF
 res=$(jq . /tmp/api-pri-domain-update-0)
@@ -56,11 +56,11 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
         "id": "$domainId",
         "name": "meet.mydomain.corp",
         "auth_type": "invalid",
-        "enabled": true,
-        "attributes": {
+        "auth_attr": {
            "app_id": "myappid",
            "app_key": "myappsecret"
-        }
+        },
+        "enabled": true
     }
 EOF
 res=$(jq . /tmp/api-pri-domain-update-1)

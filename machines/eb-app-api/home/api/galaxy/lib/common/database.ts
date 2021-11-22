@@ -48,7 +48,7 @@ export interface domainRows {
     id: string;
     name: string;
     auth_type: string;
-    attributes: unknown;
+    auth_attr: unknown;
     enabled: boolean;
     created_at: string;
     updated_at: string;

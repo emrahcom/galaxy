@@ -25,7 +25,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     {
         "name": "$name",
         "auth_type": "none",
-        "attributes": {
+        "auth_attr": {
         }
     }
 EOF
@@ -50,7 +50,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     {
         "name": "$name",
         "auth_type": "none",
-        "attributes": {
+        "auth_attr": {
         }
     }
 EOF

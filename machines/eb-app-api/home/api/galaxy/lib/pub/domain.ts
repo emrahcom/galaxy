@@ -10,7 +10,7 @@ export async function getDomain(req: Deno.RequestEvent) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
+        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
         WHERE id = $1 AND public = true`,
       args: [
@@ -45,7 +45,7 @@ export async function listDomain(req: Deno.RequestEvent) {
 
     const sql = {
       text: `
-        SELECT id, name, auth_type, attributes, enabled, created_at, updated_at
+        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
         WHERE public = true
         ORDER BY name
@@ -83,7 +83,7 @@ export async function enabledDomain(req: Deno.RequestEvent) {
 
     const sql = {
       text: `
-        SELECT id, name, auth_type, attributes, created_at, updated_at
+        SELECT id, name, auth_type, auth_attr, created_at, updated_at
         FROM domain
         WHERE public = true AND enabled = true
         ORDER BY name

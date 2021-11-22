@@ -47,6 +47,7 @@ INSERT INTO identity VALUES (
 -- DOMAIN
 -- -----------------------------------------------------------------------------
 -- - public domain can only be added by system account.
+-- - url depends on auth_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE domain_auth_type AS ENUM
     ('none', 'token', 'moderated');
@@ -55,7 +56,7 @@ CREATE TABLE domain (
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "auth_type" domain_auth_type NOT NULL DEFAULT 'none',
-    "attributes" jsonb NOT NULL DEFAULT '{}'::jsonb,
+    "auth_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "public" boolean NOT NULL DEFAULT false,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -82,7 +83,7 @@ CREATE TABLE room (
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "has_suffix" boolean NOT NULL DEFAULT true,
-    "suffix" uuid NOT NULL DEFAULT gen_random_uuid(),
+    "suffix" varchar(250) NOT NULL DEFAULT md5(gen_random_uuid()::text),
     "ephemeral" boolean NOT NULL DEFAULT false,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -95,12 +96,12 @@ ALTER TABLE room OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- MEETING
 -- -----------------------------------------------------------------------------
--- - dont show the ephemeral meeting to the owner too, if it's over
--- - duration as minute
--- - public meeting can be listed by everyone but permission will be needed to
---   participate if it is not allowed
--- - anybody can participate an allowed meeting if she has the access key. an
---   allowed meeting may be hidden (not public)
+-- - dont show the ephemeral meeting if it's over
+-- - non-hidden meeting can be seen by everyone but permission will be needed to
+--   participate it if it isn't common
+-- - anybody can participate a common meeting if she has the access key
+--   a common meeting may be hidden
+-- - duration as minute in schedule_attr according to schedule_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_schedule_type AS ENUM
     ('permanent', 'periodic', 'scheduled', 'ephemeral');
@@ -111,17 +112,33 @@ CREATE TABLE meeting (
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "title" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
-    "duration" integer NOT NULL DEFAULT 0,
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
-    "attributes" jsonb NOT NULL DEFAULT '{}'::jsonb,
-    "public" boolean NOT NULL DEFAULT false,
-    "allowed" boolean NOT NULL DEFAULT true,
+    "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
+    "scheduled_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "hidden" boolean NOT NULL DEFAULT true,
+    "common" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON meeting("access_key");
 ALTER TABLE meeting OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
+-- SCHEDULE
+-- -----------------------------------------------------------------------------
+-- - schedule doesn't contain permanent meetings
+-- -----------------------------------------------------------------------------
+CREATE TABLE schedule (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "meeting_at" timestamp with time zone NOT NULL,
+    "duration" integer NOT NULL,
+    "ended_at" timestamp GENERATED ALWAYS AS
+        (meeting_at + duration * interval '1 min') STORED,
+);
+CREATE INDEX ON schedule(meeting_id);
+ALTER TABLE schedule OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 COMMIT;
