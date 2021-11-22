@@ -23,3 +23,7 @@
 - a guest can only create meetings on public domains.
 - an ephemeral meeting has always a random room name without a suffix. use
   `uuid` inside the name to avoid the unique key constraint.
+
+## databse
+
+- index optimizations

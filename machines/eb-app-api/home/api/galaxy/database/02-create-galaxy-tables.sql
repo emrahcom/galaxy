@@ -36,11 +36,9 @@ CREATE TABLE identity (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE INDEX ON identity("enabled");
-CREATE INDEX ON identity("created_at");
-CREATE INDEX ON identity("updated_at");
 ALTER TABLE identity OWNER TO galaxy;
 
+-- system account
 INSERT INTO identity VALUES (
     '00000000-0000-0000-0000-000000000000', true, default, default
 );
@@ -64,12 +62,7 @@ CREATE TABLE domain (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON domain("identity_id", "name");
-CREATE INDEX ON domain("name");
-CREATE INDEX ON domain("auth_type");
 CREATE INDEX ON domain("public");
-CREATE INDEX ON domain("enabled");
-CREATE INDEX ON domain("created_at");
-CREATE INDEX ON domain("updated_at");
 ALTER TABLE domain OWNER TO galaxy;
 
 INSERT INTO domain VALUES (
@@ -80,7 +73,7 @@ INSERT INTO domain VALUES (
 -- -----------------------------------------------------------------------------
 -- ROOM
 -- -----------------------------------------------------------------------------
--- - update suffix if accessed_at is older than 6 hours
+-- - update suffix if accessed_at is older than 4 hours
 -- - dont show the room to the owner too if ephemeral is true
 -- - ephemeral room has no suffix but a hashed uuid inside its name
 -- -----------------------------------------------------------------------------
@@ -97,12 +90,6 @@ CREATE TABLE room (
     "accessed_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON room("domain_id", "name");
-CREATE INDEX ON room("name");
-CREATE INDEX ON room("ephemeral");
-CREATE INDEX ON room("enabled");
-CREATE INDEX ON room("created_at");
-CREATE INDEX ON room("updated_at");
-CREATE INDEX ON room("accessed_at");
 ALTER TABLE room OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -110,10 +97,10 @@ ALTER TABLE room OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting to the owner too, if it's over
 -- - duration as minute
--- - subscription, how?
--- - visibility, how?
--- - accessibility, how?
--- - description
+-- - public meeting can be listed by everyone but permission will be needed to
+--   participate if it is not allowed
+-- - anybody can participate an allowed meeting if she has the access key. an
+--   allowed meeting may be hidden (not public)
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_schedule_type AS ENUM
     ('permanent', 'periodic', 'scheduled', 'ephemeral');
@@ -123,20 +110,17 @@ CREATE TABLE meeting (
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "title" varchar(250) NOT NULL,
+    "info" varchar(2000) NOT NULL DEFAULT '',
     "duration" integer NOT NULL DEFAULT 0,
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
     "attributes" jsonb NOT NULL DEFAULT '{}'::jsonb,
+    "public" boolean NOT NULL DEFAULT false,
+    "allowed" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON meeting("access_key");
-CREATE INDEX ON meeting("room_id");
-CREATE INDEX ON meeting("title");
-CREATE INDEX ON meeting("schedule_type");
-CREATE INDEX ON meeting("enabled");
-CREATE INDEX ON meeting("created_at");
-CREATE INDEX ON meeting("updated_at");
 ALTER TABLE meeting OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
