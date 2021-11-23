@@ -12,10 +12,10 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
-        WHERE id = $1 AND identity_id = $2`,
+        WHERE id = $2 AND identity_id = $1`,
       args: [
-        pl.id,
         identityId,
+        pl.id,
       ],
     };
     const rows = await query(sql)
@@ -88,7 +88,7 @@ export async function enabledDomain(
 
     const sql = {
       text: `
-        SELECT id, name, auth_type, auth_attr, created_at, updated_at
+        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
         WHERE identity_id = $1 AND enabled = true
         ORDER BY name
@@ -144,11 +144,11 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         DELETE FROM domain
-        WHERE id = $1 AND identity_id = $2
+        WHERE id = $2 AND identity_id = $1
         RETURNING id, now() as at`,
       args: [
-        pl.id,
         identityId,
+        pl.id,
       ],
     };
     const rows = await query(sql)
@@ -172,17 +172,15 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
           name = $3,
           auth_type = $4,
           auth_attr = $5::jsonb,
-          enabled = $6,
           updated_at = now()
-        WHERE id = $1 AND identity_id = $2
+        WHERE id = $2 AND identity_id = $1
         RETURNING id, updated_at as at`,
       args: [
-        pl.id,
         identityId,
+        pl.id,
         pl.name,
         pl.auth_type,
         pl.auth_attr,
-        pl.enabled,
       ],
     };
     const rows = await query(sql)
@@ -198,8 +196,8 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
 
 // -----------------------------------------------------------------------------
 export async function updateEnabled(
-  domainId: string,
   identityId: string,
+  domainId: string,
   value = true,
 ) {
   const sql = {
@@ -207,11 +205,11 @@ export async function updateEnabled(
       UPDATE domain SET
         enabled = $3,
         updated_at = now()
-      WHERE id = $1 AND identity_id = $2
+      WHERE id = $2 AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
-      domainId,
       identityId,
+      domainId,
       value,
     ],
   };
@@ -227,7 +225,7 @@ export async function updateEnabled(
 export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-    const rows = await updateEnabled(pl.id, identityId, true);
+    const rows = await updateEnabled(identityId, pl.id, true);
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -242,7 +240,7 @@ export async function disableDomain(
 ) {
   try {
     const pl = await req.request.json();
-    const rows = await updateEnabled(pl.id, identityId, false);
+    const rows = await updateEnabled(identityId, pl.id, false);
 
     ok(req, JSON.stringify(rows));
   } catch {

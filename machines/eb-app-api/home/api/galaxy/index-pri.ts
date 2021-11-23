@@ -7,6 +7,7 @@ import {
 import { getIdentityId } from "./lib/pri/kratos.ts";
 import hello from "./lib/pri/hello.ts";
 import domain from "./lib/pri/domain.ts";
+import room from "./lib/pri/room.ts";
 
 const PRE = "/api/pri";
 
@@ -16,6 +17,8 @@ function route(req: Deno.RequestEvent, path: string, identityId: string) {
     hello(req, identityId);
   } else if (path.match(`^${PRE}/domain/`)) {
     domain(req, path, identityId);
+  } else if (path.match(`^${PRE}/room/`)) {
+    room(req, path, identityId);
   } else {
     notFound(req);
   }

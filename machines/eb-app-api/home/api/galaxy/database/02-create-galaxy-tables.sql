@@ -80,6 +80,7 @@ INSERT INTO domain VALUES (
 -- -----------------------------------------------------------------------------
 CREATE TABLE room (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "has_suffix" boolean NOT NULL DEFAULT true,
@@ -107,9 +108,10 @@ CREATE TYPE meeting_schedule_type AS ENUM
     ('permanent', 'periodic', 'scheduled', 'ephemeral');
 CREATE TABLE meeting (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "access_key" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
-    "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "title" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',

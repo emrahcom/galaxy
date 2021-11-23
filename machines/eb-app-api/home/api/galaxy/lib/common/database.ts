@@ -54,3 +54,17 @@ export interface domainRows {
     updated_at: string;
   };
 }
+
+// -----------------------------------------------------------------------------
+export interface roomRows {
+  [index: number]: {
+    id: string;
+    domain_id: string;
+    name: string;
+    has_suffix: boolean;
+    suffix: string;
+    enabled: boolean;
+    created_at: string;
+    updated_at: string;
+  };
+}
