@@ -49,8 +49,7 @@ INSERT INTO identity VALUES (
 -- - public domain can only be added by system account.
 -- - url depends on auth_type
 -- -----------------------------------------------------------------------------
-CREATE TYPE domain_auth_type AS ENUM
-    ('none', 'token', 'moderated');
+CREATE TYPE domain_auth_type AS ENUM ('none', 'token');
 CREATE TABLE domain (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
