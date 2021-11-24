@@ -59,12 +59,15 @@ export interface domainRows {
 export interface roomRows {
   [index: number]: {
     id: string;
-    domain_id: string;
     name: string;
+    domain_id: string;
+    domain_name: string;
     has_suffix: boolean;
     suffix: string;
+    ephemeral: boolean;
     enabled: boolean;
     created_at: string;
     updated_at: string;
+    accessed_at: string;
   };
 }

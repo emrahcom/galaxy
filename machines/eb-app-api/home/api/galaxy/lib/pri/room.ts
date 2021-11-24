@@ -5,6 +5,118 @@ import { internalServerError, notFound, ok } from "../common/http-response.ts";
 const PRE = "/api/pri/room";
 
 // -----------------------------------------------------------------------------
+export async function getRoom(req: Deno.RequestEvent, identityId: string) {
+  try {
+    const pl = await req.request.json();
+    const sql = {
+      text: `
+        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
+            r.has_suffix, r.suffix, r.ephemeral, r.enabled, r.created_at,
+            r.updated_at, r.accessed_at
+        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
+        WHERE r.id = $2 AND r.identity_id = $1`,
+      args: [
+        identityId,
+        pl.id,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as roomRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
+export async function listRoom(req: Deno.RequestEvent, identityId: string) {
+  try {
+    const pl = await req.request.json();
+
+    let limit = pl.limit;
+    if (!limit) {
+      limit = DEFAULT_LIST_SIZE;
+    } else if (limit > MAX_LIST_SIZE) {
+      limit = MAX_LIST_SIZE;
+    }
+
+    let offset = pl.offset;
+    if (!offset) offset = 0;
+
+    const sql = {
+      text: `
+        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
+            r.has_suffix, r.suffix, r.ephemeral, r.enabled, r.created_at,
+            r.updated_at, r.accessed_at
+        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
+        WHERE r.identity_id = $1
+        ORDER BY r.name
+        LIMIT $2 OFFSET $3`,
+      args: [
+        identityId,
+        limit,
+        offset,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as roomRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
+export async function enabledRoom(
+  req: Deno.RequestEvent,
+  identityId: string,
+) {
+  try {
+    const pl = await req.request.json();
+
+    let limit = pl.limit;
+    if (!limit) {
+      limit = DEFAULT_LIST_SIZE;
+    } else if (limit > MAX_LIST_SIZE) {
+      limit = MAX_LIST_SIZE;
+    }
+
+    let offset = pl.offset;
+    if (!offset) offset = 0;
+
+    const sql = {
+      text: `
+        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
+            r.has_suffix, r.suffix, r.ephemeral, r.enabled, r.created_at,
+            r.updated_at, r.accessed_at
+        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
+        WHERE r.identity_id = $1 AND r.enabled = true AND d.enabled = true
+        ORDER BY r.name
+        LIMIT $2 OFFSET $3`,
+      args: [
+        identityId,
+        limit,
+        offset,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as roomRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export async function addRoom(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
