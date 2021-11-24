@@ -90,7 +90,7 @@ CREATE TABLE room (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "accessed_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON room("domain_id", "name");
+CREATE UNIQUE INDEX ON room("identity_id", "name");
 ALTER TABLE room OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -129,14 +129,14 @@ ALTER TABLE meeting OWNER TO galaxy;
 -- SCHEDULE
 -- -----------------------------------------------------------------------------
 -- - schedule doesn't contain permanent meetings
--- - ended_at = meeting_at + duration * interval '1 min'
+-- - end_at = start_at + duration * interval '1 min'
 -- -----------------------------------------------------------------------------
 CREATE TABLE schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "meeting_at" timestamp with time zone NOT NULL,
+    "start_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
-    "ended_at" timestamp with time zone NOT NULL
+    "end_at" timestamp with time zone NOT NULL
 );
 CREATE INDEX ON schedule(meeting_id);
 ALTER TABLE schedule OWNER TO galaxy;
