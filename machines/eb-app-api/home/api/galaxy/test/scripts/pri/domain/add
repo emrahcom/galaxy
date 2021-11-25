@@ -10,12 +10,12 @@ source $BASEDIR/../../common
 header <<< "/api/pri/domain/add"
 rm -f /tmp/api-pri-domain-add-*
 
-# ------------------------------------------------------------------------------
-# /api/pri/domain/add (not exists)
-# ------------------------------------------------------------------------------
 cookieJar=$(cat /tmp/kratos-login-cookie)
 name="$RANDOM.$(date +'%s').mydomain.corp"
 
+# ------------------------------------------------------------------------------
+# /api/pri/domain/add (not exists)
+# ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     --output-dir /tmp --output api-pri-domain-add-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -39,8 +39,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/add (exists)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
-
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
     --output-dir /tmp --output api-pri-domain-add-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \

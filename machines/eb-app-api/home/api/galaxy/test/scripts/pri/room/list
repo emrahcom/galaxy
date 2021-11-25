@@ -7,16 +7,16 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/list"
-rm -f /tmp/api-pri-domain-list-*
+header <<< "/api/pri/room/list"
+rm -f /tmp/api-pri-room-list-*
 
 cookieJar=$(cat /tmp/kratos-login-cookie)
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/list (no limit, no offset)
+# /api/pri/room/list (no limit, no offset)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
-    --output-dir /tmp --output api-pri-domain-list-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/list \
+    --output-dir /tmp --output api-pri-room-list-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -24,7 +24,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
     {
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-list-0)
+res=$(jq . /tmp/api-pri-room-list-0)
 out <<< "no limit, no offset:"
 out <<< "$res"
 
@@ -32,10 +32,10 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/list (limit 2, no offset)
+# /api/pri/room/list (limit 2, no offset)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
-    --output-dir /tmp --output api-pri-domain-list-1 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/list \
+    --output-dir /tmp --output api-pri-room-list-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -44,7 +44,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
         "limit": 2
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-list-1)
+res=$(jq . /tmp/api-pri-room-list-1)
 out <<< "limit 2, no offset:"
 out <<< "$res"
 
@@ -52,10 +52,10 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/list (limit 2 offset 1)
+# /api/pri/room/list (limit 2 offset 1)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
-    --output-dir /tmp --output api-pri-domain-list-2 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/list \
+    --output-dir /tmp --output api-pri-room-list-2 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -65,7 +65,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
         "offset": 1
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-list-2)
+res=$(jq . /tmp/api-pri-room-list-2)
 out <<< "limit 2 offset 1:"
 out <<< "$res"
 
@@ -73,10 +73,10 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/list (no limit, offset 1000000)
+# /api/pri/room/list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
-    --output-dir /tmp --output api-pri-domain-list-3 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/list \
+    --output-dir /tmp --output api-pri-room-list-3 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -85,7 +85,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/list \
         "offset": 1000000
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-list-3)
+res=$(jq . /tmp/api-pri-room-list-3)
 out <<< "limit 2 offset 1000000:"
 out <<< "$res"
 
@@ -94,4 +94,4 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/list"
+footer <<< "/api/pri/room/list"

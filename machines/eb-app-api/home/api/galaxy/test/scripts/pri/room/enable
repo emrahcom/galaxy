@@ -7,27 +7,27 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/get"
-rm -f /tmp/api-pri-domain-get-*
+header <<< "/api/pri/room/enable"
+rm -f /tmp/api-pri-room-enable-*
 
 cookieJar=$(cat /tmp/kratos-login-cookie)
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/get (exists)
+# /api/pri/room/enable (exists)
 # ------------------------------------------------------------------------------
-domainId=$(jq -r .[0].id /tmp/api-pri-domain-add-0)
+roomId=$(jq -r .[0].id /tmp/api-pri-room-add-0)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
-    --output-dir /tmp --output api-pri-domain-get-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/enable \
+    --output-dir /tmp --output api-pri-room-enable-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId"
+        "id": "$roomId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-get-0)
+res=$(jq . /tmp/api-pri-room-enable-0)
 out <<< "exists:"
 out <<< "$res"
 
@@ -35,21 +35,21 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/get (not exists)
+# /api/pri/room/enable (not exists)
 # ------------------------------------------------------------------------------
-domainId=$(uuidgen)
+roomId=$(uuidgen)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
-    --output-dir /tmp --output api-pri-domain-get-1 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/enable \
+    --output-dir /tmp --output api-pri-room-enable-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId"
+        "id": "$roomId"
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-get-1)
+res=$(jq . /tmp/api-pri-room-enable-1)
 out <<< "not exists:"
 out <<< "$res"
 
@@ -58,4 +58,4 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/get"
+footer <<< "/api/pri/room/enable"

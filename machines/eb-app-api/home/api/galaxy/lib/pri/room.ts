@@ -181,7 +181,7 @@ export async function updateRoom(req: Deno.RequestEvent, identityId: string) {
         UPDATE room SET
           domain_id = (SELECT id
                        FROM domain
-                       WHERE id = $3 AND (identity_id = $1 or public = true))
+                       WHERE id = $3 AND (identity_id = $1 or public = true)),
           name = $4,
           has_suffix = $5,
           updated_at = now()

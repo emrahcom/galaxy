@@ -10,10 +10,11 @@ source $BASEDIR/../../common
 header <<< "/api/pri/domain/update"
 rm -f /tmp/api-pri-domain-update-*
 
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
 # ------------------------------------------------------------------------------
 # /api/pri/domain/update (valid post)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(jq -r .[0].id /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
@@ -29,8 +30,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
         "auth_attr": {
            "app_id": "myappid",
            "app_key": "myappsecret"
-        },
-        "enabled": true
+        }
     }
 EOF
 res=$(jq . /tmp/api-pri-domain-update-0)
@@ -43,7 +43,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/update (invalid post)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
@@ -59,8 +58,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
         "auth_attr": {
            "app_id": "myappid",
            "app_key": "myappsecret"
-        },
-        "enabled": true
+        }
     }
 EOF
 res=$(jq . /tmp/api-pri-domain-update-1)

@@ -10,13 +10,14 @@ source $BASEDIR/../../common
 header <<< "/api/pri/room/add"
 rm -f /tmp/api-pri-room-add-*
 
+cookieJar=$(cat /tmp/kratos-login-cookie)
+domain_id=$(jq -r ".[0].id" /tmp/api-pri-domain-add-0)
+domain_fake=$(uuidgen)
+name="room-$RANDOM-$(date +'%s')"
+
 # ------------------------------------------------------------------------------
 # /api/pri/room/add (not exists)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
-domain_id=$(jq -r ".[0].id" /tmp/api-pri-domain-add-0)
-name="room-$RANDOM-$(date +'%s')"
-
 curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
     --output-dir /tmp --output api-pri-room-add-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -39,8 +40,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/room/add (exists)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
-
 curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
     --output-dir /tmp --output api-pri-room-add-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -55,6 +54,28 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
 EOF
 res=$(jq . /tmp/api-pri-room-add-1)
 out <<< "exists:"
+out <<< "$res"
+
+[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/room/add (for nonexistent domain)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
+    --output-dir /tmp --output api-pri-room-add-2 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "domain_id": "$domain_fake",
+        "name": "$name",
+        "has_suffix": true
+    }
+EOF
+res=$(jq . /tmp/api-pri-room-add-2)
+out <<< "for notexistent domain:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1

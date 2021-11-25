@@ -10,11 +10,11 @@ source $BASEDIR/../../common
 header <<< "/api/pri/domain/enabled"
 rm -f /tmp/api-pri-domain-enabled-*
 
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
 # ------------------------------------------------------------------------------
 # /api/pri/domain/enabled (no limit, no offset)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
-
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/enabled \
     --output-dir /tmp --output api-pri-domain-enabled-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -34,8 +34,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/enabled (limit 2, no offset)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
-
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/enabled \
     --output-dir /tmp --output api-pri-domain-enabled-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -56,8 +54,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/enabled (limit 2 offset 1)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
-
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/enabled \
     --output-dir /tmp --output api-pri-domain-enabled-2 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -79,8 +75,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/enabled (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
-
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/enabled \
     --output-dir /tmp --output api-pri-domain-enabled-3 \
     --cookie $cookieJar --cookie-jar $cookieJar \

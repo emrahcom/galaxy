@@ -10,10 +10,11 @@ source $BASEDIR/../../common
 header <<< "/api/pri/domain/del"
 rm -f /tmp/api-pri-domain-del-*
 
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
 # ------------------------------------------------------------------------------
 # /api/pri/domain/del (exists)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
 domain_id=$(jq -r .[0].id /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \
@@ -36,7 +37,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/del (not exists)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/del \

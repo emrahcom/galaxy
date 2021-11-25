@@ -7,55 +7,64 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/get"
-rm -f /tmp/api-pri-domain-get-*
+header <<< "/api/pri/room/update"
+rm -f /tmp/api-pri-room-update-*
 
 cookieJar=$(cat /tmp/kratos-login-cookie)
+domain_id=$(jq -r ".[0].id" /tmp/api-pri-domain-add-0)
+domain_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/get (exists)
+# /api/pri/room/update (valid post)
 # ------------------------------------------------------------------------------
-domainId=$(jq -r .[0].id /tmp/api-pri-domain-add-0)
+roomId=$(jq -r .[0].id /tmp/api-pri-room-add-0)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
-    --output-dir /tmp --output api-pri-domain-get-0 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/update \
+    --output-dir /tmp --output api-pri-room-update-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId"
+        "id": "$roomId",
+        "domain_id": "$domain_id",
+        "name": "myroom",
+        "has_suffix": false
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-get-0)
-out <<< "exists:"
+res=$(jq . /tmp/api-pri-room-update-0)
+out <<< "valid post:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .[0])" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/get (not exists)
+# /api/pri/room/update (invalid post)
 # ------------------------------------------------------------------------------
-domainId=$(uuidgen)
+roomId=$(uuidgen)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/get \
-    --output-dir /tmp --output api-pri-domain-get-1 \
+curl -ks -X POST https://$APP_FQDN/api/pri/room/update \
+    --output-dir /tmp --output api-pri-room-update-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
-        "id": "$domainId"
+        "id": "$roomId",
+        "domain_id": "$domain_fake",
+        "name": "myroom",
+        "has_suffix": false
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-get-1)
-out <<< "not exists:"
+res=$(jq . /tmp/api-pri-room-update-1)
+out <<< "invalid post:"
 out <<< "$res"
 
-[[ "$res" != "[]" ]] && exit 1
+[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/get"
+footer <<< "/api/pri/room/update"

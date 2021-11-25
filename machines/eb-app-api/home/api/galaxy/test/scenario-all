@@ -39,6 +39,17 @@ bash $BASEDIR/scripts/pri/domain/enabled
 
 # room
 bash $BASEDIR/scripts/pri/room/add
+bash $BASEDIR/scripts/pri/room/get
+bash $BASEDIR/scripts/pri/room/update
+bash $BASEDIR/scripts/pri/room/disable
+bash $BASEDIR/scripts/pri/room/enable
+bash $BASEDIR/scripts/pri/room/del
+
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/room/add
+done
+bash $BASEDIR/scripts/pri/room/list
+bash $BASEDIR/scripts/pri/room/enabled
 
 # ------------------------------------------------------------------------------
 # pub

@@ -10,10 +10,11 @@ source $BASEDIR/../../common
 header <<< "/api/pri/domain/disable"
 rm -f /tmp/api-pri-domain-disable-*
 
+cookieJar=$(cat /tmp/kratos-login-cookie)
+
 # ------------------------------------------------------------------------------
 # /api/pri/domain/disable (exists)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(jq -r .[0].id /tmp/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
@@ -36,7 +37,6 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # /api/pri/domain/disable (not exists)
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-login-cookie)
 domainId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/disable \
