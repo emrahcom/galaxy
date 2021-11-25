@@ -8,12 +8,22 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/scripts/common
 
 # ------------------------------------------------------------------------------
-# scripts
+# kratos
 # ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/kratos/registration
 bash $BASEDIR/scripts/kratos/login
+
+# ------------------------------------------------------------------------------
+# adm
+# ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/adm/hello
+
+# ------------------------------------------------------------------------------
+# pri
+# ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/pri/hello
+
+# domain
 bash $BASEDIR/scripts/pri/domain/add
 bash $BASEDIR/scripts/pri/domain/get
 bash $BASEDIR/scripts/pri/domain/update
@@ -27,6 +37,12 @@ done
 bash $BASEDIR/scripts/pri/domain/list
 bash $BASEDIR/scripts/pri/domain/enabled
 
+# room
+bash $BASEDIR/scripts/pri/room/add
+
+# ------------------------------------------------------------------------------
+# pub
+# ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/pub/hello
 bash $BASEDIR/scripts/pub/domain/list
 bash $BASEDIR/scripts/pub/domain/enabled
