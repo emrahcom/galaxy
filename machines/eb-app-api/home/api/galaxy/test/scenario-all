@@ -51,6 +51,20 @@ done
 bash $BASEDIR/scripts/pri/room/list
 bash $BASEDIR/scripts/pri/room/list-enabled
 
+# meeting
+bash $BASEDIR/scripts/pri/meeting/add
+bash $BASEDIR/scripts/pri/meeting/get
+bash $BASEDIR/scripts/pri/meeting/update
+bash $BASEDIR/scripts/pri/meeting/disable
+bash $BASEDIR/scripts/pri/meeting/enable
+bash $BASEDIR/scripts/pri/meeting/del
+
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/meeting/add
+done
+bash $BASEDIR/scripts/pri/meeting/list
+bash $BASEDIR/scripts/pri/meeting/list-enabled
+
 # ------------------------------------------------------------------------------
 # pub
 # ------------------------------------------------------------------------------
