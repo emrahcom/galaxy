@@ -53,6 +53,7 @@ curl -ks -X POST "$actionUrl" \
     }
 EOF
 userId=$(jq -r .identity.id /tmp/kratos-registration-session)
+[[ -z "$userId" ]] && exit 1
 [[ "$userId" = "null" ]] && exit 1
 
 echo "email=$email" >/tmp/kratos-credential

@@ -38,6 +38,7 @@ out <<< "valid post:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -54,7 +55,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
     {
         "id": "$domainId",
         "name": "meet.mydomain.corp",
-        "auth_type": "invalid",
+        "auth_type": "UNKNOWN",
         "auth_attr": {
            "app_id": "myappid",
            "app_key": "myappsecret"
@@ -66,6 +67,7 @@ out <<< "invalid post:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
 [[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------

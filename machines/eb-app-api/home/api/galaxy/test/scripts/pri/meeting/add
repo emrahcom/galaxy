@@ -39,6 +39,7 @@ out <<< "hidden:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -66,6 +67,7 @@ out <<< "non-hidden:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -92,6 +94,7 @@ out <<< "for notexistent room:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
 [[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------

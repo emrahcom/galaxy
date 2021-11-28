@@ -65,6 +65,7 @@ curl -ks -X POST "$actionUrl" \
     }
 EOF
 userId=$(jq -r .session.identity.id /tmp/kratos-login-session)
+[[ -z "$userId" ]] && exit 1
 [[ "$userId" = "null" ]] && exit 1
 
 out <<< "user id:"

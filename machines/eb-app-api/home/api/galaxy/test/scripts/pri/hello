@@ -24,6 +24,7 @@ out <<< "with authentication:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq -r .text)" ]] && exit 1
 [[ "$(echo $res | jq -r .text)" = "hello null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
@@ -37,6 +38,7 @@ out <<< "no authentication:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
 [[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
