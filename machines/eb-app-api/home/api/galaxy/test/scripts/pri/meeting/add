@@ -13,11 +13,11 @@ rm -f /tmp/api-pri-meeting-add-*
 cookieJar=$(cat /tmp/kratos-login-cookie)
 room_id=$(jq -r ".[0].id" /tmp/api-pri-room-add-0)
 room_fake=$(uuidgen)
-name="meeting-$RANDOM-$(date +'%s')"
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/add (not exists)
+# /api/pri/meeting/add (hidden)
 # ------------------------------------------------------------------------------
+name="meeting-$RANDOM-$(date +'%s')"
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
     --output-dir /tmp --output api-pri-meeting-add-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -26,24 +26,25 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
     --data @- << EOF
     {
         "room_id": "$room_id",
-        "name": "mymeeting",
+        "name": "$name",
         "info": "some meeting info",
-        "schedule_type": "permenant",
+        "schedule_type": "permanent",
         "schedule_attr": "{}",
         "hidden": true,
         "restricted": false
     }
 EOF
 res=$(jq . /tmp/api-pri-meeting-add-0)
-out <<< "not exists:"
+out <<< "hidden:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .[0])" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/add (exists)
+# /api/pri/meeting/add (non-hidden)
 # ------------------------------------------------------------------------------
+name="meeting-$RANDOM-$(date +'%s')"
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
     --output-dir /tmp --output api-pri-meeting-add-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
@@ -52,23 +53,23 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
     --data @- << EOF
     {
         "room_id": "$room_id",
-        "name": "mymeeting",
+        "name": "$name",
         "info": "some meeting info",
-        "schedule_type": "permenant",
+        "schedule_type": "permanent",
         "schedule_attr": "{}",
-        "hidden": true,
+        "hidden": false,
         "restricted": false
     }
 EOF
 res=$(jq . /tmp/api-pri-meeting-add-1)
-out <<< "exists:"
+out <<< "non-hidden:"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/add (for nonexistent domain)
+# /api/pri/meeting/add (for nonexistent room)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
     --output-dir /tmp --output api-pri-meeting-add-2 \
@@ -80,14 +81,14 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
         "room_id": "$room_fake",
         "name": "mymeeting",
         "info": "some meeting info",
-        "schedule_type": "permenant",
+        "schedule_type": "permanent",
         "schedule_attr": "{}",
         "hidden": true,
         "restricted": false
     }
 EOF
 res=$(jq . /tmp/api-pri-meeting-add-2)
-out <<< "for notexistent domain:"
+out <<< "for notexistent room:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1

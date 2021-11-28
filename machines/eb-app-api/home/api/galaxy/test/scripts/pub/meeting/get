@@ -13,7 +13,7 @@ rm -f /tmp/api-pub-meeting-get-*
 # ------------------------------------------------------------------------------
 # /api/pub/meeting/get (exists)
 # ------------------------------------------------------------------------------
-meetingId=$(jq -r .[0].id /tmp/api-pub-meeting-list-0)
+meetingId=$(jq -r .[0].id /tmp/api-pub-meeting-list-enabled-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pub/meeting/get \
     --output-dir /tmp --output api-pub-meeting-get-0 \

@@ -30,7 +30,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/update \
         "room_id": "$room_id",
         "name": "mymeeting",
         "info": "some meeting info",
-        "schedule_type": "permenant",
+        "schedule_type": "permanent",
         "schedule_attr": "{}",
         "hidden": true,
         "restricted": false
@@ -59,7 +59,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/update \
         "room_id": "$room_fake",
         "name": "mymeeting",
         "info": "some meeting info",
-        "schedule_type": "permenant",
+        "schedule_type": "permanent",
         "schedule_attr": "{}",
         "hidden": true,
         "restricted": false
