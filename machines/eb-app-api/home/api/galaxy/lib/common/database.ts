@@ -88,7 +88,6 @@ export interface meetingRows {
     name: string;
     room_id: string;
     room_name: string;
-    name: string;
     info: string;
     schedule_type: string;
     schedule_attr: unknown;

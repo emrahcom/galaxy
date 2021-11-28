@@ -55,7 +55,13 @@ bash $BASEDIR/scripts/pri/room/list-enabled
 # pub
 # ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/pub/hello
+
+# domain
 bash $BASEDIR/scripts/pub/domain/list
 bash $BASEDIR/scripts/pub/domain/list-enabled
+
+# meeting
+bash $BASEDIR/scripts/pub/meeting/list-enabled
+bash $BASEDIR/scripts/pub/meeting/get
 
 footer <<< completed successfully
