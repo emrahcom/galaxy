@@ -98,9 +98,9 @@ ALTER TABLE room OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting if it's over
 -- - non-hidden meeting can be seen by everyone but permission will be needed to
---   participate it if it isn't common
--- - anybody can participate a common meeting if she has the access key
---   a common meeting may be hidden
+--   participate it if it is restricted
+-- - anybody can participate a restricted meeting if she has the key
+-- - a non-restricted meeting may be hidden
 -- - duration as minute in schedule_attr according to schedule_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_schedule_type AS ENUM
@@ -119,7 +119,7 @@ CREATE TABLE meeting (
     "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "scheduled_at" timestamp with time zone NOT NULL DEFAULT now(),
     "hidden" boolean NOT NULL DEFAULT true,
-    "common" boolean NOT NULL DEFAULT true,
+    "restricted" boolean NOT NULL DEFAULT false,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
