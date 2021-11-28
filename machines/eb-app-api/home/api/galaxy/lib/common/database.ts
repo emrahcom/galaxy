@@ -73,7 +73,6 @@ export interface roomRows {
     domain_name: string;
     has_suffix: boolean;
     suffix: string;
-    ephemeral: boolean;
     enabled: boolean;
     created_at: string;
     updated_at: string;
@@ -91,7 +90,6 @@ export interface meetingRows {
     info: string;
     schedule_type: string;
     schedule_attr: unknown;
-    scheduled_at: string;
     hidden: boolean;
     restricted: boolean;
     enabled: boolean;

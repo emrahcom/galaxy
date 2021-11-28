@@ -1,20 +1,20 @@
 import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../../config.ts";
-import { idRows, query, roomRows } from "../common/database.ts";
+import { idRows, meetingRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
-const PRE = "/api/pri/room";
+const PRE = "/api/pri/meeting";
 
 // -----------------------------------------------------------------------------
-export async function getRoom(req: Deno.RequestEvent, identityId: string) {
+export async function getMeeting(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-            r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-            r.accessed_at
-        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
-        WHERE r.id = $2 AND r.identity_id = $1 AND r.ephemeral = false`,
+        SELECT m.id, m.name, r.id as room_id, r.name as room_name, m.info,
+            m.schedule_type, m.schedule_attr, m.hidden, m.restricted, m.enabled,
+            m.created_at, m.updated_at
+        FROM meeting AS m JOIN room AS r ON m.room_id = r.id
+        WHERE m.id = $2 AND m.identity_id = $1`,
       args: [
         identityId,
         pl.id,
@@ -22,7 +22,7 @@ export async function getRoom(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as roomRows;
+        return rst.rows as meetingRows;
       });
 
     ok(req, JSON.stringify(rows));
@@ -32,7 +32,7 @@ export async function getRoom(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listRoom(req: Deno.RequestEvent, identityId: string) {
+export async function listMeeting(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
 
@@ -48,12 +48,12 @@ export async function listRoom(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-            r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-            r.accessed_at
-        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
-        WHERE r.identity_id = $1 AND r.ephemeral = false
-        ORDER BY r.name
+        SELECT m.id, m.name, r.id as room_id, r.name as room_name, m.info,
+            m.schedule_type, m.schedule_attr, m.hidden, m.restricted, m.enabled,
+            m.created_at, m.updated_at
+        FROM meeting AS m JOIN room AS r ON m.room_id = r.id
+        WHERE m.identity_id = $1
+        ORDER BY m.name
         LIMIT $2 OFFSET $3`,
       args: [
         identityId,
@@ -63,7 +63,7 @@ export async function listRoom(req: Deno.RequestEvent, identityId: string) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as roomRows;
+        return rst.rows as meetingRows;
       });
 
     ok(req, JSON.stringify(rows));
@@ -73,7 +73,7 @@ export async function listRoom(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listEnabledRoom(
+export async function listEnabledMeeting(
   req: Deno.RequestEvent,
   identityId: string,
 ) {
@@ -92,12 +92,11 @@ export async function listEnabledRoom(
 
     const sql = {
       text: `
-        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-            r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-            r.accessed_at
-        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
-        WHERE r.identity_id = $1 AND r.ephemeral = false AND r.enabled = true
-            AND d.enabled = true
+        SELECT m.id, m.name, r.id as room_id, r.name as room_name, m.info,
+            m.schedule_type, m.schedule_attr, m.hidden, m.restricted, m.enabled,
+            m.created_at, m.updated_at
+        FROM meeting AS m JOIN room AS r ON m.room_id = r.id
+        WHERE m.identity_id = $1 AND m.enabled = true AND r.enabled = true
         ORDER BY r.name
         LIMIT $2 OFFSET $3`,
       args: [
@@ -108,7 +107,7 @@ export async function listEnabledRoom(
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as roomRows;
+        return rst.rows as meetingRows;
       });
 
     ok(req, JSON.stringify(rows));
@@ -118,23 +117,28 @@ export async function listEnabledRoom(
 }
 
 // -----------------------------------------------------------------------------
-export async function addRoom(req: Deno.RequestEvent, identityId: string) {
+export async function addMeeting(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
     const sql = {
       text: `
-        INSERT INTO room (identity_id, domain_id, name, has_suffix)
+        INSERT INTO meeting (identity_id, room_id, name, info, schedule_type,
+            schedule_attr, hidden, restricted)
         VALUES ($1,
                 (SELECT id
-                 FROM domain
-                 WHERE id = $2 AND (identity_id = $1 OR public = true)),
-                $3, $4)
+                 FROM room
+                 WHERE id = $2 AND identity_id = $1),
+                $3, $4, $5, $6, $7, $8)
         RETURNING id, created_at as at`,
       args: [
         identityId,
-        pl.domain_id,
+        pl.room_id,
         pl.name,
-        pl.has_suffix,
+        pl.info,
+        pl.schedule_type,
+        pl.schedule_attr,
+        pl.hidden,
+        pl.restricted,
       ],
     };
     const rows = await query(sql)
@@ -149,12 +153,12 @@ export async function addRoom(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function delRoom(req: Deno.RequestEvent, identityId: string) {
+export async function delMeeting(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
     const sql = {
       text: `
-        DELETE FROM room
+        DELETE FROM meeting
         WHERE id = $2 AND identity_id = $1
         RETURNING id, now() as at`,
       args: [
@@ -174,26 +178,37 @@ export async function delRoom(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updateRoom(req: Deno.RequestEvent, identityId: string) {
+export async function updateMeeting(
+  req: Deno.RequestEvent,
+  identityId: string,
+) {
   try {
     const pl = await req.request.json();
     const sql = {
       text: `
-        UPDATE room SET
-          domain_id = (SELECT id
-                       FROM domain
-                       WHERE id = $3 AND (identity_id = $1 or public = true)),
+        UPDATE meeting SET
+          room_id = (SELECT id
+                     FROM room
+                     WHERE id = $3 AND identity_id = $1),
           name = $4,
-          has_suffix = $5,
+          info = $5,
+          schedule_type = $6,
+          schedule_attr = $7,
+          hidden = $8,
+          restricted = $9,
           updated_at = now()
         WHERE id = $2 AND identity_id = $1
         RETURNING id, updated_at as at`,
       args: [
         identityId,
         pl.id,
-        pl.domain_id,
+        pl.room_id,
         pl.name,
-        pl.has_suffix,
+        pl.info,
+        pl.schedule_type,
+        pl.schedule_attr,
+        pl.hidden,
+        pl.restricted,
       ],
     };
     const rows = await query(sql)
@@ -210,19 +225,19 @@ export async function updateRoom(req: Deno.RequestEvent, identityId: string) {
 // -----------------------------------------------------------------------------
 export async function updateEnabled(
   identityId: string,
-  roomId: string,
+  meetingId: string,
   value = true,
 ) {
   const sql = {
     text: `
-      UPDATE room SET
+      UPDATE meeting SET
         enabled = $3,
         updated_at = now()
       WHERE id = $2 AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
       identityId,
-      roomId,
+      meetingId,
       value,
     ],
   };
@@ -235,7 +250,10 @@ export async function updateEnabled(
 }
 
 // -----------------------------------------------------------------------------
-export async function enableRoom(req: Deno.RequestEvent, identityId: string) {
+export async function enableMeeting(
+  req: Deno.RequestEvent,
+  identityId: string,
+) {
   try {
     const pl = await req.request.json();
     const rows = await updateEnabled(identityId, pl.id, true);
@@ -247,7 +265,7 @@ export async function enableRoom(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function disableRoom(
+export async function disableMeeting(
   req: Deno.RequestEvent,
   identityId: string,
 ) {
@@ -268,21 +286,21 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    getRoom(req, identityId);
+    getMeeting(req, identityId);
   } else if (path === `${PRE}/list`) {
-    listRoom(req, identityId);
+    listMeeting(req, identityId);
   } else if (path === `${PRE}/list/enabled`) {
-    listEnabledRoom(req, identityId);
+    listEnabledMeeting(req, identityId);
   } else if (path === `${PRE}/add`) {
-    addRoom(req, identityId);
+    addMeeting(req, identityId);
   } else if (path === `${PRE}/del`) {
-    delRoom(req, identityId);
+    delMeeting(req, identityId);
   } else if (path === `${PRE}/update`) {
-    updateRoom(req, identityId);
+    updateMeeting(req, identityId);
   } else if (path === `${PRE}/enable`) {
-    enableRoom(req, identityId);
+    enableMeeting(req, identityId);
   } else if (path === `${PRE}/disable`) {
-    disableRoom(req, identityId);
+    disableMeeting(req, identityId);
   } else {
     notFound(req);
   }
