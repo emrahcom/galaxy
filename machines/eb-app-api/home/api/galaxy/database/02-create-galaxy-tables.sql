@@ -109,7 +109,9 @@ CREATE TABLE meeting (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
-    "access_key" varchar(250) NOT NULL
+    "host_key" varchar(250) NOT NULL
+        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "guest_key" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "title" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
@@ -122,7 +124,8 @@ CREATE TABLE meeting (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON meeting("access_key");
+CREATE UNIQUE INDEX ON meeting("host_key");
+CREATE UNIQUE INDEX ON meeting("guest_key");
 ALTER TABLE meeting OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
