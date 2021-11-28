@@ -1,7 +1,8 @@
 import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/common/http-response.ts";
-import hello from "./lib/pub/hello.ts";
 import domain from "./lib/pub/domain.ts";
+import hello from "./lib/pub/hello.ts";
+import meeting from "./lib/pub/meeting.ts";
 
 const PRE = "/api/pub";
 
@@ -11,6 +12,8 @@ function route(req: Deno.RequestEvent, path: string) {
     hello(req);
   } else if (path.match(`^${PRE}/domain/`)) {
     domain(req, path);
+  } else if (path.match(`^${PRE}/meeting/`)) {
+    meeting(req, path);
   } else {
     notFound(req);
   }
