@@ -35,7 +35,7 @@ for i in $(seq 1 10); do
     bash $BASEDIR/scripts/pri/domain/add
 done
 bash $BASEDIR/scripts/pri/domain/list
-bash $BASEDIR/scripts/pri/domain/enabled
+bash $BASEDIR/scripts/pri/domain/list-enabled
 
 # room
 bash $BASEDIR/scripts/pri/room/add
@@ -49,14 +49,14 @@ for i in $(seq 1 10); do
     bash $BASEDIR/scripts/pri/room/add
 done
 bash $BASEDIR/scripts/pri/room/list
-bash $BASEDIR/scripts/pri/room/enabled
+bash $BASEDIR/scripts/pri/room/list-enabled
 
 # ------------------------------------------------------------------------------
 # pub
 # ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/pub/hello
 bash $BASEDIR/scripts/pub/domain/list
-bash $BASEDIR/scripts/pub/domain/enabled
+bash $BASEDIR/scripts/pub/domain/list-enabled
 bash $BASEDIR/scripts/pub/domain/get
 
 footer <<< completed successfully

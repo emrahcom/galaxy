@@ -67,7 +67,7 @@ export async function listDomain(req: Deno.RequestEvent) {
 }
 
 // -----------------------------------------------------------------------------
-export async function enabledDomain(req: Deno.RequestEvent) {
+export async function listEnabledDomain(req: Deno.RequestEvent) {
   try {
     const pl = await req.request.json();
 
@@ -110,8 +110,8 @@ export default function (req: Deno.RequestEvent, path: string) {
     getDomain(req);
   } else if (path === `${PRE}/list`) {
     listDomain(req);
-  } else if (path === `${PRE}/enabled`) {
-    enabledDomain(req);
+  } else if (path === `${PRE}/list/enabled`) {
+    listEnabledDomain(req);
   } else {
     notFound(req);
   }

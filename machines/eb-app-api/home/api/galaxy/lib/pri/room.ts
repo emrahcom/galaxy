@@ -73,7 +73,7 @@ export async function listRoom(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function enabledRoom(
+export async function listEnabledRoom(
   req: Deno.RequestEvent,
   identityId: string,
 ) {
@@ -270,8 +270,8 @@ export default function (
     getRoom(req, identityId);
   } else if (path === `${PRE}/list`) {
     listRoom(req, identityId);
-  } else if (path === `${PRE}/enabled`) {
-    enabledRoom(req, identityId);
+  } else if (path === `${PRE}/list/enabled`) {
+    listEnabledRoom(req, identityId);
   } else if (path === `${PRE}/add`) {
     addRoom(req, identityId);
   } else if (path === `${PRE}/del`) {

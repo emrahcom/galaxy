@@ -7,24 +7,21 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
-header <<< "/api/pri/room/enabled"
-rm -f /tmp/api-pri-room-enabled-*
-
-cookieJar=$(cat /tmp/kratos-login-cookie)
+header <<< "/api/pub/domain/list/enabled"
+rm -f /tmp/api-pub-domain-list-enabled-*
 
 # ------------------------------------------------------------------------------
-# /api/pri/room/enabled (no limit, no offset)
+# /api/pub/domain/list/enabled (no limit, no offset)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/room/enabled \
-    --output-dir /tmp --output api-pri-room-enabled-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
+curl -ks -X POST https://$APP_FQDN/api/pub/domain/list/enabled \
+    --output-dir /tmp --output api-pub-domain-list-enabled-0 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
     }
 EOF
-res=$(jq . /tmp/api-pri-room-enabled-0)
+res=$(jq . /tmp/api-pub-domain-list-enabled-0)
 out <<< "no limit, no offset:"
 out <<< "$res"
 
@@ -32,11 +29,10 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/room/enabled (limit 2, no offset)
+# /api/pub/domain/list/enabled (limit 2, no offset)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/room/enabled \
-    --output-dir /tmp --output api-pri-room-enabled-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
+curl -ks -X POST https://$APP_FQDN/api/pub/domain/list/enabled \
+    --output-dir /tmp --output api-pub-domain-list-enabled-1 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -44,7 +40,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/enabled \
         "limit": 2
     }
 EOF
-res=$(jq . /tmp/api-pri-room-enabled-1)
+res=$(jq . /tmp/api-pub-domain-list-enabled-1)
 out <<< "limit 2, no offset:"
 out <<< "$res"
 
@@ -52,32 +48,10 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/room/enabled (limit 2 offset 1)
+# /api/pub/domain/list/enabled (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/room/enabled \
-    --output-dir /tmp --output api-pri-room-enabled-2 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "limit": 2,
-        "offset": 1
-    }
-EOF
-res=$(jq . /tmp/api-pri-room-enabled-2)
-out <<< "limit 2 offset 1:"
-out <<< "$res"
-
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# /api/pri/room/enabled (no limit, offset 1000000)
-# ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/room/enabled \
-    --output-dir /tmp --output api-pri-room-enabled-3 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
+curl -ks -X POST https://$APP_FQDN/api/pub/domain/list/enabled \
+    --output-dir /tmp --output api-pub-domain-list-enabled-2 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -85,7 +59,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/enabled \
         "offset": 1000000
     }
 EOF
-res=$(jq . /tmp/api-pri-room-enabled-3)
+res=$(jq . /tmp/api-pub-domain-list-enabled-2)
 out <<< "limit 2 offset 1000000:"
 out <<< "$res"
 
@@ -94,4 +68,4 @@ out <<< "$res"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "/api/pri/room/enabled"
+footer <<< "/api/pub/domain/list/enabled"

@@ -69,7 +69,7 @@ export async function listDomain(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function enabledDomain(
+export async function listEnabledDomain(
   req: Deno.RequestEvent,
   identityId: string,
 ) {
@@ -258,8 +258,8 @@ export default function (
     getDomain(req, identityId);
   } else if (path === `${PRE}/list`) {
     listDomain(req, identityId);
-  } else if (path === `${PRE}/enabled`) {
-    enabledDomain(req, identityId);
+  } else if (path === `${PRE}/list/enabled`) {
+    listEnabledDomain(req, identityId);
   } else if (path === `${PRE}/add`) {
     addDomain(req, identityId);
   } else if (path === `${PRE}/del`) {
