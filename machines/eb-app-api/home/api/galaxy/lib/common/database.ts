@@ -56,6 +56,15 @@ export interface domainRows {
 }
 
 // -----------------------------------------------------------------------------
+export interface narrowedDomainRows {
+  [index: number]: {
+    id: string;
+    name: string;
+    enabled: boolean;
+  };
+}
+
+// -----------------------------------------------------------------------------
 export interface roomRows {
   [index: number]: {
     id: string;
@@ -69,5 +78,38 @@ export interface roomRows {
     created_at: string;
     updated_at: string;
     accessed_at: string;
+  };
+}
+
+// -----------------------------------------------------------------------------
+export interface meetingRows {
+  [index: number]: {
+    id: string;
+    name: string;
+    room_id: string;
+    room_name: string;
+    name: string;
+    info: string;
+    schedule_type: string;
+    schedule_attr: unknown;
+    scheduled_at: string;
+    hidden: boolean;
+    restricted: boolean;
+    enabled: boolean;
+    created_at: string;
+    updated_at: string;
+  };
+}
+
+// -----------------------------------------------------------------------------
+export interface narrowedMeetingRows {
+  [index: number]: {
+    id: string;
+    name: string;
+    info: string;
+    schedule_type: string;
+    schedule_attr: unknown;
+    restricted: boolean;
+    enabled: boolean;
   };
 }

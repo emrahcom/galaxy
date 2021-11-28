@@ -47,7 +47,8 @@ INSERT INTO identity VALUES (
 -- DOMAIN
 -- -----------------------------------------------------------------------------
 -- - public domain can only be added by system account.
--- - url depends on auth_type
+-- - auth_type of public domain must be 'none'
+-- - urls are in auth_attr depending on auth_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE domain_auth_type AS ENUM ('none', 'token');
 CREATE TABLE domain (
@@ -113,7 +114,7 @@ CREATE TABLE meeting (
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "guest_key" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
-    "title" varchar(250) NOT NULL,
+    "name" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
     "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,

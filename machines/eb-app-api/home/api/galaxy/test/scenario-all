@@ -57,6 +57,5 @@ bash $BASEDIR/scripts/pri/room/list-enabled
 bash $BASEDIR/scripts/pub/hello
 bash $BASEDIR/scripts/pub/domain/list
 bash $BASEDIR/scripts/pub/domain/list-enabled
-bash $BASEDIR/scripts/pub/domain/get
 
 footer <<< completed successfully
