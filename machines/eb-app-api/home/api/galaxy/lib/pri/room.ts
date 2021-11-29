@@ -1,5 +1,10 @@
-import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../../config.ts";
-import { idRows, query, roomRows } from "../common/database.ts";
+import {
+  getLimit,
+  getOffset,
+  idRows,
+  query,
+  roomRows,
+} from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pri/room";
@@ -35,16 +40,8 @@ export async function getRoom(req: Deno.RequestEvent, identityId: string) {
 export async function listRoom(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-
-    let limit = pl.limit;
-    if (!limit) {
-      limit = DEFAULT_LIST_SIZE;
-    } else if (limit > MAX_LIST_SIZE) {
-      limit = MAX_LIST_SIZE;
-    }
-
-    let offset = pl.offset;
-    if (!offset) offset = 0;
+    const limit = getLimit(pl.limit);
+    const offset = getOffset(pl.offset);
 
     const sql = {
       text: `
@@ -79,16 +76,8 @@ export async function listEnabledRoom(
 ) {
   try {
     const pl = await req.request.json();
-
-    let limit = pl.limit;
-    if (!limit) {
-      limit = DEFAULT_LIST_SIZE;
-    } else if (limit > MAX_LIST_SIZE) {
-      limit = MAX_LIST_SIZE;
-    }
-
-    let offset = pl.offset;
-    if (!offset) offset = 0;
+    const limit = getLimit(pl.limit);
+    const offset = getOffset(pl.offset);
 
     const sql = {
       text: `

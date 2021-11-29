@@ -1,5 +1,10 @@
-import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../../config.ts";
-import { domainRows, idRows, query } from "../common/database.ts";
+import {
+  domainRows,
+  getLimit,
+  getOffset,
+  idRows,
+  query,
+} from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pri/domain";
@@ -33,16 +38,8 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
 export async function listDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-
-    let limit = pl.limit;
-    if (!limit) {
-      limit = DEFAULT_LIST_SIZE;
-    } else if (limit > MAX_LIST_SIZE) {
-      limit = MAX_LIST_SIZE;
-    }
-
-    let offset = pl.offset;
-    if (!offset) offset = 0;
+    const limit = getLimit(pl.limit);
+    const offset = getOffset(pl.offset);
 
     const sql = {
       text: `
@@ -75,16 +72,8 @@ export async function listEnabledDomain(
 ) {
   try {
     const pl = await req.request.json();
-
-    let limit = pl.limit;
-    if (!limit) {
-      limit = DEFAULT_LIST_SIZE;
-    } else if (limit > MAX_LIST_SIZE) {
-      limit = MAX_LIST_SIZE;
-    }
-
-    let offset = pl.offset;
-    if (!offset) offset = 0;
+    const limit = getLimit(pl.limit);
+    const offset = getOffset(pl.offset);
 
     const sql = {
       text: `

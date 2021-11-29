@@ -6,6 +6,8 @@ import {
   DB_POOL_SIZE,
   DB_PORT,
   DB_USER,
+  DEFAULT_LIST_SIZE,
+  MAX_LIST_SIZE,
 } from "../../config.ts";
 
 const dbPool = new Pool({
@@ -32,6 +34,24 @@ export async function query(sql: QueryObjectConfig) {
       // do nothing
     }
   }
+}
+
+// -----------------------------------------------------------------------------
+export function getLimit(limit: number) {
+  if (!limit) {
+    limit = DEFAULT_LIST_SIZE;
+  } else if (limit > MAX_LIST_SIZE) {
+    limit = MAX_LIST_SIZE;
+  }
+
+  return limit;
+}
+
+// -----------------------------------------------------------------------------
+export function getOffset(offset: number) {
+  if (!offset) offset = 0;
+
+  return offset;
 }
 
 // -----------------------------------------------------------------------------
