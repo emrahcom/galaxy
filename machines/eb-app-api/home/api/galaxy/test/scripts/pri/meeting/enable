@@ -8,17 +8,17 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pri/meeting/enable"
-rm -f /tmp/api-pri-meeting-enable-*
+rm -f $TMP/api-pri-meeting-enable-*
 
-cookieJar=$(cat /tmp/kratos-login-cookie)
+cookieJar=$(cat $TMP/kratos-login-cookie)
 
 # ------------------------------------------------------------------------------
 # /api/pri/meeting/enable (exists)
 # ------------------------------------------------------------------------------
-meetingId=$(jq -r .[0].id /tmp/api-pri-meeting-add-0)
+meetingId=$(jq -r .[0].id $TMP/api-pri-meeting-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/enable \
-    --output-dir /tmp --output api-pri-meeting-enable-0 \
+    --output-dir $TMP --output api-pri-meeting-enable-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -27,7 +27,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/enable \
         "id": "$meetingId"
     }
 EOF
-res=$(jq . /tmp/api-pri-meeting-enable-0)
+res=$(jq . $TMP/api-pri-meeting-enable-0)
 out <<< "exists:"
 out <<< "$res"
 
@@ -41,7 +41,7 @@ out <<< "$res"
 meetingId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/enable \
-    --output-dir /tmp --output api-pri-meeting-enable-1 \
+    --output-dir $TMP --output api-pri-meeting-enable-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -50,7 +50,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/enable \
         "id": "$meetingId"
     }
 EOF
-res=$(jq . /tmp/api-pri-meeting-enable-1)
+res=$(jq . $TMP/api-pri-meeting-enable-1)
 out <<< "not exists:"
 out <<< "$res"
 

@@ -8,17 +8,17 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pri/room/disable"
-rm -f /tmp/api-pri-room-disable-*
+rm -f $TMP/api-pri-room-disable-*
 
-cookieJar=$(cat /tmp/kratos-login-cookie)
+cookieJar=$(cat $TMP/kratos-login-cookie)
 
 # ------------------------------------------------------------------------------
 # /api/pri/room/disable (exists)
 # ------------------------------------------------------------------------------
-roomId=$(jq -r .[0].id /tmp/api-pri-room-add-0)
+roomId=$(jq -r .[0].id $TMP/api-pri-room-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/room/disable \
-    --output-dir /tmp --output api-pri-room-disable-0 \
+    --output-dir $TMP --output api-pri-room-disable-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -27,7 +27,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/disable \
         "id": "$roomId"
     }
 EOF
-res=$(jq . /tmp/api-pri-room-disable-0)
+res=$(jq . $TMP/api-pri-room-disable-0)
 out <<< "exists:"
 out <<< "$res"
 
@@ -41,7 +41,7 @@ out <<< "$res"
 roomId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/room/disable \
-    --output-dir /tmp --output api-pri-room-disable-1 \
+    --output-dir $TMP --output api-pri-room-disable-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -50,7 +50,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/disable \
         "id": "$roomId"
     }
 EOF
-res=$(jq . /tmp/api-pri-room-disable-1)
+res=$(jq . $TMP/api-pri-room-disable-1)
 out <<< "not exists:"
 out <<< "$res"
 

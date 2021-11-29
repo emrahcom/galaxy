@@ -8,17 +8,17 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pri/domain/update"
-rm -f /tmp/api-pri-domain-update-*
+rm -f $TMP/api-pri-domain-update-*
 
-cookieJar=$(cat /tmp/kratos-login-cookie)
+cookieJar=$(cat $TMP/kratos-login-cookie)
 
 # ------------------------------------------------------------------------------
 # /api/pri/domain/update (valid post)
 # ------------------------------------------------------------------------------
-domainId=$(jq -r .[0].id /tmp/api-pri-domain-add-0)
+domainId=$(jq -r .[0].id $TMP/api-pri-domain-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
-    --output-dir /tmp --output api-pri-domain-update-0 \
+    --output-dir $TMP --output api-pri-domain-update-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -33,7 +33,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
         }
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-update-0)
+res=$(jq . $TMP/api-pri-domain-update-0)
 out <<< "valid post:"
 out <<< "$res"
 
@@ -47,7 +47,7 @@ out <<< "$res"
 domainId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
-    --output-dir /tmp --output api-pri-domain-update-1 \
+    --output-dir $TMP --output api-pri-domain-update-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -62,7 +62,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
         }
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-update-1)
+res=$(jq . $TMP/api-pri-domain-update-1)
 out <<< "invalid post:"
 out <<< "$res"
 

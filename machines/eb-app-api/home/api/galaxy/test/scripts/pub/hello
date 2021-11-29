@@ -8,15 +8,15 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
 header <<< "/api/pub/hello"
-rm -f /tmp/api-pub-hello
+rm -f $TMP/api-pub-hello
 
 # ------------------------------------------------------------------------------
 # /api/pub/hello
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/hello \
-    --output-dir /tmp --output api-pub-hello \
+    --output-dir $TMP --output api-pub-hello \
     -H "Accept: application/json"
-res=$(jq . /tmp/api-pub-hello)
+res=$(jq . $TMP/api-pub-hello)
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1

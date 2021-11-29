@@ -12,15 +12,15 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
 header <<< "/api/adm/hello"
-rm -f /tmp/api-adm-hello
+rm -f $TMP/api-adm-hello
 
 # ------------------------------------------------------------------------------
 # /api/adm/hello
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/adm/hello \
-    --output-dir /tmp --output api-adm-hello \
+    --output-dir $TMP --output api-adm-hello \
     -H "Accept: application/json"
-res=$(jq . /tmp/api-adm-hello)
+res=$(jq . $TMP/api-adm-hello)
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .)" ]] && exit 1

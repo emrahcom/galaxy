@@ -7,6 +7,9 @@ set -e
 [[ -z "$KRATOS_FQDN" ]] && KRATOS_FQDN=kratos.galaxy.corp
 [[ -z "$APP_FQDN" ]] && APP_FQDN=app.galaxy.corp
 
+mkdir -p /tmp/galaxy
+TMP=/tmp/galaxy
+
 # ------------------------------------------------------------------------------
 # header
 # ------------------------------------------------------------------------------

@@ -8,10 +8,10 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pri/room/add"
-rm -f /tmp/api-pri-room-add-*
+rm -f $TMP/api-pri-room-add-*
 
-cookieJar=$(cat /tmp/kratos-login-cookie)
-domain_id=$(jq -r ".[0].id" /tmp/api-pri-domain-add-0)
+cookieJar=$(cat $TMP/kratos-login-cookie)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-0)
 domain_fake=$(uuidgen)
 name="room-$RANDOM-$(date +'%s')"
 
@@ -19,7 +19,7 @@ name="room-$RANDOM-$(date +'%s')"
 # /api/pri/room/add (not exists)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
-    --output-dir /tmp --output api-pri-room-add-0 \
+    --output-dir $TMP --output api-pri-room-add-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -30,7 +30,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
         "has_suffix": true
     }
 EOF
-res=$(jq . /tmp/api-pri-room-add-0)
+res=$(jq . $TMP/api-pri-room-add-0)
 out <<< "not exists:"
 out <<< "$res"
 
@@ -42,7 +42,7 @@ out <<< "$res"
 # /api/pri/room/add (exists)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
-    --output-dir /tmp --output api-pri-room-add-1 \
+    --output-dir $TMP --output api-pri-room-add-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -53,7 +53,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
         "has_suffix": true
     }
 EOF
-res=$(jq . /tmp/api-pri-room-add-1)
+res=$(jq . $TMP/api-pri-room-add-1)
 out <<< "exists:"
 out <<< "$res"
 
@@ -65,7 +65,7 @@ out <<< "$res"
 # /api/pri/room/add (for nonexistent domain)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
-    --output-dir /tmp --output api-pri-room-add-2 \
+    --output-dir $TMP --output api-pri-room-add-2 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -76,7 +76,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/add \
         "has_suffix": true
     }
 EOF
-res=$(jq . /tmp/api-pri-room-add-2)
+res=$(jq . $TMP/api-pri-room-add-2)
 out <<< "for notexistent domain:"
 out <<< "$res"
 

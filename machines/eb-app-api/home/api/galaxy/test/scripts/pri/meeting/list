@@ -8,15 +8,15 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pri/meeting/list"
-rm -f /tmp/api-pri-meeting-list-*
+rm -f $TMP/api-pri-meeting-list-*
 
-cookieJar=$(cat /tmp/kratos-login-cookie)
+cookieJar=$(cat $TMP/kratos-login-cookie)
 
 # ------------------------------------------------------------------------------
 # /api/pri/meeting/list (no limit, no offset)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir /tmp --output api-pri-meeting-list-0 \
+    --output-dir $TMP --output api-pri-meeting-list-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -24,7 +24,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
     {
     }
 EOF
-res=$(jq . /tmp/api-pri-meeting-list-0)
+res=$(jq . $TMP/api-pri-meeting-list-0)
 out <<< "no limit, no offset:"
 out <<< "$res"
 
@@ -36,7 +36,7 @@ out <<< "$res"
 # /api/pri/meeting/list (limit 2, no offset)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir /tmp --output api-pri-meeting-list-1 \
+    --output-dir $TMP --output api-pri-meeting-list-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -45,7 +45,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
         "limit": 2
     }
 EOF
-res=$(jq . /tmp/api-pri-meeting-list-1)
+res=$(jq . $TMP/api-pri-meeting-list-1)
 out <<< "limit 2, no offset:"
 out <<< "$res"
 
@@ -57,7 +57,7 @@ out <<< "$res"
 # /api/pri/meeting/list (limit 2 offset 1)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir /tmp --output api-pri-meeting-list-2 \
+    --output-dir $TMP --output api-pri-meeting-list-2 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -67,7 +67,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
         "offset": 1
     }
 EOF
-res=$(jq . /tmp/api-pri-meeting-list-2)
+res=$(jq . $TMP/api-pri-meeting-list-2)
 out <<< "limit 2 offset 1:"
 out <<< "$res"
 
@@ -79,7 +79,7 @@ out <<< "$res"
 # /api/pri/meeting/list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir /tmp --output api-pri-meeting-list-3 \
+    --output-dir $TMP --output api-pri-meeting-list-3 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -88,7 +88,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
         "offset": 1000000
     }
 EOF
-res=$(jq . /tmp/api-pri-meeting-list-3)
+res=$(jq . $TMP/api-pri-meeting-list-3)
 out <<< "limit 2 offset 1000000:"
 out <<< "$res"
 

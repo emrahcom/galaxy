@@ -56,7 +56,7 @@ export interface domainRows {
 }
 
 // -----------------------------------------------------------------------------
-export interface narrowedDomainRows {
+export interface pubDomainRows {
   [index: number]: {
     id: string;
     name: string;
@@ -99,7 +99,7 @@ export interface meetingRows {
 }
 
 // -----------------------------------------------------------------------------
-export interface narrowedMeetingRows {
+export interface pubMeetingRows {
   [index: number]: {
     id: string;
     name: string;

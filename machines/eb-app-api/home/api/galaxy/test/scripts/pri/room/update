@@ -8,19 +8,19 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pri/room/update"
-rm -f /tmp/api-pri-room-update-*
+rm -f $TMP/api-pri-room-update-*
 
-cookieJar=$(cat /tmp/kratos-login-cookie)
-domain_id=$(jq -r ".[0].id" /tmp/api-pri-domain-add-0)
+cookieJar=$(cat $TMP/kratos-login-cookie)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-0)
 domain_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
 # /api/pri/room/update (valid post)
 # ------------------------------------------------------------------------------
-roomId=$(jq -r .[0].id /tmp/api-pri-room-add-0)
+roomId=$(jq -r .[0].id $TMP/api-pri-room-add-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/room/update \
-    --output-dir /tmp --output api-pri-room-update-0 \
+    --output-dir $TMP --output api-pri-room-update-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -32,7 +32,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/update \
         "has_suffix": false
     }
 EOF
-res=$(jq . /tmp/api-pri-room-update-0)
+res=$(jq . $TMP/api-pri-room-update-0)
 out <<< "valid post:"
 out <<< "$res"
 
@@ -46,7 +46,7 @@ out <<< "$res"
 roomId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pri/room/update \
-    --output-dir /tmp --output api-pri-room-update-1 \
+    --output-dir $TMP --output api-pri-room-update-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -58,7 +58,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/room/update \
         "has_suffix": false
     }
 EOF
-res=$(jq . /tmp/api-pri-room-update-1)
+res=$(jq . $TMP/api-pri-room-update-1)
 out <<< "invalid criteria:"
 out <<< "$res"
 

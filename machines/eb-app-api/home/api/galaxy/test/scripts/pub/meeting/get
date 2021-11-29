@@ -8,15 +8,15 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pub/meeting/get"
-rm -f /tmp/api-pub-meeting-get-*
+rm -f $TMP/api-pub-meeting-get-*
 
 # ------------------------------------------------------------------------------
 # /api/pub/meeting/get (exists)
 # ------------------------------------------------------------------------------
-meetingId=$(jq -r .[0].id /tmp/api-pub-meeting-list-enabled-0)
+meetingId=$(jq -r .[0].id $TMP/api-pub-meeting-list-enabled-0)
 
 curl -ks -X POST https://$APP_FQDN/api/pub/meeting/get \
-    --output-dir /tmp --output api-pub-meeting-get-0 \
+    --output-dir $TMP --output api-pub-meeting-get-0 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -24,7 +24,7 @@ curl -ks -X POST https://$APP_FQDN/api/pub/meeting/get \
         "id": "$meetingId"
     }
 EOF
-res=$(jq . /tmp/api-pub-meeting-get-0)
+res=$(jq . $TMP/api-pub-meeting-get-0)
 out <<< "exists:"
 out <<< "$res"
 
@@ -38,7 +38,7 @@ out <<< "$res"
 meetingId=$(uuidgen)
 
 curl -ks -X POST https://$APP_FQDN/api/pub/meeting/get \
-    --output-dir /tmp --output api-pub-meeting-get-1 \
+    --output-dir $TMP --output api-pub-meeting-get-1 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -46,7 +46,7 @@ curl -ks -X POST https://$APP_FQDN/api/pub/meeting/get \
         "id": "$meetingId"
     }
 EOF
-res=$(jq . /tmp/api-pub-meeting-get-1)
+res=$(jq . $TMP/api-pub-meeting-get-1)
 out <<< "not exists:"
 out <<< "$res"
 

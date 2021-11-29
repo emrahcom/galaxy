@@ -8,16 +8,16 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pri/domain/add"
-rm -f /tmp/api-pri-domain-add-*
+rm -f $TMP/api-pri-domain-add-*
 
-cookieJar=$(cat /tmp/kratos-login-cookie)
+cookieJar=$(cat $TMP/kratos-login-cookie)
 name="$RANDOM.$(date +'%s').mydomain.corp"
 
 # ------------------------------------------------------------------------------
 # /api/pri/domain/add (not exists)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
-    --output-dir /tmp --output api-pri-domain-add-0 \
+    --output-dir $TMP --output api-pri-domain-add-0 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -29,7 +29,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
         }
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-add-0)
+res=$(jq . $TMP/api-pri-domain-add-0)
 out <<< "not exists:"
 out <<< "$res"
 
@@ -41,7 +41,7 @@ out <<< "$res"
 # /api/pri/domain/add (exists)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
-    --output-dir /tmp --output api-pri-domain-add-1 \
+    --output-dir $TMP --output api-pri-domain-add-1 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -53,7 +53,7 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/add \
         }
     }
 EOF
-res=$(jq . /tmp/api-pri-domain-add-1)
+res=$(jq . $TMP/api-pri-domain-add-1)
 out <<< "exists:"
 out <<< "$res"
 

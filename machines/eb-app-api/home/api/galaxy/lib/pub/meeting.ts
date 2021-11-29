@@ -1,5 +1,5 @@
 import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../../config.ts";
-import { narrowedMeetingRows, query } from "../common/database.ts";
+import { pubMeetingRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pub/meeting";
@@ -19,7 +19,7 @@ export async function getMeeting(req: Deno.RequestEvent) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as narrowedMeetingRows;
+        return rst.rows as pubMeetingRows;
       });
 
     ok(req, JSON.stringify(rows));
@@ -57,7 +57,7 @@ export async function listEnabledMeeting(req: Deno.RequestEvent) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as narrowedMeetingRows;
+        return rst.rows as pubMeetingRows;
       });
 
     ok(req, JSON.stringify(rows));

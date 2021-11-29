@@ -8,20 +8,20 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pub/meeting/list/enabled"
-rm -f /tmp/api-pub-meeting-list-enabled-*
+rm -f $TMP/api-pub-meeting-list-enabled-*
 
 # ------------------------------------------------------------------------------
 # /api/pub/meeting/list/enabled (no limit, no offset)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/meeting/list/enabled \
-    --output-dir /tmp --output api-pub-meeting-list-enabled-0 \
+    --output-dir $TMP --output api-pub-meeting-list-enabled-0 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
     }
 EOF
-res=$(jq . /tmp/api-pub-meeting-list-enabled-0)
+res=$(jq . $TMP/api-pub-meeting-list-enabled-0)
 out <<< "no limit, no offset:"
 out <<< "$res"
 
@@ -33,7 +33,7 @@ out <<< "$res"
 # /api/pub/meeting/list/enabled (limit 2, no offset)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/meeting/list/enabled \
-    --output-dir /tmp --output api-pub-meeting-list-enabled-1 \
+    --output-dir $TMP --output api-pub-meeting-list-enabled-1 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -41,7 +41,7 @@ curl -ks -X POST https://$APP_FQDN/api/pub/meeting/list/enabled \
         "limit": 2
     }
 EOF
-res=$(jq . /tmp/api-pub-meeting-list-enabled-1)
+res=$(jq . $TMP/api-pub-meeting-list-enabled-1)
 out <<< "limit 2, no offset:"
 out <<< "$res"
 
@@ -53,7 +53,7 @@ out <<< "$res"
 # /api/pub/meeting/list/enabled (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/meeting/list/enabled \
-    --output-dir /tmp --output api-pub-meeting-list-enabled-2 \
+    --output-dir $TMP --output api-pub-meeting-list-enabled-2 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -61,7 +61,7 @@ curl -ks -X POST https://$APP_FQDN/api/pub/meeting/list/enabled \
         "offset": 1000000
     }
 EOF
-res=$(jq . /tmp/api-pub-meeting-list-enabled-2)
+res=$(jq . $TMP/api-pub-meeting-list-enabled-2)
 out <<< "limit 2 offset 1000000:"
 out <<< "$res"
 

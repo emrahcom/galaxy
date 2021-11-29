@@ -8,20 +8,20 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
 header <<< "/api/pub/domain/list"
-rm -f /tmp/api-pub-domain-list-*
+rm -f $TMP/api-pub-domain-list-*
 
 # ------------------------------------------------------------------------------
 # /api/pub/domain/list (no limit, no offset)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/domain/list \
-    --output-dir /tmp --output api-pub-domain-list-0 \
+    --output-dir $TMP --output api-pub-domain-list-0 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
     {
     }
 EOF
-res=$(jq . /tmp/api-pub-domain-list-0)
+res=$(jq . $TMP/api-pub-domain-list-0)
 out <<< "no limit, no offset:"
 out <<< "$res"
 
@@ -33,7 +33,7 @@ out <<< "$res"
 # /api/pub/domain/list (limit 2, no offset)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/domain/list \
-    --output-dir /tmp --output api-pub-domain-list-1 \
+    --output-dir $TMP --output api-pub-domain-list-1 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -41,7 +41,7 @@ curl -ks -X POST https://$APP_FQDN/api/pub/domain/list \
         "limit": 2
     }
 EOF
-res=$(jq . /tmp/api-pub-domain-list-1)
+res=$(jq . $TMP/api-pub-domain-list-1)
 out <<< "limit 2, no offset:"
 out <<< "$res"
 
@@ -53,7 +53,7 @@ out <<< "$res"
 # /api/pub/domain/list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pub/domain/list \
-    --output-dir /tmp --output api-pub-domain-list-2 \
+    --output-dir $TMP --output api-pub-domain-list-2 \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data @- << EOF
@@ -61,7 +61,7 @@ curl -ks -X POST https://$APP_FQDN/api/pub/domain/list \
         "offset": 1000000
     }
 EOF
-res=$(jq . /tmp/api-pub-domain-list-2)
+res=$(jq . $TMP/api-pub-domain-list-2)
 out <<< "limit 2 offset 1000000:"
 out <<< "$res"
 

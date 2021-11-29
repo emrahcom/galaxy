@@ -1,5 +1,5 @@
 import { DEFAULT_LIST_SIZE, MAX_LIST_SIZE } from "../../config.ts";
-import { narrowedDomainRows, query } from "../common/database.ts";
+import { pubDomainRows, query } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
 
 const PRE = "/api/pub/domain";
@@ -33,7 +33,7 @@ export async function listDomain(req: Deno.RequestEvent) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as narrowedDomainRows;
+        return rst.rows as pubDomainRows;
       });
 
     ok(req, JSON.stringify(rows));
@@ -71,7 +71,7 @@ export async function listEnabledDomain(req: Deno.RequestEvent) {
     };
     const rows = await query(sql)
       .then((rst) => {
-        return rst.rows as narrowedDomainRows;
+        return rst.rows as pubDomainRows;
       });
 
     ok(req, JSON.stringify(rows));

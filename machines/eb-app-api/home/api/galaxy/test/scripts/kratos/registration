@@ -8,24 +8,24 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
 header <<< "kratos registration"
-rm -f /tmp/kratos-credential
-rm -f /tmp/kratos-registration-*
-rm -f /tmp/*.kratos.registration
+rm -f $TMP/kratos-credential
+rm -f $TMP/kratos-registration-*
+rm -f $TMP/*.kratos.registration
 
 # ------------------------------------------------------------------------------
 # kratos registration flow
 # ------------------------------------------------------------------------------
 cookieJar=$(mktemp --suffix .kratos.registration)
-echo $cookieJar >/tmp/kratos-registration-cookie
+echo $cookieJar >$TMP/kratos-registration-cookie
 
 curl -ks https://$KRATOS_FQDN/self-service/registration/browser \
-    --output-dir /tmp --output kratos-registration-flow \
+    --output-dir $TMP --output kratos-registration-flow \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json"
-actionUrl=$(jq -r .ui.action /tmp/kratos-registration-flow)
+actionUrl=$(jq -r .ui.action $TMP/kratos-registration-flow)
 csrfToken=$(jq -r \
     '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
-    /tmp/kratos-registration-flow)
+    $TMP/kratos-registration-flow)
 
 out <<< "flow, action URL:"
 out <<< "  $actionUrl"
@@ -35,12 +35,12 @@ out <<< "  $csrfToken"
 # ------------------------------------------------------------------------------
 # kratos registration
 # ------------------------------------------------------------------------------
-cookieJar=$(cat /tmp/kratos-registration-cookie)
+cookieJar=$(cat $TMP/kratos-registration-cookie)
 email=user.$(date +%s)@galaxy.corp
 passwd=$(openssl rand -base64 12)
 
 curl -ks -X POST "$actionUrl" \
-    --output-dir /tmp --output kratos-registration-session \
+    --output-dir $TMP --output kratos-registration-session \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -52,12 +52,12 @@ curl -ks -X POST "$actionUrl" \
         "method": "password"
     }
 EOF
-userId=$(jq -r .identity.id /tmp/kratos-registration-session)
+userId=$(jq -r .identity.id $TMP/kratos-registration-session)
 [[ -z "$userId" ]] && exit 1
 [[ "$userId" = "null" ]] && exit 1
 
-echo "email=$email" >/tmp/kratos-credential
-echo "passwd=$passwd" >>/tmp/kratos-credential
+echo "email=$email" >$TMP/kratos-credential
+echo "passwd=$passwd" >>$TMP/kratos-credential
 
 out <<< "user id:"
 out <<< "  $userId"
