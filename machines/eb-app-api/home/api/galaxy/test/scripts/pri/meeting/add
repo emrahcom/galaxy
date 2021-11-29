@@ -1,103 +1,62 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
 source $BASEDIR/../../common
 
-header <<< "/api/pri/meeting/add"
-rm -f $TMP/api-pri-meeting-add-*
-
-cookieJar=$(cat $TMP/kratos-login-cookie)
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-0)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-ok-0)
 room_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/add (hidden)
+# hidden
 # ------------------------------------------------------------------------------
 name="meeting-$RANDOM-$(date +'%s')"
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
-    --output-dir $TMP --output api-pri-meeting-add-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "room_id": "$room_id",
-        "name": "$name",
-        "info": "some meeting info",
-        "schedule_type": "permanent",
-        "schedule_attr": "{}",
-        "hidden": true,
-        "restricted": false
-    }
+JSON=$(cat <<EOF
+{
+    "room_id": "$room_id",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "permanent",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-add-0)
-out <<< "hidden:"
-out <<< "$res"
-
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+)
+bash $BASEDIR/../../templates/add-ok "pri" "meeting" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/add (non-hidden)
+# non-hidden
 # ------------------------------------------------------------------------------
 name="meeting-$RANDOM-$(date +'%s')"
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
-    --output-dir $TMP --output api-pri-meeting-add-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "room_id": "$room_id",
-        "name": "$name",
-        "info": "some meeting info",
-        "schedule_type": "permanent",
-        "schedule_attr": "{}",
-        "hidden": false,
-        "restricted": false
-    }
+JSON=$(cat <<EOF
+{
+    "room_id": "$room_id",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "permanent",
+    "schedule_attr": "{}",
+    "hidden": false,
+    "restricted": false
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-add-1)
-out <<< "non-hidden:"
-out <<< "$res"
-
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+)
+bash $BASEDIR/../../templates/add-ok "pri" "meeting" "$JSON" 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/add (for nonexistent room)
+# nonexistent room
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/add \
-    --output-dir $TMP --output api-pri-meeting-add-2 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "room_id": "$room_fake",
-        "name": "mymeeting",
-        "info": "some meeting info",
-        "schedule_type": "permanent",
-        "schedule_attr": "{}",
-        "hidden": true,
-        "restricted": false
-    }
+name="meeting-$RANDOM-$(date +'%s')"
+JSON=$(cat <<EOF
+{
+    "room_id": "$room_fake",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "permanent",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-add-2)
-out <<< "for notexistent room:"
-out <<< "$res"
-
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
-[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pri/meeting/add"
+)
+bash $BASEDIR/../../templates/add-error "pri" "meeting" "$JSON" 0

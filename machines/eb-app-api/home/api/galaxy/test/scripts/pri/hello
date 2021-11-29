@@ -1,47 +1,7 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
-source $BASEDIR/../common
 
-header <<< "/api/pri/hello"
-rm -f $TMP/api-pri-hello-*
-
-# ------------------------------------------------------------------------------
-# /api/pri/hello (with authentication)
-# ------------------------------------------------------------------------------
-cookieJar=$(cat $TMP/kratos-login-cookie)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/hello \
-    --output-dir $TMP --output api-pri-hello-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json"
-res=$(jq . $TMP/api-pri-hello-0)
-out <<< "with authentication:"
-out <<< "$res"
-
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ -z "$(echo $res | jq -r .text)" ]] && exit 1
-[[ "$(echo $res | jq -r .text)" = "hello null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# /api/pri/hello (no authentication)
-# ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/hello \
-    --output-dir $TMP --output api-pri-hello-1 \
-    -H "Accept: application/json"
-res=$(jq . $TMP/api-pri-hello-1)
-out <<< "no authentication:"
-out <<< "$res"
-
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
-[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pri/hello"
+bash $BASEDIR/../templates/hello-ok "pri"
+bash $BASEDIR/../templates/hello-error "pri"

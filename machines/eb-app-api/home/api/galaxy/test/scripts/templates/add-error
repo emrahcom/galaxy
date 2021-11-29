@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+# ------------------------------------------------------------------------------
+# environment
+# ------------------------------------------------------------------------------
+BASEDIR=$(dirname $0)
+source $BASEDIR/../common
+
+SERVICE=$1
+CLASS=$2
+JSON=$3
+[[ -z "$4" ]] && NUM=0 || NUM=$4
+
+# ------------------------------------------------------------------------------
+# /api/<service>/<class>/add -> error
+# ------------------------------------------------------------------------------
+header <<< "/api/$SERVICE/$CLASS/add -> error"
+rm -f $TMP/api-$SERVICE-$CLASS-add-error-*
+
+cookieJar=$(cat $TMP/kratos-login-cookie)
+curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/add \
+    --output-dir $TMP --output api-$SERVICE-$CLASS-add-error-$NUM \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data "$JSON"
+res=$(jq . $TMP/api-$SERVICE-$CLASS-add-error-$NUM)
+inp <<< "$(echo $JSON | jq .)"
+out <<< "$res"
+
+[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
+[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
+footer <<< "/api/$SERVICE/$CLASS/add -> error"

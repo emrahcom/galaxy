@@ -4,30 +4,6 @@ set -e
 # ------------------------------------------------------------------------------
 # this works only in trusted network
 # ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
-source $BASEDIR/../common
 
-header <<< "/api/adm/hello"
-rm -f $TMP/api-adm-hello
-
-# ------------------------------------------------------------------------------
-# /api/adm/hello
-# ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/adm/hello \
-    --output-dir $TMP --output api-adm-hello \
-    -H "Accept: application/json"
-res=$(jq . $TMP/api-adm-hello)
-out <<< "$res"
-
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ -z "$(echo $res | jq -r .text)" ]] && exit 1
-[[ "$(echo $res | jq -r .text)" = "null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/adm/hello"
+bash $BASEDIR/../templates/hello-unsecure "adm"
