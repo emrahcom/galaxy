@@ -54,7 +54,7 @@ out <<< "$res"
 [[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/list (limit 2 offset 1)
+# /api/pri/meeting/list (limit 2, offset 1)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
     --output-dir $TMP --output api-pri-meeting-list-2 \
@@ -68,7 +68,29 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
     }
 EOF
 res=$(jq . $TMP/api-pri-meeting-list-2)
-out <<< "limit 2 offset 1:"
+out <<< "limit 2, offset 1:"
+out <<< "$res"
+
+[[ -z "$(echo $res | jq .[0])" ]] && exit 1
+[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
+[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+
+# ------------------------------------------------------------------------------
+# /api/pri/meeting/list (invalid limit, invalid offset)
+# ------------------------------------------------------------------------------
+curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
+    --output-dir $TMP --output api-pri-meeting-list-3 \
+    --cookie $cookieJar --cookie-jar $cookieJar \
+    -H "Accept: application/json" \
+    -H "Content-Type: application/json" \
+    --data @- << EOF
+    {
+        "limit": "INVALID",
+        "offset": "INVALID"
+    }
+EOF
+res=$(jq . $TMP/api-pri-meeting-list-3)
+out <<< "invalid limit, invalid offset:"
 out <<< "$res"
 
 [[ -z "$(echo $res | jq .[0])" ]] && exit 1
@@ -79,7 +101,7 @@ out <<< "$res"
 # /api/pri/meeting/list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
 curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir $TMP --output api-pri-meeting-list-3 \
+    --output-dir $TMP --output api-pri-meeting-list-4 \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -88,8 +110,8 @@ curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
         "offset": 1000000
     }
 EOF
-res=$(jq . $TMP/api-pri-meeting-list-3)
-out <<< "limit 2 offset 1000000:"
+res=$(jq . $TMP/api-pri-meeting-list-4)
+out <<< "no limit, offset 1000000:"
 out <<< "$res"
 
 [[ "$res" != "[]" ]] && exit 1
