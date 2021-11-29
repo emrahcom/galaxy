@@ -93,9 +93,9 @@ res=$(jq . $TMP/api-pri-room-list-3)
 out <<< "invalid limit, invalid offset:"
 out <<< "$res"
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+[[ -z "$(echo $res | jq .)" ]] && exit 1
+[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
+[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
 
 # ------------------------------------------------------------------------------
 # /api/pri/room/list (no limit, offset 1000000)

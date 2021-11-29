@@ -37,21 +37,21 @@ export async function query(sql: QueryObjectConfig) {
 }
 
 // -----------------------------------------------------------------------------
-export function getLimit(limit: unknown) {
-  if (!limit || typeof limit !== "number") {
+export function getLimit(limit: number) {
+  if (!limit) {
     limit = DEFAULT_LIST_SIZE;
   } else if (limit > MAX_LIST_SIZE) {
     limit = MAX_LIST_SIZE;
   }
 
-  return limit;
+  return limit + 0;
 }
 
 // -----------------------------------------------------------------------------
-export function getOffset(offset: unknown) {
-  if (!offset || typeof offset !== "number") offset = 0;
+export function getOffset(offset: number) {
+  if (!offset) offset = 0;
 
-  return offset;
+  return offset + 0;
 }
 
 // -----------------------------------------------------------------------------
