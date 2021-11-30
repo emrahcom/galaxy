@@ -2,15 +2,16 @@
 set -e
 
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-ok-0)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-0)
 domain_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# new
+# add a new room
 # ------------------------------------------------------------------------------
-name="room-$RANDOM-$(date +'%s')"
+name="room-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {
     "domain_id": "$domain_id",
@@ -19,10 +20,11 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $BASEDIR/../../templates/add-ok "pri" "room" "$JSON" 0
+
+bash $TEMPLATES/action-member-id "pri" "room" "add" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# exist
+# try to add an already existing room
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
@@ -32,12 +34,13 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $BASEDIR/../../templates/add-error "pri" "room" "$JSON" 0
+
+bash $TEMPLATES/action-member-error "pri" "room" "add" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# for nonexistent domain
+# try to add a new room for a nonexistent domain
 # ------------------------------------------------------------------------------
-name="room-$RANDOM-$(date +'%s')"
+name="room-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {
     "domain_id": "$domain_fake",
@@ -46,4 +49,5 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $BASEDIR/../../templates/add-error "pri" "room" "$JSON" 1
+
+bash $TEMPLATES/action-member-error "pri" "room" "add" "$JSON" 1

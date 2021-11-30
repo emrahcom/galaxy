@@ -2,6 +2,14 @@
 set -e
 
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../templates
 
-bash $BASEDIR/../templates/hello-ok "pri"
-bash $BASEDIR/../templates/hello-error "pri"
+# ------------------------------------------------------------------------------
+# hello with authentication to the private api
+# ------------------------------------------------------------------------------
+bash $TEMPLATES/hello-member-text "pri"
+
+# ------------------------------------------------------------------------------
+# hello without authentication to the private api
+# ------------------------------------------------------------------------------
+bash $TEMPLATES/hello-guest-error "pri"

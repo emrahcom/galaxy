@@ -1,57 +1,35 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/update"
-rm -f $TMP/api-pri-domain-update-*
-
-cookieJar=$(cat $TMP/kratos-login-cookie)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-0)
+domain_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/update (valid post)
+# update with valid post
 # ------------------------------------------------------------------------------
-domainId=$(jq -r .[0].id $TMP/api-pri-domain-add-0)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
-    --output-dir $TMP --output api-pri-domain-update-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "id": "$domainId",
-        "name": "meet.mydomain.corp",
-        "auth_type": "token",
-        "auth_attr": {
-           "app_id": "myappid",
-           "app_key": "myappsecret"
-        }
+JSON=$(cat <<EOF
+{
+    "id": "$domain_id",
+    "name": "meet.mydomain.corp",
+    "auth_type": "token",
+    "auth_attr": {
+       "app_id": "myappid",
+       "app_key": "myappsecret"
     }
+}
 EOF
-res=$(jq . $TMP/api-pri-domain-update-0)
-out <<< "valid post:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-id "pri" "domain" "update" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/update (invalid post)
+# try to update with invalid post
 # ------------------------------------------------------------------------------
-domainId=$(uuidgen)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
-    --output-dir $TMP --output api-pri-domain-update-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
+JSON=$(cat <<EOF
     {
         "id": "$domainId",
         "name": "meet.mydomain.corp",
@@ -62,15 +40,6 @@ curl -ks -X POST https://$APP_FQDN/api/pri/domain/update \
         }
     }
 EOF
-res=$(jq . $TMP/api-pri-domain-update-1)
-out <<< "invalid post:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
-[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/update"
+bash $TEMPLATES/action-member-error "pri" "domain" "update" "$JSON" 0

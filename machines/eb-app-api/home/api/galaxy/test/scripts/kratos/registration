@@ -15,7 +15,7 @@ rm -f $TMP/*.kratos.registration
 # ------------------------------------------------------------------------------
 # kratos registration flow
 # ------------------------------------------------------------------------------
-cookieJar=$(mktemp --suffix .kratos.registration)
+cookieJar=$(mktemp -p $TMP --suffix .kratos.registration)
 echo $cookieJar >$TMP/kratos-registration-cookie
 
 curl -ks https://$KRATOS_FQDN/self-service/registration/browser \

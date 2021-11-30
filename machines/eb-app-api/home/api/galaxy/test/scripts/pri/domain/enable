@@ -1,62 +1,33 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-header <<< "/api/pri/domain/enable"
-rm -f $TMP/api-pri-domain-enable-*
-
-cookieJar=$(cat $TMP/kratos-login-cookie)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-0)
+domain_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/enable (exists)
+# enable an existing domain
 # ------------------------------------------------------------------------------
-domainId=$(jq -r .[0].id $TMP/api-pri-domain-add-0)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
-    --output-dir $TMP --output api-pri-domain-enable-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "id": "$domainId"
-    }
+JSON=$(cat <<EOF
+{
+    "id": "$domain_id"
+}
 EOF
-res=$(jq . $TMP/api-pri-domain-enable-0)
-out <<< "exists:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-id "pri" "domain" "enable" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pri/domain/enable (not exists)
+# enable a nonexistent domain
 # ------------------------------------------------------------------------------
-domainId=$(uuidgen)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/domain/enable \
-    --output-dir $TMP --output api-pri-domain-enable-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "id": "$domainId"
-    }
+JSON=$(cat <<EOF
+{
+    "id": "$domain_fake"
+}
 EOF
-res=$(jq . $TMP/api-pri-domain-enable-1)
-out <<< "not exists:"
-out <<< "$res"
+)
 
-[[ "$res" != "[]" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pri/domain/enable"
+bash $TEMPLATES/action-member-empty "pri" "domain" "enable" "$JSON" 0

@@ -31,9 +31,7 @@ bash $BASEDIR/scripts/pri/domain/disable
 bash $BASEDIR/scripts/pri/domain/enable
 bash $BASEDIR/scripts/pri/domain/del
 
-for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/domain/add
-done
+bash $BASEDIR/scripts/pri/domain/add-many 10
 bash $BASEDIR/scripts/pri/domain/list
 bash $BASEDIR/scripts/pri/domain/list-enabled
 

@@ -2,5 +2,9 @@
 set -e
 
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../templates
 
-bash $BASEDIR/../templates/hello-unsecure "pub"
+# ------------------------------------------------------------------------------
+# hello to the public api
+# ------------------------------------------------------------------------------
+bash $TEMPLATES/hello-guest-text "pub"
