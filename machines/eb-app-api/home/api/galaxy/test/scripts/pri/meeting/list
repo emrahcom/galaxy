@@ -1,122 +1,67 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-header <<< "/api/pri/meeting/list"
-rm -f $TMP/api-pri-meeting-list-*
-
-cookieJar=$(cat $TMP/kratos-login-cookie)
-
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/list (no limit, no offset)
+# get meeting list (no limit, no offset)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir $TMP --output api-pri-meeting-list-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-    }
+JSON=$(cat <<EOF
+{
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-list-0)
-out <<< "no limit, no offset:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/list (limit 2, no offset)
+# get meeting list (limit 2, no offset)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir $TMP --output api-pri-meeting-list-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "limit": 2
-    }
+JSON=$(cat <<EOF
+{
+    "limit": 2
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-list-1)
-out <<< "limit 2, no offset:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 1
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/list (limit 2, offset 1)
+# get meeting list (limit 2, offset 1)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir $TMP --output api-pri-meeting-list-2 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "limit": 2,
-        "offset": 1
-    }
+JSON=$(cat <<EOF
+{
+    "limit": 2,
+    "offset": 1
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-list-2)
-out <<< "limit 2, offset 1:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 2
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/list (invalid limit, invalid offset)
+# get meeting list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir $TMP --output api-pri-meeting-list-3 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "limit": "INVALID",
-        "offset": "INVALID"
-    }
+JSON=$(cat <<EOF
+{
+    "offset": 1000000
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-list-3)
-out <<< "invalid limit, invalid offset:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
-[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-empty "pri" "meeting" "list" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/list (no limit, offset 1000000)
+# get meeting list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/list \
-    --output-dir $TMP --output api-pri-meeting-list-4 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "offset": 1000000
-    }
+JSON=$(cat <<EOF
+{
+    "limit": "INVALID",
+    "offset": "INVALID"
+}
 EOF
-res=$(jq . $TMP/api-pri-meeting-list-4)
-out <<< "no limit, offset 1000000:"
-out <<< "$res"
+)
 
-[[ "$res" != "[]" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pri/meeting/list"
+bash $TEMPLATES/action-member-error "pri" "meeting" "list" "$JSON" 0

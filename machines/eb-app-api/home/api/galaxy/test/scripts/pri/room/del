@@ -1,62 +1,33 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-header <<< "/api/pri/room/del"
-rm -f $TMP/api-pri-room-del-*
-
-cookieJar=$(cat $TMP/kratos-login-cookie)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-0)
+room_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# /api/pri/room/del (exists)
+# delete an existing room
 # ------------------------------------------------------------------------------
-room_id=$(jq -r .[0].id $TMP/api-pri-room-add-0)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/room/del \
-    --output-dir $TMP --output api-pri-room-del-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "id": "$room_id"
-    }
+JSON=$(cat <<EOF
+{
+    "id": "$room_id"
+}
 EOF
-res=$(jq . $TMP/api-pri-room-del-0)
-out <<< "exists"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-id "pri" "room" "del" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pri/room/del (not exists)
+# delete a nonexistent room
 # ------------------------------------------------------------------------------
-roomId=$(uuidgen)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/room/del \
-    --output-dir $TMP --output api-pri-room-del-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "id": "$room_id"
-    }
+JSON=$(cat <<EOF
+{
+    "id": "$room_fake"
+}
 EOF
-res=$(jq . $TMP/api-pri-room-del-1)
-out <<< "not exists"
-out <<< "$res"
+)
 
-[[ "$res" != "[]" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pri/room/del"
+bash $TEMPLATES/action-member-empty "pri" "room" "del" "$JSON" 0

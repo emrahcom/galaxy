@@ -1,80 +1,68 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-header <<< "/api/pri/meeting/update"
-rm -f $TMP/api-pri-meeting-update-*
-
-cookieJar=$(cat $TMP/kratos-login-cookie)
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-0)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-0)
 room_fake=$(uuidgen)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-0)
+meeting_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/update (valid post)
+# update with valid post
 # ------------------------------------------------------------------------------
-meetingId=$(jq -r .[0].id $TMP/api-pri-meeting-add-0)
+JSON=$(cat <<EOF
+{
+    "id": "$meeting_id",
+    "room_id": "$room_id",
+    "name": "mymeeting",
+    "info": "some meeting info",
+    "schedule_type": "permanent",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
+}
+EOF
+)
 
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/update \
-    --output-dir $TMP --output api-pri-meeting-update-0 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
+bash $TEMPLATES/action-member-id "pri" "meeting" "update" "$JSON" 0
+
+# ------------------------------------------------------------------------------
+# try to update with invalid post
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
     {
-        "id": "$meetingId",
-        "room_id": "$room_id",
-        "name": "mymeeting",
-        "info": "some meeting info",
-        "schedule_type": "permanent",
-        "schedule_attr": "{}",
-        "hidden": true,
-        "restricted": false
+    "id": "$meeting_fake",
+    "room_id": "$room_fake",
+    "name": "mymeeting",
+    "info": "some meeting info",
+    "schedule_type": "UNKNOWN",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
     }
 EOF
-res=$(jq . $TMP/api-pri-meeting-update-0)
-out <<< "valid post:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-member-error "pri" "meeting" "update" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pri/meeting/update (invalid post)
+# try to update with invalid criteria
 # ------------------------------------------------------------------------------
-meetingId=$(uuidgen)
-
-curl -ks -X POST https://$APP_FQDN/api/pri/meeting/update \
-    --output-dir $TMP --output api-pri-meeting-update-1 \
-    --cookie $cookieJar --cookie-jar $cookieJar \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
+JSON=$(cat <<EOF
     {
-        "id": "$meetingId",
-        "room_id": "$room_fake",
-        "name": "mymeeting",
-        "info": "some meeting info",
-        "schedule_type": "UNKNOWN",
-        "schedule_attr": "{}",
-        "hidden": true,
-        "restricted": false
+    "id": "$meeting_fake",
+    "room_id": "$room_fake",
+    "name": "mymeeting",
+    "info": "some meeting info",
+    "schedule_type": "permanent",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
     }
 EOF
-res=$(jq . $TMP/api-pri-meeting-update-1)
-out <<< "invalid post:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .)" ]] && exit 1
-[[ -z "$(echo $res | jq -r .error)" ]] && exit 1
-[[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pri/meeting/update"
+bash $TEMPLATES/action-member-empty "pri" "meeting" "update" "$JSON" 0

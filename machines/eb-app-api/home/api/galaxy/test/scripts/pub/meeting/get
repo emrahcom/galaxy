@@ -1,58 +1,33 @@
 #!/bin/bash
 set -e
 
-# ------------------------------------------------------------------------------
-# environment
-# ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-header <<< "/api/pub/meeting/get"
-rm -f $TMP/api-pub-meeting-get-*
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-0)
+meeting_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# /api/pub/meeting/get (exists)
+# get for an existing meeting
 # ------------------------------------------------------------------------------
-meetingId=$(jq -r .[0].id $TMP/api-pub-meeting-list-enabled-0)
-
-curl -ks -X POST https://$APP_FQDN/api/pub/meeting/get \
-    --output-dir $TMP --output api-pub-meeting-get-0 \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "id": "$meetingId"
-    }
+JSON=$(cat <<EOF
+{
+    "id": "$meeting_id"
+}
 EOF
-res=$(jq . $TMP/api-pub-meeting-get-0)
-out <<< "exists:"
-out <<< "$res"
+)
 
-[[ -z "$(echo $res | jq .[0])" ]] && exit 1
-[[ -z "$(echo $res | jq -r .[0].id)" ]] && exit 1
-[[ "$(echo $res | jq -r .[0].id)" = "null" ]] && exit 1
+bash $TEMPLATES/action-guest-id "pub" "meeting" "get" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# /api/pub/meeting/get (not exists)
+# get for a nonexistent meeting
 # ------------------------------------------------------------------------------
-meetingId=$(uuidgen)
-
-curl -ks -X POST https://$APP_FQDN/api/pub/meeting/get \
-    --output-dir $TMP --output api-pub-meeting-get-1 \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    --data @- << EOF
-    {
-        "id": "$meetingId"
-    }
+JSON=$(cat <<EOF
+{
+    "id": "$meeting_fake"
+}
 EOF
-res=$(jq . $TMP/api-pub-meeting-get-1)
-out <<< "not exists:"
-out <<< "$res"
+)
 
-[[ "$res" != "[]" ]] && exit 1
-
-# ------------------------------------------------------------------------------
-# completed
-# ------------------------------------------------------------------------------
-footer <<< "/api/pub/meeting/get"
+bash $TEMPLATES/action-guest-empty "pub" "meeting" "get" "$JSON" 0

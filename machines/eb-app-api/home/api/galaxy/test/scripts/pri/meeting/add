@@ -5,11 +5,11 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-ok-0)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-0)
 room_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# add a hidden meeting
+# add a new meeting (hidden)
 # ------------------------------------------------------------------------------
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
@@ -24,10 +24,11 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $TEMPLATES/add-ok "pri" "meeting" "$JSON" 0
+
+bash $TEMPLATES/action-member-id "pri" "meeting" "add" "$JSON" 0
 
 # ------------------------------------------------------------------------------
-# add a non-hidden meeting
+# add a new meeting (non-hidden)
 # ------------------------------------------------------------------------------
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
@@ -42,10 +43,11 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $TEMPLATES/add-ok "pri" "meeting" "$JSON" 1
+
+bash $TEMPLATES/action-member-id "pri" "meeting" "add" "$JSON" 1
 
 # ------------------------------------------------------------------------------
-# try to add a meeting for a nonexistent room
+# try to add a new meeting for a nonexistent room
 # ------------------------------------------------------------------------------
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
@@ -60,4 +62,5 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $TEMPLATES/add-error "pri" "meeting" "$JSON" 0
+
+bash $TEMPLATES/action-member-error "pri" "meeting" "add" "$JSON" 0

@@ -25,11 +25,13 @@ bash $BASEDIR/scripts/pri/hello
 
 # domain
 bash $BASEDIR/scripts/pri/domain/add
+bash $BASEDIR/scripts/pri/domain/del
+
+bash $BASEDIR/scripts/pri/domain/add
 bash $BASEDIR/scripts/pri/domain/get
 bash $BASEDIR/scripts/pri/domain/update
 bash $BASEDIR/scripts/pri/domain/disable
 bash $BASEDIR/scripts/pri/domain/enable
-bash $BASEDIR/scripts/pri/domain/del
 
 bash $BASEDIR/scripts/pri/domain/add-many 10
 bash $BASEDIR/scripts/pri/domain/list
@@ -37,29 +39,29 @@ bash $BASEDIR/scripts/pri/domain/list-enabled
 
 # room
 bash $BASEDIR/scripts/pri/room/add
+bash $BASEDIR/scripts/pri/room/del
+
+bash $BASEDIR/scripts/pri/room/add
 bash $BASEDIR/scripts/pri/room/get
 bash $BASEDIR/scripts/pri/room/update
 bash $BASEDIR/scripts/pri/room/disable
 bash $BASEDIR/scripts/pri/room/enable
-bash $BASEDIR/scripts/pri/room/del
 
-for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/room/add
-done
+bash $BASEDIR/scripts/pri/room/add-many 10
 bash $BASEDIR/scripts/pri/room/list
 bash $BASEDIR/scripts/pri/room/list-enabled
 
 # meeting
 bash $BASEDIR/scripts/pri/meeting/add
+bash $BASEDIR/scripts/pri/meeting/del
+
+bash $BASEDIR/scripts/pri/meeting/add
 bash $BASEDIR/scripts/pri/meeting/get
 bash $BASEDIR/scripts/pri/meeting/update
 bash $BASEDIR/scripts/pri/meeting/disable
 bash $BASEDIR/scripts/pri/meeting/enable
-bash $BASEDIR/scripts/pri/meeting/del
 
-for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/meeting/add
-done
+bash $BASEDIR/scripts/pri/meeting/add-many 10
 bash $BASEDIR/scripts/pri/meeting/list
 bash $BASEDIR/scripts/pri/meeting/list-enabled
 
@@ -76,4 +78,7 @@ bash $BASEDIR/scripts/pub/domain/list-enabled
 bash $BASEDIR/scripts/pub/meeting/list-enabled
 bash $BASEDIR/scripts/pub/meeting/get
 
+# ------------------------------------------------------------------------------
+# completed
+# ------------------------------------------------------------------------------
 footer <<< completed successfully
