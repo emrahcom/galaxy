@@ -31,6 +31,7 @@ bash $TEMPLATES/action-member-id "pri" "meeting" "update" "$JSON" 0
 
 # ------------------------------------------------------------------------------
 # try to update with invalid post
+# schedule_type is incorrect in the example
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
     {

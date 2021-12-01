@@ -75,8 +75,8 @@ bash $BASEDIR/scripts/pub/domain/list
 bash $BASEDIR/scripts/pub/domain/list-enabled
 
 # meeting
-bash $BASEDIR/scripts/pub/meeting/list-enabled
 bash $BASEDIR/scripts/pub/meeting/get
+bash $BASEDIR/scripts/pub/meeting/list-enabled
 
 # ------------------------------------------------------------------------------
 # completed

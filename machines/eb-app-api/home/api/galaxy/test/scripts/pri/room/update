@@ -27,6 +27,7 @@ bash $TEMPLATES/action-member-id "pri" "room" "update" "$JSON" 0
 
 # ------------------------------------------------------------------------------
 # try to update with invalid post
+# name is missing in the example
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
