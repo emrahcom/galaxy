@@ -98,7 +98,8 @@ CREATE TABLE room (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
-    "name" varchar(250) NOT NULL 'room-' || md5(gen_random_uuid()::text),
+    "name" varchar(250) NOT NULL
+        DEFAULT 'room-' || md5(gen_random_uuid()::text),
     "has_suffix" boolean NOT NULL DEFAULT false,
     "suffix" varchar(250) NOT NULL DEFAULT md5(gen_random_uuid()::text),
     "ephemeral" boolean NOT NULL DEFAULT true,
