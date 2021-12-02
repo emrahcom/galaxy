@@ -8,6 +8,7 @@ import { getIdentityId } from "./lib/pri/kratos.ts";
 import domain from "./lib/pri/domain.ts";
 import hello from "./lib/pri/hello.ts";
 import meeting from "./lib/pri/meeting.ts";
+import profile from "./lib/pri/profile.ts";
 import room from "./lib/pri/room.ts";
 
 const PRE = "/api/pri";
@@ -20,6 +21,8 @@ function route(req: Deno.RequestEvent, path: string, identityId: string) {
     domain(req, path, identityId);
   } else if (path.match(`^${PRE}/meeting/`)) {
     meeting(req, path, identityId);
+  } else if (path.match(`^${PRE}/profile/`)) {
+    profile(req, path, identityId);
   } else if (path.match(`^${PRE}/room/`)) {
     room(req, path, identityId);
   } else {
