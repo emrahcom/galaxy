@@ -15,7 +15,7 @@ export async function getProfile(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT id, name, email, default, enabled, created_at, updated_at
+        SELECT id, name, email, is_default, enabled, created_at, updated_at
         FROM profile
         WHERE id = $2 AND identity_id = $1`,
       args: [
@@ -42,9 +42,9 @@ export async function getDefaultProfile(
   try {
     const sql = {
       text: `
-        SELECT id, name, email, default, enabled, created_at, updated_at
+        SELECT id, name, email, is_default, enabled, created_at, updated_at
         FROM profile
-        WHERE identity_id = $1 AND default = true
+        WHERE identity_id = $1 AND is_default = true
         LIMIT 1`,
       args: [
         identityId,
@@ -70,7 +70,7 @@ export async function listProfile(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT id, name, email, default, enabled, created_at, updated_at
+        SELECT id, name, email, is_default, enabled, created_at, updated_at
         FROM profile
         WHERE identity_id = $1
         ORDER BY name
@@ -104,7 +104,7 @@ export async function listEnabledProfile(
 
     const sql = {
       text: `
-        SELECT id, name, email, default, enabled, created_at, updated_at
+        SELECT id, name, email, is_default, enabled, created_at, updated_at
         FROM profile
         WHERE identity_id = $1 AND enabled = true
         ORDER BY name
@@ -277,7 +277,7 @@ export async function setDefaultProfile(
     const sql = {
       text: `
         UPDATE profile SET
-          default = true,
+          is_default = true,
           updated_at = now()
         WHERE id = $2 AND identity_id = $1
         RETURNING id, updated_at as at`,

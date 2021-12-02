@@ -23,6 +23,20 @@ bash $BASEDIR/scripts/adm/hello
 # ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/pri/hello
 
+# profile
+bash $BASEDIR/scripts/pri/profile/add
+bash $BASEDIR/scripts/pri/profile/del
+
+bash $BASEDIR/scripts/pri/profile/add
+bash $BASEDIR/scripts/pri/profile/get
+bash $BASEDIR/scripts/pri/profile/update
+bash $BASEDIR/scripts/pri/profile/disable
+bash $BASEDIR/scripts/pri/profile/enable
+
+bash $BASEDIR/scripts/pri/profile/add-many 10
+bash $BASEDIR/scripts/pri/profile/list
+bash $BASEDIR/scripts/pri/profile/list-enabled
+
 # domain
 bash $BASEDIR/scripts/pri/domain/add
 bash $BASEDIR/scripts/pri/domain/del

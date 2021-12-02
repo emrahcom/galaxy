@@ -51,7 +51,7 @@ CREATE TABLE profile (
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "email" varchar(250) NOT NULL,
-    "default" boolean NOT NULL DEFAULT false,
+    "is_default" boolean NOT NULL DEFAULT false,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
