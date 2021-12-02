@@ -13,11 +13,12 @@ meeting_fake=$(uuidgen)
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
+name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id",
     "room_id": "$room_id",
-    "name": "mymeeting",
+    "name": "$name",
     "info": "some meeting info",
     "schedule_type": "permanent",
     "schedule_attr": "{}",
@@ -33,11 +34,12 @@ bash $TEMPLATES/action-member-id "pri" "meeting" "update" "$JSON" 0
 # try to update with invalid post
 # schedule_type is incorrect in the example
 # ------------------------------------------------------------------------------
+name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
     {
     "id": "$meeting_fake",
     "room_id": "$room_fake",
-    "name": "mymeeting",
+    "name": "$name",
     "info": "some meeting info",
     "schedule_type": "UNKNOWN",
     "schedule_attr": "{}",
@@ -52,11 +54,12 @@ bash $TEMPLATES/action-member-error "pri" "meeting" "update" "$JSON" 0
 # ------------------------------------------------------------------------------
 # try to update with invalid criteria
 # ------------------------------------------------------------------------------
+name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
     {
     "id": "$meeting_fake",
     "room_id": "$room_fake",
-    "name": "mymeeting",
+    "name": "$name",
     "info": "some meeting info",
     "schedule_type": "permanent",
     "schedule_attr": "{}",

@@ -56,7 +56,7 @@ CREATE TABLE profile (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON profile("identity_id", "name");
+CREATE UNIQUE INDEX ON profile("identity_id", "name", "email");
 ALTER TABLE profile OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ CREATE TABLE room (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "accessed_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON room("identity_id", "name");
+CREATE UNIQUE INDEX ON room("identity_id", "domain_id", "name");
 ALTER TABLE room OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------

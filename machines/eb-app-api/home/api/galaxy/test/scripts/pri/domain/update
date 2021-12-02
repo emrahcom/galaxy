@@ -11,10 +11,11 @@ domain_fake=$(uuidgen)
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
+name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
 {
     "id": "$domain_id",
-    "name": "meet.mydomain.corp",
+    "name": "$name",
     "auth_type": "token",
     "auth_attr": {
        "app_id": "myappid",
@@ -29,10 +30,11 @@ bash $TEMPLATES/action-member-id "pri" "domain" "update" "$JSON" 0
 # ------------------------------------------------------------------------------
 # try to update with invalid post
 # ------------------------------------------------------------------------------
+name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
     {
         "id": "$domain_id",
-        "name": "meet.mydomain.corp",
+        "name": "$name",
         "auth_type": "UNKNOWN",
         "auth_attr": {
            "app_id": "myappid",
@@ -47,10 +49,11 @@ bash $TEMPLATES/action-member-error "pri" "domain" "update" "$JSON" 0
 # ------------------------------------------------------------------------------
 # try to update with invalid criteria
 # ------------------------------------------------------------------------------
+name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
     {
         "id": "$domain_fake",
-        "name": "meet.mydomain.corp",
+        "name": "$name",
         "auth_type": "token",
         "auth_attr": {
            "app_id": "myappid",
