@@ -44,6 +44,22 @@ INSERT INTO identity VALUES (
 );
 
 -- -----------------------------------------------------------------------------
+-- PROFILE
+-- -----------------------------------------------------------------------------
+CREATE TABLE profile (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
+    "email" varchar(250) NOT NULL,
+    "default" boolean NOT NULL DEFAULT false,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON profile("identity_id", "name");
+ALTER TABLE profile OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- DOMAIN
 -- -----------------------------------------------------------------------------
 -- - public domain can only be added by system account.
@@ -98,6 +114,7 @@ ALTER TABLE room OWNER TO galaxy;
 -- MEETING
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting if it's over
+-- - dont allow to change schedule type after insert or only without ephemeral
 -- - non-hidden meeting can be seen by everyone but permission will be needed to
 --   participate it if it is restricted
 -- - anybody can participate a restricted meeting if she has the key
