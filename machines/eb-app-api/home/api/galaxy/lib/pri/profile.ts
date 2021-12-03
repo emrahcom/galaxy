@@ -274,6 +274,10 @@ export async function setDefaultProfile(
 ) {
   try {
     const pl = await req.request.json();
+
+    // note: don't add an is_default checking into WHERE. user should set a
+    // profile as default although it's already default to solve the duplicated
+    // defaults issue. Also UI should support this.
     const sql = {
       text: `
         UPDATE profile SET
