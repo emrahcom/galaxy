@@ -112,12 +112,12 @@ export async function addRoom(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        INSERT INTO room (identity_id, domain_id, name, has_suffix)
+        INSERT INTO room (identity_id, domain_id, name, has_suffix, ephemeral)
         VALUES ($1,
                 (SELECT id
                  FROM domain
                  WHERE id = $2 AND (identity_id = $1 OR public = true)),
-                $3, $4)
+                $3, $4, false)
         RETURNING id, created_at as at`,
       args: [
         identityId,

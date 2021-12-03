@@ -102,7 +102,7 @@ CREATE TABLE room (
         DEFAULT 'room-' || md5(gen_random_uuid()::text),
     "has_suffix" boolean NOT NULL DEFAULT false,
     "suffix" varchar(250) NOT NULL DEFAULT md5(gen_random_uuid()::text),
-    "ephemeral" boolean NOT NULL DEFAULT false,
+    "ephemeral" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
