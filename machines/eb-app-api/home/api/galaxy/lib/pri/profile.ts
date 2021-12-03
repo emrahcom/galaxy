@@ -274,21 +274,7 @@ export async function setDefaultProfile(
 ) {
   try {
     const pl = await req.request.json();
-
-    const sql1 = {
-      text: `
-        UPDATE profile SET
-          is_default = false,
-          updated_at = now()
-        WHERE identity_id = $1 AND id != $2 AND is_default = true`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    await query(sql1);
-
-    const sql2 = {
+    const sql = {
       text: `
         UPDATE profile SET
           is_default = true,
@@ -300,10 +286,24 @@ export async function setDefaultProfile(
         pl.id,
       ],
     };
-    const rows = await query(sql2)
+    const rows = await query(sql)
       .then((rst) => {
         return rst.rows as idRows;
       });
+
+    // reset the old default if the set action is successful
+    const sql1 = {
+      text: `
+        UPDATE profile SET
+          is_default = false,
+          updated_at = now()
+        WHERE identity_id = $1 AND id != $2 AND is_default = true`,
+      args: [
+        identityId,
+        pl.id,
+      ],
+    };
+    if (rows) await query(sql1);
 
     ok(req, JSON.stringify(rows));
   } catch {
