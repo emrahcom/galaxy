@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get default for empty result set
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "profile" "get/default" "$JSON" 0
