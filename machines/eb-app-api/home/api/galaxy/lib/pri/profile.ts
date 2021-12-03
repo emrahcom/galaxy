@@ -303,7 +303,7 @@ export async function setDefaultProfile(
         pl.id,
       ],
     };
-    if (rows) await query(sql1);
+    if (rows[0] !== undefined) await query(sql1);
 
     ok(req, JSON.stringify(rows));
   } catch {
