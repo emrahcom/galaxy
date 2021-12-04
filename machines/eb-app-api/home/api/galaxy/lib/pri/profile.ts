@@ -17,7 +17,8 @@ export async function getProfile(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT id, name, email, is_default, enabled, created_at, updated_at
         FROM profile
-        WHERE id = $2 AND identity_id = $1`,
+        WHERE id = $2
+          AND identity_id = $1`,
       args: [
         identityId,
         pl.id,
@@ -44,7 +45,8 @@ export async function getDefaultProfile(
       text: `
         SELECT id, name, email, is_default, enabled, created_at, updated_at
         FROM profile
-        WHERE identity_id = $1 AND is_default = true
+        WHERE identity_id = $1
+          AND is_default = true
         LIMIT 1`,
       args: [
         identityId,
@@ -106,7 +108,8 @@ export async function listEnabledProfile(
       text: `
         SELECT id, name, email, is_default, enabled, created_at, updated_at
         FROM profile
-        WHERE identity_id = $1 AND enabled = true
+        WHERE identity_id = $1
+          AND enabled = true
         ORDER BY name
         LIMIT $2 OFFSET $3`,
       args: [
@@ -159,7 +162,8 @@ export async function delProfile(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         DELETE FROM profile
-        WHERE id = $2 AND identity_id = $1
+        WHERE id = $2
+          AND identity_id = $1
         RETURNING id, now() as at`,
       args: [
         identityId,
@@ -186,11 +190,13 @@ export async function updateProfile(
     const pl = await req.request.json();
     const sql = {
       text: `
-        UPDATE profile SET
+        UPDATE profile
+        SET
           name = $3,
           email = $4,
           updated_at = now()
-        WHERE id = $2 AND identity_id = $1
+        WHERE id = $2
+          AND identity_id = $1
         RETURNING id, updated_at as at`,
       args: [
         identityId,
@@ -218,10 +224,12 @@ export async function updateEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE profile SET
+      UPDATE profile
+      SET
         enabled = $3,
         updated_at = now()
-      WHERE id = $2 AND identity_id = $1
+      WHERE id = $2
+        AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
       identityId,
@@ -280,10 +288,12 @@ export async function setDefaultProfile(
     // defaults issue. Also UI should support this.
     const sql = {
       text: `
-        UPDATE profile SET
+        UPDATE profile
+        SET
           is_default = true,
           updated_at = now()
-        WHERE id = $2 AND identity_id = $1
+        WHERE id = $2
+          AND identity_id = $1
         RETURNING id, updated_at as at`,
       args: [
         identityId,
@@ -298,10 +308,13 @@ export async function setDefaultProfile(
     // reset the old default if the set action is successful
     const sql1 = {
       text: `
-        UPDATE profile SET
+        UPDATE profile
+        SET
           is_default = false,
           updated_at = now()
-        WHERE identity_id = $1 AND id != $2 AND is_default = true`,
+        WHERE identity_id = $1
+          AND id != $2
+          AND is_default = true`,
       args: [
         identityId,
         pl.id,

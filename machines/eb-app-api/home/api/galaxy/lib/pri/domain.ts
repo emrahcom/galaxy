@@ -17,7 +17,8 @@ export async function getDomain(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
-        WHERE id = $2 AND identity_id = $1`,
+        WHERE id = $2
+          AND identity_id = $1`,
       args: [
         identityId,
         pl.id,
@@ -79,7 +80,8 @@ export async function listEnabledDomain(
       text: `
         SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
         FROM domain
-        WHERE identity_id = $1 AND enabled = true
+        WHERE identity_id = $1
+          AND enabled = true
         ORDER BY name
         LIMIT $2 OFFSET $3`,
       args: [
@@ -133,7 +135,8 @@ export async function delDomain(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         DELETE FROM domain
-        WHERE id = $2 AND identity_id = $1
+        WHERE id = $2
+          AND identity_id = $1
         RETURNING id, now() as at`,
       args: [
         identityId,
@@ -157,12 +160,14 @@ export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        UPDATE domain SET
+        UPDATE domain
+        SET
           name = $3,
           auth_type = $4,
           auth_attr = $5::jsonb,
           updated_at = now()
-        WHERE id = $2 AND identity_id = $1
+        WHERE id = $2
+          AND identity_id = $1
         RETURNING id, updated_at as at`,
       args: [
         identityId,
@@ -191,10 +196,12 @@ export async function updateEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE domain SET
+      UPDATE domain
+      SET
         enabled = $3,
         updated_at = now()
-      WHERE id = $2 AND identity_id = $1
+      WHERE id = $2
+        AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
       identityId,

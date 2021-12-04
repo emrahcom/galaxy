@@ -17,7 +17,7 @@ export async function getMeeting(req: Deno.RequestEvent) {
         SELECT id, name, info, schedule_type, schedule_attr, restricted, enabled
         FROM meeting
         WHERE id = $1
-            AND hidden = false`,
+          AND hidden = false`,
       args: [
         pl.id,
       ],
@@ -43,18 +43,18 @@ export async function listEnabledMeeting(req: Deno.RequestEvent) {
     const sql = {
       text: `
         SELECT m.id, m.name, m.info, m.schedule_type, m.schedule_attr,
-            m.restricted, m.enabled
+          m.restricted, m.enabled
         FROM meeting m
-            JOIN identity i ON m.identity_id = i.id
-            JOIN room r ON m.room_id = r.id
-            JOIN domain d ON r.domain_id = d.id
-            JOIN identity i2 ON d.identity_id = i2.id
+          JOIN identity i ON m.identity_id = i.id
+          JOIN room r ON m.room_id = r.id
+          JOIN domain d ON r.domain_id = d.id
+          JOIN identity i2 ON d.identity_id = i2.id
         WHERE m.hidden = false
-            AND m.enabled = true
-            AND i.enabled = true
-            AND r.enabled = true
-            AND d.enabled = true
-            AND i2.enabled = true
+          AND m.enabled = true
+          AND i.enabled = true
+          AND r.enabled = true
+          AND d.enabled = true
+          AND i2.enabled = true
         ORDER BY name
         LIMIT $1 OFFSET $2`,
       args: [

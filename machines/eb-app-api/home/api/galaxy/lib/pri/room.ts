@@ -16,10 +16,13 @@ export async function getRoom(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-            r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-            r.accessed_at
-        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
-        WHERE r.id = $2 AND r.identity_id = $1 AND r.ephemeral = false`,
+          r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
+          r.accessed_at
+        FROM room r
+          JOIN domain d ON r.domain_id = d.id
+        WHERE r.id = $2
+          AND r.identity_id = $1
+          AND r.ephemeral = false`,
       args: [
         identityId,
         pl.id,
@@ -46,10 +49,12 @@ export async function listRoom(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-            r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-            r.accessed_at
-        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
-        WHERE r.identity_id = $1 AND r.ephemeral = false
+          r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
+          r.accessed_at
+        FROM room r
+          JOIN domain d ON r.domain_id = d.id
+        WHERE r.identity_id = $1
+          AND r.ephemeral = false
         ORDER BY r.name
         LIMIT $2 OFFSET $3`,
       args: [
@@ -82,11 +87,16 @@ export async function listEnabledRoom(
     const sql = {
       text: `
         SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-            r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-            r.accessed_at
-        FROM room AS r JOIN domain AS d ON r.domain_id = d.id
-        WHERE r.identity_id = $1 AND r.ephemeral = false AND r.enabled = true
-            AND d.enabled = true
+          r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
+          r.accessed_at
+        FROM room r
+          JOIN domain d ON r.domain_id = d.id
+          JOIN identity i ON d.identity_id = i.id
+        WHERE r.identity_id = $1
+          AND r.ephemeral = false
+          AND r.enabled = true
+          AND d.enabled = true
+          AND i.enabled = true
         ORDER BY r.name
         LIMIT $2 OFFSET $3`,
       args: [
@@ -113,11 +123,14 @@ export async function addRoom(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         INSERT INTO room (identity_id, domain_id, name, has_suffix, ephemeral)
-        VALUES ($1,
-                (SELECT id
-                 FROM domain
-                 WHERE id = $2 AND (identity_id = $1 OR public = true)),
-                $3, $4, false)
+        VALUES (
+          $1,
+          (SELECT id
+           FROM domain
+           WHERE id = $2
+             AND (identity_id = $1
+                  OR public = true)),
+          $3, $4, false)
         RETURNING id, created_at as at`,
       args: [
         identityId,
@@ -144,7 +157,8 @@ export async function delRoom(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         DELETE FROM room
-        WHERE id = $2 AND identity_id = $1
+        WHERE id = $2
+          AND identity_id = $1
         RETURNING id, now() as at`,
       args: [
         identityId,
@@ -168,14 +182,18 @@ export async function updateRoom(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        UPDATE room SET
+        UPDATE room
+        SET
           domain_id = (SELECT id
                        FROM domain
-                       WHERE id = $3 AND (identity_id = $1 or public = true)),
+                       WHERE id = $3
+                         AND (identity_id = $1
+                              OR public = true)),
           name = $4,
           has_suffix = $5,
           updated_at = now()
-        WHERE id = $2 AND identity_id = $1
+        WHERE id = $2
+          AND identity_id = $1
         RETURNING id, updated_at as at`,
       args: [
         identityId,
@@ -204,10 +222,12 @@ export async function updateEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE room SET
+      UPDATE room
+      SET
         enabled = $3,
         updated_at = now()
-      WHERE id = $2 AND identity_id = $1
+      WHERE id = $2
+        AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
       identityId,

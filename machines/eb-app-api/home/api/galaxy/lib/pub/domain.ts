@@ -19,8 +19,10 @@ export async function listEnabledDomain(req: Deno.RequestEvent) {
       text: `
         SELECT d.id, d.name, d.enabled
         FROM domain d
-        JOIN identity i ON d.identity_id = i.id
-        WHERE d.public = true AND d.enabled = true AND i.enabled = true
+          JOIN identity i ON d.identity_id = i.id
+        WHERE d.public = true
+          AND d.enabled = true
+          AND i.enabled = true
         ORDER BY name
         LIMIT $1 OFFSET $2`,
       args: [
