@@ -111,16 +111,20 @@ export async function addMeeting(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        INSERT INTO meeting (identity_id, room_id, name, info, schedule_type,
-            schedule_attr, hidden, restricted)
+        INSERT INTO meeting (identity_id, profile_id, room_id, name, info,
+            schedule_type, schedule_attr, hidden, restricted)
         VALUES ($1,
                 (SELECT id
-                 FROM room
+                 FROM profile
                  WHERE id = $2 AND identity_id = $1),
-                $3, $4, $5, $6, $7, $8)
+                (SELECT id
+                 FROM room
+                 WHERE id = $3 AND identity_id = $1),
+                $4, $5, $6, $7, $8, $9)
         RETURNING id, created_at as at`,
       args: [
         identityId,
+        pl.profile_id,
         pl.room_id,
         pl.name,
         pl.info,
