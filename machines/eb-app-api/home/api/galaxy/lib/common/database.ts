@@ -117,9 +117,9 @@ export interface roomRows {
 export interface meetingRows {
   [index: number]: {
     id: string;
-    name: string;
+    profile_id: string;
     room_id: string;
-    room_name: string;
+    name: string;
     info: string;
     schedule_type: string;
     schedule_attr: unknown;

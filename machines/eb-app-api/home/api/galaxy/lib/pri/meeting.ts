@@ -15,11 +15,10 @@ export async function getMeeting(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT m.id, m.name, r.id as room_id, r.name as room_name, m.info,
-            m.schedule_type, m.schedule_attr, m.hidden, m.restricted, m.enabled,
-            m.created_at, m.updated_at
-        FROM meeting AS m JOIN room AS r ON m.room_id = r.id
-        WHERE m.id = $2 AND m.identity_id = $1`,
+        SELECT id, profile_id, room_id, name, info, schedule_type,
+            schedule_attr, hidden, restricted, enabled, created_at, updated_at
+        FROM meeting
+        WHERE id = $2 AND identity_id = $1`,
       args: [
         identityId,
         pl.id,
@@ -45,12 +44,11 @@ export async function listMeeting(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT m.id, m.name, r.id as room_id, r.name as room_name, m.info,
-            m.schedule_type, m.schedule_attr, m.hidden, m.restricted, m.enabled,
-            m.created_at, m.updated_at
-        FROM meeting AS m JOIN room AS r ON m.room_id = r.id
-        WHERE m.identity_id = $1
-        ORDER BY m.name
+        SELECT id, profile_id, room_id, name, info, schedule_type,
+            schedule_attr, hidden, restricted, enabled, created_at, updated_at
+        FROM meeting
+        WHERE identity_id = $1
+        ORDER BY name
         LIMIT $2 OFFSET $3`,
       args: [
         identityId,
@@ -81,12 +79,11 @@ export async function listEnabledMeeting(
 
     const sql = {
       text: `
-        SELECT m.id, m.name, r.id as room_id, r.name as room_name, m.info,
-            m.schedule_type, m.schedule_attr, m.hidden, m.restricted, m.enabled,
-            m.created_at, m.updated_at
-        FROM meeting AS m JOIN room AS r ON m.room_id = r.id
-        WHERE m.identity_id = $1 AND m.enabled = true AND r.enabled = true
-        ORDER BY r.name
+        SELECT id, profile_id, room_id, name, info, schedule_type,
+            schedule_attr, hidden, restricted, enabled, created_at, updated_at
+        FROM meeting
+        WHERE identity_id = $1 AND enabled = true
+        ORDER BY name
         LIMIT $2 OFFSET $3`,
       args: [
         identityId,
@@ -180,21 +177,25 @@ export async function updateMeeting(
     const sql = {
       text: `
         UPDATE meeting SET
+          profile_id= (SELECT id
+                       FROM profile
+                       WHERE id = $3 AND identity_id = $1),
           room_id = (SELECT id
                      FROM room
-                     WHERE id = $3 AND identity_id = $1),
-          name = $4,
-          info = $5,
-          schedule_type = $6,
-          schedule_attr = $7,
-          hidden = $8,
-          restricted = $9,
+                     WHERE id = $4 AND identity_id = $1),
+          name = $5,
+          info = $6,
+          schedule_type = $7,
+          schedule_attr = $8,
+          hidden = $9,
+          restricted = $10,
           updated_at = now()
         WHERE id = $2 AND identity_id = $1
         RETURNING id, updated_at as at`,
       args: [
         identityId,
         pl.id,
+        pl.profile_id,
         pl.room_id,
         pl.name,
         pl.info,
