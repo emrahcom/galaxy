@@ -58,7 +58,7 @@ selfservice:
               config:
                 url: http://eb-app-api:8000/api/adm/identity/add
                 method: POST
-                body: /home/kratos/jsonnet/identity-id.jsonnet
+                body: /home/kratos/jsonnet/identity.jsonnet
             - hook: session
 
 log:
