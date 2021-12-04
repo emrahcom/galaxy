@@ -6,7 +6,7 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # ------------------------------------------------------------------------------
-# get default for empty result set
+# get default profile
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
@@ -14,4 +14,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "pri" "profile" "get/default" "$JSON" 0
+bash $TEMPLATES/action-member-id "pri" "profile" "get/default" "$JSON" 0

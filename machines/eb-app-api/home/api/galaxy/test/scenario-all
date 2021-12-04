@@ -32,9 +32,8 @@ bash $BASEDIR/scripts/pri/profile/get
 bash $BASEDIR/scripts/pri/profile/update
 bash $BASEDIR/scripts/pri/profile/disable
 bash $BASEDIR/scripts/pri/profile/enable
-bash $BASEDIR/scripts/pri/profile/get-default-for-empty
 bash $BASEDIR/scripts/pri/profile/set-default
-bash $BASEDIR/scripts/pri/profile/get-default-for-id
+bash $BASEDIR/scripts/pri/profile/get-default
 
 bash $BASEDIR/scripts/pri/profile/add-many 10
 bash $BASEDIR/scripts/pri/profile/list
