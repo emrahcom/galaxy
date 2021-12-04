@@ -179,7 +179,7 @@ CREATE TABLE membership (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON meeting("identity_id", "meeting_id");
+CREATE UNIQUE INDEX ON membership("identity_id", "meeting_id");
 ALTER TABLE membership OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
