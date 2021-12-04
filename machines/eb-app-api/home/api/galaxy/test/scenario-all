@@ -87,7 +87,6 @@ bash $BASEDIR/scripts/pri/meeting/list-enabled
 bash $BASEDIR/scripts/pub/hello
 
 # domain
-bash $BASEDIR/scripts/pub/domain/list
 bash $BASEDIR/scripts/pub/domain/list-enabled
 
 # meeting
