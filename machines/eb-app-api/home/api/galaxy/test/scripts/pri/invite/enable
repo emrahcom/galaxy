@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-0)
+invite_fake=$(uuidgen)
+
+# ------------------------------------------------------------------------------
+# enable an existing invite
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "id": "$invite_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "invite" "enable" "$JSON" 0
+
+# ------------------------------------------------------------------------------
+# enable a nonexistent invite
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "id": "$invite_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "invite" "enable" "$JSON" 0

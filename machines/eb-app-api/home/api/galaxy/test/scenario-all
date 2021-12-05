@@ -75,6 +75,18 @@ bash $BASEDIR/scripts/pri/meeting/enable
 bash $BASEDIR/scripts/pri/meeting/add-many 10
 bash $BASEDIR/scripts/pri/meeting/list
 
+# invite
+bash $BASEDIR/scripts/pri/invite/add
+bash $BASEDIR/scripts/pri/invite/del
+
+bash $BASEDIR/scripts/pri/invite/add
+bash $BASEDIR/scripts/pri/invite/get
+bash $BASEDIR/scripts/pri/invite/disable
+bash $BASEDIR/scripts/pri/invite/enable
+
+bash $BASEDIR/scripts/pri/invite/add-many 10
+bash $BASEDIR/scripts/pri/invite/list
+
 # ------------------------------------------------------------------------------
 # pub
 # ------------------------------------------------------------------------------
