@@ -67,41 +67,6 @@ export async function listDomain(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listEnabledDomain(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
-
-    const sql = {
-      text: `
-        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
-        FROM domain
-        WHERE identity_id = $1
-          AND enabled = true
-        ORDER BY name
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as domainRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
 export async function addDomain(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
@@ -254,8 +219,6 @@ export default function (
     getDomain(req, identityId);
   } else if (path === `${PRE}/list`) {
     listDomain(req, identityId);
-  } else if (path === `${PRE}/list/enabled`) {
-    listEnabledDomain(req, identityId);
   } else if (path === `${PRE}/add`) {
     addDomain(req, identityId);
   } else if (path === `${PRE}/del`) {

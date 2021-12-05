@@ -17,7 +17,7 @@ export async function listEnabledDomain(req: Deno.RequestEvent) {
 
     const sql = {
       text: `
-        SELECT d.id, d.name, d.enabled
+        SELECT d.id, d.name
         FROM domain d
           JOIN identity i ON d.identity_id = i.id
         WHERE d.public = true

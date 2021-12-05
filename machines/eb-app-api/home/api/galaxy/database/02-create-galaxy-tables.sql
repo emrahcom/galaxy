@@ -52,7 +52,6 @@ CREATE TABLE profile (
     "name" varchar(250) NOT NULL,
     "email" varchar(250) NOT NULL,
     "is_default" boolean NOT NULL DEFAULT false,
-    "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
@@ -127,7 +126,7 @@ CREATE TYPE meeting_schedule_type AS ENUM
 CREATE TABLE meeting (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE CASCADE,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "host_key" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
@@ -191,7 +190,7 @@ ALTER TABLE invite OWNER TO galaxy;
 CREATE TABLE membership (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE CASCADE,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),

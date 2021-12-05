@@ -15,7 +15,7 @@ export async function getProfile(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT id, name, email, is_default, enabled, created_at, updated_at
+        SELECT id, name, email, is_default, created_at, updated_at
         FROM profile
         WHERE id = $2
           AND identity_id = $1`,
@@ -43,7 +43,7 @@ export async function getDefaultProfile(
   try {
     const sql = {
       text: `
-        SELECT id, name, email, is_default, enabled, created_at, updated_at
+        SELECT id, name, email, is_default, created_at, updated_at
         FROM profile
         WHERE identity_id = $1
           AND is_default = true
@@ -72,44 +72,9 @@ export async function listProfile(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT id, name, email, is_default, enabled, created_at, updated_at
+        SELECT id, name, email, is_default, created_at, updated_at
         FROM profile
         WHERE identity_id = $1
-        ORDER BY name
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as profileRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
-export async function listEnabledProfile(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
-
-    const sql = {
-      text: `
-        SELECT id, name, email, is_default, enabled, created_at, updated_at
-        FROM profile
-        WHERE identity_id = $1
-          AND enabled = true
         ORDER BY name
         LIMIT $2 OFFSET $3`,
       args: [
@@ -217,65 +182,6 @@ export async function updateProfile(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateEnabled(
-  identityId: string,
-  profileId: string,
-  value = true,
-) {
-  const sql = {
-    text: `
-      UPDATE profile
-      SET
-        enabled = $3,
-        updated_at = now()
-      WHERE id = $2
-        AND identity_id = $1
-      RETURNING id, updated_at as at`,
-    args: [
-      identityId,
-      profileId,
-      value,
-    ],
-  };
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
-}
-
-// -----------------------------------------------------------------------------
-export async function enableProfile(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, true);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
-export async function disableProfile(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, false);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
 export async function setDefaultProfile(
   req: Deno.RequestEvent,
   identityId: string,
@@ -340,18 +246,12 @@ export default function (
     getDefaultProfile(req, identityId);
   } else if (path === `${PRE}/list`) {
     listProfile(req, identityId);
-  } else if (path === `${PRE}/list/enabled`) {
-    listEnabledProfile(req, identityId);
   } else if (path === `${PRE}/add`) {
     addProfile(req, identityId);
   } else if (path === `${PRE}/del`) {
     delProfile(req, identityId);
   } else if (path === `${PRE}/update`) {
     updateProfile(req, identityId);
-  } else if (path === `${PRE}/enable`) {
-    enableProfile(req, identityId);
-  } else if (path === `${PRE}/disable`) {
-    disableProfile(req, identityId);
   } else if (path === `${PRE}/set/default`) {
     setDefaultProfile(req, identityId);
   } else {

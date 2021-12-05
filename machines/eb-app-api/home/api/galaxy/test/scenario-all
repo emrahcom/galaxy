@@ -30,14 +30,11 @@ bash $BASEDIR/scripts/pri/profile/del
 bash $BASEDIR/scripts/pri/profile/add
 bash $BASEDIR/scripts/pri/profile/get
 bash $BASEDIR/scripts/pri/profile/update
-bash $BASEDIR/scripts/pri/profile/disable
-bash $BASEDIR/scripts/pri/profile/enable
 bash $BASEDIR/scripts/pri/profile/set-default
 bash $BASEDIR/scripts/pri/profile/get-default
 
 bash $BASEDIR/scripts/pri/profile/add-many 10
 bash $BASEDIR/scripts/pri/profile/list
-bash $BASEDIR/scripts/pri/profile/list-enabled
 
 # domain
 bash $BASEDIR/scripts/pri/domain/add
@@ -51,7 +48,6 @@ bash $BASEDIR/scripts/pri/domain/enable
 
 bash $BASEDIR/scripts/pri/domain/add-many 10
 bash $BASEDIR/scripts/pri/domain/list
-bash $BASEDIR/scripts/pri/domain/list-enabled
 
 # room
 bash $BASEDIR/scripts/pri/room/add
@@ -65,7 +61,6 @@ bash $BASEDIR/scripts/pri/room/enable
 
 bash $BASEDIR/scripts/pri/room/add-many 10
 bash $BASEDIR/scripts/pri/room/list
-bash $BASEDIR/scripts/pri/room/list-enabled
 
 # meeting
 bash $BASEDIR/scripts/pri/meeting/add
@@ -79,7 +74,6 @@ bash $BASEDIR/scripts/pri/meeting/enable
 
 bash $BASEDIR/scripts/pri/meeting/add-many 10
 bash $BASEDIR/scripts/pri/meeting/list
-bash $BASEDIR/scripts/pri/meeting/list-enabled
 
 # ------------------------------------------------------------------------------
 # pub

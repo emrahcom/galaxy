@@ -17,9 +17,11 @@ export async function getRoom(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
           r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-          r.accessed_at
+          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) AS
+          chain_enabled
         FROM room r
           JOIN domain d ON r.domain_id = d.id
+          JOIN identity i ON d.identity_id = i.id
         WHERE r.id = $2
           AND r.identity_id = $1
           AND r.ephemeral = false`,
@@ -50,54 +52,14 @@ export async function listRoom(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
           r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-          r.accessed_at
-        FROM room r
-          JOIN domain d ON r.domain_id = d.id
-        WHERE r.identity_id = $1
-          AND r.ephemeral = false
-        ORDER BY r.name
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as roomRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
-export async function listEnabledRoom(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
-
-    const sql = {
-      text: `
-        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-          r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-          r.accessed_at
+          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) AS
+          chain_enabled
         FROM room r
           JOIN domain d ON r.domain_id = d.id
           JOIN identity i ON d.identity_id = i.id
         WHERE r.identity_id = $1
           AND r.ephemeral = false
-          AND r.enabled = true
-          AND d.enabled = true
-          AND i.enabled = true
-        ORDER BY r.name
+        ORDER BY name
         LIMIT $2 OFFSET $3`,
       args: [
         identityId,
@@ -280,8 +242,6 @@ export default function (
     getRoom(req, identityId);
   } else if (path === `${PRE}/list`) {
     listRoom(req, identityId);
-  } else if (path === `${PRE}/list/enabled`) {
-    listEnabledRoom(req, identityId);
   } else if (path === `${PRE}/add`) {
     addRoom(req, identityId);
   } else if (path === `${PRE}/del`) {

@@ -68,8 +68,7 @@ export interface profileRows {
     id: string;
     name: string;
     email: string;
-    default: boolean;
-    enabled: boolean;
+    is_default: boolean;
     created_at: string;
     updated_at: string;
   };
@@ -93,7 +92,6 @@ export interface pubDomainRows {
   [index: number]: {
     id: string;
     name: string;
-    enabled: boolean;
   };
 }
 
@@ -107,6 +105,7 @@ export interface roomRows {
     has_suffix: boolean;
     suffix: string;
     enabled: boolean;
+    chain_enabled: boolean;
     created_at: string;
     updated_at: string;
     accessed_at: string;
@@ -119,6 +118,8 @@ export interface meetingRows {
     id: string;
     profile_id: string;
     room_id: string;
+    host_key: string;
+    guest_key: string;
     name: string;
     info: string;
     schedule_type: string;
@@ -126,6 +127,7 @@ export interface meetingRows {
     hidden: boolean;
     restricted: boolean;
     enabled: boolean;
+    chain_enabled: boolean;
     created_at: string;
     updated_at: string;
   };
@@ -140,7 +142,6 @@ export interface pubMeetingRows {
     schedule_type: string;
     schedule_attr: unknown;
     restricted: boolean;
-    enabled: boolean;
   };
 }
 

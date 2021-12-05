@@ -77,44 +77,6 @@ export async function listMembership(
 }
 
 // -----------------------------------------------------------------------------
-export async function listEnabledMembership(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
-
-    const sql = {
-      text: `
-        SELECT mem.id, mem.profile_id, m.id, m.name, m.info, mem.enabled,
-          mem.created_at, mem.updated_at
-        FROM membership mem
-          JOIN meeting m ON mem.meeting_id = m.id
-        WHERE mem.identity_id = $1
-          AND mem.enabled = true
-          AND m.enabled = true
-        ORDER BY m.name, mem.created_at
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as membershipRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
 export async function delMembership(
   req: Deno.RequestEvent,
   identityId: string,
@@ -197,8 +159,6 @@ export default function (
     getMembership(req, identityId);
   } else if (path === `${PRE}/list`) {
     listMembership(req, identityId);
-  } else if (path === `${PRE}/list/enabled`) {
-    listEnabledMembership(req, identityId);
   } else if (path === `${PRE}/del`) {
     delMembership(req, identityId);
   } else if (path === `${PRE}/update`) {
