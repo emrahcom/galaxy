@@ -55,7 +55,7 @@ export async function listEnabledMeeting(req: Deno.RequestEvent) {
           AND r.enabled = true
           AND d.enabled = true
           AND i2.enabled = true
-        ORDER BY created_at DESC
+        ORDER BY m.created_at DESC
         LIMIT $1 OFFSET $2`,
       args: [
         limit,
