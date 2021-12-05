@@ -143,3 +143,17 @@ export interface pubMeetingRows {
     enabled: boolean;
   };
 }
+
+// -----------------------------------------------------------------------------
+export interface membershipRows {
+  [index: number]: {
+    id: string;
+    profile_id: string;
+    meeting_id: string;
+    meeting_name: string;
+    meeting_info: string;
+    enabled: boolean;
+    created_at: string;
+    updated_at: string;
+  };
+}
