@@ -176,7 +176,7 @@ CREATE TABLE invite (
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "expire_at" timestamp with time zone NOT NULL
+    "expired_at" timestamp with time zone NOT NULL
       DEFAULT now() + interval '3 days'
 );
 CREATE UNIQUE INDEX ON invite("code");
