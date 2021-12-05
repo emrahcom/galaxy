@@ -151,6 +151,7 @@ export interface inviteRows {
     id: string;
     meeting_id: string;
     meeting_name: string;
+    meeting_info: string;
     code: string;
     enabled: boolean;
     created_at: string;
