@@ -15,10 +15,10 @@ export async function getMeeting(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT m.id, m.profile_id, m.room_id, m.host_key, m.guest_key, m.name,
-          m.info, m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
-          m.enabled, m.created_at, m.updated_at,
-          (m.enabled AND r.enabled AND d.enabled AND i.enabled) AS
+        SELECT m.id, m.profile_id as profile_id, m.room_id as room_id,
+          m.host_key, m.guest_key, m.name, m.info, m.schedule_type,
+          m.schedule_attr, m.hidden, m.restricted, m.enabled, m.created_at,
+          m.updated_at, (m.enabled AND r.enabled AND d.enabled AND i.enabled) as
           chain_enabled
         FROM meeting m
           JOIN room r ON m.room_id = r.id
@@ -51,10 +51,10 @@ export async function listMeeting(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT m.id, m.profile_id, m.room_id, m.host_key, m.guest_key, m.name,
-          m.info, m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
-          m.enabled, m.created_at, m.updated_at,
-          (m.enabled AND r.enabled AND d.enabled AND i.enabled) AS
+        SELECT m.id, m.profile_id as profile_id, m.room_id as room_id,
+          m.host_key, m.guest_key, m.name, m.info, m.schedule_type,
+          m.schedule_attr, m.hidden, m.restricted, m.enabled, m.created_at,
+          m.updated_at, (m.enabled AND r.enabled AND d.enabled AND i.enabled) as
           chain_enabled
         FROM meeting m
           JOIN room r ON m.room_id = r.id

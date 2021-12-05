@@ -15,8 +15,8 @@ export async function getInvite(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        SELECT i.id, m.id, m.name, i.code, i.enabled, i.created_at,
-          i.updated_at, i.expired_at
+        SELECT i.id, m.id as meeting_id, m.name as meeting_name, i.code,
+          i.enabled, i.created_at, i.updated_at, i.expired_at
         FROM invite i
           JOIN meeting m ON i.meeting_id = m.id
         WHERE i.id = $2
@@ -47,8 +47,8 @@ export async function listInvite(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT i.id, m.id, m.name, i.code, i.enabled, i.created_at,
-          i.updated_at, i.expired_at
+        SELECT i.id, m.id as meeting_id, m.name as meeting_name, i.code,
+          i.enabled, i.created_at, i.updated_at, i.expired_at
         FROM invite i
           JOIN meeting m ON i.meeting_id = m.id
         WHERE i.identity_id = $1

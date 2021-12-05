@@ -17,7 +17,7 @@ export async function getRoom(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
           r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) AS
+          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) as
           chain_enabled
         FROM room r
           JOIN domain d ON r.domain_id = d.id
@@ -52,7 +52,7 @@ export async function listRoom(req: Deno.RequestEvent, identityId: string) {
       text: `
         SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
           r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) AS
+          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) as
           chain_enabled
         FROM room r
           JOIN domain d ON r.domain_id = d.id
