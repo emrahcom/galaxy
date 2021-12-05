@@ -165,6 +165,24 @@ CREATE INDEX ON schedule(meeting_id);
 ALTER TABLE schedule OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- INVITE
+-- -----------------------------------------------------------------------------
+CREATE TABLE invite (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "code" varchar(250) NOT NULL
+        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expire_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '3 days'
+);
+CREATE UNIQUE INDEX ON invite("code");
+ALTER TABLE invite OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- MEMBERSHIP
 -- -----------------------------------------------------------------------------
 -- identity cannot update enabled but she can delete the membership
