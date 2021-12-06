@@ -94,7 +94,8 @@ export async function addMembershipByInvite(
              AND identity_id = $1),
           (SELECT id
            FROM meeting
-           WHERE code = $3)
+           WHERE code = $3
+             AND expired_at > now())
         RETURNING id, created_at as at`,
       args: [
         identityId,
