@@ -77,6 +77,43 @@ export async function listMembership(
 }
 
 // -----------------------------------------------------------------------------
+export async function addMembershipByInvite(
+  req: Deno.RequestEvent,
+  identityId: string,
+) {
+  try {
+    const pl = await req.request.json();
+    const sql = {
+      text: `
+        INSERT INTO meeting (identity_id, profile_id, meeting_id)
+        VALUES (
+          $1,
+          (SELECT id
+           FROM profile
+           WHERE id = $2
+             AND identity_id = $1),
+          (SELECT id
+           FROM meeting
+           WHERE code = $3)
+        RETURNING id, created_at as at`,
+      args: [
+        identityId,
+        pl.profile_id,
+        pl.invite_code,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as idRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export async function delMembership(
   req: Deno.RequestEvent,
   identityId: string,
@@ -159,6 +196,8 @@ export default function (
     getMembership(req, identityId);
   } else if (path === `${PRE}/list`) {
     listMembership(req, identityId);
+  } else if (path === `${PRE}/add/byinvite`) {
+    addMembershipByInvite(req, identityId);
   } else if (path === `${PRE}/del`) {
     delMembership(req, identityId);
   } else if (path === `${PRE}/update`) {
