@@ -13,7 +13,7 @@ profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
 # add many new memberships
 # ------------------------------------------------------------------------------
 for i in $(seq 1 $NUM); do
-    (( idx = i - 1 ))
+    (( idx = i - 1 )) || true
 
     invite_code=$(jq -r ".[$idx].code" $TMP/api-pri-invite-list-id-1)
     JSON=$(cat <<EOF
