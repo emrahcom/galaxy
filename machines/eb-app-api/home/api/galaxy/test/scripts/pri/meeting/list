@@ -14,7 +14,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 0
+bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # get meeting list (limit 2, no offset)
@@ -26,7 +26,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 1
+bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 2
 
 # ------------------------------------------------------------------------------
 # get meeting list (limit 2, offset 1)
@@ -39,7 +39,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 2
+bash $TEMPLATES/action-member-id "pri" "meeting" "list" "$JSON" 3
 
 # ------------------------------------------------------------------------------
 # get meeting list (no limit, offset 1000000)
@@ -51,7 +51,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "pri" "meeting" "list" "$JSON" 0
+bash $TEMPLATES/action-member-empty "pri" "meeting" "list" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # get meeting list (invalid limit, invalid offset)
@@ -64,4 +64,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "meeting" "list" "$JSON" 0
+bash $TEMPLATES/action-member-error "pri" "meeting" "list" "$JSON" 1

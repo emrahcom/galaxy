@@ -5,7 +5,7 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-0)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
 profile_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "profile" "get" "$JSON" 0
+bash $TEMPLATES/action-member-id "pri" "profile" "get" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # get for a nonexistent profile
@@ -30,4 +30,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "pri" "profile" "get" "$JSON" 0
+bash $TEMPLATES/action-member-empty "pri" "profile" "get" "$JSON" 1

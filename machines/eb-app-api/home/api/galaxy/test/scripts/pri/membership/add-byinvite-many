@@ -7,19 +7,23 @@ source $BASEDIR/../../common
 
 [[ -z "$1" ]] && NUM=1 || NUM=$1
 
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+
 # ------------------------------------------------------------------------------
-# add many new profiles
+# add many new memberships
 # ------------------------------------------------------------------------------
 for i in $(seq 1 $NUM); do
-    name="profile-$(date +'%s')-$i-$RANDOM"
-    email="profile-$i@mydomain.com"
+    (( idx = i - 1 ))
+
+    invite_code=$(jq -r ".[$idx].code" $TMP/api-pri-invite-list-id-1)
     JSON=$(cat <<EOF
     {
-        "name": "$name",
-        "email": "$email"
+        "profile_id": "$profile_id",
+        "invite_code": "$invite_code"
     }
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "pri" "profile" "add" "$JSON" $i
+    bash $TEMPLATES/action-member-id "pri" "membership" "add/byinvite" \
+        "$JSON" $i
 done

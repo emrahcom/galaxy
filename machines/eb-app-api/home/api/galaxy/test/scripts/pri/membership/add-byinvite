@@ -7,50 +7,36 @@ source $BASEDIR/../../common
 
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
 profile_fake=$(uuidgen)
+invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-list-id-1)
+invite_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# update with valid post
+# add a new membership
 # ------------------------------------------------------------------------------
-name="profile-$(date +'%s')-$RANDOM"
-email="myprofile@mydomain.com"
 JSON=$(cat <<EOF
 {
-    "id": "$profile_id",
-    "name": "$name",
-    "email": "$email"
+    "profile_id": "$profile_id",
+    "invite_code": "$invite_code"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "profile" "update" "$JSON" 1
+bash $TEMPLATES/action-member-id "pri" "membership" "add/byinvite" "$JSON" 1
 
 # ------------------------------------------------------------------------------
-# try to update with invalid post
-# email is missing in the example
+# try to add an already existing membership
 # ------------------------------------------------------------------------------
-name="profile-$(date +'%s')-$RANDOM"
+bash $TEMPLATES/action-member-error "pri" "membership" "add/byinvite" "$JSON" 1
+
+# ------------------------------------------------------------------------------
+# try to add a new membership for a nonexistent invite
+# ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
-    "id": "$profile_id",
-    "name": "$name"
+    "profile_id": "$profile_id",
+    "invite_code": "$invite_fake"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "profile" "update" "$JSON" 1
-
-# ------------------------------------------------------------------------------
-# try to update with invalid criteria
-# ------------------------------------------------------------------------------
-name="profile-$(date +'%s')-$RANDOM"
-email="myprofile@mydomain.com"
-JSON=$(cat <<EOF
-{
-    "id": "$profile_fake",
-    "name": "$name",
-    "email": "$email"
-}
-EOF
-)
-
-bash $TEMPLATES/action-member-empty "pri" "profile" "update" "$JSON" 1
+bash $TEMPLATES/action-member-error "pri" "membership" "add/byinvite" "$JSON" 1

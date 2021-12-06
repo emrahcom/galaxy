@@ -14,7 +14,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 0
+bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # get enabled meeting list (limit 2, no offset)
@@ -26,7 +26,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 1
+bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 2
 
 # ------------------------------------------------------------------------------
 # get enabled meeting list (limit 2, offset 1)
@@ -39,7 +39,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 2
+bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 3
 
 # ------------------------------------------------------------------------------
 # get enabled meeting list (no limit, offset 1000000)
@@ -51,7 +51,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-empty "pub" "meeting" "list/enabled" "$JSON" 0
+bash $TEMPLATES/action-guest-empty "pub" "meeting" "list/enabled" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # get enabled meeting list (invalid limit, invalid offset)
@@ -64,4 +64,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-error "pub" "meeting" "list/enabled" "$JSON" 0
+bash $TEMPLATES/action-guest-error "pub" "meeting" "list/enabled" "$JSON" 1

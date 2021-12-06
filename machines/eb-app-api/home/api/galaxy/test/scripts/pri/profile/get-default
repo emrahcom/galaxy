@@ -14,4 +14,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "profile" "get/default" "$JSON" 0
+bash $TEMPLATES/action-member-id "pri" "profile" "get/default" "$JSON" 1

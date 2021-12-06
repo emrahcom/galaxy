@@ -14,7 +14,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-id "pub" "domain" "list/enabled" "$JSON" 0
+bash $TEMPLATES/action-guest-id "pub" "domain" "list/enabled" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # get enabled domain list (limit 2, no offset)
@@ -26,7 +26,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-id "pub" "domain" "list/enabled" "$JSON" 1
+bash $TEMPLATES/action-guest-id "pub" "domain" "list/enabled" "$JSON" 2
 
 # ------------------------------------------------------------------------------
 # get enabled domain list (no limit, offset 1000000)
@@ -38,7 +38,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-empty "pub" "domain" "list/enabled" "$JSON" 0
+bash $TEMPLATES/action-guest-empty "pub" "domain" "list/enabled" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # get enabled domain list (invalid limit, invalid offset)
@@ -51,4 +51,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-error "pub" "domain" "list/enabled" "$JSON" 0
+bash $TEMPLATES/action-guest-error "pub" "domain" "list/enabled" "$JSON" 1

@@ -5,7 +5,7 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-0)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
 meeting_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $TEMPLATES/action-member-id "pri" "invite" "add" "$JSON" 0
+bash $TEMPLATES/action-member-id "pri" "invite" "add" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # try to add a new invite for a nonexistent meeting
@@ -28,4 +28,4 @@ JSON=$(cat <<EOF
 }
 EOF
 )
-bash $TEMPLATES/action-member-error "pri" "invite" "add" "$JSON" 0
+bash $TEMPLATES/action-member-error "pri" "invite" "add" "$JSON" 1

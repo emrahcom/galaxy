@@ -5,11 +5,11 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-0)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
 room_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# add a new meeting (hidden)
+# add a new meeting
 # ------------------------------------------------------------------------------
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
@@ -20,25 +20,6 @@ JSON=$(cat <<EOF
     "schedule_type": "permanent",
     "schedule_attr": "{}",
     "hidden": true,
-    "restricted": false
-}
-EOF
-)
-
-bash $TEMPLATES/action-member-id "pri" "meeting" "add" "$JSON" 0
-
-# ------------------------------------------------------------------------------
-# add a new meeting (non-hidden)
-# ------------------------------------------------------------------------------
-name="meeting-$(date +'%s')-$RANDOM"
-JSON=$(cat <<EOF
-{
-    "room_id": "$room_id",
-    "name": "$name",
-    "info": "some meeting info",
-    "schedule_type": "permanent",
-    "schedule_attr": "{}",
-    "hidden": false,
     "restricted": false
 }
 EOF
@@ -63,4 +44,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "meeting" "add" "$JSON" 0
+bash $TEMPLATES/action-member-error "pri" "meeting" "add" "$JSON" 1

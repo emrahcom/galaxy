@@ -18,7 +18,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "profile" "add" "$JSON" 0
+bash $TEMPLATES/action-member-id "pri" "profile" "add" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # try to add an already existing profile
@@ -31,7 +31,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "profile" "add" "$JSON" 0
+bash $TEMPLATES/action-member-error "pri" "profile" "add" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # try to add a new profile without an email field
@@ -44,4 +44,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "profile" "add" "$JSON" 1
+bash $TEMPLATES/action-member-error "pri" "profile" "add" "$JSON" 2

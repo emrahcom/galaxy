@@ -5,9 +5,9 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-0)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
 room_fake=$(uuidgen)
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-0)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
 meeting_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "meeting" "update" "$JSON" 0
+bash $TEMPLATES/action-member-id "pri" "meeting" "update" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # try to update with invalid post
@@ -49,7 +49,7 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "meeting" "update" "$JSON" 0
+bash $TEMPLATES/action-member-error "pri" "meeting" "update" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # try to update with invalid criteria
@@ -69,4 +69,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "pri" "meeting" "update" "$JSON" 0
+bash $TEMPLATES/action-member-empty "pri" "meeting" "update" "$JSON" 1

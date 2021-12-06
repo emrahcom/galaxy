@@ -7,7 +7,7 @@ source $BASEDIR/../../common
 
 [[ -z "$1" ]] && NUM=1 || NUM=$1
 
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-0)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-1)
 
 # ------------------------------------------------------------------------------
 # add many new rooms
@@ -23,5 +23,5 @@ for i in $(seq 1 $NUM); do
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "pri" "room" "add" "$JSON" 0
+    bash $TEMPLATES/action-member-id "pri" "room" "add" "$JSON" $i
 done
