@@ -186,3 +186,15 @@ export interface membershipRows {
     updated_at: string;
   };
 }
+
+// -----------------------------------------------------------------------------
+export interface memberRows {
+  [index: number]: {
+    id: string;
+    profile_name: string;
+    is_host: boolean;
+    enabled: boolean;
+    created_at: string;
+    updated_at: string;
+  };
+}

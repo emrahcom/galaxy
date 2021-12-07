@@ -129,6 +129,7 @@ export async function delProfile(req: Deno.RequestEvent, identityId: string) {
         DELETE FROM profile
         WHERE id = $2
           AND identity_id = $1
+          AND is_default = false
         RETURNING id, now() as at`,
       args: [
         identityId,

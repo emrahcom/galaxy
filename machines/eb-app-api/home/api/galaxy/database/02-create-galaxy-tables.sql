@@ -46,6 +46,8 @@ INSERT INTO identity VALUES (
 -- -----------------------------------------------------------------------------
 -- PROFILE
 -- -----------------------------------------------------------------------------
+-- don't allow to delete the default profile
+-- -----------------------------------------------------------------------------
 CREATE TABLE profile (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,

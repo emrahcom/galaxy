@@ -132,7 +132,7 @@ export async function delMembership(
 
     const sql = {
       text: `
-        DELETE FROM membership mem
+        DELETE FROM membership
         WHERE id = $2
           AND identity_id = $1
         RETURNING id, now() as at`,

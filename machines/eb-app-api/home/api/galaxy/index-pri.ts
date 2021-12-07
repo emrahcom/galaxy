@@ -9,6 +9,7 @@ import domain from "./lib/pri/domain.ts";
 import hello from "./lib/pri/hello.ts";
 import invite from "./lib/pri/invite.ts";
 import meeting from "./lib/pri/meeting.ts";
+import member from "./lib/pri/member.ts";
 import membership from "./lib/pri/membership.ts";
 import profile from "./lib/pri/profile.ts";
 import room from "./lib/pri/room.ts";
@@ -25,6 +26,8 @@ function route(req: Deno.RequestEvent, path: string, identityId: string) {
     invite(req, path, identityId);
   } else if (path.match(`^${PRE}/meeting/`)) {
     meeting(req, path, identityId);
+  } else if (path.match(`^${PRE}/member/`)) {
+    member(req, path, identityId);
   } else if (path.match(`^${PRE}/membership/`)) {
     membership(req, path, identityId);
   } else if (path.match(`^${PRE}/profile/`)) {
