@@ -40,6 +40,34 @@ export async function getInvite(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function getInviteByCode(req: Deno.RequestEvent) {
+  try {
+    const pl = await req.request.json();
+    const sql = {
+      text: `
+        SELECT m.name as meeting_name, m.info as meeting_info, i.code,
+          i.as_host, i.expired_at
+        FROM invite i
+          JOIN meeting m ON i.meeting_id = m.id
+        WHERE i.code = $1
+          AND i.enabled = true
+          AND i.expired_at > now()`,
+      args: [
+        pl.code,
+      ],
+    };
+    const rows = await query(sql)
+      .then((rst) => {
+        return rst.rows as pubInviteRows;
+      });
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
+
+// -----------------------------------------------------------------------------
 export async function listInvite(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
@@ -199,6 +227,8 @@ export default function (
 ) {
   if (path === `${PRE}/get`) {
     getInvite(req, identityId);
+  } else if (path === `${PRE}/get/bycode`) {
+    getInviteByCode(req);
   } else if (path === `${PRE}/list`) {
     listInvite(req, identityId);
   } else if (path === `${PRE}/add`) {

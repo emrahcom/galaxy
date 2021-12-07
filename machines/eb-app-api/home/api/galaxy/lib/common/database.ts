@@ -162,6 +162,17 @@ export interface inviteRows {
 }
 
 // -----------------------------------------------------------------------------
+export interface pubInviteRows {
+  [index: number]: {
+    meeting_name: string;
+    meeting_info: string;
+    code: string;
+    as_host: boolean;
+    expired_at: string;
+  };
+}
+
+// -----------------------------------------------------------------------------
 export interface membershipRows {
   [index: number]: {
     id: string;
