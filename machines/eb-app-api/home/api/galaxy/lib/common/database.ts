@@ -153,6 +153,7 @@ export interface inviteRows {
     meeting_name: string;
     meeting_info: string;
     code: string;
+    as_host: boolean;
     enabled: boolean;
     created_at: string;
     updated_at: string;
@@ -168,6 +169,7 @@ export interface membershipRows {
     meeting_id: string;
     meeting_name: string;
     meeting_info: string;
+    is_host: boolean;
     enabled: boolean;
     created_at: string;
     updated_at: string;

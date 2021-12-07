@@ -13,7 +13,8 @@ meeting_fake=$(uuidgen)
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
-    "meeting_id": "$meeting_id"
+    "meeting_id": "$meeting_id",
+    "as_host": false
 }
 EOF
 )
@@ -24,7 +25,8 @@ bash $TEMPLATES/action-member-id "pri" "invite" "add" "$JSON" 1
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
-    "meeting_id": "$meeting_fake"
+    "meeting_id": "$meeting_fake",
+    "as_host": false
 }
 EOF
 )

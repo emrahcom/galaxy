@@ -16,8 +16,8 @@ export async function getInvite(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         SELECT i.id, m.id as meeting_id, m.name as meeting_name,
-          m.info as meeting_info, i.code, i.enabled, i.created_at, i.updated_at,
-          i.expired_at
+          m.info as meeting_info, i.code, i.as_host, i.enabled, i.created_at,
+          i.updated_at, i.expired_at
         FROM invite i
           JOIN meeting m ON i.meeting_id = m.id
         WHERE i.id = $2
@@ -49,8 +49,8 @@ export async function listInvite(req: Deno.RequestEvent, identityId: string) {
     const sql = {
       text: `
         SELECT i.id, m.id as meeting_id, m.name as meeting_name,
-          m.info as meeting_info, i.code, i.enabled, i.created_at, i.updated_at,
-          i.expired_at
+          m.info as meeting_info, i.code, i.as_host, i.enabled, i.created_at,
+          i.updated_at, i.expired_at
         FROM invite i
           JOIN meeting m ON i.meeting_id = m.id
         WHERE i.identity_id = $1
@@ -80,17 +80,19 @@ export async function addInvite(req: Deno.RequestEvent, identityId: string) {
     const pl = await req.request.json();
     const sql = {
       text: `
-        INSERT INTO invite (identity_id, meeting_id)
+        INSERT INTO invite (identity_id, meeting_id, as_host)
         VALUES (
           $1,
           (SELECT id
            FROM meeting
            WHERE id = $2
-             AND identity_id = $1))
+             AND identity_id = $1),
+          $3)
         RETURNING id, created_at as at`,
       args: [
         identityId,
         pl.meeting_id,
+        pl.as_host,
       ],
     };
     const rows = await query(sql)

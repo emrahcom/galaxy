@@ -19,8 +19,8 @@ export async function getMembership(
     const sql = {
       text: `
         SELECT mem.id, mem.profile_id, m.id as meeting_id,
-          m.name as meeting_name, m.info as meeting_info, mem.enabled,
-          mem.created_at, mem.updated_at
+          m.name as meeting_name, m.info as meeting_info, mem.is_host,
+          mem.enabled, mem.created_at, mem.updated_at
         FROM membership mem
           JOIN meeting m ON mem.meeting_id = m.id
         WHERE mem.id = $2
@@ -54,8 +54,8 @@ export async function listMembership(
     const sql = {
       text: `
         SELECT mem.id, mem.profile_id, m.id as meeting_id,
-          m.name as meeting_name, m.info as meeting_info, mem.enabled,
-          mem.created_at, mem.updated_at
+          m.name as meeting_name, m.info as meeting_info, mem.is_host,
+          mem.enabled, mem.created_at, mem.updated_at
         FROM membership mem
           JOIN meeting m ON mem.meeting_id = m.id
         WHERE mem.identity_id = $1
@@ -87,7 +87,7 @@ export async function addMembershipByInvite(
     const pl = await req.request.json();
     const sql = {
       text: `
-        INSERT INTO membership (identity_id, profile_id, meeting_id)
+        INSERT INTO membership (identity_id, profile_id, meeting_id, is_host)
         VALUES (
           $1,
           (SELECT id
@@ -95,6 +95,10 @@ export async function addMembershipByInvite(
            WHERE id = $2
              AND identity_id = $1),
           (SELECT meeting_id
+           FROM invite
+           WHERE code = $3
+             AND expired_at > now()),
+          (SELECT as_host
            FROM invite
            WHERE code = $3
              AND expired_at > now()))

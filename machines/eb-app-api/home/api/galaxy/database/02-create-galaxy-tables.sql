@@ -172,6 +172,7 @@ CREATE TABLE invite (
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "as_host" boolean NOT NULL DEFAULT false,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -192,11 +193,12 @@ CREATE TABLE membership (
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "is_host" boolean NOT NULL DEFAULT false,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON membership("identity_id", "meeting_id");
+CREATE UNIQUE INDEX ON membership("identity_id", "meeting_id", "is_host");
 ALTER TABLE membership OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------

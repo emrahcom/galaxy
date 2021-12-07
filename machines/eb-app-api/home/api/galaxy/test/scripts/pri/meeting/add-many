@@ -12,10 +12,8 @@ room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
 # ------------------------------------------------------------------------------
 # add many new meetings
 # ------------------------------------------------------------------------------
-hidden=true
+hidden=false
 for i in $(seq 1 $NUM); do
-    [[ "$hidden" = false ]] && hidden=true || hidden=false
-
     name="meeting-$(date +'%s')-$i-$RANDOM"
     JSON=$(cat <<EOF
     {
@@ -29,6 +27,7 @@ for i in $(seq 1 $NUM); do
     }
 EOF
 )
+    [[ "$hidden" = false ]] && hidden=true || hidden=false
 
     bash $TEMPLATES/action-member-id "pri" "meeting" "add" "$JSON" $i
 done
