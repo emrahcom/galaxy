@@ -3,6 +3,7 @@ import {
   getOffset,
   idRows,
   inviteRows,
+  pubInviteRows,
   query,
 } from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
