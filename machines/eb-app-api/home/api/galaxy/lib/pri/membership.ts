@@ -124,16 +124,11 @@ export async function delMembership(
   try {
     const pl = await req.request.json();
 
-    // membership owner or meeting owner can delete the record
     const sql = {
       text: `
         DELETE FROM membership mem
         WHERE id = $2
-          AND (identity_id = $1
-               OR exists(SELECT 1
-                         FROM meeting m
-                         WHERE m.id = mem.meeting_id
-                           AND m.identity_id = $1))
+          AND identity_id = $1
         RETURNING id, now() as at`,
       args: [
         identityId,
