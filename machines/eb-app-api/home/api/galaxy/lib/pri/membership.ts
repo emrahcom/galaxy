@@ -97,10 +97,12 @@ export async function addMembershipByInvite(
           (SELECT meeting_id
            FROM invite
            WHERE code = $3
+             AND enabled = true
              AND expired_at > now()),
           (SELECT as_host
            FROM invite
            WHERE code = $3
+             AND enabled = true
              AND expired_at > now()))
         RETURNING id, created_at as at`,
       args: [
