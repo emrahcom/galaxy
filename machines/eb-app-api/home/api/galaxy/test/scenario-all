@@ -25,9 +25,6 @@ bash $BASEDIR/scripts/pri/hello
 
 # profile
 bash $BASEDIR/scripts/pri/profile/add
-bash $BASEDIR/scripts/pri/profile/del
-
-bash $BASEDIR/scripts/pri/profile/add
 bash $BASEDIR/scripts/pri/profile/get
 bash $BASEDIR/scripts/pri/profile/update
 bash $BASEDIR/scripts/pri/profile/set-default
@@ -38,9 +35,6 @@ bash $BASEDIR/scripts/pri/profile/add-many 10
 bash $BASEDIR/scripts/pri/profile/list
 
 # domain
-bash $BASEDIR/scripts/pri/domain/add
-bash $BASEDIR/scripts/pri/domain/del
-
 bash $BASEDIR/scripts/pri/domain/add
 bash $BASEDIR/scripts/pri/domain/get
 bash $BASEDIR/scripts/pri/domain/update
@@ -53,9 +47,6 @@ bash $BASEDIR/scripts/pri/domain/list
 
 # room
 bash $BASEDIR/scripts/pri/room/add
-bash $BASEDIR/scripts/pri/room/del
-
-bash $BASEDIR/scripts/pri/room/add
 bash $BASEDIR/scripts/pri/room/get
 bash $BASEDIR/scripts/pri/room/update
 bash $BASEDIR/scripts/pri/room/disable
@@ -66,9 +57,6 @@ bash $BASEDIR/scripts/pri/room/add-many 10
 bash $BASEDIR/scripts/pri/room/list
 
 # meeting
-bash $BASEDIR/scripts/pri/meeting/add
-bash $BASEDIR/scripts/pri/meeting/del
-
 bash $BASEDIR/scripts/pri/meeting/add
 bash $BASEDIR/scripts/pri/meeting/get
 bash $BASEDIR/scripts/pri/meeting/update
@@ -81,9 +69,6 @@ bash $BASEDIR/scripts/pri/meeting/list
 
 # invite
 bash $BASEDIR/scripts/pri/invite/add
-bash $BASEDIR/scripts/pri/invite/del
-
-bash $BASEDIR/scripts/pri/invite/add
 bash $BASEDIR/scripts/pri/invite/get
 bash $BASEDIR/scripts/pri/invite/disable
 bash $BASEDIR/scripts/pri/invite/enable
@@ -93,9 +78,6 @@ bash $BASEDIR/scripts/pri/invite/add-many 10
 bash $BASEDIR/scripts/pri/invite/list
 
 # membership
-bash $BASEDIR/scripts/pri/membership/add-byinvite
-bash $BASEDIR/scripts/pri/membership/del
-
 bash $BASEDIR/scripts/pri/membership/add-byinvite
 bash $BASEDIR/scripts/pri/membership/get
 bash $BASEDIR/scripts/pri/membership/update
