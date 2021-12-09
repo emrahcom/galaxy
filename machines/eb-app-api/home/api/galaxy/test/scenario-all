@@ -95,15 +95,27 @@ bash $BASEDIR/scripts/pri/room/list-huge-offset
 bash $BASEDIR/scripts/pri/room/list-invalid-post
 
 # meeting
-bash $BASEDIR/scripts/pri/meeting/add
-bash $BASEDIR/scripts/pri/meeting/get
-bash $BASEDIR/scripts/pri/meeting/update
-bash $BASEDIR/scripts/pri/meeting/disable
-bash $BASEDIR/scripts/pri/meeting/enable
-bash $BASEDIR/scripts/pri/meeting/del
+bash $BASEDIR/scripts/pri/meeting/add-nonexist
+bash $BASEDIR/scripts/pri/meeting/get-exist
+bash $BASEDIR/scripts/pri/meeting/get-nonexist
+bash $BASEDIR/scripts/pri/meeting/add-invalid-post
+
+bash $BASEDIR/scripts/pri/meeting/update-exist
+bash $BASEDIR/scripts/pri/meeting/update-nonexist
+bash $BASEDIR/scripts/pri/meeting/update-invalid-post
+bash $BASEDIR/scripts/pri/meeting/disable-exist
+bash $BASEDIR/scripts/pri/meeting/disable-nonexist
+bash $BASEDIR/scripts/pri/meeting/enable-exist
+bash $BASEDIR/scripts/pri/meeting/enable-nonexist
+bash $BASEDIR/scripts/pri/meeting/del-exist
+bash $BASEDIR/scripts/pri/meeting/del-nonexist
 
 bash $BASEDIR/scripts/pri/meeting/add-many 10
-bash $BASEDIR/scripts/pri/meeting/list
+bash $BASEDIR/scripts/pri/meeting/list-nolimit-nooffset
+bash $BASEDIR/scripts/pri/meeting/list-limit
+bash $BASEDIR/scripts/pri/meeting/list-limit-offset
+bash $BASEDIR/scripts/pri/meeting/list-huge-offset
+bash $BASEDIR/scripts/pri/meeting/list-invalid-post
 
 # invite
 bash $BASEDIR/scripts/pri/invite/add

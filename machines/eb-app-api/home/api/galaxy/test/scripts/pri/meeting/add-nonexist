@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# add a new meeting
+# ------------------------------------------------------------------------------
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
+name="meeting-$(date +'%s')-$RANDOM"
+JSON=$(cat <<EOF
+{
+    "room_id": "$room_id",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "permanent",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "meeting" "add" "$JSON" 1

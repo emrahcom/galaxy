@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# try to update with invalid post
+# schedule_type is incorrect in the example
+# ------------------------------------------------------------------------------
+meeting_fake=$(uuidgen)
+room_fake=$(uuidgen)
+name="meeting-$(date +'%s')-$RANDOM"
+JSON=$(cat <<EOF
+    {
+    "id": "$meeting_fake",
+    "room_id": "$room_fake",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "UNKNOWN",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
+    }
+EOF
+)
+
+bash $TEMPLATES/action-member-error "pri" "meeting" "update" "$JSON" 1

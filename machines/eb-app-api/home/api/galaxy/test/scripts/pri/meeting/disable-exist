@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# disable an existing meeting
+# ------------------------------------------------------------------------------
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
+JSON=$(cat <<EOF
+{
+    "id": "$meeting_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "meeting" "disable" "$JSON" 1

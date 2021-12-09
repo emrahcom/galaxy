@@ -5,12 +5,10 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
-meeting_fake=$(uuidgen)
-
 # ------------------------------------------------------------------------------
 # delete an existing meeting
 # ------------------------------------------------------------------------------
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id"
@@ -19,15 +17,3 @@ EOF
 )
 
 bash $TEMPLATES/action-member-id "pri" "meeting" "del" "$JSON" 1
-
-# ------------------------------------------------------------------------------
-# delete a nonexistent meeting
-# ------------------------------------------------------------------------------
-JSON=$(cat <<EOF
-{
-    "id": "$meeting_fake"
-}
-EOF
-)
-
-bash $TEMPLATES/action-member-empty "pri" "meeting" "del" "$JSON" 1

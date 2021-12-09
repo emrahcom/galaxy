@@ -5,31 +5,10 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
-room_fake=$(uuidgen)
-
-# ------------------------------------------------------------------------------
-# add a new meeting
-# ------------------------------------------------------------------------------
-name="meeting-$(date +'%s')-$RANDOM"
-JSON=$(cat <<EOF
-{
-    "room_id": "$room_id",
-    "name": "$name",
-    "info": "some meeting info",
-    "schedule_type": "permanent",
-    "schedule_attr": "{}",
-    "hidden": true,
-    "restricted": false
-}
-EOF
-)
-
-bash $TEMPLATES/action-member-id "pri" "meeting" "add" "$JSON" 1
-
 # ------------------------------------------------------------------------------
 # try to add a new meeting for a nonexistent room
 # ------------------------------------------------------------------------------
+room_fake=$(uuidgen)
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {

@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# try to update with invalid criteria
+# ------------------------------------------------------------------------------
+meeting_fake=$(uuidgen)
+room_fake=$(uuidgen)
+name="meeting-$(date +'%s')-$RANDOM"
+JSON=$(cat <<EOF
+    {
+    "id": "$meeting_fake",
+    "room_id": "$room_fake",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "permanent",
+    "schedule_attr": "{}",
+    "hidden": true,
+    "restricted": false
+    }
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "meeting" "update" "$JSON" 1

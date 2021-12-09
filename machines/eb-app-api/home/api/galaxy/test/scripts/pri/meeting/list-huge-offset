@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get meeting list (no limit, offset 1000000)
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "offset": 1000000
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "meeting" "list" "$JSON" 1

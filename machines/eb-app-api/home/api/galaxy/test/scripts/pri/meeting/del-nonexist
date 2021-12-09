@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# delete a nonexistent meeting
+# ------------------------------------------------------------------------------
+meeting_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$meeting_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "meeting" "del" "$JSON" 1
