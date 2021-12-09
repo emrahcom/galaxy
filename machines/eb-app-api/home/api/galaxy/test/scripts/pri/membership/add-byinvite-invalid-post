@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# try to add a new membership for a nonexistent invite
+# ------------------------------------------------------------------------------
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+invite_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "profile_id": "$profile_id",
+    "invite_code": "$invite_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "pri" "membership" "add/byinvite" "$JSON" 1

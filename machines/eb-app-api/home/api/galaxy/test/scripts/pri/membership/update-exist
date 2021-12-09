@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# update with valid post
+# ------------------------------------------------------------------------------
+membership_id=$(jq -r ".[0].id" $TMP/api-pri-membership-add-byinvite-id-1)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+JSON=$(cat <<EOF
+{
+    "id": "$membership_id",
+    "profile_id": "$profile_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "membership" "update" "$JSON" 1

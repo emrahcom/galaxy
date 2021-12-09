@@ -5,24 +5,10 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-membership_id=$(jq -r ".[0].id" $TMP/api-pri-membership-add-byinvite-id-1)
-membership_fake=$(uuidgen)
-
-# ------------------------------------------------------------------------------
-# get for an existing membership
-# ------------------------------------------------------------------------------
-JSON=$(cat <<EOF
-{
-    "id": "$membership_id"
-}
-EOF
-)
-
-bash $TEMPLATES/action-member-id "pri" "membership" "get" "$JSON" 1
-
 # ------------------------------------------------------------------------------
 # get for a nonexistent membership
 # ------------------------------------------------------------------------------
+membership_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
     "id": "$membership_fake"
