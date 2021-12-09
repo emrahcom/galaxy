@@ -24,15 +24,27 @@ bash $BASEDIR/scripts/adm/hello
 bash $BASEDIR/scripts/pri/hello
 
 # profile
-bash $BASEDIR/scripts/pri/profile/add
-bash $BASEDIR/scripts/pri/profile/get
-bash $BASEDIR/scripts/pri/profile/update
-bash $BASEDIR/scripts/pri/profile/set-default
+bash $BASEDIR/scripts/pri/profile/add-nonexist
+bash $BASEDIR/scripts/pri/profile/get-exist
+bash $BASEDIR/scripts/pri/profile/add-exist
+bash $BASEDIR/scripts/pri/profile/add-invalid-post
+
+bash $BASEDIR/scripts/pri/profile/get-nonexist
 bash $BASEDIR/scripts/pri/profile/get-default
-bash $BASEDIR/scripts/pri/profile/del
+bash $BASEDIR/scripts/pri/profile/update-exist
+bash $BASEDIR/scripts/pri/profile/update-nonexist
+bash $BASEDIR/scripts/pri/profile/update-invalid-post
+bash $BASEDIR/scripts/pri/profile/del-exist
+bash $BASEDIR/scripts/pri/profile/del-nonexist
 
 bash $BASEDIR/scripts/pri/profile/add-many 10
-bash $BASEDIR/scripts/pri/profile/list
+bash $BASEDIR/scripts/pri/profile/set-default-exist
+bash $BASEDIR/scripts/pri/profile/set-default-nonexist
+bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset
+bash $BASEDIR/scripts/pri/profile/list-limit
+bash $BASEDIR/scripts/pri/profile/list-limit-offset
+bash $BASEDIR/scripts/pri/profile/list-huge-offset
+bash $BASEDIR/scripts/pri/profile/list-invalid-post
 
 # domain
 bash $BASEDIR/scripts/pri/domain/add

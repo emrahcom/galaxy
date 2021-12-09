@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# set as default an existing profile
+# ------------------------------------------------------------------------------
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+JSON=$(cat <<EOF
+{
+    "id": "$profile_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "profile" "set/default" "$JSON" 1

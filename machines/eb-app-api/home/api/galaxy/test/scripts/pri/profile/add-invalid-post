@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# try to add a new profile without an email field
+# ------------------------------------------------------------------------------
+name="profile-$(date +'%s')-$RANDOM"
+JSON=$(cat <<EOF
+{
+    "name": "$name"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "pri" "profile" "add" "$JSON" 2

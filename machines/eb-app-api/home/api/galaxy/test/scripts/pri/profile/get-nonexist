@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get for a nonexistent profile
+# ------------------------------------------------------------------------------
+profile_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$profile_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "profile" "get" "$JSON" 1

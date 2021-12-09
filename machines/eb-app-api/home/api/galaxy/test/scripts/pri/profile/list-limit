@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get profile list (limit 2, no offset)
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "limit": 2
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "profile" "list" "$JSON" 2

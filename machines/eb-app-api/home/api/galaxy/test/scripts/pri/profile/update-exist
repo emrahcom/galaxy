@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# update with valid post
+# ------------------------------------------------------------------------------
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+name="profile-$(date +'%s')-$RANDOM"
+email="myprofile@mydomain.com"
+JSON=$(cat <<EOF
+{
+    "id": "$profile_id",
+    "name": "$name",
+    "email": "$email"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "profile" "update" "$JSON" 1
