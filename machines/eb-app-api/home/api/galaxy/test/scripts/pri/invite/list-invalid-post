@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get invite list (invalid limit, invalid offset)
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "limit": "INVALID",
+    "offset": "INVALID"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "pri" "invite" "list" "$JSON" 1

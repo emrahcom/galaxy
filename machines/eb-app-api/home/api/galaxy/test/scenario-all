@@ -118,14 +118,24 @@ bash $BASEDIR/scripts/pri/meeting/list-huge-offset
 bash $BASEDIR/scripts/pri/meeting/list-invalid-post
 
 # invite
-bash $BASEDIR/scripts/pri/invite/add
-bash $BASEDIR/scripts/pri/invite/get
-bash $BASEDIR/scripts/pri/invite/disable
-bash $BASEDIR/scripts/pri/invite/enable
-bash $BASEDIR/scripts/pri/invite/del
+bash $BASEDIR/scripts/pri/invite/add-nonexist
+bash $BASEDIR/scripts/pri/invite/get-exist
+bash $BASEDIR/scripts/pri/invite/get-nonexist
+bash $BASEDIR/scripts/pri/invite/add-invalid-post
+
+bash $BASEDIR/scripts/pri/invite/disable-exist
+bash $BASEDIR/scripts/pri/invite/disable-nonexist
+bash $BASEDIR/scripts/pri/invite/enable-exist
+bash $BASEDIR/scripts/pri/invite/enable-nonexist
+bash $BASEDIR/scripts/pri/invite/del-exist
+bash $BASEDIR/scripts/pri/invite/del-nonexist
 
 bash $BASEDIR/scripts/pri/invite/add-many 10
-bash $BASEDIR/scripts/pri/invite/list
+bash $BASEDIR/scripts/pri/invite/list-nolimit-nooffset
+bash $BASEDIR/scripts/pri/invite/list-limit
+bash $BASEDIR/scripts/pri/invite/list-limit-offset
+bash $BASEDIR/scripts/pri/invite/list-huge-offset
+bash $BASEDIR/scripts/pri/invite/list-invalid-post
 
 # membership
 bash $BASEDIR/scripts/pri/membership/add-byinvite
