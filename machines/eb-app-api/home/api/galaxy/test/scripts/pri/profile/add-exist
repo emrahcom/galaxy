@@ -7,7 +7,7 @@ source $BASEDIR/../../common
 
 # ------------------------------------------------------------------------------
 # try to add an already existing profile
-# duplicated identity_id + name + email
+# duplicated (identity_id, name, email)
 # ------------------------------------------------------------------------------
 name=$(jq -r ".[0].name" $TMP/api-pri-profile-get-id-1)
 email=$(jq -r ".[0].email" $TMP/api-pri-profile-get-id-1)

@@ -6,18 +6,14 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # ------------------------------------------------------------------------------
-# try to add an already existing domain
-# duplicated (identity_id, name)
+# delete a nonexistent room
 # ------------------------------------------------------------------------------
-name=$(jq -r ".[0].name" $TMP/api-pri-domain-get-id-1)
+room_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
-    "name": "$name",
-    "auth_type": "none",
-    "auth_attr": {
-    }
+    "id": "$room_fake"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "domain" "add" "$JSON" 1
+bash $TEMPLATES/action-member-empty "pri" "room" "del" "$JSON" 1

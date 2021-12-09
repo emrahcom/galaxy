@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# try to update with invalid post
+# name is missing in the example
+# ------------------------------------------------------------------------------
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-1)
+JSON=$(cat <<EOF
+{
+    "id": "$room_id",
+    "domain_id": "$domain_id",
+    "has_suffix": false
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "pri" "room" "update" "$JSON" 1

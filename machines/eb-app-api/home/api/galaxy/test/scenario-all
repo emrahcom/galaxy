@@ -71,15 +71,28 @@ bash $BASEDIR/scripts/pri/domain/list-huge-offset
 bash $BASEDIR/scripts/pri/domain/list-invalid-post
 
 # room
-bash $BASEDIR/scripts/pri/room/add
-bash $BASEDIR/scripts/pri/room/get
-bash $BASEDIR/scripts/pri/room/update
-bash $BASEDIR/scripts/pri/room/disable
-bash $BASEDIR/scripts/pri/room/enable
-bash $BASEDIR/scripts/pri/room/del
+bash $BASEDIR/scripts/pri/room/add-nonexist
+bash $BASEDIR/scripts/pri/room/get-exist
+bash $BASEDIR/scripts/pri/room/get-nonexist
+bash $BASEDIR/scripts/pri/room/add-exist
+bash $BASEDIR/scripts/pri/room/add-invalid-post
+
+bash $BASEDIR/scripts/pri/room/update-exist
+bash $BASEDIR/scripts/pri/room/update-nonexist
+bash $BASEDIR/scripts/pri/room/update-invalid-post
+bash $BASEDIR/scripts/pri/room/disable-exist
+bash $BASEDIR/scripts/pri/room/disable-nonexist
+bash $BASEDIR/scripts/pri/room/enable-exist
+bash $BASEDIR/scripts/pri/room/enable-nonexist
+bash $BASEDIR/scripts/pri/room/del-exist
+bash $BASEDIR/scripts/pri/room/del-nonexist
 
 bash $BASEDIR/scripts/pri/room/add-many 10
-bash $BASEDIR/scripts/pri/room/list
+bash $BASEDIR/scripts/pri/room/list-nolimit-nooffset
+bash $BASEDIR/scripts/pri/room/list-limit
+bash $BASEDIR/scripts/pri/room/list-limit-offset
+bash $BASEDIR/scripts/pri/room/list-huge-offset
+bash $BASEDIR/scripts/pri/room/list-invalid-post
 
 # meeting
 bash $BASEDIR/scripts/pri/meeting/add

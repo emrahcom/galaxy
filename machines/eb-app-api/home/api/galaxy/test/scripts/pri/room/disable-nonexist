@@ -5,24 +5,10 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
-room_fake=$(uuidgen)
-
-# ------------------------------------------------------------------------------
-# disable an existing room
-# ------------------------------------------------------------------------------
-JSON=$(cat <<EOF
-{
-    "id": "$room_id"
-}
-EOF
-)
-
-bash $TEMPLATES/action-member-id "pri" "room" "disable" "$JSON" 1
-
 # ------------------------------------------------------------------------------
 # disable a nonexistent room
 # ------------------------------------------------------------------------------
+room_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
     "id": "$room_fake"

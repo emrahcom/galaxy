@@ -6,18 +6,14 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # ------------------------------------------------------------------------------
-# try to add an already existing domain
-# duplicated (identity_id, name)
+# get for an existing room
 # ------------------------------------------------------------------------------
-name=$(jq -r ".[0].name" $TMP/api-pri-domain-get-id-1)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
 JSON=$(cat <<EOF
 {
-    "name": "$name",
-    "auth_type": "none",
-    "auth_attr": {
-    }
+    "id": "$room_id"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "domain" "add" "$JSON" 1
+bash $TEMPLATES/action-member-id "pri" "room" "get" "$JSON" 1
