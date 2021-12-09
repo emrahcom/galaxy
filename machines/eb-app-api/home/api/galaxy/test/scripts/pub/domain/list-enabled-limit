@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get enabled domain list (limit 2, no offset)
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "limit": 2
+}
+EOF
+)
+
+bash $TEMPLATES/action-guest-id "pub" "domain" "list/enabled" "$JSON" 2

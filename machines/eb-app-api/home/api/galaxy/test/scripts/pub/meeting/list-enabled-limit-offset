@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get enabled meeting list (limit 2, offset 2)
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "limit": 2,
+    "offset": 2
+}
+EOF
+)
+
+bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 3
