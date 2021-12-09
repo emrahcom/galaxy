@@ -9,7 +9,7 @@ domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-1)
 domain_fake=$(uuidgen)
 
 # ------------------------------------------------------------------------------
-# get for an existing domain
+# disable an existing domain
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
@@ -18,10 +18,10 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "domain" "get" "$JSON" 1
+bash $TEMPLATES/action-member-id "pri" "domain" "disable" "$JSON" 1
 
 # ------------------------------------------------------------------------------
-# get for a nonexistent domain
+# disable a nonexistent domain
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
@@ -30,4 +30,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "pri" "domain" "get" "$JSON" 1
+bash $TEMPLATES/action-member-empty "pri" "domain" "disable" "$JSON" 1

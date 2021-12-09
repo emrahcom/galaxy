@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get domain list (limit 2, offset 1)
+# ------------------------------------------------------------------------------
+JSON=$(cat <<EOF
+{
+    "limit": 2,
+    "offset": 1
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "domain" "list" "$JSON" 3

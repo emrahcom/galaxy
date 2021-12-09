@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# try to update with invalid criteria
+# ------------------------------------------------------------------------------
+domain_fake=$(uuidgen)
+name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
+JSON=$(cat <<EOF
+{
+    "id": "$domain_fake",
+    "name": "$name",
+    "auth_type": "token",
+    "auth_attr": {
+       "app_id": "myappid",
+       "app_key": "myappsecret"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "domain" "update" "$JSON" 1

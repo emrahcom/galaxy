@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get for a nonexistent domain
+# ------------------------------------------------------------------------------
+domain_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$domain_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "domain" "get" "$JSON" 1

@@ -26,11 +26,11 @@ bash $BASEDIR/scripts/pri/hello
 # profile
 bash $BASEDIR/scripts/pri/profile/add-nonexist
 bash $BASEDIR/scripts/pri/profile/get-exist
+bash $BASEDIR/scripts/pri/profile/get-nonexist
+bash $BASEDIR/scripts/pri/profile/get-default
 bash $BASEDIR/scripts/pri/profile/add-exist
 bash $BASEDIR/scripts/pri/profile/add-invalid-post
 
-bash $BASEDIR/scripts/pri/profile/get-nonexist
-bash $BASEDIR/scripts/pri/profile/get-default
 bash $BASEDIR/scripts/pri/profile/update-exist
 bash $BASEDIR/scripts/pri/profile/update-nonexist
 bash $BASEDIR/scripts/pri/profile/update-invalid-post
@@ -47,15 +47,28 @@ bash $BASEDIR/scripts/pri/profile/list-huge-offset
 bash $BASEDIR/scripts/pri/profile/list-invalid-post
 
 # domain
-bash $BASEDIR/scripts/pri/domain/add
-bash $BASEDIR/scripts/pri/domain/get
-bash $BASEDIR/scripts/pri/domain/update
-bash $BASEDIR/scripts/pri/domain/disable
-bash $BASEDIR/scripts/pri/domain/enable
-bash $BASEDIR/scripts/pri/domain/del
+bash $BASEDIR/scripts/pri/domain/add-nonexist
+bash $BASEDIR/scripts/pri/domain/get-exist
+bash $BASEDIR/scripts/pri/domain/get-nonexist
+bash $BASEDIR/scripts/pri/domain/add-exist
+bash $BASEDIR/scripts/pri/domain/add-invalid-post
+
+bash $BASEDIR/scripts/pri/domain/update-exist
+bash $BASEDIR/scripts/pri/domain/update-nonexist
+bash $BASEDIR/scripts/pri/domain/update-invalid-post
+bash $BASEDIR/scripts/pri/domain/disable-exist
+bash $BASEDIR/scripts/pri/domain/disable-nonexist
+bash $BASEDIR/scripts/pri/domain/enable-exist
+bash $BASEDIR/scripts/pri/domain/enable-nonexist
+bash $BASEDIR/scripts/pri/domain/del-exist
+bash $BASEDIR/scripts/pri/domain/del-nonexist
 
 bash $BASEDIR/scripts/pri/domain/add-many 10
-bash $BASEDIR/scripts/pri/domain/list
+bash $BASEDIR/scripts/pri/domain/list-nolimit-nooffset
+bash $BASEDIR/scripts/pri/domain/list-limit
+bash $BASEDIR/scripts/pri/domain/list-limit-offset
+bash $BASEDIR/scripts/pri/domain/list-huge-offset
+bash $BASEDIR/scripts/pri/domain/list-invalid-post
 
 # room
 bash $BASEDIR/scripts/pri/room/add

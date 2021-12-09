@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# add a new domain
+# ------------------------------------------------------------------------------
+name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
+JSON=$(cat <<EOF
+{
+    "name": "$name",
+    "auth_type": "none",
+    "auth_attr": {
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "domain" "add" "$JSON" 1
