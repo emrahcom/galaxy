@@ -7,11 +7,10 @@ source $BASEDIR/../../common
 
 [[ -z "$1" ]] && NUM=1 || NUM=$1
 
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
-
 # ------------------------------------------------------------------------------
 # add many new memberships
 # ------------------------------------------------------------------------------
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
 for i in $(seq 1 $NUM); do
     (( idx = i - 1 )) || true
 

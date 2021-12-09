@@ -7,11 +7,11 @@ source $BASEDIR/../../common
 
 [[ -z "$1" ]] && NUM=1 || NUM=$1
 
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
-
 # ------------------------------------------------------------------------------
 # add many new meetings
 # ------------------------------------------------------------------------------
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
+
 hidden=false
 for i in $(seq 1 $NUM); do
     name="meeting-$(date +'%s')-$i-$RANDOM"

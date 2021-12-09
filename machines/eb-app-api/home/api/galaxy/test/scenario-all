@@ -24,7 +24,7 @@ bash $BASEDIR/scripts/adm/hello
 bash $BASEDIR/scripts/pri/hello
 
 # profile
-bash $BASEDIR/scripts/pri/profile/add-nonexist
+bash $BASEDIR/scripts/pri/profile/add-new
 bash $BASEDIR/scripts/pri/profile/get-exist
 bash $BASEDIR/scripts/pri/profile/get-nonexist
 bash $BASEDIR/scripts/pri/profile/get-default
@@ -37,7 +37,7 @@ bash $BASEDIR/scripts/pri/profile/update-invalid-post
 bash $BASEDIR/scripts/pri/profile/del-exist
 bash $BASEDIR/scripts/pri/profile/del-nonexist
 
-bash $BASEDIR/scripts/pri/profile/add-many 10
+bash $BASEDIR/scripts/pri/profile/add-new 10
 bash $BASEDIR/scripts/pri/profile/set-default-exist
 bash $BASEDIR/scripts/pri/profile/set-default-nonexist
 bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset
@@ -47,7 +47,7 @@ bash $BASEDIR/scripts/pri/profile/list-huge-offset
 bash $BASEDIR/scripts/pri/profile/list-invalid-post
 
 # domain
-bash $BASEDIR/scripts/pri/domain/add-nonexist
+bash $BASEDIR/scripts/pri/domain/add-new
 bash $BASEDIR/scripts/pri/domain/get-exist
 bash $BASEDIR/scripts/pri/domain/get-nonexist
 bash $BASEDIR/scripts/pri/domain/add-exist
@@ -63,7 +63,7 @@ bash $BASEDIR/scripts/pri/domain/enable-nonexist
 bash $BASEDIR/scripts/pri/domain/del-exist
 bash $BASEDIR/scripts/pri/domain/del-nonexist
 
-bash $BASEDIR/scripts/pri/domain/add-many 10
+bash $BASEDIR/scripts/pri/domain/add-new 10
 bash $BASEDIR/scripts/pri/domain/list-nolimit-nooffset
 bash $BASEDIR/scripts/pri/domain/list-limit
 bash $BASEDIR/scripts/pri/domain/list-limit-offset
@@ -71,7 +71,7 @@ bash $BASEDIR/scripts/pri/domain/list-huge-offset
 bash $BASEDIR/scripts/pri/domain/list-invalid-post
 
 # room
-bash $BASEDIR/scripts/pri/room/add-nonexist
+bash $BASEDIR/scripts/pri/room/add-new
 bash $BASEDIR/scripts/pri/room/get-exist
 bash $BASEDIR/scripts/pri/room/get-nonexist
 bash $BASEDIR/scripts/pri/room/add-exist
@@ -87,7 +87,7 @@ bash $BASEDIR/scripts/pri/room/enable-nonexist
 bash $BASEDIR/scripts/pri/room/del-exist
 bash $BASEDIR/scripts/pri/room/del-nonexist
 
-bash $BASEDIR/scripts/pri/room/add-many 10
+bash $BASEDIR/scripts/pri/room/add-new 10
 bash $BASEDIR/scripts/pri/room/list-nolimit-nooffset
 bash $BASEDIR/scripts/pri/room/list-limit
 bash $BASEDIR/scripts/pri/room/list-limit-offset
@@ -95,7 +95,7 @@ bash $BASEDIR/scripts/pri/room/list-huge-offset
 bash $BASEDIR/scripts/pri/room/list-invalid-post
 
 # meeting
-bash $BASEDIR/scripts/pri/meeting/add-nonexist
+bash $BASEDIR/scripts/pri/meeting/add-new
 bash $BASEDIR/scripts/pri/meeting/get-exist
 bash $BASEDIR/scripts/pri/meeting/get-nonexist
 bash $BASEDIR/scripts/pri/meeting/add-invalid-post
@@ -110,7 +110,7 @@ bash $BASEDIR/scripts/pri/meeting/enable-nonexist
 bash $BASEDIR/scripts/pri/meeting/del-exist
 bash $BASEDIR/scripts/pri/meeting/del-nonexist
 
-bash $BASEDIR/scripts/pri/meeting/add-many 10
+bash $BASEDIR/scripts/pri/meeting/add-new 10
 bash $BASEDIR/scripts/pri/meeting/list-nolimit-nooffset
 bash $BASEDIR/scripts/pri/meeting/list-limit
 bash $BASEDIR/scripts/pri/meeting/list-limit-offset
@@ -118,7 +118,7 @@ bash $BASEDIR/scripts/pri/meeting/list-huge-offset
 bash $BASEDIR/scripts/pri/meeting/list-invalid-post
 
 # invite
-bash $BASEDIR/scripts/pri/invite/add-nonexist
+bash $BASEDIR/scripts/pri/invite/add-new
 bash $BASEDIR/scripts/pri/invite/get-exist
 bash $BASEDIR/scripts/pri/invite/get-nonexist
 bash $BASEDIR/scripts/pri/invite/add-invalid-post
@@ -130,7 +130,7 @@ bash $BASEDIR/scripts/pri/invite/enable-nonexist
 bash $BASEDIR/scripts/pri/invite/del-exist
 bash $BASEDIR/scripts/pri/invite/del-nonexist
 
-bash $BASEDIR/scripts/pri/invite/add-many 10
+bash $BASEDIR/scripts/pri/invite/add-new 10
 bash $BASEDIR/scripts/pri/invite/list-nolimit-nooffset
 bash $BASEDIR/scripts/pri/invite/list-limit
 bash $BASEDIR/scripts/pri/invite/list-limit-offset
@@ -138,7 +138,7 @@ bash $BASEDIR/scripts/pri/invite/list-huge-offset
 bash $BASEDIR/scripts/pri/invite/list-invalid-post
 
 # membership
-bash $BASEDIR/scripts/pri/membership/add-byinvite-nonexist
+bash $BASEDIR/scripts/pri/membership/add-byinvite-new
 bash $BASEDIR/scripts/pri/membership/get-exist
 bash $BASEDIR/scripts/pri/membership/get-nonexist
 bash $BASEDIR/scripts/pri/membership/add-byinvite-exist
@@ -149,7 +149,7 @@ bash $BASEDIR/scripts/pri/membership/update-nonexist
 bash $BASEDIR/scripts/pri/membership/del-exist
 bash $BASEDIR/scripts/pri/membership/del-nonexist
 
-bash $BASEDIR/scripts/pri/membership/add-byinvite-many 10
+bash $BASEDIR/scripts/pri/membership/add-byinvite-new 10
 bash $BASEDIR/scripts/pri/membership/list-nolimit-nooffset
 bash $BASEDIR/scripts/pri/membership/list-limit
 bash $BASEDIR/scripts/pri/membership/list-limit-offset
