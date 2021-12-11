@@ -116,7 +116,8 @@ ALTER TABLE room OWNER TO galaxy;
 -- MEETING
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting if it's over
--- - dont allow to change schedule type after insert or only without ephemeral
+-- - dont allow to change schedule type after insert or allow only if it is not
+--   ephemeral
 -- - non-hidden meeting can be seen by everyone but permission will be needed to
 --   participate it if it is restricted
 -- - anybody can participate a restricted meeting if she has the key
@@ -153,14 +154,14 @@ ALTER TABLE meeting OWNER TO galaxy;
 -- SCHEDULE
 -- -----------------------------------------------------------------------------
 -- - schedule doesn't contain permanent meetings
--- - end_at = start_at + duration * interval '1 min'
+-- - ended_at = started_at + duration * interval '1 min'
 -- -----------------------------------------------------------------------------
 CREATE TABLE schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "start_at" timestamp with time zone NOT NULL,
+    "started_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
-    "end_at" timestamp with time zone NOT NULL
+    "ended_at" timestamp with time zone NOT NULL
 );
 CREATE INDEX ON schedule(meeting_id);
 ALTER TABLE schedule OWNER TO galaxy;
@@ -188,7 +189,9 @@ ALTER TABLE invite OWNER TO galaxy;
 -- MEMBERSHIP
 -- -----------------------------------------------------------------------------
 -- identity cannot update enabled but she can delete the membership
+-- identity cannot update is_host
 -- meeting owner can update enabled or delete the membership
+-- meeting owner can update is_host
 -- -----------------------------------------------------------------------------
 CREATE TABLE membership (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
