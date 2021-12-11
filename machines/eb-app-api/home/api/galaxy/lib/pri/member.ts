@@ -125,7 +125,7 @@ export async function updateEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE membership
+      UPDATE membership mem
       SET
         enabled = $3,
         updated_at = now()
@@ -187,7 +187,7 @@ export async function updateIsHost(
 ) {
   const sql = {
     text: `
-      UPDATE membership
+      UPDATE membership mem
       SET
         is_host = $3,
         updated_at = now()
