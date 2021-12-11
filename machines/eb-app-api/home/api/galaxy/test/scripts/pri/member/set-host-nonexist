@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# set as host a nonexistent member
+# ------------------------------------------------------------------------------
+membership_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$membership_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "member" "set/host" "$JSON" 1

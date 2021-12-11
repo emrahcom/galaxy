@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get for an existing member
+# ------------------------------------------------------------------------------
+membership_id=$(jq -r ".[0].id" $TMP/api-pri-membership-add-byinvite-id-1)
+JSON=$(cat <<EOF
+{
+    "id": "$membership_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "member" "get" "$JSON" 1
