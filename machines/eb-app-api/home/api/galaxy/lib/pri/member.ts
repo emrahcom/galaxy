@@ -64,8 +64,8 @@ export async function listMember(
                       FROM meeting m
                       WHERE m.id = mem.meeting_id
                         AND m.identity_id = $1)
-        ORDER BY mem.profile_name, mem.created_at
-        LIMIT $2 OFFSET $3`,
+        ORDER BY profile_name, mem.created_at
+        LIMIT $3 OFFSET $4`,
       args: [
         identityId,
         pl.meeting_id,

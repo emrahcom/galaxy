@@ -161,14 +161,14 @@ bash $BASEDIR/scripts/pri/membership/list-invalid-post
 bash $BASEDIR/scripts/pri/member/get-exist
 bash $BASEDIR/scripts/pri/member/get-nonexist
 
-bash $BASEDIR/scripts/pri/member/disable-exist
-bash $BASEDIR/scripts/pri/member/disable-nonexist
-bash $BASEDIR/scripts/pri/member/enable-exist
-bash $BASEDIR/scripts/pri/member/enable-nonexist
-bash $BASEDIR/scripts/pri/member/set-guest--exist
-bash $BASEDIR/scripts/pri/member/set-guest--nonexist
-bash $BASEDIR/scripts/pri/member/set-host--exist
-bash $BASEDIR/scripts/pri/member/set-host--nonexist
+#bash $BASEDIR/scripts/pri/member/disable-exist
+#bash $BASEDIR/scripts/pri/member/disable-nonexist
+#bash $BASEDIR/scripts/pri/member/enable-exist
+#bash $BASEDIR/scripts/pri/member/enable-nonexist
+#bash $BASEDIR/scripts/pri/member/set-guest--exist
+#bash $BASEDIR/scripts/pri/member/set-guest--nonexist
+#bash $BASEDIR/scripts/pri/member/set-host--exist
+#bash $BASEDIR/scripts/pri/member/set-host--nonexist
 bash $BASEDIR/scripts/pri/member/del-exist
 bash $BASEDIR/scripts/pri/member/del-nonexist
 
