@@ -18,14 +18,17 @@ JSON=$4
 # /api/<service>/<class>/<action> -> empty
 # ------------------------------------------------------------------------------
 header <<< "/api/$SERVICE/$CLASS/$ACTION -> empty"
-rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$NUM
+rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$NUM-*
+
+echo "$JSON" >$TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$NUM-req
 
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
-    --output-dir $TMP --output api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$NUM \
+    --output-dir $TMP \
+    --output api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$NUM-res \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data "$JSON"
-res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$NUM)
+res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$NUM-res)
 
 inp <<< "$(echo $JSON | jq .)"
 out <<< "$res"

@@ -10,7 +10,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # add many new meetings
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1-res)
 
 hidden=false
 for i in $(seq 1 $NUM); do

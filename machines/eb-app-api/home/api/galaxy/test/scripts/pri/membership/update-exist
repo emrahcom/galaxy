@@ -8,8 +8,8 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-membership_id=$(jq -r ".[0].id" $TMP/api-pri-membership-add-byinvite-id-1)
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+membership_id=$(jq -r ".[0].id" $TMP/api-pri-membership-add-byinvite-id-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id",

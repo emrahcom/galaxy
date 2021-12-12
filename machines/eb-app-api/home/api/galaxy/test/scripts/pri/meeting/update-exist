@@ -8,8 +8,8 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-get-id-1-res)
+room_id=$(jq -r ".[0].room_id" $TMP/api-pri-meeting-get-id-1-res)
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {

@@ -9,7 +9,7 @@ source $BASEDIR/../../common
 # try to update with invalid post
 # email is missing in the example
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1-res)
 name="profile-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {

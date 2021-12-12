@@ -8,8 +8,8 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # try to add an already existing membership
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].profile_id" $TMP/api-pri-invite-get-id-1)
-invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-list-id-1)
+profile_id=$(jq -r ".[0].profile_id" $TMP/api-pri-invite-add-id-1-res)
+invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-1-res)
 JSON=$(cat <<EOF
 {
     "profile_id": "$profile_id",

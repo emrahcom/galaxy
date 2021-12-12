@@ -8,7 +8,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # delete an existing meeting
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id"

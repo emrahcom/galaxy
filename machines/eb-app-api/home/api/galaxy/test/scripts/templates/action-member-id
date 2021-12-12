@@ -18,16 +18,19 @@ JSON=$4
 # /api/<service>/<class>/<action> -> id
 # ------------------------------------------------------------------------------
 header <<< "/api/$SERVICE/$CLASS/$ACTION -> id"
-rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-id-$NUM
+rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-id-$NUM-*
+
+echo "$JSON" >$TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-id-$NUM-req
 
 cookieJar=$(cat $TMP/kratos-login-cookie)
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
-    --output-dir $TMP --output api-$SERVICE-$CLASS-$ACTION_DASHED-id-$NUM \
+    --output-dir $TMP \
+    --output api-$SERVICE-$CLASS-$ACTION_DASHED-id-$NUM-res \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data "$JSON"
-res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-id-$NUM)
+res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-id-$NUM-res)
 
 inp <<< "$(echo $JSON | jq .)"
 out <<< "$res"

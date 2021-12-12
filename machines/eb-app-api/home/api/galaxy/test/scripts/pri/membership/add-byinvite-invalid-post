@@ -8,7 +8,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # try to add a new membership for a nonexistent invite
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1-res)
 invite_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {

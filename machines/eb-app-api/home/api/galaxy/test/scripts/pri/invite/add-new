@@ -12,7 +12,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 as_host=true
 for i in $(seq 1 $NUM); do
-    meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$i)
+    meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$i-res)
     JSON=$(cat <<EOF
     {
         "meeting_id": "$meeting_id",

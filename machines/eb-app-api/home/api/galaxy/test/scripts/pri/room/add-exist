@@ -9,8 +9,8 @@ source $BASEDIR/../../common
 # try to add an already existing room
 # duplicated (identity_id, domain_id, name)
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].domain_id" $TMP/api-pri-room-get-id-1)
-name=$(jq -r ".[0].name" $TMP/api-pri-room-get-id-1)
+domain_id=$(jq -r ".[0].domain_id" $TMP/api-pri-room-get-id-1-res)
+name=$(jq -r ".[0].name" $TMP/api-pri-room-get-id-1-res)
 JSON=$(cat <<EOF
 {
     "domain_id": "$domain_id",

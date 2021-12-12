@@ -9,7 +9,7 @@ source $BASEDIR/../../common
 # try to update with invalid criteria
 # ------------------------------------------------------------------------------
 membership_fake=$(uuidgen)
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_fake",

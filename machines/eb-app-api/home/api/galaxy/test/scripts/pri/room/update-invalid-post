@@ -9,8 +9,8 @@ source $BASEDIR/../../common
 # try to update with invalid post
 # name is missing in the example
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1)
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-1)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$room_id",

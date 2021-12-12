@@ -8,7 +8,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # disable an existing invite
 # ------------------------------------------------------------------------------
-invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-1)
+invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$invite_id"

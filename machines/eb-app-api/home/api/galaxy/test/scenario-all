@@ -133,7 +133,6 @@ bash $BASEDIR/scripts/pri/invite/del-nonexist
 bash $BASEDIR/scripts/pri/invite/add-new 10
 bash $BASEDIR/scripts/pri/invite/list-nolimit-nooffset
 bash $BASEDIR/scripts/pri/invite/list-limit
-bash $BASEDIR/scripts/pri/invite/list-limit-offset
 bash $BASEDIR/scripts/pri/invite/list-huge-offset
 bash $BASEDIR/scripts/pri/invite/list-invalid-post
 
