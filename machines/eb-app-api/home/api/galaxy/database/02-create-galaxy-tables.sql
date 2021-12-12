@@ -183,6 +183,7 @@ CREATE TABLE invite (
       DEFAULT now() + interval '3 days'
 );
 CREATE UNIQUE INDEX ON invite("code");
+CREATE INDEX ON invite("identity_id", "meeting", "expired_at");
 ALTER TABLE invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -193,9 +194,9 @@ ALTER TABLE invite OWNER TO galaxy;
 -- - identity owner can delete the request only if the status is pending
 -- - meeting owner can delete the request anytimes
 -- - delete all records which have expired_at older than now()
+-- - create membership immediately if meeting is not restricted
 -- -----------------------------------------------------------------------------
-CREATE TYPE request_status_type AS ENUM
-    ('pending', 'rejected');
+CREATE TYPE request_status AS ENUM ('pending', 'rejected');
 CREATE TABLE request (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
@@ -208,7 +209,7 @@ CREATE TABLE request (
       DEFAULT now() + interval '7 days'
 );
 CREATE UNIQUE INDEX ON request("identity_id", "meeting_id");
-CREATE INDEX ON request("meeting_id");
+CREATE INDEX ON request("meeting_id", "status");
 ALTER TABLE request OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -230,6 +231,7 @@ CREATE TABLE membership (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON membership("identity_id", "meeting_id", "is_host");
+CREATE INDEX ON membership("meeting_id", "is_host");
 ALTER TABLE membership OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------

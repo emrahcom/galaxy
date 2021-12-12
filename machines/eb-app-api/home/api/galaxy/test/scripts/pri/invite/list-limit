@@ -8,8 +8,10 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # get invite list (limit 2, no offset)
 # ------------------------------------------------------------------------------
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1)
 JSON=$(cat <<EOF
 {
+    "meeting_id": "$meeting_id",
     "limit": 2
 }
 EOF

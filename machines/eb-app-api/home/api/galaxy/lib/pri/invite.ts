@@ -77,17 +77,16 @@ export async function listInvite(req: Deno.RequestEvent, identityId: string) {
 
     const sql = {
       text: `
-        SELECT i.id, m.id as meeting_id, m.name as meeting_name,
-          m.info as meeting_info, i.code, i.as_host, i.enabled, i.created_at,
-          i.updated_at, i.expired_at
-        FROM invite i
-          JOIN meeting m ON i.meeting_id = m.id
-        WHERE i.identity_id = $1
-          AND i.expired_at > now()
-        ORDER BY m.name, i.created_at
-        LIMIT $2 OFFSET $3`,
+        SELECT id, code, as_host, enabled, created_at, updated_at, expired_at
+        FROM invite
+        WHERE identity_id = $1
+          AND meeting_id = $2
+          AND expired_at > now()
+        ORDER BY as_host, expired_at
+        LIMIT $3 OFFSET $4`,
       args: [
         identityId,
+        pl.meeting_id,
         limit,
         offset,
       ],
