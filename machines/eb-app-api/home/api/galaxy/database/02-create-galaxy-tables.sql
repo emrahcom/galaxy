@@ -183,7 +183,7 @@ CREATE TABLE invite (
       DEFAULT now() + interval '3 days'
 );
 CREATE UNIQUE INDEX ON invite("code");
-CREATE INDEX ON invite("identity_id", "meeting", "expired_at");
+CREATE INDEX ON invite("identity_id", "meeting_id", "expired_at");
 ALTER TABLE invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
