@@ -186,6 +186,32 @@ CREATE UNIQUE INDEX ON invite("code");
 ALTER TABLE invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- REQUEST
+-- -----------------------------------------------------------------------------
+-- - when rejected, expired_at will be now() + interval '7 days'
+-- - identity owner can update the profile only if the status is pending
+-- - identity owner can delete the request only if the status is pending
+-- - meeting owner can delete the request anytimes
+-- - delete all records which have expired_at older than now()
+-- -----------------------------------------------------------------------------
+CREATE TYPE request_status_type AS ENUM
+    ('pending', 'rejected');
+CREATE TABLE request (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "profile_id" uuid NOT NULL REFERENCES profile(id) ON DELETE CASCADE,
+    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "status" request_status NOT NULL DEFAULT 'pending',
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '7 days'
+);
+CREATE UNIQUE INDEX ON request("identity_id", "meeting_id");
+CREATE INDEX ON request("meeting_id");
+ALTER TABLE request OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- MEMBERSHIP
 -- -----------------------------------------------------------------------------
 -- identity cannot update enabled but she can delete the membership
