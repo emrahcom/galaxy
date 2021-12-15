@@ -1,10 +1,6 @@
-import {
-  internalServerError,
-  notFound,
-  ok,
-} from "/lib/common/http-response.ts";
-import { addIdentity } from "/lib/common/identity.ts";
-import { addProfile } from "/lib/common/profile.ts";
+import { internalServerError, notFound, ok } from "../common/http-response.ts";
+import { addIdentity } from "../common/identity.ts";
+import { addProfile } from "../common/profile.ts";
 
 const PRE = "/api/adm/identity";
 
@@ -22,6 +18,7 @@ async function add(req: Deno.RequestEvent) {
         identityId,
         identityName,
         identityEmail,
+        true,
       );
     }
 

@@ -1,33 +1,23 @@
-import {
-  getLimit,
-  getOffset,
-  idRows,
-  profileRows,
-  query,
-} from "../common/database.ts";
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
+import { getLimit, getOffset } from "./database.ts";
+import {
+  addProfile,
+  delProfile,
+  getDefaultProfile,
+  getProfile,
+  listProfile,
+  setDefaultProfile,
+  updateProfile,
+} from "../common/profile.ts";
 
 const PRE = "/api/pri/profile";
 
 // -----------------------------------------------------------------------------
-export async function getProfile(req: Deno.RequestEvent, identityId: string) {
+async function get(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-    const sql = {
-      text: `
-        SELECT id, name, email, is_default, created_at, updated_at
-        FROM profile
-        WHERE id = $2
-          AND identity_id = $1`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as profileRows;
-      });
+    const profileId = pl.id;
+    const rows = await getProfile(identityId, profileId);
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -36,26 +26,9 @@ export async function getProfile(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function getDefaultProfile(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
+async function getDefault(req: Deno.RequestEvent, identityId: string) {
   try {
-    const sql = {
-      text: `
-        SELECT id, name, email, is_default, created_at, updated_at
-        FROM profile
-        WHERE identity_id = $1
-          AND is_default = true
-        LIMIT 1`,
-      args: [
-        identityId,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as profileRows;
-      });
+    const rows = await getDefaultProfile(identityId);
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -64,29 +37,12 @@ export async function getDefaultProfile(
 }
 
 // -----------------------------------------------------------------------------
-export async function listProfile(req: Deno.RequestEvent, identityId: string) {
+async function list(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
     const limit = getLimit(pl.limit);
     const offset = getOffset(pl.offset);
-
-    const sql = {
-      text: `
-        SELECT id, name, email, is_default, created_at, updated_at
-        FROM profile
-        WHERE identity_id = $1
-        ORDER BY name
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as profileRows;
-      });
+    const rows = await listProfile(identityId, limit, offset);
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -95,24 +51,12 @@ export async function listProfile(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function addProfile(req: Deno.RequestEvent, identityId: string) {
+async function add(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-    const sql = {
-      text: `
-        INSERT INTO profile (identity_id, name, email)
-        VALUES ($1, $2, $3)
-        RETURNING id, created_at as at`,
-      args: [
-        identityId,
-        pl.name,
-        pl.email,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+    const profileName = pl.name;
+    const profileEmail = pl.email;
+    const rows = await addProfile(identityId, profileName, profileEmail);
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -121,25 +65,11 @@ export async function addProfile(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function delProfile(req: Deno.RequestEvent, identityId: string) {
+async function del(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-    const sql = {
-      text: `
-        DELETE FROM profile
-        WHERE id = $2
-          AND identity_id = $1
-          AND is_default = false
-        RETURNING id, now() as at`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+    const profileId = pl.id;
+    const rows = await delProfile(identityId, profileId);
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -148,33 +78,18 @@ export async function delProfile(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updateProfile(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
+async function update(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-    const sql = {
-      text: `
-        UPDATE profile
-        SET
-          name = $3,
-          email = $4,
-          updated_at = now()
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, updated_at as at`,
-      args: [
-        identityId,
-        pl.id,
-        pl.name,
-        pl.email,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+    const profileId = pl.id;
+    const profileName = pl.name;
+    const profileEmail = pl.email;
+    const rows = await updateProfile(
+      identityId,
+      profileId,
+      profileName,
+      profileEmail,
+    );
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -183,51 +98,11 @@ export async function updateProfile(
 }
 
 // -----------------------------------------------------------------------------
-export async function setDefaultProfile(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
+async function setDefault(req: Deno.RequestEvent, identityId: string) {
   try {
     const pl = await req.request.json();
-
-    // note: don't add an is_default checking into WHERE. user should set a
-    // profile as default although it's already default to solve the duplicated
-    // defaults issue. Also UI should support this.
-    const sql = {
-      text: `
-        UPDATE profile
-        SET
-          is_default = true,
-          updated_at = now()
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, updated_at as at`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
-
-    // reset the old default if the set action is successful
-    const sql1 = {
-      text: `
-        UPDATE profile
-        SET
-          is_default = false,
-          updated_at = now()
-        WHERE identity_id = $1
-          AND id != $2
-          AND is_default = true`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    if (rows[0] !== undefined) await query(sql1);
+    const profileId = pl.id;
+    const rows = await setDefaultProfile(identityId, profileId);
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -242,19 +117,19 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    getProfile(req, identityId);
+    get(req, identityId);
   } else if (path === `${PRE}/get/default`) {
-    getDefaultProfile(req, identityId);
+    getDefault(req, identityId);
   } else if (path === `${PRE}/list`) {
-    listProfile(req, identityId);
+    list(req, identityId);
   } else if (path === `${PRE}/add`) {
-    addProfile(req, identityId);
+    add(req, identityId);
   } else if (path === `${PRE}/del`) {
-    delProfile(req, identityId);
+    del(req, identityId);
   } else if (path === `${PRE}/update`) {
-    updateProfile(req, identityId);
+    update(req, identityId);
   } else if (path === `${PRE}/set/default`) {
-    setDefaultProfile(req, identityId);
+    setDefault(req, identityId);
   } else {
     notFound(req);
   }

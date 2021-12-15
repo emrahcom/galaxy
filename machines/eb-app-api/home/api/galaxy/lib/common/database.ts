@@ -63,18 +63,6 @@ export interface idRows {
 }
 
 // -----------------------------------------------------------------------------
-export interface profileRows {
-  [index: number]: {
-    id: string;
-    name: string;
-    email: string;
-    is_default: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
 export interface domainRows {
   [index: number]: {
     id: string;
