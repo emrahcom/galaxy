@@ -80,39 +80,6 @@ export interface roomRows {
 }
 
 // -----------------------------------------------------------------------------
-export interface meetingRows {
-  [index: number]: {
-    id: string;
-    profile_id: string;
-    room_id: string;
-    host_key: string;
-    guest_key: string;
-    name: string;
-    info: string;
-    schedule_type: string;
-    schedule_attr: unknown;
-    hidden: boolean;
-    restricted: boolean;
-    enabled: boolean;
-    chain_enabled: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
-export interface pubMeetingRows {
-  [index: number]: {
-    id: string;
-    name: string;
-    info: string;
-    schedule_type: string;
-    schedule_attr: unknown;
-    restricted: boolean;
-  };
-}
-
-// -----------------------------------------------------------------------------
 export interface inviteRows {
   [index: number]: {
     id: string;

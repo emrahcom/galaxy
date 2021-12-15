@@ -187,7 +187,7 @@ export async function updateDomain(
 export async function updateDomainEnabled(
   identityId: string,
   domainId: string,
-  value = true,
+  value: boolean,
 ) {
   const sql = {
     text: `
