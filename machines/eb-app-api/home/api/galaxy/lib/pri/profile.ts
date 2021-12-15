@@ -1,5 +1,5 @@
 import { internalServerError, notFound, ok } from "../common/http-response.ts";
-import { getLimit, getOffset } from "./database.ts";
+import { getLimit, getOffset } from "../common/database.ts";
 import {
   addProfile,
   delProfile,
