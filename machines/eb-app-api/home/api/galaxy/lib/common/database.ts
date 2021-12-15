@@ -63,27 +63,6 @@ export interface idRows {
 }
 
 // -----------------------------------------------------------------------------
-export interface domainRows {
-  [index: number]: {
-    id: string;
-    name: string;
-    auth_type: string;
-    auth_attr: unknown;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
-export interface pubDomainRows {
-  [index: number]: {
-    id: string;
-    name: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
 export interface roomRows {
   [index: number]: {
     id: string;

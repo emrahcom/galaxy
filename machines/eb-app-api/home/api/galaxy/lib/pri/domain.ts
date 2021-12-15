@@ -1,212 +1,87 @@
+import { notFound, responsePri } from "../common/http-response.ts";
+import { getLimit, getOffset } from "../common/database.ts";
 import {
-  domainRows,
-  getLimit,
-  getOffset,
-  idRows,
-  query,
-} from "../common/database.ts";
-import { internalServerError, notFound, ok } from "../common/http-response.ts";
+  addDomain,
+  delDomain,
+  getDomain,
+  listDomain,
+  updateDomain,
+  updateDomainEnabled,
+} from "../common/domain.ts";
 
 const PRE = "/api/pri/domain";
 
 // -----------------------------------------------------------------------------
-export async function getDomain(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
-        FROM domain
-        WHERE id = $2
-          AND identity_id = $1`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as domainRows;
-      });
+async function get(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const domainId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await getDomain(identityId, domainId);
 }
 
 // -----------------------------------------------------------------------------
-export async function listDomain(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
+async function list(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
 
-    const sql = {
-      text: `
-        SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
-        FROM domain
-        WHERE identity_id = $1
-        ORDER BY name
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as domainRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await listDomain(identityId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
-export async function addDomain(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        INSERT INTO domain (identity_id, name, auth_type, auth_attr)
-        VALUES ($1, $2, $3, $4::jsonb)
-        RETURNING id, created_at as at`,
-      args: [
-        identityId,
-        pl.name,
-        pl.auth_type,
-        pl.auth_attr,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function add(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const domainName = pl.name;
+  const domainAuthType = pl.auth_type;
+  const domainAuthAttr = pl.auth_attr;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await addDomain(
+    identityId,
+    domainName,
+    domainAuthType,
+    domainAuthAttr,
+  );
 }
 
 // -----------------------------------------------------------------------------
-export async function delDomain(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        DELETE FROM domain
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, now() as at`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function del(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const domainId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await delDomain(identityId, domainId);
 }
 
 // -----------------------------------------------------------------------------
-export async function updateDomain(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        UPDATE domain
-        SET
-          name = $3,
-          auth_type = $4,
-          auth_attr = $5::jsonb,
-          updated_at = now()
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, updated_at as at`,
-      args: [
-        identityId,
-        pl.id,
-        pl.name,
-        pl.auth_type,
-        pl.auth_attr,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function update(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const domainId = pl.id;
+  const domainName = pl.name;
+  const domainAuthType = pl.auth_type;
+  const domainAuthAttr = pl.auth_attr;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await updateDomain(
+    identityId,
+    domainId,
+    domainName,
+    domainAuthType,
+    domainAuthAttr,
+  );
 }
 
 // -----------------------------------------------------------------------------
-export async function updateEnabled(
-  identityId: string,
-  domainId: string,
-  value = true,
-) {
-  const sql = {
-    text: `
-      UPDATE domain
-      SET
-        enabled = $3,
-        updated_at = now()
-      WHERE id = $2
-        AND identity_id = $1
-      RETURNING id, updated_at as at`,
-    args: [
-      identityId,
-      domainId,
-      value,
-    ],
-  };
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
+async function enable(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const domainId = pl.id;
 
-  return rows;
+  return await updateDomainEnabled(identityId, domainId, true);
 }
 
 // -----------------------------------------------------------------------------
-export async function enableDomain(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, true);
+async function disable(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const domainId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
-export async function disableDomain(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, false);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await updateDomainEnabled(identityId, domainId, false);
 }
 
 // -----------------------------------------------------------------------------
@@ -216,19 +91,19 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    getDomain(req, identityId);
+    responsePri(get, req, identityId);
   } else if (path === `${PRE}/list`) {
-    listDomain(req, identityId);
+    responsePri(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    addDomain(req, identityId);
+    responsePri(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    delDomain(req, identityId);
+    responsePri(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    updateDomain(req, identityId);
+    responsePri(update, req, identityId);
   } else if (path === `${PRE}/enable`) {
-    enableDomain(req, identityId);
+    responsePri(enable, req, identityId);
   } else if (path === `${PRE}/disable`) {
-    disableDomain(req, identityId);
+    responsePri(disable, req, identityId);
   } else {
     notFound(req);
   }

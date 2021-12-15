@@ -1,71 +1,58 @@
 import { idRows, query } from "./database.ts";
 
 // -----------------------------------------------------------------------------
-interface profileRows {
+interface domainRows {
   [index: number]: {
     id: string;
     name: string;
-    email: string;
-    is_default: boolean;
+    auth_type: string;
+    auth_attr: unknown;
+    enabled: boolean;
     created_at: string;
     updated_at: string;
   };
 }
 
 // -----------------------------------------------------------------------------
-export async function getProfile(identityId: string, profileId: string) {
+interface pubDomainRows {
+  [index: number]: {
+    id: string;
+    name: string;
+  };
+}
+
+// -----------------------------------------------------------------------------
+export async function getDomain(identityId: string, domainId: string) {
   const sql = {
     text: `
-      SELECT id, name, email, is_default, created_at, updated_at
-      FROM profile
+      SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
+      FROM domain
       WHERE id = $2
         AND identity_id = $1`,
     args: [
       identityId,
-      profileId,
+      domainId,
     ],
   };
 
   const rows = await query(sql)
     .then((rst) => {
-      return rst.rows as profileRows;
+      return rst.rows as domainRows;
     });
 
   return rows;
 }
 
 // -----------------------------------------------------------------------------
-export async function getDefaultProfile(identityId: string) {
-  const sql = {
-    text: `
-      SELECT id, name, email, is_default, created_at, updated_at
-      FROM profile
-      WHERE identity_id = $1
-        AND is_default = true
-      LIMIT 1`,
-    args: [
-      identityId,
-    ],
-  };
-
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as profileRows;
-    });
-
-  return rows;
-}
-
-// -----------------------------------------------------------------------------
-export async function listProfile(
+export async function listDomain(
   identityId: string,
   limit: number,
   offset: number,
 ) {
   const sql = {
     text: `
-      SELECT id, name, email, is_default, created_at, updated_at
-      FROM profile
+      SELECT id, name, auth_type, auth_attr, enabled, created_at, updated_at
+      FROM domain
       WHERE identity_id = $1
       ORDER BY name
       LIMIT $2 OFFSET $3`,
@@ -78,31 +65,58 @@ export async function listProfile(
 
   const rows = await query(sql)
     .then((rst) => {
-      return rst.rows as profileRows;
+      return rst.rows as domainRows;
     });
 
   return rows;
 }
 
 // -----------------------------------------------------------------------------
-export async function addProfile(
+export async function listEnabledPublicDomain(limit: number, offset: number) {
+  const sql = {
+    text: `
+      SELECT d.id, d.name
+      FROM domain d
+        JOIN identity i ON d.identity_id = i.id
+      WHERE d.public = true
+        AND d.enabled = true
+        AND i.enabled = true
+      ORDER BY name
+      LIMIT $1 OFFSET $2`,
+    args: [
+      limit,
+      offset,
+    ],
+  };
+
+  const rows = await query(sql)
+    .then((rst) => {
+      return rst.rows as pubDomainRows;
+    });
+
+  return rows;
+}
+
+// -----------------------------------------------------------------------------
+export async function addDomain(
   identityId: string,
-  profileName: string,
-  profileEmail: string,
-  isDefault = false,
+  domainName: string,
+  domainAuthType: string,
+  domainAuthAttr: unknown,
 ) {
   const sql = {
     text: `
-      INSERT INTO profile (identity_id, name, email, is_default)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO domain (identity_id, name, auth_type, auth_attr)
+      VALUES ($1, $2, $3, $4::jsonb)
       RETURNING id, created_at as at`,
     args: [
       identityId,
-      profileName,
-      profileEmail,
-      isDefault,
+      domainName,
+      domainAuthType,
+      domainAuthAttr,
     ],
   };
+
   const rows = await query(sql)
     .then((rst) => {
       return rst.rows as idRows;
@@ -112,17 +126,16 @@ export async function addProfile(
 }
 
 // -----------------------------------------------------------------------------
-export async function delProfile(identityId: string, profileId: string) {
+export async function delDomain(identityId: string, domainId: string) {
   const sql = {
     text: `
-      DELETE FROM profile
+      DELETE FROM domain
       WHERE id = $2
         AND identity_id = $1
-        AND is_default = false
       RETURNING id, now() as at`,
     args: [
       identityId,
-      profileId,
+      domainId,
     ],
   };
 
@@ -135,27 +148,30 @@ export async function delProfile(identityId: string, profileId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updateProfile(
+export async function updateDomain(
   identityId: string,
-  profileId: string,
-  profileName: string,
-  profileEmail: string,
+  domainId: string,
+  domainName: string,
+  domainAuthType: string,
+  domainAuthAttr: unknown,
 ) {
   const sql = {
     text: `
-      UPDATE profile
+      UPDATE domain
       SET
         name = $3,
-        email = $4,
+        auth_type = $4,
+        auth_attr = $5::jsonb,
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
       identityId,
-      profileId,
-      profileName,
-      profileEmail,
+      domainId,
+      domainName,
+      domainAuthType,
+      domainAuthAttr,
     ],
   };
 
@@ -168,45 +184,31 @@ export async function updateProfile(
 }
 
 // -----------------------------------------------------------------------------
-export async function setDefaultProfile(identityId: string, profileId: string) {
-  // note: don't add an is_default checking into WHERE. user should set a
-  // profile as default although it's already default to solve the duplicated
-  // defaults issue. Also UI should support this.
+export async function updateDomainEnabled(
+  identityId: string,
+  domainId: string,
+  value = true,
+) {
   const sql = {
     text: `
-      UPDATE profile
+      UPDATE domain
       SET
-        is_default = true,
+        enabled = $3,
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
       identityId,
-      profileId,
+      domainId,
+      value,
     ],
   };
+
   const rows = await query(sql)
     .then((rst) => {
       return rst.rows as idRows;
     });
-
-  // reset the old default if the set action is successful
-  const sql1 = {
-    text: `
-      UPDATE profile
-      SET
-        is_default = false,
-        updated_at = now()
-      WHERE identity_id = $1
-        AND id != $2
-        AND is_default = true`,
-    args: [
-      identityId,
-      profileId,
-    ],
-  };
-  if (rows[0] !== undefined) await query(sql1);
 
   return rows;
 }
