@@ -1,4 +1,4 @@
-import { internalServerError, notFound, ok } from "../common/http-response.ts";
+import { notFound, responsePri } from "../common/http-response.ts";
 import { getLimit, getOffset } from "../common/database.ts";
 import {
   addProfile,
@@ -14,100 +14,59 @@ const PRE = "/api/pri/profile";
 
 // -----------------------------------------------------------------------------
 async function get(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const profileId = pl.id;
-    const rows = await getProfile(identityId, profileId);
+  const pl = await req.request.json();
+  const profileId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await getProfile(identityId, profileId);
 }
 
 // -----------------------------------------------------------------------------
-async function getDefault(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const rows = await getDefaultProfile(identityId);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+async function getDefault(_req: Deno.RequestEvent, identityId: string) {
+  return await getDefaultProfile(identityId);
 }
 
 // -----------------------------------------------------------------------------
 async function list(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
-    const rows = await listProfile(identityId, limit, offset);
+  const pl = await req.request.json();
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await listProfile(identityId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
 async function add(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const profileName = pl.name;
-    const profileEmail = pl.email;
-    const rows = await addProfile(identityId, profileName, profileEmail);
+  const pl = await req.request.json();
+  const profileName = pl.name;
+  const profileEmail = pl.email;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await addProfile(identityId, profileName, profileEmail);
 }
 
 // -----------------------------------------------------------------------------
 async function del(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const profileId = pl.id;
-    const rows = await delProfile(identityId, profileId);
+  const pl = await req.request.json();
+  const profileId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await delProfile(identityId, profileId);
 }
 
 // -----------------------------------------------------------------------------
 async function update(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const profileId = pl.id;
-    const profileName = pl.name;
-    const profileEmail = pl.email;
-    const rows = await updateProfile(
-      identityId,
-      profileId,
-      profileName,
-      profileEmail,
-    );
+  const pl = await req.request.json();
+  const profileId = pl.id;
+  const profileName = pl.name;
+  const profileEmail = pl.email;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await updateProfile(identityId, profileId, profileName, profileEmail);
 }
 
 // -----------------------------------------------------------------------------
 async function setDefault(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const profileId = pl.id;
-    const rows = await setDefaultProfile(identityId, profileId);
+  const pl = await req.request.json();
+  const profileId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await setDefaultProfile(identityId, profileId);
 }
 
 // -----------------------------------------------------------------------------
@@ -117,19 +76,19 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    get(req, identityId);
+    responsePri(get, req, identityId);
   } else if (path === `${PRE}/get/default`) {
-    getDefault(req, identityId);
+    responsePri(getDefault, req, identityId);
   } else if (path === `${PRE}/list`) {
-    list(req, identityId);
+    responsePri(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    add(req, identityId);
+    responsePri(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    del(req, identityId);
+    responsePri(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    update(req, identityId);
+    responsePri(update, req, identityId);
   } else if (path === `${PRE}/set/default`) {
-    setDefault(req, identityId);
+    responsePri(setDefault, req, identityId);
   } else {
     notFound(req);
   }
