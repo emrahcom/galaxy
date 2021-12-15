@@ -1,41 +1,29 @@
-import { idRows, query } from "../common/database.ts";
-import { internalServerError, notFound, ok } from "../common/http-response.ts";
+import {
+  internalServerError,
+  notFound,
+  ok,
+} from "/lib/common/http-response.ts";
+import { addIdentity } from "/lib/common/identity.ts";
+import { addProfile } from "/lib/common/profile.ts";
 
 const PRE = "/api/adm/identity";
 
 // -----------------------------------------------------------------------------
-export async function addIdentity(req: Deno.RequestEvent) {
+async function add(req: Deno.RequestEvent) {
   try {
     const pl = await req.request.json();
     const identityId = pl.identity_id;
     const identityEmail = pl.identity_email;
+    const identityName = identityEmail.split("@")[0];
+    const rows = await addIdentity(identityId);
 
-    const sql = {
-      text: `
-        INSERT INTO identity (id)
-        VALUES ($1)
-        RETURNING id, created_at as at`,
-      args: [
+    if (rows[0] !== undefined) {
+      await addProfile(
         identityId,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
-
-    // add the initial profile using email if the previous action is successful
-    const sql1 = {
-      text: `
-        INSERT INTO profile (identity_id, name, email, is_default)
-        VALUES ($1, $2, $3, true)`,
-      args: [
-        identityId,
-        identityEmail.split("@")[0],
+        identityName,
         identityEmail,
-      ],
-    };
-    if (rows[0] !== undefined) await query(sql1);
+      );
+    }
 
     ok(req, JSON.stringify(rows));
   } catch {
@@ -46,7 +34,7 @@ export async function addIdentity(req: Deno.RequestEvent) {
 // -----------------------------------------------------------------------------
 export default function (req: Deno.RequestEvent, path: string) {
   if (path === `${PRE}/add`) {
-    addIdentity(req);
+    add(req);
   } else {
     notFound(req);
   }
