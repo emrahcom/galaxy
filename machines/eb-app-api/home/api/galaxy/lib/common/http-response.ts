@@ -82,3 +82,16 @@ export async function responsePri(
     internalServerError(req);
   }
 }
+
+// -----------------------------------------------------------------------------
+type functionPub = (req: Deno.RequestEvent) => unknown;
+
+export async function responsePub(f: functionPub, req: Deno.RequestEvent) {
+  try {
+    const rows = await f(req);
+
+    ok(req, JSON.stringify(rows));
+  } catch {
+    internalServerError(req);
+  }
+}
