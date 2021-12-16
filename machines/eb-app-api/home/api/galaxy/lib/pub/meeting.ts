@@ -1,4 +1,5 @@
-import { notFound, responsePub } from "../http/response.ts";
+import { notFound } from "../http/response.ts";
+import { pub as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
   getPublicMeeting,
@@ -27,9 +28,9 @@ async function listEnabled(req: Deno.RequestEvent) {
 // -----------------------------------------------------------------------------
 export default function (req: Deno.RequestEvent, path: string) {
   if (path === `${PRE}/get`) {
-    responsePub(get, req);
+    wrapper(get, req);
   } else if (path === `${PRE}/list/enabled`) {
-    responsePub(listEnabled, req);
+    wrapper(listEnabled, req);
   } else {
     notFound(req);
   }

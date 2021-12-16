@@ -1,4 +1,5 @@
-import { notFound, responsePri } from "../http/response.ts";
+import { notFound } from "../http/response.ts";
+import { wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
   addProfile,
@@ -76,19 +77,19 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    responsePri(get, req, identityId);
+    wrapper(get, req, identityId);
   } else if (path === `${PRE}/get/default`) {
-    responsePri(getDefault, req, identityId);
+    wrapper(getDefault, req, identityId);
   } else if (path === `${PRE}/list`) {
-    responsePri(list, req, identityId);
+    wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    responsePri(add, req, identityId);
+    wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    responsePri(del, req, identityId);
+    wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    responsePri(update, req, identityId);
+    wrapper(update, req, identityId);
   } else if (path === `${PRE}/set/default`) {
-    responsePri(setDefault, req, identityId);
+    wrapper(setDefault, req, identityId);
   } else {
     notFound(req);
   }

@@ -65,33 +65,3 @@ export async function unauthorized(req: Deno.RequestEvent) {
     }),
   ).catch();
 }
-
-// -----------------------------------------------------------------------------
-type functionPri = (req: Deno.RequestEvent, identityId: string) => unknown;
-
-export async function responsePri(
-  f: functionPri,
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const rows = await f(req, identityId);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
-type functionPub = (req: Deno.RequestEvent) => unknown;
-
-export async function responsePub(f: functionPub, req: Deno.RequestEvent) {
-  try {
-    const rows = await f(req);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
