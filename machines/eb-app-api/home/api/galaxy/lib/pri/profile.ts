@@ -1,5 +1,5 @@
-import { notFound, responsePri } from "../common/http-response.ts";
-import { getLimit, getOffset } from "../common/database.ts";
+import { notFound, responsePri } from "../http/response.ts";
+import { getLimit, getOffset } from "../database/common.ts";
 import {
   addProfile,
   delProfile,
@@ -8,7 +8,7 @@ import {
   listProfile,
   setDefaultProfile,
   updateProfile,
-} from "../common/profile.ts";
+} from "../database/profile.ts";
 
 const PRE = "/api/pri/profile";
 

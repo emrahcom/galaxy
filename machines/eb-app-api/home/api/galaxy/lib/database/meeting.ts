@@ -1,4 +1,4 @@
-import { idRows, query } from "../common/database.ts";
+import { idRows, query } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 export interface meetingRows {

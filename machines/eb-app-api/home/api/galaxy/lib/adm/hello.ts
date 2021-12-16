@@ -1,4 +1,4 @@
-import { ok } from "../common/http-response.ts";
+import { ok } from "../http/response.ts";
 
 // -----------------------------------------------------------------------------
 export default function (req: Deno.RequestEvent) {

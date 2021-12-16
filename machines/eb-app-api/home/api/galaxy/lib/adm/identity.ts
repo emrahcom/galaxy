@@ -1,6 +1,6 @@
-import { internalServerError, notFound, ok } from "../common/http-response.ts";
-import { addIdentity } from "../common/identity.ts";
-import { addProfile } from "../common/profile.ts";
+import { internalServerError, notFound, ok } from "../http/response.ts";
+import { addIdentity } from "../database/identity.ts";
+import { addProfile } from "../database/profile.ts";
 
 const PRE = "/api/adm/identity";
 

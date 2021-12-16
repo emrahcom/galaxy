@@ -1,5 +1,5 @@
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
-import { methodNotAllowed, notFound } from "./lib/common/http-response.ts";
+import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import hello from "./lib/adm/hello.ts";
 import identity from "./lib/adm/identity.ts";
 

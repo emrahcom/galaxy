@@ -1,6 +1,6 @@
-import { notFound, responsePub } from "../common/http-response.ts";
-import { getLimit, getOffset } from "../common/database.ts";
-import { listEnabledPublicDomain } from "../common/domain.ts";
+import { notFound, responsePub } from "../http/response.ts";
+import { getLimit, getOffset } from "../database/common.ts";
+import { listEnabledPublicDomain } from "../database/domain.ts";
 
 const PRE = "/api/pub/domain";
 

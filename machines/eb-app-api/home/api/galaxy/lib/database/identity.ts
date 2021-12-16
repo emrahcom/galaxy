@@ -1,4 +1,4 @@
-import { idRows, query } from "./database.ts";
+import { idRows, query } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 export async function addIdentity(identityId: string) {

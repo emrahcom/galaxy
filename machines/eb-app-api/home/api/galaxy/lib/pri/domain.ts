@@ -1,5 +1,5 @@
-import { notFound, responsePri } from "../common/http-response.ts";
-import { getLimit, getOffset } from "../common/database.ts";
+import { notFound, responsePri } from "../http/response.ts";
+import { getLimit, getOffset } from "../database/common.ts";
 import {
   addDomain,
   delDomain,
@@ -7,7 +7,7 @@ import {
   listDomain,
   updateDomain,
   updateDomainEnabled,
-} from "../common/domain.ts";
+} from "../database/domain.ts";
 
 const PRE = "/api/pri/domain";
 

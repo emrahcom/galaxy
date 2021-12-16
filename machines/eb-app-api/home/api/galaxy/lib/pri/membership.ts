@@ -4,8 +4,8 @@ import {
   idRows,
   membershipRows,
   query,
-} from "../common/database.ts";
-import { internalServerError, notFound, ok } from "../common/http-response.ts";
+} from "../database/common.ts";
+import { internalServerError, notFound, ok } from "../http/response.ts";
 
 const PRE = "/api/pri/membership";
 

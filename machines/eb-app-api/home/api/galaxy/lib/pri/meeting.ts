@@ -1,5 +1,5 @@
-import { notFound, responsePri } from "../common/http-response.ts";
-import { getLimit, getOffset } from "../common/database.ts";
+import { notFound, responsePri } from "../http/response.ts";
+import { getLimit, getOffset } from "../database/common.ts";
 import {
   addMeeting,
   delMeeting,
@@ -7,7 +7,7 @@ import {
   listMeeting,
   updateMeeting,
   updateMeetingEnabled,
-} from "../common/meeting.ts";
+} from "../database/meeting.ts";
 
 const PRE = "/api/pri/meeting";
 

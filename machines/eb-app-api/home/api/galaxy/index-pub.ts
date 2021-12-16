@@ -1,5 +1,5 @@
 import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
-import { methodNotAllowed, notFound } from "./lib/common/http-response.ts";
+import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import domain from "./lib/pub/domain.ts";
 import hello from "./lib/pub/hello.ts";
 import meeting from "./lib/pub/meeting.ts";

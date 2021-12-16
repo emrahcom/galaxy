@@ -1,9 +1,9 @@
-import { notFound, responsePub } from "../common/http-response.ts";
-import { getLimit, getOffset } from "../common/database.ts";
+import { notFound, responsePub } from "../http/response.ts";
+import { getLimit, getOffset } from "../database/common.ts";
 import {
   getPublicMeeting,
   listEnabledPublicMeeting,
-} from "../common/meeting.ts";
+} from "../database/meeting.ts";
 
 const PRE = "/api/pub/meeting";
 

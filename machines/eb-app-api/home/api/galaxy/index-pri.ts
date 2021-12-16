@@ -3,7 +3,7 @@ import {
   methodNotAllowed,
   notFound,
   unauthorized,
-} from "./lib/common/http-response.ts";
+} from "./lib/http/response.ts";
 import { getIdentityId } from "./lib/pri/kratos.ts";
 import domain from "./lib/pri/domain.ts";
 import hello from "./lib/pri/hello.ts";
