@@ -101,7 +101,7 @@ export async function delMember(identityId: string, membershipId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updateEnabled(
+export async function updateMemberEnabled(
   identityId: string,
   membershipId: string,
   value: boolean,
@@ -134,7 +134,7 @@ export async function updateEnabled(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateIsHost(
+export async function updateMemberIsHost(
   identityId: string,
   membershipId: string,
   value: boolean,

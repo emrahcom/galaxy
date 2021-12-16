@@ -10,7 +10,7 @@ async function add(req: Deno.RequestEvent) {
   const pl = await req.request.json();
   const identityId = pl.identity_id;
   const email = pl.identity_email;
-  const name = identityEmail.split("@")[0];
+  const name = email.split("@")[0];
   const rows = await addIdentity(identityId);
 
   if (rows[0] !== undefined) {

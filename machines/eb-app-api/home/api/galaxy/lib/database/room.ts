@@ -177,7 +177,7 @@ export async function updateRoom(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateEnabled(
+export async function updateRoomEnabled(
   identityId: string,
   roomId: string,
   value = true,
