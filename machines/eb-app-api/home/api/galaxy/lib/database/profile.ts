@@ -87,8 +87,8 @@ export async function listProfile(
 // -----------------------------------------------------------------------------
 export async function addProfile(
   identityId: string,
-  profileName: string,
-  profileEmail: string,
+  name: string,
+  email: string,
   isDefault = false,
 ) {
   const sql = {
@@ -98,8 +98,8 @@ export async function addProfile(
       RETURNING id, created_at as at`,
     args: [
       identityId,
-      profileName,
-      profileEmail,
+      name,
+      email,
       isDefault,
     ],
   };
@@ -138,8 +138,8 @@ export async function delProfile(identityId: string, profileId: string) {
 export async function updateProfile(
   identityId: string,
   profileId: string,
-  profileName: string,
-  profileEmail: string,
+  name: string,
+  email: string,
 ) {
   const sql = {
     text: `
@@ -154,8 +154,8 @@ export async function updateProfile(
     args: [
       identityId,
       profileId,
-      profileName,
-      profileEmail,
+      name,
+      email,
     ],
   };
 

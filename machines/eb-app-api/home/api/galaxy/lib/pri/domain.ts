@@ -32,15 +32,15 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 // -----------------------------------------------------------------------------
 async function add(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
-  const domainName = pl.name;
-  const domainAuthType = pl.auth_type;
-  const domainAuthAttr = pl.auth_attr;
+  const name = pl.name;
+  const authType = pl.auth_type;
+  const authAttr = pl.auth_attr;
 
   return await addDomain(
     identityId,
-    domainName,
-    domainAuthType,
-    domainAuthAttr,
+    name,
+    authType,
+    authAttr,
   );
 }
 
@@ -56,16 +56,16 @@ async function del(req: Deno.RequestEvent, identityId: string) {
 async function update(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
   const domainId = pl.id;
-  const domainName = pl.name;
-  const domainAuthType = pl.auth_type;
-  const domainAuthAttr = pl.auth_attr;
+  const name = pl.name;
+  const authType = pl.auth_type;
+  const authAttr = pl.auth_attr;
 
   return await updateDomain(
     identityId,
     domainId,
-    domainName,
-    domainAuthType,
-    domainAuthAttr,
+    name,
+    authType,
+    authAttr,
   );
 }
 

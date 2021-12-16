@@ -9,15 +9,15 @@ const PRE = "/api/adm/identity";
 async function add(req: Deno.RequestEvent) {
   const pl = await req.request.json();
   const identityId = pl.identity_id;
-  const identityEmail = pl.identity_email;
-  const identityName = identityEmail.split("@")[0];
+  const email = pl.identity_email;
+  const name = identityEmail.split("@")[0];
   const rows = await addIdentity(identityId);
 
   if (rows[0] !== undefined) {
     await addProfile(
       identityId,
-      identityName,
-      identityEmail,
+      name,
+      email,
       true,
     );
   }

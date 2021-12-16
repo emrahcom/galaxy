@@ -38,10 +38,10 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 // -----------------------------------------------------------------------------
 async function add(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
-  const profileName = pl.name;
-  const profileEmail = pl.email;
+  const name = pl.name;
+  const email = pl.email;
 
-  return await addProfile(identityId, profileName, profileEmail);
+  return await addProfile(identityId, name, email);
 }
 
 // -----------------------------------------------------------------------------
@@ -56,10 +56,10 @@ async function del(req: Deno.RequestEvent, identityId: string) {
 async function update(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
   const profileId = pl.id;
-  const profileName = pl.name;
-  const profileEmail = pl.email;
+  const name = pl.name;
+  const email = pl.email;
 
-  return await updateProfile(identityId, profileId, profileName, profileEmail);
+  return await updateProfile(identityId, profileId, name, email);
 }
 
 // -----------------------------------------------------------------------------

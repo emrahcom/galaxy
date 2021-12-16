@@ -32,25 +32,25 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 // -----------------------------------------------------------------------------
 async function add(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
-  const meetingProfileId = pl.profile_id;
-  const meetingRoomId = pl.room_id;
-  const meetingName = pl.name;
-  const meetingInfo = pl.info;
-  const meetingScheduleType = pl.schedule_type;
-  const meetingScheduleAttr = pl.schedule_attr;
-  const meetingHidden = pl.hidden;
-  const meetingRestricted = pl.restricted;
+  const profileId = pl.profile_id;
+  const roomId = pl.room_id;
+  const name = pl.name;
+  const info = pl.info;
+  const scheduleType = pl.schedule_type;
+  const scheduleAttr = pl.schedule_attr;
+  const hidden = pl.hidden;
+  const restricted = pl.restricted;
 
   return await addMeeting(
     identityId,
-    meetingProfileId,
-    meetingRoomId,
-    meetingName,
-    meetingInfo,
-    meetingScheduleType,
-    meetingScheduleAttr,
-    meetingHidden,
-    meetingRestricted,
+    profileId,
+    roomId,
+    name,
+    info,
+    scheduleType,
+    scheduleAttr,
+    hidden,
+    restricted,
   );
 }
 
@@ -66,26 +66,26 @@ async function del(req: Deno.RequestEvent, identityId: string) {
 async function update(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
   const meetingId = pl.id;
-  const meetingProfileId = pl.profile_id;
-  const meetingRoomId = pl.room_id;
-  const meetingName = pl.name;
-  const meetingInfo = pl.info;
-  const meetingScheduleType = pl.schedule_type;
-  const meetingScheduleAttr = pl.schedule_attr;
-  const meetingHidden = pl.hidden;
-  const meetingRestricted = pl.restricted;
+  const profileId = pl.profile_id;
+  const roomId = pl.room_id;
+  const name = pl.name;
+  const info = pl.info;
+  const scheduleType = pl.schedule_type;
+  const scheduleAttr = pl.schedule_attr;
+  const hidden = pl.hidden;
+  const restricted = pl.restricted;
 
   return await updateMeeting(
     identityId,
     meetingId,
-    meetingProfileId,
-    meetingRoomId,
-    meetingName,
-    meetingInfo,
-    meetingScheduleType,
-    meetingScheduleAttr,
-    meetingHidden,
-    meetingRestricted,
+    profileId,
+    roomId,
+    name,
+    info,
+    scheduleType,
+    scheduleAttr,
+    hidden,
+    restricted,
   );
 }
 

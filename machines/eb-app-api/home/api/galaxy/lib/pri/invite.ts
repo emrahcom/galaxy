@@ -23,9 +23,9 @@ async function get(req: Deno.RequestEvent, identityId: string) {
 // -----------------------------------------------------------------------------
 async function getByCode(req: Deno.RequestEvent, _identityId: string) {
   const pl = await req.request.json();
-  const inviteCode = pl.code;
+  const code = pl.code;
 
-  return await getInviteByCode(inviteCode);
+  return await getInviteByCode(code);
 }
 
 // -----------------------------------------------------------------------------

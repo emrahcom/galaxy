@@ -157,14 +157,14 @@ export async function listEnabledPublicMeeting(
 // -----------------------------------------------------------------------------
 export async function addMeeting(
   identityId: string,
-  meetingProfileId: string,
-  meetingRoomId: string,
-  meetingName: string,
-  meetingInfo: string,
-  meetingScheduleType: string,
-  meetingScheduleAttr: unknown,
-  meetingHidden: boolean,
-  meetingRestricted: boolean,
+  profileId: string,
+  roomId: string,
+  name: string,
+  info: string,
+  scheduleType: string,
+  scheduleAttr: unknown,
+  hidden: boolean,
+  restricted: boolean,
 ) {
   const sql = {
     text: `
@@ -184,14 +184,14 @@ export async function addMeeting(
       RETURNING id, created_at as at`,
     args: [
       identityId,
-      meetingProfileId,
-      meetingRoomId,
-      meetingName,
-      meetingInfo,
-      meetingScheduleType,
-      meetingScheduleAttr,
-      meetingHidden,
-      meetingRestricted,
+      profileId,
+      roomId,
+      name,
+      info,
+      scheduleType,
+      scheduleAttr,
+      hidden,
+      restricted,
     ],
   };
 
@@ -229,14 +229,14 @@ export async function delMeeting(identityId: string, meetingId: string) {
 export async function updateMeeting(
   identityId: string,
   meetingId: string,
-  meetingProfileId: string,
-  meetingRoomId: string,
-  meetingName: string,
-  meetingInfo: string,
-  meetingScheduleType: string,
-  meetingScheduleAttr: unknown,
-  meetingHidden: boolean,
-  meetingRestricted: boolean,
+  profileId: string,
+  roomId: string,
+  name: string,
+  info: string,
+  scheduleType: string,
+  scheduleAttr: unknown,
+  hidden: boolean,
+  restricted: boolean,
 ) {
   const sql = {
     text: `
@@ -263,14 +263,14 @@ export async function updateMeeting(
     args: [
       identityId,
       meetingId,
-      meetingProfileId,
-      meetingRoomId,
-      meetingName,
-      meetingInfo,
-      meetingScheduleType,
-      meetingScheduleAttr,
-      meetingHidden,
-      meetingRestricted,
+      profileId,
+      roomId,
+      name,
+      info,
+      scheduleType,
+      scheduleAttr,
+      hidden,
+      restricted,
     ],
   };
 

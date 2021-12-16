@@ -33,10 +33,10 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 async function add(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
   const domainId = pl.domain_id;
-  const roomName = pl.name;
-  const roomHasSuffix = pl.has_suffix;
+  const name = pl.name;
+  const hasSuffix = pl.has_suffix;
 
-  return await addRoom(identityId, domainId, roomName, roomHasSuffix);
+  return await addRoom(identityId, domainId, name, hasSuffix);
 }
 
 // -----------------------------------------------------------------------------
@@ -52,15 +52,15 @@ async function update(req: Deno.RequestEvent, identityId: string) {
   const pl = await req.request.json();
   const roomId = pl.id;
   const domainId = pl.domain_id;
-  const roomName = pl.name;
-  const roomHasSuffix = pl.has_suffix;
+  const name = pl.name;
+  const hasSuffix = pl.has_suffix;
 
   return await updateRoom(
     identityId,
     roomId,
     domainId,
-    roomName,
-    roomHasSuffix,
+    name,
+    hasSuffix,
   );
 }
 

@@ -83,8 +83,8 @@ export async function listRoom(
 export async function addRoom(
   identityId: string,
   domainId: string,
-  roomName: string,
-  roomHasSuffix: boolean,
+  name: string,
+  hasSuffix: boolean,
 ) {
   const sql = {
     text: `
@@ -101,8 +101,8 @@ export async function addRoom(
     args: [
       identityId,
       domainId,
-      roomName,
-      roomHasSuffix,
+      name,
+      hasSuffix,
     ],
   };
 
@@ -141,8 +141,8 @@ export async function updateRoom(
   identityId: string,
   roomId: string,
   domainId: string,
-  roomName: string,
-  roomHasSuffix: boolean,
+  name: string,
+  hasSuffix: boolean,
 ) {
   const sql = {
     text: `
@@ -163,8 +163,8 @@ export async function updateRoom(
       identityId,
       roomId,
       domainId,
-      roomName,
-      roomHasSuffix,
+      name,
+      hasSuffix,
     ],
   };
 

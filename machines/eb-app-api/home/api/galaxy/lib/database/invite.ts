@@ -54,7 +54,7 @@ export async function getInvite(identityId: string, inviteId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function getInviteByCode(inviteCode: string) {
+export async function getInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, i.code,
@@ -65,7 +65,7 @@ export async function getInviteByCode(inviteCode: string) {
         AND i.enabled = true
         AND i.expired_at > now()`,
     args: [
-      inviteCode,
+      code,
     ],
   };
 

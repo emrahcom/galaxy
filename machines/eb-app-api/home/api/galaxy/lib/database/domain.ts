@@ -100,9 +100,9 @@ export async function listEnabledPublicDomain(limit: number, offset: number) {
 // -----------------------------------------------------------------------------
 export async function addDomain(
   identityId: string,
-  domainName: string,
-  domainAuthType: string,
-  domainAuthAttr: unknown,
+  name: string,
+  authType: string,
+  authAttr: unknown,
 ) {
   const sql = {
     text: `
@@ -111,9 +111,9 @@ export async function addDomain(
       RETURNING id, created_at as at`,
     args: [
       identityId,
-      domainName,
-      domainAuthType,
-      domainAuthAttr,
+      name,
+      authType,
+      authAttr,
     ],
   };
 
@@ -151,9 +151,9 @@ export async function delDomain(identityId: string, domainId: string) {
 export async function updateDomain(
   identityId: string,
   domainId: string,
-  domainName: string,
-  domainAuthType: string,
-  domainAuthAttr: unknown,
+  name: string,
+  authType: string,
+  authAttr: unknown,
 ) {
   const sql = {
     text: `
@@ -169,9 +169,9 @@ export async function updateDomain(
     args: [
       identityId,
       domainId,
-      domainName,
-      domainAuthType,
-      domainAuthAttr,
+      name,
+      authType,
+      authAttr,
     ],
   };
 
