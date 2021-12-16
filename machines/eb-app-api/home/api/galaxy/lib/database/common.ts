@@ -37,6 +37,16 @@ export async function query(sql: QueryObjectConfig) {
 }
 
 // -----------------------------------------------------------------------------
+export async function fetch(sql: QueryObjectConfig) {
+  const rows = await query(sql)
+    .then((rst) => {
+      return rst.rows;
+    });
+
+  return rows;
+}
+
+// -----------------------------------------------------------------------------
 export function getLimit(limit: number) {
   if (!limit) {
     limit = DEFAULT_LIST_SIZE;

@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 interface inviteRows {
@@ -45,12 +45,7 @@ export async function getInvite(identityId: string, inviteId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as inviteRows;
-    });
-
-  return rows;
+  return await fetch(sql) as inviteRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -69,12 +64,7 @@ export async function getInviteByCode(code: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as pubInviteRows;
-    });
-
-  return rows;
+  return await fetch(sql) as pubInviteRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,12 +91,7 @@ export async function listInvite(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as inviteRows;
-    });
-
-  return rows;
+  return await fetch(sql) as inviteRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -133,12 +118,7 @@ export async function addInvite(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,12 +135,7 @@ export async function delInvite(identityId: string, inviteId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,10 +160,5 @@ export async function updateInviteEnabled(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }

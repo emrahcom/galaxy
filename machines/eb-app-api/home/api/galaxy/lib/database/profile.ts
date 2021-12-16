@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows, query } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 interface profileRows {
@@ -26,12 +26,7 @@ export async function getProfile(identityId: string, profileId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as profileRows;
-    });
-
-  return rows;
+  return await fetch(sql) as profileRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -48,12 +43,7 @@ export async function getDefaultProfile(identityId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as profileRows;
-    });
-
-  return rows;
+  return await fetch(sql) as profileRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,12 +66,7 @@ export async function listProfile(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as profileRows;
-    });
-
-  return rows;
+  return await fetch(sql) as profileRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,12 +88,8 @@ export async function addProfile(
       isDefault,
     ],
   };
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
 
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -126,12 +107,7 @@ export async function delProfile(identityId: string, profileId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,12 +135,7 @@ export async function updateProfile(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -186,10 +157,7 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
       profileId,
     ],
   };
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
+  const rows = await fetch(sql) as idRows;
 
   // reset the old default if the set action is successful
   const sql1 = {

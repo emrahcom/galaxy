@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 export async function addIdentity(identityId: string) {
@@ -12,10 +12,5 @@ export async function addIdentity(identityId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }

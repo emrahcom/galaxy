@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 interface membershipRows {
@@ -35,12 +35,7 @@ export async function getMembership(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as membershipRows;
-    });
-
-  return rows;
+  return await fetch(sql) as membershipRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,12 +61,7 @@ export async function listMembership(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as membershipRows;
-    });
-
-  return rows;
+  return await fetch(sql) as membershipRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,12 +97,7 @@ export async function addMembershipByInvite(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,12 +117,7 @@ export async function delMembership(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,10 +146,5 @@ export async function updateMembership(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }

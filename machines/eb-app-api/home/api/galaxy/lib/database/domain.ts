@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 interface domainRows {
@@ -35,12 +35,7 @@ export async function getDomain(identityId: string, domainId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as domainRows;
-    });
-
-  return rows;
+  return await fetch(sql) as domainRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,12 +58,7 @@ export async function listDomain(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as domainRows;
-    });
-
-  return rows;
+  return await fetch(sql) as domainRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -89,12 +79,7 @@ export async function listEnabledPublicDomain(limit: number, offset: number) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as pubDomainRows;
-    });
-
-  return rows;
+  return await fetch(sql) as pubDomainRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,12 +102,7 @@ export async function addDomain(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -139,12 +119,7 @@ export async function delDomain(identityId: string, domainId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -175,12 +150,7 @@ export async function updateDomain(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -205,10 +175,5 @@ export async function updateDomainEnabled(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }

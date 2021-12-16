@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 interface roomRows {
@@ -37,12 +37,7 @@ export async function getRoom(identityId: string, roomId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as roomRows;
-    });
-
-  return rows;
+  return await fetch(sql) as roomRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -71,12 +66,7 @@ export async function listRoom(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as roomRows;
-    });
-
-  return rows;
+  return await fetch(sql) as roomRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -106,12 +96,7 @@ export async function addRoom(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -128,12 +113,7 @@ export async function delRoom(identityId: string, roomId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -168,12 +148,7 @@ export async function updateRoom(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -198,10 +173,5 @@ export async function updateRoomEnabled(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }

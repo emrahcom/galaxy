@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 interface meetingRows {
@@ -54,12 +54,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as meetingRows;
-    });
-
-  return rows;
+  return await fetch(sql) as meetingRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -75,12 +70,7 @@ export async function getPublicMeeting(meetingId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as pubMeetingRows;
-    });
-
-  return rows;
+  return await fetch(sql) as pubMeetingRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -110,12 +100,7 @@ export async function listMeeting(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as meetingRows;
-    });
-
-  return rows;
+  return await fetch(sql) as meetingRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,12 +131,7 @@ export async function listEnabledPublicMeeting(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as pubMeetingRows;
-    });
-
-  return rows;
+  return await fetch(sql) as pubMeetingRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -195,12 +175,7 @@ export async function addMeeting(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -217,12 +192,7 @@ export async function delMeeting(identityId: string, meetingId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -274,12 +244,7 @@ export async function updateMeeting(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -304,10 +269,5 @@ export async function updateMeetingEnabled(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }

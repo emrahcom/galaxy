@@ -1,4 +1,4 @@
-import { idRows, query } from "./common.ts";
+import { fetch, idRows } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 interface memberRows {
@@ -31,12 +31,7 @@ export async function getMember(identityId: string, membershipId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as memberRows;
-    });
-
-  return rows;
+  return await fetch(sql) as memberRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,12 +62,7 @@ export async function listMember(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as memberRows;
-    });
-
-  return rows;
+  return await fetch(sql) as memberRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -92,12 +82,7 @@ export async function delMember(identityId: string, membershipId: string) {
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -125,12 +110,7 @@ export async function updateMemberEnabled(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
 
 // -----------------------------------------------------------------------------
@@ -158,10 +138,5 @@ export async function updateMemberIsHost(
     ],
   };
 
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
-
-  return rows;
+  return await fetch(sql) as idRows;
 }
