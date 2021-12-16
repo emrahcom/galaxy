@@ -1,193 +1,57 @@
+import { notFound } from "../http/response.ts";
+import { pri as wrapper } from "../http/wrapper.ts";
+import { getLimit, getOffset } from "../database/common.ts";
 import {
-  getLimit,
-  getOffset,
-  idRows,
-  membershipRows,
-  query,
-} from "../database/common.ts";
-import { internalServerError, notFound, ok } from "../http/response.ts";
+  addMembershipByInvite,
+  delMembership,
+  getMembership,
+  listMembership,
+  updateMembership,
+} from "../database/membership.ts";
 
 const PRE = "/api/pri/membership";
 
 // -----------------------------------------------------------------------------
-export async function getMembership(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        SELECT mem.id, mem.profile_id, m.id as meeting_id,
-          m.name as meeting_name, m.info as meeting_info, mem.is_host,
-          mem.enabled, mem.created_at, mem.updated_at
-        FROM membership mem
-          JOIN meeting m ON mem.meeting_id = m.id
-        WHERE mem.id = $2
-          AND mem.identity_id = $1`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as membershipRows;
-      });
+async function get(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const membershipId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await getMembership(identityId, membershipId);
 }
 
 // -----------------------------------------------------------------------------
-export async function listMembership(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
+async function list(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
 
-    const sql = {
-      text: `
-        SELECT mem.id, mem.profile_id, m.id as meeting_id,
-          m.name as meeting_name, m.info as meeting_info, mem.is_host,
-          mem.enabled, mem.created_at, mem.updated_at
-        FROM membership mem
-          JOIN meeting m ON mem.meeting_id = m.id
-        WHERE mem.identity_id = $1
-        ORDER BY m.name, mem.created_at
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as membershipRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await listMembership(identityId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
-export async function addMembershipByInvite(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        INSERT INTO membership (identity_id, profile_id, meeting_id, is_host)
-        VALUES (
-          $1,
-          (SELECT id
-           FROM profile
-           WHERE id = $2
-             AND identity_id = $1),
-          (SELECT meeting_id
-           FROM invite
-           WHERE code = $3
-             AND enabled = true
-             AND expired_at > now()),
-          (SELECT as_host
-           FROM invite
-           WHERE code = $3
-             AND enabled = true
-             AND expired_at > now()))
-        RETURNING id, created_at as at`,
-      args: [
-        identityId,
-        pl.profile_id,
-        pl.invite_code,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function addByInvite(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const profileId = pl.profile_id;
+  const inviteCode = pl.invite_code;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await addMembershipByInvite(identityId, profileId, inviteCode);
 }
 
 // -----------------------------------------------------------------------------
-export async function delMembership(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
+async function del(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const membershipId = pl.id;
 
-    const sql = {
-      text: `
-        DELETE FROM membership
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, now() as at`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await delMembership(identityId, membershipId);
 }
 
 // -----------------------------------------------------------------------------
-export async function updateMembership(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
+async function update(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const membershipId = pl.id;
+  const profileId = pl.profile_id;
 
-    // meeting_id cannot be updated
-    const sql = {
-      text: `
-        UPDATE membership
-        SET
-          profile_id= (SELECT id
-                       FROM profile
-                       WHERE id = $3
-                         AND identity_id = $1),
-          updated_at = now()
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, updated_at as at`,
-      args: [
-        identityId,
-        pl.id,
-        pl.profile_id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await updateMembership(identityId, membershipId, profileId);
 }
 
 // -----------------------------------------------------------------------------
@@ -197,15 +61,15 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    getMembership(req, identityId);
+    wrapper(get, req, identityId);
   } else if (path === `${PRE}/list`) {
-    listMembership(req, identityId);
+    wrapper(list, req, identityId);
   } else if (path === `${PRE}/add/byinvite`) {
-    addMembershipByInvite(req, identityId);
+    wrapper(addByInvite, req, identityId);
   } else if (path === `${PRE}/del`) {
-    delMembership(req, identityId);
+    wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    updateMembership(req, identityId);
+    wrapper(update, req, identityId);
   } else {
     notFound(req);
   }

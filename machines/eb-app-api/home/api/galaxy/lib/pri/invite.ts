@@ -1,222 +1,74 @@
+import { notFound } from "../http/response.ts";
+import { pri as wrapper } from "../http/wrapper.ts";
+import { getLimit, getOffset } from "../database/common.ts";
 import {
-  getLimit,
-  getOffset,
-  idRows,
-  inviteRows,
-  pubInviteRows,
-  query,
-} from "../database/common.ts";
-import { internalServerError, notFound, ok } from "../http/response.ts";
+  addInvite,
+  delInvite,
+  getInvite,
+  getInviteByCode,
+  listInvite,
+  updateInviteEnabled,
+} from "../database/invite.ts";
 
 const PRE = "/api/pri/invite";
 
 // -----------------------------------------------------------------------------
-export async function getInvite(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        SELECT i.id, m.id as meeting_id, m.name as meeting_name,
-          m.info as meeting_info, i.code, i.as_host, i.enabled, i.created_at,
-          i.updated_at, i.expired_at
-        FROM invite i
-          JOIN meeting m ON i.meeting_id = m.id
-        WHERE i.id = $2
-          AND i.identity_id = $1
-          AND i.expired_at > now()`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as inviteRows;
-      });
+async function get(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const inviteId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await getInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
-export async function getInviteByCode(req: Deno.RequestEvent) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        SELECT m.name as meeting_name, m.info as meeting_info, i.code,
-          i.as_host, i.expired_at
-        FROM invite i
-          JOIN meeting m ON i.meeting_id = m.id
-        WHERE i.code = $1
-          AND i.enabled = true
-          AND i.expired_at > now()`,
-      args: [
-        pl.code,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as pubInviteRows;
-      });
+async function getByCode(req: Deno.RequestEvent, _identityId: string) {
+  const pl = await req.request.json();
+  const inviteCode = pl.code;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await getInviteByCode(inviteCode);
 }
 
 // -----------------------------------------------------------------------------
-export async function listInvite(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
+async function list(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const meetingId = pl.meeting_id;
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
 
-    const sql = {
-      text: `
-        SELECT id, code, as_host, enabled, created_at, updated_at, expired_at
-        FROM invite
-        WHERE identity_id = $1
-          AND meeting_id = $2
-          AND expired_at > now()
-        ORDER BY as_host, expired_at
-        LIMIT $3 OFFSET $4`,
-      args: [
-        identityId,
-        pl.meeting_id,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as inviteRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await listInvite(identityId, meetingId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
-export async function addInvite(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        INSERT INTO invite (identity_id, meeting_id, as_host)
-        VALUES (
-          $1,
-          (SELECT id
-           FROM meeting
-           WHERE id = $2
-             AND identity_id = $1),
-          $3)
-        RETURNING id, created_at as at`,
-      args: [
-        identityId,
-        pl.meeting_id,
-        pl.as_host,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function add(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const meetingId = pl.meeting_id;
+  const asHost = pl.as_host;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await addInvite(identityId, meetingId, asHost);
 }
 
 // -----------------------------------------------------------------------------
-export async function delInvite(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        DELETE FROM invite
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, now() as at`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function del(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const inviteId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await delInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
-export async function updateEnabled(
-  identityId: string,
-  inviteId: string,
-  value = true,
-) {
-  const sql = {
-    text: `
-      UPDATE invite
-      SET
-        enabled = $3,
-        updated_at = now()
-      WHERE id = $2
-        AND identity_id = $1
-      RETURNING id, updated_at as at`,
-    args: [
-      identityId,
-      inviteId,
-      value,
-    ],
-  };
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
+async function enable(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const inviteId = pl.id;
 
-  return rows;
+  return await updateInviteEnabled(identityId, inviteId, true);
 }
 
 // -----------------------------------------------------------------------------
-export async function enableInvite(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, true);
+async function disable(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const inviteId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
-export async function disableInvite(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, false);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await updateInviteEnabled(identityId, inviteId, false);
 }
 
 // -----------------------------------------------------------------------------
@@ -226,19 +78,19 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    getInvite(req, identityId);
+    wrapper(get, req, identityId);
   } else if (path === `${PRE}/get/bycode`) {
-    getInviteByCode(req);
+    wrapper(getByCode, req, identityId);
   } else if (path === `${PRE}/list`) {
-    listInvite(req, identityId);
+    wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    addInvite(req, identityId);
+    wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    delInvite(req, identityId);
+    wrapper(del, req, identityId);
   } else if (path === `${PRE}/enable`) {
-    enableInvite(req, identityId);
+    wrapper(enable, req, identityId);
   } else if (path === `${PRE}/disable`) {
-    disableInvite(req, identityId);
+    wrapper(disable, req, identityId);
   } else {
     notFound(req);
   }

@@ -1,7 +1,7 @@
 import { idRows, query } from "./common.ts";
 
 // -----------------------------------------------------------------------------
-export interface meetingRows {
+interface meetingRows {
   [index: number]: {
     id: string;
     profile_id: string;
@@ -22,7 +22,7 @@ export interface meetingRows {
 }
 
 // -----------------------------------------------------------------------------
-export interface pubMeetingRows {
+interface pubMeetingRows {
   [index: number]: {
     id: string;
     name: string;

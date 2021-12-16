@@ -1,235 +1,83 @@
+import { notFound } from "../http/response.ts";
+import { pri as wrapper } from "../http/wrapper.ts";
+import { getLimit, getOffset } from "../database/common.ts";
 import {
-  getLimit,
-  getOffset,
-  idRows,
-  query,
-  roomRows,
-} from "../database/common.ts";
-import { internalServerError, notFound, ok } from "../http/response.ts";
+  addRoom,
+  delRoom,
+  getRoom,
+  listRoom,
+  updateRoom,
+  updateRoomEnabled,
+} from "../database/room.ts";
 
 const PRE = "/api/pri/room";
 
 // -----------------------------------------------------------------------------
-export async function getRoom(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-          r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) as
-          chain_enabled
-        FROM room r
-          JOIN domain d ON r.domain_id = d.id
-          JOIN identity i ON d.identity_id = i.id
-        WHERE r.id = $2
-          AND r.identity_id = $1
-          AND r.ephemeral = false`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as roomRows;
-      });
+async function get(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const roomId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await getRoom(identityId, roomId);
 }
 
 // -----------------------------------------------------------------------------
-export async function listRoom(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const limit = getLimit(pl.limit);
-    const offset = getOffset(pl.offset);
+async function list(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
 
-    const sql = {
-      text: `
-        SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-          r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-          r.accessed_at, (r.enabled AND d.enabled AND i.enabled) as
-          chain_enabled
-        FROM room r
-          JOIN domain d ON r.domain_id = d.id
-          JOIN identity i ON d.identity_id = i.id
-        WHERE r.identity_id = $1
-          AND r.ephemeral = false
-        ORDER BY name
-        LIMIT $2 OFFSET $3`,
-      args: [
-        identityId,
-        limit,
-        offset,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as roomRows;
-      });
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await listRoom(identityId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
-export async function addRoom(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        INSERT INTO room (identity_id, domain_id, name, has_suffix, ephemeral)
-        VALUES (
-          $1,
-          (SELECT id
-           FROM domain
-           WHERE id = $2
-             AND (identity_id = $1
-                  OR public = true)),
-          $3, $4, false)
-        RETURNING id, created_at as at`,
-      args: [
-        identityId,
-        pl.domain_id,
-        pl.name,
-        pl.has_suffix,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function add(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const domainId = pl.domain_id;
+  const roomName = pl.name;
+  const roomHasSuffix = pl.has_suffix;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await addRoom(identityId, domainId, roomName, roomHasSuffix);
 }
 
 // -----------------------------------------------------------------------------
-export async function delRoom(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        DELETE FROM room
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, now() as at`,
-      args: [
-        identityId,
-        pl.id,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function del(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const roomId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await delRoom(identityId, roomId);
 }
 
 // -----------------------------------------------------------------------------
-export async function updateRoom(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const sql = {
-      text: `
-        UPDATE room
-        SET
-          domain_id = (SELECT id
-                       FROM domain
-                       WHERE id = $3
-                         AND (identity_id = $1
-                              OR public = true)),
-          name = $4,
-          has_suffix = $5,
-          updated_at = now()
-        WHERE id = $2
-          AND identity_id = $1
-        RETURNING id, updated_at as at`,
-      args: [
-        identityId,
-        pl.id,
-        pl.domain_id,
-        pl.name,
-        pl.has_suffix,
-      ],
-    };
-    const rows = await query(sql)
-      .then((rst) => {
-        return rst.rows as idRows;
-      });
+async function update(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const roomId = pl.id;
+  const domainId = pl.domain_id;
+  const roomName = pl.name;
+  const roomHasSuffix = pl.has_suffix;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await updateRoom(
+    identityId,
+    roomId,
+    domainId,
+    roomName,
+    roomHasSuffix,
+  );
 }
 
 // -----------------------------------------------------------------------------
-export async function updateEnabled(
-  identityId: string,
-  roomId: string,
-  value = true,
-) {
-  const sql = {
-    text: `
-      UPDATE room
-      SET
-        enabled = $3,
-        updated_at = now()
-      WHERE id = $2
-        AND identity_id = $1
-      RETURNING id, updated_at as at`,
-    args: [
-      identityId,
-      roomId,
-      value,
-    ],
-  };
-  const rows = await query(sql)
-    .then((rst) => {
-      return rst.rows as idRows;
-    });
+async function enable(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const roomId = pl.id;
 
-  return rows;
+  return await updateRoomEnabled(identityId, roomId, true);
 }
 
 // -----------------------------------------------------------------------------
-export async function enableRoom(req: Deno.RequestEvent, identityId: string) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, true);
+async function disable(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const roomId = pl.id;
 
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
-}
-
-// -----------------------------------------------------------------------------
-export async function disableRoom(
-  req: Deno.RequestEvent,
-  identityId: string,
-) {
-  try {
-    const pl = await req.request.json();
-    const rows = await updateEnabled(identityId, pl.id, false);
-
-    ok(req, JSON.stringify(rows));
-  } catch {
-    internalServerError(req);
-  }
+  return await updateRoomEnabled(identityId, roomId, false);
 }
 
 // -----------------------------------------------------------------------------
@@ -239,19 +87,19 @@ export default function (
   identityId: string,
 ) {
   if (path === `${PRE}/get`) {
-    getRoom(req, identityId);
+    wrapper(get, req, identityId);
   } else if (path === `${PRE}/list`) {
-    listRoom(req, identityId);
+    wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    addRoom(req, identityId);
+    wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    delRoom(req, identityId);
+    wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    updateRoom(req, identityId);
+    wrapper(update, req, identityId);
   } else if (path === `${PRE}/enable`) {
-    enableRoom(req, identityId);
+    wrapper(enable, req, identityId);
   } else if (path === `${PRE}/disable`) {
-    disableRoom(req, identityId);
+    wrapper(disable, req, identityId);
   } else {
     notFound(req);
   }
