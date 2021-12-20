@@ -10,9 +10,8 @@ usage() {
   cat <<EOF
 $this: download go binaries for ory/kratos
 
-Usage: $this [-b] bindir [-s] [-d] [tag]
+Usage: $this [-b] bindir [-d] [tag]
   -b sets bindir or installation directory, Defaults to ./bin
-  -s sqlite supported version
   -d turns on debug logging
    [tag] is a tag from
    https://github.com/ory/kratos/releases
@@ -31,12 +30,10 @@ parse_args() {
   #BINDIR is ./bin unless set be ENV
   # over-ridden by flag below
 
-  SQLITE=
   BINDIR=${BINDIR:-./bin}
-  while getopts "b:sdh?x" arg; do
+  while getopts "b:dh?x" arg; do
     case "$arg" in
       b) BINDIR="$OPTARG" ;;
-      s) SQLITE="-sqlite" ;;
       d) log_set_priority 10 ;;
       h | \?) usage "$0" ;;
       x) set -x ;;
@@ -62,8 +59,8 @@ execute() {
     if [ "$OS" = "windows" ]; then
       binexe="${binexe}.exe"
     fi
-    install "${srcdir}/${binexe}" "${BINDIR}/${binexe}${SQLITE}"
-    log_info "installed ${BINDIR}/${binexe}${SQLITE}"
+    install "${srcdir}/${binexe}" "${BINDIR}/"
+    log_info "installed ${BINDIR}/${binexe}"
   done
   rm -rf "${tmpdir}"
 }
@@ -405,7 +402,7 @@ adjust_arch
 
 log_info "found version: ${VERSION} for ${TAG}/${OS}/${ARCH}"
 
-NAME=${PROJECT_NAME}_${VERSION}${SQLITE}_${OS}_${ARCH}
+NAME=${PROJECT_NAME}_${VERSION}-sqlite_${OS}_${ARCH}
 TARBALL=${NAME}.${FORMAT}
 TARBALL_URL=${GITHUB_DOWNLOAD}/${TAG}/${TARBALL}
 CHECKSUM=${PROJECT_NAME}_${VERSION}_checksums.txt
