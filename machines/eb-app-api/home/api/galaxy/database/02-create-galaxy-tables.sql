@@ -141,6 +141,7 @@ CREATE TABLE meeting (
     "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "hidden" boolean NOT NULL DEFAULT true,
     "restricted" boolean NOT NULL DEFAULT false,
+    "subscribable" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
@@ -188,7 +189,9 @@ ALTER TABLE invite OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- REQUEST
 -- -----------------------------------------------------------------------------
--- - when rejected, expired_at will be now() + interval '7 days'
+-- - request can be created only if the meeting is subscribable and restricted.
+--   if not restricted, no need the request, create membership immediately.
+-- - when rejected, expired_at will be updated as now() + interval '7 days'
 -- - identity owner can update the profile only if the status is pending
 -- - identity owner can delete the request only if the status is pending
 -- - meeting owner can delete the request anytimes
