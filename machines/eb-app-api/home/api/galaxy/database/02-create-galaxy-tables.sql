@@ -116,8 +116,8 @@ ALTER TABLE room OWNER TO galaxy;
 -- MEETING
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting if it's over
--- - dont allow to change schedule type after insert or allow only if it is not
---   ephemeral
+-- - show the scheduled meeting although it's over. it may be added a new date
+-- - allow to change the schedule type if it is not ephemeral
 -- - non-hidden meeting can be seen by everyone but permission will be needed to
 --   participate it if it is restricted
 -- - anybody can participate a restricted meeting if she has the key
@@ -125,7 +125,7 @@ ALTER TABLE room OWNER TO galaxy;
 -- - duration as minute in schedule_attr according to schedule_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_schedule_type AS ENUM
-    ('permanent', 'periodic', 'scheduled', 'ephemeral');
+    ('permanent', 'scheduled', 'ephemeral');
 CREATE TABLE meeting (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
@@ -139,7 +139,6 @@ CREATE TABLE meeting (
     "info" varchar(2000) NOT NULL DEFAULT '',
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
     "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
-    "scheduled_at" timestamp with time zone NOT NULL DEFAULT now(),
     "hidden" boolean NOT NULL DEFAULT true,
     "restricted" boolean NOT NULL DEFAULT false,
     "enabled" boolean NOT NULL DEFAULT true,
