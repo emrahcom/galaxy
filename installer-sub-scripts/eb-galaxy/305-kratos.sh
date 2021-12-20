@@ -162,9 +162,6 @@ lxc-attach -n $MACH -- zsh <<EOS
 set -e
 bash /root/tools/kratos-download.sh -b /usr/local/bin $KRATOS_VERSION
 kratos version
-
-bash /root/tools/kratos-download.sh -b /usr/local/bin -s $KRATOS_VERSION
-kratos-sqlite version
 EOS
 
 # kratos files
