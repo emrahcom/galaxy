@@ -23,7 +23,8 @@ for i in $(seq 1 $NUM); do
         "schedule_type": "permanent",
         "schedule_attr": "{}",
         "hidden": $hidden,
-        "restricted": true
+        "restricted": true,
+        "subscribable": true
     }
 EOF
 )

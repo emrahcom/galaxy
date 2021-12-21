@@ -14,6 +14,7 @@ interface meetingRows {
     schedule_attr: unknown;
     hidden: boolean;
     restricted: boolean;
+    subscribable: boolean;
     enabled: boolean;
     chain_enabled: boolean;
     created_at: string;
@@ -30,6 +31,7 @@ interface pubMeetingRows {
     schedule_type: string;
     schedule_attr: unknown;
     restricted: boolean;
+    subscribable: boolean;
   };
 }
 
@@ -39,9 +41,9 @@ export async function getMeeting(identityId: string, meetingId: string) {
     text: `
       SELECT m.id, m.profile_id as profile_id, m.room_id as room_id,
         m.host_key, m.guest_key, m.name, m.info, m.schedule_type,
-        m.schedule_attr, m.hidden, m.restricted, m.enabled, m.created_at,
-        m.updated_at, (m.enabled AND r.enabled AND d.enabled AND i.enabled) as
-        chain_enabled
+        m.schedule_attr, m.hidden, m.restricted, m.subscribable, m.enabled,
+        m.created_at, m.updated_at,
+        (m.enabled AND r.enabled AND d.enabled AND i.enabled) as chain_enabled
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -61,10 +63,11 @@ export async function getMeeting(identityId: string, meetingId: string) {
 export async function getPublicMeeting(meetingId: string) {
   const sql = {
     text: `
-    SELECT id, name, info, schedule_type, schedule_attr, restricted
-    FROM meeting
-    WHERE id = $1
-      AND hidden = false`,
+      SELECT id, name, info, schedule_type, schedule_attr, restricted,
+        subscribable
+      FROM meeting
+      WHERE id = $1
+        AND hidden = false`,
     args: [
       meetingId,
     ],
@@ -83,9 +86,9 @@ export async function listMeeting(
     text: `
       SELECT m.id, m.profile_id as profile_id, m.room_id as room_id,
         m.host_key, m.guest_key, m.name, m.info, m.schedule_type,
-        m.schedule_attr, m.hidden, m.restricted, m.enabled, m.created_at,
-        m.updated_at, (m.enabled AND r.enabled AND d.enabled AND i.enabled) as
-        chain_enabled
+        m.schedule_attr, m.hidden, m.restricted, m.subscribable, m.enabled,
+        m.created_at, m.updated_at,
+        (m.enabled AND r.enabled AND d.enabled AND i.enabled) as chain_enabled
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -111,7 +114,7 @@ export async function listEnabledPublicMeeting(
   const sql = {
     text: `
       SELECT m.id, m.name, m.info, m.schedule_type, m.schedule_attr,
-        m.restricted
+        m.restricted, m.subscribable
       FROM meeting m
         JOIN identity i ON m.identity_id = i.id
         JOIN room r ON m.room_id = r.id
@@ -145,11 +148,12 @@ export async function addMeeting(
   scheduleAttr: unknown,
   hidden: boolean,
   restricted: boolean,
+  subscribable: boolean,
 ) {
   const sql = {
     text: `
       INSERT INTO meeting (identity_id, profile_id, room_id, name, info,
-        schedule_type, schedule_attr, hidden, restricted)
+        schedule_type, schedule_attr, hidden, restricted, subscribable)
       VALUES (
         $1,
         (SELECT id
@@ -160,7 +164,7 @@ export async function addMeeting(
          FROM room
          WHERE id = $3
            AND identity_id = $1),
-        $4, $5, $6, $7, $8, $9)
+        $4, $5, $6, $7, $8, $9, $10)
       RETURNING id, created_at as at`,
     args: [
       identityId,
@@ -172,6 +176,7 @@ export async function addMeeting(
       scheduleAttr,
       hidden,
       restricted,
+      subscribable,
     ],
   };
 
@@ -207,6 +212,7 @@ export async function updateMeeting(
   scheduleAttr: unknown,
   hidden: boolean,
   restricted: boolean,
+  subscribable: boolean,
 ) {
   const sql = {
     text: `
@@ -226,6 +232,7 @@ export async function updateMeeting(
         schedule_attr = $8,
         hidden = $9,
         restricted = $10,
+        subscribable = $11,
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
@@ -241,6 +248,7 @@ export async function updateMeeting(
       scheduleAttr,
       hidden,
       restricted,
+      subscribable,
     ],
   };
 

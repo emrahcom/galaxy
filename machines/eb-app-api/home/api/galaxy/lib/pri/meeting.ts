@@ -40,6 +40,7 @@ async function add(req: Deno.RequestEvent, identityId: string) {
   const scheduleAttr = pl.schedule_attr;
   const hidden = pl.hidden;
   const restricted = pl.restricted;
+  const subscribable = pl.subscribable;
 
   return await addMeeting(
     identityId,
@@ -51,6 +52,7 @@ async function add(req: Deno.RequestEvent, identityId: string) {
     scheduleAttr,
     hidden,
     restricted,
+    subscribable,
   );
 }
 
@@ -74,6 +76,7 @@ async function update(req: Deno.RequestEvent, identityId: string) {
   const scheduleAttr = pl.schedule_attr;
   const hidden = pl.hidden;
   const restricted = pl.restricted;
+  const subscribable = pl.subscribable;
 
   return await updateMeeting(
     identityId,
@@ -86,6 +89,7 @@ async function update(req: Deno.RequestEvent, identityId: string) {
     scheduleAttr,
     hidden,
     restricted,
+    subscribable,
   );
 }
 

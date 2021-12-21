@@ -18,7 +18,8 @@ JSON=$(cat <<EOF
     "schedule_type": "permanent",
     "schedule_attr": "{}",
     "hidden": true,
-    "restricted": false
+    "restricted": false,
+    "subscribable": true
 }
 EOF
 )
