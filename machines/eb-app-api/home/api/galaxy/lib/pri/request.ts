@@ -2,10 +2,12 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
+  acceptRequest,
   addRequest,
   delRequest,
   getRequest,
   listRequest,
+  rejectRequest,
   updateRequest,
 } from "../database/request.ts";
 
