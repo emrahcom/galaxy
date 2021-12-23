@@ -136,6 +136,26 @@ bash $BASEDIR/scripts/pri/invite/list-limit
 bash $BASEDIR/scripts/pri/invite/list-huge-offset
 bash $BASEDIR/scripts/pri/invite/list-invalid-post
 
+# request
+bash $BASEDIR/scripts/pri/request/add-new
+bash $BASEDIR/scripts/pri/request/get-exist
+bash $BASEDIR/scripts/pri/request/get-nonexist
+bash $BASEDIR/scripts/pri/request/add-exist
+bash $BASEDIR/scripts/pri/request/add-invalid-post
+
+bash $BASEDIR/scripts/pri/request/update-exist
+bash $BASEDIR/scripts/pri/request/update-nonexist
+bash $BASEDIR/scripts/pri/request/update-invalid-post
+bash $BASEDIR/scripts/pri/request/del-exist
+bash $BASEDIR/scripts/pri/request/del-nonexist
+
+bash $BASEDIR/scripts/pri/request/add-new 10
+bash $BASEDIR/scripts/pri/request/list-nolimit-nooffset
+bash $BASEDIR/scripts/pri/request/list-limit
+bash $BASEDIR/scripts/pri/request/list-limit-offset
+bash $BASEDIR/scripts/pri/request/list-huge-offset
+bash $BASEDIR/scripts/pri/request/list-invalid-post
+
 # membership
 bash $BASEDIR/scripts/pri/membership/add-byinvite-new
 bash $BASEDIR/scripts/pri/membership/get-exist

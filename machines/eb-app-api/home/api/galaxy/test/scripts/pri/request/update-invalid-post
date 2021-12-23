@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# try to update with invalid post
+# a nonexistent profile in the example
+# ------------------------------------------------------------------------------
+request_id=$(jq -r ".[0].id" $TMP/api-pri-request-add-id-1-res)
+profile_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$request_id",
+    "profile_id": "$profile_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "pri" "request" "update" "$JSON" 1

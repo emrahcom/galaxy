@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# delete a nonexistent request
+# ------------------------------------------------------------------------------
+request_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$request_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "pri" "request" "del" "$JSON" 1

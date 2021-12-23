@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# delete an existing request
+# ------------------------------------------------------------------------------
+request_id=$(jq -r ".[0].id" $TMP/api-pri-request-add-id-1-res)
+JSON=$(cat <<EOF
+{
+    "id": "$request_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-id "pri" "request" "del" "$JSON" 1
