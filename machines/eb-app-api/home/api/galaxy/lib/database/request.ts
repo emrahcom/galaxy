@@ -138,3 +138,56 @@ export async function updateRequest(
 
   return await fetch(sql) as idRows;
 }
+
+// -----------------------------------------------------------------------------
+export async function acceptRequest(identityId: string, requestId: string) {
+  const sql = {
+    text: `
+      INSERT INTO membership (identity_id, profile_id, meeting_id)
+        VALUES (
+          (SELECT identity_id
+           FROM request
+           WHERE id = $2),
+          (SELECT profile_id
+           FROM request
+           WHERE id = $2),
+          (SELECT meeting_id
+           FROM request r
+           WHERE id = $2
+             AND EXISTS (SELECT 1
+                         FROM meeting
+                         WHERE id = r.meeting_id
+                           AND identity_id = $1)))
+      RETURNING id, created_at as at`,
+    args: [
+      identityId,
+      requestId,
+    ],
+  };
+
+  return await fetch(sql) as idRows;
+}
+
+// -----------------------------------------------------------------------------
+export async function rejectRequest(identityId: string, requestId: string) {
+  const sql = {
+    text: `
+      UPDATE request r
+      SET
+        status = 'rejected',
+        expired_at = now() + interval '7 days',
+        updated_at = now()
+      WHERE id = $2
+        AND EXISTS (SELECT 1
+                    FROM meeting
+                    WHERE id = r.meeting_id
+                      AND identity_id = $1)
+      RETURNING id, updated_at as at`,
+    args: [
+      identityId,
+      requestId,
+    ],
+  };
+
+  return await fetch(sql) as idRows;
+}

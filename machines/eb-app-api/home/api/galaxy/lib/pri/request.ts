@@ -55,6 +55,22 @@ async function update(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+async function accept(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const requestId = pl.id;
+
+  return await acceptRequest(identityId, requestId);
+}
+
+// -----------------------------------------------------------------------------
+async function reject(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const requestId = pl.id;
+
+  return await rejectRequest(identityId, requestId);
+}
+
+// -----------------------------------------------------------------------------
 export default function (
   req: Deno.RequestEvent,
   path: string,
@@ -70,6 +86,10 @@ export default function (
     wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
     wrapper(update, req, identityId);
+  } else if (path === `${PRE}/accept`) {
+    wrapper(accept, req, identityId);
+  } else if (path === `${PRE}/reject`) {
+    wrapper(reject, req, identityId);
   } else {
     notFound(req);
   }
