@@ -24,12 +24,12 @@ bash $BASEDIR/scripts/adm/hello
 bash $BASEDIR/scripts/pri/hello
 
 # profile
+bash $BASEDIR/scripts/pri/profile/add-invalid-post
 bash $BASEDIR/scripts/pri/profile/add-new
 bash $BASEDIR/scripts/pri/profile/get-exist
 bash $BASEDIR/scripts/pri/profile/get-nonexist
 bash $BASEDIR/scripts/pri/profile/get-default
 bash $BASEDIR/scripts/pri/profile/add-exist
-bash $BASEDIR/scripts/pri/profile/add-invalid-post
 
 bash $BASEDIR/scripts/pri/profile/update-exist
 bash $BASEDIR/scripts/pri/profile/update-nonexist
@@ -47,11 +47,11 @@ bash $BASEDIR/scripts/pri/profile/list-huge-offset
 bash $BASEDIR/scripts/pri/profile/list-invalid-post
 
 # domain
+bash $BASEDIR/scripts/pri/domain/add-invalid-post
 bash $BASEDIR/scripts/pri/domain/add-new
 bash $BASEDIR/scripts/pri/domain/get-exist
 bash $BASEDIR/scripts/pri/domain/get-nonexist
 bash $BASEDIR/scripts/pri/domain/add-exist
-bash $BASEDIR/scripts/pri/domain/add-invalid-post
 
 bash $BASEDIR/scripts/pri/domain/update-exist
 bash $BASEDIR/scripts/pri/domain/update-nonexist
@@ -71,11 +71,11 @@ bash $BASEDIR/scripts/pri/domain/list-huge-offset
 bash $BASEDIR/scripts/pri/domain/list-invalid-post
 
 # room
+bash $BASEDIR/scripts/pri/room/add-invalid-post
 bash $BASEDIR/scripts/pri/room/add-new
 bash $BASEDIR/scripts/pri/room/get-exist
 bash $BASEDIR/scripts/pri/room/get-nonexist
 bash $BASEDIR/scripts/pri/room/add-exist
-bash $BASEDIR/scripts/pri/room/add-invalid-post
 
 bash $BASEDIR/scripts/pri/room/update-exist
 bash $BASEDIR/scripts/pri/room/update-nonexist
@@ -95,10 +95,10 @@ bash $BASEDIR/scripts/pri/room/list-huge-offset
 bash $BASEDIR/scripts/pri/room/list-invalid-post
 
 # meeting
+bash $BASEDIR/scripts/pri/meeting/add-invalid-post
 bash $BASEDIR/scripts/pri/meeting/add-new
 bash $BASEDIR/scripts/pri/meeting/get-exist
 bash $BASEDIR/scripts/pri/meeting/get-nonexist
-bash $BASEDIR/scripts/pri/meeting/add-invalid-post
 
 bash $BASEDIR/scripts/pri/meeting/update-exist
 bash $BASEDIR/scripts/pri/meeting/update-nonexist
@@ -118,10 +118,10 @@ bash $BASEDIR/scripts/pri/meeting/list-huge-offset
 bash $BASEDIR/scripts/pri/meeting/list-invalid-post
 
 # invite
+bash $BASEDIR/scripts/pri/invite/add-invalid-post
 bash $BASEDIR/scripts/pri/invite/add-new
 bash $BASEDIR/scripts/pri/invite/get-exist
 bash $BASEDIR/scripts/pri/invite/get-nonexist
-bash $BASEDIR/scripts/pri/invite/add-invalid-post
 
 bash $BASEDIR/scripts/pri/invite/disable-exist
 bash $BASEDIR/scripts/pri/invite/disable-nonexist
@@ -137,11 +137,11 @@ bash $BASEDIR/scripts/pri/invite/list-huge-offset
 bash $BASEDIR/scripts/pri/invite/list-invalid-post
 
 # request
+bash $BASEDIR/scripts/pri/request/add-invalid-post
 bash $BASEDIR/scripts/pri/request/add-new
 bash $BASEDIR/scripts/pri/request/get-exist
 bash $BASEDIR/scripts/pri/request/get-nonexist
 bash $BASEDIR/scripts/pri/request/add-exist
-bash $BASEDIR/scripts/pri/request/add-invalid-post
 
 bash $BASEDIR/scripts/pri/request/update-exist
 bash $BASEDIR/scripts/pri/request/update-nonexist
@@ -157,11 +157,11 @@ bash $BASEDIR/scripts/pri/request/list-huge-offset
 bash $BASEDIR/scripts/pri/request/list-invalid-post
 
 # membership
+bash $BASEDIR/scripts/pri/membership/add-byinvite-invalid-post
 bash $BASEDIR/scripts/pri/membership/add-byinvite-new
 bash $BASEDIR/scripts/pri/membership/get-exist
 bash $BASEDIR/scripts/pri/membership/get-nonexist
 bash $BASEDIR/scripts/pri/membership/add-byinvite-exist
-bash $BASEDIR/scripts/pri/membership/add-byinvite-invalid-post
 
 bash $BASEDIR/scripts/pri/membership/update-exist
 bash $BASEDIR/scripts/pri/membership/update-nonexist
