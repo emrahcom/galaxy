@@ -196,7 +196,6 @@ ALTER TABLE invite OWNER TO galaxy;
 -- - identity owner can delete the request only if the status is pending
 -- - meeting owner can delete the request anytimes
 -- - delete all records which have expired_at older than now()
--- - create membership immediately if meeting is not restricted
 -- -----------------------------------------------------------------------------
 CREATE TYPE request_status AS ENUM ('pending', 'rejected');
 CREATE TABLE request (
