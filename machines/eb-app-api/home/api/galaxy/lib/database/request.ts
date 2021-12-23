@@ -19,7 +19,7 @@ interface requestRows {
 export async function getRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      SELECT r.id, p.is as profile_id, p.name as profile_name,
+      SELECT r.id, p.id as profile_id, p.name as profile_name,
         m.id as meeting_id, m.name as meeting_name, r.status, r.created_at,
         r.updated_at, r.expired_at
       FROM request r
@@ -44,7 +44,7 @@ export async function listRequest(
 ) {
   const sql = {
     text: `
-      SELECT r.id, p.is as profile_id, p.name as profile_name,
+      SELECT r.id, p.id as profile_id, p.name as profile_name,
         m.id as meeting_id, m.name as meeting_name, r.status, r.created_at,
         r.updated_at, r.expired_at
       FROM request r
