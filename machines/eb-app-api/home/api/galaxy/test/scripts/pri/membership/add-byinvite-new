@@ -5,23 +5,24 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && NUM=1 || NUM=$1
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && NUM=1 || NUM=$2
 
 # ------------------------------------------------------------------------------
 # add many new memberships
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$ID-1-res)
 for i in $(seq 1 $NUM); do
-    invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-$i-res)
+    invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-$ID-$i-res)
     JSON=$(cat <<EOF
     {
         "id": "$invite_id"
     }
 EOF
 )
-    bash $TEMPLATES/action-member-id "pri" "invite" "get" "$JSON" $i
+    bash $TEMPLATES/action-member-id "$ID" "pri" "invite" "get" "$JSON" $i
 
-    invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$i-res)
+    invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$ID-$i-res)
     JSON=$(cat <<EOF
     {
         "profile_id": "$profile_id",
@@ -30,6 +31,6 @@ EOF
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "pri" "membership" "add/byinvite" \
+    bash $TEMPLATES/action-member-id "$ID" "pri" "membership" "add/byinvite" \
         "$JSON" $i
 done

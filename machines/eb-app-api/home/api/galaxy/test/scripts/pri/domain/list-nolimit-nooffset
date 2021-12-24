@@ -5,6 +5,8 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && ID=1 || ID=$1
+
 # ------------------------------------------------------------------------------
 # get domain list (no limit, no offset)
 # ------------------------------------------------------------------------------
@@ -14,4 +16,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "domain" "list" "$JSON" 1
+bash $TEMPLATES/action-member-id "$ID" "pri" "domain" "list" "$JSON" 1

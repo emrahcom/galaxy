@@ -5,6 +5,8 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && ID=1 || ID=$1
+
 # ------------------------------------------------------------------------------
 # try to update with invalid criteria
 # ------------------------------------------------------------------------------
@@ -21,4 +23,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "pri" "room" "update" "$JSON" 1
+bash $TEMPLATES/action-member-empty "$ID" "pri" "room" "update" "$JSON" 1

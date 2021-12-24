@@ -5,10 +5,13 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && ID=1 || ID=$1
+
 # ------------------------------------------------------------------------------
 # disable an existing member
 # ------------------------------------------------------------------------------
-membership_id=$(jq -r ".[0].id" $TMP/api-pri-membership-add-byinvite-id-1-res)
+membership_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-membership-add-byinvite-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"
@@ -16,4 +19,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "member" "disable" "$JSON" 1
+bash $TEMPLATES/action-member-id "$ID" "pri" "member" "disable" "$JSON" 1

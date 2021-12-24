@@ -5,6 +5,8 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && ID=1 || ID=$1
+
 # ------------------------------------------------------------------------------
 # try to add a new room for a nonexistent domain
 # ------------------------------------------------------------------------------
@@ -19,4 +21,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "pri" "room" "add" "$JSON" 2
+bash $TEMPLATES/action-member-error "$ID" "pri" "room" "add" "$JSON" 2

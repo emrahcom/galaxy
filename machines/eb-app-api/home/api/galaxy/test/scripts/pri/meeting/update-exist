@@ -5,11 +5,13 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && ID=1 || ID=$1
+
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-get-id-1-res)
-room_id=$(jq -r ".[0].room_id" $TMP/api-pri-meeting-get-id-1-res)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-get-id-$ID-1-res)
+room_id=$(jq -r ".[0].room_id" $TMP/api-pri-meeting-get-id-$ID-1-res)
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {
@@ -26,4 +28,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "pri" "meeting" "update" "$JSON" 1
+bash $TEMPLATES/action-member-id "$ID" "pri" "meeting" "update" "$JSON" 1
