@@ -10,8 +10,10 @@ source $BASEDIR/scripts/common
 # ------------------------------------------------------------------------------
 # kratos
 # ------------------------------------------------------------------------------
-bash $BASEDIR/scripts/kratos/registration
-bash $BASEDIR/scripts/kratos/login
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/kratos/registration $i
+    bash $BASEDIR/scripts/kratos/login $i
+done
 
 # ------------------------------------------------------------------------------
 # adm

@@ -11,24 +11,27 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
-header <<< "kratos login"
-rm -f $TMP/kratos-login-*
-rm -f $TMP/*.kratos.login
+ID=$1
+[[ -z "$ID" ]] && ID=1
+
+header <<< "kratos-$ID login"
+rm -f $TMP/kratos-$ID-login-*
+rm -f $TMP/*.kratos-$ID.login
 
 # ------------------------------------------------------------------------------
 # kratos login flow
 # ------------------------------------------------------------------------------
-cookieJar=$(mktemp -p $TMP --suffix .kratos.login)
-echo $cookieJar >$TMP/kratos-login-cookie
+cookieJar=$(mktemp -p $TMP --suffix .kratos-$ID.login)
+echo $cookieJar >$TMP/kratos-$ID-login-cookie
 
 curl -ks https://$KRATOS_FQDN/self-service/login/browser \
-    --output-dir $TMP --output kratos-login-flow \
+    --output-dir $TMP --output kratos-$ID-login-flow \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json"
-actionUrl=$(jq -r .ui.action $TMP/kratos-login-flow)
+actionUrl=$(jq -r .ui.action $TMP/kratos-$ID-login-flow)
 csrfToken=$(jq -r \
     '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
-    $TMP/kratos-login-flow)
+    $TMP/kratos-$ID-login-flow)
 
 out <<< "flow, action URL:"
 out <<< "  $actionUrl"
@@ -38,8 +41,8 @@ out <<< "  $csrfToken"
 # ------------------------------------------------------------------------------
 # kratos credential
 # ------------------------------------------------------------------------------
-email=$(grep email $TMP/kratos-credential | cut -d= -f2)
-passwd=$(grep passwd $TMP/kratos-credential | cut -d= -f2)
+email=$(grep email $TMP/kratos-$ID-credential | cut -d= -f2)
+passwd=$(grep passwd $TMP/kratos-$ID-credential | cut -d= -f2)
 
 out <<< "email:"
 out <<< "  $email"
@@ -49,10 +52,10 @@ out <<< "  $passwd"
 # ------------------------------------------------------------------------------
 # kratos login
 # ------------------------------------------------------------------------------
-cookieJar=$(cat $TMP/kratos-login-cookie)
+cookieJar=$(cat $TMP/kratos-$ID-login-cookie)
 
 curl -ks -X POST "$actionUrl" \
-    --output-dir $TMP --output kratos-login-session \
+    --output-dir $TMP --output kratos-$ID-login-session \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
@@ -64,7 +67,7 @@ curl -ks -X POST "$actionUrl" \
         "method": "password"
     }
 EOF
-userId=$(jq -r .session.identity.id $TMP/kratos-login-session)
+userId=$(jq -r .session.identity.id $TMP/kratos-$ID-login-session)
 [[ -z "$userId" ]] && exit 1
 [[ "$userId" = "null" ]] && exit 1
 
@@ -74,4 +77,4 @@ out <<< "  $userId"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "kratos login"
+footer <<< "kratos-$ID login"
