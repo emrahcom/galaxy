@@ -23,30 +23,32 @@ bash $BASEDIR/scripts/adm/hello
 # ------------------------------------------------------------------------------
 # pri
 # ------------------------------------------------------------------------------
-bash $BASEDIR/scripts/pri/hello
+ID=1
+
+bash $BASEDIR/scripts/pri/hello $ID
 
 # profile
-bash $BASEDIR/scripts/pri/profile/add-invalid-post
-bash $BASEDIR/scripts/pri/profile/add-new
-bash $BASEDIR/scripts/pri/profile/get-exist
-bash $BASEDIR/scripts/pri/profile/get-nonexist
-bash $BASEDIR/scripts/pri/profile/get-default
-bash $BASEDIR/scripts/pri/profile/add-exist
+bash $BASEDIR/scripts/pri/profile/add-invalid-post $ID
+bash $BASEDIR/scripts/pri/profile/add-new $ID
+bash $BASEDIR/scripts/pri/profile/get-exist $ID
+bash $BASEDIR/scripts/pri/profile/get-nonexist $ID
+bash $BASEDIR/scripts/pri/profile/get-default $ID
+bash $BASEDIR/scripts/pri/profile/add-exist $ID
 
-bash $BASEDIR/scripts/pri/profile/update-exist
-bash $BASEDIR/scripts/pri/profile/update-nonexist
-bash $BASEDIR/scripts/pri/profile/update-invalid-post
-bash $BASEDIR/scripts/pri/profile/del-exist
-bash $BASEDIR/scripts/pri/profile/del-nonexist
+bash $BASEDIR/scripts/pri/profile/update-exist $ID
+bash $BASEDIR/scripts/pri/profile/update-nonexist $ID
+bash $BASEDIR/scripts/pri/profile/update-invalid-post $ID
+bash $BASEDIR/scripts/pri/profile/del-exist $ID
+bash $BASEDIR/scripts/pri/profile/del-nonexist $ID
 
-bash $BASEDIR/scripts/pri/profile/add-new 10
-bash $BASEDIR/scripts/pri/profile/set-default-exist
-bash $BASEDIR/scripts/pri/profile/set-default-nonexist
-bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset
-bash $BASEDIR/scripts/pri/profile/list-limit
-bash $BASEDIR/scripts/pri/profile/list-limit-offset
-bash $BASEDIR/scripts/pri/profile/list-huge-offset
-bash $BASEDIR/scripts/pri/profile/list-invalid-post
+bash $BASEDIR/scripts/pri/profile/add-new $ID 10
+bash $BASEDIR/scripts/pri/profile/set-default-exist $ID
+bash $BASEDIR/scripts/pri/profile/set-default-nonexist $ID
+bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset $ID
+bash $BASEDIR/scripts/pri/profile/list-limit $ID
+bash $BASEDIR/scripts/pri/profile/list-limit-offset $ID
+bash $BASEDIR/scripts/pri/profile/list-huge-offset $ID
+bash $BASEDIR/scripts/pri/profile/list-invalid-post $ID
 
 # domain
 bash $BASEDIR/scripts/pri/domain/add-invalid-post

@@ -7,10 +7,9 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
-ID=$1
-[[ -z "$ID" ]] && ID=1
+[[ -z "$1" ]] && ID=1 || ID=$1
 
-header <<< "kratos-$ID registration"
+header <<< "kratos registration (id: $ID)"
 rm -f $TMP/kratos-$ID-credential
 rm -f $TMP/kratos-$ID-registration-*
 rm -f $TMP/*.kratos-$ID.registration
@@ -39,7 +38,7 @@ out <<< "  $csrfToken"
 # kratos registration
 # ------------------------------------------------------------------------------
 cookieJar=$(cat $TMP/kratos-$ID-registration-cookie)
-email=user.$(date +%s)@galaxy.corp
+email=user.$(date +%s).$RANDOM@galaxy.corp
 passwd=$(openssl rand -base64 12)
 
 curl -ks -X POST "$actionUrl" \
@@ -72,4 +71,4 @@ out <<< "  $passwd"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "kratos-$ID registration"
+footer <<< "kratos registration (id: $ID)"

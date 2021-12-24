@@ -11,10 +11,9 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
-ID=$1
-[[ -z "$ID" ]] && ID=1
+[[ -z "$1" ]] && ID=1 || ID=$1
 
-header <<< "kratos-$ID login"
+header <<< "kratos login (id: $ID)"
 rm -f $TMP/kratos-$ID-login-*
 rm -f $TMP/*.kratos-$ID.login
 
@@ -77,4 +76,4 @@ out <<< "  $userId"
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "kratos-$ID login"
+footer <<< "kratos login (id: $ID)"
