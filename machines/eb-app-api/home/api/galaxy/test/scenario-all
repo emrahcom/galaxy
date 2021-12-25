@@ -179,6 +179,9 @@ bash $BASEDIR/scripts/pri/membership/list-limit-offset $ID
 bash $BASEDIR/scripts/pri/membership/list-huge-offset $ID
 bash $BASEDIR/scripts/pri/membership/list-invalid-post $ID
 
+# request (2)
+bash $BASEDIR/scripts/pri/request/add-exist-membership $ID
+
 # member
 
 bash $BASEDIR/scripts/pri/member/get-exist $ID
