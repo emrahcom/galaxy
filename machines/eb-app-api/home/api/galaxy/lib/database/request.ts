@@ -105,6 +105,7 @@ export async function delRequest(identityId: string, requestId: string) {
       DELETE FROM request
       WHERE id = $2
         AND identity_id = $1
+        AND status = 'pending'
       RETURNING id, now() as at`,
     args: [
       identityId,
@@ -132,6 +133,7 @@ export async function updateRequest(
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
+        AND status = 'pending'
       RETURNING id, updated_at as at`,
     args: [
       identityId,
