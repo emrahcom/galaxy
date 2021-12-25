@@ -159,7 +159,7 @@ lxc-attach -n $MACH -- zsh <<EOS
 set -e
 wget -O /tmp/install.sh \
     https://raw.githubusercontent.com/ory/meta/master/install.sh
-bash /tmp/install.sh -b /usr/local/bin kratos $KRATOS_VERSION
+bash /tmp/install.sh -s -b /usr/local/bin kratos $KRATOS_VERSION
 kratos version
 EOS
 
