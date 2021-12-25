@@ -155,12 +155,11 @@ chown kratos:kratos /home/kratos/.zshrc
 EOS
 
 # kratos app
-mkdir $ROOTFS/root/tools
-cp root/tools/kratos-download.sh $ROOTFS/root/tools/
-
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-bash /root/tools/kratos-download.sh -b /usr/local/bin $KRATOS_VERSION
+wget -O /tmp/install.sh \
+    https://raw.githubusercontent.com/ory/meta/master/install.sh
+bash /tmp/install.sh -b /usr/local/bin kratos $KRATOS_VERSION
 kratos version
 EOS
 
