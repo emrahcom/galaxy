@@ -5,6 +5,7 @@ import {
   acceptRequest,
   addRequest,
   delRequest,
+  dropRequest,
   getRequest,
   listRequest,
   rejectRequest,
@@ -73,6 +74,14 @@ async function reject(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+async function drop(req: Deno.RequestEvent, identityId: string) {
+  const pl = await req.request.json();
+  const requestId = pl.id;
+
+  return await dropRequest(identityId, requestId);
+}
+
+// -----------------------------------------------------------------------------
 export default function (
   req: Deno.RequestEvent,
   path: string,
@@ -92,6 +101,8 @@ export default function (
     wrapper(accept, req, identityId);
   } else if (path === `${PRE}/reject`) {
     wrapper(reject, req, identityId);
+  } else if (path === `${PRE}/drop`) {
+    wrapper(drop, req, identityId);
   } else {
     notFound(req);
   }

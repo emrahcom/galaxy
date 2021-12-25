@@ -197,3 +197,23 @@ export async function rejectRequest(identityId: string, requestId: string) {
 
   return await fetch(sql) as idRows;
 }
+
+// -----------------------------------------------------------------------------
+export async function dropRequest(identityId: string, requestId: string) {
+  const sql = {
+    text: `
+      DELETE FROM request req
+      WHERE id = $2
+        AND EXISTS (SELECT 1
+                    FROM meeting
+                    WHERE id = req.meeting_id
+                      AND identity_id = $1)
+      RETURNING id, now() as at`,
+    args: [
+      identityId,
+      requestId,
+    ],
+  };
+
+  return await fetch(sql) as idRows;
+}
