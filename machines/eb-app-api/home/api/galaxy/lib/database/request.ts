@@ -19,14 +19,14 @@ interface requestRows {
 export async function getRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      SELECT r.id, p.id as profile_id, p.name as profile_name,
-        m.id as meeting_id, m.name as meeting_name, r.status, r.created_at,
-        r.updated_at, r.expired_at
-      FROM request r
-        JOIN profile p ON r.profile_id = p.id
-        JOIN meeting m ON r.meeting_id = m.id
-      WHERE r.id = $2
-        AND r.identity_id = $1`,
+      SELECT req.id, p.id as profile_id, p.name as profile_name,
+        m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
+        req.updated_at, req.expired_at
+      FROM request req
+        JOIN profile p ON req.profile_id = p.id
+        JOIN meeting m ON req.meeting_id = m.id
+      WHERE req.id = $2
+        AND req.identity_id = $1`,
     args: [
       identityId,
       requestId,
@@ -44,14 +44,14 @@ export async function listRequest(
 ) {
   const sql = {
     text: `
-      SELECT r.id, p.id as profile_id, p.name as profile_name,
-        m.id as meeting_id, m.name as meeting_name, r.status, r.created_at,
-        r.updated_at, r.expired_at
-      FROM request r
-        JOIN profile p ON r.profile_id = p.id
-        JOIN meeting m ON r.meeting_id = m.id
-      WHERE r.identity_id = $1
-      ORDER BY r.status, meeting_name
+      SELECT req.id, p.id as profile_id, p.name as profile_name,
+        m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
+        req.updated_at, req.expired_at
+      FROM request req
+        JOIN profile p ON req.profile_id = p.id
+        JOIN meeting m ON req.meeting_id = m.id
+      WHERE req.identity_id = $1
+      ORDER BY req.status, meeting_name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
@@ -158,11 +158,11 @@ export async function acceptRequest(identityId: string, requestId: string) {
            FROM request
            WHERE id = $2),
           (SELECT meeting_id
-           FROM request r
+           FROM request req
            WHERE id = $2
              AND EXISTS (SELECT 1
                          FROM meeting
-                         WHERE id = r.meeting_id
+                         WHERE id = req.meeting_id
                            AND identity_id = $1)))
       RETURNING id, created_at as at`,
     args: [
@@ -178,7 +178,7 @@ export async function acceptRequest(identityId: string, requestId: string) {
 export async function rejectRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      UPDATE request r
+      UPDATE request req
       SET
         status = 'rejected',
         expired_at = now() + interval '7 days',
@@ -186,7 +186,7 @@ export async function rejectRequest(identityId: string, requestId: string) {
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
-                    WHERE id = r.meeting_id
+                    WHERE id = req.meeting_id
                       AND identity_id = $1)
       RETURNING id, updated_at as at`,
     args: [
