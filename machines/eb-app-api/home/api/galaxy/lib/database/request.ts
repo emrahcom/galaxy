@@ -82,7 +82,11 @@ export async function addRequest(
          FROM meeting
          WHERE id = $3
            AND restricted = true
-           AND subscribable = true))
+           AND subscribable = true
+           AND NOT EXISTS (SELECT 1
+                           FROM membership
+                           WHERE identity_id = $1
+                             AND meeting_id = $3)))
       RETURNING id, created_at as at`,
     args: [
       identityId,
