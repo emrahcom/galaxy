@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && ID=1 || ID=$1
+
+# ------------------------------------------------------------------------------
+# try to reject a nonexistent request
+# ------------------------------------------------------------------------------
+request_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$request_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "$ID" "pri" "request" "reject" "$JSON" 1

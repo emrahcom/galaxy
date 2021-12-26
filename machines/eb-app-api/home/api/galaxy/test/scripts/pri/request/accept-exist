@@ -7,19 +7,18 @@ source $BASEDIR/../../common
 
 # the meeting owner id
 [[ -z "$1" ]] && ID1=1 || ID1=$1
-# the member (membership owner) id
+# the request owner id
 [[ -z "$2" ]] && ID2=2 || ID2=$2
 
 # ------------------------------------------------------------------------------
-# enable an existing member
+# accept an existing request
 # ------------------------------------------------------------------------------
-membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-membership-add-byinvite-id-$ID2-1-res)
+request_id=$(jq -r ".[0].id" $TMP/api-pri-request-add-id-$ID2-1-res)
 JSON=$(cat <<EOF
 {
-    "id": "$membership_id"
+    "id": "$request_id"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-id "$ID1" "pri" "member" "enable" "$JSON" 1
+bash $TEMPLATES/action-member-id "$ID1" "pri" "request" "accept" "$JSON" 1

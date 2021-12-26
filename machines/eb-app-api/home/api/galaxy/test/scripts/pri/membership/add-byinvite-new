@@ -5,24 +5,27 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
-[[ -z "$2" ]] && NUM=1 || NUM=$2
+# the membership owner id
+[[ -z "$1" ]] && ID1=2 || ID1=$1
+# the invite owner id
+[[ -z "$2" ]] && ID2=1 || ID2=$2
+[[ -z "$3" ]] && NUM=1 || NUM=$3
 
 # ------------------------------------------------------------------------------
 # add many new memberships
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$ID-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$ID1-1-res)
 for i in $(seq 1 $NUM); do
-    invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-$ID-$i-res)
+    invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-$ID2-$i-res)
     JSON=$(cat <<EOF
     {
         "id": "$invite_id"
     }
 EOF
 )
-    bash $TEMPLATES/action-member-id "$ID" "pri" "invite" "get" "$JSON" $i
+    bash $TEMPLATES/action-member-id "$ID2" "pri" "invite" "get" "$JSON" $i
 
-    invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$ID-$i-res)
+    invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$ID2-$i-res)
     JSON=$(cat <<EOF
     {
         "profile_id": "$profile_id",
@@ -31,6 +34,6 @@ EOF
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "$ID" "pri" "membership" "add/byinvite" \
+    bash $TEMPLATES/action-member-id "$ID1" "pri" "membership" "add/byinvite" \
         "$JSON" $i
 done
