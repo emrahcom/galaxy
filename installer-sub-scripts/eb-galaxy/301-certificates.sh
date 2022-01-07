@@ -42,7 +42,8 @@ EOF
 
 # FQDNs
 echo "DNS.1 = $KRATOS_FQDN" >>eb-galaxy.ext
-echo "DNS.2 = $APP_FQDN" >>eb-galaxy.ext
+echo "DNS.2 = $DESK_FQDN" >>eb-galaxy.ext
+echo "DNS.3 = $APP_FQDN" >>eb-galaxy.ext
 
 # internal IPs
 i=1

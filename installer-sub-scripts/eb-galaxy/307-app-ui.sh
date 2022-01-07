@@ -173,8 +173,10 @@ EOS
 # ------------------------------------------------------------------------------
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/ui.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/ui.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/desk-ui.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/desk-ui.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/default-ui.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/default-ui.conf $ROOTFS/etc/nginx/sites-enabled/
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
@@ -237,6 +239,8 @@ EOS
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
     $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
+sed -i "s/___DESK_FQDN___/$DESK_FQDN/g" \
+    $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
 
@@ -265,6 +269,8 @@ EOSS
 EOS
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
+    $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts
+sed -i "s/___DESK_FQDN___/$DESK_FQDN/g" \
     $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts

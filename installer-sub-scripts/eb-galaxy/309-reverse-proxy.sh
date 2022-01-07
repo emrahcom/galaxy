@@ -173,8 +173,13 @@ cp etc/nginx/sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
 cp etc/nginx/sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/eb-desk.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-desk.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/eb-desk-wss.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/eb-desk-wss.conf $ROOTFS/etc/nginx/sites-enabled/
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
+sed -i "s/___DESK_FQDN___/$DESK_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
