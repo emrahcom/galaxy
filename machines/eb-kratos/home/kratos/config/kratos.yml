@@ -10,6 +10,7 @@ serve:
       enabled: true
       allowed_origins:
         - https://___APP_FQDN___
+        - https://___DESK_FQDN___
   admin:
     base_url: https://___KRATOS_FQDN___:4434/
 
