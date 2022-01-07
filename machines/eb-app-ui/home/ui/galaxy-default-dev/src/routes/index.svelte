@@ -4,4 +4,5 @@
 
 <!-- -------------------------------------------------------------------------->
 <h2>welcome</h2>
-<a href="{APP}/dashboard">Dashboard</a>
+<a href="{APP}/panel">Default Control Panel</a>
+<a href="{APP}/desk/panel">Advanced Control Panel</a>

@@ -180,9 +180,8 @@ lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
 
 # ------------------------------------------------------------------------------
-# UI
+# UI USER
 # ------------------------------------------------------------------------------
-# ui user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 adduser ui --system --group --disabled-password --shell /bin/zsh --gecos ''
@@ -199,13 +198,15 @@ chown ui:ui /home/ui/.vimrc
 chown ui:ui /home/ui/.zshrc
 EOS
 
-# kratos ui
+# ------------------------------------------------------------------------------
+# KRATOS-TEST UI
+# ------------------------------------------------------------------------------
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 su -l ui <<EOSS
     set -e
-    git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos
-    cd kratos
+    git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos-test
+    cd kratos-test
     git checkout $KRATOS_VERSION
 
     npm ci
@@ -213,38 +214,69 @@ su -l ui <<EOSS
 EOSS
 EOS
 
-# kratos-ui systemd service (disabled by default)
-cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
+# kratos-test-ui systemd service (disabled by default)
+cp etc/systemd/system/kratos-test-ui.service $ROOTFS/etc/systemd/system/
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ui.service
+    $ROOTFS/etc/systemd/system/kratos-test-ui.service
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ui.service
+    $ROOTFS/etc/systemd/system/kratos-test-ui.service
 
-# galaxy ui
-cp -arp home/ui/galaxy $ROOTFS/home/ui/
+# ------------------------------------------------------------------------------
+# GALAXY-DESK-DEV UI
+# ------------------------------------------------------------------------------
+cp -arp home/ui/galaxy-desk-dev $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown ui:ui /home/ui/galaxy -R
+chown ui:ui /home/ui/galaxy-desk-dev -R
 su -l ui <<EOSS
     set -e
-    cd /home/ui/galaxy
+    cd /home/ui/galaxy-desk-dev
     npm install
 EOSS
 EOS
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/home/ui/galaxy/src/lib/config.ts
+    $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/ui/galaxy/src/lib/config.ts
+    $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
 
-# galaxy-ui systemd service
-cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
+# galaxy-desk-dev-ui systemd service
+cp etc/systemd/system/galaxy-desk-dev-ui.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable galaxy-ui.service
-systemctl start galaxy-ui.service
+systemctl enable galaxy-desk-dev-ui.service
+systemctl start galaxy-desk-dev-ui.service
+EOS
+
+# ------------------------------------------------------------------------------
+# GALAXY-DEFAULT-DEV UI
+# ------------------------------------------------------------------------------
+cp -arp home/ui/galaxy-default-dev $ROOTFS/home/ui/
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+chown ui:ui /home/ui/galaxy-default-dev -R
+su -l ui <<EOSS
+    set -e
+    cd /home/ui/galaxy-default-dev
+    npm install
+EOSS
+EOS
+
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
+    $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts
+sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
+    $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts
+
+# galaxy-default-dev-ui systemd service
+cp etc/systemd/system/galaxy-default-dev-ui.service $ROOTFS/etc/systemd/system/
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+systemctl daemon-reload
+systemctl enable galaxy-default-dev-ui.service
+systemctl start galaxy-default-dev-ui.service
 EOS
 
 # ------------------------------------------------------------------------------

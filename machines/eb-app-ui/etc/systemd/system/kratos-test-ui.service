@@ -1,5 +1,5 @@
 [Unit]
-Description=Kratos UI
+Description=Kratos Test UI
 After=network-online.target
 
 [Service]
@@ -11,7 +11,7 @@ Environment=PORT=3000
 Environment=SECURITY_MODE=cookie
 User=ui
 Group=ui
-WorkingDirectory=/home/ui/kratos
+WorkingDirectory=/home/ui/kratos-test
 ExecStart=npm run serve
 Restart=always
 RestartSec=2s
