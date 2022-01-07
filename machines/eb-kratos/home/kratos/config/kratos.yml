@@ -17,6 +17,7 @@ selfservice:
   default_browser_return_url: https://___APP_FQDN___/
   whitelisted_return_urls:
     - https://___APP_FQDN___
+    - https://___DESK_FQDN___
 
   methods:
     password:
