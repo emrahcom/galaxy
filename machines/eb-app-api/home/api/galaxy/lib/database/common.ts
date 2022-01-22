@@ -1,4 +1,5 @@
-import { Pool, QueryObjectConfig } from "https://deno.land/x/postgres/mod.ts";
+import { Pool } from "https://deno.land/x/postgres/mod.ts";
+import { QueryArguments } from "https://deno.land/x/postgres/query/query.ts";
 import {
   DB_HOST,
   DB_NAME,
@@ -18,8 +19,13 @@ const dbPool = new Pool({
   port: DB_PORT,
 }, DB_POOL_SIZE);
 
+interface QueryObject {
+  text: string;
+  args?: QueryArguments;
+}
+
 // -----------------------------------------------------------------------------
-export async function query(sql: QueryObjectConfig) {
+export async function query(sql: QueryObject) {
   const db = await dbPool.connect();
 
   try {
@@ -37,7 +43,7 @@ export async function query(sql: QueryObjectConfig) {
 }
 
 // -----------------------------------------------------------------------------
-export async function fetch(sql: QueryObjectConfig) {
+export async function fetch(sql: QueryObject) {
   const rows = await query(sql)
     .then((rst) => {
       return rst.rows;
