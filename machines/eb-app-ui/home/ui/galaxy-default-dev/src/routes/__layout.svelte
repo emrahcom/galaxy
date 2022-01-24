@@ -17,22 +17,19 @@
 <script lang="ts">
   import { setContext } from "svelte";
   import type { KratosIdentity } from "$lib/kratos-types";
+  import NavbarPri from "$lib/components/navbar-pri.svelte";
+  import NavbarPub from "$lib/components/navbar-pub.svelte";
 
   export let identity: KratosIdentity;
   setContext("identity", identity);
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<nav class="navbar navbar-light bg-light fixed-top shadow">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">
-      <img src="/logo.svg" alt="logo" width="32rem" height="32rem" />
-    </a>
-    <a class="navbar-link" href="/panel" title="Control Panel">
-      <i class="bi bi-gear" />
-    </a>
-  </div>
-</nav>
+{#if identity}
+  <NavbarPri />
+{:else}
+  <NavbarPub />
+{/if}
 
 <div class="container-fluid">
   <br />
