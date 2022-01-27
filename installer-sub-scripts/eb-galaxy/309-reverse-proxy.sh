@@ -34,16 +34,11 @@ nft delete element eb-nat tcp2ip { 443 } 2>/dev/null || true
 nft add element eb-nat tcp2ip { 443 : $IP }
 nft delete element eb-nat tcp2port { 443 } 2>/dev/null || true
 nft add element eb-nat tcp2port { 443 : 443 }
-# tcp/3000 sveltekit wss (only for development environment, default UI)
+# tcp/3000 sveltekit wss (only for development environment)
 nft delete element eb-nat tcp2ip { 3000 } 2>/dev/null || true
 nft add element eb-nat tcp2ip { 3000 : $IP }
 nft delete element eb-nat tcp2port { 3000 } 2>/dev/null || true
 nft add element eb-nat tcp2port { 3000 : 3000 }
-# tcp/3001 sveltekit wss (only for development environment, desk UI)
-nft delete element eb-nat tcp2ip { 3001 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 3001 : $IP }
-nft delete element eb-nat tcp2port { 3001 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 3001 : 3001 }
 
 # ------------------------------------------------------------------------------
 # INIT
@@ -173,13 +168,8 @@ cp etc/nginx/sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/eb-app.conf $ROOTFS/etc/nginx/sites-enabled/
 cp etc/nginx/sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/eb-app-wss.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/eb-desk.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-desk.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/eb-desk-wss.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/eb-desk-wss.conf $ROOTFS/etc/nginx/sites-enabled/
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
-sed -i "s/___DESK_FQDN___/$DESK_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
 
 lxc-attach -n $MACH -- systemctl stop nginx.service

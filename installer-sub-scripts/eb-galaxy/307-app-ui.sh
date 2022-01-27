@@ -173,10 +173,8 @@ EOS
 # ------------------------------------------------------------------------------
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/desk-ui.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/desk-ui.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/default-ui.conf $ROOTFS/etc/nginx/sites-available/
-ln -s ../sites-available/default-ui.conf $ROOTFS/etc/nginx/sites-enabled/
+cp etc/nginx/sites-available/ui.conf $ROOTFS/etc/nginx/sites-available/
+ln -s ../sites-available/ui.conf $ROOTFS/etc/nginx/sites-enabled/
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
@@ -201,7 +199,7 @@ chown ui:ui /home/ui/.zshrc
 EOS
 
 # ------------------------------------------------------------------------------
-# KRATOS-TEST UI
+# KRATOS TEST UI
 # ------------------------------------------------------------------------------
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
@@ -224,65 +222,32 @@ sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/etc/systemd/system/kratos-test-ui.service
 
 # ------------------------------------------------------------------------------
-# GALAXY-DESK-DEV UI
+# GALAXY UI (development)
 # ------------------------------------------------------------------------------
-cp -arp home/ui/galaxy-desk-dev $ROOTFS/home/ui/
+cp -arp home/ui/galaxy-dev $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown ui:ui /home/ui/galaxy-desk-dev -R
+chown ui:ui /home/ui/galaxy-dev -R
 su -l ui <<EOSS
     set -e
-    cd /home/ui/galaxy-desk-dev
+    cd /home/ui/galaxy-dev
     npm install
 EOSS
 EOS
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
-sed -i "s/___DESK_FQDN___/$DESK_FQDN/g" \
-    $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
+    $ROOTFS/home/ui/galaxy-dev/src/lib/config.ts
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/ui/galaxy-desk-dev/src/lib/config.ts
+    $ROOTFS/home/ui/galaxy-dev/src/lib/config.ts
 
-# galaxy-desk-dev-ui systemd service
-cp etc/systemd/system/galaxy-desk-dev-ui.service $ROOTFS/etc/systemd/system/
+# galaxy-ui-dev systemd service
+cp etc/systemd/system/galaxy-ui-dev.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable galaxy-desk-dev-ui.service
-systemctl start galaxy-desk-dev-ui.service
-EOS
-
-# ------------------------------------------------------------------------------
-# GALAXY-DEFAULT-DEV UI
-# ------------------------------------------------------------------------------
-cp -arp home/ui/galaxy-default-dev $ROOTFS/home/ui/
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-chown ui:ui /home/ui/galaxy-default-dev -R
-su -l ui <<EOSS
-    set -e
-    cd /home/ui/galaxy-default-dev
-    npm install
-EOSS
-EOS
-
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts
-sed -i "s/___DESK_FQDN___/$DESK_FQDN/g" \
-    $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts
-sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/ui/galaxy-default-dev/src/lib/config.ts
-
-# galaxy-default-dev-ui systemd service
-cp etc/systemd/system/galaxy-default-dev-ui.service $ROOTFS/etc/systemd/system/
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-systemctl daemon-reload
-systemctl enable galaxy-default-dev-ui.service
-systemctl start galaxy-default-dev-ui.service
+systemctl enable galaxy-ui-dev.service
+systemctl start galaxy-ui-dev.service
 EOS
 
 # ------------------------------------------------------------------------------

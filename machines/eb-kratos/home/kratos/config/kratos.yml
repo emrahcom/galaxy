@@ -10,7 +10,6 @@ serve:
       enabled: true
       allowed_origins:
         - https://___APP_FQDN___
-        - https://___DESK_FQDN___
   admin:
     base_url: https://___KRATOS_FQDN___:4434/
 
@@ -18,7 +17,6 @@ selfservice:
   default_browser_return_url: https://___APP_FQDN___/
   whitelisted_return_urls:
     - https://___APP_FQDN___
-    - https://___DESK_FQDN___
 
   methods:
     password:

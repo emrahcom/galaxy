@@ -1,11 +1,11 @@
 [Unit]
-Description=Galaxy Default Development UI
+Description=Galaxy UI (development)
 After=network-online.target
 
 [Service]
 User=ui
 Group=ui
-WorkingDirectory=/home/ui/galaxy-default-dev
+WorkingDirectory=/home/ui/galaxy-dev
 ExecStart=npm run dev -- --host --port 3000
 Restart=always
 RestartSec=2s
