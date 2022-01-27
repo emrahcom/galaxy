@@ -222,7 +222,7 @@ sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/etc/systemd/system/kratos-ui-test.service
 
 # ------------------------------------------------------------------------------
-# GALAXY UI (development)
+# GALAXY UI (dev)
 # ------------------------------------------------------------------------------
 cp -arp home/ui/galaxy-dev $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
@@ -248,6 +248,17 @@ set -e
 systemctl daemon-reload
 systemctl enable galaxy-ui-dev.service
 systemctl start galaxy-ui-dev.service
+EOS
+
+# ------------------------------------------------------------------------------
+# GALAXY UI (prod, inactive)
+# ------------------------------------------------------------------------------
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l ui <<EOSS
+    set -e
+    ln -s galaxy-dev/build /home/ui/galaxy-static
+EOSS
 EOS
 
 # ------------------------------------------------------------------------------
