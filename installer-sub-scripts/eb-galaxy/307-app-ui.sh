@@ -214,12 +214,12 @@ su -l ui <<EOSS
 EOSS
 EOS
 
-# kratos-test-ui systemd service (disabled by default)
-cp etc/systemd/system/kratos-test-ui.service $ROOTFS/etc/systemd/system/
+# kratos-ui-test systemd service (disabled by default)
+cp etc/systemd/system/kratos-ui-test.service $ROOTFS/etc/systemd/system/
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-test-ui.service
+    $ROOTFS/etc/systemd/system/kratos-ui-test.service
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-test-ui.service
+    $ROOTFS/etc/systemd/system/kratos-ui-test.service
 
 # ------------------------------------------------------------------------------
 # GALAXY UI (development)
