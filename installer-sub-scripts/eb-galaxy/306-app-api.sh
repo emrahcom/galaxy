@@ -185,19 +185,19 @@ chown api:api /home/api/galaxy -R
 EOS
 
 # galaxy-api systemd services
-cp etc/systemd/system/galaxy-adm-api.service $ROOTFS/etc/systemd/system/
-cp etc/systemd/system/galaxy-pri-api.service $ROOTFS/etc/systemd/system/
-cp etc/systemd/system/galaxy-pub-api.service $ROOTFS/etc/systemd/system/
+cp etc/systemd/system/galaxy-api-adm.service $ROOTFS/etc/systemd/system/
+cp etc/systemd/system/galaxy-api-pri.service $ROOTFS/etc/systemd/system/
+cp etc/systemd/system/galaxy-api-pub.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
-systemctl enable galaxy-adm-api.service
-systemctl enable galaxy-pri-api.service
-systemctl enable galaxy-pub-api.service
-systemctl start galaxy-adm-api.service
-systemctl start galaxy-pri-api.service
-systemctl start galaxy-pub-api.service
+systemctl enable galaxy-api-adm.service
+systemctl enable galaxy-api-pri.service
+systemctl enable galaxy-api-pub.service
+systemctl start galaxy-api-adm.service
+systemctl start galaxy-api-pri.service
+systemctl start galaxy-api-pub.service
 EOS
 
 # ------------------------------------------------------------------------------
