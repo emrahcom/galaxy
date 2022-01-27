@@ -13,7 +13,7 @@
         </li>
         <li class="nav-item me-2">
           <a class="btn btn-sm btn-outline-primary" href="/login">
-            <span class="bi bi-emoji-smile" />
+            <i class="bi bi-emoji-smile" />
             Login
           </a>
         </li>
