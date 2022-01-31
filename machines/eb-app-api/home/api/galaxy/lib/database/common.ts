@@ -48,7 +48,7 @@ export async function query(
 }
 
 // -----------------------------------------------------------------------------
-export async function fetch(sql: QueryObject): unknown {
+export async function fetch(sql: QueryObject): Promise<unknown> {
   const rows = await query(sql)
     .then((rst) => {
       return rst.rows;
