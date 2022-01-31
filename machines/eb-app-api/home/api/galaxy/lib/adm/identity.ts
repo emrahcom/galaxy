@@ -6,8 +6,8 @@ import { addProfile } from "../database/profile.ts";
 const PRE = "/api/adm/identity";
 
 // -----------------------------------------------------------------------------
-async function add(req: Deno.RequestEvent) {
-  const pl = await req.request.json();
+async function add(req: Request): Promise<unknown> {
+  const pl = await req.json();
   const identityId = pl.identity_id;
   const email = pl.identity_email;
   const name = email.split("@")[0];
@@ -26,10 +26,10 @@ async function add(req: Deno.RequestEvent) {
 }
 
 // -----------------------------------------------------------------------------
-export default function (req: Deno.RequestEvent, path: string) {
+export default async function (req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/add`) {
-    wrapper(add, req);
+    return await wrapper(add, req);
   } else {
-    notFound(req);
+    return notFound();
   }
 }

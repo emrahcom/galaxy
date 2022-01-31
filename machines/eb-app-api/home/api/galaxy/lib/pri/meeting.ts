@@ -13,16 +13,16 @@ import {
 const PRE = "/api/pri/meeting";
 
 // -----------------------------------------------------------------------------
-async function get(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function get(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.id;
 
   return await getMeeting(identityId, meetingId);
 }
 
 // -----------------------------------------------------------------------------
-async function list(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function list(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
@@ -30,8 +30,8 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function add(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function add(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const profileId = pl.profile_id;
   const roomId = pl.room_id;
   const name = pl.name;
@@ -57,16 +57,16 @@ async function add(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function del(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function del(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.id;
 
   return await delMeeting(identityId, meetingId);
 }
 
 // -----------------------------------------------------------------------------
-async function update(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function update(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.id;
   const profileId = pl.profile_id;
   const roomId = pl.room_id;
@@ -94,42 +94,42 @@ async function update(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function enable(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function enable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.id;
 
   return await updateMeetingEnabled(identityId, meetingId, true);
 }
 
 // -----------------------------------------------------------------------------
-async function disable(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function disable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.id;
 
   return await updateMeetingEnabled(identityId, meetingId, false);
 }
 
 // -----------------------------------------------------------------------------
-export default function (
-  req: Deno.RequestEvent,
+export default async function (
+  req: Request,
   path: string,
   identityId: string,
-) {
+): Promise<Response> {
   if (path === `${PRE}/get`) {
-    wrapper(get, req, identityId);
+    return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/list`) {
-    wrapper(list, req, identityId);
+    return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    wrapper(add, req, identityId);
+    return await wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    wrapper(del, req, identityId);
+    return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    wrapper(update, req, identityId);
+    return await wrapper(update, req, identityId);
   } else if (path === `${PRE}/enable`) {
-    wrapper(enable, req, identityId);
+    return await wrapper(enable, req, identityId);
   } else if (path === `${PRE}/disable`) {
-    wrapper(disable, req, identityId);
+    return await wrapper(disable, req, identityId);
   } else {
-    notFound(req);
+    return notFound();
   }
 }

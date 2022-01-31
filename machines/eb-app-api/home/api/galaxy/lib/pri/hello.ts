@@ -1,10 +1,10 @@
 import { ok } from "../http/response.ts";
 
 // -----------------------------------------------------------------------------
-export default function (req: Deno.RequestEvent, identityId: string) {
+export default function (identityId: string): Response {
   const body = {
     text: `hello ${identityId}`,
   };
 
-  ok(req, JSON.stringify(body));
+  return ok(JSON.stringify(body));
 }

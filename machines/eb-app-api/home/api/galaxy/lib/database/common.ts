@@ -1,5 +1,8 @@
 import { Pool } from "https://deno.land/x/postgres/mod.ts";
-import { QueryArguments } from "https://deno.land/x/postgres/query/query.ts";
+import {
+  QueryArguments,
+  QueryObjectResult,
+} from "https://deno.land/x/postgres/query/query.ts";
 import {
   DB_HOST,
   DB_NAME,
@@ -25,7 +28,9 @@ interface QueryObject {
 }
 
 // -----------------------------------------------------------------------------
-export async function query(sql: QueryObject) {
+export async function query(
+  sql: QueryObject,
+): Promise<QueryObjectResult<unknown>> {
   const db = await dbPool.connect();
 
   try {
@@ -43,7 +48,7 @@ export async function query(sql: QueryObject) {
 }
 
 // -----------------------------------------------------------------------------
-export async function fetch(sql: QueryObject) {
+export async function fetch(sql: QueryObject): unknown {
   const rows = await query(sql)
     .then((rst) => {
       return rst.rows;
@@ -53,7 +58,7 @@ export async function fetch(sql: QueryObject) {
 }
 
 // -----------------------------------------------------------------------------
-export function getLimit(limit: number) {
+export function getLimit(limit: number): number {
   if (!limit) {
     limit = DEFAULT_LIST_SIZE;
   } else if (limit > MAX_LIST_SIZE) {
@@ -64,7 +69,7 @@ export function getLimit(limit: number) {
 }
 
 // -----------------------------------------------------------------------------
-export function getOffset(offset: number) {
+export function getOffset(offset: number): number {
   if (!offset) offset = 0;
 
   return offset + 0;

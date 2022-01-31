@@ -1,3 +1,4 @@
+import { serve } from "https://deno.land/std/http/server.ts";
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import hello from "./lib/adm/hello.ts";
@@ -6,43 +7,35 @@ import identity from "./lib/adm/identity.ts";
 const PRE = "/api/adm";
 
 // -----------------------------------------------------------------------------
-function route(req: Deno.RequestEvent, path: string) {
+async function route(req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/hello`) {
-    hello(req);
+    return hello();
   } else if (path.match(`^${PRE}/identity/`)) {
-    identity(req, path);
+    return await identity(req, path);
   } else {
-    notFound(req);
+    return notFound();
   }
 }
 
 // -----------------------------------------------------------------------------
-async function handle(cnn: Deno.Conn) {
-  const http = Deno.serveHttp(cnn);
+async function handler(req: Request): Promise<Response> {
+  // check method
+  if (req.method === "POST") {
+    const url = new URL(req.url);
+    const path = url.pathname;
 
-  for await (const req of http) {
-    // check method
-    if (req.request.method === "POST") {
-      const url = new URL(req.request.url);
-      const path = url.pathname;
-
-      route(req, path);
-    } else {
-      methodNotAllowed(req);
-    }
+    return await route(req, path);
+  } else {
+    return methodNotAllowed();
   }
 }
 
 // -----------------------------------------------------------------------------
-async function main() {
-  const server = Deno.listen({
+function main() {
+  serve(handler, {
     hostname: HOSTNAME,
     port: PORT_ADMIN,
   });
-
-  for await (const cnn of server) {
-    handle(cnn);
-  }
 }
 
 // -----------------------------------------------------------------------------

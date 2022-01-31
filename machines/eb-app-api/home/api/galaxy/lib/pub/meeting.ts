@@ -9,16 +9,16 @@ import {
 const PRE = "/api/pub/meeting";
 
 // -----------------------------------------------------------------------------
-async function get(req: Deno.RequestEvent) {
-  const pl = await req.request.json();
+async function get(req: Request): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.id;
 
   return await getPublicMeeting(meetingId);
 }
 
 // -----------------------------------------------------------------------------
-async function listEnabled(req: Deno.RequestEvent) {
-  const pl = await req.request.json();
+async function listEnabled(req: Request): Promise<unknown> {
+  const pl = await req.json();
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
@@ -26,12 +26,12 @@ async function listEnabled(req: Deno.RequestEvent) {
 }
 
 // -----------------------------------------------------------------------------
-export default function (req: Deno.RequestEvent, path: string) {
+export default async function (req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/get`) {
-    wrapper(get, req);
+    return await wrapper(get, req);
   } else if (path === `${PRE}/list/enabled`) {
-    wrapper(listEnabled, req);
+    return await wrapper(listEnabled, req);
   } else {
-    notFound(req);
+    return notFound();
   }
 }

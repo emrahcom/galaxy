@@ -1,3 +1,4 @@
+import { serve } from "https://deno.land/std/http/server.ts";
 import { HOSTNAME, PORT_PRIVATE } from "./config.ts";
 import {
   methodNotAllowed,
@@ -18,63 +19,59 @@ import room from "./lib/pri/room.ts";
 const PRE = "/api/pri";
 
 // -----------------------------------------------------------------------------
-function route(req: Deno.RequestEvent, path: string, identityId: string) {
+async function route(
+  req: Request,
+  path: string,
+  identityId: string,
+): Promise<Response> {
   if (path === `${PRE}/hello`) {
-    hello(req, identityId);
+    return hello(identityId);
   } else if (path.match(`^${PRE}/domain/`)) {
-    domain(req, path, identityId);
+    return await domain(req, path, identityId);
   } else if (path.match(`^${PRE}/invite/`)) {
-    invite(req, path, identityId);
+    return await invite(req, path, identityId);
   } else if (path.match(`^${PRE}/meeting/`)) {
-    meeting(req, path, identityId);
+    return await meeting(req, path, identityId);
   } else if (path.match(`^${PRE}/member/`)) {
-    member(req, path, identityId);
+    return await member(req, path, identityId);
   } else if (path.match(`^${PRE}/membership/`)) {
-    membership(req, path, identityId);
+    return await membership(req, path, identityId);
   } else if (path.match(`^${PRE}/profile/`)) {
-    profile(req, path, identityId);
+    return await profile(req, path, identityId);
   } else if (path.match(`^${PRE}/request/`)) {
-    request(req, path, identityId);
+    return await request(req, path, identityId);
   } else if (path.match(`^${PRE}/room/`)) {
-    room(req, path, identityId);
+    return await room(req, path, identityId);
   } else {
-    notFound(req);
+    return notFound();
   }
 }
 
 // -----------------------------------------------------------------------------
-async function handle(cnn: Deno.Conn) {
-  const http = Deno.serveHttp(cnn);
+async function handler(req: Request): Promise<Response> {
+  // check method
+  if (req.method === "POST") {
+    // check credential
+    const identityId = await getIdentityId(req);
+    if (identityId) {
+      const url = new URL(req.url);
+      const path = url.pathname;
 
-  for await (const req of http) {
-    // check method
-    if (req.request.method === "POST") {
-      // check credential
-      const identityId = await getIdentityId(req);
-      if (identityId) {
-        const url = new URL(req.request.url);
-        const path = url.pathname;
-
-        route(req, path, identityId);
-      } else {
-        unauthorized(req);
-      }
+      return await route(req, path, identityId);
     } else {
-      methodNotAllowed(req);
+      return unauthorized();
     }
+  } else {
+    return methodNotAllowed();
   }
 }
 
 // -----------------------------------------------------------------------------
-async function main() {
-  const server = Deno.listen({
+function main() {
+  serve(handler, {
     hostname: HOSTNAME,
     port: PORT_PRIVATE,
   });
-
-  for await (const cnn of server) {
-    handle(cnn);
-  }
 }
 
 // -----------------------------------------------------------------------------

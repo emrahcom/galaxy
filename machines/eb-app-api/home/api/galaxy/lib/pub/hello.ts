@@ -1,10 +1,10 @@
 import { ok } from "../http/response.ts";
 
 // -----------------------------------------------------------------------------
-export default function (req: Deno.RequestEvent) {
+export default function (): Response {
   const body = {
     text: "hello public",
   };
 
-  ok(req, JSON.stringify(body));
+  return ok(JSON.stringify(body));
 }

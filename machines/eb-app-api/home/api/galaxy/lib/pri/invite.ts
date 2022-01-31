@@ -13,24 +13,24 @@ import {
 const PRE = "/api/pri/invite";
 
 // -----------------------------------------------------------------------------
-async function get(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function get(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const inviteId = pl.id;
 
   return await getInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
-async function getByCode(req: Deno.RequestEvent, _identityId: string) {
-  const pl = await req.request.json();
+async function getByCode(req: Request, _identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const code = pl.code;
 
   return await getInviteByCode(code);
 }
 
 // -----------------------------------------------------------------------------
-async function list(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function list(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.meeting_id;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
@@ -39,8 +39,8 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function add(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function add(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const meetingId = pl.meeting_id;
   const asHost = pl.as_host;
 
@@ -48,50 +48,50 @@ async function add(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function del(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function del(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const inviteId = pl.id;
 
   return await delInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
-async function enable(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function enable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const inviteId = pl.id;
 
   return await updateInviteEnabled(identityId, inviteId, true);
 }
 
 // -----------------------------------------------------------------------------
-async function disable(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function disable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const inviteId = pl.id;
 
   return await updateInviteEnabled(identityId, inviteId, false);
 }
 
 // -----------------------------------------------------------------------------
-export default function (
-  req: Deno.RequestEvent,
+export default async function (
+  req: Request,
   path: string,
   identityId: string,
-) {
+): Promise<Response> {
   if (path === `${PRE}/get`) {
-    wrapper(get, req, identityId);
+    return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/get/bycode`) {
-    wrapper(getByCode, req, identityId);
+    return await wrapper(getByCode, req, identityId);
   } else if (path === `${PRE}/list`) {
-    wrapper(list, req, identityId);
+    return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    wrapper(add, req, identityId);
+    return await wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    wrapper(del, req, identityId);
+    return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/enable`) {
-    wrapper(enable, req, identityId);
+    return await wrapper(enable, req, identityId);
   } else if (path === `${PRE}/disable`) {
-    wrapper(disable, req, identityId);
+    return await wrapper(disable, req, identityId);
   } else {
-    notFound(req);
+    return notFound();
   }
 }

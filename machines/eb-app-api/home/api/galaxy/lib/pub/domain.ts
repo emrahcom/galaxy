@@ -6,8 +6,8 @@ import { listEnabledPublicDomain } from "../database/domain.ts";
 const PRE = "/api/pub/domain";
 
 // -----------------------------------------------------------------------------
-async function listEnabled(req: Deno.RequestEvent) {
-  const pl = await req.request.json();
+async function listEnabled(req: Request): Promise<unknown> {
+  const pl = await req.json();
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
@@ -15,10 +15,10 @@ async function listEnabled(req: Deno.RequestEvent) {
 }
 
 // -----------------------------------------------------------------------------
-export default function (req: Deno.RequestEvent, path: string) {
+export default async function (req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/list/enabled`) {
-    wrapper(listEnabled, req);
+    return await wrapper(listEnabled, req);
   } else {
-    notFound(req);
+    return notFound();
   }
 }

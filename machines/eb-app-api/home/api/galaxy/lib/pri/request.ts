@@ -15,16 +15,16 @@ import {
 const PRE = "/api/pri/request";
 
 // -----------------------------------------------------------------------------
-async function get(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function get(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const requestId = pl.id;
 
   return await getRequest(identityId, requestId);
 }
 
 // -----------------------------------------------------------------------------
-async function list(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function list(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
@@ -32,8 +32,8 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function add(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function add(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const profileId = pl.profile_id;
   const meetingId = pl.meeting_id;
 
@@ -41,16 +41,16 @@ async function add(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function del(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function del(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const requestId = pl.id;
 
   return await delRequest(identityId, requestId);
 }
 
 // -----------------------------------------------------------------------------
-async function update(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function update(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const requestId = pl.id;
   const profileId = pl.profile_id;
 
@@ -58,52 +58,52 @@ async function update(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function accept(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function accept(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const requestId = pl.id;
 
   return await acceptRequest(identityId, requestId);
 }
 
 // -----------------------------------------------------------------------------
-async function reject(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function reject(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const requestId = pl.id;
 
   return await rejectRequest(identityId, requestId);
 }
 
 // -----------------------------------------------------------------------------
-async function drop(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function drop(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const requestId = pl.id;
 
   return await dropRequest(identityId, requestId);
 }
 
 // -----------------------------------------------------------------------------
-export default function (
-  req: Deno.RequestEvent,
+export default async function (
+  req: Request,
   path: string,
   identityId: string,
-) {
+): Promise<Response> {
   if (path === `${PRE}/get`) {
-    wrapper(get, req, identityId);
+    return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/list`) {
-    wrapper(list, req, identityId);
+    return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
-    wrapper(add, req, identityId);
+    return await wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
-    wrapper(del, req, identityId);
+    return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    wrapper(update, req, identityId);
+    return await wrapper(update, req, identityId);
   } else if (path === `${PRE}/accept`) {
-    wrapper(accept, req, identityId);
+    return await wrapper(accept, req, identityId);
   } else if (path === `${PRE}/reject`) {
-    wrapper(reject, req, identityId);
+    return await wrapper(reject, req, identityId);
   } else if (path === `${PRE}/drop`) {
-    wrapper(drop, req, identityId);
+    return await wrapper(drop, req, identityId);
   } else {
-    notFound(req);
+    return notFound();
   }
 }

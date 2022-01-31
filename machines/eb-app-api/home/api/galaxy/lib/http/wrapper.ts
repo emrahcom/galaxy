@@ -1,44 +1,44 @@
 import { internalServerError, ok } from "./response.ts";
 
 // -----------------------------------------------------------------------------
-type functionPri = (req: Deno.RequestEvent, identityId: string) => unknown;
+type functionPri = (req: Request, identityId: string) => unknown;
 
 export async function pri(
   f: functionPri,
-  req: Deno.RequestEvent,
+  req: Request,
   identityId: string,
-) {
+): Promise<Response> {
   try {
     const rows = await f(req, identityId);
 
-    ok(req, JSON.stringify(rows));
+    return ok(JSON.stringify(rows));
   } catch {
-    internalServerError(req);
+    return internalServerError();
   }
 }
 
 // -----------------------------------------------------------------------------
-type functionPub = (req: Deno.RequestEvent) => unknown;
+type functionPub = (req: Request) => unknown;
 
-export async function pub(f: functionPub, req: Deno.RequestEvent) {
+export async function pub(f: functionPub, req: Request): Promise<Response> {
   try {
     const rows = await f(req);
 
-    ok(req, JSON.stringify(rows));
+    return ok(JSON.stringify(rows));
   } catch {
-    internalServerError(req);
+    return internalServerError();
   }
 }
 
 // -----------------------------------------------------------------------------
-type functionAdm = (req: Deno.RequestEvent) => unknown;
+type functionAdm = (req: Request) => unknown;
 
-export async function adm(f: functionAdm, req: Deno.RequestEvent) {
+export async function adm(f: functionAdm, req: Request): Promise<Response> {
   try {
     const rows = await f(req);
 
-    ok(req, JSON.stringify(rows));
+    return ok(JSON.stringify(rows));
   } catch {
-    internalServerError(req);
+    return internalServerError();
   }
 }

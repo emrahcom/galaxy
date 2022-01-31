@@ -12,16 +12,16 @@ import {
 const PRE = "/api/pri/membership";
 
 // -----------------------------------------------------------------------------
-async function get(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function get(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const membershipId = pl.id;
 
   return await getMembership(identityId, membershipId);
 }
 
 // -----------------------------------------------------------------------------
-async function list(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function list(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
@@ -29,8 +29,8 @@ async function list(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function addByInvite(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function addByInvite(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const profileId = pl.profile_id;
   const inviteCode = pl.invite_code;
 
@@ -38,16 +38,16 @@ async function addByInvite(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function del(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function del(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const membershipId = pl.id;
 
   return await delMembership(identityId, membershipId);
 }
 
 // -----------------------------------------------------------------------------
-async function update(req: Deno.RequestEvent, identityId: string) {
-  const pl = await req.request.json();
+async function update(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
   const membershipId = pl.id;
   const profileId = pl.profile_id;
 
@@ -55,22 +55,22 @@ async function update(req: Deno.RequestEvent, identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export default function (
-  req: Deno.RequestEvent,
+export default async function (
+  req: Request,
   path: string,
   identityId: string,
-) {
+): Promise<Response> {
   if (path === `${PRE}/get`) {
-    wrapper(get, req, identityId);
+    return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/list`) {
-    wrapper(list, req, identityId);
+    return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add/byinvite`) {
-    wrapper(addByInvite, req, identityId);
+    return await wrapper(addByInvite, req, identityId);
   } else if (path === `${PRE}/del`) {
-    wrapper(del, req, identityId);
+    return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
-    wrapper(update, req, identityId);
+    return await wrapper(update, req, identityId);
   } else {
-    notFound(req);
+    return notFound();
   }
 }

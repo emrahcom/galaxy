@@ -1,8 +1,8 @@
 import { KRATOS } from "../../config.ts";
 
 // -----------------------------------------------------------------------------
-export async function getIdentityId(req: Deno.RequestEvent) {
-  const cookie = req.request.headers.get("cookie");
+export async function getIdentityId(req: Request): Promise<string | undefined> {
+  const cookie = req.headers.get("cookie");
   if (!cookie) return undefined;
   if (!cookie.match("csrf_token")) return undefined;
   if (!cookie.match("ory_kratos_session")) return undefined;
