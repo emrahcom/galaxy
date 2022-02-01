@@ -1,7 +1,7 @@
 import { internalServerError, ok } from "./response.ts";
 
 // -----------------------------------------------------------------------------
-type functionPri = (req: Request, identityId: string) => unknown;
+type functionPri = (req: Request, identityId: string) => Promise<unknown>;
 
 export async function pri(
   f: functionPri,
@@ -18,7 +18,7 @@ export async function pri(
 }
 
 // -----------------------------------------------------------------------------
-type functionPub = (req: Request) => unknown;
+type functionPub = (req: Request) => Promise<unknown>;
 
 export async function pub(f: functionPub, req: Request): Promise<Response> {
   try {
@@ -31,7 +31,7 @@ export async function pub(f: functionPub, req: Request): Promise<Response> {
 }
 
 // -----------------------------------------------------------------------------
-type functionAdm = (req: Request) => unknown;
+type functionAdm = (req: Request) => Promise<unknown>;
 
 export async function adm(f: functionAdm, req: Request): Promise<Response> {
   try {
