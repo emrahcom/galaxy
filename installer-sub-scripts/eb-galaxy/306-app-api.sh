@@ -165,7 +165,7 @@ EOS
 cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/api/
 cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/api/
 cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/api/
-cat $MACHINE_COMMON/home/user/.vimrc.typescript >>$ROOTFS/home/ui/.vimrc
+cat $MACHINE_COMMON/home/user/.vimrc.typescript >>$ROOTFS/home/api/.vimrc
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
