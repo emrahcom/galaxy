@@ -163,8 +163,9 @@ adduser api-pub --system --group --disabled-password --gecos ''
 EOS
 
 cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/api/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/api/
 cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/api/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/api/
+cat $MACHINE_COMMON/home/user/.vimrc.typescript >>$ROOTFS/home/ui/.vimrc
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e

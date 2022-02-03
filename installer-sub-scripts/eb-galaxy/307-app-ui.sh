@@ -188,8 +188,10 @@ adduser ui --system --group --disabled-password --shell /bin/zsh --gecos ''
 EOS
 
 cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/ui/
-cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/ui/
 cp $MACHINE_COMMON/home/user/.zshrc $ROOTFS/home/ui/
+cp $MACHINE_COMMON/home/user/.vimrc $ROOTFS/home/ui/
+cat $MACHINE_COMMON/home/user/.vimrc.svelte >>$ROOTFS/home/ui/.vimrc
+cat $MACHINE_COMMON/home/user/.vimrc.typescript >>$ROOTFS/home/ui/.vimrc
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
