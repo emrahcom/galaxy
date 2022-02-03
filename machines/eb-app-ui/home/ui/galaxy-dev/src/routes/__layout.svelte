@@ -31,9 +31,10 @@
   <NavbarPub />
 {/if}
 
-<main class="container-fluid">
+<section id="hidden-top-margin">
   <br />
   <br />
   <br />
-  <slot />
-</main>
+</section>
+
+<slot />
