@@ -1,9 +1,11 @@
 <script lang="ts" context="module">
   import { getIdentity } from "$lib/kratos";
-  import type { LoadOutput } from "$lib/custom-types";
+  import type { KratosLoad } from "$lib/kratos-types";
 
-  export async function load(): Promise<LoadOutput> {
-    const identity = await getIdentity();
+  export async function load(): Promise<KratosLoad> {
+    const identity = await getIdentity().catch(() => {
+      return undefined;
+    });
 
     return {
       props: {
@@ -15,13 +17,11 @@
 
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
-  import { setContext } from "svelte";
   import type { KratosIdentity } from "$lib/kratos-types";
   import NavbarPri from "$lib/components/navbar-pri.svelte";
   import NavbarPub from "$lib/components/navbar-pub.svelte";
 
-  export let identity: KratosIdentity;
-  setContext("identity", identity);
+  export let identity: KratosIdentity | undefined;
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -31,9 +31,9 @@
   <NavbarPub />
 {/if}
 
-<div class="container-fluid">
+<main class="container-fluid">
   <br />
   <br />
   <br />
   <slot />
-</div>
+</main>

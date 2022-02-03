@@ -93,3 +93,17 @@ export interface KratosIdentity {
   "created_at": string;
   "updated_at": string;
 }
+
+// -----------------------------------------------------------------------------
+export interface KratosLoad {
+  status?: number;
+  redirect?: string;
+  props?: {
+    [key: string]:
+      | string
+      | KratosError
+      | KratosForm
+      | KratosIdentity
+      | KratosLogout;
+  };
+}

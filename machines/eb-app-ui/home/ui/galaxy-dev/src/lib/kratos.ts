@@ -1,9 +1,9 @@
 import { KRATOS } from "$lib/config";
-import type { LoadOutput } from "$lib/custom-types";
 import type {
   KratosError,
   KratosForm,
   KratosIdentity,
+  KratosLoad,
   KratosLogout,
 } from "$lib/kratos-types";
 
@@ -15,7 +15,7 @@ export function getFlowId(): string {
 }
 
 // -----------------------------------------------------------------------------
-export async function getIdentity(): Promise<KratosIdentity | undefined> {
+export async function getIdentity(): Promise<KratosIdentity> {
   const url = `${KRATOS}/sessions/whoami`;
   const res = await fetch(url, {
     credentials: "include",
@@ -25,12 +25,12 @@ export async function getIdentity(): Promise<KratosIdentity | undefined> {
     mode: "cors",
   });
 
-  if (res.status === 200) {
-    const dm = await res.json();
-    return dm.identity;
-  } else {
-    return undefined;
+  if (res.status !== 200) {
+    throw new Error("no identity");
   }
+
+  const dm = await res.json();
+  return dm.identity;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +61,7 @@ export async function getDataModels(
 }
 
 // -----------------------------------------------------------------------------
-export async function loadDataModels(flow: string): Promise<LoadOutput> {
+export async function getKratosLoad(flow: string): Promise<KratosLoad> {
   const flowId = getFlowId();
 
   // get flowId if there is no one

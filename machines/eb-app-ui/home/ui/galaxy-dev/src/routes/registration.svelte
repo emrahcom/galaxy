@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-  import { loadDataModels } from "$lib/kratos";
-  import type { LoadOutput } from "$lib/custom-types";
+  import { getKratosLoad } from "$lib/kratos";
+  import type { KratosLoad } from "$lib/kratos-types";
 
-  export async function load(): Promise<LoadOutput> {
-    return await loadDataModels("registration");
+  export async function load(): Promise<KratosLoad> {
+    return await getKratosLoad("registration");
   }
 </script>
 
