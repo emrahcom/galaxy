@@ -19,18 +19,46 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-{#if dm.instanceOf === "KratosForm"}
-  <div class="container" id="registration">
-    <h2 class="subheading">Registration</h2>
+<section class="container-fluid" id="registration">
+  {#if dm.instanceOf === "KratosForm"}
+    <div class="row justify-content-center">
+      <div class="col text-center" style="max-width:540px;">
+        <form>
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="email"
+            />
+            <label for="email">Email</label>
+          </div>
 
-    <Form {dm} groups={["default", "password"]} />
+          <div class="form-floating mb-3">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="password"
+            />
+            <label for="password">Password</label>
+          </div>
 
-    <hr class="divider" />
+          <div class="form-floating mb-3">
+            <button type="submit" class="btn btn-secondary">Sign Up</button>
+          </div>
+        </form>
 
-    <div class="alternative-actions">
-      <a href="{APP}/login">Already have an account? Log in instead</a>
+        <!-- <Form {dm} groups={["default", "password"]} /> -->
+
+        <hr class="divider" />
+
+        <section class="alternative-actions">
+          <a href="{APP}/login">Already have an account? Log in instead</a>
+        </section>
+      </div>
     </div>
-  </div>
-{:else}
-  <p>Something went wrong</p>
-{/if}
+  {:else}
+    <p>Something went wrong</p>
+  {/if}
+</section>
