@@ -15,18 +15,18 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<fieldset>
-  <label>
-    <span>{labelText}</span>
-    <input
-      type="text"
-      name={attr.name}
-      value={attr.value || ""}
-      placeholder={labelText}
-      disabled={attr.disabled}
-      required={attr.required}
-    />
-  </label>
-
+<div class="form-floating mb-3">
+  <input
+    type="text"
+    id={labelText}
+    class="form-control"
+    name={attr.name}
+    value={attr.value || ""}
+    placeholder={labelText}
+    disabled={attr.disabled}
+    required={attr.required}
+  />
+  <label for={labelText}>{labelText}</label>
   <Messages messages={node.messages} />
-</fieldset>
+  TEXT
+</div>

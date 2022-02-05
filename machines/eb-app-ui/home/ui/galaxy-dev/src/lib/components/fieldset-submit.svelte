@@ -14,6 +14,13 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<button type="submit" name={attr.name} value={attr.value}>
-  {labelText}
-</button>
+<div class="form-floating mb-3">
+  <button
+    type="submit"
+    class="btn btn-secondary"
+    name={attr.name}
+    value={attr.value}
+  >
+    {labelText}
+  </button>
+</div>

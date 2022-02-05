@@ -7,29 +7,21 @@
 
   const attr = node.attributes;
   let isHidden = true;
-  let labelText: string;
-
-  try {
-    labelText = node.meta.label.text;
-  } catch {
-    labelText = attr.name;
-  }
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<fieldset>
-  <label>
-    <span>{labelText}</span>
-    <input
-      type={isHidden ? "password" : "text"}
-      name={attr.name}
-      value={attr.value || ""}
-      placeholder={labelText}
-      disabled={attr.disabled}
-      required={attr.required}
-    />
-    <PasswordToggle bind:isHidden />
-  </label>
-
+<div class="form-floating mb-3">
+  <input
+    type={isHidden ? "password" : "text"}
+    id="password"
+    class="form-control"
+    name={attr.name}
+    value={attr.value || ""}
+    placeholder="password"
+    disabled={attr.disabled}
+    required={attr.required}
+  />
+  <label for="password">Password</label>
+  <PasswordToggle bind:isHidden />
   <Messages messages={node.messages} />
-</fieldset>
+</div>

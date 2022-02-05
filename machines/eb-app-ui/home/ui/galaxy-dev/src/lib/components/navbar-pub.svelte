@@ -7,12 +7,16 @@
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">
         <li class="nav-item me-2">
-          <a class="btn btn-sm btn-outline-primary" href="/registration">
+          <a
+            class="btn btn-sm btn-outline-primary"
+            role="button"
+            href="/registration"
+          >
             Sign Up
           </a>
         </li>
         <li class="nav-item me-2">
-          <a class="btn btn-sm btn-outline-primary" href="/login">
+          <a class="btn btn-sm btn-outline-primary" role="button" href="/login">
             <i class="bi bi-emoji-smile" />
             Login
           </a>
