@@ -7,8 +7,8 @@
 <!-- -------------------------------------------------------------------------->
 {#if messages}
   {#each messages as msg}
-    {msg.id} -
-    {msg.type} -
-    {msg.text}<br />
+    <div class="alert alert-warning" role="alert">
+      {msg.text}
+    </div>
   {/each}
 {/if}

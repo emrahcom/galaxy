@@ -7,8 +7,9 @@
 <!-- -------------------------------------------------------------------------->
 {#if messages}
   {#each messages as msg}
-    {msg.id} -
-    {msg.type} -
-    {msg.text}<br />
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+      <h2><i class="bi bi-exclamation-triangle-fill" role="img" /></h2>
+      {msg.text}
+    </div>
   {/each}
 {/if}
