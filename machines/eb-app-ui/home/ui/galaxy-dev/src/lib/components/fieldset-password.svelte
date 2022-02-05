@@ -1,16 +1,19 @@
 <script lang="ts">
   import Messages from "$lib/components/messages.svelte";
-  import PasswordToggle from "$lib/components/fieldset-password-toggle.svelte";
   import type { Node } from "$lib/kratos-types";
 
   export let node: Node;
 
   const attr = node.attributes;
   let isHidden = true;
+
+  function toggleVisibility() {
+    isHidden = !isHidden;
+  }
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="form-floating mb-3">
+<div class="form-floating input-group mb-3">
   <input
     type={isHidden ? "password" : "text"}
     id="password"
@@ -22,6 +25,14 @@
     required={attr.required}
   />
   <label for="password">Password</label>
-  <PasswordToggle bind:isHidden />
+
+  <span class="input-group-text" on:click={toggleVisibility}>
+    {#if isHidden}
+      <span class="bi bi-eye-fill" />
+    {:else}
+      <span class="bi bi-eye-slash-fill" />
+    {/if}
+  </span>
+
   <Messages messages={node.messages} />
 </div>

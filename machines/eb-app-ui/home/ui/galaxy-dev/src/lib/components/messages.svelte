@@ -7,7 +7,7 @@
 <!-- -------------------------------------------------------------------------->
 {#if messages}
   {#each messages as msg}
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning small" role="alert">
       {msg.text}
     </div>
   {/each}
