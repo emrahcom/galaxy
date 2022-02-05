@@ -12,7 +12,7 @@
   import { APP } from "$lib/config";
   import type { KratosForm, KratosError } from "$lib/kratos-types";
   import Form from "$lib/components/form.svelte";
-  import MessageGlobal from "$lib/components/message-global.svelte";
+  import MessagesGlobal from "$lib/components/messages-global.svelte";
 
   export let dm: KratosForm | KratosError;
 
