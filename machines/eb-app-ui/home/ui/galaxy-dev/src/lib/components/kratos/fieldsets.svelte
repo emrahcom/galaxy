@@ -1,9 +1,9 @@
 <script lang="ts">
-  import Hidden from "$lib/components/fieldset-hidden.svelte";
-  import Password from "$lib/components/fieldset-password.svelte";
-  import Text from "$lib/components/fieldset-text.svelte";
-  import Email from "$lib/components/fieldset-email.svelte";
-  import Submit from "$lib/components/fieldset-submit.svelte";
+  import Hidden from "$lib/components/kratos/fieldset-hidden.svelte";
+  import Password from "$lib/components/kratos/fieldset-password.svelte";
+  import Text from "$lib/components/kratos/fieldset-text.svelte";
+  import Email from "$lib/components/kratos/fieldset-email.svelte";
+  import Submit from "$lib/components/kratos/fieldset-submit.svelte";
   import type { Node } from "$lib/kratos-types";
 
   export let nodes: Node[];

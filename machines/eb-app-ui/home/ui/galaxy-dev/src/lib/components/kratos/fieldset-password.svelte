@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Messages from "$lib/components/messages.svelte";
+  import Messages from "$lib/components/kratos/messages.svelte";
   import type { Node } from "$lib/kratos-types";
 
   export let node: Node;

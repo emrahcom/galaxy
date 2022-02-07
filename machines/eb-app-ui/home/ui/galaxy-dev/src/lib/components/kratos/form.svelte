@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Fieldsets from "$lib/components/fieldsets.svelte";
+  import Fieldsets from "$lib/components/kratos/fieldsets.svelte";
   import type { KratosForm } from "$lib/kratos-types";
 
   export let dm: KratosForm;

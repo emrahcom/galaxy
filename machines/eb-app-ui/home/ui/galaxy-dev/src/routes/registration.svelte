@@ -11,8 +11,8 @@
 <script lang="ts">
   import { APP } from "$lib/config";
   import type { KratosForm, KratosError } from "$lib/kratos-types";
-  import Form from "$lib/components/form.svelte";
-  import MessagesGlobal from "$lib/components/messages-global.svelte";
+  import Form from "$lib/components/kratos/form.svelte";
+  import MessagesGlobal from "$lib/components/kratos/messages-global.svelte";
 
   export let dm: KratosForm | KratosError;
 

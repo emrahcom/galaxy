@@ -10,7 +10,7 @@
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
   import type { KratosForm, KratosError } from "$lib/kratos-types";
-  import Form from "$lib/components/form.svelte";
+  import Form from "$lib/components/kratos/form.svelte";
 
   export let dm: KratosForm | KratosError;
 
