@@ -13,7 +13,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="form-floating input-group mb-3">
+<div class="form-floating input-group my-3">
   <input
     type={isHidden ? "password" : "text"}
     id="password"
@@ -33,6 +33,6 @@
       <span class="bi bi-eye-slash-fill" />
     {/if}
   </span>
-
-  <Messages messages={node.messages} />
 </div>
+
+<Messages messages={node.messages} />
