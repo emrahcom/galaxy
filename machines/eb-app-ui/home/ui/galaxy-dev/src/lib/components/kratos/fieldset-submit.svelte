@@ -8,6 +8,8 @@
 
   try {
     labelText = node.meta.label.text;
+
+    if (labelText === "Sign in") labelText = "Login";
   } catch {
     labelText = "Submit";
   }

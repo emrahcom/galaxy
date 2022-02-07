@@ -6,19 +6,26 @@
 
   const attr = node.attributes;
   let labelText: string;
+  let inputType: string;
 
   try {
     labelText = node.meta.label.text;
+    if (labelText === "ID") labelText = "Email";
   } catch {
     labelText = attr.name;
   }
+
+  inputType = "text";
+  try {
+    if (labelText === "Email") inputType = "email";
+  } catch {}
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <div class="form-floating mb-3">
   <input
-    type="text"
-    id={labelText}
+    type={inputType}
+    id={attr.name}
     class="form-control"
     name={attr.name}
     value={attr.value || ""}
@@ -26,7 +33,7 @@
     disabled={attr.disabled}
     required={attr.required}
   />
-  <label for={labelText}>{labelText}</label>
-  <Messages messages={node.messages} />
-  TEXT
+  <label for={attr.name}>{labelText}</label>
 </div>
+
+<Messages messages={node.messages} />
