@@ -24,13 +24,14 @@
   {#if dm.instanceOf === "KratosForm"}
     <div class="row justify-content-center">
       <div class="col text-center" style="max-width:540px;">
+        <p class="h3 text-muted">Create a new account</p>
         <MessagesGlobal messages={dm.ui.messages} />
         <Form {dm} groups={["default", "password"]} />
 
         <hr class="divider" />
 
         <section class="alternative-actions">
-          <a href="{APP}/login">Already have an account? Log in instead</a>
+          <a href="{APP}/login">Already have an account? Login instead</a>
         </section>
       </div>
     </div>
