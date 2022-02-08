@@ -16,9 +16,7 @@
   }
 
   inputType = "text";
-  try {
-    if (labelText === "Email") inputType = "email";
-  } catch {}
+  if (labelText === "Email") inputType = "email";
 </script>
 
 <!-- -------------------------------------------------------------------------->

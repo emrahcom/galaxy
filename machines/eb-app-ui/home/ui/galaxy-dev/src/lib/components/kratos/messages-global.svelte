@@ -7,7 +7,10 @@
 <!-- -------------------------------------------------------------------------->
 {#if messages}
   {#each messages as msg}
-    <div class="alert alert-warning d-flex align-items-center my-1" role="alert">
+    <div
+      class="alert alert-warning d-flex align-items-center my-1"
+      role="alert"
+    >
       <h2><i class="bi bi-exclamation-triangle-fill me-2" role="img" /></h2>
       {msg.text}
     </div>
