@@ -96,7 +96,7 @@ DB_GALAXY_PASSWD=$(egrep '^galaxy:' $ROOTFS/root/postgresql-passwd.txt | \
 # generate a new one if there is no passwd
 if [[ -z "$DB_GALAXY_PASSWD" ]]; then
     DB_GALAXY_PASSWD=$(openssl rand -hex 20)
-    echo "galaxy:$DB__GALAXY_PASSWD" >> $ROOTFS/root/postgresql-passwd.txt
+    echo "galaxy:$DB_GALAXY_PASSWD" >> $ROOTFS/root/postgresql-passwd.txt
 fi
 
 chmod 600 $ROOTFS/root/postgresql-passwd.txt
