@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+TMP_DIR="/tmp/galaxy-dev"
+APP_REPO="https://github.com/emrahcom/galaxy.git"
+APP_DIR="$TMP_DIR/machines/eb-app-ui/home/ui/galaxy-dev"
+
+[[ -z "$KRATOS" ]] && \
+    KRATOS=$(ack KRATOS /home/ui/galaxy-dev/src/lib/config.ts | \
+                 cut -d'"' -f2 | cut -d '/' -f3)
+if [[ -z "$KRATOS" ]]; then
+    echo "ERROR: No KRATOS domain"
+    exit 1
+else
+   echo "KRATOS: $KRATOS"
+fi
+
+[[ -z "$APP" ]] && \
+    APP=$(ack APP /home/ui/galaxy-dev/src/lib/config.ts | \
+              cut -d'"' -f2 | cut -d '/' -f3)
+if [[ -z "$APP" ]]; then
+    echo "ERROR: No APP domain"
+    exit 1
+else
+   echo "APP: $APP"
+fi
+
+rm -rf $TMP_DIR
+git clone --depth=1 $APP_REPO $TMP_DIR
+
+sed -i "s/___KRATOS_FQDN___/$KRATOS/" $APP_DIR/src/lib/config.ts
+sed -i "s/___APP_FQDN___/$APP/" $APP_DIR/src/lib/config.ts
+cat $APP_DIR/src/lib/config.ts
+
+rm -rf /tmp/galaxy-dev.old
+mv /home/ui/galaxy-dev /tmp/galaxy-dev.old
+mv $APP_DIR /home/ui/
+cd /home/ui/galaxy-dev
+npm install
+
+cp $APP_DIR/../update-galaxy-dev /home/ui/
