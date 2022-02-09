@@ -18,12 +18,15 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-{#if dm.instanceOf === "KratosForm"}
-  <div class="container" id="recovery">
-    <h2 class="subheading">recovery</h2>
-
-    <Form {dm} groups={["default", "link"]} />
-  </div>
-{:else}
-  <p>Something went wrong</p>
-{/if}
+<section class="container-fluid" id="recovery">
+  {#if dm.instanceOf === "KratosForm"}
+    <div class="row justify-content-center">
+      <div class="col text-center" style="max-width:540px;">
+        <p class="h3 text-muted">Request password reset</p>
+        <Form {dm} groups={["default", "link"]} />
+      </div>
+    </div>
+  {:else}
+    <p>Something went wrong</p>
+  {/if}
+</section>
