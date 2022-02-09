@@ -7,33 +7,33 @@ UI="$LOCAL/machines/eb-app-ui/home/ui"
 APP="$UI/galaxy-dev"
 
 # get KRATOS FQDN
-[[ -z "$KRATOS" ]] && \
-    KRATOS=$(ack KRATOS /home/ui/galaxy-dev/src/lib/config.ts | \
+[[ -z "$KRATOS_FQDN" ]] && \
+    KRATOS_FQDN=$(ack KRATOS /home/ui/galaxy-dev/src/lib/config.ts | \
                  cut -d'"' -f2 | cut -d '/' -f3)
-if [[ -z "$KRATOS" ]]; then
-    echo "error: KRATOS is not found"
+if [[ -z "$KRATOS_FQDN" ]]; then
+    echo "error: KRATOS_FQDN is not found"
     exit 1
 else
-   echo "KRATOS: $KRATOS"
+   echo "KRATOS_FQDN: $KRATOS_FQDN"
 fi
 
 # get APP FQDN
-[[ -z "$APP" ]] && \
-    APP=$(ack APP /home/ui/galaxy-dev/src/lib/config.ts | \
+[[ -z "$APP_FQDN" ]] && \
+    APP_FQDN=$(ack APP /home/ui/galaxy-dev/src/lib/config.ts | \
               cut -d'"' -f2 | cut -d '/' -f3)
-if [[ -z "$APP" ]]; then
-    echo "error: APP is not found"
+if [[ -z "$APP_FQDN" ]]; then
+    echo "error: APP_FQDN is not found"
     exit 1
 else
-   echo "APP: $APP"
+   echo "APP_FQDN: $APP_FQDN"
 fi
 
 # clone
 rm -rf $LOCAL
 git clone --depth=1 $REMOTE $LOCAL
 
-sed -i "s/___KRATOS_FQDN___/$KRATOS/" $APP/src/lib/config.ts
-sed -i "s/___APP_FQDN___/$APP/" $APP/src/lib/config.ts
+sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/" $APP/src/lib/config.ts
+sed -i "s/___APP_FQDN___/$APP_FQDN/" $APP/src/lib/config.ts
 cat $APP/src/lib/config.ts
 
 # update app
