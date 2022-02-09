@@ -12,6 +12,7 @@
   import { APP } from "$lib/config";
   import type { KratosForm, KratosError } from "$lib/kratos-types";
   import Form from "$lib/components/kratos/form.svelte";
+  import MessagesGlobal from "$lib/components/kratos/messages-global.svelte";
 
   export let dm: KratosForm | KratosError;
 
@@ -19,19 +20,22 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-{#if dm.instanceOf === "KratosForm"}
-  <div class="container" id="login">
-    <h2 class="subheading">Sign in</h2>
+<section class="container-fluid" id="login">
+  {#if dm.instanceOf === "KratosForm"}
+    <div class="row justify-content-center">
+      <div class="col text-center" style="max-width:540px;">
+        <p class="h3 text-muted">Sign in to your account</p>
+        <MessagesGlobal messages={dm.ui.messages} />
+        <Form {dm} groups={["default", "password"]} />
 
-    <Form {dm} groups={["default", "password"]} />
+        <hr class="divider" />
 
-    <hr class="divider" />
-
-    <div class="alternative-actions">
-      <a href="{APP}/registration">Register new account</a>
-      <a href="{APP}/recovery">Reset password</a>
+        <section class="alternative-actions">
+          <a href="{APP}/recovery">Forgot Password?</a>
+        </section>
+      </div>
     </div>
-  </div>
-{:else}
-  <p>Something went wrong</p>
-{/if}
+  {:else}
+    <p>Something went wrong</p>
+  {/if}
+</section>
