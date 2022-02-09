@@ -29,8 +29,11 @@
           you a link to reset your password.
         </p>
 
-        <Messages messages={dm.ui.messages} />
-        <Form {dm} groups={["default", "link"]} />
+        {#if dm.ui.messages}
+          <Messages messages={dm.ui.messages} />
+        {:else}
+          <Form {dm} groups={["default", "link"]} />
+        {/if}
       </div>
     </div>
   {:else}
