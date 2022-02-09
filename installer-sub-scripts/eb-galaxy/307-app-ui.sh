@@ -230,6 +230,7 @@ cp -arp home/ui/update-galaxy-dev $ROOTFS/home/ui/
 cp -arp home/ui/galaxy-dev $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
+chown ui:ui /home/ui/update-galaxy-dev
 chown ui:ui /home/ui/galaxy-dev -R
 su -l ui <<EOSS
     set -e
