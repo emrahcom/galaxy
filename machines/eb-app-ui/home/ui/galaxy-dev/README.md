@@ -1,5 +1,5 @@
 #### running
 
 ```bash
-npm run dev -- --host --port 3000
+(cd /home/ui/galaxy-dev; npm run dev -- --host --port 3000)
 ```
