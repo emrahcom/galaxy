@@ -25,6 +25,7 @@
     <div class="row justify-content-center">
       <div class="col text-center" style="max-width:540px;">
         <p class="h3 text-muted">Sign in to your account</p>
+
         <MessagesGlobal messages={dm.ui.messages} />
         <Form {dm} groups={["default", "password"]} />
 

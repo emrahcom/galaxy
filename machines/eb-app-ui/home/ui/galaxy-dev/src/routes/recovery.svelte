@@ -22,7 +22,12 @@
   {#if dm.instanceOf === "KratosForm"}
     <div class="row justify-content-center">
       <div class="col text-center" style="max-width:540px;">
-        <p class="h3 text-muted">Request password reset</p>
+        <p class="h3 text-muted">Forgot password?</p>
+        <p class="small text-muted my-4 text-start">
+          Enter the email address associated with your account and we will send
+          you a link to reset your password.
+        </p>
+
         <Form {dm} groups={["default", "link"]} />
       </div>
     </div>
