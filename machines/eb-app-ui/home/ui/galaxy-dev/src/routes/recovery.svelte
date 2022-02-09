@@ -11,7 +11,7 @@
 <script lang="ts">
   import type { KratosForm, KratosError } from "$lib/kratos-types";
   import Form from "$lib/components/kratos/form.svelte";
-  import MessagesGlobal from "$lib/components/kratos/messages-global.svelte";
+  import Messages from "$lib/components/kratos/messages.svelte";
 
   export let dm: KratosForm | KratosError;
 
@@ -29,7 +29,7 @@
           you a link to reset your password.
         </p>
 
-        <MessagesGlobal messages={dm.ui.messages} />
+        <Messages messages={dm.ui.messages} />
         <Form {dm} groups={["default", "link"]} />
       </div>
     </div>
