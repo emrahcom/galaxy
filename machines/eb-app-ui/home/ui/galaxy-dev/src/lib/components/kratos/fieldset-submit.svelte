@@ -14,7 +14,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="form-floating mb-3">
+<div class="form-floating my-3">
   <button
     type="submit"
     class="btn btn-secondary"

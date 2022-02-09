@@ -20,7 +20,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="form-floating mb-3">
+<div class="form-floating my-3">
   <input
     type={inputType}
     id={attr.name}
