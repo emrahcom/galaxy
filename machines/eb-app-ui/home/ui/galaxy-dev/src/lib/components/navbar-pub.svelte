@@ -17,8 +17,7 @@
         </li>
         <li class="nav-item me-2">
           <a class="btn btn-sm btn-outline-primary" role="button" href="/login">
-            <i class="bi bi-emoji-smile" />
-            Login
+            Sign In
           </a>
         </li>
       </ul>
