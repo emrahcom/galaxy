@@ -1,42 +1,51 @@
 #!/bin/bash
 set -e
 
-APP_REPO="https://github.com/emrahcom/galaxy.git"
-TMP_DIR="/tmp/galaxy-dev"
-UI_DIR="$TMP_DIR/machines/eb-app-ui/home/ui"
-APP_DIR="$UI_DIR/galaxy-dev"
+REMOTE="https://github.com/emrahcom/galaxy.git"
+LOCAL="/tmp/galaxy"
+UI="$LOCAL/machines/eb-app-ui/home/ui"
+APP="$UI/galaxy-dev"
 
+# get KRATOS FQDN
 [[ -z "$KRATOS" ]] && \
     KRATOS=$(ack KRATOS /home/ui/galaxy-dev/src/lib/config.ts | \
                  cut -d'"' -f2 | cut -d '/' -f3)
 if [[ -z "$KRATOS" ]]; then
-    echo "ERROR: No KRATOS domain"
+    echo "error: KRATOS is not found"
     exit 1
 else
    echo "KRATOS: $KRATOS"
 fi
 
+# get APP FQDN
 [[ -z "$APP" ]] && \
     APP=$(ack APP /home/ui/galaxy-dev/src/lib/config.ts | \
               cut -d'"' -f2 | cut -d '/' -f3)
 if [[ -z "$APP" ]]; then
-    echo "ERROR: No APP domain"
+    echo "error: APP is not found"
     exit 1
 else
    echo "APP: $APP"
 fi
 
-rm -rf $TMP_DIR
-git clone --depth=1 $APP_REPO $TMP_DIR
+# clone
+rm -rf $LOCAL
+git clone --depth=1 $REMOTE $LOCAL
 
-sed -i "s/___KRATOS_FQDN___/$KRATOS/" $APP_DIR/src/lib/config.ts
-sed -i "s/___APP_FQDN___/$APP/" $APP_DIR/src/lib/config.ts
-cat $APP_DIR/src/lib/config.ts
+sed -i "s/___KRATOS_FQDN___/$KRATOS/" $APP/src/lib/config.ts
+sed -i "s/___APP_FQDN___/$APP/" $APP/src/lib/config.ts
+cat $APP/src/lib/config.ts
 
+# update app
 rm -rf /tmp/galaxy-dev.old
 mv /home/ui/galaxy-dev /tmp/galaxy-dev.old
-mv $APP_DIR /home/ui/
+mv $APP /home/ui/
+
+# node modules
+[[ -d "/tmp/galaxy-dev.old/node_modules" ]] && \
+    cp -arp /tmp/galaxy-dev.old/node_modules /home/ui/galaxy-dev/
 cd /home/ui/galaxy-dev
 npm install
 
-cp $UI_DIR/update-galaxy-dev /home/ui/
+# update this script
+cp $UI/update-galaxy-dev /home/ui/
