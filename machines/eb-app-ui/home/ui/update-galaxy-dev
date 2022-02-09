@@ -1,9 +1,10 @@
 #!/bin/bash
 set -e
 
-TMP_DIR="/tmp/galaxy-dev"
 APP_REPO="https://github.com/emrahcom/galaxy.git"
-APP_DIR="$TMP_DIR/machines/eb-app-ui/home/ui/galaxy-dev"
+TMP_DIR="/tmp/galaxy-dev"
+UI_DIR="$TMP_DIR/machines/eb-app-ui/home/ui"
+APP_DIR="$UI_DIR/galaxy-dev"
 
 [[ -z "$KRATOS" ]] && \
     KRATOS=$(ack KRATOS /home/ui/galaxy-dev/src/lib/config.ts | \
@@ -38,4 +39,4 @@ mv $APP_DIR /home/ui/
 cd /home/ui/galaxy-dev
 npm install
 
-cp $APP_DIR/../update-galaxy-dev /home/ui/
+cp $UI_DIR/update-galaxy-dev /home/ui/
