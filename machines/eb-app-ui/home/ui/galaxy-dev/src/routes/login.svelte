@@ -31,8 +31,8 @@
         <hr class="divider" />
 
         <section class="alternative-actions">
-          <a href="{APP}/recovery">Forgot Password?</a>
-          <a href="{APP}/registration">Don't have an account?</a>
+          <p><a href="{APP}/recovery">Forgot Password?</a></p>
+          <p><a href="{APP}/registration">Don't have an account?</a></p>
         </section>
       </div>
     </div>

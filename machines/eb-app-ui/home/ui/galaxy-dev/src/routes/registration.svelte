@@ -31,7 +31,7 @@
         <hr class="divider" />
 
         <section class="alternative-actions">
-          <a href="{APP}/login">Already have an account?</a>
+          <p><a href="{APP}/login">Already have an account?</a></p>
         </section>
       </div>
     </div>
