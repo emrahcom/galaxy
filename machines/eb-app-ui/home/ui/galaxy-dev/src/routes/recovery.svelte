@@ -37,6 +37,6 @@
       </div>
     </div>
   {:else}
-    <p>Something went wrong</p>
+    <p class="text-center">Something went wrong</p>
   {/if}
 </section>
