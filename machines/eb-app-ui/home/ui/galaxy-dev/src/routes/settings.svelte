@@ -29,7 +29,7 @@
           <Messages messages={dm.ui.messages} />
         {:else}
           <Form {dm} groups={["default", "profile"]} />
-          <hr class="divider my-3" />
+          <div class="my-5" />
           <Form {dm} groups={["default", "password"]} />
         {/if}
       </div>
