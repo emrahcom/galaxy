@@ -36,7 +36,7 @@ sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/" $APP/src/lib/config.ts
 sed -i "s/___APP_FQDN___/$APP_FQDN/" $APP/src/lib/config.ts
 cat $APP/src/lib/config.ts
 
-# update app
+# upgrade app
 rm -rf /tmp/galaxy-dev.old
 mv /home/ui/galaxy-dev /tmp/galaxy-dev.old
 mv $APP /home/ui/
@@ -47,5 +47,5 @@ mv $APP /home/ui/
 cd /home/ui/galaxy-dev
 npm install
 
-# update this script
-cp $UI/update-galaxy-dev /home/ui/
+# upgrade this script
+cp $UI/upgrade-galaxy-dev /home/ui/

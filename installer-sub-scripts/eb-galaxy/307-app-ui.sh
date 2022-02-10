@@ -226,11 +226,11 @@ sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
 # ------------------------------------------------------------------------------
 # GALAXY UI (dev)
 # ------------------------------------------------------------------------------
-cp -arp home/ui/update-galaxy-dev $ROOTFS/home/ui/
+cp -arp home/ui/upgrade-galaxy-dev $ROOTFS/home/ui/
 cp -arp home/ui/galaxy-dev $ROOTFS/home/ui/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-chown ui:ui /home/ui/update-galaxy-dev
+chown ui:ui /home/ui/upgrade-galaxy-dev
 chown ui:ui /home/ui/galaxy-dev -R
 su -l ui <<EOSS
     set -e
