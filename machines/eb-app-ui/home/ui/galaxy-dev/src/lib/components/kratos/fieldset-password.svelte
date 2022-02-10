@@ -13,7 +13,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="form-floating input-group my-3">
+<div class="form-floating d-flex my-3">
   <input
     type={isHidden ? "password" : "text"}
     id="password"
