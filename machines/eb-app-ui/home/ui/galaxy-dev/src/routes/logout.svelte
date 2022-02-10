@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
-  import { getLogoutData } from "$lib/kratos";
+  import { getLogoutDataModels } from "$lib/kratos";
   import type { KratosLoad } from "$lib/kratos-types";
 
   export async function load(): Promise<KratosLoad> {
-    const dm = await getLogoutData();
+    const dm = await getLogoutDataModels();
 
     if (dm.instanceOf === "KratosLogout") {
       return {
@@ -18,4 +18,4 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<p>something went wrong</p>
+<p class="text-center">Something went wrong</p>

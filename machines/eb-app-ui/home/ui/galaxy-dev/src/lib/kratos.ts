@@ -61,6 +61,32 @@ export async function getDataModels(
 }
 
 // -----------------------------------------------------------------------------
+export async function getLogoutDataModels(): Promise<
+  KratosLogout | KratosError
+> {
+  const url = `${KRATOS}/self-service/logout/browser`;
+  const res = await fetch(url, {
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+    },
+    mode: "cors",
+  });
+
+  const dm = await res.json();
+
+  if (dm.error) {
+    dm.instanceOf = "KratosError";
+  } else if (dm.logout_url) {
+    dm.instanceOf = "KratosLogout";
+  } else {
+    throw new Error("unexpected Kratos object");
+  }
+
+  return dm;
+}
+
+// -----------------------------------------------------------------------------
 export async function getKratosLoad(flow: string): Promise<KratosLoad> {
   const flowId = getFlowId();
 
@@ -92,28 +118,4 @@ export async function getKratosLoad(flow: string): Promise<KratosLoad> {
       dm,
     },
   };
-}
-
-// -----------------------------------------------------------------------------
-export async function getLogoutData(): Promise<KratosLogout | KratosError> {
-  const url = `${KRATOS}/self-service/logout/browser`;
-  const res = await fetch(url, {
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-    },
-    mode: "cors",
-  });
-
-  const dm = await res.json();
-
-  if (dm.error) {
-    dm.instanceOf = "KratosError";
-  } else if (dm.logout_url) {
-    dm.instanceOf = "KratosLogout";
-  } else {
-    throw new Error("unexpected Kratos object");
-  }
-
-  return dm;
 }
