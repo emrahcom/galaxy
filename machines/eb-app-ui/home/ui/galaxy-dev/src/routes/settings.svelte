@@ -25,12 +25,13 @@
       <div class="col text-center" style="max-width:540px;">
         <p class="h3 text-muted">Update your account settings</p>
 
-        <Messages messages={dm.ui.messages} />
-        <Form {dm} groups={["default", "profile"]} />
-
-        <hr class="divider" />
-
-        <Form {dm} groups={["default", "password"]} />
+        {#if dm.ui.messages}
+          <Messages messages={dm.ui.messages} />
+        {:else}
+          <Form {dm} groups={["default", "profile"]} />
+          <hr class="divider my-3" />
+          <Form {dm} groups={["default", "password"]} />
+        {/if}
       </div>
     </div>
   {:else}
