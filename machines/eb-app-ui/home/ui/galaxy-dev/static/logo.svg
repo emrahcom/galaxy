@@ -9,11 +9,11 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg2"
    sodipodi:docname="logo.svg"
-   viewBox="0 0 500 300"
+   viewBox="0 0 500 250"
    version="1.1"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    width="500"
-   height="300">
+   height="250">
   <defs
      id="defs87" />
   <sodipodi:namedview
@@ -22,7 +22,7 @@
      inkscape:pageshadow="2"
      inkscape:window-y="0"
      pagecolor="#ffffff"
-     inkscape:window-height="1060"
+     inkscape:window-height="1080"
      inkscape:window-maximized="0"
      inkscape:zoom="0.49497475"
      inkscape:window-x="0"
@@ -31,11 +31,11 @@
      inkscape:current-layer="layer1"
      inkscape:cx="-318.26849"
      inkscape:cy="401.60253"
-     inkscape:window-width="1918"
+     inkscape:window-width="1920"
      inkscape:pageopacity="0.0"
      inkscape:document-units="px"
      inkscape:document-rotation="0"
-     fit-margin-top="20"
+     fit-margin-top="0"
      fit-margin-left="20"
      fit-margin-right="20"
      fit-margin-bottom="20"
@@ -47,7 +47,7 @@
      transform="translate(-35.497023,-670.75748)">
     <g
        id="g3783"
-       transform="matrix(-1.3453,0,0,1.3453,794.67001,58.224723)">
+       transform="matrix(-1.3453,0,0,1.3453,794.67001,33.224723)">
       <path
          id="path2991"
          d="m 460.63,574.56 c 0,0 -63.64,-95.964 -132.33,-87.883 -68.69,8.0812 -105.06,94.954 -105.06,94.954 0,0 33.335,34.345 74.751,45.457 41.416,11.112 67.68,10.102 114.15,-16.162 46.467,-26.264 116.17,-87.883 121.22,-94.954 5.0508,-7.0711 -15.152,30.305 -17.173,63.64 -2.0203,33.335 8.0812,68.69 8.0812,68.69 z"
