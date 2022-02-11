@@ -25,7 +25,7 @@
       <div class="col text-center" style="max-width:540px;">
         <p class="h3 text-muted">Verify your email address</p>
         <p class="small text-muted my-4 text-start">
-          Sumbit the email address associated with your account and we will send
+          Submit the email address associated with your account and we will send
           you a link to verify your email address.
         </p>
 
