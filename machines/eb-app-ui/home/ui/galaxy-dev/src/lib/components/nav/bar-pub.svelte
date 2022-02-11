@@ -1,8 +1,11 @@
+<script lang="ts">
+  import Brand from "$lib/components/nav/brand.svelte";
+</script>
+
+<!-- -------------------------------------------------------------------------->
 <nav class="navbar navbar-expand navbar-light bg-light fixed-top shadow">
   <div class="container-fluid">
-    <a class="navbar-brand py-0" href="/">
-      <img src="/logo.svg" alt="logo" height="50rem" />
-    </a>
+    <Brand />
 
     <div class="collapse navbar-collapse justify-content-end">
       <ul class="navbar-nav">

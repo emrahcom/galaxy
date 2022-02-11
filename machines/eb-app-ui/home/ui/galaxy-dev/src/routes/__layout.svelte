@@ -18,17 +18,17 @@
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
   import type { KratosIdentity } from "$lib/kratos-types";
-  import NavbarPri from "$lib/components/navbar-pri.svelte";
-  import NavbarPub from "$lib/components/navbar-pub.svelte";
+  import NavBarPri from "$lib/components/nav/bar-pri.svelte";
+  import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
   export let identity: KratosIdentity | undefined;
 </script>
 
 <!-- -------------------------------------------------------------------------->
 {#if identity}
-  <NavbarPri />
+  <NavBarPri />
 {:else}
-  <NavbarPub />
+  <NavBarPub />
 {/if}
 
 <section id="hidden-top-margin">
