@@ -17,11 +17,14 @@
 
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
+  import { setContext } from "svelte";
   import type { KratosIdentity } from "$lib/kratos-types";
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
   export let identity: KratosIdentity | undefined;
+
+  if (identity) setContext("identity", identity);
 </script>
 
 <!-- -------------------------------------------------------------------------->

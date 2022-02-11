@@ -1,3 +1,11 @@
+<script lang="ts">
+  import { getContext } from "svelte";
+  import type { KratosIdentity } from "$lib/kratos-types";
+
+  const identity: KratosIdentity = getContext("identity");
+</script>
+
+<!-- -------------------------------------------------------------------------->
 <button
   class="btn btn-outline-primary"
   type="button"
@@ -8,8 +16,16 @@
   <span class="bi bi-person" />
 </button>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAccount">
-  <div class="offcanvas-header justify-content-end">
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasAccount"
+  aria-labelledby="offcanvasAccountLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title text-muted" id="offcanvasAccountLabel">
+      {identity.traits.email}
+    </h5>
     <button
       type="button"
       class="btn-close text-reset"
