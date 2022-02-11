@@ -1,5 +1,5 @@
 <button
-  class="navbar-toggler"
+  class="btn btn-outline-primary"
   type="button"
   data-bs-toggle="offcanvas"
   data-bs-target="#offcanvasAccount"
