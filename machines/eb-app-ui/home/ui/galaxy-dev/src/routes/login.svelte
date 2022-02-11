@@ -9,7 +9,6 @@
 
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
-  import { APP } from "$lib/config";
   import type { KratosForm, KratosError } from "$lib/kratos-types";
   import Form from "$lib/components/kratos/form.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
@@ -32,8 +31,8 @@
         <hr class="divider" />
 
         <section class="alternative-actions">
-          <p><a href="{APP}/recovery">Forgot Password?</a></p>
-          <p><a href="{APP}/registration">Don't have an account?</a></p>
+          <p><a href="/recovery">Forgot Password?</a></p>
+          <p><a href="/registration">Don't have an account?</a></p>
         </section>
       </div>
     </div>

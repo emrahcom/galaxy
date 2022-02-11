@@ -9,7 +9,6 @@
 
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
-  import { APP } from "$lib/config";
   import type { KratosForm, KratosError } from "$lib/kratos-types";
   import Form from "$lib/components/kratos/form.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
@@ -32,7 +31,7 @@
         <hr class="divider" />
 
         <section class="alternative-actions">
-          <p><a href="{APP}/login">Already have an account?</a></p>
+          <p><a href="/login">Already have an account?</a></p>
         </section>
       </div>
     </div>
