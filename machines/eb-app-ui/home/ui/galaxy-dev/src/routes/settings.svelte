@@ -28,6 +28,7 @@
         {#if dm.ui.messages}
           <Messages messages={dm.ui.messages} />
         {:else}
+          <div class="my-5" />
           <Form {dm} groups={["default", "profile"]} />
           <div class="my-5" />
           <Form {dm} groups={["default", "password"]} />
