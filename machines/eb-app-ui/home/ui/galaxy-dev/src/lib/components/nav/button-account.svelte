@@ -22,10 +22,11 @@
   id="offcanvasAccount"
   aria-labelledby="offcanvasAccountLabel"
 >
-  <div class="offcanvas-header">
+  <div class="offcanvas-header bg-light">
     <h5 class="offcanvas-title text-muted" id="offcanvasAccountLabel">
       {identity.traits.email}
     </h5>
+
     <button
       type="button"
       class="btn-close text-reset"

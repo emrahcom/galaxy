@@ -2,14 +2,21 @@
   class="btn btn-outline-primary"
   type="button"
   data-bs-toggle="offcanvas"
-  data-bs-target="#offcanvasList"
-  aria-controls="offcanvasList"
+  data-bs-target="#offcanvasMenu"
+  aria-controls="offcanvasMenu"
 >
   <span class="bi bi-list" />
 </button>
 
-<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasList">
-  <div class="offcanvas-header justify-content-end">
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasMenu"
+  aria-labelledby="offcanvasMenuLabel"
+>
+  <div class="offcanvas-header bg-light">
+    <h5 class="offcanvas-title text-muted" id="offcanvasMenuLabel">Menu</h5>
+
     <button
       type="button"
       class="btn-close text-reset"
