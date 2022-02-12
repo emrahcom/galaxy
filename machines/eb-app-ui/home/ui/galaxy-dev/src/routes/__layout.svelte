@@ -1,28 +1,11 @@
-<script lang="ts" context="module">
-  import { getIdentity } from "$lib/kratos";
-  import type { KratosLoad } from "$lib/kratos-types";
-
-  export async function load(): Promise<KratosLoad> {
-    const identity = await getIdentity().catch(() => {
-      return undefined;
-    });
-
-    return {
-      props: {
-        identity,
-      },
-    };
-  }
-</script>
-
-<!-- -------------------------------------------------------------------------->
 <script lang="ts">
+  import { get } from "svelte/store";
+  import { identity as id } from "$lib/stores/identity";
   import { setContext } from "svelte";
-  import type { KratosIdentity } from "$lib/kratos-types";
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
-  export let identity: KratosIdentity | undefined;
+  export const identity = get(id);
 
   if (identity) setContext("identity", identity);
 </script>
