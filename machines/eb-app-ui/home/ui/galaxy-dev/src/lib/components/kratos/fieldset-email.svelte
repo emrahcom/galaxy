@@ -1,13 +1,14 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { getContext } from "svelte";
+  import { get } from "svelte/store";
+  import { identity as id } from "$lib/stores/kratos";
   import Messages from "$lib/components/kratos/messages.svelte";
-  import type { KratosIdentity, Node } from "$lib/kratos-types";
+  import type { Node } from "$lib/kratos-types";
 
   export let node: Node;
 
   const attr = node.attributes;
-  const identity: KratosIdentity = getContext("identity");
+  const identity = get(id);
 </script>
 
 <!-- -------------------------------------------------------------------------->

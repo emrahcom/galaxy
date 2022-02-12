@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { getContext } from "svelte";
-  import type { KratosIdentity } from "$lib/kratos-types";
+  import { get } from "svelte/store";
+  import { identity as id } from "$lib/stores/kratos";
 
-  const identity: KratosIdentity = getContext("identity");
+  const identity = get(id);
 </script>
 
 <!-- -------------------------------------------------------------------------->
