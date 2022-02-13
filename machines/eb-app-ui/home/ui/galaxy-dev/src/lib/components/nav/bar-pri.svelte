@@ -10,8 +10,8 @@
     <Brand />
 
     <div class="justify-content-end">
-      <ButtonMenu />
       <ButtonAccount />
+      <ButtonMenu />
     </div>
   </div>
 </nav>
