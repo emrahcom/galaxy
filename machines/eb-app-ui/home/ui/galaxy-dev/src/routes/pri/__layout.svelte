@@ -1,14 +1,19 @@
 <script lang="ts" context="module">
   import { KRATOS } from "$lib/config";
-  import { getIdentity } from "$lib/kratos";
+  import { get } from "svelte/store";
+  import { identity as id } from "$lib/stores/kratos";
 
   export async function load() {
-    await getIdentity().catch(() => {
+    const identity = get(id);
+
+    if (!identity) {
       return {
         status: 302,
         redirect: `${KRATOS}/self-service/login/browser`,
       };
-    });
+    }
+
+    return {};
   }
 </script>
 
