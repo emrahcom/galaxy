@@ -1,8 +1,3 @@
-import { readable } from "svelte/store";
-import { getIdentity } from "$lib/kratos";
+import { writable } from "svelte/store";
 
-export const identity = readable(
-  await getIdentity().catch(() => {
-    return undefined;
-  }),
-);
+export const identity = writable(undefined);
