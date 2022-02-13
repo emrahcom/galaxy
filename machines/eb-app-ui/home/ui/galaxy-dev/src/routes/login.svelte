@@ -14,8 +14,6 @@
   import Messages from "$lib/components/kratos/messages.svelte";
 
   export let dm: KratosForm | KratosError;
-
-  if (dm.instanceOf === "KratosError") console.error(dm);
 </script>
 
 <!-- -------------------------------------------------------------------------->

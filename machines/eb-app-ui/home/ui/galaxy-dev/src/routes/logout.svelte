@@ -10,12 +10,11 @@
         status: 302,
         redirect: `${dm.logout_url}`,
       };
-    } else {
-      console.log(dm);
-      return {};
     }
+
+    return {
+      status: 302,
+      redirect: "/",
+    };
   }
 </script>
-
-<!-- -------------------------------------------------------------------------->
-<p class="text-center">Something went wrong</p>
