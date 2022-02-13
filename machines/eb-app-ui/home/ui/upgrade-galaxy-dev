@@ -17,23 +17,11 @@ else
    echo "KRATOS_FQDN: $KRATOS_FQDN"
 fi
 
-# get APP FQDN
-[[ -z "$APP_FQDN" ]] && \
-    APP_FQDN=$(ack APP /home/ui/galaxy-dev/src/lib/config.ts | \
-              cut -d'"' -f2 | cut -d '/' -f3)
-if [[ -z "$APP_FQDN" ]]; then
-    echo "error: APP_FQDN is not found"
-    exit 1
-else
-   echo "APP_FQDN: $APP_FQDN"
-fi
-
 # clone
 rm -rf $LOCAL
 git clone --depth=1 $REMOTE $LOCAL
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/" $APP/src/lib/config.ts
-sed -i "s/___APP_FQDN___/$APP_FQDN/" $APP/src/lib/config.ts
 cat $APP/src/lib/config.ts
 
 # upgrade app
