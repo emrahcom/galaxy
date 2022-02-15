@@ -1,14 +1,12 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { get } from "svelte/store";
-  import { identity as id } from "$lib/stores/kratos";
+  import identity from "$lib/stores/kratos/identity";
   import Messages from "$lib/components/kratos/messages.svelte";
   import type { Node } from "$lib/kratos-types";
 
   export let node: Node;
 
   const attr = node.attributes;
-  const identity = get(id);
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -19,7 +17,7 @@
       id="email"
       class="form-control"
       name={attr.name}
-      value={identity.traits.email}
+      value={$identity.traits.email}
       placeholder="email"
       readonly
       required={attr.required}

@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { get } from "svelte/store";
-  import { identity as id } from "$lib/stores/kratos";
-
-  const identity = get(id);
+  import identity from "$lib/stores/kratos/identity";
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -24,7 +21,7 @@
 >
   <div class="offcanvas-header bg-light">
     <h5 class="offcanvas-title text-muted" id="offcanvasAccountLabel">
-      {identity.traits.email}
+      {$identity.traits.email}
     </h5>
 
     <button
