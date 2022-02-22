@@ -1,8 +1,14 @@
 <script lang="ts">
   import { listDomain } from "$lib/pri/domain";
 
-  const domains = listDomain();
+  const promise = listDomain();
 </script>
 
 <!-- -------------------------------------------------------------------------->
-{domains}
+{#await promise}
+  waiting...
+{:then domains}
+  {domains}
+{:catch}
+  something went wrong
+{/await}
