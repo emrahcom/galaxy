@@ -1,11 +1,13 @@
 export async function listDomain() {
-  const url = "/api/domain/list";
+  const url = "/api/pri/domain/list";
   const res = await fetch(url, {
     credentials: "include",
     headers: {
       "Accept": "application/json",
     },
     mode: "cors",
+    method: "post",
+    body: JSON.stringify({}),
   });
 
   if (res.status !== 200) {
