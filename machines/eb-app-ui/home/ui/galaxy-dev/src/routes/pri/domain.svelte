@@ -6,9 +6,9 @@
 
 <!-- -------------------------------------------------------------------------->
 {#await promise}
-  waiting...
+  <p class="text-center">Waiting...</p>
 {:then domains}
   {domains}
 {:catch}
-  something went wrong
+  <p class="text-center">Something went wrong</p>
 {/await}
