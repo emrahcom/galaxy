@@ -1,4 +1,5 @@
 import { KRATOS } from "$lib/config";
+import { get } from "$lib/http";
 import type {
   KratosError,
   KratosForm,
@@ -17,13 +18,7 @@ export function getFlowId(): string {
 // -----------------------------------------------------------------------------
 export async function getIdentity(): Promise<KratosIdentity> {
   const url = `${KRATOS}/sessions/whoami`;
-  const res = await fetch(url, {
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-    },
-    mode: "cors",
-  });
+  const res = await get(url);
 
   if (res.status !== 200) {
     throw new Error("no identity");
@@ -39,14 +34,7 @@ export async function getDataModels(
   flowId: string,
 ): Promise<KratosForm | KratosError> {
   const url = `${KRATOS}/self-service/${flow}/flows?id=${flowId}`;
-  const res = await fetch(url, {
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-    },
-    mode: "cors",
-  });
-
+  const res = await get(url);
   const dm = await res.json();
 
   if (dm.error) {
@@ -65,14 +53,7 @@ export async function getLogoutDataModels(): Promise<
   KratosLogout | KratosError
 > {
   const url = `${KRATOS}/self-service/logout/browser`;
-  const res = await fetch(url, {
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-    },
-    mode: "cors",
-  });
-
+  const res = await get(url);
   const dm = await res.json();
 
   if (dm.error) {

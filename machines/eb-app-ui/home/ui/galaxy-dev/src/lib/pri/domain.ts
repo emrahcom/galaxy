@@ -1,14 +1,10 @@
+import { post } from "$lib/http";
+
+// -----------------------------------------------------------------------------
 export async function listDomain() {
   const url = "/api/pri/domain/list";
-  const res = await fetch(url, {
-    credentials: "include",
-    headers: {
-      "Accept": "application/json",
-    },
-    mode: "cors",
-    method: "post",
-    body: JSON.stringify({}),
-  });
+  const payload = {};
+  const res = await post(url, payload);
 
   if (res.status !== 200) {
     throw new Error("could not get domain list");
