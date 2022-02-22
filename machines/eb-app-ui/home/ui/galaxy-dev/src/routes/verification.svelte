@@ -3,7 +3,7 @@
   import { get } from "svelte/store";
   import { getKratosLoad } from "$lib/kratos";
   import identity from "$lib/stores/kratos/identity";
-  import type { KratosLoad } from "$lib/kratos-types";
+  import type { KratosLoad } from "$lib/kratos/types";
 
   export async function load(): Promise<KratosLoad> {
     const _identity = get(identity);
@@ -21,7 +21,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
-  import type { KratosForm, KratosError } from "$lib/kratos-types";
+  import type { KratosForm, KratosError } from "$lib/kratos/types";
   import Form from "$lib/components/kratos/form.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
 

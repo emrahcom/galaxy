@@ -1,6 +1,6 @@
 <script lang="ts">
   import Fieldsets from "$lib/components/kratos/fieldsets.svelte";
-  import type { KratosForm } from "$lib/kratos-types";
+  import type { KratosForm } from "$lib/kratos/types";
 
   export let dm: KratosForm;
   export let groups: string[];

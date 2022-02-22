@@ -5,7 +5,7 @@ import type {
   KratosIdentity,
   KratosLoad,
   KratosLogout,
-} from "$lib/kratos-types";
+} from "$lib/kratos/types";
 
 // -----------------------------------------------------------------------------
 export function getFlowId(): string {

@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
   import { getLogoutDataModels } from "$lib/kratos";
-  import type { KratosLoad } from "$lib/kratos-types";
+  import type { KratosLoad } from "$lib/kratos/types";
 
   export async function load(): Promise<KratosLoad> {
     const dm = await getLogoutDataModels();

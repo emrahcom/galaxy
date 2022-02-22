@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
   import { getKratosLoad } from "$lib/kratos";
-  import type { KratosLoad } from "$lib/kratos-types";
+  import type { KratosLoad } from "$lib/kratos/types";
 
   export async function load(): Promise<KratosLoad> {
     return await getKratosLoad("settings");
@@ -9,7 +9,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
-  import type { KratosForm, KratosError } from "$lib/kratos-types";
+  import type { KratosForm, KratosError } from "$lib/kratos/types";
   import Form from "$lib/components/kratos/form.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
 

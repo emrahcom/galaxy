@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import identity from "$lib/stores/kratos/identity";
   import Messages from "$lib/components/kratos/messages.svelte";
-  import type { Node } from "$lib/kratos-types";
+  import type { Node } from "$lib/kratos/types";
 
   export let node: Node;
 
