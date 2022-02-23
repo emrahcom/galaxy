@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Subheader from "$lib/components/pri/sunheader.svelte";
+  import Subheader from "$lib/components/pri/subheader.svelte";
   import { listProfiles } from "$lib/pri/profile";
 
   const promise = listProfiles();
