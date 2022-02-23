@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { listDomain } from "$lib/pri/domain";
+  import { listProfiles } from "$lib/pri/profile";
 
-  const promise = listDomain();
+  const promise = listProfiles();
 </script>
 
 <!-- -------------------------------------------------------------------------->
 {#await promise}
   <p class="text-center">Waiting...</p>
-{:then domains}
-  {domains}
+{:then profiles}
+  {console.log(profiles)}
 {:catch}
   <p class="text-center">Something went wrong</p>
 {/await}
