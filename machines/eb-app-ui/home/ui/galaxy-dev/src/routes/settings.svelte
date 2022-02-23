@@ -10,6 +10,7 @@
 <!-- -------------------------------------------------------------------------->
 <script lang="ts">
   import type { KratosForm, KratosError } from "$lib/kratos/types";
+  import Layout from "$lib/components/kratos/layout.svelte";
   import Form from "$lib/components/kratos/form.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
 
@@ -19,20 +20,18 @@
 <!-- -------------------------------------------------------------------------->
 <section id="settings">
   {#if dm.instanceOf === "KratosForm"}
-    <div class="row justify-content-center">
-      <div class="col text-center" style="max-width:540px;">
-        <p class="h3 text-muted">Update your account settings</p>
+    <Layout>
+      <p class="h3 text-muted">Update your account settings</p>
 
-        {#if dm.ui.messages}
-          <Messages messages={dm.ui.messages} />
-        {:else}
-          <div class="my-5" />
-          <Form {dm} groups={["default", "profile"]} />
-          <div class="my-5" />
-          <Form {dm} groups={["default", "password"]} />
-        {/if}
-      </div>
-    </div>
+      {#if dm.ui.messages}
+        <Messages messages={dm.ui.messages} />
+      {:else}
+        <div class="my-5" />
+        <Form {dm} groups={["default", "profile"]} />
+        <div class="my-5" />
+        <Form {dm} groups={["default", "password"]} />
+      {/if}
+    </Layout>
   {:else}
     <p class="text-center">Something went wrong</p>
   {/if}
