@@ -1,6 +1,16 @@
 import { post } from "$lib/http";
 
 // -----------------------------------------------------------------------------
+export interface profile {
+  id: string;
+  name: string;
+  email: string;
+  is_default: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export async function listProfiles() {
   const url = "/api/pri/profile/list";
   const payload = {};
