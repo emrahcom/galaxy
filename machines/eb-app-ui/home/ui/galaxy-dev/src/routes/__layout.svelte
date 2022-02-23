@@ -35,4 +35,6 @@
   <br />
 </section>
 
-<slot />
+<div class="container-fluid">
+  <slot />
+</div>

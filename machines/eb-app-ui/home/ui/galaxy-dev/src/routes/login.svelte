@@ -17,7 +17,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section class="container-fluid" id="login">
+<section id="login">
   {#if dm.instanceOf === "KratosForm"}
     <div class="row justify-content-center">
       <div class="col text-center" style="max-width:540px;">
