@@ -1,3 +1,12 @@
+<script lang="ts">
+  function closeMenu() {
+    let closeButton = document.getElementById("closeButton");
+
+    closeButton.click();
+  }
+</script>
+
+<!-- -------------------------------------------------------------------------->
 <button
   class="btn btn-outline-primary"
   type="button"
@@ -20,6 +29,7 @@
     <button
       type="button"
       class="btn-close text-reset"
+      id="closeButton"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     />
@@ -28,10 +38,10 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/pri/domain">Domains</a>
+        <a class="nav-link" href="/pri/domain" on:click={closeMenu}>Domains</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pri/room">Rooms</a>
+        <a class="nav-link" href="/pri/room" on:click={closeMenu}>Rooms</a>
       </li>
     </ul>
   </div>
