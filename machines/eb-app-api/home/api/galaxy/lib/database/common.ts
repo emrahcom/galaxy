@@ -14,6 +14,11 @@ import {
   MAX_LIST_SIZE,
 } from "../../config.ts";
 
+interface QueryObject {
+  text: string;
+  args?: QueryArguments;
+}
+
 const dbPool = new Pool({
   user: DB_USER,
   password: DB_PASSWD,
@@ -21,11 +26,6 @@ const dbPool = new Pool({
   hostname: DB_HOST,
   port: DB_PORT,
 }, DB_POOL_SIZE);
-
-interface QueryObject {
-  text: string;
-  args?: QueryArguments;
-}
 
 // -----------------------------------------------------------------------------
 export async function query(
@@ -73,12 +73,4 @@ export function getOffset(offset: number): number {
   if (!offset) offset = 0;
 
   return offset + 0;
-}
-
-// -----------------------------------------------------------------------------
-export interface idRows {
-  [index: number]: {
-    id: string;
-    at: string;
-  };
 }

@@ -1,19 +1,5 @@
-import { fetch, idRows } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface membershipRows {
-  [index: number]: {
-    id: string;
-    profile_id: string;
-    meeting_id: string;
-    meeting_name: string;
-    meeting_info: string;
-    is_host: boolean;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
+import { fetch } from "./common.ts";
+import type { Id, Membership } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMembership(
@@ -35,7 +21,7 @@ export async function getMembership(
     ],
   };
 
-  return await fetch(sql) as membershipRows;
+  return await fetch(sql) as Membership[];
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +47,7 @@ export async function listMembership(
     ],
   };
 
-  return await fetch(sql) as membershipRows;
+  return await fetch(sql) as Membership[];
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +83,7 @@ export async function addMembershipByInvite(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +103,7 @@ export async function delMembership(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -146,5 +132,5 @@ export async function updateMembership(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }

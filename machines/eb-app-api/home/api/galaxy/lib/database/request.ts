@@ -1,19 +1,5 @@
-import { fetch, idRows } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface requestRows {
-  [index: number]: {
-    id: string;
-    profile_id: string;
-    profile_name: string;
-    meeting_id: string;
-    meeting_name: string;
-    status: string;
-    created_at: string;
-    updated_at: string;
-    expired_at: string;
-  };
-}
+import { fetch } from "./common.ts";
+import type { Id, Req } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRequest(identityId: string, requestId: string) {
@@ -33,7 +19,7 @@ export async function getRequest(identityId: string, requestId: string) {
     ],
   };
 
-  return await fetch(sql) as requestRows;
+  return await fetch(sql) as Req[];
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +46,7 @@ export async function listRequest(
     ],
   };
 
-  return await fetch(sql) as requestRows;
+  return await fetch(sql) as Req[];
 }
 
 // -----------------------------------------------------------------------------
@@ -95,7 +81,7 @@ export async function addRequest(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +99,7 @@ export async function delRequest(identityId: string, requestId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +128,7 @@ export async function updateRequest(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +157,7 @@ export async function acceptRequest(identityId: string, requestId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +181,7 @@ export async function rejectRequest(identityId: string, requestId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -215,5 +201,5 @@ export async function dropRequest(identityId: string, requestId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }

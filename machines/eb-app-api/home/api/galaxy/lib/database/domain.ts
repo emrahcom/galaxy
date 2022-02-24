@@ -1,25 +1,5 @@
-import { fetch, idRows } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface domainRows {
-  [index: number]: {
-    id: string;
-    name: string;
-    auth_type: string;
-    auth_attr: unknown;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
-interface pubDomainRows {
-  [index: number]: {
-    id: string;
-    name: string;
-  };
-}
+import { fetch } from "./common.ts";
+import type { Domain, Id, PubDomain } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getDomain(identityId: string, domainId: string) {
@@ -35,7 +15,7 @@ export async function getDomain(identityId: string, domainId: string) {
     ],
   };
 
-  return await fetch(sql) as domainRows;
+  return await fetch(sql) as Domain[];
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +38,7 @@ export async function listDomain(
     ],
   };
 
-  return await fetch(sql) as domainRows;
+  return await fetch(sql) as Domain[];
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +59,7 @@ export async function listEnabledPublicDomain(limit: number, offset: number) {
     ],
   };
 
-  return await fetch(sql) as pubDomainRows;
+  return await fetch(sql) as PubDomain[];
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +82,7 @@ export async function addDomain(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +99,7 @@ export async function delDomain(identityId: string, domainId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +130,7 @@ export async function updateDomain(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -175,5 +155,5 @@ export async function updateDomainEnabled(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }

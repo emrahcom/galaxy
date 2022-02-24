@@ -1,4 +1,5 @@
-import { fetch, idRows } from "./common.ts";
+import { fetch } from "./common.ts";
+import type { Id } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function addIdentity(identityId: string) {
@@ -12,5 +13,5 @@ export async function addIdentity(identityId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }

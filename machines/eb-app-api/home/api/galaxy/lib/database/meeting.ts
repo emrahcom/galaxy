@@ -1,39 +1,5 @@
-import { fetch, idRows } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface meetingRows {
-  [index: number]: {
-    id: string;
-    profile_id: string;
-    room_id: string;
-    host_key: string;
-    guest_key: string;
-    name: string;
-    info: string;
-    schedule_type: string;
-    schedule_attr: unknown;
-    hidden: boolean;
-    restricted: boolean;
-    subscribable: boolean;
-    enabled: boolean;
-    chain_enabled: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
-interface pubMeetingRows {
-  [index: number]: {
-    id: string;
-    name: string;
-    info: string;
-    schedule_type: string;
-    schedule_attr: unknown;
-    restricted: boolean;
-    subscribable: boolean;
-  };
-}
+import { fetch } from "./common.ts";
+import type { Id, Meeting, PubMeeting } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeeting(identityId: string, meetingId: string) {
@@ -56,7 +22,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
     ],
   };
 
-  return await fetch(sql) as meetingRows;
+  return await fetch(sql) as Meeting[];
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +39,7 @@ export async function getPublicMeeting(meetingId: string) {
     ],
   };
 
-  return await fetch(sql) as pubMeetingRows;
+  return await fetch(sql) as PubMeeting[];
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +69,7 @@ export async function listMeeting(
     ],
   };
 
-  return await fetch(sql) as meetingRows;
+  return await fetch(sql) as Meeting[];
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +100,7 @@ export async function listEnabledPublicMeeting(
     ],
   };
 
-  return await fetch(sql) as pubMeetingRows;
+  return await fetch(sql) as PubMeeting[];
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +146,7 @@ export async function addMeeting(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -197,7 +163,7 @@ export async function delMeeting(identityId: string, meetingId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +218,7 @@ export async function updateMeeting(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -277,5 +243,5 @@ export async function updateMeetingEnabled(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }

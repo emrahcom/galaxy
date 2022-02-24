@@ -1,16 +1,5 @@
-import { fetch, idRows, query } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface profileRows {
-  [index: number]: {
-    id: string;
-    name: string;
-    email: string;
-    is_default: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
+import { fetch, query } from "./common.ts";
+import type { Id, Profile } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getProfile(identityId: string, profileId: string) {
@@ -26,7 +15,7 @@ export async function getProfile(identityId: string, profileId: string) {
     ],
   };
 
-  return await fetch(sql) as profileRows;
+  return await fetch(sql) as Profile[];
 }
 
 // -----------------------------------------------------------------------------
@@ -43,7 +32,7 @@ export async function getDefaultProfile(identityId: string) {
     ],
   };
 
-  return await fetch(sql) as profileRows;
+  return await fetch(sql) as Profile[];
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +55,7 @@ export async function listProfile(
     ],
   };
 
-  return await fetch(sql) as profileRows;
+  return await fetch(sql) as Profile[];
 }
 
 // -----------------------------------------------------------------------------
@@ -89,7 +78,7 @@ export async function addProfile(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +96,7 @@ export async function delProfile(identityId: string, profileId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +124,7 @@ export async function updateProfile(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +146,7 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
       profileId,
     ],
   };
-  const rows = await fetch(sql) as idRows;
+  const rows = await fetch(sql) as Id[];
 
   // reset the old default if the set action is successful
   const sql1 = {

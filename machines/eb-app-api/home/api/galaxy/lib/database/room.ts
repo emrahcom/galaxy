@@ -1,21 +1,5 @@
-import { fetch, idRows } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface roomRows {
-  [index: number]: {
-    id: string;
-    name: string;
-    domain_id: string;
-    domain_name: string;
-    has_suffix: boolean;
-    suffix: string;
-    enabled: boolean;
-    chain_enabled: boolean;
-    created_at: string;
-    updated_at: string;
-    accessed_at: string;
-  };
-}
+import { fetch } from "./common.ts";
+import type { Id, Room } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoom(identityId: string, roomId: string) {
@@ -37,7 +21,7 @@ export async function getRoom(identityId: string, roomId: string) {
     ],
   };
 
-  return await fetch(sql) as roomRows;
+  return await fetch(sql) as Room[];
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +50,7 @@ export async function listRoom(
     ],
   };
 
-  return await fetch(sql) as roomRows;
+  return await fetch(sql) as Room[];
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +80,7 @@ export async function addRoom(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +97,7 @@ export async function delRoom(identityId: string, roomId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -148,7 +132,7 @@ export async function updateRoom(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -173,5 +157,5 @@ export async function updateRoomEnabled(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }

@@ -1,16 +1,5 @@
-import { fetch, idRows } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface memberRows {
-  [index: number]: {
-    id: string;
-    profile_name: string;
-    is_host: boolean;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string;
-  };
-}
+import { fetch } from "./common.ts";
+import type { Id, Member } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMember(identityId: string, membershipId: string) {
@@ -31,7 +20,7 @@ export async function getMember(identityId: string, membershipId: string) {
     ],
   };
 
-  return await fetch(sql) as memberRows;
+  return await fetch(sql) as Member[];
 }
 
 // -----------------------------------------------------------------------------
@@ -62,7 +51,7 @@ export async function listMember(
     ],
   };
 
-  return await fetch(sql) as memberRows;
+  return await fetch(sql) as Member[];
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +71,7 @@ export async function delMember(identityId: string, membershipId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +99,7 @@ export async function updateMemberEnabled(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -138,5 +127,5 @@ export async function updateMemberIsHost(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }

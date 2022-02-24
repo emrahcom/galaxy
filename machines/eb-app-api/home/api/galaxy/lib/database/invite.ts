@@ -1,31 +1,5 @@
-import { fetch, idRows } from "./common.ts";
-
-// -----------------------------------------------------------------------------
-interface inviteRows {
-  [index: number]: {
-    id: string;
-    meeting_id: string;
-    meeting_name: string;
-    meeting_info: string;
-    code: string;
-    as_host: boolean;
-    enabled: boolean;
-    created_at: string;
-    updated_at: string;
-    expired_at: string;
-  };
-}
-
-// -----------------------------------------------------------------------------
-interface pubInviteRows {
-  [index: number]: {
-    meeting_name: string;
-    meeting_info: string;
-    code: string;
-    as_host: boolean;
-    expired_at: string;
-  };
-}
+import { fetch } from "./common.ts";
+import type { Id, Invite, PubInvite } from "types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getInvite(identityId: string, inviteId: string) {
@@ -45,7 +19,7 @@ export async function getInvite(identityId: string, inviteId: string) {
     ],
   };
 
-  return await fetch(sql) as inviteRows;
+  return await fetch(sql) as Invite[];
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +38,7 @@ export async function getInviteByCode(code: string) {
     ],
   };
 
-  return await fetch(sql) as pubInviteRows;
+  return await fetch(sql) as PubInvite[];
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +65,7 @@ export async function listInvite(
     ],
   };
 
-  return await fetch(sql) as inviteRows;
+  return await fetch(sql) as Invite[];
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +92,7 @@ export async function addInvite(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +109,7 @@ export async function delInvite(identityId: string, inviteId: string) {
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -160,5 +134,5 @@ export async function updateInviteEnabled(
     ],
   };
 
-  return await fetch(sql) as idRows;
+  return await fetch(sql) as Id[];
 }
