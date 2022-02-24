@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id } from "types.ts";
+import type { Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function addIdentity(identityId: string) {
