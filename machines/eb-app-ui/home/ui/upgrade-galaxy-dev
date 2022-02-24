@@ -27,7 +27,7 @@ cat $APP/src/lib/config.ts
 # upgrade app
 rm -rf /tmp/galaxy-dev.old
 mv /home/ui/galaxy-dev /tmp/galaxy-dev.old
-mv $APP /home/ui/
+cp -arpL $APP /home/ui/
 
 # node modules
 [[ -d "/tmp/galaxy-dev.old/node_modules" ]] && \
