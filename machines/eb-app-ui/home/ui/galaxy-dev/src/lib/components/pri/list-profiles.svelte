@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { profile } from "$lib/pri/profile";
+  import type { Profile } from "$lib/pri/profile";
 
-  export let profiles: profile[];
+  export let profiles: Profile[];
 </script>
 
 <!-- -------------------------------------------------------------------------->

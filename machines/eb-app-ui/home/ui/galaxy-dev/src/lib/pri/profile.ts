@@ -1,7 +1,7 @@
 import { post } from "$lib/http";
 
 // -----------------------------------------------------------------------------
-export interface profile {
+export interface Profile {
   id: string;
   name: string;
   email: string;
