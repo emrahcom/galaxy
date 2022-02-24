@@ -1,39 +1,36 @@
-<script lang="ts" context="module">
-  import { getKratosLoad } from "$lib/kratos";
-  import type { KratosLoad } from "$lib/kratos/types";
-
-  export async function load(): Promise<KratosLoad> {
-    return await getKratosLoad("recovery");
-  }
-</script>
-
-<!-- -------------------------------------------------------------------------->
 <script lang="ts">
-  import type { KratosForm, KratosError } from "$lib/kratos/types";
+  import { KRATOS } from "$lib/config";
+  import { page } from "$app/stores";
+  import { getFlowId, getDataModels } from "$lib/kratos";
   import Layout from "$lib/components/kratos/layout.svelte";
   import Form from "$lib/components/kratos/form.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
 
-  export let dm: KratosForm | KratosError;
+  const flowId = getFlowId($page.url.search);
+  if (!flowId) window.location.href = `${KRATOS}/self-service/recovery/browser`;
+
+  let promise = getDataModels("recovery", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <section id="recovery">
-  {#if dm.instanceOf === "KratosForm"}
-    <Layout>
-      <p class="h3 text-muted">Forgot password?</p>
-      <p class="small text-muted my-4 text-start">
-        Enter the email address associated with your account and we will send
-        you a link to reset your password.
-      </p>
+  {#await promise then dm}
+    {#if dm.instanceOf === "KratosForm"}
+      <Layout>
+        <p class="h3 text-muted">Forgot password?</p>
+        <p class="small text-muted my-4 text-start">
+          Enter the email address associated with your account and we will send
+          you a link to reset your password.
+        </p>
 
-      {#if dm.ui.messages}
-        <Messages messages={dm.ui.messages} />
-      {:else}
-        <Form {dm} groups={["default", "link"]} />
-      {/if}
-    </Layout>
-  {:else}
-    <p class="text-center">Something went wrong</p>
-  {/if}
+        {#if dm.ui.messages}
+          <Messages messages={dm.ui.messages} />
+        {:else}
+          <Form {dm} groups={["default", "link"]} />
+        {/if}
+      </Layout>
+    {:else}
+      <p class="text-center">Something went wrong</p>
+    {/if}
+  {/await}
 </section>
