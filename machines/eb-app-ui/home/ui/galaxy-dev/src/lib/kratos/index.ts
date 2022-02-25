@@ -38,6 +38,10 @@ export async function getDataModels(
 
   if (dm.error) {
     dm.instanceOf = "KratosError";
+
+    if (dm.error.details && dm.error.details.redirect_to) {
+      window.location.href = dm.error.details.redirect_to;
+    }
   } else if (dm.ui) {
     dm.instanceOf = "KratosForm";
   } else {
@@ -65,37 +69,3 @@ export async function getLogoutDataModels(): Promise<
 
   return dm;
 }
-
-// -----------------------------------------------------------------------------
-//export async function getKratosLoad(flow: string): Promise<KratosLoad> {
-//  const flowId = getFlowId();
-//
-//  // get flowId if there is no one
-//  if (!flowId) {
-//    return {
-//      status: 302,
-//      redirect: `${KRATOS}/self-service/${flow}/browser`,
-//    };
-//  }
-//
-//  const dm = await getDataModels(flow, flowId);
-//
-//  // redirect if this is KratosError and there is a redirect_to
-//  if (
-//    dm.instanceOf === "KratosError" &&
-//    dm.error.details &&
-//    dm.error.details.redirect_to
-//  ) {
-//    return {
-//      status: 302,
-//      redirect: `${dm.error.details.redirect_to}`,
-//    };
-//  }
-//
-//  // return data models
-//  return {
-//    props: {
-//      dm,
-//    },
-//  };
-//}
