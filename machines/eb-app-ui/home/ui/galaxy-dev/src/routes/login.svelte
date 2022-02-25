@@ -2,8 +2,8 @@
   import { KRATOS } from "$lib/config";
   import { page } from "$app/stores";
   import { getFlowId, getDataModels } from "$lib/kratos";
-  import Layout from "$lib/components/kratos/layout.svelte";
   import Form from "$lib/components/kratos/form.svelte";
+  import Layout from "$lib/components/kratos/layout.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
 
   const flowId = getFlowId($page.url.search);

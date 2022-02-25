@@ -4,8 +4,8 @@
   import { get } from "svelte/store";
   import { getFlowId, getDataModels } from "$lib/kratos";
   import identity from "$lib/stores/kratos/identity";
-  import Layout from "$lib/components/kratos/layout.svelte";
   import Form from "$lib/components/kratos/form.svelte";
+  import Layout from "$lib/components/kratos/layout.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
 
   const _identity = get(identity);
