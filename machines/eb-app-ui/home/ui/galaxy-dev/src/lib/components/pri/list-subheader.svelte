@@ -1,6 +1,6 @@
 <script lang="ts">
-  export let subheader: string;
   export let href: string;
+  export let subheader: string;
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -9,7 +9,7 @@
     <div class="col">
       <h3 class="text-muted">{subheader}</h3>
     </div>
-    <div class="col justify-content-end text-end">
+    <div class="col text-end">
       <a class="btn btn-outline-secondary" role="button" {href}>
         <span class="bi bi-plus-lg" />
       </a>
