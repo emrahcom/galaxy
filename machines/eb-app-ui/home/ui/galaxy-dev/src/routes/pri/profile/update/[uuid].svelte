@@ -1,8 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  console.log($page);
 </script>
 
 <!-- -------------------------------------------------------------------------->
-profile update <br />
-{$page.params.uuid}
+profile update: {$page.params.uuid}
