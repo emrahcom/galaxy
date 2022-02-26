@@ -38,12 +38,12 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/pri/profiles" on:click={closeMenu}>
+        <a class="nav-link" href="/pri/profile" on:click={closeMenu}>
           Profiles
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pri/domains" on:click={closeMenu}>
+        <a class="nav-link" href="/pri/domain" on:click={closeMenu}>
           Domains
         </a>
       </li>
