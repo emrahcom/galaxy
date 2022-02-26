@@ -9,7 +9,7 @@
   <div class="row mx-auto mt-2 g-2" style="max-width:1080px;">
     {#each profiles as p}
       <div class="col-sm-6 col-lg-4">
-        <div class="card {!p.is_default ? 'border border-primary' : ''}">
+        <div class="card {p.is_default ? 'border border-primary' : ''}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
             <p class="card-text text-muted">{p.email}</p>
