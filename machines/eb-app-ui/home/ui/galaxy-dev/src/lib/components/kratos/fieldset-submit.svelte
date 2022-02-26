@@ -17,7 +17,7 @@
 <div class="my-3">
   <button
     type="submit"
-    class="btn btn-secondary"
+    class="btn btn-outline-secondary"
     name={attr.name}
     value={attr.value}
   >
