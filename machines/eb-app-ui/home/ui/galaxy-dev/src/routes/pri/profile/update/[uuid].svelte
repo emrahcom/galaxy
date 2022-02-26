@@ -4,4 +4,5 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-profile update
+profile update <br />
+{$page.params.uuid}
