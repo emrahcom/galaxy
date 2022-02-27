@@ -6,9 +6,9 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="warning">
-  <div class="row mx-auto mt-2" style="max-width:{MAX_WIDTH};">
+  <div class="row mx-auto mt-5" style="max-width:{MAX_WIDTH};">
     <div class="col text-center">
-      <p class="text-warning">{msg}</p>
+      <p class="text-danger">{msg}</p>
     </div>
   </div>
 </section>
