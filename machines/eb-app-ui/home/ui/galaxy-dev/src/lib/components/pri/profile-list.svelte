@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { MAX_WIDTH } from "$lib/config";
   import type { Profile } from "$lib/types";
 
   export let profiles: Profile[];
@@ -6,7 +7,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="profiles">
-  <div class="row mx-auto mt-2 g-2" style="max-width:1080px;">
+  <div class="row mx-auto mt-2 g-2" style="max-width:{MAX_WIDTH};">
     {#each profiles as p}
       <div class="col-sm-6 col-lg-4">
         <div class="card {p.is_default ? 'border border-primary' : ''}">

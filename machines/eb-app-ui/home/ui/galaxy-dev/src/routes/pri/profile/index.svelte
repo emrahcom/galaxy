@@ -1,6 +1,6 @@
 <script lang="ts">
   import Profiles from "$lib/components/pri/list-profiles.svelte";
-  import Subheader from "$lib/components/pri/list-subheader.svelte";
+  import Subheader from "$lib/components/pri/subheader-list.svelte";
   import { listProfiles } from "$lib/pri/profile";
 
   const promise = listProfiles();
