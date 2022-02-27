@@ -6,7 +6,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="profiles">
+<section id="list">
   <div class="row mx-auto mt-2 g-2" style="max-width:{MAX_WIDTH};">
     {#each profiles as p}
       <div class="col-sm-6 col-lg-4">
