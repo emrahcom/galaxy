@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { MAX_WIDTH_KRATOS } from "$lib/config";
+  import { FORM_WIDTH } from "$lib/config";
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="row justify-content-center">
-  <div class="col text-center" style="max-width:{MAX_WIDTH_KRATOS}px;">
+<div class="d-flex mt-2 justify-content-center">
+  <div class="text-center" style="width:{FORM_WIDTH};">
     <slot />
   </div>
 </div>
