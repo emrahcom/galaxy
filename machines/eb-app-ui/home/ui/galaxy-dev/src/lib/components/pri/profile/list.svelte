@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { MAX_WIDTH } from "$lib/config";
   import type { Profile } from "$lib/types";
 
   export let profiles: Profile[];
@@ -7,7 +6,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="list">
-  <div class="row mx-auto mt-2 g-2" style="max-width:{MAX_WIDTH};">
+  <div class="row mx-auto mt-2 g-2">
     {#each profiles as p}
       <div class="col-sm-6 col-lg-4">
         <div class="card {p.is_default ? 'border border-primary' : ''}">
@@ -18,11 +17,12 @@
 
           <div class="card-footer bg-body text-center">
             <a
-              href="/pri/profile/update/{p.id}"
+              href="/pri/profile/del/{p.id}"
               class="btn btn-outline-secondary btn-sm"
               role="button"
+              tabindex="-1"
             >
-              <i class="bi bi-pencil" />
+              <i class="bi bi-trash" />
             </a>
 
             {#if !p.is_default}
@@ -30,17 +30,19 @@
                 href="/pri/profile/set/default/{p.id}"
                 class="btn btn-outline-secondary btn-sm"
                 role="button"
+                tabindex="-1"
               >
                 <i class="bi bi-check" />
               </a>
             {/if}
 
             <a
-              href="/pri/profile/del/{p.id}"
+              href="/pri/profile/update/{p.id}"
               class="btn btn-outline-secondary btn-sm"
               role="button"
+              tabindex="-1"
             >
-              <i class="bi bi-trash" />
+              <i class="bi bi-pencil" />
             </a>
           </div>
         </div>
