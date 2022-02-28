@@ -1,8 +1,8 @@
 <script lang="ts">
   import { MAX_WIDTH } from "$lib/config";
   import type { Profile } from "$lib/types";
-  import Cancel from "$lib/components/common/button-cancel.svelte";
-  import Submit from "$lib/components/common/button-submit.svelte";
+  import Cancel from "$lib/components/pri/common/button-cancel.svelte";
+  import Submit from "$lib/components/pri/common/button-submit.svelte";
 
   export let p: Profile;
 
