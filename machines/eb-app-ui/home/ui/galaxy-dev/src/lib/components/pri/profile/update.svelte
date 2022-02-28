@@ -2,7 +2,9 @@
   import { FORM_WIDTH } from "$lib/config";
   import type { Profile } from "$lib/types";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
+  import Email from "$lib/components/pri/common/form-email.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
+  import Text from "$lib/components/pri/common/form-text.svelte";
 
   export let p: Profile;
 
@@ -19,31 +21,8 @@
 <section id="update">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={update} style="width:{FORM_WIDTH};">
-      <div class="form-floating my-3">
-        <input
-          type="text"
-          id="name"
-          class="form-control"
-          name="name"
-          placeholder="Name"
-          value={p.name}
-          required
-        />
-        <label for="name">Name</label>
-      </div>
-
-      <div class="form-floating my-3">
-        <input
-          type="email"
-          id="email"
-          class="form-control"
-          name="email"
-          placeholder="Email"
-          value={p.email}
-          required
-        />
-        <label for="email">Email</label>
-      </div>
+      <Text name="name" label="Name" value={p.name} required={true} />
+      <Email name="email" label="Email" value={p.email} required={true} />
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
