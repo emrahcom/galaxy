@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Profile } from "$lib/types";
-  import Check from "$lib/component/pri/common/button-check.svelte";
-  import Del from "$lib/component/pri/common/button-del.svelte";
-  import Update from "$lib/component/pri/common/button-update.svelte";
+  import Check from "$lib/components/pri/common/button-check.svelte";
+  import Del from "$lib/components/pri/common/button-del.svelte";
+  import Update from "$lib/components/pri/common/button-update.svelte";
 
   export let profiles: Profile[];
 </script>
