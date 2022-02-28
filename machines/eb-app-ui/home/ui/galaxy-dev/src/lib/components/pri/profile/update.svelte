@@ -1,6 +1,8 @@
 <script lang="ts">
   import { MAX_WIDTH } from "$lib/config";
   import type { Profile } from "$lib/types";
+  import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Submit from "$lib/components/common/button-submit.svelte";
 
   export let p: Profile;
 
@@ -45,17 +47,8 @@
         </div>
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            on:click={cancel}
-          >
-            Cancel
-          </button>
-
-          <button class="btn btn-outline-secondary" type="submit">
-            Update
-          </button>
+          <Cancel on:click={cancel} />
+          <Submit label="Update" />
         </div>
       </form>
     </div>
