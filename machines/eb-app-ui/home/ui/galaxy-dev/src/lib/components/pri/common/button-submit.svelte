@@ -3,4 +3,4 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<button class="btn btn-outline-secondary" type="button">{label}</button>
+<button class="btn btn-outline-secondary" type="submit">{label}</button>
