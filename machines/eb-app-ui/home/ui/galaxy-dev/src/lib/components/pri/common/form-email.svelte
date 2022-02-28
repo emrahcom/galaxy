@@ -1,7 +1,8 @@
 <script lang="ts">
   export let label: string;
   export let name: string;
-  export let required: boolean;
+  export let readonly = false;
+  export let required = false;
   export let value: string;
 </script>
 
@@ -13,7 +14,8 @@
     class="form-control"
     {name}
     placeholder={label}
-    {value}
+    value={value ? value : ""}
+    {readonly}
     {required}
   />
   <label for={name}>{label}</label>
