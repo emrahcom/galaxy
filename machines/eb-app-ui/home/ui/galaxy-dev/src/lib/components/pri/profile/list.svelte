@@ -1,5 +1,8 @@
 <script lang="ts">
   import type { Profile } from "$lib/types";
+  import Check from "$lib/component/pri/common/button-check.svelte";
+  import Del from "$lib/component/pri/common/button-del.svelte";
+  import Update from "$lib/component/pri/common/button-update.svelte";
 
   export let profiles: Profile[];
 </script>
@@ -16,34 +19,13 @@
           </div>
 
           <div class="card-footer bg-body text-center">
-            <a
-              href="/pri/profile/del/{p.id}"
-              class="btn btn-outline-secondary btn-sm"
-              role="button"
-              tabindex="-1"
-            >
-              <i class="bi bi-trash" />
-            </a>
+            <Del href="/pri/profile/del/{p.id}" />
 
             {#if !p.is_default}
-              <a
-                href="/pri/profile/set/default/{p.id}"
-                class="btn btn-outline-secondary btn-sm"
-                role="button"
-                tabindex="-1"
-              >
-                <i class="bi bi-check" />
-              </a>
+              <Check href="/pri/profile/set/default/{p.id}" />
             {/if}
 
-            <a
-              href="/pri/profile/update/{p.id}"
-              class="btn btn-outline-secondary btn-sm"
-              role="button"
-              tabindex="-1"
-            >
-              <i class="bi bi-pencil" />
-            </a>
+            <Update href="/pri/profile/update/{p.id}" />
           </div>
         </div>
       </div>
