@@ -8,7 +8,7 @@
   <div class="d-flex">
     <h3 class="text-muted my-auto">{subheader}</h3>
     <a
-      class="btn btn-outline-secondary ms-auto me-2 mx-auto"
+      class="btn btn-outline-secondary ms-auto me-2 my-auto"
       role="button"
       tabindex="-1"
       {href}
