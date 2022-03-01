@@ -14,7 +14,7 @@
     class="form-control"
     {name}
     placeholder={label}
-    value={value ? value : ""}
+    bind:value
     {readonly}
     {required}
   />

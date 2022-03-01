@@ -13,7 +13,7 @@
   }
 
   function update() {
-    console.log("update");
+    console.log(p);
   }
 </script>
 
@@ -21,8 +21,8 @@
 <section id="update">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={update} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" value={p.name} required={true} />
-      <Email name="email" label="Email" value={p.email} required={true} />
+      <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Email name="email" label="Email" bind:value={p.email} required={false} />
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
