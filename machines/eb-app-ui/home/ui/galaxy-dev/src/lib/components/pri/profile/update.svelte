@@ -16,6 +16,7 @@
   function update() {
     try {
       updateProfile(p);
+      window.location.href = "/pri/profile";
     } catch {
       console.log("error");
     }
