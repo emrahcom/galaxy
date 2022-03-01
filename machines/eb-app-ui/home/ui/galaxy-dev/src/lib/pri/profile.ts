@@ -12,7 +12,7 @@ export async function get(uuid: string) {
 
   const profiles = await res.json();
 
-  if (!profiles[0]) throw new Error("not found");
+  if (!profiles[0]) throw new Error("no result");
 
   return profiles[0];
 }
@@ -28,4 +28,18 @@ export async function list() {
   const profiles = await res.json();
 
   return profiles;
+}
+
+// -----------------------------------------------------------------------------
+export async function update(payload: unknown) {
+  const url = "/api/pri/profile/update";
+  const res = await post(url, payload);
+
+  if (res.status !== 200) throw new Error("post failed");
+
+  const profiles = await res.json();
+
+  if (!profiles[0]) throw new Error("no result");
+
+  return profiles[0];
 }

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
+  import { update as updateProfile } from "$lib/pri/profile";
   import type { Profile } from "$lib/types";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import Email from "$lib/components/pri/common/form-email.svelte";
@@ -13,7 +14,11 @@
   }
 
   function update() {
-    console.log(p);
+    try {
+      updateProfile(p);
+    } catch {
+      console.log("error");
+    }
   }
 </script>
 
