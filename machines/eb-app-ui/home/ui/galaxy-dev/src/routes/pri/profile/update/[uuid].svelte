@@ -14,5 +14,7 @@
 {#await promise then profile}
   <Update p={profile} />
 {:catch}
-  <Warning msg="Something went wrong" />
+  <Warning>
+    Something went wrong
+  </Warning>
 {/await}

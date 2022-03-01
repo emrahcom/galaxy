@@ -13,5 +13,7 @@
 {#await promise then profiles}
   <List {profiles} />
 {:catch}
-  <Warning msg="Something went wrong" />
+  <Warning>
+    Something went wrong
+  </Warning>
 {/await}

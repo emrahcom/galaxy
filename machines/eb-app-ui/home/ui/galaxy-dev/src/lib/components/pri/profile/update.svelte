@@ -6,8 +6,10 @@
   import Email from "$lib/components/pri/common/form-email.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
   import Text from "$lib/components/pri/common/form-text.svelte";
+  import Warning from "$lib/components/pri/common/warning.svelte";
 
   export let p: Profile;
+  export let warning = false;
 
   function cancel() {
     window.location.href = "/pri/profile";
@@ -15,10 +17,12 @@
 
   function update() {
     try {
+      warning = false;
+
       updateProfile(p);
       window.location.href = "/pri/profile";
     } catch {
-      console.log("error");
+      warning = true;
     }
   }
 </script>
@@ -29,6 +33,12 @@
     <form on:submit|preventDefault={update} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
       <Email name="email" label="Email" bind:value={p.email} required={false} />
+
+      {#if warning}
+        <Warning>
+          Update request is not accepted. Please check your inputs.
+        </Warning>
+      {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
