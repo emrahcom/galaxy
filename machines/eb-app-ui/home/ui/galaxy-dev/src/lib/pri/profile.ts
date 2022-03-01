@@ -1,7 +1,7 @@
 import { post } from "$lib/http";
 
 // -----------------------------------------------------------------------------
-export async function getProfile(uuid: string) {
+export async function get(uuid: string) {
   const url = "/api/pri/profile/get";
   const payload = {
     id: uuid,
@@ -18,7 +18,7 @@ export async function getProfile(uuid: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listProfiles() {
+export async function list() {
   const url = "/api/pri/profile/list";
   const payload = {};
   const res = await post(url, payload);
