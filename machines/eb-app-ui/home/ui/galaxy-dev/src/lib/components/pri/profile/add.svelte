@@ -17,11 +17,11 @@
     window.location.href = "/pri/profile";
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     try {
       warning = false;
 
-      addProfile(p);
+      await addProfile(p);
       window.location.href = "/pri/profile";
     } catch {
       warning = true;

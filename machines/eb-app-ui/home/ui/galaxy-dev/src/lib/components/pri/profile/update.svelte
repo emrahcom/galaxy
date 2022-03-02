@@ -15,11 +15,11 @@
     window.location.href = "/pri/profile";
   }
 
-  function onSubmit() {
+  async function onSubmit() {
     try {
       warning = false;
 
-      updateProfile(p);
+      await updateProfile(p);
       window.location.href = "/pri/profile";
     } catch {
       warning = true;
