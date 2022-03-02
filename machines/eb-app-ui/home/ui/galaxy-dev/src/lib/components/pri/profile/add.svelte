@@ -20,7 +20,6 @@
   async function onSubmit() {
     try {
       warning = false;
-
       await addProfile(p);
       window.location.href = "/pri/profile";
     } catch {

@@ -18,7 +18,6 @@
   async function onSubmit() {
     try {
       warning = false;
-
       await updateProfile(p);
       window.location.href = "/pri/profile";
     } catch {
