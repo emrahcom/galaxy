@@ -46,7 +46,7 @@ export async function listProfile(
       SELECT id, name, email, is_default, created_at, updated_at
       FROM profile
       WHERE identity_id = $1
-      ORDER BY name
+      ORDER BY name, email
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
