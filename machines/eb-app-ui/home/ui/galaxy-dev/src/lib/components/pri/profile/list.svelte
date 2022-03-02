@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Profile } from "$lib/types";
-  import Check from "$lib/components/pri/common/link-check.svelte";
   import Del from "$lib/components/pri/common/link-del.svelte";
+  import Set from "$lib/components/pri/common/link-set-default-profile.svelte";
   import Update from "$lib/components/pri/common/link-update.svelte";
 
   export let profiles: Profile[];
@@ -19,10 +19,9 @@
           </div>
 
           <div class="card-footer bg-body text-center">
-            <Del href="/pri/profile/del/{p.id}" />
-
             {#if !p.is_default}
-              <Check href="/pri/profile/set/default/{p.id}" />
+              <Del href="/pri/profile/del/{p.id}" />
+              <Set href="/pri/profile/set/default/{p.id}" />
             {/if}
 
             <Update href="/pri/profile/update/{p.id}" />

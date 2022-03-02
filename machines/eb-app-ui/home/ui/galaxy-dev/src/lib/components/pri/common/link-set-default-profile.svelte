@@ -4,5 +4,5 @@
 
 <!-- -------------------------------------------------------------------------->
 <a {href} class="btn btn-outline-secondary btn-sm" role="button" tabindex="-1">
-  <i class="bi bi-check" />
+  <i class="bi bi-person-check" />
 </a>
