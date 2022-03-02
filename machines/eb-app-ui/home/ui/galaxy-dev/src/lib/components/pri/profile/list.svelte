@@ -15,7 +15,7 @@
         <div class="card {p.is_default ? 'border border-primary' : ''}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
-            <p class="card-text text-muted">{p.email}</p>
+            <p class="card-text text-muted">{p.email || "-"}</p>
           </div>
 
           <div class="card-footer bg-body text-center">
