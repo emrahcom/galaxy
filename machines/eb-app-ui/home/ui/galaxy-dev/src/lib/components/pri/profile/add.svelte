@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { update as updateProfile } from "$lib/pri/profile";
-  import type { Profile } from "$lib/types";
+  import { add as addProfile } from "$lib/pri/profile";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import Email from "$lib/components/pri/common/form-email.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
@@ -9,7 +8,10 @@
   import Warning from "$lib/components/pri/common/warning.svelte";
 
   export let warning = false;
-  export let p: Profile;
+  export let p = {
+    name: "",
+    email: "",
+  };
 
   function cancel() {
     window.location.href = "/pri/profile";
@@ -19,7 +21,7 @@
     try {
       warning = false;
 
-      updateProfile(p);
+      addProfile(p);
       window.location.href = "/pri/profile";
     } catch {
       warning = true;
@@ -28,7 +30,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="update">
+<section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
@@ -36,13 +38,13 @@
 
       {#if warning}
         <Warning>
-          Update request is not accepted. Please check your inputs.
+          Add request is not accepted. Please check your inputs.
         </Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
-        <Submit label="Update" />
+        <Submit label="Add" />
       </div>
     </form>
   </div>
