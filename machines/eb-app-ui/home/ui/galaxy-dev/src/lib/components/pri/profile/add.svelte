@@ -38,7 +38,7 @@
 
       {#if warning}
         <Warning>
-          Add request is not accepted. Please check your inputs.
+          The add request is not accepted. Please check your inputs.
         </Warning>
       {/if}
 

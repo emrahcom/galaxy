@@ -40,7 +40,7 @@
       />
 
       {#if warning}
-        <Warning>Set request not accepted.</Warning>
+        <Warning>The set request is not accepted.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">

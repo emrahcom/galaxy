@@ -9,7 +9,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Delete the meeting profile" />
+<Subheader subheader="Delete this meeting profile" />
 
 {#await promise then profile}
   <Del p={profile} />

@@ -9,7 +9,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Set the meeting profile as default" />
+<Subheader subheader="Set as default profile" />
 
 {#await promise then profile}
   <SetDefault p={profile} />

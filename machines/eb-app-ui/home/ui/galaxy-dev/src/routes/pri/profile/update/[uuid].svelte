@@ -9,7 +9,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Update the meeting profile" />
+<Subheader subheader="Update this meeting profile" />
 
 {#await promise then profile}
   <Update p={profile} />
