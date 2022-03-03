@@ -1,5 +1,10 @@
 import { post } from "$lib/http";
 
+export const AUTH_OPTIONS = [
+  ["none", "anonymous"],
+  ["token", "token"],
+];
+
 // -----------------------------------------------------------------------------
 export async function get(uuid: string) {
   const url = "/api/pri/domain/get";

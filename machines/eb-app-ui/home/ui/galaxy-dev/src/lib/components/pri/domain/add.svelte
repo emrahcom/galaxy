@@ -1,7 +1,8 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { add as addDomain } from "$lib/pri/domain";
+  import { AUTH_OPTIONS, add as addDomain } from "$lib/pri/domain";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
+  import RadioInline from "$lib/components/pri/common/form-radio-inline.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
   import Text from "$lib/components/pri/common/form-text.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";
@@ -9,7 +10,7 @@
   let warning = false;
   let p = {
     name: "",
-    auth_type: "none",
+    auth_type: AUTH_OPTIONS[0][0],
     auth_attr: {
       url: "",
       app_id: "",
@@ -36,13 +37,23 @@
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Text
+        name="name"
+        label="Name"
+        bind:value={p.name}
+        placeholder="e.g. Public Jitsi"
+        required={true}
+      />
       <Text
         name="url"
         label="URL"
         bind:value={p.auth_attr.url}
+        placeholder="e.g. https://meet.jit.si"
         required={true}
       />
+
+      <span class="text-muted me-3">Authentication Type:</span>
+      <RadioInline bind:value={p.auth_type} options={AUTH_OPTIONS} />
 
       {#if p.auth_type === "token"}
         <Text
