@@ -14,7 +14,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="form-floating my-3">
+<div class="form-floating d-flex my-3">
   {#if isHidden}
     <input
       type="password"
