@@ -20,7 +20,7 @@
       id={name}
       class="form-control"
       {name}
-      placeholder={label}
+      placeholder=""
       bind:value
       {readonly}
       {required}
@@ -31,7 +31,7 @@
       id={name}
       class="form-control"
       {name}
-      placeholder={label}
+      placeholder=""
       bind:value
       {readonly}
       {required}
