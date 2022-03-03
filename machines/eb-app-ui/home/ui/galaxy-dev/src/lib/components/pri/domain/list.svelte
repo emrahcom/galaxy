@@ -8,7 +8,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="list">
-  <div class="row mx-auto mt-2 g-2">
+  <div class="row mx-auto mt-2 g-3">
     {#each domains as p}
       <div class="col-sm-6 col-lg-4 col-xxl-3">
         <div class="card {!p.enabled ? 'border border-danger' : ''}">

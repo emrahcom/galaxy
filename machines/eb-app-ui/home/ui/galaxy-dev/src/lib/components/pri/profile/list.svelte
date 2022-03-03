@@ -9,7 +9,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="list">
-  <div class="row mx-auto mt-2 g-2">
+  <div class="row mx-auto mt-2 g-3">
     {#each profiles as p}
       <div class="col-sm-6 col-lg-4 col-xxl-3">
         <div class="card {p.is_default ? 'border border-primary' : ''}">
