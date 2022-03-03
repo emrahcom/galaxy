@@ -6,8 +6,8 @@
   import Text from "$lib/components/pri/common/form-text.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";
 
-  export let warning = false;
-  export let p = {
+  let warning = false;
+  let p = {
     name: "",
     auth_type: "none",
     auth_attr: {

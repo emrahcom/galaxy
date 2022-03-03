@@ -8,8 +8,9 @@
   import Text from "$lib/components/pri/common/form-text.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";
 
-  export let warning = false;
   export let p: Profile;
+
+  let warning = false;
 
   function cancel() {
     window.location.href = "/pri/profile";
