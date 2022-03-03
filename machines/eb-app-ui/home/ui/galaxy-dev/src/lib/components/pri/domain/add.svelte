@@ -38,18 +38,11 @@
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text
-        name="name"
-        label="Name"
-        bind:value={p.name}
-        placeholder="e.g. Public Jitsi"
-        required={true}
-      />
+      <Text name="name" label="Name" bind:value={p.name} required={true} />
       <Text
         name="url"
         label="URL"
         bind:value={p.auth_attr.url}
-        placeholder="e.g. https://meet.jit.si"
         required={true}
       />
 

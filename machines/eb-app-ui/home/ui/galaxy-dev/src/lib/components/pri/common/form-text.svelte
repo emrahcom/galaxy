@@ -1,7 +1,6 @@
 <script lang="ts">
   export let label: string;
   export let name: string;
-  export let placeholder = "";
   export let readonly = false;
   export let required = false;
   export let value: string;
@@ -14,7 +13,7 @@
     id={name}
     class="form-control"
     {name}
-    {placeholder}
+    placeholder={label}
     bind:value
     {readonly}
     {required}
