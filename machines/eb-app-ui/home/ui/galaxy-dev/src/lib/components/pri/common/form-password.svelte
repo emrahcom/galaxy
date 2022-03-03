@@ -1,0 +1,50 @@
+<script lang="ts">
+  export let label: string;
+  export let name: string;
+  export let placeholder = "";
+  export let readonly = false;
+  export let required = false;
+  export let value: string;
+
+  let isHidden = true;
+
+  function toggleVisibility() {
+    isHidden = !isHidden;
+  }
+</script>
+
+<!-- -------------------------------------------------------------------------->
+<div class="form-floating my-3">
+  {#if isHidden}
+    <input
+      type="password"
+      id={name}
+      class="form-control"
+      {name}
+      {placeholder}
+      bind:value
+      {readonly}
+      {required}
+    />
+  {:else}
+    <input
+      type="text"
+      id={name}
+      class="form-control"
+      {name}
+      {placeholder}
+      bind:value
+      {readonly}
+      {required}
+    />
+  {/if}
+  <label for={name}>{label}</label>
+
+  <span class="input-group-text" on:click={toggleVisibility}>
+    {#if isHidden}
+      <span class="bi bi-eye-fill" />
+    {:else}
+      <span class="bi bi-eye-slash-fill" />
+    {/if}
+  </span>
+</div>

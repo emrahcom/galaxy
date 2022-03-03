@@ -2,6 +2,7 @@
   import { FORM_WIDTH } from "$lib/config";
   import { AUTH_OPTIONS, add as addDomain } from "$lib/pri/domain";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
+  import Password from "$lib/components/pri/common/form-password.svelte";
   import RadioInline from "$lib/components/pri/common/form-radio-inline.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
   import Text from "$lib/components/pri/common/form-text.svelte";
@@ -60,6 +61,12 @@
           name="app_id"
           label="App ID"
           bind:value={p.auth_attr.app_id}
+          required={true}
+        />
+        <Password
+          name="app_secret"
+          label="App Secret"
+          bind:value={p.auth_attr.app_secret}
           required={true}
         />
       {/if}
