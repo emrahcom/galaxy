@@ -1,0 +1,18 @@
+<script lang="ts">
+  import { page } from "$app/stores";
+  import { get } from "$lib/pri/api";
+  import Del from "$lib/components/pri/domain/del.svelte";
+  import Subheader from "$lib/components/pri/common/subheader.svelte";
+  import Warning from "$lib/components/pri/common/warning.svelte";
+
+  const promise = get("/api/pri/domain/get", $page.params.uuid);
+</script>
+
+<!-- -------------------------------------------------------------------------->
+<Subheader subheader="Delete this Jitsi domain" />
+
+{#await promise then domain}
+  <Del p={domain} />
+{:catch}
+  <Warning>Something went wrong</Warning>
+{/await}
