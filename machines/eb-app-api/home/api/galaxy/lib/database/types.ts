@@ -8,7 +8,9 @@ export interface Domain {
   id: string;
   name: string;
   auth_type: string;
-  auth_attr: unknown;
+  auth_attr: {
+    [key: string]: string;
+  };
   enabled: boolean;
   created_at: string;
   updated_at: string;
