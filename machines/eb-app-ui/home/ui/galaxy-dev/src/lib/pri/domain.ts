@@ -15,11 +15,11 @@ export async function get(uuid: string) {
 
   if (res.status !== 200) throw new Error("post failed");
 
-  const profiles = await res.json();
+  const rows = await res.json();
 
-  if (!profiles[0]) throw new Error("no result");
+  if (!rows[0]) throw new Error("no result");
 
-  return profiles[0];
+  return rows[0];
 }
 
 // -----------------------------------------------------------------------------
@@ -30,9 +30,9 @@ export async function list() {
 
   if (res.status !== 200) throw new Error("post failed");
 
-  const profiles = await res.json();
+  const rows = await res.json();
 
-  return profiles;
+  return rows;
 }
 
 // -----------------------------------------------------------------------------
@@ -42,11 +42,11 @@ export async function add(payload: unknown) {
 
   if (res.status !== 200) throw new Error("post failed");
 
-  const profiles = await res.json();
+  const rows = await res.json();
 
-  if (!profiles[0]) throw new Error("no result");
+  if (!rows[0]) throw new Error("no result");
 
-  return profiles[0];
+  return rows[0];
 }
 
 // -----------------------------------------------------------------------------
@@ -59,11 +59,11 @@ export async function del(uuid: string) {
 
   if (res.status !== 200) throw new Error("post failed");
 
-  const profiles = await res.json();
+  const rows = await res.json();
 
-  if (!profiles[0]) throw new Error("no result");
+  if (!rows[0]) throw new Error("no result");
 
-  return profiles[0];
+  return rows[0];
 }
 
 // -----------------------------------------------------------------------------
@@ -73,11 +73,11 @@ export async function update(payload: unknown) {
 
   if (res.status !== 200) throw new Error("post failed");
 
-  const profiles = await res.json();
+  const rows = await res.json();
 
-  if (!profiles[0]) throw new Error("no result");
+  if (!rows[0]) throw new Error("no result");
 
-  return profiles[0];
+  return rows[0];
 }
 
 // -----------------------------------------------------------------------------
@@ -90,11 +90,11 @@ export async function enable(uuid: string) {
 
   if (res.status !== 200) throw new Error("post failed");
 
-  const profiles = await res.json();
+  const rows = await res.json();
 
-  if (!profiles[0]) throw new Error("no result");
+  if (!rows[0]) throw new Error("no result");
 
-  return profiles[0];
+  return rows[0];
 }
 
 // -----------------------------------------------------------------------------
@@ -107,9 +107,9 @@ export async function disable(uuid: string) {
 
   if (res.status !== 200) throw new Error("post failed");
 
-  const profiles = await res.json();
+  const rows = await res.json();
 
-  if (!profiles[0]) throw new Error("no result");
+  if (!rows[0]) throw new Error("no result");
 
-  return profiles[0];
+  return rows[0];
 }
