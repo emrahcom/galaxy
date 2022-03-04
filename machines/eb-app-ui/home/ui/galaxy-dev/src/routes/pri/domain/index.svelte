@@ -4,7 +4,7 @@
   import Subheader from "$lib/components/pri/common/subheader-list.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";
 
-  const promise = list("/api/pri/domain/list");
+  const promise = list("/api/pri/domain/list", 100);
 </script>
 
 <!-- -------------------------------------------------------------------------->
