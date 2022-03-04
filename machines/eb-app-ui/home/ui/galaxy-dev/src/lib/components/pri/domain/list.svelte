@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { Domain } from "$lib/types";
   import Del from "$lib/components/pri/common/link-del.svelte";
+  import Disable from "$lib/components/pri/common/link-disable.svelte";
+  import Enable from "$lib/components/pri/common/link-enable.svelte";
   import Update from "$lib/components/pri/common/link-update.svelte";
 
   export let domains: Domain[];
@@ -21,7 +23,9 @@
             <Del href="/pri/domain/del/{p.id}" />
 
             {#if p.enabled}
-              enabled
+              <Disable href="/pri/domain/disable/{p.id}" />
+            {:else}
+              <Enable href="/pri/domain/enable/{p.id}" />
             {/if}
 
             <Update href="/pri/domain/update/{p.id}" />
