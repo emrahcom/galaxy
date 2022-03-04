@@ -19,7 +19,7 @@ export async function actionById(url: string, id: string) {
     id: id,
   };
 
-  return action(url, payload);
+  return await action(url, payload);
 }
 
 // -----------------------------------------------------------------------------
@@ -28,12 +28,15 @@ export async function get(url: string, id: string) {
     id: id,
   };
 
-  return action(url, payload);
+  return await action(url, payload);
 }
 
 // -----------------------------------------------------------------------------
-export async function list(url: string) {
-  const payload = {};
+export async function list(url: string, limit = 10, offset = 0) {
+  const payload = {
+    limit: limit,
+    offset: offset,
+  };
   const res = await post(url, payload);
 
   if (res.status !== 200) throw new Error("post failed");
