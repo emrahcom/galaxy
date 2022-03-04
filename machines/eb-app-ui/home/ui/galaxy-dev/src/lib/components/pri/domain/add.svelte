@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { AUTH_OPTIONS, add as addDomain } from "$lib/pri/domain";
+  import { AUTH_TYPE_OPTIONS, add as addDomain } from "$lib/pri/domain";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import Password from "$lib/components/pri/common/form-password.svelte";
   import RadioInline from "$lib/components/pri/common/form-radio-inline.svelte";
@@ -11,7 +11,7 @@
   let warning = false;
   let p = {
     name: "",
-    auth_type: AUTH_OPTIONS[0][0],
+    auth_type: AUTH_TYPE_OPTIONS[0][0],
     auth_attr: {
       url: "",
       app_id: "",
@@ -47,7 +47,7 @@
       />
 
       <span class="text-muted me-3">Authentication Type:</span>
-      <RadioInline bind:value={p.auth_type} options={AUTH_OPTIONS} />
+      <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
 
       {#if p.auth_type === "token"}
         <Text

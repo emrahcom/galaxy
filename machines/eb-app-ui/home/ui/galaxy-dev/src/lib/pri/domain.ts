@@ -1,6 +1,6 @@
 import { post } from "$lib/http";
 
-export const AUTH_OPTIONS = [
+export const AUTH_TYPE_OPTIONS = [
   ["none", "anonymous"],
   ["token", "token"],
 ];
