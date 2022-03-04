@@ -1,11 +1,11 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { get as getProfile } from "$lib/pri/profile";
+  import { get } from "$lib/pri/api";
   import SetDefault from "$lib/components/pri/profile/set-default.svelte";
   import Subheader from "$lib/components/pri/common/subheader.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";
 
-  const promise = getProfile($page.params.uuid);
+  const promise = get("/api/pri/profile/get", $page.params.uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->

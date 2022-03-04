@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { list as listDomains } from "$lib/pri/domain";
+  import { list } from "$lib/pri/api";
   import List from "$lib/components/pri/domain/list.svelte";
   import Subheader from "$lib/components/pri/common/subheader-list.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";
 
-  const promise = listDomains();
+  const promise = list("/api/pri/domain/list");
 </script>
 
 <!-- -------------------------------------------------------------------------->

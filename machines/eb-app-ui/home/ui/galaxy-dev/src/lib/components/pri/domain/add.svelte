@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { AUTH_TYPE_OPTIONS, add as addDomain } from "$lib/pri/domain";
+  import { AUTH_TYPE_OPTIONS } from "$lib/pri/domain";
+  import { action } from "$lib/pri/api";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import Password from "$lib/components/pri/common/form-password.svelte";
   import RadioInline from "$lib/components/pri/common/form-radio-inline.svelte";
@@ -26,7 +27,7 @@
   async function onSubmit() {
     try {
       warning = false;
-      await addDomain(p);
+      await action("/api/pri/domain/add", p);
       window.location.href = "/pri/domain";
     } catch {
       warning = true;

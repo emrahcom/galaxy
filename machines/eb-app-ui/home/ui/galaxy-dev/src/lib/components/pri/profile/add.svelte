@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { add as addProfile } from "$lib/pri/profile";
+  import { action } from "$lib/pri/api";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import Email from "$lib/components/pri/common/form-email.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
@@ -20,7 +20,7 @@
   async function onSubmit() {
     try {
       warning = false;
-      await addProfile(p);
+      await action("/api/pri/profile/add", p);
       window.location.href = "/pri/profile";
     } catch {
       warning = true;
