@@ -26,7 +26,7 @@
     id={attr.name}
     class="form-control"
     name={attr.name}
-    value={attr.value || ""}
+    value={attr.value ?? ""}
     placeholder={labelText}
     disabled={attr.disabled}
     required={attr.required}

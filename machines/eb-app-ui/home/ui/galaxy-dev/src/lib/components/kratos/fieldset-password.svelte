@@ -19,7 +19,7 @@
     id="password"
     class="form-control"
     name={attr.name}
-    value={attr.value || ""}
+    value={attr.value ?? ""}
     placeholder="password"
     disabled={attr.disabled}
     required={attr.required}

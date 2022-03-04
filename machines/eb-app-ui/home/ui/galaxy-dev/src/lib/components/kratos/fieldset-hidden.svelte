@@ -7,4 +7,4 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<input type="hidden" name={attr.name} value={attr.value || ""} />
+<input type="hidden" name={attr.name} value={attr.value ?? ""} />

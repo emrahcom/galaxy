@@ -28,7 +28,7 @@
       id="email"
       class="form-control"
       name={attr.name}
-      value={attr.value || ""}
+      value={attr.value ?? ""}
       placeholder="email"
       disabled={attr.disabled}
       required={attr.required}
