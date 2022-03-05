@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Room } from "$lib/types";
-  import Del from "$lib/components/pri/common/link-del.svelte";
-  import Disable from "$lib/components/pri/common/link-disable.svelte";
-  import Enable from "$lib/components/pri/common/link-enable.svelte";
-  import Update from "$lib/components/pri/common/link-update.svelte";
+  import Del from "$lib/components/common/link-del.svelte";
+  import Disable from "$lib/components/common/link-disable.svelte";
+  import Enable from "$lib/components/common/link-enable.svelte";
+  import Update from "$lib/components/common/link-update.svelte";
 
   export let rooms: Room[];
 </script>

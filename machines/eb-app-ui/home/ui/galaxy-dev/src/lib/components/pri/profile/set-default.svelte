@@ -2,11 +2,11 @@
   import { FORM_WIDTH } from "$lib/config";
   import { actionById } from "$lib/api";
   import type { Profile } from "$lib/types";
-  import Cancel from "$lib/components/pri/common/button-cancel.svelte";
-  import Email from "$lib/components/pri/common/form-email.svelte";
-  import Submit from "$lib/components/pri/common/button-submit.svelte";
-  import Text from "$lib/components/pri/common/form-text.svelte";
-  import Warning from "$lib/components/pri/common/warning.svelte";
+  import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Email from "$lib/components/common/form-email.svelte";
+  import Submit from "$lib/components/common/button-submit.svelte";
+  import Text from "$lib/components/common/form-text.svelte";
+  import Warning from "$lib/components/common/warning.svelte";
 
   export let p: Profile;
 

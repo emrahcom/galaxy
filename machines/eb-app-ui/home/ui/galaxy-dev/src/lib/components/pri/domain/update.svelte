@@ -3,12 +3,12 @@
   import { AUTH_TYPE_OPTIONS } from "$lib/pri/domain";
   import { action } from "$lib/api";
   import type { Domain } from "$lib/types";
-  import Cancel from "$lib/components/pri/common/button-cancel.svelte";
-  import Password from "$lib/components/pri/common/form-password.svelte";
-  import RadioInline from "$lib/components/pri/common/form-radio-inline.svelte";
-  import Submit from "$lib/components/pri/common/button-submit.svelte";
-  import Text from "$lib/components/pri/common/form-text.svelte";
-  import Warning from "$lib/components/pri/common/warning.svelte";
+  import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Password from "$lib/components/common/form-password.svelte";
+  import RadioInline from "$lib/components/common/form-radio-inline.svelte";
+  import Submit from "$lib/components/common/button-submit.svelte";
+  import Text from "$lib/components/common/form-text.svelte";
+  import Warning from "$lib/components/common/warning.svelte";
 
   export let p: Domain;
 

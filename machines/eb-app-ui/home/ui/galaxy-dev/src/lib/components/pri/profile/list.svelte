@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Profile } from "$lib/types";
-  import Del from "$lib/components/pri/common/link-del.svelte";
-  import Set from "$lib/components/pri/common/link-set-default-profile.svelte";
-  import Update from "$lib/components/pri/common/link-update.svelte";
+  import Del from "$lib/components/common/link-del.svelte";
+  import Set from "$lib/components/common/link-set-default-profile.svelte";
+  import Update from "$lib/components/common/link-update.svelte";
 
   export let profiles: Profile[];
 </script>
