@@ -35,15 +35,16 @@
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Select
+        id="domain_id"
+        label="Jitsi domain"
+        bind:value={p.domain_id}
+        options={[]}
+      />
       <Switch
         name="has_suffix"
         label="Enable unpredictable room name generator"
         bind:value={p.has_suffix}
-      />
-      <Select
-        label="select Jitsi domain"
-        bind:value={p.domain_id}
-        options={[]}
       />
 
       {#if warning}
