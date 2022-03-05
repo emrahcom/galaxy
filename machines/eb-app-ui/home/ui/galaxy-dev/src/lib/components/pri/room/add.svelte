@@ -2,6 +2,7 @@
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/pri/api";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
+  import Select from "$lib/components/pri/common/form-select.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
   import Switch from "$lib/components/pri/common/form-switch.svelte";
   import Text from "$lib/components/pri/common/form-text.svelte";
@@ -38,6 +39,11 @@
         name="has_suffix"
         label="Enable unpredictable room name generator"
         bind:value={p.has_suffix}
+      />
+      <Select
+        label="select Jitsi domain"
+        bind:value={p.domain_id}
+        options={[]}
       />
 
       {#if warning}
