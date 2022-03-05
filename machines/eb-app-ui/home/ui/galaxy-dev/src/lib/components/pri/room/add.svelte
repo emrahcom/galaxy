@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action } from "$lib/pri/api";
+  import { action } from "$lib/api";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import Select from "$lib/components/pri/common/form-select.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";

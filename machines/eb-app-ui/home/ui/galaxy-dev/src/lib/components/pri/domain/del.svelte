@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { AUTH_TYPE_OPTIONS } from "$lib/pri/domain";
-  import { actionById } from "$lib/pri/api";
+  import { actionById } from "$lib/api";
   import type { Domain } from "$lib/types";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import RadioInline from "$lib/components/pri/common/form-radio-inline.svelte";

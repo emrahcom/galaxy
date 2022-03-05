@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { get } from "$lib/pri/api";
+  import { get } from "$lib/api";
   import SetDefault from "$lib/components/pri/profile/set-default.svelte";
   import Subheader from "$lib/components/pri/common/subheader.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";

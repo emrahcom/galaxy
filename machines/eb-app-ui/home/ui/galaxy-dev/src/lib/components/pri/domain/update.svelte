@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { AUTH_TYPE_OPTIONS } from "$lib/pri/domain";
-  import { action } from "$lib/pri/api";
+  import { action } from "$lib/api";
   import type { Domain } from "$lib/types";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
   import Password from "$lib/components/pri/common/form-password.svelte";
