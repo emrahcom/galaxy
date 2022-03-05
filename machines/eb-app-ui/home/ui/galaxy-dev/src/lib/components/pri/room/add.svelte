@@ -2,8 +2,8 @@
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/pri/api";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
-  import Check from "$lib/components/pri/common/form-check.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
+  import Switch from "$lib/components/pri/common/form-switch.svelte";
   import Text from "$lib/components/pri/common/form-text.svelte";
   import Warning from "$lib/components/pri/common/warning.svelte";
 
@@ -34,6 +34,11 @@
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Switch
+        name="has_suffix"
+        label="Enable unpredictable room name generator"
+        bind:value={p.has_suffix}
+      />
 
       {#if warning}
         <Warning>
