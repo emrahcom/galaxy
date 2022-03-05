@@ -1,7 +1,7 @@
 <script lang="ts">
   import { list } from "$lib/api";
   import List from "$lib/components/pri/room/list.svelte";
-  import Subheader from "$lib/components/common/subheader-list.svelte";
+  import Subheader from "$lib/components/common/subheader-pri-list.svelte";
   import Warning from "$lib/components/common/warning.svelte";
 
   const promise = list("/api/pri/room/list", 100);
