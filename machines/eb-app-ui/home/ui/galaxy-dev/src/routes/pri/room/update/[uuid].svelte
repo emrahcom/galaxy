@@ -1,0 +1,18 @@
+<script lang="ts">
+  import { page } from "$app/stores";
+  import { get } from "$lib/pri/api";
+  import Subheader from "$lib/components/pri/common/subheader.svelte";
+  import Update from "$lib/components/pri/room/update.svelte";
+  import Warning from "$lib/components/pri/common/warning.svelte";
+
+  const promise = get("/api/pri/room/get", $page.params.uuid);
+</script>
+
+<!-- -------------------------------------------------------------------------->
+<Subheader subheader="Update this meeting room" />
+
+{#await promise then room}
+  <Update p={room} />
+{:catch}
+  <Warning>Something went wrong</Warning>
+{/await}
