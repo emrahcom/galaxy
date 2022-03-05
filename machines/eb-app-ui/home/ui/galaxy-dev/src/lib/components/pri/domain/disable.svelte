@@ -35,7 +35,7 @@
       <Text name="name" label="Name" value={p.name} readonly={true} />
       <Text name="url" label="URL" value={p.auth_attr.url} readonly={true} />
 
-      <span class="text-muted me-3">Authentication Type:</span>
+      <p class="text-muted me-3 mb-1">Authentication Type</p>
       <RadioInline
         value={p.auth_type}
         options={AUTH_TYPE_OPTIONS}

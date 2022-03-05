@@ -41,7 +41,7 @@
         required={true}
       />
 
-      <span class="text-muted me-3">Authentication Type:</span>
+      <p class="text-muted me-3 mb-1">Authentication Type</p>
       <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
 
       {#if p.auth_type === "token"}
