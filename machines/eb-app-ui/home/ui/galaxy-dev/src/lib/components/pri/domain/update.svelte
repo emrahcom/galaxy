@@ -1,9 +1,10 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { AUTH_TYPE_OPTIONS } from "$lib/pri/domain";
-  import { actionById } from "$lib/pri/api";
+  import { action } from "$lib/pri/api";
   import type { Domain } from "$lib/types";
   import Cancel from "$lib/components/pri/common/button-cancel.svelte";
+  import Password from "$lib/components/pri/common/form-password.svelte";
   import RadioInline from "$lib/components/pri/common/form-radio-inline.svelte";
   import Submit from "$lib/components/pri/common/button-submit.svelte";
   import Text from "$lib/components/pri/common/form-text.svelte";
@@ -20,7 +21,7 @@
   async function onSubmit() {
     try {
       warning = false;
-      await actionById("/api/pri/domain/enable", p.id);
+      await action("/api/pri/domain/update", p);
       window.location.href = "/pri/domain";
     } catch {
       warning = true;
@@ -29,26 +30,44 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="enable">
+<section id="update">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" value={p.name} readonly={true} />
-      <Text name="url" label="URL" value={p.auth_attr.url} readonly={true} />
-
-      <span class="text-muted me-3">Authentication Type:</span>
-      <RadioInline
-        value={p.auth_type}
-        options={AUTH_TYPE_OPTIONS}
-        disabled={true}
+      <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Text
+        name="url"
+        label="URL"
+        bind:value={p.auth_attr.url}
+        required={true}
       />
 
+      <span class="text-muted me-3">Authentication Type:</span>
+      <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
+
+      {#if p.auth_type === "token"}
+        <Text
+          name="app_id"
+          label="App ID"
+          bind:value={p.auth_attr.app_id}
+          required={true}
+        />
+        <Password
+          name="app_secret"
+          label="App Secret"
+          bind:value={p.auth_attr.app_secret}
+          required={true}
+        />
+      {/if}
+
       {#if warning}
-        <Warning>The enable request is not accepted.</Warning>
+        <Warning>
+          The update request is not accepted. Please check your inputs.
+        </Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
-        <Submit label="Enable" />
+        <Submit label="Update" />
       </div>
     </form>
   </div>

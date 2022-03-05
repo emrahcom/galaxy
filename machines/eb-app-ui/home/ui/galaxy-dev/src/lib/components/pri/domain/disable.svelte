@@ -20,7 +20,7 @@
   async function onSubmit() {
     try {
       warning = false;
-      await actionById("/api/pri/domain/enable", p.id);
+      await actionById("/api/pri/domain/disable", p.id);
       window.location.href = "/pri/domain";
     } catch {
       warning = true;
@@ -29,7 +29,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="enable">
+<section id="disable">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" value={p.name} readonly={true} />
@@ -43,12 +43,12 @@
       />
 
       {#if warning}
-        <Warning>The enable request is not accepted.</Warning>
+        <Warning>The disable request is not accepted.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
-        <Submit label="Enable" />
+        <Submit label="Disable" />
       </div>
     </form>
   </div>
