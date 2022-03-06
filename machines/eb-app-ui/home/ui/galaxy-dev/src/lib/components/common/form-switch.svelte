@@ -12,7 +12,7 @@
     type="checkbox"
     role="switch"
     id={name}
-    bind:value
+    bind:checked={value}
     {disabled}
   />
   <label class="form-check-label" for={name}>{label}</label>
