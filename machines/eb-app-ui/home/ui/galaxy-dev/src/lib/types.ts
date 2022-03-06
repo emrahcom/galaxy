@@ -13,6 +13,26 @@ export interface Domain {
 }
 
 // -----------------------------------------------------------------------------
+export interface Meeting {
+  id: string;
+  profile_id: string;
+  room_id: string;
+  host_key: string;
+  guest_key: string;
+  name: string;
+  info: string;
+  schedule_type: string;
+  schedule_attr: unknown;
+  hidden: boolean;
+  restricted: boolean;
+  subscribable: boolean;
+  enabled: boolean;
+  chain_enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Profile {
   id: string;
   name: string;
