@@ -23,7 +23,14 @@ export async function actionById(url: string, id: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function get(url: string, id: string) {
+export async function get(url: string) {
+  const payload = {};
+
+  return await action(url, payload);
+}
+
+// -----------------------------------------------------------------------------
+export async function getById(url: string, id: string) {
   const payload = {
     id: id,
   };

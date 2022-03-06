@@ -10,6 +10,8 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Connect the meeting room" />
 
-{#await promise catch}
+{#await promise}
+  connecting...
+{:catch}
   <Warning>Something went wrong</Warning>
 {/await}
