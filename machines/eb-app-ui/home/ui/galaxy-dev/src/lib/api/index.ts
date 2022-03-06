@@ -48,7 +48,7 @@ export async function list(url: string, limit = 10, offset = 0) {
 
 // -----------------------------------------------------------------------------
 export async function domainsAsOptions() {
-  let options: string[][];
+  const options: string[][] = [];
 
   const priDomains = await list("/api/pri/domain/list");
   for (const p of priDomains) {
@@ -56,7 +56,7 @@ export async function domainsAsOptions() {
   }
 
   const pubDomains = await list("/api/pub/domain/list/enabled");
-  for await (const p of pubDomains) {
+  for (const p of pubDomains) {
     options.push([p.id, p.name]);
   }
 
