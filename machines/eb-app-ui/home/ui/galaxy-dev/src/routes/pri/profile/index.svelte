@@ -8,7 +8,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Your meeting profiles" href="/pri/profile/add" />
+<Subheader subheader="My meeting profiles" href="/pri/profile/add" />
 
 {#await promise then profiles}
   <List {profiles} />

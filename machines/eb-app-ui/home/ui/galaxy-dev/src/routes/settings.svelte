@@ -17,7 +17,7 @@
   {#await promise then dm}
     {#if dm.instanceOf === "KratosForm"}
       <Layout>
-        <p class="h3 text-muted">Update your account settings</p>
+        <p class="h3 text-muted">Update my account settings</p>
 
         {#if dm.ui.messages}
           <Messages messages={dm.ui.messages} />

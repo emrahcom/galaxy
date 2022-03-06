@@ -8,7 +8,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Your meeting rooms" href="/pri/room/add" />
+<Subheader subheader="My meeting rooms" href="/pri/room/add" />
 
 {#await promise then rooms}
   <List {rooms} />
