@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Room } from "$lib/types";
+  import Connect from "$lib/components/common/link-connect.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
@@ -29,6 +30,7 @@
             {/if}
 
             <Update href="/pri/room/update/{p.id}" />
+            <Connect href="/pri/room/connect/{p.id}" />
           </div>
         </div>
       </div>
