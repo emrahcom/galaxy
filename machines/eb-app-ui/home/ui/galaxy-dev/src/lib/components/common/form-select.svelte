@@ -9,6 +9,8 @@
 <!-- -------------------------------------------------------------------------->
 <div class="form-floating my-3">
   <select class="form-select" {id} bind:value aria-label={label} {disabled}>
+    <option class="bg-body" disabled />
+
     {#each options as opt}
       <option value={opt[0]}>{opt[1]}</option>
     {/each}
