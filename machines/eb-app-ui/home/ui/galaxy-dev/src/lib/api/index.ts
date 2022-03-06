@@ -45,3 +45,20 @@ export async function list(url: string, limit = 10, offset = 0) {
 
   return rows;
 }
+
+// -----------------------------------------------------------------------------
+export async function domainsAsOptions() {
+  let options: string[][];
+
+  const priDomains = await list("/api/pri/domain/list");
+  for (const p of priDomains) {
+    options.push([p.id, p.name]);
+  }
+
+  const pubDomains = await list("/api/pub/domain/list/enabled");
+  for await (const p of pubDomains) {
+    options.push([p.id, p.name]);
+  }
+
+  return options;
+}
