@@ -1,27 +1,26 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { AUTH_TYPE_OPTIONS } from "$lib/pri/domain";
   import { actionById } from "$lib/api";
-  import type { Domain } from "$lib/types";
+  import type { Room } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
-  import RadioInline from "$lib/components/common/form-radio-inline.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
+  import Switch from "$lib/components/common/form-switch.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/warning.svelte";
 
-  export let p: Domain;
+  export let p: Room;
 
   let warning = false;
 
   function cancel() {
-    window.location.href = "/pri/domain";
+    window.location.href = "/pri/room";
   }
 
   async function onSubmit() {
     try {
       warning = false;
-      await actionById("/api/pri/domain/del", p.id);
-      window.location.href = "/pri/domain";
+      await actionById("/api/pri/room/del", p.id);
+      window.location.href = "/pri/room";
     } catch {
       warning = true;
     }
@@ -33,12 +32,16 @@
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" value={p.name} readonly={true} />
-      <Text name="url" label="URL" value={p.auth_attr.url} readonly={true} />
-
-      <p class="text-muted me-3 mb-1">Authentication Type</p>
-      <RadioInline
-        value={p.auth_type}
-        options={AUTH_TYPE_OPTIONS}
+      <Text
+        name="domain"
+        label="Jitsi domain"
+        value={p.domain_name}
+        readonly={true}
+      />
+      <Switch
+        name="has_suffix"
+        label="Enable unpredictable room name generator"
+        value={p.has_suffix}
         disabled={true}
       />
 

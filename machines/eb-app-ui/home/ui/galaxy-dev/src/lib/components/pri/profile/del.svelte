@@ -40,7 +40,7 @@
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
-        <Submit label="Del" />
+        <Submit label="Delete" />
       </div>
     </form>
   </div>
