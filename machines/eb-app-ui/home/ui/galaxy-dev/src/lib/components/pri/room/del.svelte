@@ -34,7 +34,7 @@
       <Text name="name" label="Name" value={p.name} readonly={true} />
       <Text
         name="domain"
-        label="Jitsi domain"
+        label="Jitsi Domain"
         value={p.domain_name}
         readonly={true}
       />

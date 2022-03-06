@@ -39,7 +39,7 @@
         <Text name="name" label="Name" bind:value={p.name} required={true} />
         <Select
           id="domain_id"
-          label="Jitsi domain"
+          label="Jitsi Domain"
           bind:value={p.domain_id}
           options={domains}
         />
