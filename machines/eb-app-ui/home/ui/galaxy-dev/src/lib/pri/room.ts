@@ -10,4 +10,6 @@ export async function connect(roomId: string) {
   console.log(room);
   console.log(domain);
   console.log(profile);
+
+  //room get link api call
 }
