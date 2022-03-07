@@ -1,5 +1,6 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
+import { isValidUrl } from "../common/validate.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
   addDomain,
@@ -36,6 +37,8 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const authType = pl.auth_type;
   const authAttr = pl.auth_attr;
 
+  if (!isValidUrl(authAttr.url)) throw new Error("invalid input");
+
   return await addDomain(
     identityId,
     name,
@@ -59,6 +62,8 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const name = pl.name;
   const authType = pl.auth_type;
   const authAttr = pl.auth_attr;
+
+  if (!isValidUrl(authAttr.url)) throw new Error("invalid input");
 
   return await updateDomain(
     identityId,
