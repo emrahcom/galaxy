@@ -6,7 +6,7 @@ export async function createLink(
   room: RoomLink,
   profile: Profile,
   exp = 86400,
-): string {
+): Promise<string> {
   let link = room.auth_attr.url;
   let roomName = room.name;
 
@@ -17,7 +17,7 @@ export async function createLink(
   if (room.auth_type === "token") {
     const jwt = await createHostToken(
       room.auth_attr.app_id,
-      room.auth_attr.appsecret,
+      room.auth_attr.app_secret,
       roomName,
       profile.name,
       profile.email,
