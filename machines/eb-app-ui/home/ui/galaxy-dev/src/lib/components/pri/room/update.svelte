@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action, domainsAsOptions } from "$lib/api";
+  import { action } from "$lib/api";
+  import { domainsAsOptions } from "$lib/pri/domain";
   import type { Room } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Select from "$lib/components/common/form-select.svelte";
