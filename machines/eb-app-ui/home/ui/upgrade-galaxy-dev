@@ -9,8 +9,8 @@ APP="$UI/galaxy-dev"
 # get KRATOS FQDN
 [[ -z "$KRATOS_FQDN" ]] && \
     KRATOS_FQDN=$(ack "^export const KRATOS =" \
-                      /home/ui/galaxy-dev/src/lib/config.ts | \
-                      cut -d'"' -f2 | cut -d '/' -f3)
+                  /home/ui/galaxy-dev/src/lib/config.ts | \
+                  cut -d'"' -f2 | cut -d '/' -f3)
 if [[ -z "$KRATOS_FQDN" ]]; then
     echo "error: KRATOS_FQDN is not found"
     exit 1
