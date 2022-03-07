@@ -31,7 +31,7 @@ export async function createHostToken(
   username: string,
   email: string,
   exp = 86400,
-): string {
+): Promise<string> {
   const alg: Algorithm = "HS512";
   const hash = "SHA-512";
 
