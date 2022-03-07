@@ -1,0 +1,39 @@
+#!/bin/bash
+set -e
+
+REMOTE="https://github.com/emrahcom/galaxy.git"
+LOCAL="/tmp/galaxy"
+API="$LOCAL/machines/eb-app-api/home/api"
+APP="$API/galaxy"
+
+# get DB_PASSWD
+[[ -z "$DB_PASSWD" ]] && \
+    DB_PASSWD=$(ack "^export const DB_PASSWD =" /home/api/galaxy/config.ts | \
+                cut -d'"' -f2)
+if [[ -z "$DB_PASSWD" ]]; then
+    echo "error: DB_PASSWD is not found"
+    exit 1
+else
+    echo "DB_PASSWD: $DB_PASSWD"
+fi
+
+# clone
+rm -rf $LOCAL
+git clone --depth=1 $REMOTE $LOCAL
+
+sed -i "s/___DB_PASSWD___/$DB_PASSWD/" $APP/config.ts
+cat $APP/config.ts
+
+# upgrade app
+rm -rf /tmp/galaxy.old
+mv /home/api/galaxy /tmp/galaxy.old
+cp -arp $APP /home/api/
+
+# clear caches
+rm -rf /home/api/.cache/deno
+rm -rf /home/api-adm/.cache/deno
+rm -rf /home/api-pri/.cache/deno
+rm -rf /home/api-pub/.cache/deno
+
+# upgrade this script
+cp $API/upgrade-galaxy /home/api/
