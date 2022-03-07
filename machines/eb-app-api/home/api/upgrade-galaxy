@@ -29,11 +29,18 @@ rm -rf /tmp/galaxy.old
 mv /home/api/galaxy /tmp/galaxy.old
 cp -arp $APP /home/api/
 
-# clear caches
+# clear cache
 rm -rf /home/api/.cache/deno
-rm -rf /home/api-adm/.cache/deno
-rm -rf /home/api-pri/.cache/deno
-rm -rf /home/api-pub/.cache/deno
 
 # upgrade this script
 cp $API/upgrade-galaxy /home/api/
+
+# reminder
+cat <<EOF
+
+Dont forget to clear caches:
+
+  rm -rf /home/api-adm/.cache/deno
+  rm -rf /home/api-pri/.cache/deno
+  rm -rf /home/api-pub/.cache/deno
+EOF
