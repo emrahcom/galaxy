@@ -110,7 +110,6 @@ export async function updateDomain(
   authType: string,
   authAttr: unknown,
 ) {
-
   const sql = {
     text: `
       UPDATE domain
