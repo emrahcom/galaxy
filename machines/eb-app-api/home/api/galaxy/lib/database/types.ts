@@ -136,3 +136,16 @@ export interface Room {
   updated_at: string;
   accessed_at: string;
 }
+
+// -----------------------------------------------------------------------------
+export interface RoomLink {
+  name: string;
+  has_suffix: boolean;
+  suffix: string;
+  auth_type: string;
+  auth_attr: {
+    url: string;
+    app_id: string;
+    app_secret: string;
+  };
+}
