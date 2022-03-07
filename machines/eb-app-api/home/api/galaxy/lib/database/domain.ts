@@ -1,4 +1,5 @@
 import { fetch } from "./common.ts";
+import { isValidUrl } from "../common/validate.ts";
 import type { Domain, Id, PubDomain } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -69,6 +70,8 @@ export async function addDomain(
   authType: string,
   authAttr: unknown,
 ) {
+  if (!isValidUrl(authAttr.url)) throw new Error("invalid input");
+
   const sql = {
     text: `
       INSERT INTO domain (identity_id, name, auth_type, auth_attr)
@@ -110,6 +113,8 @@ export async function updateDomain(
   authType: string,
   authAttr: unknown,
 ) {
+  if (!isValidUrl(authAttr.url)) throw new Error("invalid input");
+
   const sql = {
     text: `
       UPDATE domain
