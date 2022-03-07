@@ -1,4 +1,5 @@
 import { fetch } from "./common.ts";
+import { getDefaultProfile } from "./profile.ts";
 import type { Id, Room } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -22,6 +23,30 @@ export async function getRoom(identityId: string, roomId: string) {
   };
 
   return await fetch(sql) as Room[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getRoomLink(identityId: string, roomId: string) {
+  const profile = getDefaultProfile(identityId);
+  const sql = {
+    text: `
+      SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.auth_attr
+      FROM room r
+        JOIN domain d ON r.domain_id = d.id
+      WHERE r.id = $2
+        AND r.identity_id = $1
+        AND r.ephemeral = false`,
+    args: [
+      identityId,
+      roomId,
+    ],
+  };
+  const rooms = await fetch(sql) as Room[];
+  const room = rooms[0];
+
+  return {
+    link: `${room.auth_attr.url}?name=${profile.name}`,
+  };
 }
 
 // -----------------------------------------------------------------------------

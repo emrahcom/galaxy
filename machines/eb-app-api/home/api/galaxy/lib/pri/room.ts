@@ -5,6 +5,7 @@ import {
   addRoom,
   delRoom,
   getRoom,
+  getRoomLink,
   listRoom,
   updateRoom,
   updateRoomEnabled,
@@ -18,6 +19,14 @@ async function get(req: Request, identityId: string): Promise<unknown> {
   const roomId = pl.id;
 
   return await getRoom(identityId, roomId);
+}
+
+// -----------------------------------------------------------------------------
+async function getLink(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const roomId = pl.id;
+
+  return await getRoomLink(identityId, roomId);
 }
 
 // -----------------------------------------------------------------------------
@@ -88,6 +97,8 @@ export default async function (
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req, identityId);
+  } else if (path === `${PRE}/get/link`) {
+    return await wrapper(getLink, req, identityId);
   } else if (path === `${PRE}/list`) {
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
