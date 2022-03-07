@@ -1,6 +1,8 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
+import { createLink } from "../common/helper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
+import { getDefaultProfile } from "../database/profile.ts";
 import {
   addRoom,
   delRoom,
@@ -26,7 +28,17 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const roomId = pl.id;
 
-  return await getRoomLink(identityId, roomId);
+  const roomLink = await getRoomLink(identityId, roomId)
+    .then((rows) => rows[0]);
+  const profile = await getDefaultProfile(identityId)
+    .then((rows) => rows[0]);
+  const link = await createLink(roomLink, profile);
+
+  const res = [{
+    link: link,
+  }];
+
+  return res;
 }
 
 // -----------------------------------------------------------------------------
