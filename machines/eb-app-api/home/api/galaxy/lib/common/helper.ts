@@ -7,8 +7,8 @@ export async function createLink(
   profile: Profile,
   exp = 86400,
 ): Promise<string> {
-  let link = room.auth_attr.url;
-  let roomName = room.name;
+  let link = encodeURI(room.auth_attr.url);
+  let roomName = encodeURIComponent(room.name);
 
   if (room.has_suffix) roomName = `${roomName}-${room.suffix}`;
 
@@ -27,8 +27,11 @@ export async function createLink(
     link = `${link}?jwt=${jwt}`;
   }
 
-  link = `${link}#userInfo.displayName="${profile.name}"`;
-  link = `${link}&userInfo.email="${profile.email}"`;
+  const displayName = encodeURIComponent(`"${profile.name}"`);
+  const email = encodeURIComponent(`"${profile.email}"`);
+
+  link = `${link}#userInfo.displayName=${displayName}`;
+  link = `${link}&userInfo.email=${email}`;
 
   return link;
 }
