@@ -26,6 +26,8 @@ export async function getRoom(identityId: string, roomId: string) {
 
 // -----------------------------------------------------------------------------
 export async function getRoomLink(identityId: string, roomId: string) {
+  await updateRoomSuffix(roomId);
+
   const sql = {
     text: `
       SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.auth_attr
@@ -173,6 +175,26 @@ export async function updateRoomEnabled(
       identityId,
       roomId,
       value,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function updateRoomSuffix(roomId: string) {
+  const sql = {
+    text: `
+      UPDATE room
+      SET
+        suffix = DEFAULT,
+        accessed_at = now()
+      WHERE id = $1
+        AND has_suffix = true
+        AND accessed_at + interval '4 hours' < now()
+      RETURNING id, accessed_at as at`,
+    args: [
+      roomId,
     ],
   };
 
