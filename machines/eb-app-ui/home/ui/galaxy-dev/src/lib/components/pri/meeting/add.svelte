@@ -8,6 +8,7 @@
   import Submit from "$lib/components/common/button-submit.svelte";
   import Switch from "$lib/components/common/form-switch.svelte";
   import Text from "$lib/components/common/form-text.svelte";
+  import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   let warning = false;
@@ -51,6 +52,13 @@
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
+        <Textarea
+          name="info"
+          label="Info"
+          bind:value={p.info}
+          required={false}
+          row={4}
+        />
 
         <p class="text-muted me-3 mb-1">Schedule Type</p>
         <Radio bind:value={p.schedule_type} options={SCHEDULE_TYPE_OPTIONS} />
