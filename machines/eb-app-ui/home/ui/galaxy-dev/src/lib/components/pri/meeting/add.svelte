@@ -57,17 +57,20 @@
         />
         <Switch
           name="hidden"
-          label="Hidden (don't show in public lists)"
+          label="Hidden"
+          desc="(don't show in public lists)"
           bind:value={p.hidden}
         />
         <Switch
           name="restricted"
-          label="Restricted (only for registered members)"
+          label="Restricted"
+          desc="(only for registered members)"
           bind:value={p.restricted}
         />
         <Switch
           name="subscribable"
-          label="Subscribable (allow membership requests)"
+          label="Subscribable"
+          desc="(allow membership requests)"
           bind:value={p.subscribable}
         />
 
