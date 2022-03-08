@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { Room } from "$lib/types";
-  import Connect from "$lib/components/common/link-connect.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import Join from "$lib/components/common/link-join.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
   export let rooms: Room[];
@@ -30,7 +30,7 @@
             {/if}
 
             <Update href="/pri/room/update/{p.id}" />
-            <Connect href="/pri/room/connect/{p.id}" />
+            <Join href="/pri/room/join/{p.id}" />
           </div>
         </div>
       </div>
