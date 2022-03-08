@@ -29,9 +29,11 @@ export async function createLink(
 
   const displayName = encodeURIComponent(`"${profile.name}"`);
   const email = encodeURIComponent(`"${profile.email}"`);
+  const subject = encodeURIComponent(`"${room.name}"`);
 
   link = `${link}#userInfo.displayName=${displayName}`;
   link = `${link}&userInfo.email=${email}`;
+  link = `${link}&config.subject=${subject}`;
 
   return link;
 }
