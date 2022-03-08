@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action, list } from "$lib/api";
+  import { action, get, list } from "$lib/api";
   import { SCHEDULE_TYPE_OPTIONS } from "$lib/pri/meeting";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import RadioInline from "$lib/components/common/form-radio-inline.svelte";
@@ -24,8 +24,9 @@
     restricted: false,
     subscribable: true,
   };
-  let promise1 = list("/api/pri/profile/list", 100);
-  let promise2 = list("/api/pri/room/list", 100);
+  let pr1 = get("/api/pri/profile/get/default");
+  let pr2 = list("/api/pri/profile/list", 100);
+  let pr3 = list("/api/pri/room/list", 100);
 
   function cancel() {
     window.location.href = "/pri/meeting";
@@ -44,15 +45,31 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  {#await Promise.all([promise1, promise2]) then [profiles, rooms]}
+  {#await Promise.all([pr1, pr2, pr3]) then [defaultProfile, profiles, rooms]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+        <Text name="name" label="Name" bind:value={p.name} required={true} />
+
+        <p class="text-muted me-3 mb-1">Schedule Type</p>
         <RadioInline
           bind:value={p.schedule_type}
           options={SCHEDULE_TYPE_OPTIONS}
         />
-        <Text name="name" label="Name" bind:value={p.name} required={true} />
-        <Switch name="hidden" label="Hidden" bind:value={p.hidden} />
+        <Switch
+          name="hidden"
+          label="Hidden (don't show in public lists)"
+          bind:value={p.hidden}
+        />
+        <Switch
+          name="restricted"
+          label="Restricted (only for registered members)"
+          bind:value={p.restricted}
+        />
+        <Switch
+          name="subscribable"
+          label="Subscribable (allow membership requests)"
+          bind:value={p.subscribable}
+        />
 
         {#if warning}
           <Warning>
