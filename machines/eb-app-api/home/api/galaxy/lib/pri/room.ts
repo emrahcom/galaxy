@@ -34,11 +34,11 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
     .then((rows) => rows[0]);
   const url = await generateRoomUrl(room, profile);
 
-  const res = [{
+  const link = [{
     url: url,
   }];
 
-  return res;
+  return link;
 }
 
 // -----------------------------------------------------------------------------
