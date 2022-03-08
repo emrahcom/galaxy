@@ -138,7 +138,7 @@ export interface Room {
 }
 
 // -----------------------------------------------------------------------------
-export interface RoomLink {
+export interface RoomLinkSet {
   name: string;
   has_suffix: boolean;
   suffix: string;

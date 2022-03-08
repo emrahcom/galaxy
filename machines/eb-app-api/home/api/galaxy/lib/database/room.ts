@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Room, RoomLink } from "./types.ts";
+import type { Id, Room, RoomLinkSet } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoom(identityId: string, roomId: string) {
@@ -25,7 +25,7 @@ export async function getRoom(identityId: string, roomId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function getRoomLink(identityId: string, roomId: string) {
+export async function getRoomLinkSet(identityId: string, roomId: string) {
   await updateRoomSuffix(roomId);
 
   const sql = {
@@ -42,7 +42,7 @@ export async function getRoomLink(identityId: string, roomId: string) {
     ],
   };
 
-  return await fetch(sql) as RoomLink[];
+  return await fetch(sql) as RoomLinkSet[];
 }
 
 // -----------------------------------------------------------------------------

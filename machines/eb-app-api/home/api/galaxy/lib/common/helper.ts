@@ -1,21 +1,21 @@
-import { createHostToken } from "./token.ts";
-import type { Profile, RoomLink } from "../database/types.ts";
+import { generateHostToken } from "./token.ts";
+import type { Profile, RoomLinkSet } from "../database/types.ts";
 
 // -----------------------------------------------------------------------------
-export async function createLink(
-  room: RoomLink,
+export async function generateRoomUrl(
+  room: RoomLinkSet,
   profile: Profile,
   exp = 86400,
 ): Promise<string> {
-  let link = encodeURI(room.auth_attr.url);
+  let url = encodeURI(room.auth_attr.url);
   let roomName = encodeURIComponent(room.name);
 
   if (room.has_suffix) roomName = `${roomName}-${room.suffix}`;
 
-  link = `${link}/${roomName}`;
+  url = `${url}/${roomName}`;
 
   if (room.auth_type === "token") {
-    const jwt = await createHostToken(
+    const jwt = await generateHostToken(
       room.auth_attr.app_id,
       room.auth_attr.app_secret,
       roomName,
@@ -24,16 +24,16 @@ export async function createLink(
       exp,
     );
 
-    link = `${link}?jwt=${jwt}`;
+    url = `${url}?jwt=${jwt}`;
   }
 
   const displayName = encodeURIComponent(`"${profile.name}"`);
   const email = encodeURIComponent(`"${profile.email}"`);
   const subject = encodeURIComponent(`"${room.name}"`);
 
-  link = `${link}#userInfo.displayName=${displayName}`;
-  link = `${link}&userInfo.email=${email}`;
-  link = `${link}&config.subject=${subject}`;
+  url = `${url}#userInfo.displayName=${displayName}`;
+  url = `${url}&userInfo.email=${email}`;
+  url = `${url}&config.subject=${subject}`;
 
-  return link;
+  return url;
 }

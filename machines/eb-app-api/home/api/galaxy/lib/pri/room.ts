@@ -1,13 +1,13 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
-import { createLink } from "../common/helper.ts";
+import { generateRoomUrl } from "../common/helper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import { getDefaultProfile } from "../database/profile.ts";
 import {
   addRoom,
   delRoom,
   getRoom,
-  getRoomLink,
+  getRoomLinkSet,
   listRoom,
   updateRoom,
   updateRoomEnabled,
@@ -28,14 +28,14 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const roomId = pl.id;
 
-  const roomLink = await getRoomLink(identityId, roomId)
+  const room = await getRoomLinkSet(identityId, roomId)
     .then((rows) => rows[0]);
   const profile = await getDefaultProfile(identityId)
     .then((rows) => rows[0]);
-  const link = await createLink(roomLink, profile);
+  const url = await generateRoomUrl(room, profile);
 
   const res = [{
-    link: link,
+    url: url,
   }];
 
   return res;
