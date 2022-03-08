@@ -3,7 +3,7 @@
   import { action, get, list } from "$lib/api";
   import { SCHEDULE_TYPE_OPTIONS } from "$lib/pri/meeting";
   import Cancel from "$lib/components/common/button-cancel.svelte";
-  import RadioInline from "$lib/components/common/form-radio-inline.svelte";
+  import Radio from "$lib/components/common/form-radio.svelte";
   import Select from "$lib/components/common/form-select.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import Switch from "$lib/components/common/form-switch.svelte";
@@ -53,10 +53,8 @@
         <Text name="name" label="Name" bind:value={p.name} required={true} />
 
         <p class="text-muted me-3 mb-1">Schedule Type</p>
-        <RadioInline
-          bind:value={p.schedule_type}
-          options={SCHEDULE_TYPE_OPTIONS}
-        />
+        <Radio bind:value={p.schedule_type} options={SCHEDULE_TYPE_OPTIONS} />
+
         <Switch
           name="hidden"
           label="Hidden"
