@@ -93,7 +93,7 @@ INSERT INTO domain VALUES (
 -- -----------------------------------------------------------------------------
 -- - update suffix if accessed_at is older than 4 hours
 -- - dont show the room to the owner too if ephemeral is true
--- - ephemeral room has no suffix but a hashed uuid inside its name
+-- - ephemeral room name contains suffix although its has_suffix is false
 -- -----------------------------------------------------------------------------
 CREATE TABLE room (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
