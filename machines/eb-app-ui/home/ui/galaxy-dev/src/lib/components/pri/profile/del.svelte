@@ -6,7 +6,7 @@
   import Email from "$lib/components/common/form-email.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import Text from "$lib/components/common/form-text.svelte";
-  import Warning from "$lib/components/common/warning.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let p: Profile;
 

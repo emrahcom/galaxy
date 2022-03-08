@@ -3,7 +3,7 @@
   import { getById } from "$lib/api";
   import Disable from "$lib/components/pri/domain/disable.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
-  import Warning from "$lib/components/common/warning.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   const promise = getById("/api/pri/domain/get", $page.params.uuid);
 </script>
