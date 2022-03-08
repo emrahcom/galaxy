@@ -57,7 +57,6 @@
           label="Info"
           bind:value={p.info}
           required={false}
-          row={4}
         />
 
         <p class="text-muted me-3 mb-1">Schedule Type</p>

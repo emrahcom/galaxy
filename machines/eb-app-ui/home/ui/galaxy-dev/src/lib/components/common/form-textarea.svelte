@@ -3,7 +3,6 @@
   export let name: string;
   export let readonly = false;
   export let required = false;
-  export let row = 3;
   export let value: string;
 </script>
 
@@ -17,7 +16,6 @@
     bind:value
     {readonly}
     {required}
-    {row}
   />
   <label for={name}>{label}</label>
 </div>
