@@ -29,6 +29,7 @@
     subscribable: true,
   };
 
+  // ---------------------------------------------------------------------------
   let pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
     p.profile_id = item.id;
     return item;
@@ -44,15 +45,34 @@
 
   let pr4 = domainsAsOptions();
 
+  // ---------------------------------------------------------------------------
   function cancel() {
     window.location.href = "/pri/meeting";
   }
 
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;
-      await action("/api/pri/meeting/add", p);
-      window.location.href = "/pri/meeting";
+
+      if (p.schedule_type === "ephemeral") {
+        let r = {
+          name: "meeting",
+          domain_id: domain_id,
+          has_suffix: false,
+        };
+
+        const room = await action("/api/pri/room/add", r);
+        p.room_id = room.id;
+      }
+
+      let meeting = await action("/api/pri/meeting/add", p);
+
+      if (p.schedule_type === "scheduled") {
+        window.location.href = `/pri/meeting/schedule/add/${meeting.id}`;
+      } else {
+        window.location.href = "/pri/meeting";
+      }
     } catch {
       warning = true;
     }
