@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && NUM=1 || NUM=$2
+
+# ------------------------------------------------------------------------------
+# add many new ephemeral rooms
+# ------------------------------------------------------------------------------
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-ephemeral-id-$ID-1-res)
+
+for i in $(seq 1 $NUM); do
+    JSON=$(cat <<EOF
+    {
+        "domain_id": "$domain_id"
+    }
+EOF
+)
+
+    bash $TEMPLATES/action-member-id "$ID" "pri" "room" "add-ephemeral" \
+        "$JSON" $i
+done
