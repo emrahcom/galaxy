@@ -69,6 +69,20 @@
         <p class="text-muted me-3 mb-1">Meeting Type</p>
         <Radio bind:value={p.schedule_type} options={SCHEDULE_TYPE_OPTIONS} />
 
+        <Select
+          id="profile_id"
+          label="Profile"
+          bind:value={p.profile_id}
+          options={profiles}
+        />
+
+        <Select
+          id="room_id"
+          label="Room"
+          bind:value={p.room_id}
+          options={rooms}
+        />
+
         <Switch
           name="hidden"
           label="Hidden"
