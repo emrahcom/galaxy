@@ -25,12 +25,18 @@
     restricted: false,
     subscribable: true,
   };
-  let pr1 = get("/api/pri/profile/get/default").then((defaultProfile) => {
-    p.profile_id = defaultProfile.id;
-    return defaultProfile;
+  let pr1 = get("/api/pri/profile/get/default").then((item) => {
+    p.profile_id = item.id;
+    return item;
   });
-  let pr2 = list("/api/pri/profile/list", 100);
-  let pr3 = list("/api/pri/room/list", 100);
+  let pr2 = list("/api/pri/profile/list", 100).then((item) => [
+    item.id,
+    item.name,
+  ]);
+  let pr3 = list("/api/pri/room/list", 100).then((item) => [
+    item.id,
+    item.name,
+  ]);
 
   function cancel() {
     window.location.href = "/pri/meeting";
