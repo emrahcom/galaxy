@@ -59,25 +59,25 @@
           required={false}
         />
 
-        <p class="text-muted me-3 mb-1">Schedule Type</p>
+        <p class="text-muted me-3 mb-1">Meeting Type</p>
         <Radio bind:value={p.schedule_type} options={SCHEDULE_TYPE_OPTIONS} />
 
         <Switch
           name="hidden"
           label="Hidden"
-          desc="(don't show in public lists)"
+          desc="(don't show on public pages)"
           bind:value={p.hidden}
         />
         <Switch
           name="restricted"
           label="Restricted"
-          desc="(only for registered members)"
+          desc="(only for allowed members)"
           bind:value={p.restricted}
         />
         <Switch
           name="subscribable"
           label="Subscribable"
-          desc="(allow membership requests)"
+          desc="(allow membership request)"
           bind:value={p.subscribable}
         />
 
