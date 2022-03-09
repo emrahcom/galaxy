@@ -78,7 +78,7 @@
           options={profiles}
         />
 
-        {#if p.schedule_type === "ephemeral"}
+        {#if p.schedule_type !== "ephemeral"}
           <Select
             id="room_id"
             label="Room"
