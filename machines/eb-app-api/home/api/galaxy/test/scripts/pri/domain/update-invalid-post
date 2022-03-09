@@ -18,8 +18,9 @@ JSON=$(cat <<EOF
     "name": "$name",
     "auth_type": "UNKNOWN",
     "auth_attr": {
-       "app_id": "myappid",
-       "app_key": "myappsecret"
+        "url": "https://meet.jit.si",
+        "app_id": "myappid",
+        "app_key": "myappsecret"
     }
 }
 EOF

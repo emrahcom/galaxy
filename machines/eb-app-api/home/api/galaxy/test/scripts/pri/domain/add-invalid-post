@@ -16,6 +16,7 @@ JSON=$(cat <<EOF
     "name": "$name",
     "auth_type": "UNKNOWN",
     "auth_attr": {
+        "url": "https://meet.jit.si"
     }
 }
 EOF

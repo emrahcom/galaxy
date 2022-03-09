@@ -101,7 +101,7 @@ bash $BASEDIR/scripts/pri/room/list-limit-offset $ID1
 bash $BASEDIR/scripts/pri/room/list-huge-offset $ID1
 bash $BASEDIR/scripts/pri/room/list-invalid-post $ID1
 
-bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 10
+#bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 10
 
 # meeting
 bash $BASEDIR/scripts/pri/meeting/add-invalid-post $ID1
