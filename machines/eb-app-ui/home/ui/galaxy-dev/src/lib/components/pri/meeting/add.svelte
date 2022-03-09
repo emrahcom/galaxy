@@ -25,8 +25,9 @@
     restricted: false,
     subscribable: true,
   };
-  let pr1 = get("/api/pri/profile/get/default").then((d) => {
-    p.profile_id = d.id;
+  let pr1 = get("/api/pri/profile/get/default").then((defaultProfile) => {
+    p.profile_id = defaultProfile.id;
+    return defaultProfile;
   });
   let pr2 = list("/api/pri/profile/list", 100);
   let pr3 = list("/api/pri/room/list", 100);
@@ -48,7 +49,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  {#await Promise.all([pr1, pr2, pr3]) then [_setProfile, profiles, rooms]}
+  {#await Promise.all([pr1, pr2, pr3]) then [_defaultProfile, profiles, rooms]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
