@@ -9,7 +9,7 @@
   const flowId = getFlowId($page.url.search);
   if (!flowId) window.location.href = `${KRATOS}/self-service/settings/browser`;
 
-  let promise = getDataModels("settings", flowId);
+  const promise = getDataModels("settings", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->

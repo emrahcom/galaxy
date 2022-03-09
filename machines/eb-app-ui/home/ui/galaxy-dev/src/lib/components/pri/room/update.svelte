@@ -13,7 +13,8 @@
   export let p: Room;
 
   let warning = false;
-  let promise = domainsAsOptions();
+
+  const promise = domainsAsOptions();
 
   // ---------------------------------------------------------------------------
   function cancel() {

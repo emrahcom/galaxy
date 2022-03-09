@@ -5,7 +5,7 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  let promise = join($page.params.uuid);
+  const promise = join($page.params.uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->

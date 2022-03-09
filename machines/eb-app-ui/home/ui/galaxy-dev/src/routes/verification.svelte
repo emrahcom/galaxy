@@ -15,7 +15,7 @@
   if (!flowId)
     window.location.href = `${KRATOS}/self-service/verification/browser`;
 
-  let promise = getDataModels("verification", flowId);
+  const promise = getDataModels("verification", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->

@@ -29,21 +29,20 @@
     subscribable: true,
   };
 
-  // ---------------------------------------------------------------------------
-  let pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
+  const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
     p.profile_id = item.id;
     return item;
   });
 
-  let pr2 = list("/api/pri/profile/list", 100).then((items: Room[]) => {
+  const pr2 = list("/api/pri/profile/list", 100).then((items: Room[]) => {
     return items.map((i) => [i.id, i.name]);
   });
 
-  let pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
+  const pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
     return items.map((i) => [i.id, `${i.name} on ${i.domain_name}`]);
   });
 
-  let pr4 = domainsAsOptions();
+  const pr4 = domainsAsOptions();
 
   // ---------------------------------------------------------------------------
   function cancel() {

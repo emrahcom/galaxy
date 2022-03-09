@@ -10,7 +10,7 @@
   if (!flowId)
     window.location.href = `${KRATOS}/self-service/registration/browser`;
 
-  let promise = getDataModels("registration", flowId);
+  const promise = getDataModels("registration", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->

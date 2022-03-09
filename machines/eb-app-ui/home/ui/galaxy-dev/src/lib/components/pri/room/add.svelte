@@ -15,7 +15,8 @@
     domain_id: "",
     has_suffix: false,
   };
-  let promise = domainsAsOptions();
+
+  const promise = domainsAsOptions();
 
   // ---------------------------------------------------------------------------
   function cancel() {
