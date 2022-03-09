@@ -26,15 +26,18 @@
     restricted: false,
     subscribable: true,
   };
+
   let pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
     p.profile_id = item.id;
     return item;
   });
+
   let pr2 = list("/api/pri/profile/list", 100).then((items: Room[]) => {
-    return items.map((item) => [item.id, item.name]);
+    return items.map((i) => [i.id, i.name]);
   });
+
   let pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
-    return items.map((item) => [item.id, item.name]);
+    return items.map((i) => [i.id, `${i.name} on ${i.domain_name}`]);
   });
 
   function cancel() {
