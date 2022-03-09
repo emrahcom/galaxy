@@ -56,12 +56,10 @@
 
       if (p.schedule_type === "ephemeral") {
         let r = {
-          name: "meeting",
           domain_id: domain_id,
-          has_suffix: false,
         };
 
-        const room = await action("/api/pri/room/add", r);
+        const room = await action("/api/pri/room/add-ephemeral", r);
         p.room_id = room.id;
       }
 
