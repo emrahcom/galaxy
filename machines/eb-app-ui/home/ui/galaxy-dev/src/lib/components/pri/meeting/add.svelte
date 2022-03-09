@@ -28,7 +28,7 @@
   };
 
   const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
-    p.profile_id = item.id;
+    if (item) p.profile_id = item.id;
     return item;
   });
 
@@ -40,7 +40,10 @@
     return items.map((i) => [i.id, `${i.name} on ${i.domain_name}`]);
   });
 
-  const pr4 = domainsAsOptions();
+  const pr4 = domainsAsOptions().then((items) => {
+    if (items) domain_id = items[0][0];
+    return items;
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {
