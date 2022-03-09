@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action, get, list } from "$lib/api";
+  import { domainsAsOptions } from "$lib/pri/domain";
   import { SCHEDULE_TYPE_OPTIONS } from "$lib/pri/meeting";
   import type { Profile, Room } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
@@ -13,6 +14,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   let warning = false;
+  let domain_id = "";
   let p = {
     profile_id: "",
     room_id: "",
@@ -40,6 +42,8 @@
     return items.map((i) => [i.id, `${i.name} on ${i.domain_name}`]);
   });
 
+  let pr4 = domainsAsOptions();
+
   function cancel() {
     window.location.href = "/pri/meeting";
   }
@@ -57,7 +61,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  {#await Promise.all([pr1, pr2, pr3]) then [_defaultProfile, profiles, rooms]}
+  {#await Promise.all([pr1, pr2, pr3, pr4]) then [_d, profiles, rooms, domains]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
@@ -78,7 +82,14 @@
           options={profiles}
         />
 
-        {#if p.schedule_type !== "ephemeral"}
+        {#if p.schedule_type === "ephemeral"}
+          <Select
+            id="domain_id"
+            label="Domain"
+            bind:value={domain_id}
+            options={domains}
+          />
+        {:else}
           <Select
             id="room_id"
             label="Room"
