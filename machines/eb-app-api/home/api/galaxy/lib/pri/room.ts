@@ -4,6 +4,7 @@ import { generateRoomUrl } from "../common/helper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import { getDefaultProfile } from "../database/profile.ts";
 import {
+  addEphemeralRoom,
   addRoom,
   delRoom,
   getRoom,
