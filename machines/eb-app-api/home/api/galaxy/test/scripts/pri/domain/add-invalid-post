@@ -23,3 +23,20 @@ EOF
 )
 
 bash $TEMPLATES/action-member-error "$ID" "pri" "domain" "add" "$JSON" 1
+
+# ------------------------------------------------------------------------------
+# try to add a new domain with invalid url
+# ------------------------------------------------------------------------------
+name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
+JSON=$(cat <<EOF
+{
+    "name": "$name",
+    "auth_type": "none",
+    "auth_attr": {
+        "url": "ftp://meet.jit.si"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "$ID" "pri" "domain" "add" "$JSON" 2
