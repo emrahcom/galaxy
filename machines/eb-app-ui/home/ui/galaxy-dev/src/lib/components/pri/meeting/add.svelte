@@ -107,7 +107,7 @@
         {#if p.schedule_type === "ephemeral"}
           <Select
             id="domain_id"
-            label="Domain"
+            label="Jitsi Domain"
             bind:value={domain_id}
             options={domains}
           />
