@@ -78,12 +78,14 @@
           options={profiles}
         />
 
-        <Select
-          id="room_id"
-          label="Room"
-          bind:value={p.room_id}
-          options={rooms}
-        />
+        {#if p.schedule_type === "ephemeral"}
+          <Select
+            id="room_id"
+            label="Room"
+            bind:value={p.room_id}
+            options={rooms}
+          />
+        {/if}
 
         <Switch
           name="hidden"
