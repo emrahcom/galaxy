@@ -61,6 +61,18 @@ async function add(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function addEphemeral(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
+  const pl = await req.json();
+  const domainId = pl.domain_id;
+  const name = pl.name;
+
+  return await addEphemeralRoom(identityId, domainId, name);
+}
+
+// -----------------------------------------------------------------------------
 async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const roomId = pl.id;
@@ -115,6 +127,8 @@ export default async function (
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
     return await wrapper(add, req, identityId);
+  } else if (path === `${PRE}/add-ephemeral`) {
+    return await wrapper(addEphemeral, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {

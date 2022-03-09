@@ -105,6 +105,34 @@ export async function addRoom(
 }
 
 // -----------------------------------------------------------------------------
+export async function addEphemeralRoom(
+  identityId: string,
+  domainId: string,
+  name: string,
+) {
+  const sql = {
+    text: `
+      INSERT INTO room (identity_id, domain_id, name, has_suffix, ephemeral)
+      VALUES (
+        $1,
+        (SELECT id
+         FROM domain
+         WHERE id = $2
+           AND (identity_id = $1
+                OR public = true)),
+        $3, false, true)
+      RETURNING id, created_at as at`,
+    args: [
+      identityId,
+      domainId,
+      name,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function delRoom(identityId: string, roomId: string) {
   const sql = {
     text: `
