@@ -2,6 +2,7 @@
   import { FORM_WIDTH } from "$lib/config";
   import { action, get, list } from "$lib/api";
   import { SCHEDULE_TYPE_OPTIONS } from "$lib/pri/meeting";
+  import type { Profile, Room } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Radio from "$lib/components/common/form-radio.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -25,18 +26,16 @@
     restricted: false,
     subscribable: true,
   };
-  let pr1 = get("/api/pri/profile/get/default").then((item) => {
+  let pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
     p.profile_id = item.id;
     return item;
   });
-  let pr2 = list("/api/pri/profile/list", 100).then((item) => [
-    item.id,
-    item.name,
-  ]);
-  let pr3 = list("/api/pri/room/list", 100).then((item) => [
-    item.id,
-    item.name,
-  ]);
+  let pr2 = list("/api/pri/profile/list", 100).then((items: Room[]) => {
+    return items.map((item) => [item.id, item.name]);
+  });
+  let pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
+    return items.map((item) => [item.id, item.name]);
+  });
 
   function cancel() {
     window.location.href = "/pri/meeting";
