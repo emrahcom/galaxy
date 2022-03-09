@@ -7,6 +7,7 @@
 
   let isHidden = true;
 
+  // ---------------------------------------------------------------------------
   function toggleVisibility() {
     isHidden = !isHidden;
   }

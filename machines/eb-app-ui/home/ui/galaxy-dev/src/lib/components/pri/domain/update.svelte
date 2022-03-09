@@ -14,10 +14,12 @@
 
   let warning = false;
 
+  // ---------------------------------------------------------------------------
   function cancel() {
     window.location.href = "/pri/domain";
   }
 
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;

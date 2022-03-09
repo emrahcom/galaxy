@@ -12,10 +12,12 @@
 
   let warning = false;
 
+  // ---------------------------------------------------------------------------
   function cancel() {
     window.location.href = "/pri/room";
   }
 
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;

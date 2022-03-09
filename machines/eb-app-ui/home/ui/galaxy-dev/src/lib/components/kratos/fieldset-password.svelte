@@ -7,6 +7,7 @@
   const attr = node.attributes;
   let isHidden = true;
 
+  // ---------------------------------------------------------------------------
   function toggleVisibility() {
     isHidden = !isHidden;
   }

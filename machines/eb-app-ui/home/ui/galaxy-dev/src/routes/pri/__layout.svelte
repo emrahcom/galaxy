@@ -3,6 +3,7 @@
   import { get } from "svelte/store";
   import identity from "$lib/stores/kratos/identity";
 
+  // ---------------------------------------------------------------------------
   export async function load() {
     const _identity = get(identity);
 
