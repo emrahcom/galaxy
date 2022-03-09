@@ -117,7 +117,7 @@
           />
         {/if}
 
-        {#if p.schedule_type === "ephemeral"}
+        {#if p.schedule_type !== "ephemeral"}
           <Switch
             name="hidden"
             label="Hidden"
