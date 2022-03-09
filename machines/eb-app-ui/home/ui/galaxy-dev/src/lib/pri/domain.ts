@@ -12,7 +12,7 @@ export async function domainsAsOptions() {
 
   const priDomains = await list("/api/pri/domain/list");
   for (const p of priDomains) {
-    options.push([p.id, p.name]);
+    options.push([p.id, p.disabled ? `${p.name} (disabled)` : p.name]);
   }
 
   const pubDomains = await list("/api/pub/domain/list/enabled");
