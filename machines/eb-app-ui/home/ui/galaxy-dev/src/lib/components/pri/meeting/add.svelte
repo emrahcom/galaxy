@@ -21,9 +21,7 @@
     name: "",
     info: "",
     schedule_type: SCHEDULE_TYPE_OPTIONS[0][0],
-    schedule_attr: {
-      duration: 60,
-    },
+    schedule_attr: {},
     hidden: true,
     restricted: false,
     subscribable: true,
@@ -60,7 +58,11 @@
         };
 
         const room = await action("/api/pri/room/add-ephemeral", r);
+
         p.room_id = room.id;
+        p.hidden = true;
+        p.restricted = false;
+        p.subscribable = false;
       }
 
       let meeting = await action("/api/pri/meeting/add", p);
@@ -115,24 +117,26 @@
           />
         {/if}
 
-        <Switch
-          name="hidden"
-          label="Hidden"
-          desc="(don't show on public pages)"
-          bind:value={p.hidden}
-        />
-        <Switch
-          name="restricted"
-          label="Restricted"
-          desc="(only for allowed members)"
-          bind:value={p.restricted}
-        />
-        <Switch
-          name="subscribable"
-          label="Subscribable"
-          desc="(allow membership request)"
-          bind:value={p.subscribable}
-        />
+        {#if p.schedule_type === "ephemeral"}
+          <Switch
+            name="hidden"
+            label="Hidden"
+            desc="(don't show on public pages)"
+            bind:value={p.hidden}
+          />
+          <Switch
+            name="restricted"
+            label="Restricted"
+            desc="(only for allowed members)"
+            bind:value={p.restricted}
+          />
+          <Switch
+            name="subscribable"
+            label="Subscribable"
+            desc="(allow membership request)"
+            bind:value={p.subscribable}
+          />
+        {/if}
 
         {#if warning}
           <Warning>
