@@ -35,10 +35,10 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/settings">Settings</a>
+        <a class="nav-link" href="/id/settings">Settings</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/logout">Log Out</a>
+        <a class="nav-link" href="/id/logout">Log Out</a>
       </li>
     </ul>
   </div>
