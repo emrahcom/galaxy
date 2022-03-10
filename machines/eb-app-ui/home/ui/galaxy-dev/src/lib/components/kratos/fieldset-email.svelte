@@ -11,7 +11,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <div class="form-floating my-3">
-  {#if $page.url.pathname === "/verification"}
+  {#if $page.url.pathname === "/id/verification"}
     <input
       type="email"
       id="email"

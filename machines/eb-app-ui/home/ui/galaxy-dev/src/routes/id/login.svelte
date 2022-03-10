@@ -7,18 +7,17 @@
   import Messages from "$lib/components/kratos/messages.svelte";
 
   const flowId = getFlowId($page.url.search);
-  if (!flowId)
-    window.location.href = `${KRATOS}/self-service/registration/browser`;
+  if (!flowId) window.location.href = `${KRATOS}/self-service/login/browser`;
 
-  const promise = getDataModels("registration", flowId);
+  const promise = getDataModels("login", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="registration">
+<section id="login">
   {#await promise then dm}
     {#if dm.instanceOf === "KratosForm"}
       <Layout>
-        <p class="h3 text-muted">Create your account</p>
+        <p class="h3 text-muted">Sign in to your account</p>
 
         <Messages messages={dm.ui.messages} />
         <Form {dm} groups={["default", "password"]} />
@@ -26,7 +25,8 @@
         <hr class="divider" />
 
         <section class="alternative-actions">
-          <p><a href="/login">Already have an account?</a></p>
+          <p><a href="/id/recovery">Forgot Password?</a></p>
+          <p><a href="/id/registration">Don't have an account?</a></p>
         </section>
       </Layout>
     {:else}
