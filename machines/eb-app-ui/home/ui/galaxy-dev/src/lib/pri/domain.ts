@@ -8,16 +8,30 @@ export const AUTH_TYPE_OPTIONS = [
 
 // -----------------------------------------------------------------------------
 export async function domainsAsOptions() {
-  const options: string[][] = [];
+  interface Option {
+    id: string;
+    name: string;
+    enabled: boolean;
+  }
+
+  const options: Option[] = [];
 
   const priDomains = await list("/api/pri/domain/list");
   for (const p of priDomains) {
-    options.push([p.id, p.enabled ? p.name : `${p.name} - DISABLED`]);
+    options.push({
+      id: p.id,
+      name: p.name,
+      enabled: p.enabled,
+    });
   }
 
   const pubDomains = await list("/api/pub/domain/list/enabled");
   for (const p of pubDomains) {
-    options.push([p.id, p.name]);
+    options.push({
+      id: p.id,
+      name: p.name,
+      enabled: p.enabled,
+    });
   }
 
   return options;

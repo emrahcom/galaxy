@@ -48,8 +48,10 @@
   });
 
   const pr4 = domainsAsOptions().then((items) => {
-    if (items) domain_id = items[0][0];
-    return items;
+    return items.map((i) => [
+      i.id,
+      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+    ]);
   });
 
   // ---------------------------------------------------------------------------

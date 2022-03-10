@@ -17,7 +17,12 @@
     has_suffix: false,
   };
 
-  const promise = domainsAsOptions();
+  const promise = domainsAsOptions().then((items) => {
+    return items.map((i) => [
+      i.id,
+      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+    ]);
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {
