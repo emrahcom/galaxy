@@ -38,6 +38,9 @@
   });
 
   const pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
+    const enableds = items.filter((i) => i.chain_enabled);
+    if (enableds[0]) p.room_id = enableds[0].id;
+
     return items.map((i) => [
       i.id,
       `${i.name} on ${i.domain_name}${i.chain_enabled ? "" : " - DISABLED"}`,
