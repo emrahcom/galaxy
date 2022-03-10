@@ -49,6 +49,8 @@
 
       {#if warning}
         <Warning>The delete request is not accepted.</Warning>
+      {:else}
+        <Warning>All meeting on this room will be deleted.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
