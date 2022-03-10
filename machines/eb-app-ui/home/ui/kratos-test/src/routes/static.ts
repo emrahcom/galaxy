@@ -15,41 +15,41 @@ export const registerStaticRoutes: RouteRegistrator = (app) => {
   app.get('/id/error', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/error?${query}` : `/error`)
+    res.redirect(query ? `/error?${query}` : `/error`)
   })
   app.get('/id/login', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/login?${query}` : `/login`)
+    res.redirect(query ? `/login?${query}` : `/login`)
   })
   app.get('/id/logout', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/logout?${query}` : `/logout`)
+    res.redirect(query ? `/logout?${query}` : `/logout`)
   })
   app.get('/id/recovery', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/recovery?${query}` : `/recovery`)
+    res.redirect(query ? `/recovery?${query}` : `/recovery`)
   })
   app.get('/id/registration', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/registration?${query}` : `/registration`)
+    res.redirect(query ? `/registration?${query}` : `/registration`)
   })
   app.get('/id/settings', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/settings?${query}` : `/settings`)
+    res.redirect(query ? `/settings?${query}` : `/settings`)
   })
   app.get('/id/verification', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/verification?${query}` : `/verification`)
+    res.redirect(query ? `/verification?${query}` : `/verification`)
   })
   app.get('/id/welcome', (req, res) => {
     const parsed = url.parse(req.url)
     const query = parsed.query
-    res.redirect((query ? `/welcome?${query}` : `/welcome`)
+    res.redirect(query ? `/welcome?${query}` : `/welcome`)
   })
 }
