@@ -210,7 +210,22 @@ su -l ui <<EOSS
     git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos-test
     cd kratos-test
     git checkout $KRATOS_VERSION
+EOSS
+EOS
 
+# add galaxy customized routes
+cp $ROOTFS/home/ui/kratos-test/src/routes/static.ts \
+    $ROOTFS/home/ui/kratos-test/src/routes/static.ts.org
+cp home/ui/kratos-test/src/routes/static.ts \
+    $ROOTFS/home/ui/kratos-test/src/routes/
+diff $ROOTFS/home/ui/kratos-test/src/routes/static.ts.org \
+    $ROOTFS/home/ui/kratos-test/src/routes/static.ts || true
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l ui <<EOSS
+    set -e
+    cd kratos-test
     npm ci
     npm run build
 EOSS
