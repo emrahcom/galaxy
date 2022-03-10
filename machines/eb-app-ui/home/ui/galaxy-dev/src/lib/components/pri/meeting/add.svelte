@@ -33,7 +33,7 @@
     return item;
   });
 
-  const pr2 = list("/api/pri/profile/list", 100).then((items: Room[]) => {
+  const pr2 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
     return items.map((i) => [i.id, i.name]);
   });
 
