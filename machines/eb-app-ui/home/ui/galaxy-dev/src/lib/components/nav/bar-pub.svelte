@@ -13,13 +13,17 @@
           <a
             class="btn btn-sm btn-outline-primary"
             role="button"
-            href="/registration"
+            href="/id/registration"
           >
             Sign Up
           </a>
         </li>
         <li class="nav-item me-2">
-          <a class="btn btn-sm btn-outline-primary" role="button" href="/login">
+          <a
+            class="btn btn-sm btn-outline-primary"
+            role="button"
+            href="/id/login"
+          >
             Sign In
           </a>
         </li>
