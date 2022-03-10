@@ -50,7 +50,7 @@
       {#if warning}
         <Warning>The disable request is not accepted.</Warning>
       {:else}
-        <Warning>All meeting on this room will be disabled.</Warning>
+        <Warning>All meetings on this room will be disabled.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
