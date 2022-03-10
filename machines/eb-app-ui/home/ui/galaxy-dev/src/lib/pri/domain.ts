@@ -30,7 +30,7 @@ export async function domainsAsOptions() {
     options.push({
       id: p.id,
       name: p.name,
-      enabled: p.enabled,
+      enabled: true,
     });
   }
 
