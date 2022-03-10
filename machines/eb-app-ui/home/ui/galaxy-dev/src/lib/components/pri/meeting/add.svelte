@@ -39,12 +39,7 @@
 
   const pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
     const enableds = items.filter((i) => i.chain_enabled);
-
-    if (enableds[0]) {
-      p.room_id = enableds[0].id;
-    } else if (items) {
-      p.room_id = items[0].id;
-    }
+    if (enableds[0]) p.room_id = enableds[0].id;
 
     return items.map((i) => [
       i.id,
