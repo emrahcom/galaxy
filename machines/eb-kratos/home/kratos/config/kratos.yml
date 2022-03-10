@@ -38,7 +38,7 @@ selfservice:
       enabled: true
       ui_url: https://___APP_FQDN___/verification
       after:
-        default_browser_return_url: https://___APP_FQDN___/
+        default_browser_return_url: https://___APP_FQDN___/welcome
 
     logout:
       after:
@@ -47,6 +47,8 @@ selfservice:
     login:
       ui_url: https://___APP_FQDN___/login
       lifespan: 10m
+      after:
+        default_browser_return_url: https://___APP_FQDN___/welcome
 
     registration:
       lifespan: 10m
