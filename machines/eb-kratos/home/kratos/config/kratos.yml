@@ -24,35 +24,35 @@ selfservice:
 
   flows:
     error:
-      ui_url: https://___APP_FQDN___/error
+      ui_url: https://___APP_FQDN___/id/error
 
     settings:
-      ui_url: https://___APP_FQDN___/settings
+      ui_url: https://___APP_FQDN___/id/settings
       privileged_session_max_age: 15m
 
     recovery:
       enabled: true
-      ui_url: https://___APP_FQDN___/recovery
+      ui_url: https://___APP_FQDN___/id/recovery
 
     verification:
       enabled: true
-      ui_url: https://___APP_FQDN___/verification
+      ui_url: https://___APP_FQDN___/id/verification
       after:
-        default_browser_return_url: https://___APP_FQDN___/welcome
+        default_browser_return_url: https://___APP_FQDN___/id/welcome
 
     logout:
       after:
-        default_browser_return_url: https://___APP_FQDN___/login
+        default_browser_return_url: https://___APP_FQDN___/id/login
 
     login:
-      ui_url: https://___APP_FQDN___/login
+      ui_url: https://___APP_FQDN___/id/login
       lifespan: 10m
       after:
-        default_browser_return_url: https://___APP_FQDN___/welcome
+        default_browser_return_url: https://___APP_FQDN___/id/welcome
 
     registration:
       lifespan: 10m
-      ui_url: https://___APP_FQDN___/registration
+      ui_url: https://___APP_FQDN___/id/registration
       after:
         password:
           hooks:
