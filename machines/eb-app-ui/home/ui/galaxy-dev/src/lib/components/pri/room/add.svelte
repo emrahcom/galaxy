@@ -18,6 +18,9 @@
   };
 
   const promise = domainsAsOptions().then((items) => {
+    const enableds = items.filter((i) => i.enabled);
+    if (enableds[0]) p.domain_id = enableds[0].id;
+
     return items.map((i) => [
       i.id,
       `${i.name}${i.enabled ? "" : " - DISABLED"}`,
