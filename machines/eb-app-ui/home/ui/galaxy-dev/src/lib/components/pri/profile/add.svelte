@@ -4,6 +4,7 @@
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Email from "$lib/components/common/form-email.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
+  import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -45,6 +46,7 @@
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
+        <SubmitBlocker />
         <Submit label="Add" />
       </div>
     </form>
