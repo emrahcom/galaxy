@@ -6,9 +6,9 @@ export async function getRoom(identityId: string, roomId: string) {
   const sql = {
     text: `
       SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-        r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-        r.accessed_at, (r.enabled AND d.enabled AND i.enabled) as
-        chain_enabled
+        r.has_suffix, r.suffix, r.enabled,
+        (r.enabled AND d.enabled AND i.enabled) as chain_enabled,
+        r.created_at, r.updated_at, r.accessed_at
       FROM room r
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
@@ -54,9 +54,9 @@ export async function listRoom(
   const sql = {
     text: `
       SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-        r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-        r.accessed_at, (r.enabled AND d.enabled AND i.enabled) as
-        chain_enabled
+        r.has_suffix, r.suffix, r.enabled,
+        (r.enabled AND d.enabled AND i.enabled) as chain_enabled,
+        r.created_at, r.updated_at, r.accessed_at
       FROM room r
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
