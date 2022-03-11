@@ -49,7 +49,11 @@ export interface PubInvite {
 export interface Meeting {
   id: string;
   profile_id: string;
+  profile_name: string;
+  domain_id: string;
+  domain_name: string;
   room_id: string;
+  room_name: string;
   host_key: string;
   guest_key: string;
   name: string;
