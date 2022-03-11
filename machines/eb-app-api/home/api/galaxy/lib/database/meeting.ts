@@ -16,7 +16,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
-        JOIN profile p ON m.profile_id = p.id
+        LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.id = $2
         AND m.identity_id = $1`,
     args: [
@@ -64,7 +64,7 @@ export async function listMeeting(
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
-        JOIN profile p ON m.profile_id = p.id
+        LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.identity_id = $1
       ORDER BY name
       LIMIT $2 OFFSET $3`,
