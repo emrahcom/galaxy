@@ -16,7 +16,7 @@
     bind:value
     {readonly}
     {required}
-    tabindex={readonly ? -1 : null}
+    tabindex={readonly ? -1 : undefined}
   />
   <label for={name}>{label}</label>
 </div>
