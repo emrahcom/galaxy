@@ -19,7 +19,6 @@
 
 <div
   class="offcanvas offcanvas-end"
-  tabindex="-1"
   id="offcanvasMenu"
   aria-labelledby="offcanvasMenuLabel"
 >

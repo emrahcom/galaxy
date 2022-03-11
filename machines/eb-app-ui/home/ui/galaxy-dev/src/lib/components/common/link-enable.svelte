@@ -3,6 +3,6 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<a {href} class="btn btn-outline-secondary btn-sm" role="button" tabindex="-1">
+<a {href} class="btn btn-outline-secondary btn-sm" role="button">
   <i class="bi bi-check-lg" />
 </a>
