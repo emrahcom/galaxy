@@ -38,7 +38,9 @@
   });
 
   const pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
-    const enableds = items.filter((i) => i.chain_enabled);
+    const enableds = items
+      .filter((i) => i.chain_enabled)
+      .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
     if (enableds[0]) p.room_id = enableds[0].id;
 
     return items.map((i) => [
