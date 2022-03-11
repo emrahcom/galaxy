@@ -8,6 +8,12 @@ export const SCHEDULE_TYPE_OPTIONS = [
 ];
 
 // -----------------------------------------------------------------------------
+export const SCHEDULE_TYPE_OPTIONS_2 = [
+  ["permanent", "permanent"],
+  ["scheduled", "scheduled"],
+];
+
+// -----------------------------------------------------------------------------
 export async function join(uuid: string) {
   const link = await getById("/api/pri/meeting/get/link", uuid);
   window.location.replace(link.url);
