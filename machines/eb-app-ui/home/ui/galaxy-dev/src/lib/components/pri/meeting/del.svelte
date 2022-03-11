@@ -47,12 +47,27 @@
         disabled={true}
       />
 
-      <p>profile</p>
+      <Text
+        name="profile"
+        label="Profile"
+        value={p.profile_name}
+        readonly={true}
+      />
 
       {#if p.schedule_type === "ephemeral"}
-        <p>domain</p>
+        <Text
+          name="domain"
+          label="Jitsi Domain"
+          value={p.domain_name}
+          readonly={true}
+        />
       {:else}
-        <p>room</p>
+        <Text
+          name="room"
+          label="Room"
+          value={`${p.room_name} on ${p.domain_name}`}
+          readonly={true}
+        />
       {/if}
 
       {#if p.schedule_type !== "ephemeral"}
