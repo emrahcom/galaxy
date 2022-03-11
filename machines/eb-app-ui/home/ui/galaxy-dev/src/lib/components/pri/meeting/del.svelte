@@ -38,7 +38,7 @@
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" value={p.name} readonly={true} />
-      <Textarea name="info" label="Info" value={p.info} readonly={false} />
+      <Textarea name="info" label="Info" value={p.info} readonly={true} />
 
       <p class="text-muted me-3 mb-1">Meeting Type</p>
       <Radio
