@@ -175,6 +175,7 @@ chown api:api /home/api/.zshrc
 EOS
 
 # galaxy-api
+cp -arp home/api/upgrade-galaxy $ROOTFS/home/api/
 cp -arp home/api/galaxy $ROOTFS/home/api/
 rm -rf $ROOTFS/home/api/galaxy/database
 rm -rf $ROOTFS/home/api/galaxy/test
