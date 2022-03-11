@@ -183,6 +183,7 @@ sed -i "s/___DB_PASSWD___/$DB_GALAXY_PASSWD/" $ROOTFS/home/api/galaxy/config.ts
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
+chown api:api /home/api/upgrade-galaxy
 chown api:api /home/api/galaxy -R
 EOS
 
