@@ -39,8 +39,8 @@ export async function generateRoomUrl(
   const email = encodeURIComponent(`"${profile.email}"`);
 
   url = `${url}#config.subject=${subject}`;
-  if (displayName) url = `${url}&userInfo.displayName=${displayName}`;
-  if (email) url = `${url}&userInfo.email=${email}`;
+  if (displayName !== "") url = `${url}&userInfo.displayName=${displayName}`;
+  if (email !== "") url = `${url}&userInfo.email=${email}`;
 
   return url;
 }
@@ -78,8 +78,8 @@ export async function generateMeetingUrl(
   const email = encodeURIComponent(`"${meeting.profile_email}"`);
 
   url = `${url}#config.subject=${subject}`;
-  if (displayName) url = `${url}&userInfo.displayName=${displayName}`;
-  if (email) url = `${url}&userInfo.email=${email}`;
+  if (displayName !== "") url = `${url}&userInfo.displayName=${displayName}`;
+  if (email !== "") url = `${url}&userInfo.email=${email}`;
 
   return url;
 }
