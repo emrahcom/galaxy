@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Meeting, PubMeeting } from "./types.ts";
+import type { Id, Meeting, MeetingLinkSet, PubMeeting } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeeting(identityId: string, meetingId: string) {
@@ -43,6 +43,29 @@ export async function getPublicMeeting(meetingId: string) {
   };
 
   return await fetch(sql) as PubMeeting[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getMeetingLinkSet(identityId: string, meetingId: string) {
+  await updateMeetingRoomSuffix(meetingId);
+
+  const sql = {
+    text: `
+      SELECT m.name, r.name as room_name, r.has_suffix, r.suffix, d.auth_type,
+        d.auth_attr, p.name as profile_name, p.email as profile_email
+      FROM meeting m
+        JOIN room r ON m.room_id = r.id
+        JOIN domain d ON r.domain_id = d.id
+        LEFT JOIN profile p ON m.profile_id = p.id
+      WHERE m.id = $2
+        AND m.identity_id = $1`,
+    args: [
+      identityId,
+      meetingId,
+    ],
+  };
+
+  return await fetch(sql) as MeetingLinkSet[];
 }
 
 // -----------------------------------------------------------------------------
@@ -246,6 +269,28 @@ export async function updateMeetingEnabled(
       identityId,
       meetingId,
       value,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function updateMeetingRoomSuffix(meetingId: string) {
+  const sql = {
+    text: `
+      UPDATE room
+      SET
+        suffix = DEFAULT,
+        accessed_at = now()
+      WHERE id = (SELECT room_id
+                  FROM meeting
+                  WHERE id = $1)
+        AND has_suffix = true
+        AND accessed_at + interval '4 hours' < now()
+      RETURNING id, accessed_at as at`,
+    args: [
+      meetingId,
     ],
   };
 

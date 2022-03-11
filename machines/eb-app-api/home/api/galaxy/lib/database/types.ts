@@ -70,6 +70,22 @@ export interface Meeting {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingLinkSet {
+  name: string;
+  room_name: string;
+  has_suffix: boolean;
+  suffix: string;
+  auth_type: string;
+  auth_attr: {
+    url: string;
+    app_id: string;
+    app_secret: string;
+  };
+  profile_name: string;
+  profile_email: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface PubMeeting {
   id: string;
   name: string;

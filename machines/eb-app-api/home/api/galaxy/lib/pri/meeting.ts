@@ -1,10 +1,12 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
+import { generateMeetingUrl } from "../common/helper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
   addMeeting,
   delMeeting,
   getMeeting,
+  getMeetingLinkSet,
   listMeeting,
   updateMeeting,
   updateMeetingEnabled,
@@ -18,6 +20,22 @@ async function get(req: Request, identityId: string): Promise<unknown> {
   const meetingId = pl.id;
 
   return await getMeeting(identityId, meetingId);
+}
+
+// -----------------------------------------------------------------------------
+async function getLink(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const meetingId = pl.id;
+
+  const meeting = await getMeetingLinkSet(identityId, meetingId)
+    .then((rows) => rows[0]);
+  const url = await generateMeetingUrl(meeting);
+
+  const link = [{
+    url: url,
+  }];
+
+  return link;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +135,8 @@ export default async function (
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req, identityId);
+  } else if (path === `${PRE}/get/link`) {
+    return await wrapper(getLink, req, identityId);
   } else if (path === `${PRE}/list`) {
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
