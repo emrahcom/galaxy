@@ -11,6 +11,9 @@ export async function generateRoomUrl(
   profile: Profile,
   exp = 86400,
 ): Promise<string> {
+  if (!profile.name) profile.name = "";
+  if (!profile.email) profile.email = "";
+
   let url = encodeURI(room.auth_attr.url);
   let roomName = encodeURIComponent(room.name);
 
@@ -31,13 +34,13 @@ export async function generateRoomUrl(
     url = `${url}?jwt=${jwt}`;
   }
 
+  const subject = encodeURIComponent(`"${room.name}"`);
   const displayName = encodeURIComponent(`"${profile.name}"`);
   const email = encodeURIComponent(`"${profile.email}"`);
-  const subject = encodeURIComponent(`"${room.name}"`);
 
-  url = `${url}#userInfo.displayName=${displayName}`;
-  url = `${url}&userInfo.email=${email}`;
-  url = `${url}&config.subject=${subject}`;
+  url = `${url}#config.subject=${subject}`;
+  if (displayName) url = `${url}&userInfo.displayName=${displayName}`;
+  if (email) url = `${url}&userInfo.email=${email}`;
 
   return url;
 }
@@ -47,6 +50,9 @@ export async function generateMeetingUrl(
   meeting: MeetingLinkSet,
   exp = 86400,
 ): Promise<string> {
+  if (!meeting.profile_name) meeting.profile_name = "";
+  if (!meeting.profile_email) meeting.profile_email = "";
+
   let url = encodeURI(meeting.auth_attr.url);
   let roomName = encodeURIComponent(meeting.room_name);
 
@@ -67,13 +73,13 @@ export async function generateMeetingUrl(
     url = `${url}?jwt=${jwt}`;
   }
 
+  const subject = encodeURIComponent(`"${meeting.name}"`);
   const displayName = encodeURIComponent(`"${meeting.profile_name}"`);
   const email = encodeURIComponent(`"${meeting.profile_email}"`);
-  const subject = encodeURIComponent(`"${meeting.name}"`);
 
-  url = `${url}#userInfo.displayName=${displayName}`;
-  url = `${url}&userInfo.email=${email}`;
-  url = `${url}&config.subject=${subject}`;
+  url = `${url}#config.subject=${subject}`;
+  if (displayName) url = `${url}&userInfo.displayName=${displayName}`;
+  if (email) url = `${url}&userInfo.email=${email}`;
 
   return url;
 }
