@@ -6,18 +6,18 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # the request owner id
-[[ -z "$1" ]] && ID1=2 || ID1=$1
+[[ -z "$1" ]] && SET1=2 || SET1=$1
 # the meeting owner id
-[[ -z "$2" ]] && ID2=1 || ID2=$2
+[[ -z "$2" ]] && SET2=1 || SET2=$2
 [[ -z "$3" ]] && NUM=1 || NUM=$3
 
 # ------------------------------------------------------------------------------
 # add many new requests
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$ID1-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET1-1-res)
 
 for i in $(seq 1 $NUM); do
-    meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$ID2-$i-res)
+    meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET2-$i-res)
     JSON=$(cat <<EOF
     {
         "profile_id": "$profile_id",
@@ -26,5 +26,5 @@ for i in $(seq 1 $NUM); do
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "$ID1" "pri" "request" "add" "$JSON" $i
+    bash $TEMPLATES/action-member-id "$SET1" "pri" "request" "add" "$JSON" $i
 done

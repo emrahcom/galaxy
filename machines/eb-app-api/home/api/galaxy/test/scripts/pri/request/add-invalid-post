@@ -5,12 +5,12 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
 # try to add a new request for a nonexistent meeting
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$ID-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
 meeting_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
@@ -20,4 +20,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$ID" "pri" "request" "add" "$JSON" 2
+bash $TEMPLATES/action-member-error "$SET" "pri" "request" "add" "$JSON" 2
