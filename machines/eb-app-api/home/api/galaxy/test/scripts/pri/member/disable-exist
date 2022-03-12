@@ -6,15 +6,15 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # the meeting owner id
-[[ -z "$1" ]] && ID1=1 || ID1=$1
+[[ -z "$1" ]] && SET1=1 || SET1=$1
 # the member (membership owner) id
-[[ -z "$2" ]] && ID2=2 || ID2=$2
+[[ -z "$2" ]] && SET2=2 || SET2=$2
 
 # ------------------------------------------------------------------------------
 # disable an existing member
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-membership-add-byinvite-id-$ID2-1-res)
+    $TMP/api-pri-membership-add-byinvite-id-$SET2-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"
@@ -22,4 +22,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "$ID1" "pri" "member" "disable" "$JSON" 1
+bash $TEMPLATES/action-member-id "$SET1" "pri" "member" "disable" "$JSON" 1

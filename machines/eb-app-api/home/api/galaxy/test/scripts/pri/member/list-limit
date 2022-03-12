@@ -5,12 +5,12 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
 # get member list (limit 2, no offset)
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$ID-1-res)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
     "meeting_id": "$meeting_id",
@@ -19,4 +19,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "$ID" "pri" "member" "list" "$JSON" 2
+bash $TEMPLATES/action-member-id "$SET" "pri" "member" "list" "$JSON" 2
