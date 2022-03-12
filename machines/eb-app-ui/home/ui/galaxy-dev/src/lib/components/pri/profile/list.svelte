@@ -18,7 +18,7 @@
             <p class="card-text text-muted">{p.email ?? "-"}</p>
           </div>
 
-          <div class="card-footer bg-body text-center">
+          <div class="card-footer bg-body border-0 text-center">
             {#if !p.is_default}
               <Del href="/pri/profile/del/{p.id}" />
               <Set href="/pri/profile/set/default/{p.id}" />

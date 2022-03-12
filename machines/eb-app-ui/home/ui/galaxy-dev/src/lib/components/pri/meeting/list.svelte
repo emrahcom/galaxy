@@ -20,7 +20,7 @@
             <p class="card-text text-muted">{p.info}</p>
           </div>
 
-          <div class="card-footer bg-body text-center">
+          <div class="card-footer bg-body border-0 text-center">
             <Del href="/pri/meeting/del/{p.id}" />
 
             {#if p.enabled}
