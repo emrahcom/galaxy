@@ -5,13 +5,13 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 [[ -z "$2" ]] && NUM=1 || NUM=$2
 
 # ------------------------------------------------------------------------------
 # add many new rooms
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
 
 for i in $(seq 1 $NUM); do
     name="room-$(date +'%s')-$i-$RANDOM"
@@ -24,5 +24,5 @@ for i in $(seq 1 $NUM); do
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "$ID" "pri" "room" "add" "$JSON" $i
+    bash $TEMPLATES/action-member-id "$SET" "pri" "room" "add" "$JSON" $i
 done
