@@ -23,4 +23,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "$SET" "pri" "room" "update" "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET" "pri" "room" "update" "id" "$JSON" 1

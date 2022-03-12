@@ -24,5 +24,6 @@ for i in $(seq 1 $NUM); do
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "$SET" "pri" "room" "add" "$JSON" $i
+    bash $TEMPLATES/action-member-attr "$SET" "pri" "room" "add" "id" \
+        "$JSON" $i
 done

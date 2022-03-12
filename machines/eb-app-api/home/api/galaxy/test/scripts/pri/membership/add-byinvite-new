@@ -23,7 +23,8 @@ for i in $(seq 1 $NUM); do
     }
 EOF
 )
-    bash $TEMPLATES/action-member-id "$SET2" "pri" "invite" "get" "$JSON" $i
+    bash $TEMPLATES/action-member-attr "$SET2" "pri" "invite" "get" "id" \
+        "$JSON" $i
 
     invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$SET2-$i-res)
     JSON=$(cat <<EOF
@@ -34,6 +35,6 @@ EOF
 EOF
 )
 
-    bash $TEMPLATES/action-member-id "$SET1" "pri" "membership" "add/byinvite" \
-        "$JSON" $i
+    bash $TEMPLATES/action-member-attr "$SET1" "pri" "membership" \
+        "add/byinvite" "id" "$JSON" $i
 done
