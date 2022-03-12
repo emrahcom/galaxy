@@ -1,5 +1,12 @@
 <script lang="ts">
   import identity from "$lib/stores/kratos/identity";
+
+  // ---------------------------------------------------------------------------
+  function closeMenu() {
+    let closeButton = document.getElementById("closeButton");
+
+    closeButton.click();
+  }
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -26,6 +33,7 @@
     <button
       type="button"
       class="btn-close text-reset"
+      id="closeButton"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     />
@@ -34,10 +42,12 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/id/settings">Settings</a>
+        <a class="nav-link" href="/id/settings" on:click={closeMenu}>
+          Settings
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/id/logout">Log Out</a>
+        <a class="nav-link" href="/id/logout" on:click={closeMenu}> Log Out </a>
       </li>
     </ul>
   </div>
