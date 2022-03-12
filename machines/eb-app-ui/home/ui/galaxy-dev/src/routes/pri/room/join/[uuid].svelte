@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { join } from "$lib/pri/room";
-  import Info from "$lib/components/common/alert-info.svelte";
+  import Spinner from "$lib/components/common/spinner.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -12,9 +12,9 @@
 <Subheader subheader="Join the meeting room" />
 
 {#await promise}
-  <Info>joining...</Info>
+  <Spinner>joining...</Spinner>
 {:then}
-  <Info>joining...</Info>
+  <Spinner>joining...</Spinner>
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
