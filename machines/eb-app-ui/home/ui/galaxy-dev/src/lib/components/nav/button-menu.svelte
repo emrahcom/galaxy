@@ -1,6 +1,6 @@
 <script lang="ts">
   function closeMenu() {
-    let closeButton = document.getElementById("closeButton");
+    let closeButton = document.getElementById("closeMenuButton");
 
     closeButton.click();
   }
@@ -28,7 +28,7 @@
     <button
       type="button"
       class="btn-close text-reset"
-      id="closeButton"
+      id="closeMenuButton"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     />
