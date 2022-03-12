@@ -5,13 +5,13 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 [[ -z "$2" ]] && NUM=1 || NUM=$2
 
 # ------------------------------------------------------------------------------
 # add many new meetings
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-$ID-1-res)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-$SET-1-res)
 
 hidden=false
 for i in $(seq 1 $NUM); do
@@ -31,5 +31,5 @@ EOF
 )
     [[ "$hidden" = false ]] && hidden=true || hidden=false
 
-    bash $TEMPLATES/action-member-id "$ID" "pri" "meeting" "add" "$JSON" $i
+    bash $TEMPLATES/action-member-id "$SET" "pri" "meeting" "add" "$JSON" $i
 done
