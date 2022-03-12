@@ -23,204 +23,204 @@ bash $BASEDIR/scripts/adm/hello
 # ------------------------------------------------------------------------------
 # pri
 # ------------------------------------------------------------------------------
-ID1=1
-ID2=2
+SET1=1
+SET2=2
 
-bash $BASEDIR/scripts/pri/hello $ID1
+bash $BASEDIR/scripts/pri/hello $SET1
 
 # profile
-bash $BASEDIR/scripts/pri/profile/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/profile/add-new $ID1
-bash $BASEDIR/scripts/pri/profile/get-exist $ID1
-bash $BASEDIR/scripts/pri/profile/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/profile/get-default $ID1
-bash $BASEDIR/scripts/pri/profile/add-exist $ID1
+bash $BASEDIR/scripts/pri/profile/add-invalid-post $SET1
+bash $BASEDIR/scripts/pri/profile/add-new $SET1
+bash $BASEDIR/scripts/pri/profile/get-exist $SET1
+bash $BASEDIR/scripts/pri/profile/get-nonexist $SET1
+bash $BASEDIR/scripts/pri/profile/get-default $SET1
+bash $BASEDIR/scripts/pri/profile/add-exist $SET1
 
-bash $BASEDIR/scripts/pri/profile/update-exist $ID1
-bash $BASEDIR/scripts/pri/profile/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/profile/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/profile/del-exist $ID1
-bash $BASEDIR/scripts/pri/profile/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/profile/update-exist $SET1
+bash $BASEDIR/scripts/pri/profile/update-nonexist $SET1
+bash $BASEDIR/scripts/pri/profile/update-invalid-post $SET1
+bash $BASEDIR/scripts/pri/profile/del-exist $SET1
+bash $BASEDIR/scripts/pri/profile/del-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/profile/add-new $ID1 10
-bash $BASEDIR/scripts/pri/profile/set-default-exist $ID1
-bash $BASEDIR/scripts/pri/profile/set-default-nonexist $ID1
-bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/profile/list-limit $ID1
-bash $BASEDIR/scripts/pri/profile/list-limit-offset $ID1
-bash $BASEDIR/scripts/pri/profile/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/profile/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/profile/add-new $SET1 10
+bash $BASEDIR/scripts/pri/profile/set-default-exist $SET1
+bash $BASEDIR/scripts/pri/profile/set-default-nonexist $SET1
+bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/profile/list-limit $SET1
+bash $BASEDIR/scripts/pri/profile/list-limit-offset $SET1
+bash $BASEDIR/scripts/pri/profile/list-huge-offset $SET1
+bash $BASEDIR/scripts/pri/profile/list-invalid-post $SET1
 
-bash $BASEDIR/scripts/pri/profile/add-new $ID2
+bash $BASEDIR/scripts/pri/profile/add-new $SET2
 
 # domain
-bash $BASEDIR/scripts/pri/domain/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/domain/add-new $ID1
-bash $BASEDIR/scripts/pri/domain/get-exist $ID1
-bash $BASEDIR/scripts/pri/domain/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/add-exist $ID1
+bash $BASEDIR/scripts/pri/domain/add-invalid-post $SET1
+bash $BASEDIR/scripts/pri/domain/add-new $SET1
+bash $BASEDIR/scripts/pri/domain/get-exist $SET1
+bash $BASEDIR/scripts/pri/domain/get-nonexist $SET1
+bash $BASEDIR/scripts/pri/domain/add-exist $SET1
 
-bash $BASEDIR/scripts/pri/domain/update-exist $ID1
-bash $BASEDIR/scripts/pri/domain/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/domain/disable-exist $ID1
-bash $BASEDIR/scripts/pri/domain/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/enable-exist $ID1
-bash $BASEDIR/scripts/pri/domain/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/del-exist $ID1
-bash $BASEDIR/scripts/pri/domain/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/domain/update-exist $SET1
+bash $BASEDIR/scripts/pri/domain/update-nonexist $SET1
+bash $BASEDIR/scripts/pri/domain/update-invalid-post $SET1
+bash $BASEDIR/scripts/pri/domain/disable-exist $SET1
+bash $BASEDIR/scripts/pri/domain/disable-nonexist $SET1
+bash $BASEDIR/scripts/pri/domain/enable-exist $SET1
+bash $BASEDIR/scripts/pri/domain/enable-nonexist $SET1
+bash $BASEDIR/scripts/pri/domain/del-exist $SET1
+bash $BASEDIR/scripts/pri/domain/del-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/domain/add-new $ID1 10
-bash $BASEDIR/scripts/pri/domain/list-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/domain/list-limit $ID1
-bash $BASEDIR/scripts/pri/domain/list-limit-offset $ID1
-bash $BASEDIR/scripts/pri/domain/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/domain/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/domain/add-new $SET1 10
+bash $BASEDIR/scripts/pri/domain/list-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/domain/list-limit $SET1
+bash $BASEDIR/scripts/pri/domain/list-limit-offset $SET1
+bash $BASEDIR/scripts/pri/domain/list-huge-offset $SET1
+bash $BASEDIR/scripts/pri/domain/list-invalid-post $SET1
 
 # room
-bash $BASEDIR/scripts/pri/room/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/room/add-new $ID1
-bash $BASEDIR/scripts/pri/room/get-exist $ID1
-bash $BASEDIR/scripts/pri/room/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/add-exist $ID1
+bash $BASEDIR/scripts/pri/room/add-invalid-post $SET1
+bash $BASEDIR/scripts/pri/room/add-new $SET1
+bash $BASEDIR/scripts/pri/room/get-exist $SET1
+bash $BASEDIR/scripts/pri/room/get-nonexist $SET1
+bash $BASEDIR/scripts/pri/room/add-exist $SET1
 
-bash $BASEDIR/scripts/pri/room/update-exist $ID1
-bash $BASEDIR/scripts/pri/room/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/room/disable-exist $ID1
-bash $BASEDIR/scripts/pri/room/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/enable-exist $ID1
-bash $BASEDIR/scripts/pri/room/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/del-exist $ID1
-bash $BASEDIR/scripts/pri/room/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/room/update-exist $SET1
+bash $BASEDIR/scripts/pri/room/update-nonexist $SET1
+bash $BASEDIR/scripts/pri/room/update-invalid-post $SET1
+bash $BASEDIR/scripts/pri/room/disable-exist $SET1
+bash $BASEDIR/scripts/pri/room/disable-nonexist $SET1
+bash $BASEDIR/scripts/pri/room/enable-exist $SET1
+bash $BASEDIR/scripts/pri/room/enable-nonexist $SET1
+bash $BASEDIR/scripts/pri/room/del-exist $SET1
+bash $BASEDIR/scripts/pri/room/del-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/room/add-new $ID1 10
-bash $BASEDIR/scripts/pri/room/list-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/room/list-limit $ID1
-bash $BASEDIR/scripts/pri/room/list-limit-offset $ID1
-bash $BASEDIR/scripts/pri/room/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/room/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/room/add-new $SET1 10
+bash $BASEDIR/scripts/pri/room/list-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/room/list-limit $SET1
+bash $BASEDIR/scripts/pri/room/list-limit-offset $SET1
+bash $BASEDIR/scripts/pri/room/list-huge-offset $SET1
+bash $BASEDIR/scripts/pri/room/list-invalid-post $SET1
 
-bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 10
+bash $BASEDIR/scripts/pri/room/add-ephemeral $SET1 10
 
 # meeting
-bash $BASEDIR/scripts/pri/meeting/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1
-bash $BASEDIR/scripts/pri/meeting/get-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting/add-invalid-post $SET1
+bash $BASEDIR/scripts/pri/meeting/add-new $SET1
+bash $BASEDIR/scripts/pri/meeting/get-exist $SET1
+bash $BASEDIR/scripts/pri/meeting/get-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/meeting/update-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting/disable-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting/enable-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting/del-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting/update-exist $SET1
+bash $BASEDIR/scripts/pri/meeting/update-nonexist $SET1
+bash $BASEDIR/scripts/pri/meeting/update-invalid-post $SET1
+bash $BASEDIR/scripts/pri/meeting/disable-exist $SET1
+bash $BASEDIR/scripts/pri/meeting/disable-nonexist $SET1
+bash $BASEDIR/scripts/pri/meeting/enable-exist $SET1
+bash $BASEDIR/scripts/pri/meeting/enable-nonexist $SET1
+bash $BASEDIR/scripts/pri/meeting/del-exist $SET1
+bash $BASEDIR/scripts/pri/meeting/del-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1 10
-bash $BASEDIR/scripts/pri/meeting/list-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/meeting/list-limit $ID1
-bash $BASEDIR/scripts/pri/meeting/list-limit-offset $ID1
-bash $BASEDIR/scripts/pri/meeting/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/meeting/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/meeting/add-new $SET1 10
+bash $BASEDIR/scripts/pri/meeting/list-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/meeting/list-limit $SET1
+bash $BASEDIR/scripts/pri/meeting/list-limit-offset $SET1
+bash $BASEDIR/scripts/pri/meeting/list-huge-offset $SET1
+bash $BASEDIR/scripts/pri/meeting/list-invalid-post $SET1
 
 # invite
-bash $BASEDIR/scripts/pri/invite/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/invite/add-new $ID1
-bash $BASEDIR/scripts/pri/invite/get-exist $ID1
-bash $BASEDIR/scripts/pri/invite/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/invite/add-invalid-post $SET1
+bash $BASEDIR/scripts/pri/invite/add-new $SET1
+bash $BASEDIR/scripts/pri/invite/get-exist $SET1
+bash $BASEDIR/scripts/pri/invite/get-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/invite/disable-exist $ID1
-bash $BASEDIR/scripts/pri/invite/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/invite/enable-exist $ID1
-bash $BASEDIR/scripts/pri/invite/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/invite/del-exist $ID1
-bash $BASEDIR/scripts/pri/invite/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/invite/disable-exist $SET1
+bash $BASEDIR/scripts/pri/invite/disable-nonexist $SET1
+bash $BASEDIR/scripts/pri/invite/enable-exist $SET1
+bash $BASEDIR/scripts/pri/invite/enable-nonexist $SET1
+bash $BASEDIR/scripts/pri/invite/del-exist $SET1
+bash $BASEDIR/scripts/pri/invite/del-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/invite/add-new $ID1 10
-bash $BASEDIR/scripts/pri/invite/list-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/invite/list-limit $ID1
-bash $BASEDIR/scripts/pri/invite/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/invite/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/invite/add-new $SET1 10
+bash $BASEDIR/scripts/pri/invite/list-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/invite/list-limit $SET1
+bash $BASEDIR/scripts/pri/invite/list-huge-offset $SET1
+bash $BASEDIR/scripts/pri/invite/list-invalid-post $SET1
 
 # membership
-bash $BASEDIR/scripts/pri/membership/add-byinvite-invalid-post $ID2
-bash $BASEDIR/scripts/pri/membership/add-byinvite-new $ID2 $ID1
-bash $BASEDIR/scripts/pri/membership/get-exist $ID2
-bash $BASEDIR/scripts/pri/membership/get-nonexist $ID2
-bash $BASEDIR/scripts/pri/membership/add-byinvite-exist $ID2
+bash $BASEDIR/scripts/pri/membership/add-byinvite-invalid-post $SET2
+bash $BASEDIR/scripts/pri/membership/add-byinvite-new $SET2 $SET1
+bash $BASEDIR/scripts/pri/membership/get-exist $SET2
+bash $BASEDIR/scripts/pri/membership/get-nonexist $SET2
+bash $BASEDIR/scripts/pri/membership/add-byinvite-exist $SET2
 
-bash $BASEDIR/scripts/pri/membership/update-exist $ID2
-bash $BASEDIR/scripts/pri/membership/update-nonexist $ID2
-bash $BASEDIR/scripts/pri/membership/del-exist $ID2
-bash $BASEDIR/scripts/pri/membership/del-nonexist $ID2
+bash $BASEDIR/scripts/pri/membership/update-exist $SET2
+bash $BASEDIR/scripts/pri/membership/update-nonexist $SET2
+bash $BASEDIR/scripts/pri/membership/del-exist $SET2
+bash $BASEDIR/scripts/pri/membership/del-nonexist $SET2
 
-bash $BASEDIR/scripts/pri/membership/add-byinvite-new $ID2 $ID1 10
-bash $BASEDIR/scripts/pri/membership/list-nolimit-nooffset $ID2
-bash $BASEDIR/scripts/pri/membership/list-limit $ID2
-bash $BASEDIR/scripts/pri/membership/list-limit-offset $ID2
-bash $BASEDIR/scripts/pri/membership/list-huge-offset $ID2
-bash $BASEDIR/scripts/pri/membership/list-invalid-post $ID2
+bash $BASEDIR/scripts/pri/membership/add-byinvite-new $SET2 $SET1 10
+bash $BASEDIR/scripts/pri/membership/list-nolimit-nooffset $SET2
+bash $BASEDIR/scripts/pri/membership/list-limit $SET2
+bash $BASEDIR/scripts/pri/membership/list-limit-offset $SET2
+bash $BASEDIR/scripts/pri/membership/list-huge-offset $SET2
+bash $BASEDIR/scripts/pri/membership/list-invalid-post $SET2
 
 # member
-bash $BASEDIR/scripts/pri/member/get-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/member/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/member/get-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/member/get-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/member/list-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/member/list-limit $ID1
-bash $BASEDIR/scripts/pri/member/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/member/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/member/list-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/member/list-limit $SET1
+bash $BASEDIR/scripts/pri/member/list-huge-offset $SET1
+bash $BASEDIR/scripts/pri/member/list-invalid-post $SET1
 
-bash $BASEDIR/scripts/pri/member/disable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/member/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/member/enable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/member/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/member/set-guest-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/member/set-guest-nonexist $ID1
-bash $BASEDIR/scripts/pri/member/set-host-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/member/set-host-nonexist $ID1
-bash $BASEDIR/scripts/pri/member/del-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/member/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/member/disable-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/member/disable-nonexist $SET1
+bash $BASEDIR/scripts/pri/member/enable-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/member/enable-nonexist $SET1
+bash $BASEDIR/scripts/pri/member/set-guest-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/member/set-guest-nonexist $SET1
+bash $BASEDIR/scripts/pri/member/set-host-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/member/set-host-nonexist $SET1
+bash $BASEDIR/scripts/pri/member/del-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/member/del-nonexist $SET1
 
 # request
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1 1
+bash $BASEDIR/scripts/pri/meeting/add-new $SET1 1
 
-bash $BASEDIR/scripts/pri/request/add-invalid-post $ID2
-bash $BASEDIR/scripts/pri/request/add-new $ID2 $ID1
-bash $BASEDIR/scripts/pri/request/get-exist $ID2
-bash $BASEDIR/scripts/pri/request/get-nonexist $ID2
-bash $BASEDIR/scripts/pri/request/add-exist $ID2
-bash $BASEDIR/scripts/pri/request/add-exist-membership $ID2
+bash $BASEDIR/scripts/pri/request/add-invalid-post $SET2
+bash $BASEDIR/scripts/pri/request/add-new $SET2 $SET1
+bash $BASEDIR/scripts/pri/request/get-exist $SET2
+bash $BASEDIR/scripts/pri/request/get-nonexist $SET2
+bash $BASEDIR/scripts/pri/request/add-exist $SET2
+bash $BASEDIR/scripts/pri/request/add-exist-membership $SET2
 
-bash $BASEDIR/scripts/pri/request/update-exist $ID2
-bash $BASEDIR/scripts/pri/request/update-nonexist $ID2
-bash $BASEDIR/scripts/pri/request/update-invalid-post $ID2
-bash $BASEDIR/scripts/pri/request/del-exist $ID2
-bash $BASEDIR/scripts/pri/request/del-nonexist $ID2
+bash $BASEDIR/scripts/pri/request/update-exist $SET2
+bash $BASEDIR/scripts/pri/request/update-nonexist $SET2
+bash $BASEDIR/scripts/pri/request/update-invalid-post $SET2
+bash $BASEDIR/scripts/pri/request/del-exist $SET2
+bash $BASEDIR/scripts/pri/request/del-nonexist $SET2
 
-bash $BASEDIR/scripts/pri/request/drop-nonexist $ID1
-bash $BASEDIR/scripts/pri/request/add-new $ID2
-bash $BASEDIR/scripts/pri/request/drop-exist $ID1 $ID2
+bash $BASEDIR/scripts/pri/request/drop-nonexist $SET1
+bash $BASEDIR/scripts/pri/request/add-new $SET2
+bash $BASEDIR/scripts/pri/request/drop-exist $SET1 $SET2
 
-bash $BASEDIR/scripts/pri/request/reject-nonexist $ID1
-bash $BASEDIR/scripts/pri/request/add-new $ID2
-bash $BASEDIR/scripts/pri/request/reject-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/request/drop-exist $ID1 $ID2
+bash $BASEDIR/scripts/pri/request/reject-nonexist $SET1
+bash $BASEDIR/scripts/pri/request/add-new $SET2
+bash $BASEDIR/scripts/pri/request/reject-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/request/drop-exist $SET1 $SET2
 
-bash $BASEDIR/scripts/pri/request/accept-nonexist $ID1
-bash $BASEDIR/scripts/pri/request/add-new $ID2
-bash $BASEDIR/scripts/pri/request/accept-exist $ID1 $ID2
+bash $BASEDIR/scripts/pri/request/accept-nonexist $SET1
+bash $BASEDIR/scripts/pri/request/add-new $SET2
+bash $BASEDIR/scripts/pri/request/accept-exist $SET1 $SET2
 
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1 10
+bash $BASEDIR/scripts/pri/meeting/add-new $SET1 10
 
-bash $BASEDIR/scripts/pri/request/add-new $ID2 $ID1 10
-bash $BASEDIR/scripts/pri/request/list-nolimit-nooffset $ID2
-bash $BASEDIR/scripts/pri/request/list-limit $ID2
-bash $BASEDIR/scripts/pri/request/list-limit-offset $ID2
-bash $BASEDIR/scripts/pri/request/list-huge-offset $ID2
-bash $BASEDIR/scripts/pri/request/list-invalid-post $ID2
+bash $BASEDIR/scripts/pri/request/add-new $SET2 $SET1 10
+bash $BASEDIR/scripts/pri/request/list-nolimit-nooffset $SET2
+bash $BASEDIR/scripts/pri/request/list-limit $SET2
+bash $BASEDIR/scripts/pri/request/list-limit-offset $SET2
+bash $BASEDIR/scripts/pri/request/list-huge-offset $SET2
+bash $BASEDIR/scripts/pri/request/list-invalid-post $SET2
 
 # ------------------------------------------------------------------------------
 # pub
