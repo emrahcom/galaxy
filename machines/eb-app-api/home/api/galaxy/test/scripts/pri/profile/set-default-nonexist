@@ -5,7 +5,7 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
 # set as default a nonexistent profile
@@ -18,5 +18,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$ID" "pri" "profile" "set/default" \
+bash $TEMPLATES/action-member-empty "$SET" "pri" "profile" "set/default" \
     "$JSON" 1

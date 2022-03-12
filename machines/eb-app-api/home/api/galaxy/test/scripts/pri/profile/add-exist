@@ -5,14 +5,14 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
 # try to add an already existing profile
 # duplicated (identity_id, name, email)
 # ------------------------------------------------------------------------------
-name=$(jq -r ".[0].name" $TMP/api-pri-profile-get-id-$ID-1-res)
-email=$(jq -r ".[0].email" $TMP/api-pri-profile-get-id-$ID-1-res)
+name=$(jq -r ".[0].name" $TMP/api-pri-profile-get-id-$SET-1-res)
+email=$(jq -r ".[0].email" $TMP/api-pri-profile-get-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
     "name": "$name",
@@ -21,4 +21,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$ID" "pri" "profile" "add" "$JSON" 1
+bash $TEMPLATES/action-member-error "$SET" "pri" "profile" "add" "$JSON" 1
