@@ -101,6 +101,8 @@ bash $BASEDIR/scripts/pri/room/list-limit-offset $SET1
 bash $BASEDIR/scripts/pri/room/list-huge-offset $SET1
 bash $BASEDIR/scripts/pri/room/list-invalid-post $SET1
 
+bash $BASEDIR/scripts/pri/room/get-link-exist $SET1
+bash $BASEDIR/scripts/pri/room/get-link-nonexist $SET1
 bash $BASEDIR/scripts/pri/room/add-ephemeral $SET1 10
 
 # meeting
