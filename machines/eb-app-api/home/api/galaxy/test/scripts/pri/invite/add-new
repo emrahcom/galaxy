@@ -5,7 +5,7 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 [[ -z "$2" ]] && NUM=1 || NUM=$2
 
 # ------------------------------------------------------------------------------
@@ -13,7 +13,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 as_host=true
 for i in $(seq 1 $NUM); do
-    meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$ID-$i-res)
+    meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-$i-res)
     JSON=$(cat <<EOF
     {
         "meeting_id": "$meeting_id",
@@ -23,5 +23,5 @@ EOF
 )
     [[ "$as_host" = false ]] && as_host=true || as_host=false
 
-    bash $TEMPLATES/action-member-id "$ID" "pri" "invite" "add" "$JSON" $i
+    bash $TEMPLATES/action-member-id "$SET" "pri" "invite" "add" "$JSON" $i
 done
