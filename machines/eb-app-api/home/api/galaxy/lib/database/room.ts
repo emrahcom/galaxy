@@ -119,7 +119,7 @@ export async function addEphemeralRoom(
          WHERE id = $2
            AND (identity_id = $1
                 OR public = true)),
-        'meeting-' || md5(gen_random_uuid()::text),
+        'room-' || md5(gen_random_uuid()::text),
         false, true)
       RETURNING id, created_at as at`,
     args: [
