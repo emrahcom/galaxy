@@ -16,4 +16,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 3
+bash $TEMPLATES/action-guest-attr "pub" "meeting" "list/enabled" "id" "$JSON" 3

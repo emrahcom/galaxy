@@ -15,4 +15,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-id "pub" "meeting" "list/enabled" "$JSON" 2
+bash $TEMPLATES/action-guest-attr "pub" "meeting" "list/enabled" "id" "$JSON" 2
