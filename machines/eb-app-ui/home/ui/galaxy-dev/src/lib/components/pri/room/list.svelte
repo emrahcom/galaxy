@@ -13,7 +13,7 @@
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
     {#each rooms as p}
-      <div class="col-sm-6 col-lg-4 col-xxl-3">
+      <div class="col-md-6 col-xl-4">
         <div class="card {!p.chain_enabled ? 'border-danger' : ''}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
