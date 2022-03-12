@@ -31,5 +31,6 @@ EOF
 )
     [[ "$hidden" = false ]] && hidden=true || hidden=false
 
-    bash $TEMPLATES/action-member-id "$SET" "pri" "meeting" "add" "$JSON" $i
+    bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting" "add" "id" \
+        "$JSON" $i
 done

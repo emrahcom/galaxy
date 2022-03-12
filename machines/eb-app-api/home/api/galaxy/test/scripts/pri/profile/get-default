@@ -16,4 +16,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-id "$SET" "pri" "profile" "get/default" "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET" "pri" "profile" "get/default" "id" \
+    "$JSON" 1
