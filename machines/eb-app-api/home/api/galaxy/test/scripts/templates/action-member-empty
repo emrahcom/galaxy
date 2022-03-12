@@ -7,7 +7,7 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
-ID=$1
+SET=$1
 SERVICE=$2
 CLASS=$3
 ACTION=$4
@@ -18,23 +18,23 @@ JSON=$5
 # ------------------------------------------------------------------------------
 # /api/<service>/<class>/<action> -> empty
 # ------------------------------------------------------------------------------
-header <<< "/api/$SERVICE/$CLASS/$ACTION -> empty (id: $ID)"
-rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$ID-$NUM-*
+header <<< "/api/$SERVICE/$CLASS/$ACTION -> empty (set: $SET)"
+rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$SET-$NUM-*
 
-echo "$JSON" >$TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$ID-$NUM-req
+echo "$JSON" >$TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$SET-$NUM-req
 
-cookieJar=$(cat $TMP/kratos-$ID-login-cookie)
+cookieJar=$(cat $TMP/kratos-$SET-login-cookie)
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
     --output-dir $TMP \
-    --output api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$ID-$NUM-res \
+    --output api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$SET-$NUM-res \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data "$JSON"
-res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$ID-$NUM-res)
+res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-empty-$SET-$NUM-res)
 
 inp <<< "$(echo $JSON | jq .)"
 out <<< "$res"
 
 [[ "$res" != "[]" ]] && exit 1
-footer <<< "/api/$SERVICE/$CLASS/$ACTION -> empty (id: $ID)"
+footer <<< "/api/$SERVICE/$CLASS/$ACTION -> empty (set: $SET)"

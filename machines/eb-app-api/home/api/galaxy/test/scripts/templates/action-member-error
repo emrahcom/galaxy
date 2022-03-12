@@ -7,7 +7,7 @@ set -e
 BASEDIR=$(dirname $0)
 source $BASEDIR/../common
 
-ID=$1
+SET=$1
 SERVICE=$2
 CLASS=$3
 ACTION=$4
@@ -18,20 +18,20 @@ JSON=$5
 # ------------------------------------------------------------------------------
 # /api/<service>/<class>/<action> -> error
 # ------------------------------------------------------------------------------
-header <<< "/api/$SERVICE/$CLASS/$ACTION -> error (id: $ID)"
-rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-error-$ID-$NUM-*
+header <<< "/api/$SERVICE/$CLASS/$ACTION -> error (set: $SET)"
+rm -f $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-error-$SET-$NUM-*
 
-echo "$JSON" >$TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-error-$ID-$NUM-req
+echo "$JSON" >$TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-error-$SET-$NUM-req
 
-cookieJar=$(cat $TMP/kratos-$ID-login-cookie)
+cookieJar=$(cat $TMP/kratos-$SET-login-cookie)
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
     --output-dir $TMP \
-    --output api-$SERVICE-$CLASS-$ACTION_DASHED-error-$ID-$NUM-res \
+    --output api-$SERVICE-$CLASS-$ACTION_DASHED-error-$SET-$NUM-res \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data "$JSON"
-res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-error-$ID-$NUM-res)
+res=$(jq . $TMP/api-$SERVICE-$CLASS-$ACTION_DASHED-error-$SET-$NUM-res)
 
 inp <<< "$(echo $JSON | jq .)"
 out <<< "$res"
@@ -39,4 +39,4 @@ out <<< "$res"
 [[ -z "$(echo $res | jq .)" ]] && exit 1
 [[ -z "$(echo $res | jq -r .error)" ]] && exit 1
 [[ "$(echo $res | jq -r .error)" = "null" ]] && exit 1
-footer <<< "/api/$SERVICE/$CLASS/$ACTION -> error (id: $ID)"
+footer <<< "/api/$SERVICE/$CLASS/$ACTION -> error (set: $SET)"
