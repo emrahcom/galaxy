@@ -6,15 +6,15 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # the membership owner id
-[[ -z "$1" ]] && ID1=2 || ID1=$1
+[[ -z "$1" ]] && SET1=2 || SET1=$1
 # the invite owner id
-[[ -z "$2" ]] && ID2=1 || ID2=$2
+[[ -z "$2" ]] && SET2=1 || SET2=$2
 
 # ------------------------------------------------------------------------------
 # try to add an already existing membership
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$ID1-1-res)
-invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$ID2-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET1-1-res)
+invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$SET2-1-res)
 JSON=$(cat <<EOF
 {
     "profile_id": "$profile_id",
@@ -23,5 +23,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$ID1" "pri" "membership" "add/byinvite" \
+bash $TEMPLATES/action-member-error "$SET1" "pri" "membership" "add/byinvite" \
     "$JSON" 1
