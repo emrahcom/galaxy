@@ -5,12 +5,12 @@ BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
 # try to update with invalid auth_type
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
 name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
 {
@@ -26,12 +26,12 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$ID" "pri" "domain" "update" "$JSON" 1
+bash $TEMPLATES/action-member-error "$SET" "pri" "domain" "update" "$JSON" 1
 
 # ------------------------------------------------------------------------------
 # try to update with invalid url
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
 name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
 {
@@ -47,4 +47,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$ID" "pri" "domain" "update" "$JSON" 2
+bash $TEMPLATES/action-member-error "$SET" "pri" "domain" "update" "$JSON" 2

@@ -4,12 +4,12 @@ set -e
 BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../templates
 
-[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
 # hello with authentication to the private api
 # ------------------------------------------------------------------------------
-bash $TEMPLATES/hello-member-text "$ID" "pri"
+bash $TEMPLATES/hello-member-text "$SET" "pri"
 
 # ------------------------------------------------------------------------------
 # hello without authentication to the private api
