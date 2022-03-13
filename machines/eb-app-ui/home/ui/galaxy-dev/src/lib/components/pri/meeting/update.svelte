@@ -62,7 +62,7 @@
         <Text name="name" label="Name" bind:value={p.name} required={true} />
         <Textarea
           name="info"
-          label="Info"
+          label="Info (optional)"
           bind:value={p.info}
           required={false}
         />
