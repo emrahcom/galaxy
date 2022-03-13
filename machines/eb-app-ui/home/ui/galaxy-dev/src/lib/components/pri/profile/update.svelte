@@ -35,7 +35,12 @@
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
-      <Email name="email" label="Email" bind:value={p.email} required={false} />
+      <Email
+        name="email"
+        label="Email (optional)"
+        bind:value={p.email}
+        required={false}
+      />
 
       {#if warning}
         <Warning>
