@@ -1,11 +1,11 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action, list } from "$lib/api";
+  import { action, getById, list } from "$lib/api";
   import {
     SCHEDULE_TYPE_OPTIONS,
     SCHEDULE_TYPE_OPTIONS_2,
   } from "$lib/pri/meeting";
-  import type { Meeting, Profile, Room } from "$lib/types";
+  import type { Domain, Meeting, Profile, Room } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Radio from "$lib/components/common/form-radio.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -31,6 +31,12 @@
     ]);
   });
 
+  const pr3 = getById("/api/pri/domain/get", p.domain_id).then(
+    (item: Domain) => {
+      if (!item.enabled) p.domain_name = `${p.domain_name} - DISABLED`;
+    },
+  );
+
   // ---------------------------------------------------------------------------
   function cancel() {
     window.location.href = "/pri/meeting";
@@ -50,7 +56,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="update">
-  {#await Promise.all([pr1, pr2]) then [profiles, rooms]}
+  {#await Promise.all([pr1, pr2, pr3]) then [profiles, rooms, _domain]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
