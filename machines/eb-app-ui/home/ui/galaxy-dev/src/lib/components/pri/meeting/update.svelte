@@ -40,14 +40,8 @@
   async function onSubmit() {
     try {
       warning = false;
-
       await action("/api/pri/meeting/update", p);
-
-      if (p.schedule_type === "scheduled") {
-        window.location.href = `/pri/meeting/schedule/add/${p.id}`;
-      } else {
-        window.location.href = "/pri/meeting";
-      }
+      window.location.href = "/pri/meeting";
     } catch {
       warning = true;
     }
