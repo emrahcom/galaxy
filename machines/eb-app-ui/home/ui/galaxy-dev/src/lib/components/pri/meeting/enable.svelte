@@ -15,9 +15,11 @@
   export let p: Meeting;
 
   let warning = false;
+  let domain_name: string;
+  let room_name: string;
 
   if (!p.domain_enabled || !p.domain_owner_enabled) {
-    p.domain_name = `${p.domain_name} - DISABLED`;
+    domain_name = `${p.domain_name} - DISABLED`;
   }
   if (
     !p.domain_enabled ||
@@ -25,7 +27,7 @@
     !p.room_enabled ||
     !p.room_owner_enabled
   ) {
-    p.room_name = `${p.room_name} on ${p.domain_name} - DISABLED`;
+    room_name = `${p.room_name} on ${p.domain_name} - DISABLED`;
   }
 
   // ---------------------------------------------------------------------------
@@ -70,11 +72,11 @@
         <Text
           name="domain"
           label="Jitsi Domain"
-          value={p.domain_name}
+          value={domain_name}
           readonly={true}
         />
       {:else}
-        <Text name="room" label="Room" value={p.room_name} readonly={true} />
+        <Text name="room" label="Room" value={room_name} readonly={true} />
       {/if}
 
       {#if p.schedule_type !== "ephemeral"}
