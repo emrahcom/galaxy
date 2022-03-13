@@ -33,7 +33,7 @@
 
   const pr3 = getById("/api/pri/domain/get", p.domain_id)
     .then((item: Domain) => {
-      if (!item.enabled) p.domain_name = `${p.domain_name} - DISABLED`;
+      if (!item.chain_enabled) p.domain_name = `${p.domain_name} - DISABLED`;
     })
     .catch(() => {
       // this case occurs if there is a network issue or the domain is public
