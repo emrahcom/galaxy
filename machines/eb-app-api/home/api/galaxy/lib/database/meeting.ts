@@ -117,16 +117,18 @@ export async function listEnabledPublicMeeting(
       SELECT m.id, m.name, m.info, m.schedule_type, m.schedule_attr,
         m.restricted, m.subscribable
       FROM meeting m
-        JOIN identity i ON m.identity_id = i.id
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
-        JOIN identity i2 ON d.identity_id = i2.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+        JOIN identity i3 ON m.identity_id = i3.id
       WHERE m.hidden = false
         AND m.enabled = true
-        AND i.enabled = true
         AND r.enabled = true
         AND d.enabled = true
+        AND i1.enabled = true
         AND i2.enabled = true
+        AND i3.enabled = true
       ORDER BY m.created_at DESC
       LIMIT $1 OFFSET $2`,
     args: [
