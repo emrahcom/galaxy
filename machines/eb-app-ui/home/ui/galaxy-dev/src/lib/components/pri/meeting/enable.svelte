@@ -16,7 +16,7 @@
 
   let warning = false;
   let domain_name = p.domain_name;
-  let room_name = p.room_name;
+  let room_name = `${p.room_name} on ${p.domain_name}`;
 
   if (!p.domain_enabled || !p.domain_owner_enabled) {
     domain_name = `${p.domain_name} - DISABLED`;
