@@ -5,9 +5,9 @@ import type { Domain, Id, PubDomain } from "./types.ts";
 export async function getDomain(identityId: string, domainId: string) {
   const sql = {
     text: `
-      SELECT d.id, d.name, d.auth_type, d.auth_attr, i.enabled as owner_enabled,
-        d.enabled, (i.enabled AND d.enabled) as chain_enabled, d.created_at,
-        d.updated_at
+      SELECT d.id, d.name, d.auth_type, d.auth_attr, d.enabled,
+        i.enabled as owner_enabled, (i.enabled AND d.enabled) as chain_enabled,
+        d.created_at, d.updated_at
       FROM domain d
         JOIN identity i ON d.identity_id = i.id
       WHERE d.id = $2
@@ -29,9 +29,9 @@ export async function listDomain(
 ) {
   const sql = {
     text: `
-      SELECT d.id, d.name, d.auth_type, d.auth_attr, i.enabled as owner_enabled,
-        d.enabled, (i.enabled AND d.enabled) as chain_enabled, d.created_at,
-        d.updated_at
+      SELECT d.id, d.name, d.auth_type, d.auth_attr, d.enabled,
+        i.enabled as owner_enabled, (i.enabled AND d.enabled) as chain_enabled,
+        d.created_at, d.updated_at
       FROM domain d
         JOIN identity i ON d.identity_id = i.id
       WHERE d.identity_id = $1

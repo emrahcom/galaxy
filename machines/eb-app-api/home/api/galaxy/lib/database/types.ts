@@ -11,8 +11,8 @@ export interface Domain {
   auth_attr: {
     [key: string]: string;
   };
-  owner_enabled: boolean;
   enabled: boolean;
+  owner_enabled: boolean;
   chain_enabled: boolean;
   created_at: string;
   updated_at: string;
