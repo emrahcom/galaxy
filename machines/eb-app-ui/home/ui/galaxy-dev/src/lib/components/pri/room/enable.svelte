@@ -13,7 +13,9 @@
 
   let warning = false;
 
-  if (!p.domain_enabled) p.domain_name = `${p.domain_name} - DISABLED`;
+  if (!p.domain_enabled || !p.domain_owner_enabled) {
+    p.domain_name = `${p.domain_name} - DISABLED`;
+  }
 
   // ---------------------------------------------------------------------------
   function cancel() {
