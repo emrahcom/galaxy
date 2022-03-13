@@ -15,8 +15,8 @@
   export let p: Meeting;
 
   let warning = false;
-  let domain_name: string;
-  let room_name: string;
+  let domain_name = p.domain_name;
+  let room_name = p.room_name;
 
   if (!p.domain_enabled || !p.domain_owner_enabled) {
     domain_name = `${p.domain_name} - DISABLED`;
