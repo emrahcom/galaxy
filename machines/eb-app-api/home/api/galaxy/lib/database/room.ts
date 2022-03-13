@@ -6,13 +6,14 @@ export async function getRoom(identityId: string, roomId: string) {
   const sql = {
     text: `
       SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-        d.enabled as domain_enabled, i.enabled as domain_owner_enabled,
-        r.has_suffix, r.suffix, r.enabled,
-        (i.enabled AND d.enabled AND r.enabled) as chain_enabled,
-        r.created_at, r.updated_at, r.accessed_at
+        d.enabled as domain_enabled, i1.enabled as domain_owner_enabled,
+        r.has_suffix, r.suffix, r.enabled, i2.enabled as owner_enabled,
+        (i1.enabled AND d.enabled AND r.enabled AND i2.enabled)
+        as chain_enabled, r.created_at, r.updated_at, r.accessed_at
       FROM room r
         JOIN domain d ON r.domain_id = d.id
-        JOIN identity i ON d.identity_id = i.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
       WHERE r.id = $2
         AND r.identity_id = $1
         AND r.ephemeral = false`,
@@ -55,13 +56,14 @@ export async function listRoom(
   const sql = {
     text: `
       SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-        d.enabled as domain_enabled, i.enabled as domain_owner_enabled,
-        r.has_suffix, r.suffix, r.enabled,
-        (i.enabled AND d.enabled AND r.enabled) as chain_enabled,
-        r.created_at, r.updated_at, r.accessed_at
+        d.enabled as domain_enabled, i1.enabled as domain_owner_enabled,
+        r.has_suffix, r.suffix, r.enabled, i2.enabled as owner_enabled,
+        (i1.enabled AND d.enabled AND r.enabled AND i2.enabled)
+        as chain_enabled, r.created_at, r.updated_at, r.accessed_at
       FROM room r
         JOIN domain d ON r.domain_id = d.id
-        JOIN identity i ON d.identity_id = i.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
       WHERE r.identity_id = $1
         AND r.ephemeral = false
       ORDER BY name
