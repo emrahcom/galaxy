@@ -5,13 +5,13 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const promise = join($page.params.uuid);
+  const pr = join($page.params.uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Join the meeting" />
 
-{#await promise}
+{#await pr}
   <Spinner>joining...</Spinner>
 {:then}
   <Spinner>joining...</Spinner>

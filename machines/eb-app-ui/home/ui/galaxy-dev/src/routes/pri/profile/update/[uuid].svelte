@@ -5,13 +5,13 @@
   import Update from "$lib/components/pri/profile/update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const promise = getById("/api/pri/profile/get", $page.params.uuid);
+  const pr = getById("/api/pri/profile/get", $page.params.uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Update this meeting profile" />
 
-{#await promise then profile}
+{#await pr then profile}
   <Update p={profile} />
 {:catch}
   <Warning>Something went wrong</Warning>

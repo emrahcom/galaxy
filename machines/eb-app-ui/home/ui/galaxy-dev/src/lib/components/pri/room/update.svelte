@@ -15,7 +15,7 @@
 
   let warning = false;
 
-  const promise = domainsAsOptions().then((items) => {
+  const pr = domainsAsOptions().then((items) => {
     return items.map((i) => [
       i.id,
       `${i.name}${i.enabled ? "" : " - DISABLED"}`,
@@ -41,7 +41,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="update">
-  {#await promise then domains}
+  {#await pr then domains}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />

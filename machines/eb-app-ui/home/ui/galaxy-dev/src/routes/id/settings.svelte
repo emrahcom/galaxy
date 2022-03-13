@@ -9,12 +9,12 @@
   const flowId = getFlowId($page.url.search);
   if (!flowId) window.location.href = `${KRATOS}/self-service/settings/browser`;
 
-  const promise = getDataModels("settings", flowId);
+  const pr = getDataModels("settings", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <section id="settings">
-  {#await promise then dm}
+  {#await pr then dm}
     {#if dm.instanceOf === "KratosForm"}
       <Layout>
         <p class="h3 text-muted">Update my account settings</p>

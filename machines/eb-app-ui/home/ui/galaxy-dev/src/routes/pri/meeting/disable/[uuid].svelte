@@ -5,13 +5,13 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const promise = getById("/api/pri/meeting/get", $page.params.uuid);
+  const pr = getById("/api/pri/meeting/get", $page.params.uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Disable this meeting" />
 
-{#await promise then meeting}
+{#await pr then meeting}
   <Disable p={meeting} />
 {:catch}
   <Warning>Something went wrong</Warning>

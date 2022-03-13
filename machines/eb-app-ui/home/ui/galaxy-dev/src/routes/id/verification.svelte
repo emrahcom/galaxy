@@ -15,12 +15,12 @@
   if (!flowId)
     window.location.href = `${KRATOS}/self-service/verification/browser`;
 
-  const promise = getDataModels("verification", flowId);
+  const pr = getDataModels("verification", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <section id="verification">
-  {#await promise then dm}
+  {#await pr then dm}
     {#if dm.instanceOf === "KratosForm"}
       <Layout>
         <p class="h3 text-muted">Verify your email address</p>

@@ -17,7 +17,7 @@
     has_suffix: false,
   };
 
-  const promise = domainsAsOptions().then((items) => {
+  const pr = domainsAsOptions().then((items) => {
     const enableds = items.filter((i) => i.enabled);
     if (enableds[0]) p.domain_id = enableds[0].id;
 
@@ -46,7 +46,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  {#await promise then domains}
+  {#await pr then domains}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />

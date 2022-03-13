@@ -10,12 +10,12 @@
   if (!flowId)
     window.location.href = `${KRATOS}/self-service/registration/browser`;
 
-  const promise = getDataModels("registration", flowId);
+  const pr = getDataModels("registration", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <section id="registration">
-  {#await promise then dm}
+  {#await pr then dm}
     {#if dm.instanceOf === "KratosForm"}
       <Layout>
         <p class="h3 text-muted">Create your account</p>

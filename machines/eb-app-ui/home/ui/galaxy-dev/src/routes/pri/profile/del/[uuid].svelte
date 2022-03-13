@@ -5,13 +5,13 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const promise = getById("/api/pri/profile/get", $page.params.uuid);
+  const pr = getById("/api/pri/profile/get", $page.params.uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Delete this meeting profile" />
 
-{#await promise then profile}
+{#await pr then profile}
   <Del p={profile} />
 {:catch}
   <Warning>Something went wrong</Warning>

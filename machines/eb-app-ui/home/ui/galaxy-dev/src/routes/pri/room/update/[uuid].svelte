@@ -5,13 +5,13 @@
   import Update from "$lib/components/pri/room/update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const promise = getById("/api/pri/room/get", $page.params.uuid);
+  const pr = getById("/api/pri/room/get", $page.params.uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Update this meeting room" />
 
-{#await promise then room}
+{#await pr then room}
   <Update p={room} />
 {:catch}
   <Warning>Something went wrong</Warning>

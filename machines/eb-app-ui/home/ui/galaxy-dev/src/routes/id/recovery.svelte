@@ -9,12 +9,12 @@
   const flowId = getFlowId($page.url.search);
   if (!flowId) window.location.href = `${KRATOS}/self-service/recovery/browser`;
 
-  const promise = getDataModels("recovery", flowId);
+  const pr = getDataModels("recovery", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <section id="recovery">
-  {#await promise then dm}
+  {#await pr then dm}
     {#if dm.instanceOf === "KratosForm"}
       <Layout>
         <p class="h3 text-muted">Forgot password?</p>

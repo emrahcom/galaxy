@@ -9,12 +9,12 @@
   const flowId = getFlowId($page.url.search);
   if (!flowId) window.location.href = `${KRATOS}/self-service/login/browser`;
 
-  const promise = getDataModels("login", flowId);
+  const pr = getDataModels("login", flowId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <section id="login">
-  {#await promise then dm}
+  {#await pr then dm}
     {#if dm.instanceOf === "KratosForm"}
       <Layout>
         <p class="h3 text-muted">Sign in to your account</p>

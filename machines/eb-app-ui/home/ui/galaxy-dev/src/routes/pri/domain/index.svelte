@@ -4,13 +4,13 @@
   import Subheader from "$lib/components/common/subheader-pri-list.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const promise = list("/api/pri/domain/list", 100);
+  const pr = list("/api/pri/domain/list", 100);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="My Jitsi domains" href="/pri/domain/add" />
 
-{#await promise then domains}
+{#await pr then domains}
   <List {domains} />
 {:catch}
   <Warning>Something went wrong</Warning>
