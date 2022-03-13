@@ -6,16 +6,19 @@ export async function getMeeting(identityId: string, meetingId: string) {
   const sql = {
     text: `
       SELECT m.id, p.id as profile_id, p.name as profile_name,
-        d.id as domain_id, d.name as domain_name, r.id as room_id,
-        r.name as room_name, m.host_key, m.guest_key, m.name, m.info,
-        m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
+        d.id as domain_id, d.name as domain_name, d.enabled as domain_enabled,
+        i1.enabled as domain_owner_enabled, r.id as room_id,
+        r.name as room_name, r.enabled as room_enabled,
+        i2.enabled as room_owner_enabled, m.host_key, m.guest_key, m.name,
+        m.info, m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
         m.subscribable, m.enabled,
-        (m.enabled AND r.enabled AND d.enabled AND i.enabled) as chain_enabled,
-        m.created_at, m.updated_at
+        (i1.enabled AND d.enabled AND r.enabled AND i2.enabled AND m.enabled) as
+        chain_enabled, m.created_at, m.updated_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
-        JOIN identity i ON d.identity_id = i.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
         LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.id = $2
         AND m.identity_id = $1`,
@@ -77,16 +80,19 @@ export async function listMeeting(
   const sql = {
     text: `
       SELECT m.id, p.id as profile_id, p.name as profile_name,
-        d.id as domain_id, d.name as domain_name, r.id as room_id,
-        r.name as room_name, m.host_key, m.guest_key, m.name, m.info,
-        m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
+        d.id as domain_id, d.name as domain_name, d.enabled as domain_enabled,
+        i1.enabled as domain_owner_enabled, r.id as room_id,
+        r.name as room_name, r.enabled as room_enabled,
+        i2.enabled as room_owner_enabled, m.host_key, m.guest_key, m.name,
+        m.info, m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
         m.subscribable, m.enabled,
-        (m.enabled AND r.enabled AND d.enabled AND i.enabled) as chain_enabled,
-        m.created_at, m.updated_at
+        (i1.enabled AND d.enabled AND r.enabled AND i2.enabled AND m.enabled) as
+        chain_enabled, m.created_at, m.updated_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
-        JOIN identity i ON d.identity_id = i.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
         LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.identity_id = $1
       ORDER BY name

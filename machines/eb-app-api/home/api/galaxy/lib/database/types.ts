@@ -52,8 +52,12 @@ export interface Meeting {
   profile_name: string;
   domain_id: string;
   domain_name: string;
+  domain_enabled: boolean;
+  domain_owner_enabled: boolean;
   room_id: string;
   room_name: string;
+  room_enabled: boolean;
+  room_owner_enabled: boolean;
   host_key: string;
   guest_key: string;
   name: string;
