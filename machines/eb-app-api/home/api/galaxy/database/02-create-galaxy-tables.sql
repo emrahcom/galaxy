@@ -276,7 +276,7 @@ CREATE INDEX ON meeting_invite("identity_id", "meeting_id", "expired_at");
 ALTER TABLE meeting_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
--- REQUEST
+-- MEETING_REQUEST
 -- -----------------------------------------------------------------------------
 -- - request can be created only if the meeting is subscribable and restricted.
 --   if not restricted, no need the request, create membership immediately.
@@ -286,21 +286,21 @@ ALTER TABLE meeting_invite OWNER TO galaxy;
 -- - meeting owner can delete the request anytimes
 -- - delete all records which have expired_at older than now()
 -- -----------------------------------------------------------------------------
-CREATE TYPE request_status AS ENUM ('pending', 'rejected');
-CREATE TABLE request (
+CREATE TYPE meeting_request_status AS ENUM ('pending', 'rejected');
+CREATE TABLE meeting_request (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "profile_id" uuid NOT NULL REFERENCES profile(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "status" request_status NOT NULL DEFAULT 'pending',
+    "status" meeting_request_status NOT NULL DEFAULT 'pending',
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
       DEFAULT now() + interval '7 days'
 );
-CREATE UNIQUE INDEX ON request("identity_id", "meeting_id");
-CREATE INDEX ON request("meeting_id", "status");
-ALTER TABLE request OWNER TO galaxy;
+CREATE UNIQUE INDEX ON meeting_request("identity_id", "meeting_id");
+CREATE INDEX ON meeting_request("meeting_id", "status");
+ALTER TABLE meeting_request OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- SCHEDULE
