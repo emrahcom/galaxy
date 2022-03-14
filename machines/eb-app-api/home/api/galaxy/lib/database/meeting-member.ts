@@ -1,101 +1,69 @@
 import { fetch } from "./common.ts";
-import type { Id, Membership } from "./types.ts";
+import type { Id, Member } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getMembership(
-  identityId: string,
-  membershipId: string,
-) {
+export async function getMember(identityId: string, membershipId: string) {
   const sql = {
     text: `
-      SELECT mem.id, mem.profile_id, m.id as meeting_id,
-        m.name as meeting_name, m.info as meeting_info, mem.is_host,
-        mem.enabled, mem.created_at, mem.updated_at
+      SELECT mem.id, p.name as profile_name, mem.is_host, mem.enabled,
+        mem.created_at, mem.updated_at
       FROM membership mem
-        JOIN meeting m ON mem.meeting_id = m.id
+        JOIN profile p ON mem.profile_id = p.id
       WHERE mem.id = $2
-        AND mem.identity_id = $1`,
+        AND EXISTS (SELECT 1
+                    FROM meeting m
+                    WHERE m.id = mem.meeting_id
+                      AND m.identity_id = $1)`,
     args: [
       identityId,
       membershipId,
     ],
   };
 
-  return await fetch(sql) as Membership[];
+  return await fetch(sql) as Member[];
 }
 
 // -----------------------------------------------------------------------------
-export async function listMembership(
+export async function listMember(
   identityId: string,
+  meetingId: string,
   limit: number,
   offset: number,
 ) {
   const sql = {
     text: `
-      SELECT mem.id, mem.profile_id, m.id as meeting_id,
-        m.name as meeting_name, m.info as meeting_info, mem.is_host,
-        mem.enabled, mem.created_at, mem.updated_at
+      SELECT mem.id, p.name as profile_name, mem.is_host, mem.enabled,
+        mem.created_at, mem.updated_at
       FROM membership mem
-        JOIN meeting m ON mem.meeting_id = m.id
-      WHERE mem.identity_id = $1
-      ORDER BY m.name, mem.created_at
-      LIMIT $2 OFFSET $3`,
+        JOIN profile p ON mem.profile_id = p.id
+      WHERE mem.meeting_id = $2
+        AND EXISTS (SELECT 1
+                    FROM meeting m
+                    WHERE m.id = mem.meeting_id
+                      AND m.identity_id = $1)
+      ORDER BY profile_name, mem.created_at
+      LIMIT $3 OFFSET $4`,
     args: [
       identityId,
+      meetingId,
       limit,
       offset,
     ],
   };
 
-  return await fetch(sql) as Membership[];
+  return await fetch(sql) as Member[];
 }
 
 // -----------------------------------------------------------------------------
-export async function addMembershipByInvite(
-  identityId: string,
-  profileId: string,
-  inviteCode: string,
-) {
+export async function delMember(identityId: string, membershipId: string) {
   const sql = {
     text: `
-      INSERT INTO membership (identity_id, profile_id, meeting_id, is_host)
-      VALUES (
-        $1,
-        (SELECT id
-         FROM profile
-         WHERE id = $2
-           AND identity_id = $1),
-        (SELECT meeting_id
-         FROM invite
-         WHERE code = $3
-           AND enabled = true
-           AND expired_at > now()),
-        (SELECT as_host
-         FROM invite
-         WHERE code = $3
-           AND enabled = true
-           AND expired_at > now()))
-      RETURNING id, created_at as at`,
-    args: [
-      identityId,
-      profileId,
-      inviteCode,
-    ],
-  };
-
-  return await fetch(sql) as Id[];
-}
-
-// -----------------------------------------------------------------------------
-export async function delMembership(
-  identityId: string,
-  membershipId: string,
-) {
-  const sql = {
-    text: `
-      DELETE FROM membership
+      DELETE FROM membership mem
       WHERE id = $2
-        AND identity_id = $1
+        AND EXISTS (SELECT 1
+                    FROM meeting m
+                    WHERE m.id = mem.meeting_id
+                      AND m.identity_id = $1)
       RETURNING id, now() as at`,
     args: [
       identityId,
@@ -107,28 +75,55 @@ export async function delMembership(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateMembership(
+export async function updateMemberEnabled(
   identityId: string,
   membershipId: string,
-  profileId: string,
+  value: boolean,
 ) {
-  // meeting_id is not updatable
   const sql = {
     text: `
-      UPDATE membership
+      UPDATE membership mem
       SET
-        profile_id= (SELECT id
-                     FROM profile
-                     WHERE id = $3
-                       AND identity_id = $1),
+        enabled = $3,
         updated_at = now()
       WHERE id = $2
-        AND identity_id = $1
+        AND EXISTS (SELECT 1
+                    FROM meeting m
+                    WHERE m.id = mem.meeting_id
+                      AND m.identity_id = $1)
       RETURNING id, updated_at as at`,
     args: [
       identityId,
       membershipId,
-      profileId,
+      value,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function updateMemberIsHost(
+  identityId: string,
+  membershipId: string,
+  value: boolean,
+) {
+  const sql = {
+    text: `
+      UPDATE membership mem
+      SET
+        is_host = $3,
+        updated_at = now()
+      WHERE id = $2
+        AND EXISTS (SELECT 1
+                    FROM meeting m
+                    WHERE m.id = mem.meeting_id
+                      AND m.identity_id = $1)
+      RETURNING id, updated_at as at`,
+    args: [
+      identityId,
+      membershipId,
+      value,
     ],
   };
 
