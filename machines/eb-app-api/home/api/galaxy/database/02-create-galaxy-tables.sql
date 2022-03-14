@@ -63,8 +63,9 @@ ALTER TABLE profile OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- DOMAIN
 -- -----------------------------------------------------------------------------
--- - public domain can only be added by system account.
--- - auth_type of public domain must be 'none'
+-- - public domain can only be added by system account
+-- - auth_type of public domain must be 'none' (to decrease complexity)
+-- - only none and token are supported as auth_type (to decrease complexity)
 -- - urls are in auth_attr depending on auth_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE domain_auth_type AS ENUM ('none', 'token');
@@ -109,8 +110,8 @@ ALTER TABLE domain_partner OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- DOMAIN_INVITE
 -- -----------------------------------------------------------------------------
--- - domain invite can only be used once by an identity, then it will be
---   disabled
+-- - domain invite can only be used once, then it will be disabled
+-- - needs a unique invite for each partner
 -- -----------------------------------------------------------------------------
 CREATE TABLE domain_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -132,7 +133,7 @@ ALTER TABLE domain_invite OWNER TO galaxy;
 -- ROOM
 -- -----------------------------------------------------------------------------
 -- - update suffix if accessed_at is older than 4 hours
--- - dont show the room to the owner too if ephemeral is true
+-- - dont show the room to the owner if ephemeral is true
 -- - ephemeral room name contains suffix in its name
 -- -----------------------------------------------------------------------------
 CREATE TABLE room (
@@ -173,7 +174,8 @@ ALTER TABLE room_partner OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- ROOM_INVITE
 -- -----------------------------------------------------------------------------
--- - room invite can only be used once by an identity, then it will be disabled
+-- - room invite can only be used once, then it will be disabled
+-- - needs a unique invite for each partner
 -- -----------------------------------------------------------------------------
 CREATE TABLE room_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -195,13 +197,13 @@ ALTER TABLE room_invite OWNER TO galaxy;
 -- MEETING
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting if it's over
+-- - ephemeral will be over 4 hours after the room's accessed_at
 -- - show the scheduled meeting although it's over. it may be added a new date
 -- - allow to change the schedule type if it is not ephemeral
 -- - non-hidden meeting can be seen by everyone but permission will be needed to
 --   participate it if it is restricted
 -- - anybody can participate a restricted meeting if she has the key
 -- - a non-restricted meeting may be hidden
--- - duration as minute in schedule_attr according to schedule_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_schedule_type AS ENUM
     ('permanent', 'scheduled', 'ephemeral');
