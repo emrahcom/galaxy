@@ -5,7 +5,7 @@ import type { Domain, Id, PubDomain } from "./types.ts";
 export async function getDomain(identityId: string, domainId: string) {
   const sql = {
     text: `
-      SELECT d.id, d.name, d.auth_type, d.auth_attr, d.enabled,
+      SELECT d.id, d.name, d.auth_type, d.domain_attr, d.enabled,
         i.enabled as owner_enabled, (i.enabled AND d.enabled) as chain_enabled,
         d.created_at, d.updated_at
       FROM domain d
@@ -29,7 +29,7 @@ export async function listDomain(
 ) {
   const sql = {
     text: `
-      SELECT d.id, d.name, d.auth_type, d.auth_attr, d.enabled,
+      SELECT d.id, d.name, d.auth_type, d.domain_attr, d.enabled,
         i.enabled as owner_enabled, (i.enabled AND d.enabled) as chain_enabled,
         d.created_at, d.updated_at
       FROM domain d
@@ -73,18 +73,18 @@ export async function addDomain(
   identityId: string,
   name: string,
   authType: string,
-  authAttr: unknown,
+  domainAttr: unknown,
 ) {
   const sql = {
     text: `
-      INSERT INTO domain (identity_id, name, auth_type, auth_attr)
+      INSERT INTO domain (identity_id, name, auth_type, domain_attr)
       VALUES ($1, $2, $3, $4::jsonb)
       RETURNING id, created_at as at`,
     args: [
       identityId,
       name,
       authType,
-      authAttr,
+      domainAttr,
     ],
   };
 
@@ -114,7 +114,7 @@ export async function updateDomain(
   domainId: string,
   name: string,
   authType: string,
-  authAttr: unknown,
+  domainAttr: unknown,
 ) {
   const sql = {
     text: `
@@ -122,7 +122,7 @@ export async function updateDomain(
       SET
         name = $3,
         auth_type = $4,
-        auth_attr = $5::jsonb,
+        domain_attr = $5::jsonb,
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
@@ -132,7 +132,7 @@ export async function updateDomain(
       domainId,
       name,
       authType,
-      authAttr,
+      domainAttr,
     ],
   };
 

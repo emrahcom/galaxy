@@ -15,7 +15,7 @@ JSON=$(cat <<EOF
 {
     "name": "$name",
     "auth_type": "UNKNOWN",
-    "auth_attr": {
+    "domain_attr": {
         "url": "https://meet.jit.si"
     }
 }
@@ -32,7 +32,7 @@ JSON=$(cat <<EOF
 {
     "name": "$name",
     "auth_type": "none",
-    "auth_attr": {
+    "domain_attr": {
         "url": "ftp://meet.jit.si"
     }
 }

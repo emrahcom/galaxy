@@ -14,7 +14,7 @@ export async function generateRoomUrl(
   if (!profile.name) profile.name = "";
   if (!profile.email) profile.email = "";
 
-  let url = encodeURI(room.auth_attr.url);
+  let url = encodeURI(room.domain_attr.url);
   let roomName = encodeURIComponent(room.name);
 
   if (room.has_suffix) roomName = `${roomName}-${room.suffix}`;
@@ -23,8 +23,8 @@ export async function generateRoomUrl(
 
   if (room.auth_type === "token") {
     const jwt = await generateHostToken(
-      room.auth_attr.app_id,
-      room.auth_attr.app_secret,
+      room.domain_attr.app_id,
+      room.domain_attr.app_secret,
       roomName,
       profile.name,
       profile.email,
@@ -53,7 +53,7 @@ export async function generateMeetingUrl(
   if (!meeting.profile_name) meeting.profile_name = "";
   if (!meeting.profile_email) meeting.profile_email = "";
 
-  let url = encodeURI(meeting.auth_attr.url);
+  let url = encodeURI(meeting.domain_attr.url);
   let roomName = encodeURIComponent(meeting.room_name);
 
   if (meeting.has_suffix) roomName = `${roomName}-${meeting.suffix}`;
@@ -62,8 +62,8 @@ export async function generateMeetingUrl(
 
   if (meeting.auth_type === "token") {
     const jwt = await generateHostToken(
-      meeting.auth_attr.app_id,
-      meeting.auth_attr.app_secret,
+      meeting.domain_attr.app_id,
+      meeting.domain_attr.app_secret,
       roomName,
       meeting.profile_name,
       meeting.profile_email,

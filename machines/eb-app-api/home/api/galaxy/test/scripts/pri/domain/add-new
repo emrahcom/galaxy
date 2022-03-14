@@ -17,7 +17,7 @@ for i in $(seq 1 $NUM); do
     {
         "name": "$name",
         "auth_type": "none",
-        "auth_attr": {
+        "domain_attr": {
             "url": "https://meet.jit.si"
         }
     }

@@ -32,7 +32,7 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
 
   const sql = {
     text: `
-      SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.auth_attr
+      SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.domain_attr
       FROM room r
         JOIN domain d ON r.domain_id = d.id
       WHERE r.id = $2

@@ -35,15 +35,15 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const name = pl.name;
   const authType = pl.auth_type;
-  const authAttr = pl.auth_attr;
+  const domainAttr = pl.domain_attr;
 
-  if (!isValidUrl(authAttr.url)) throw new Error("invalid input");
+  if (!isValidUrl(domainAttr.url)) throw new Error("invalid input");
 
   return await addDomain(
     identityId,
     name,
     authType,
-    authAttr,
+    domainAttr,
   );
 }
 
@@ -61,16 +61,16 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const domainId = pl.id;
   const name = pl.name;
   const authType = pl.auth_type;
-  const authAttr = pl.auth_attr;
+  const domainAttr = pl.domain_attr;
 
-  if (!isValidUrl(authAttr.url)) throw new Error("invalid input");
+  if (!isValidUrl(domainAttr.url)) throw new Error("invalid input");
 
   return await updateDomain(
     identityId,
     domainId,
     name,
     authType,
-    authAttr,
+    domainAttr,
   );
 }
 
