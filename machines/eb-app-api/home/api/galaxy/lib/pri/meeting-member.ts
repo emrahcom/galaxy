@@ -2,39 +2,31 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
-  addMembershipByInvite,
-  delMembership,
-  getMembership,
-  listMembership,
-  updateMembership,
-} from "../database/membership.ts";
+  delMember,
+  getMember,
+  listMember,
+  updateMemberEnabled,
+  updateMemberIsHost,
+} from "../database/member.ts";
 
-const PRE = "/api/pri/membership";
+const PRE = "/api/pri/member";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const membershipId = pl.id;
 
-  return await getMembership(identityId, membershipId);
+  return await getMember(identityId, membershipId);
 }
 
 // -----------------------------------------------------------------------------
 async function list(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
+  const meetingId = pl.meeting_id;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listMembership(identityId, limit, offset);
-}
-
-// -----------------------------------------------------------------------------
-async function addByInvite(req: Request, identityId: string): Promise<unknown> {
-  const pl = await req.json();
-  const profileId = pl.profile_id;
-  const inviteCode = pl.invite_code;
-
-  return await addMembershipByInvite(identityId, profileId, inviteCode);
+  return await listMember(identityId, meetingId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
@@ -42,16 +34,39 @@ async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const membershipId = pl.id;
 
-  return await delMembership(identityId, membershipId);
+  return await delMember(identityId, membershipId);
 }
 
 // -----------------------------------------------------------------------------
-async function update(req: Request, identityId: string): Promise<unknown> {
+async function enable(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const membershipId = pl.id;
-  const profileId = pl.profile_id;
 
-  return await updateMembership(identityId, membershipId, profileId);
+  return await updateMemberEnabled(identityId, membershipId, true);
+}
+
+// -----------------------------------------------------------------------------
+async function disable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const membershipId = pl.id;
+
+  return await updateMemberEnabled(identityId, membershipId, false);
+}
+
+// -----------------------------------------------------------------------------
+async function setHost(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const membershipId = pl.id;
+
+  return await updateMemberIsHost(identityId, membershipId, true);
+}
+
+// -----------------------------------------------------------------------------
+async function setGuest(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const membershipId = pl.id;
+
+  return await updateMemberIsHost(identityId, membershipId, false);
 }
 
 // -----------------------------------------------------------------------------
@@ -64,12 +79,16 @@ export default async function (
     return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/list`) {
     return await wrapper(list, req, identityId);
-  } else if (path === `${PRE}/add/byinvite`) {
-    return await wrapper(addByInvite, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
-  } else if (path === `${PRE}/update`) {
-    return await wrapper(update, req, identityId);
+  } else if (path === `${PRE}/enable`) {
+    return await wrapper(enable, req, identityId);
+  } else if (path === `${PRE}/disable`) {
+    return await wrapper(disable, req, identityId);
+  } else if (path === `${PRE}/set/host`) {
+    return await wrapper(setHost, req, identityId);
+  } else if (path === `${PRE}/set/guest`) {
+    return await wrapper(setGuest, req, identityId);
   } else {
     return notFound();
   }

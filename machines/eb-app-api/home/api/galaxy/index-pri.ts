@@ -8,12 +8,12 @@ import {
 import { getIdentityId } from "./lib/pri/kratos.ts";
 import domain from "./lib/pri/domain.ts";
 import hello from "./lib/pri/hello.ts";
-import invite from "./lib/pri/invite.ts";
 import meeting from "./lib/pri/meeting.ts";
-import member from "./lib/pri/member.ts";
-import membership from "./lib/pri/membership.ts";
+import meetingInvite from "./lib/pri/meeting-invite.ts";
+import meetingMember from "./lib/pri/meeting-member.ts";
+import meetingMembership from "./lib/pri/meeting-membership.ts";
+import meetingRequest from "./lib/pri/meeting-request.ts";
 import profile from "./lib/pri/profile.ts";
-import request from "./lib/pri/request.ts";
 import room from "./lib/pri/room.ts";
 
 const PRE = "/api/pri";
@@ -28,18 +28,18 @@ async function route(
     return hello(identityId);
   } else if (path.match(`^${PRE}/domain/`)) {
     return await domain(req, path, identityId);
-  } else if (path.match(`^${PRE}/invite/`)) {
-    return await invite(req, path, identityId);
+  } else if (path.match(`^${PRE}/meeting/invite/`)) {
+    return await meetingInvite(req, path, identityId);
+  } else if (path.match(`^${PRE}/meeting/member/`)) {
+    return await meetingMember(req, path, identityId);
+  } else if (path.match(`^${PRE}/meeting/membership/`)) {
+    return await meetingMembership(req, path, identityId);
+  } else if (path.match(`^${PRE}/meeting/request/`)) {
+    return await meetingRequest(req, path, identityId);
   } else if (path.match(`^${PRE}/meeting/`)) {
     return await meeting(req, path, identityId);
-  } else if (path.match(`^${PRE}/member/`)) {
-    return await member(req, path, identityId);
-  } else if (path.match(`^${PRE}/membership/`)) {
-    return await membership(req, path, identityId);
   } else if (path.match(`^${PRE}/profile/`)) {
     return await profile(req, path, identityId);
-  } else if (path.match(`^${PRE}/request/`)) {
-    return await request(req, path, identityId);
   } else if (path.match(`^${PRE}/room/`)) {
     return await room(req, path, identityId);
   } else {
