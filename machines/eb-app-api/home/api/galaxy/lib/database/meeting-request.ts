@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Req } from "./types.ts";
+import type { Id, MeetingRequest } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRequest(identityId: string, requestId: string) {
@@ -19,7 +19,7 @@ export async function getRequest(identityId: string, requestId: string) {
     ],
   };
 
-  return await fetch(sql) as Req[];
+  return await fetch(sql) as MeetingRequest[];
 }
 
 // -----------------------------------------------------------------------------
@@ -46,7 +46,7 @@ export async function listRequest(
     ],
   };
 
-  return await fetch(sql) as Req[];
+  return await fetch(sql) as MeetingRequest[];
 }
 
 // -----------------------------------------------------------------------------

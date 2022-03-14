@@ -108,6 +108,19 @@ export interface MeetingMembership {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingRequest {
+  id: string;
+  profile_id: string;
+  profile_name: string;
+  meeting_id: string;
+  meeting_name: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingLinkSet {
   name: string;
   room_name: string;
@@ -131,19 +144,6 @@ export interface Profile {
   is_default: boolean;
   created_at: string;
   updated_at: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface Req {
-  id: string;
-  profile_id: string;
-  profile_name: string;
-  meeting_id: string;
-  meeting_name: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
-  expired_at: string;
 }
 
 // -----------------------------------------------------------------------------
