@@ -22,7 +22,6 @@
     name: "",
     info: "",
     schedule_type: SCHEDULE_TYPE_OPTIONS[0][0],
-    schedule_attr: {},
     hidden: true,
     restricted: false,
     subscribable: true,
