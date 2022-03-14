@@ -219,7 +219,7 @@ export async function updateRoomSuffix(roomId: string) {
     text: `
       UPDATE room
       SET
-        suffix = DEFAULT,
+        suffix = DEFAULT
       WHERE id = $1
         AND has_suffix = true
         AND accessed_at + interval '4 hours' < now()
