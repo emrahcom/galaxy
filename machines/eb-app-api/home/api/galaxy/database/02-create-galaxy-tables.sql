@@ -131,6 +131,24 @@ CREATE UNIQUE INDEX ON room("identity_id", "domain_id", "name");
 ALTER TABLE room OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- ROOM_PARTNER
+-- -----------------------------------------------------------------------------
+-- identity cannot update enabled but she can delete the partnership
+-- room owner can update enabled or delete the partnership
+-- -----------------------------------------------------------------------------
+CREATE TABLE room_partner (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON room_partner("identity_id", "room_id");
+CREATE INDEX ON room_partner("room_id");
+ALTER TABLE room_partner OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- MEETING
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting if it's over
