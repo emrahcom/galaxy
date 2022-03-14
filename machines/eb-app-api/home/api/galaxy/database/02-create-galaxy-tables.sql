@@ -308,15 +308,15 @@ ALTER TABLE meeting_request OWNER TO galaxy;
 -- - schedule contains scheduled meetings only
 -- - ended_at = started_at + duration * interval '1 min'
 -- -----------------------------------------------------------------------------
-CREATE TABLE schedule (
+CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "started_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
     "ended_at" timestamp with time zone NOT NULL
 );
-CREATE INDEX ON schedule(meeting_id);
-ALTER TABLE schedule OWNER TO galaxy;
+CREATE INDEX ON meeting_schedule(meeting_id);
+ALTER TABLE meeting_schedule OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 COMMIT;
