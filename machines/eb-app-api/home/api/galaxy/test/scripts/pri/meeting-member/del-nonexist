@@ -8,7 +8,7 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# delete a nonexistent membership
+# delete a nonexistent member
 # ------------------------------------------------------------------------------
 membership_fake=$(uuidgen)
 JSON=$(cat <<EOF
@@ -18,5 +18,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "meeting-member" "del" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-empty "$SET" "pri" "member" "del" "$JSON" 1

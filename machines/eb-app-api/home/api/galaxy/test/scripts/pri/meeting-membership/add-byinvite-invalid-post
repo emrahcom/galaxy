@@ -8,14 +8,17 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# get member list (no limit, no offset)
+# try to add a new membership for a nonexistent invite
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
+invite_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
-    "meeting_id": "$meeting_id"
+    "profile_id": "$profile_id",
+    "invite_code": "$invite_fake"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "member" "list" "id" "$JSON" 1
+bash $TEMPLATES/action-member-error "$SET" "pri" "meeting/membership" \
+    "add/byinvite" "$JSON" 1

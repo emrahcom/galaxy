@@ -11,7 +11,7 @@ source $BASEDIR/../../common
 # update with valid post
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-member-add-byinvite-id-$SET-1-res)
+    $TMP/api-pri-meeting-membership-add-byinvite-id-$SET-1-res)
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
@@ -21,5 +21,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting-member" "update" "id" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/membership" "update" \
+    "id" "$JSON" 1

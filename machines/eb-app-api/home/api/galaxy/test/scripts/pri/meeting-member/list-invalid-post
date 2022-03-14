@@ -8,15 +8,16 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# get membership list (invalid limit, invalid offset)
+# get member list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
+    "meeting_id": "$meeting_id",
     "limit": "INVALID",
     "offset": "INVALID"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET" "pri" "meeting-member" "list" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-error "$SET" "pri" "member" "list" "$JSON" 1
