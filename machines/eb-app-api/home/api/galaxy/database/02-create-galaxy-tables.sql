@@ -209,25 +209,12 @@ CREATE INDEX ON meeting_member("meeting_id", "is_host");
 ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
--- SCHEDULE
+-- MEETING_INVITE
 -- -----------------------------------------------------------------------------
--- - schedule doesn't contain permanent meetings
--- - ended_at = started_at + duration * interval '1 min'
+-- meeting invite can be shared with multiple members and can be used multiple
+-- times before the expire time
 -- -----------------------------------------------------------------------------
-CREATE TABLE schedule (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "started_at" timestamp with time zone NOT NULL,
-    "duration" integer NOT NULL,
-    "ended_at" timestamp with time zone NOT NULL
-);
-CREATE INDEX ON schedule(meeting_id);
-ALTER TABLE schedule OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
--- INVITE
--- -----------------------------------------------------------------------------
-CREATE TABLE invite (
+CREATE TABLE meeting_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
@@ -240,9 +227,9 @@ CREATE TABLE invite (
     "expired_at" timestamp with time zone NOT NULL
       DEFAULT now() + interval '3 days'
 );
-CREATE UNIQUE INDEX ON invite("code");
-CREATE INDEX ON invite("identity_id", "meeting_id", "expired_at");
-ALTER TABLE invite OWNER TO galaxy;
+CREATE UNIQUE INDEX ON meeting_invite("code");
+CREATE INDEX ON meeting_invite("identity_id", "meeting_id", "expired_at");
+ALTER TABLE meeting_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- REQUEST
@@ -270,6 +257,22 @@ CREATE TABLE request (
 CREATE UNIQUE INDEX ON request("identity_id", "meeting_id");
 CREATE INDEX ON request("meeting_id", "status");
 ALTER TABLE request OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
+-- SCHEDULE
+-- -----------------------------------------------------------------------------
+-- - schedule doesn't contain permanent meetings
+-- - ended_at = started_at + duration * interval '1 min'
+-- -----------------------------------------------------------------------------
+CREATE TABLE schedule (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "started_at" timestamp with time zone NOT NULL,
+    "duration" integer NOT NULL,
+    "ended_at" timestamp with time zone NOT NULL
+);
+CREATE INDEX ON schedule(meeting_id);
+ALTER TABLE schedule OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 COMMIT;
