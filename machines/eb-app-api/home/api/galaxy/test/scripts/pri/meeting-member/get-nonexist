@@ -8,16 +8,15 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# try to update with invalid criteria
+# get for a nonexistent membership
 # ------------------------------------------------------------------------------
 membership_fake=$(uuidgen)
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
-    "id": "$membership_fake",
-    "profile_id": "$profile_id"
+    "id": "$membership_fake"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "membership" "update" "$JSON" 1
+bash $TEMPLATES/action-member-empty "$SET" "pri" "meeting-member" "get" \
+    "$JSON" 1

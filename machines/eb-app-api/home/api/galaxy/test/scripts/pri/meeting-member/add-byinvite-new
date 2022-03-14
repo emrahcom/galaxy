@@ -35,6 +35,6 @@ EOF
 EOF
 )
 
-    bash $TEMPLATES/action-member-attr "$SET1" "pri" "membership" \
+    bash $TEMPLATES/action-member-attr "$SET1" "pri" "meeting-member" \
         "add/byinvite" "id" "$JSON" $i
 done

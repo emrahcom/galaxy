@@ -8,14 +8,16 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# get membership list (limit 2, no offset)
+# delete an existing membership
 # ------------------------------------------------------------------------------
+membership_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-member-add-byinvite-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
-    "limit": 2
+    "id": "$membership_id"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "membership" "list" "id" \
-    "$JSON" 2
+bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting-member" "del" "id" \
+    "$JSON" 1

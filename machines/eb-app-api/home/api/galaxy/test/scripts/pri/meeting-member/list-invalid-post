@@ -8,13 +8,15 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# get membership list (no limit, offset 1000000)
+# get membership list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
-    "offset": 1000000
+    "limit": "INVALID",
+    "offset": "INVALID"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "membership" "list" "$JSON" 1
+bash $TEMPLATES/action-member-error "$SET" "pri" "meeting-member" "list" \
+    "$JSON" 1

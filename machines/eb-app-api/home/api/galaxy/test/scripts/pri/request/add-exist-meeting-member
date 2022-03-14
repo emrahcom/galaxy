@@ -12,7 +12,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 profile_id=$(jq -r ".[0].profile_id" $TMP/api-pri-request-get-id-$SET-1-res)
 meeting_id=$(jq -r ".[0].meeting_id" \
-    $TMP/api-pri-membership-add-byinvite-id-$SET-1-res)
+    $TMP/api-pri-meeting-member-add-byinvite-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
     "profile_id": "$profile_id",

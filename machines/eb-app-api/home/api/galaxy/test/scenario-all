@@ -150,24 +150,24 @@ bash $BASEDIR/scripts/pri/invite/list-limit $SET1
 bash $BASEDIR/scripts/pri/invite/list-huge-offset $SET1
 bash $BASEDIR/scripts/pri/invite/list-invalid-post $SET1
 
-# membership
-bash $BASEDIR/scripts/pri/membership/add-byinvite-invalid-post $SET2
-bash $BASEDIR/scripts/pri/membership/add-byinvite-new $SET2 $SET1
-bash $BASEDIR/scripts/pri/membership/get-exist $SET2
-bash $BASEDIR/scripts/pri/membership/get-nonexist $SET2
-bash $BASEDIR/scripts/pri/membership/add-byinvite-exist $SET2
+# meeting-member
+bash $BASEDIR/scripts/pri/meeting-member/add-byinvite-invalid-post $SET2
+bash $BASEDIR/scripts/pri/meeting-member/add-byinvite-new $SET2 $SET1
+bash $BASEDIR/scripts/pri/meeting-member/get-exist $SET2
+bash $BASEDIR/scripts/pri/meeting-member/get-nonexist $SET2
+bash $BASEDIR/scripts/pri/meeting-member/add-byinvite-exist $SET2
 
-bash $BASEDIR/scripts/pri/membership/update-exist $SET2
-bash $BASEDIR/scripts/pri/membership/update-nonexist $SET2
-bash $BASEDIR/scripts/pri/membership/del-exist $SET2
-bash $BASEDIR/scripts/pri/membership/del-nonexist $SET2
+bash $BASEDIR/scripts/pri/meeting-member/update-exist $SET2
+bash $BASEDIR/scripts/pri/meeting-member/update-nonexist $SET2
+bash $BASEDIR/scripts/pri/meeting-member/del-exist $SET2
+bash $BASEDIR/scripts/pri/meeting-member/del-nonexist $SET2
 
-bash $BASEDIR/scripts/pri/membership/add-byinvite-new $SET2 $SET1 10
-bash $BASEDIR/scripts/pri/membership/list-nolimit-nooffset $SET2
-bash $BASEDIR/scripts/pri/membership/list-limit $SET2
-bash $BASEDIR/scripts/pri/membership/list-limit-offset $SET2
-bash $BASEDIR/scripts/pri/membership/list-huge-offset $SET2
-bash $BASEDIR/scripts/pri/membership/list-invalid-post $SET2
+bash $BASEDIR/scripts/pri/meeting-member/add-byinvite-new $SET2 $SET1 10
+bash $BASEDIR/scripts/pri/meeting-member/list-nolimit-nooffset $SET2
+bash $BASEDIR/scripts/pri/meeting-member/list-limit $SET2
+bash $BASEDIR/scripts/pri/meeting-member/list-limit-offset $SET2
+bash $BASEDIR/scripts/pri/meeting-member/list-huge-offset $SET2
+bash $BASEDIR/scripts/pri/meeting-member/list-invalid-post $SET2
 
 # member
 bash $BASEDIR/scripts/pri/member/get-exist $SET1 $SET2
@@ -197,7 +197,7 @@ bash $BASEDIR/scripts/pri/request/add-new $SET2 $SET1
 bash $BASEDIR/scripts/pri/request/get-exist $SET2
 bash $BASEDIR/scripts/pri/request/get-nonexist $SET2
 bash $BASEDIR/scripts/pri/request/add-exist $SET2
-bash $BASEDIR/scripts/pri/request/add-exist-membership $SET2
+bash $BASEDIR/scripts/pri/request/add-exist-meeting-member $SET2
 
 bash $BASEDIR/scripts/pri/request/update-exist $SET2
 bash $BASEDIR/scripts/pri/request/update-nonexist $SET2
