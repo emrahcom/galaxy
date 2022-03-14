@@ -14,7 +14,7 @@
   let p = {
     name: "",
     auth_type: AUTH_TYPE_OPTIONS[0][0],
-    auth_attr: {
+    domain_attr: {
       url: "",
       app_id: "",
       app_secret: "",
@@ -46,7 +46,7 @@
       <Text
         name="url"
         label="URL"
-        bind:value={p.auth_attr.url}
+        bind:value={p.domain_attr.url}
         required={true}
       />
 
@@ -57,13 +57,13 @@
         <Text
           name="app_id"
           label="App ID"
-          bind:value={p.auth_attr.app_id}
+          bind:value={p.domain_attr.app_id}
           required={true}
         />
         <Password
           name="app_secret"
           label="App Secret"
-          bind:value={p.auth_attr.app_secret}
+          bind:value={p.domain_attr.app_secret}
           required={true}
         />
       {/if}

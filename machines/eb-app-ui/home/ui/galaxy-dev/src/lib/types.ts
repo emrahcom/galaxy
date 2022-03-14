@@ -2,7 +2,7 @@ export interface Domain {
   id: string;
   name: string;
   auth_type: string;
-  auth_attr: {
+  domain_attr: {
     url: string;
     app_id: string;
     app_secret: string;
