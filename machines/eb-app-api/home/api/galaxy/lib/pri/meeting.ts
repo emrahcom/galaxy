@@ -55,7 +55,6 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const name = pl.name;
   const info = pl.info;
   const scheduleType = pl.schedule_type;
-  const scheduleAttr = pl.schedule_attr;
   const hidden = pl.hidden;
   const restricted = pl.restricted;
   const subscribable = pl.subscribable;
@@ -67,7 +66,6 @@ async function add(req: Request, identityId: string): Promise<unknown> {
     name,
     info,
     scheduleType,
-    scheduleAttr,
     hidden,
     restricted,
     subscribable,
@@ -91,7 +89,6 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const name = pl.name;
   const info = pl.info;
   const scheduleType = pl.schedule_type;
-  const scheduleAttr = pl.schedule_attr;
   const hidden = pl.hidden;
   const restricted = pl.restricted;
   const subscribable = pl.subscribable;
@@ -104,7 +101,6 @@ async function update(req: Request, identityId: string): Promise<unknown> {
     name,
     info,
     scheduleType,
-    scheduleAttr,
     hidden,
     restricted,
     subscribable,

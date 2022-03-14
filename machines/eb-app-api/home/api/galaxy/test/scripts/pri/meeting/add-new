@@ -22,7 +22,6 @@ for i in $(seq 1 $NUM); do
         "name": "$name",
         "info": "some meeting info",
         "schedule_type": "permanent",
-        "schedule_attr": "{}",
         "hidden": $hidden,
         "restricted": true,
         "subscribable": true

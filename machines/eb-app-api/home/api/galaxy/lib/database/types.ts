@@ -65,7 +65,6 @@ export interface Meeting {
   name: string;
   info: string;
   schedule_type: string;
-  schedule_attr: unknown;
   hidden: boolean;
   restricted: boolean;
   subscribable: boolean;
@@ -97,7 +96,6 @@ export interface PubMeeting {
   name: string;
   info: string;
   schedule_type: string;
-  schedule_attr: unknown;
   restricted: boolean;
   subscribable: boolean;
 }

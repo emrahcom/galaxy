@@ -20,7 +20,6 @@ JSON=$(cat <<EOF
     "name": "$name",
     "info": "some meeting info",
     "schedule_type": "permanent",
-    "schedule_attr": "{}",
     "hidden": true,
     "restricted": false,
     "subscribable": true

@@ -10,8 +10,8 @@ export async function getMeeting(identityId: string, meetingId: string) {
         i1.enabled as domain_owner_enabled, r.id as room_id,
         r.name as room_name, r.enabled as room_enabled,
         i2.enabled as room_owner_enabled, m.host_key, m.guest_key, m.name,
-        m.info, m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
-        m.subscribable, m.enabled,
+        m.info, m.schedule_type, m.hidden, m.restricted, m.subscribable,
+        m.enabled,
         (i1.enabled AND d.enabled AND r.enabled AND i2.enabled AND m.enabled) as
         chain_enabled, m.created_at, m.updated_at
       FROM meeting m
@@ -35,8 +35,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
 export async function getPublicMeeting(meetingId: string) {
   const sql = {
     text: `
-      SELECT id, name, info, schedule_type, schedule_attr, restricted,
-        subscribable
+      SELECT id, name, info, schedule_type, restricted, subscribable
       FROM meeting
       WHERE id = $1
         AND hidden = false`,
@@ -84,8 +83,8 @@ export async function listMeeting(
         i1.enabled as domain_owner_enabled, r.id as room_id,
         r.name as room_name, r.enabled as room_enabled,
         i2.enabled as room_owner_enabled, m.host_key, m.guest_key, m.name,
-        m.info, m.schedule_type, m.schedule_attr, m.hidden, m.restricted,
-        m.subscribable, m.enabled,
+        m.info, m.schedule_type, m.hidden, m.restricted, m.subscribable,
+        m.enabled,
         (i1.enabled AND d.enabled AND r.enabled AND i2.enabled AND m.enabled) as
         chain_enabled, m.created_at, m.updated_at
       FROM meeting m
@@ -114,8 +113,8 @@ export async function listEnabledPublicMeeting(
 ) {
   const sql = {
     text: `
-      SELECT m.id, m.name, m.info, m.schedule_type, m.schedule_attr,
-        m.restricted, m.subscribable
+      SELECT m.id, m.name, m.info, m.schedule_type, m.restricted,
+        m.subscribable
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -148,7 +147,6 @@ export async function addMeeting(
   name: string,
   info: string,
   scheduleType: string,
-  scheduleAttr: unknown,
   hidden: boolean,
   restricted: boolean,
   subscribable: boolean,
@@ -156,7 +154,7 @@ export async function addMeeting(
   const sql = {
     text: `
       INSERT INTO meeting (identity_id, profile_id, room_id, name, info,
-        schedule_type, schedule_attr, hidden, restricted, subscribable)
+        schedule_type, hidden, restricted, subscribable)
       VALUES (
         $1,
         (SELECT id
@@ -167,7 +165,7 @@ export async function addMeeting(
          FROM room
          WHERE id = $3
            AND identity_id = $1),
-        $4, $5, $6, $7, $8, $9, $10)
+        $4, $5, $6, $7, $8, $9)
       RETURNING id, created_at as at`,
     args: [
       identityId,
@@ -176,7 +174,6 @@ export async function addMeeting(
       name,
       info,
       scheduleType,
-      scheduleAttr,
       hidden,
       restricted,
       subscribable,
@@ -212,7 +209,6 @@ export async function updateMeeting(
   name: string,
   info: string,
   scheduleType: string,
-  scheduleAttr: unknown,
   hidden: boolean,
   restricted: boolean,
   subscribable: boolean,
@@ -232,10 +228,9 @@ export async function updateMeeting(
         name = $5,
         info = $6,
         schedule_type = $7,
-        schedule_attr = $8,
-        hidden = $9,
-        restricted = $10,
-        subscribable = $11,
+        hidden = $8,
+        restricted = $9,
+        subscribable = $10,
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
@@ -248,7 +243,6 @@ export async function updateMeeting(
       name,
       info,
       scheduleType,
-      scheduleAttr,
       hidden,
       restricted,
       subscribable,
