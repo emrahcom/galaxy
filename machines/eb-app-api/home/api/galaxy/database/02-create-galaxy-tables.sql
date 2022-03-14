@@ -219,7 +219,7 @@ CREATE TABLE meeting (
     "name" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
-    "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
+    "meeting_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "hidden" boolean NOT NULL DEFAULT true,
     "restricted" boolean NOT NULL DEFAULT false,
     "subscribable" boolean NOT NULL DEFAULT true,
