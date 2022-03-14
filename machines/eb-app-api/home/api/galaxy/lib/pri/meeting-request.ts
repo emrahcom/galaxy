@@ -10,9 +10,9 @@ import {
   listRequest,
   rejectRequest,
   updateRequest,
-} from "../database/request.ts";
+} from "../database/meeting-request.ts";
 
-const PRE = "/api/pri/request";
+const PRE = "/api/pri/meeting/request";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {

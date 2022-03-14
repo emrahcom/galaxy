@@ -8,9 +8,9 @@ import {
   getInviteByCode,
   listInvite,
   updateInviteEnabled,
-} from "../database/invite.ts";
+} from "../database/meeting-invite.ts";
 
-const PRE = "/api/pri/invite";
+const PRE = "/api/pri/meeting/invite";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {

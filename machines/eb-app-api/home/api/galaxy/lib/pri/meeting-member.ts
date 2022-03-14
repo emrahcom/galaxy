@@ -7,9 +7,9 @@ import {
   listMember,
   updateMemberEnabled,
   updateMemberIsHost,
-} from "../database/member.ts";
+} from "../database/meeting-member.ts";
 
-const PRE = "/api/pri/member";
+const PRE = "/api/pri/meeting/member";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {

@@ -7,9 +7,9 @@ import {
   getMembership,
   listMembership,
   updateMembership,
-} from "../database/membership.ts";
+} from "../database/meeting-membership.ts";
 
-const PRE = "/api/pri/membership";
+const PRE = "/api/pri/meeting/membership";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {
