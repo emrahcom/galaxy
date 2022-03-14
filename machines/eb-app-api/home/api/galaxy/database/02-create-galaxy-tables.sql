@@ -107,6 +107,28 @@ CREATE INDEX ON domain_partner("domain_id");
 ALTER TABLE domain_partner OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- DOMAIN_INVITE
+-- -----------------------------------------------------------------------------
+-- domain invite can be used only one time by one identity, then it will be
+-- disabled
+-- -----------------------------------------------------------------------------
+CREATE TABLE domain_invite (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "code" varchar(250) NOT NULL
+        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '3 days'
+);
+CREATE UNIQUE INDEX ON domain_invite("code");
+CREATE INDEX ON domain_invite("identity_id", "domain_id", "expired_at");
+ALTER TABLE domain_invite OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- ROOM
 -- -----------------------------------------------------------------------------
 -- - update suffix if accessed_at is older than 4 hours
