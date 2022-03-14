@@ -171,6 +171,27 @@ CREATE INDEX ON room_partner("room_id");
 ALTER TABLE room_partner OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- ROOM_INVITE
+-- -----------------------------------------------------------------------------
+-- - room invite can only be used once by an identity, then it will be disabled
+-- -----------------------------------------------------------------------------
+CREATE TABLE room_invite (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
+    "code" varchar(250) NOT NULL
+        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '3 days'
+);
+CREATE UNIQUE INDEX ON room_invite("code");
+CREATE INDEX ON room_invite("identity_id", "room_id", "expired_at");
+ALTER TABLE room_invite OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- MEETING
 -- -----------------------------------------------------------------------------
 -- - dont show the ephemeral meeting if it's over
