@@ -8,15 +8,16 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# disable an existing invite
+# get invite list (limit 2, no offset)
 # ------------------------------------------------------------------------------
-invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-$SET-1-res)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
-    "id": "$invite_id"
+    "meeting_id": "$meeting_id",
+    "limit": 2
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "invite" "disable" "id" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" "list" "id" \
+    "$JSON" 2

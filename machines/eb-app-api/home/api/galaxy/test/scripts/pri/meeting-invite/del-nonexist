@@ -8,14 +8,15 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# delete an existing invite
+# delete a nonexistent invite
 # ------------------------------------------------------------------------------
-invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-$SET-1-res)
+invite_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
-    "id": "$invite_id"
+    "id": "$invite_fake"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "invite" "del" "id" "$JSON" 1
+bash $TEMPLATES/action-member-empty "$SET" "pri" "meeting/invite" "del" \
+    "$JSON" 1

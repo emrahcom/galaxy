@@ -23,6 +23,6 @@ EOF
 )
     [[ "$as_host" = false ]] && as_host=true || as_host=false
 
-    bash $TEMPLATES/action-member-attr "$SET" "pri" "invite" "add" "id" \
-        "$JSON" $i
+    bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" "add" \
+        "id" "$JSON" $i
 done

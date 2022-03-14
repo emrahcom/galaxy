@@ -16,17 +16,18 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET1-1-res)
 for i in $(seq 1 $NUM); do
-    invite_id=$(jq -r ".[0].id" $TMP/api-pri-invite-add-id-$SET2-$i-res)
+    invite_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-invite-add-id-$SET2-$i-res)
     JSON=$(cat <<EOF
     {
         "id": "$invite_id"
     }
 EOF
 )
-    bash $TEMPLATES/action-member-attr "$SET2" "pri" "invite" "get" "id" \
+    bash $TEMPLATES/action-member-attr "$SET2" "pri" "meeting/invite" "get" "id" \
         "$JSON" $i
 
-    invite_code=$(jq -r ".[0].code" $TMP/api-pri-invite-get-id-$SET2-$i-res)
+    invite_code=$(jq -r ".[0].code" \
+                      $TMP/api-pri-meeting-invite-get-id-$SET2-$i-res)
     JSON=$(cat <<EOF
     {
         "profile_id": "$profile_id",
@@ -35,6 +36,6 @@ EOF
 EOF
 )
 
-    bash $TEMPLATES/action-member-attr "$SET1" "pri" "meeting-member" \
+    bash $TEMPLATES/action-member-attr "$SET1" "pri" "meeting/member" \
         "add/byinvite" "id" "$JSON" $i
 done

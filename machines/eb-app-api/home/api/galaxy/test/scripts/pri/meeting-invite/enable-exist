@@ -8,14 +8,15 @@ source $BASEDIR/../../common
 [[ -z "$1" ]] && SET=1 || SET=$1
 
 # ------------------------------------------------------------------------------
-# enable a nonexistent invite
+# enable an existing invite
 # ------------------------------------------------------------------------------
-invite_fake=$(uuidgen)
+invite_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-invite-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
-    "id": "$invite_fake"
+    "id": "$invite_id"
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "invite" "enable" "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" "enable" "id" \
+    "$JSON" 1
