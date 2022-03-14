@@ -89,12 +89,12 @@ INSERT INTO domain VALUES (
 );
 
 -- -----------------------------------------------------------------------------
--- DOMAIN_MEMBER
+-- DOMAIN_PARTNER
 -- -----------------------------------------------------------------------------
--- identity cannot update enabled but she can delete the membership
--- domain owner can update enabled or delete the membership
+-- identity cannot update enabled but she can delete the partnership
+-- domain owner can update enabled or delete the partnership
 -- -----------------------------------------------------------------------------
-CREATE TABLE domain_member (
+CREATE TABLE domain_partner (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
@@ -102,9 +102,9 @@ CREATE TABLE domain_member (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON domain_member("identity_id", "domain_id");
-CREATE INDEX ON domain_member("domain_id");
-ALTER TABLE domain_member OWNER TO galaxy;
+CREATE UNIQUE INDEX ON domain_partner("identity_id", "domain_id");
+CREATE INDEX ON domain_partner("domain_id");
+ALTER TABLE domain_partner OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- ROOM
