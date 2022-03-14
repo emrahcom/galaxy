@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Membership } from "./types.ts";
+import type { Id, MeetingMembership } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMembership(
@@ -21,7 +21,7 @@ export async function getMembership(
     ],
   };
 
-  return await fetch(sql) as Membership[];
+  return await fetch(sql) as MeetingMembership[];
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ export async function listMembership(
     ],
   };
 
-  return await fetch(sql) as Membership[];
+  return await fetch(sql) as MeetingMembership[];
 }
 
 // -----------------------------------------------------------------------------

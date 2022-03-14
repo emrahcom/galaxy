@@ -25,29 +25,6 @@ export interface PubDomain {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingInvite {
-  id: string;
-  meeting_id: string;
-  meeting_name: string;
-  meeting_info: string;
-  code: string;
-  as_host: boolean;
-  enabled: boolean;
-  created_at: string;
-  updated_at: string;
-  expired_at: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface PubMeetingInvite {
-  meeting_name: string;
-  meeting_info: string;
-  code: string;
-  as_host: boolean;
-  expired_at: string;
-}
-
-// -----------------------------------------------------------------------------
 export interface Meeting {
   id: string;
   profile_id: string;
@@ -75,6 +52,62 @@ export interface Meeting {
 }
 
 // -----------------------------------------------------------------------------
+export interface PubMeeting {
+  id: string;
+  name: string;
+  info: string;
+  schedule_type: string;
+  restricted: boolean;
+  subscribable: boolean;
+}
+
+// -----------------------------------------------------------------------------
+export interface MeetingInvite {
+  id: string;
+  meeting_id: string;
+  meeting_name: string;
+  meeting_info: string;
+  code: string;
+  as_host: boolean;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface PubMeetingInvite {
+  meeting_name: string;
+  meeting_info: string;
+  code: string;
+  as_host: boolean;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface MeetingMember {
+  id: string;
+  profile_name: string;
+  is_host: boolean;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface MeetingMembership {
+  id: string;
+  profile_id: string;
+  meeting_id: string;
+  meeting_name: string;
+  meeting_info: string;
+  is_host: boolean;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingLinkSet {
   name: string;
   room_name: string;
@@ -88,39 +121,6 @@ export interface MeetingLinkSet {
   };
   profile_name: string;
   profile_email: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface PubMeeting {
-  id: string;
-  name: string;
-  info: string;
-  schedule_type: string;
-  restricted: boolean;
-  subscribable: boolean;
-}
-
-// -----------------------------------------------------------------------------
-export interface Member {
-  id: string;
-  profile_name: string;
-  is_host: boolean;
-  enabled: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface Membership {
-  id: string;
-  profile_id: string;
-  meeting_id: string;
-  meeting_name: string;
-  meeting_info: string;
-  is_host: boolean;
-  enabled: boolean;
-  created_at: string;
-  updated_at: string;
 }
 
 // -----------------------------------------------------------------------------
