@@ -11,7 +11,7 @@ export async function getMembership(
       SELECT mem.id, mem.profile_id, m.id as meeting_id,
         m.name as meeting_name, m.info as meeting_info, mem.is_host,
         mem.enabled, mem.created_at, mem.updated_at
-      FROM membership mem
+      FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
       WHERE mem.id = $2
         AND mem.identity_id = $1`,
@@ -35,7 +35,7 @@ export async function listMembership(
       SELECT mem.id, mem.profile_id, m.id as meeting_id,
         m.name as meeting_name, m.info as meeting_info, mem.is_host,
         mem.enabled, mem.created_at, mem.updated_at
-      FROM membership mem
+      FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
       WHERE mem.identity_id = $1
       ORDER BY m.name, mem.created_at
@@ -58,7 +58,7 @@ export async function addMembershipByInvite(
 ) {
   const sql = {
     text: `
-      INSERT INTO membership (identity_id, profile_id, meeting_id, is_host)
+      INSERT INTO meeting_member (identity_id, profile_id, meeting_id, is_host)
       VALUES (
         $1,
         (SELECT id
@@ -93,7 +93,7 @@ export async function delMembership(
 ) {
   const sql = {
     text: `
-      DELETE FROM membership
+      DELETE FROM meeting_member
       WHERE id = $2
         AND identity_id = $1
       RETURNING id, now() as at`,
@@ -115,7 +115,7 @@ export async function updateMembership(
   // meeting_id is not updatable
   const sql = {
     text: `
-      UPDATE membership
+      UPDATE meeting_member
       SET
         profile_id= (SELECT id
                      FROM profile

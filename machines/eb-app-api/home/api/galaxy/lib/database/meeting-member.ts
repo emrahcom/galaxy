@@ -7,7 +7,7 @@ export async function getMember(identityId: string, membershipId: string) {
     text: `
       SELECT mem.id, p.name as profile_name, mem.is_host, mem.enabled,
         mem.created_at, mem.updated_at
-      FROM membership mem
+      FROM meeting_member mem
         JOIN profile p ON mem.profile_id = p.id
       WHERE mem.id = $2
         AND EXISTS (SELECT 1
@@ -34,7 +34,7 @@ export async function listMember(
     text: `
       SELECT mem.id, p.name as profile_name, mem.is_host, mem.enabled,
         mem.created_at, mem.updated_at
-      FROM membership mem
+      FROM meeting_member mem
         JOIN profile p ON mem.profile_id = p.id
       WHERE mem.meeting_id = $2
         AND EXISTS (SELECT 1
@@ -58,7 +58,7 @@ export async function listMember(
 export async function delMember(identityId: string, membershipId: string) {
   const sql = {
     text: `
-      DELETE FROM membership mem
+      DELETE FROM meeting_member mem
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting m
@@ -82,7 +82,7 @@ export async function updateMemberEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE membership mem
+      UPDATE meeting_member mem
       SET
         enabled = $3,
         updated_at = now()
@@ -110,7 +110,7 @@ export async function updateMemberIsHost(
 ) {
   const sql = {
     text: `
-      UPDATE membership mem
+      UPDATE meeting_member mem
       SET
         is_host = $3,
         updated_at = now()
