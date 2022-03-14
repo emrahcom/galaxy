@@ -8,7 +8,7 @@ export async function getRequest(identityId: string, requestId: string) {
       SELECT req.id, p.id as profile_id, p.name as profile_name,
         m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
         req.updated_at, req.expired_at
-      FROM request req
+      FROM meeting_request req
         JOIN profile p ON req.profile_id = p.id
         JOIN meeting m ON req.meeting_id = m.id
       WHERE req.id = $2
@@ -33,7 +33,7 @@ export async function listRequest(
       SELECT req.id, p.id as profile_id, p.name as profile_name,
         m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
         req.updated_at, req.expired_at
-      FROM request req
+      FROM meeting_request req
         JOIN profile p ON req.profile_id = p.id
         JOIN meeting m ON req.meeting_id = m.id
       WHERE req.identity_id = $1
@@ -57,7 +57,7 @@ export async function addRequest(
 ) {
   const sql = {
     text: `
-      INSERT INTO request (identity_id, profile_id, meeting_id)
+      INSERT INTO meeting_request (identity_id, profile_id, meeting_id)
       VALUES (
         $1,
         (SELECT id
@@ -70,7 +70,7 @@ export async function addRequest(
            AND restricted = true
            AND subscribable = true
            AND NOT EXISTS (SELECT 1
-                           FROM membership
+                           FROM meeting_member
                            WHERE identity_id = $1
                              AND meeting_id = $3)))
       RETURNING id, created_at as at`,
@@ -88,7 +88,7 @@ export async function addRequest(
 export async function delRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      DELETE FROM request
+      DELETE FROM meeting_request
       WHERE id = $2
         AND identity_id = $1
         AND status = 'pending'
@@ -110,7 +110,7 @@ export async function updateRequest(
 ) {
   const sql = {
     text: `
-      UPDATE request
+      UPDATE meeting_request
       SET
         profile_id = (SELECT id
                       FROM profile
@@ -135,16 +135,16 @@ export async function updateRequest(
 export async function acceptRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      INSERT INTO membership (identity_id, profile_id, meeting_id)
+      INSERT INTO meeting_member (identity_id, profile_id, meeting_id)
         VALUES (
           (SELECT identity_id
-           FROM request
+           FROM meeting_request
            WHERE id = $2),
           (SELECT profile_id
-           FROM request
+           FROM meeting_request
            WHERE id = $2),
           (SELECT meeting_id
-           FROM request req
+           FROM meeting_request req
            WHERE id = $2
              AND EXISTS (SELECT 1
                          FROM meeting
@@ -164,7 +164,7 @@ export async function acceptRequest(identityId: string, requestId: string) {
 export async function rejectRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      UPDATE request req
+      UPDATE meeting_request req
       SET
         status = 'rejected',
         expired_at = now() + interval '7 days',
@@ -188,7 +188,7 @@ export async function rejectRequest(identityId: string, requestId: string) {
 export async function dropRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      DELETE FROM request req
+      DELETE FROM meeting_request req
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
