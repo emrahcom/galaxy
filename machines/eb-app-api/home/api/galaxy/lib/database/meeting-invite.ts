@@ -8,7 +8,7 @@ export async function getInvite(identityId: string, inviteId: string) {
       SELECT i.id, m.id as meeting_id, m.name as meeting_name,
         m.info as meeting_info, i.code, i.as_host, i.enabled, i.created_at,
         i.updated_at, i.expired_at
-      FROM invite i
+      FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.id = $2
         AND i.identity_id = $1
@@ -28,7 +28,7 @@ export async function getInviteByCode(code: string) {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, i.code,
         i.as_host, i.expired_at
-      FROM invite i
+      FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.code = $1
         AND i.enabled = true
@@ -51,7 +51,7 @@ export async function listInvite(
   const sql = {
     text: `
       SELECT id, code, as_host, enabled, created_at, updated_at, expired_at
-      FROM invite
+      FROM meeting_invite
       WHERE identity_id = $1
         AND meeting_id = $2
         AND expired_at > now()
@@ -76,7 +76,7 @@ export async function addInvite(
 ) {
   const sql = {
     text: `
-      INSERT INTO invite (identity_id, meeting_id, as_host)
+      INSERT INTO meeting_invite (identity_id, meeting_id, as_host)
       VALUES (
         $1,
         (SELECT id
@@ -99,7 +99,7 @@ export async function addInvite(
 export async function delInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
-      DELETE FROM invite
+      DELETE FROM meeting_invite
       WHERE id = $2
         AND identity_id = $1
       RETURNING id, now() as at`,
@@ -120,7 +120,7 @@ export async function updateInviteEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE invite
+      UPDATE meeting_invite
       SET
         enabled = $3,
         updated_at = now()
