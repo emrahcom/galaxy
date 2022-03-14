@@ -89,6 +89,24 @@ INSERT INTO domain VALUES (
 );
 
 -- -----------------------------------------------------------------------------
+-- DOMAIN_MEMBER
+-- -----------------------------------------------------------------------------
+-- identity cannot update enabled but she can delete the membership
+-- domain owner can update enabled or delete the membership
+-- -----------------------------------------------------------------------------
+CREATE TABLE domain_member (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON domain_member("identity_id", "domain_id");
+CREATE INDEX ON domain_member("domain_id");
+ALTER TABLE domain_member OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- ROOM
 -- -----------------------------------------------------------------------------
 -- - update suffix if accessed_at is older than 4 hours
