@@ -305,7 +305,7 @@ ALTER TABLE request OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- SCHEDULE
 -- -----------------------------------------------------------------------------
--- - schedule doesn't contain permanent meetings
+-- - schedule contains scheduled meetings only
 -- - ended_at = started_at + duration * interval '1 min'
 -- -----------------------------------------------------------------------------
 CREATE TABLE schedule (
