@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Invite, PubInvite } from "./types.ts";
+import type { Id, MeetingInvite, PubMeetingInvite } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getInvite(identityId: string, inviteId: string) {
@@ -19,7 +19,7 @@ export async function getInvite(identityId: string, inviteId: string) {
     ],
   };
 
-  return await fetch(sql) as Invite[];
+  return await fetch(sql) as MeetingInvite[];
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ export async function getInviteByCode(code: string) {
     ],
   };
 
-  return await fetch(sql) as PubInvite[];
+  return await fetch(sql) as PubMeetingInvite[];
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ export async function listInvite(
     ],
   };
 
-  return await fetch(sql) as Invite[];
+  return await fetch(sql) as MeetingInvite[];
 }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ export interface PubDomain {
 }
 
 // -----------------------------------------------------------------------------
-export interface Invite {
+export interface MeetingInvite {
   id: string;
   meeting_id: string;
   meeting_name: string;
@@ -39,7 +39,7 @@ export interface Invite {
 }
 
 // -----------------------------------------------------------------------------
-export interface PubInvite {
+export interface PubMeetingInvite {
   meeting_name: string;
   meeting_info: string;
   code: string;
