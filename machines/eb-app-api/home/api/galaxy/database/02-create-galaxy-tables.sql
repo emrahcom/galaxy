@@ -66,7 +66,7 @@ ALTER TABLE profile OWNER TO galaxy;
 -- - public domain can only be added by system account
 -- - auth_type of public domain must be 'none' (to decrease complexity)
 -- - only none and token are supported as auth_type (to decrease complexity)
--- - urls are in auth_attr depending on auth_type
+-- - urls are in domain_attr depending on auth_type
 -- -----------------------------------------------------------------------------
 CREATE TYPE domain_auth_type AS ENUM ('none', 'token');
 CREATE TABLE domain (
@@ -219,7 +219,6 @@ CREATE TABLE meeting (
     "name" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
-    "meeting_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "hidden" boolean NOT NULL DEFAULT true,
     "restricted" boolean NOT NULL DEFAULT false,
     "subscribable" boolean NOT NULL DEFAULT true,
