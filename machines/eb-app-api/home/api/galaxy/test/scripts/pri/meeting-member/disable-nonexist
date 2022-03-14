@@ -18,4 +18,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "member" "disable" "$JSON" 1
+bash $TEMPLATES/action-member-empty "$SET" "pri" "meeting/member" "disable" \
+    "$JSON" 1

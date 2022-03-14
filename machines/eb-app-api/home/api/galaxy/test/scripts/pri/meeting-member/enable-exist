@@ -14,7 +14,7 @@ source $BASEDIR/../../common
 # enable an existing member
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-member-add-byinvite-id-$SET2-1-res)
+    $TMP/api-pri-meeting-membership-add-byinvite-id-$SET2-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"
@@ -22,5 +22,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET1" "pri" "member" "enable" "id" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET1" "pri" "meeting/member" "enable" \
+    "id" "$JSON" 1
