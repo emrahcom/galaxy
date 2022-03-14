@@ -50,6 +50,7 @@ export async function getPublicMeeting(meetingId: string) {
 // -----------------------------------------------------------------------------
 export async function getMeetingLinkSet(identityId: string, meetingId: string) {
   await updateMeetingRoomSuffix(meetingId);
+  await updateMeetingRoomAccessTime(meetingId);
 
   const sql = {
     text: `
@@ -283,13 +284,31 @@ export async function updateMeetingRoomSuffix(meetingId: string) {
     text: `
       UPDATE room
       SET
-        suffix = DEFAULT,
-        accessed_at = now()
+        suffix = DEFAULT
       WHERE id = (SELECT room_id
                   FROM meeting
                   WHERE id = $1)
         AND has_suffix = true
         AND accessed_at + interval '4 hours' < now()
+      RETURNING id, accessed_at as at`,
+    args: [
+      meetingId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function updateMeetingRoomAccessTime(meetingId: string) {
+  const sql = {
+    text: `
+      UPDATE room
+      SET
+        accessed_at = now()
+      WHERE id = (SELECT room_id
+                  FROM meeting
+                  WHERE id = $1)
       RETURNING id, accessed_at as at`,
     args: [
       meetingId,
