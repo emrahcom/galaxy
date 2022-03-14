@@ -187,6 +187,28 @@ CREATE UNIQUE INDEX ON meeting("guest_key");
 ALTER TABLE meeting OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- MEETING_MEMBER
+-- -----------------------------------------------------------------------------
+-- identity cannot update enabled but she can delete the membership
+-- identity cannot update is_host
+-- meeting owner can update enabled or delete the membership
+-- meeting owner can update is_host
+-- -----------------------------------------------------------------------------
+CREATE TABLE meeting_member (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "is_host" boolean NOT NULL DEFAULT false,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON meeting_member("identity_id", "meeting_id", "is_host");
+CREATE INDEX ON meeting_member("meeting_id", "is_host");
+ALTER TABLE meeting_member OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- SCHEDULE
 -- -----------------------------------------------------------------------------
 -- - schedule doesn't contain permanent meetings
@@ -248,28 +270,6 @@ CREATE TABLE request (
 CREATE UNIQUE INDEX ON request("identity_id", "meeting_id");
 CREATE INDEX ON request("meeting_id", "status");
 ALTER TABLE request OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
--- MEMBERSHIP
--- -----------------------------------------------------------------------------
--- identity cannot update enabled but she can delete the membership
--- identity cannot update is_host
--- meeting owner can update enabled or delete the membership
--- meeting owner can update is_host
--- -----------------------------------------------------------------------------
-CREATE TABLE membership (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
-    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "is_host" boolean NOT NULL DEFAULT false,
-    "enabled" boolean NOT NULL DEFAULT true,
-    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX ON membership("identity_id", "meeting_id", "is_host");
-CREATE INDEX ON membership("meeting_id", "is_host");
-ALTER TABLE membership OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 COMMIT;
