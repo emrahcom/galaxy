@@ -66,12 +66,12 @@ export async function addMembershipByInvite(
          WHERE id = $2
            AND identity_id = $1),
         (SELECT meeting_id
-         FROM invite
+         FROM meeting_invite
          WHERE code = $3
            AND enabled = true
            AND expired_at > now()),
         (SELECT as_host
-         FROM invite
+         FROM meeting_invite
          WHERE code = $3
            AND enabled = true
            AND expired_at > now()))
