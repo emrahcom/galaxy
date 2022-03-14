@@ -17,7 +17,7 @@ BEGIN;
 -- -----------------------------------------------------------------------------
 -- PARAM
 -- -----------------------------------------------------------------------------
--- The (key, value) pairs.
+-- - contains the (key, value) pairs for miscellaneous use cases
 -- -----------------------------------------------------------------------------
 CREATE TABLE param (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -46,7 +46,7 @@ INSERT INTO identity VALUES (
 -- -----------------------------------------------------------------------------
 -- PROFILE
 -- -----------------------------------------------------------------------------
--- don't allow to delete the default profile
+-- - don't allow to delete the default profile
 -- -----------------------------------------------------------------------------
 CREATE TABLE profile (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -91,8 +91,8 @@ INSERT INTO domain VALUES (
 -- -----------------------------------------------------------------------------
 -- DOMAIN_PARTNER
 -- -----------------------------------------------------------------------------
--- identity cannot update enabled but she can delete the partnership
--- domain owner can update enabled or delete the partnership
+-- - identity cannot update enabled but she can delete the partnership
+-- - domain owner can update enabled or delete the partnership
 -- -----------------------------------------------------------------------------
 CREATE TABLE domain_partner (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -109,8 +109,8 @@ ALTER TABLE domain_partner OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- DOMAIN_INVITE
 -- -----------------------------------------------------------------------------
--- domain invite can be used only one time by one identity, then it will be
--- disabled
+-- - domain invite can only be used once by an identity, then it will be
+--   disabled
 -- -----------------------------------------------------------------------------
 CREATE TABLE domain_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -155,8 +155,8 @@ ALTER TABLE room OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- ROOM_PARTNER
 -- -----------------------------------------------------------------------------
--- identity cannot update enabled but she can delete the partnership
--- room owner can update enabled or delete the partnership
+-- - identity cannot update enabled but she can delete the partnership
+-- - room owner can update enabled or delete the partnership
 -- -----------------------------------------------------------------------------
 CREATE TABLE room_partner (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -211,10 +211,10 @@ ALTER TABLE meeting OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- MEETING_MEMBER
 -- -----------------------------------------------------------------------------
--- identity cannot update enabled but she can delete the membership
--- identity cannot update is_host
--- meeting owner can update enabled or delete the membership
--- meeting owner can update is_host
+-- - identity cannot update enabled but she can delete the membership
+-- - identity cannot update is_host
+-- - meeting owner can update enabled or delete the membership
+-- - meeting owner can update is_host
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_member (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -233,8 +233,8 @@ ALTER TABLE meeting_member OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- MEETING_INVITE
 -- -----------------------------------------------------------------------------
--- meeting invite can be shared with multiple members and can be used multiple
--- times before the expire time
+-- - meeting invite can be shared with multiple members and can be used multiple
+--   times before the expire time
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
