@@ -11,8 +11,10 @@ source $BASEDIR/../../common
 # try to add an already existing request
 # duplicated (identity_id, meeting_id)
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].profile_id" $TMP/api-pri-request-get-id-$SET-1-res)
-meeting_id=$(jq -r ".[0].meeting_id" $TMP/api-pri-request-get-id-$SET-1-res)
+profile_id=$(jq -r ".[0].profile_id" \
+    $TMP/api-pri-meeting-request-get-id-$SET-1-res)
+meeting_id=$(jq -r ".[0].meeting_id" \
+    $TMP/api-pri-meeting-request-get-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
     "profile_id": "$profile_id",
@@ -21,4 +23,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET" "pri" "request" "add" "$JSON" 1
+bash $TEMPLATES/action-member-error "$SET" "pri" "meeting/request" "add" \
+    "$JSON" 1

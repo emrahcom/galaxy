@@ -10,7 +10,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-request_id=$(jq -r ".[0].id" $TMP/api-pri-request-add-id-$SET-1-res)
+request_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-request-add-id-$SET-1-res)
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
@@ -20,5 +20,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "request" "update" "id" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/request" "update" \
+    "id" "$JSON" 1

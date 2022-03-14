@@ -13,7 +13,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # reject an existing request
 # ------------------------------------------------------------------------------
-request_id=$(jq -r ".[0].id" $TMP/api-pri-request-add-id-$SET2-1-res)
+request_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-request-add-id-$SET2-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$request_id"
@@ -21,5 +21,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET1" "pri" "request" "reject" "id" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-attr "$SET1" "pri" "meeting/request" "reject" \
+    "id" "$JSON" 1
