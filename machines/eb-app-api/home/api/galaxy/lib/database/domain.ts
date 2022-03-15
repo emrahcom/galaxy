@@ -48,7 +48,7 @@ export async function listDomain(
 }
 
 // -----------------------------------------------------------------------------
-export async function listEnabledPublicDomain(limit: number, offset: number) {
+export async function listPublicDomain(limit: number, offset: number) {
   const sql = {
     text: `
       SELECT d.id, d.name
