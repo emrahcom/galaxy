@@ -232,12 +232,6 @@ bash $BASEDIR/scripts/pri/meeting-request/list-invalid-post $SET2
 # ------------------------------------------------------------------------------
 bash $BASEDIR/scripts/pub/hello
 
-# domain
-bash $BASEDIR/scripts/pub/domain/list-nolimit-nooffset
-bash $BASEDIR/scripts/pub/domain/list-limit
-bash $BASEDIR/scripts/pub/domain/list-huge-offset
-bash $BASEDIR/scripts/pub/domain/list-invalid-post
-
 # meeting
 bash $BASEDIR/scripts/pub/meeting/get-exist
 bash $BASEDIR/scripts/pub/meeting/get-nonexist
