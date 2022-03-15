@@ -19,9 +19,19 @@ export interface Domain {
 }
 
 // -----------------------------------------------------------------------------
-export interface PubDomain {
+export interface DomainPublic {
   id: string;
   name: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface DomainReduced {
+  id: string;
+  name: string;
+  auth_type: string;
+  enabled: boolean;
+  owner_enabled: boolean;
+  chain_enabled: boolean;
 }
 
 // -----------------------------------------------------------------------------

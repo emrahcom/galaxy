@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Domain, Id, PubDomain } from "./types.ts";
+import type { Domain, DomainPublic, DomainReduced, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getDomain(identityId: string, domainId: string) {
