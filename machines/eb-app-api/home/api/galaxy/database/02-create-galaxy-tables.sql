@@ -256,7 +256,7 @@ ALTER TABLE meeting_member OWNER TO galaxy;
 -- MEETING_INVITE
 -- -----------------------------------------------------------------------------
 -- - meeting invite can be shared with multiple members and can be used multiple
---   times before the expire time
+--   times before the expire time if it is not disposable
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -265,6 +265,7 @@ CREATE TABLE meeting_invite (
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "as_host" boolean NOT NULL DEFAULT false,
+    "disposable" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
