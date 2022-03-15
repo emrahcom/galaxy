@@ -1,7 +1,6 @@
 import { serve } from "https://deno.land/std/http/server.ts";
 import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
-import domain from "./lib/pub/domain.ts";
 import hello from "./lib/pub/hello.ts";
 import meeting from "./lib/pub/meeting.ts";
 
@@ -11,8 +10,6 @@ const PRE = "/api/pub";
 async function route(req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/hello`) {
     return hello();
-  } else if (path.match(`^${PRE}/domain/`)) {
-    return await domain(req, path);
   } else if (path.match(`^${PRE}/meeting/`)) {
     return await meeting(req, path);
   } else {
