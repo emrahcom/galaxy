@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Meeting, MeetingLinkSet, PubMeeting } from "./types.ts";
+import type { Id, Meeting, MeetingLinkSet, MeetingPublic } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeeting(identityId: string, meetingId: string) {
@@ -44,7 +44,7 @@ export async function getPublicMeeting(meetingId: string) {
     ],
   };
 
-  return await fetch(sql) as PubMeeting[];
+  return await fetch(sql) as MeetingPublic[];
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,7 @@ export async function listEnabledPublicMeeting(
     ],
   };
 
-  return await fetch(sql) as PubMeeting[];
+  return await fetch(sql) as MeetingPublic[];
 }
 
 // -----------------------------------------------------------------------------

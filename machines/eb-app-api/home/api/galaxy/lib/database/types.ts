@@ -62,7 +62,7 @@ export interface Meeting {
 }
 
 // -----------------------------------------------------------------------------
-export interface PubMeeting {
+export interface MeetingPublic {
   id: string;
   name: string;
   info: string;
@@ -87,7 +87,7 @@ export interface MeetingInvite {
 }
 
 // -----------------------------------------------------------------------------
-export interface PubMeetingInvite {
+export interface MeetingInvitePublic {
   meeting_name: string;
   meeting_info: string;
   code: string;
