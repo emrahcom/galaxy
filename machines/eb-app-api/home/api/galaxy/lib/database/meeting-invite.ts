@@ -6,8 +6,8 @@ export async function getInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT i.id, m.id as meeting_id, m.name as meeting_name,
-        m.info as meeting_info, i.code, i.as_host, i.enabled, i.created_at,
-        i.updated_at, i.expired_at
+        m.info as meeting_info, i.code, i.as_host, i.disposable, i.enabled,
+        i.created_at, i.updated_at, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.id = $2
@@ -50,7 +50,8 @@ export async function listInvite(
 ) {
   const sql = {
     text: `
-      SELECT id, code, as_host, enabled, created_at, updated_at, expired_at
+      SELECT id, code, as_host, disposable, enabled, created_at, updated_at,
+        expired_at
       FROM meeting_invite
       WHERE identity_id = $1
         AND meeting_id = $2
@@ -73,22 +74,24 @@ export async function addInvite(
   identityId: string,
   meetingId: string,
   asHost: boolean,
+  disposable: boolean,
 ) {
   const sql = {
     text: `
-      INSERT INTO meeting_invite (identity_id, meeting_id, as_host)
+      INSERT INTO meeting_invite (identity_id, meeting_id, as_host, disposable)
       VALUES (
         $1,
         (SELECT id
          FROM meeting
          WHERE id = $2
            AND identity_id = $1),
-        $3)
+        $3, $4)
       RETURNING id, created_at as at`,
     args: [
       identityId,
       meetingId,
       asHost,
+      disposable,
     ],
   };
 

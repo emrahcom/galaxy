@@ -69,6 +69,7 @@ export interface MeetingInvite {
   meeting_info: string;
   code: string;
   as_host: boolean;
+  disposable: boolean;
   enabled: boolean;
   created_at: string;
   updated_at: string;
