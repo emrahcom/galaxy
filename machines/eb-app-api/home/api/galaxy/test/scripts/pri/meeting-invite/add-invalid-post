@@ -14,7 +14,8 @@ meeting_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
     "meeting_id": "$meeting_fake",
-    "as_host": false
+    "as_host": false,
+    "disposable": false
 }
 EOF
 )
