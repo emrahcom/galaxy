@@ -14,7 +14,7 @@
   <div class="row mx-auto mt-2 g-3">
     {#each rooms as p}
       <div class="col-md-6 col-xl-4">
-        <div class="card {!p.chain_enabled ? 'border-danger' : ''}">
+        <div class="card h-100 {!p.chain_enabled ? 'border-danger' : ''}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
             <p class="card-text text-muted">{p.domain_name}</p>
