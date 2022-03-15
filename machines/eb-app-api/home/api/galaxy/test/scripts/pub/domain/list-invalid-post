@@ -6,7 +6,7 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # ------------------------------------------------------------------------------
-# get enabled domain list (invalid limit, invalid offset)
+# get public domain list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
@@ -16,4 +16,4 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-error "pub" "domain" "list/enabled" "$JSON" 1
+bash $TEMPLATES/action-guest-error "pub" "domain" "list" "$JSON" 1

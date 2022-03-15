@@ -233,19 +233,19 @@ bash $BASEDIR/scripts/pri/meeting-request/list-invalid-post $SET2
 bash $BASEDIR/scripts/pub/hello
 
 # domain
-bash $BASEDIR/scripts/pub/domain/list-enabled-nolimit-nooffset
-bash $BASEDIR/scripts/pub/domain/list-enabled-limit
-bash $BASEDIR/scripts/pub/domain/list-enabled-huge-offset
-bash $BASEDIR/scripts/pub/domain/list-enabled-invalid-post
+bash $BASEDIR/scripts/pub/domain/list-nolimit-nooffset
+bash $BASEDIR/scripts/pub/domain/list-limit
+bash $BASEDIR/scripts/pub/domain/list-huge-offset
+bash $BASEDIR/scripts/pub/domain/list-invalid-post
 
 # meeting
 bash $BASEDIR/scripts/pub/meeting/get-exist
 bash $BASEDIR/scripts/pub/meeting/get-nonexist
-bash $BASEDIR/scripts/pub/meeting/list-enabled-nolimit-nooffset
-bash $BASEDIR/scripts/pub/meeting/list-enabled-limit
-bash $BASEDIR/scripts/pub/meeting/list-enabled-limit-offset
-bash $BASEDIR/scripts/pub/meeting/list-enabled-huge-offset
-bash $BASEDIR/scripts/pub/meeting/list-enabled-invalid-post
+bash $BASEDIR/scripts/pub/meeting/list-nolimit-nooffset
+bash $BASEDIR/scripts/pub/meeting/list-limit
+bash $BASEDIR/scripts/pub/meeting/list-limit-offset
+bash $BASEDIR/scripts/pub/meeting/list-huge-offset
+bash $BASEDIR/scripts/pub/meeting/list-invalid-post
 
 # ------------------------------------------------------------------------------
 # completed

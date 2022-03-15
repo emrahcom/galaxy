@@ -6,12 +6,13 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # ------------------------------------------------------------------------------
-# get enabled domain list (no limit, no offset)
+# get public domain list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
+    "offset": 1000000
 }
 EOF
 )
 
-bash $TEMPLATES/action-guest-attr "pub" "domain" "list/enabled" "id" "$JSON" 1
+bash $TEMPLATES/action-guest-empty "pub" "domain" "list" "$JSON" 1
