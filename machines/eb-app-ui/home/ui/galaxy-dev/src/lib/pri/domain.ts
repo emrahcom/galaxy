@@ -25,14 +25,5 @@ export async function domainsAsOptions() {
     });
   }
 
-  const pubDomains = await list("/api/pub/domain/list/enabled");
-  for (const p of pubDomains) {
-    options.push({
-      id: p.id,
-      name: p.name,
-      enabled: true,
-    });
-  }
-
   return options;
 }

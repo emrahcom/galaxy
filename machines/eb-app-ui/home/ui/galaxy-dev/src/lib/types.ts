@@ -15,6 +15,15 @@ export interface Domain {
 }
 
 // -----------------------------------------------------------------------------
+export interface DomainReduced {
+  id: string;
+  name: string;
+  auth_type: string;
+  enabled: boolean;
+  ownership: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Meeting {
   id: string;
   profile_id: string;

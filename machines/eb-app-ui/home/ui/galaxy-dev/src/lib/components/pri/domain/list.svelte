@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Domain } from "$lib/types";
+  import type { DomainReduced } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
-  export let domains: Domain[];
+  export let domains: DomainReduced[];
 </script>
 
 <!-- -------------------------------------------------------------------------->
