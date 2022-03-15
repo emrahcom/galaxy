@@ -6,14 +6,12 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../common
 
 # ------------------------------------------------------------------------------
-# get enabled meeting list (limit 2, offset 2)
+# get public meeting list (no limit, no offset)
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
-    "limit": 2,
-    "offset": 2
 }
 EOF
 )
 
-bash $TEMPLATES/action-guest-attr "pub" "meeting" "list/enabled" "id" "$JSON" 3
+bash $TEMPLATES/action-guest-attr "pub" "meeting" "list" "id" "$JSON" 1
