@@ -19,12 +19,6 @@ export interface Domain {
 }
 
 // -----------------------------------------------------------------------------
-export interface DomainPublic {
-  id: string;
-  name: string;
-}
-
-// -----------------------------------------------------------------------------
 export interface DomainReduced {
   id: string;
   name: string;

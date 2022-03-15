@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Domain, DomainPublic, DomainReduced, Id } from "./types.ts";
+import type { Domain, DomainReduced, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getDomain(identityId: string, domainId: string) {
@@ -62,25 +62,6 @@ export async function listDomain(
   };
 
   return await fetch(sql) as DomainReduced[];
-}
-
-// -----------------------------------------------------------------------------
-export async function listPublicDomain(limit: number, offset: number) {
-  const sql = {
-    text: `
-      SELECT id, name
-      FROM domain
-      WHERE public = true
-        AND enabled = true
-      ORDER BY name
-      LIMIT $1 OFFSET $2`,
-    args: [
-      limit,
-      offset,
-    ],
-  };
-
-  return await fetch(sql) as DomainPublic[];
 }
 
 // -----------------------------------------------------------------------------
