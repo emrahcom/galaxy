@@ -65,7 +65,7 @@ export async function listEnabledPublicDomain(limit: number, offset: number) {
     ],
   };
 
-  return await fetch(sql) as PubDomain[];
+  return await fetch(sql) as DomainPublic[];
 }
 
 // -----------------------------------------------------------------------------
