@@ -16,7 +16,7 @@
         <div class="card {!p.enabled ? 'border-danger' : ''}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
-            <p class="card-text text-muted">{p.domain_attr.url}</p>
+            <p class="card-text text-muted">{p.url}</p>
           </div>
 
           <div class="card-footer bg-body border-0 text-center">

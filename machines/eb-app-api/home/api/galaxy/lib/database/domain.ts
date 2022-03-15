@@ -29,13 +29,15 @@ export async function listDomain(
 ) {
   const sql = {
     text: `
-      SELECT id, name, auth_type, enabled, 'private' as ownership
+      SELECT id, name, auth_type, domain_attr->>'url', enabled,
+        'private' as ownership
       FROM domain
       WHERE identity_id = $1
 
       UNION
 
-      SELECT id, name, auth_type, true, 'partner' as ownership
+      SELECT id, name, auth_type, domain_attr->>'url', true,
+        'partner' as ownership
       FROM domain
       WHERE id IN (SELECT domain_id
                    FROM domain_partner p
@@ -48,7 +50,8 @@ export async function listDomain(
 
       UNION
 
-      SELECT id, name, auth_type, true, 'public' as ownership
+      SELECT id, name, auth_type, domain_attr->>'url', true,
+        'public' as ownership
       FROM domain
       WHERE public = true
         AND enabled = true
