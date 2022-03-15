@@ -3,7 +3,7 @@ import { pub as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
   getPublicMeeting,
-  listEnabledPublicMeeting,
+  listPublicMeeting,
 } from "../database/meeting.ts";
 
 const PRE = "/api/pub/meeting";
@@ -22,14 +22,14 @@ async function listEnabled(req: Request): Promise<unknown> {
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listEnabledPublicMeeting(limit, offset);
+  return await listPublicMeeting(limit, offset);
 }
 
 // -----------------------------------------------------------------------------
 export default async function (req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req);
-  } else if (path === `${PRE}/list/enabled`) {
+  } else if (path === `${PRE}/list`) {
     return await wrapper(listEnabled, req);
   } else {
     return notFound();

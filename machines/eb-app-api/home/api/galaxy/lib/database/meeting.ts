@@ -108,7 +108,7 @@ export async function listMeeting(
 }
 
 // -----------------------------------------------------------------------------
-export async function listEnabledPublicMeeting(
+export async function listPublicMeeting(
   limit: number,
   offset: number,
 ) {
