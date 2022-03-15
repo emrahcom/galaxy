@@ -21,15 +21,17 @@
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
-            <Del href="/pri/domain/del/{p.id}" />
+            {#if p.ownership === "private"}
+              <Del href="/pri/domain/del/{p.id}" />
 
-            {#if p.enabled}
-              <Disable href="/pri/domain/disable/{p.id}" />
-            {:else}
-              <Enable href="/pri/domain/enable/{p.id}" />
+              {#if p.enabled}
+                <Disable href="/pri/domain/disable/{p.id}" />
+              {:else}
+                <Enable href="/pri/domain/enable/{p.id}" />
+              {/if}
+
+              <Update href="/pri/domain/update/{p.id}" />
             {/if}
-
-            <Update href="/pri/domain/update/{p.id}" />
           </div>
         </div>
       </div>
