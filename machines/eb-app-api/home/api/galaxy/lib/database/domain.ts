@@ -68,12 +68,10 @@ export async function listDomain(
 export async function listPublicDomain(limit: number, offset: number) {
   const sql = {
     text: `
-      SELECT d.id, d.name
-      FROM domain d
-        JOIN identity i ON d.identity_id = i.id
-      WHERE d.public = true
-        AND d.enabled = true
-        AND i.enabled = true
+      SELECT id, name
+      FROM domain
+      WHERE public = true
+        AND enabled = true
       ORDER BY name
       LIMIT $1 OFFSET $2`,
     args: [
