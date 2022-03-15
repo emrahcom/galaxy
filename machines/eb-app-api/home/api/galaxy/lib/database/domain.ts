@@ -29,13 +29,30 @@ export async function listDomain(
 ) {
   const sql = {
     text: `
-      SELECT d.id, d.name, d.auth_type, d.domain_attr, d.enabled,
-        i.enabled as owner_enabled, (i.enabled AND d.enabled) as chain_enabled,
-        d.created_at, d.updated_at
-      FROM domain d
-        JOIN identity i ON d.identity_id = i.id
-      WHERE d.identity_id = $1
-      ORDER BY d.name
+      SELECT id, name, auth_type, enabled, 'private' as ownership
+      FROM domain
+      WHERE identity_id = $1
+
+      UNION
+
+      SELECT id, name, auth_type, true, 'partner' as ownership
+      FROM domain
+      WHERE id IN (SELECT domain_id
+                   FROM domain_partner p
+                     JOIN domain d ON p.domain_id = d.id
+                     JOIN identity i ON d.identity_id = i.id
+                   WHERE p.identity_id = $1
+                     AND p.enabled = true
+                     AND d.enabled = true
+                     AND i.enabled = true)
+
+      UNION
+
+      SELECT id, name, auth_type, true, 'public' as ownership
+      FROM domain
+      WHERE public = true
+        AND enabled = true
+      ORDER BY name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
@@ -44,7 +61,7 @@ export async function listDomain(
     ],
   };
 
-  return await fetch(sql) as Domain[];
+  return await fetch(sql) as DomainReduced[];
 }
 
 // -----------------------------------------------------------------------------

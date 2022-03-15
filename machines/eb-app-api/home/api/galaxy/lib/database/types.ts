@@ -30,8 +30,7 @@ export interface DomainReduced {
   name: string;
   auth_type: string;
   enabled: boolean;
-  owner_enabled: boolean;
-  chain_enabled: boolean;
+  ownership: string;
 }
 
 // -----------------------------------------------------------------------------
