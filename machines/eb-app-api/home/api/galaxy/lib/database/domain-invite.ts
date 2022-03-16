@@ -57,7 +57,7 @@ export async function listInvite(
       WHERE i.identity_id = $1
         AND i.domain_id = $2
         AND expired_at > now()
-      ORDER BY expired_at
+      ORDER BY expired_at DESC
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
@@ -123,7 +123,8 @@ export async function updateInviteEnabled(
       UPDATE domain_invite
       SET
         enabled = $3,
-        updated_at = now()
+        updated_at = now(),
+        expired_at = now() + interval '3 days'
       WHERE id = $2
         AND identity_id = $1
       RETURNING id, updated_at as at`,
