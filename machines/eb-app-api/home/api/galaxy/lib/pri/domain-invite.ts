@@ -1,6 +1,74 @@
 import { notFound } from "../http/response.ts";
+import { pri as wrapper } from "../http/wrapper.ts";
+import { getLimit, getOffset } from "../database/common.ts";
+import {
+  addInvite,
+  delInvite,
+  getInvite,
+  getInviteByCode,
+  listInvite,
+  updateInviteEnabled,
+} from "../database/domain-invite.ts";
 
-const PRE = "/api/pri/meeting/invite";
+const PRE = "/api/pri/domain/invite";
+
+// -----------------------------------------------------------------------------
+async function get(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const inviteId = pl.id;
+
+  return await getInvite(identityId, inviteId);
+}
+
+// -----------------------------------------------------------------------------
+async function getByCode(req: Request, _identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const code = pl.code;
+
+  return await getInviteByCode(code);
+}
+
+// -----------------------------------------------------------------------------
+async function list(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const domainId = pl.domain_id;
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
+
+  return await listInvite(identityId, domainId, limit, offset);
+}
+
+// -----------------------------------------------------------------------------
+async function add(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const domainId = pl.domain_id;
+
+  return await addInvite(identityId, domainId);
+}
+
+// -----------------------------------------------------------------------------
+async function del(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const inviteId = pl.id;
+
+  return await delInvite(identityId, inviteId);
+}
+
+// -----------------------------------------------------------------------------
+async function enable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const inviteId = pl.id;
+
+  return await updateInviteEnabled(identityId, inviteId, true);
+}
+
+// -----------------------------------------------------------------------------
+async function disable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const inviteId = pl.id;
+
+  return await updateInviteEnabled(identityId, inviteId, false);
+}
 
 // -----------------------------------------------------------------------------
 export default async function (
@@ -9,7 +77,19 @@ export default async function (
   identityId: string,
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
-    console.log("get");
+    return await wrapper(get, req, identityId);
+  } else if (path === `${PRE}/get/bycode`) {
+    return await wrapper(getByCode, req, identityId);
+  } else if (path === `${PRE}/list`) {
+    return await wrapper(list, req, identityId);
+  } else if (path === `${PRE}/add`) {
+    return await wrapper(add, req, identityId);
+  } else if (path === `${PRE}/del`) {
+    return await wrapper(del, req, identityId);
+  } else if (path === `${PRE}/enable`) {
+    return await wrapper(enable, req, identityId);
+  } else if (path === `${PRE}/disable`) {
+    return await wrapper(disable, req, identityId);
   } else {
     return notFound();
   }
