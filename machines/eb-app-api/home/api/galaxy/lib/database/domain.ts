@@ -5,13 +5,10 @@ import type { Domain, DomainReduced, Id } from "./types.ts";
 export async function getDomain(identityId: string, domainId: string) {
   const sql = {
     text: `
-      SELECT d.id, d.name, d.auth_type, d.domain_attr, d.enabled,
-        i.enabled as owner_enabled, (i.enabled AND d.enabled) as chain_enabled,
-        d.created_at, d.updated_at
-      FROM domain d
-        JOIN identity i ON d.identity_id = i.id
-      WHERE d.id = $2
-        AND d.identity_id = $1`,
+      SELECT id, name, auth_type, domain_attr, enabled, created_at, updated_at
+      FROM domain
+      WHERE id = $2
+        AND identity_id = $1`,
     args: [
       identityId,
       domainId,

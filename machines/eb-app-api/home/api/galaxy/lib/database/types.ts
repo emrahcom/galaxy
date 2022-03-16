@@ -12,8 +12,6 @@ export interface Domain {
     [key: string]: string;
   };
   enabled: boolean;
-  owner_enabled: boolean;
-  chain_enabled: boolean;
   created_at: string;
   updated_at: string;
 }
