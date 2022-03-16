@@ -23,6 +23,26 @@ export interface DomainReduced {
 }
 
 // -----------------------------------------------------------------------------
+export interface DomainInvite {
+  id: string;
+  domain_id: string;
+  domain_name: string;
+  domain_url: string;
+  code: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface DomainInviteReduced {
+  domain_name: string;
+  domain_url: string;
+  code: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Meeting {
   id: string;
   profile_id: string;
