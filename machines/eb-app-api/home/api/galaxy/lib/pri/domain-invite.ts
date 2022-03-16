@@ -33,8 +33,9 @@ async function list(req: Request, identityId: string): Promise<unknown> {
 async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const domainId = pl.domain_id;
+  const name = pl.name;
 
-  return await addInvite(identityId, domainId);
+  return await addInvite(identityId, domainId, name);
 }
 
 // -----------------------------------------------------------------------------
