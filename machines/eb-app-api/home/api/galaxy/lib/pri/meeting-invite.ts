@@ -42,10 +42,11 @@ async function list(req: Request, identityId: string): Promise<unknown> {
 async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.meeting_id;
+  const name = pl.name;
   const asHost = pl.as_host;
   const disposable = pl.disposable;
 
-  return await addInvite(identityId, meetingId, asHost, disposable);
+  return await addInvite(identityId, meetingId, name, asHost, disposable);
 }
 
 // -----------------------------------------------------------------------------
