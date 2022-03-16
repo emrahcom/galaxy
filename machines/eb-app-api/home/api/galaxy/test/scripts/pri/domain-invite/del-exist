@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=1 || SET=$1
+
+# ------------------------------------------------------------------------------
+# delete an existing invite
+# ------------------------------------------------------------------------------
+invite_id=$(jq -r ".[0].id" $TMP/api-pri-domain-invite-add-id-$SET-1-res)
+JSON=$(cat <<EOF
+{
+    "id": "$invite_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr "$SET" "pri" "domain/invite" "del" "id" \
+    "$JSON" 1
