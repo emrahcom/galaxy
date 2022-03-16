@@ -8,7 +8,7 @@
   const uuid = $page.params.uuid;
 
   const pr1 = getById("/api/pri/domain/get", uuid);
-  const pr2 = list("/api/pri/domain/invite/list", 100);
+  const pr2 = listById("/api/pri/domain/invite/list", uuid, 100);
 </script>
 
 <!-- -------------------------------------------------------------------------->

@@ -13,7 +13,8 @@ source $BASEDIR/../../common
 domain_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
-    "domain_id": "$domain_fake"
+    "domain_id": "$domain_fake",
+    "name": "invite-$RANDOM"
 }
 EOF
 )

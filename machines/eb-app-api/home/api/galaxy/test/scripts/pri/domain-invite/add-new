@@ -15,7 +15,8 @@ for i in $(seq 1 $NUM); do
     domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-$i-res)
     JSON=$(cat <<EOF
     {
-        "domain_id": "$domain_id"
+        "domain_id": "$domain_id",
+        "name": "invite-$RANDOM"
     }
 EOF
 )
