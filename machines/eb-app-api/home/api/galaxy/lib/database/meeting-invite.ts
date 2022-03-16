@@ -5,7 +5,7 @@ import type { Id, MeetingInvite, MeetingInvitePublic } from "./types.ts";
 export async function getInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
-      SELECT i.id, m.id as meeting_id, m.name as meeting_name,
+      SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
         m.info as meeting_info, i.code, i.as_host, i.disposable, i.enabled,
         i.created_at, i.updated_at, i.expired_at
       FROM meeting_invite i
@@ -45,13 +45,14 @@ export async function getInviteByCode(code: string) {
 export async function listInvite(
   identityId: string,
   meetingId: string,
+  name: string,
   limit: number,
   offset: number,
 ) {
   const sql = {
     text: `
-      SELECT id, code, as_host, disposable, enabled, created_at, updated_at,
-        expired_at
+      SELECT id, name, code, as_host, disposable, enabled, created_at,
+        updated_at, expired_at
       FROM meeting_invite
       WHERE identity_id = $1
         AND meeting_id = $2
@@ -61,6 +62,7 @@ export async function listInvite(
     args: [
       identityId,
       meetingId,
+      name,
       limit,
       offset,
     ],
