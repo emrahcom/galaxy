@@ -126,7 +126,7 @@ export async function updateInviteEnabled(
         updated_at = now(),
         expired_at = CASE $3
                        WHEN true THEN now() + interval '3 days'
-                       ELSE now()
+                       ELSE now() + interval '3 hours'
                      END
       WHERE id = $2
         AND identity_id = $1
