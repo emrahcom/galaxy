@@ -58,7 +58,7 @@ export async function listById(
   url: string,
   id: string,
   limit = 10,
-  offset = 0
+  offset = 0,
 ) {
   const payload = {
     id: id,
