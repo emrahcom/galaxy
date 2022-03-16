@@ -3,7 +3,6 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
-  import Update from "$lib/components/common/link-update.svelte";
 
   export let invites: DomainInvite[];
 </script>
@@ -11,7 +10,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#each invite as p}
+    {#each invites as p}
       <div class="col-md-6 col-xl-4">
         <div class="card h-100 {!p.enabled ? 'border-danger' : ''}">
           <div class="card-body text-center">
