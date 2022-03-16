@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=1 || SET=$1
+
+# ------------------------------------------------------------------------------
+# get invite list (invalid limit, invalid offset)
+# ------------------------------------------------------------------------------
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
+JSON=$(cat <<EOF
+{
+    "domain_id": "$domain_id",
+    "limit": "INVALID",
+    "offset": "INVALID"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "$SET" "pri" "domain/invite" "list" \
+    "$JSON" 1
