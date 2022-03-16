@@ -22,7 +22,7 @@ async function get(req: Request, identityId: string): Promise<unknown> {
 // -----------------------------------------------------------------------------
 async function list(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const domainId = pl.domain_id;
+  const domainId = pl.id;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
