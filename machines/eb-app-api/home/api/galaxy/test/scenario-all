@@ -77,6 +77,9 @@ bash $BASEDIR/scripts/pri/domain/list-limit-offset $SET1
 bash $BASEDIR/scripts/pri/domain/list-huge-offset $SET1
 bash $BASEDIR/scripts/pri/domain/list-invalid-post $SET1
 
+# domain-invite
+bash $BASEDIR/scripts/pri/domain-invite/add-invalid-post $SET1
+
 # room
 bash $BASEDIR/scripts/pri/room/add-invalid-post $SET1
 bash $BASEDIR/scripts/pri/room/add-new $SET1
