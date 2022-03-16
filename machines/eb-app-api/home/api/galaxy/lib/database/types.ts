@@ -29,6 +29,7 @@ export interface DomainReduced {
 // -----------------------------------------------------------------------------
 export interface DomainInvite {
   id: string;
+  name: string;
   domain_id: string;
   domain_name: string;
   domain_url: string;
@@ -86,6 +87,7 @@ export interface MeetingPublic {
 // -----------------------------------------------------------------------------
 export interface MeetingInvite {
   id: string;
+  name: string;
   meeting_id: string;
   meeting_name: string;
   meeting_info: string;
