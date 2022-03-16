@@ -52,3 +52,24 @@ export async function list(url: string, limit = 10, offset = 0) {
 
   return rows;
 }
+
+// -----------------------------------------------------------------------------
+export async function listById(
+  url: string,
+  id: string,
+  limit = 10,
+  offset = 0
+) {
+  const payload = {
+    id: id,
+    limit: limit,
+    offset: offset,
+  };
+  const res = await post(url, payload);
+
+  if (res.status !== 200) throw new Error("post failed");
+
+  const rows = await res.json();
+
+  return rows;
+}
