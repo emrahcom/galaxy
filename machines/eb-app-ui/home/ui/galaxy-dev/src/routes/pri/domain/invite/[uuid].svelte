@@ -14,7 +14,7 @@
 <!-- -------------------------------------------------------------------------->
 {#await Promise.all([pr1, pr2]) then [domain, invites]}
   <Subheader
-    subheader="The partner keys for ${domain.name}"
+    subheader="The partner keys for {domain.name}"
     href="/pri/domain/invite/add/{uuid}"
   />
 
