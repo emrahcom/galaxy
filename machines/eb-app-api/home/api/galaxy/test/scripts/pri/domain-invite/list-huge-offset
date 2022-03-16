@@ -13,7 +13,7 @@ source $BASEDIR/../../common
 domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
-    "domain_id": "$domain_id",
+    "id": "$domain_id",
     "offset": 1000000
 }
 EOF
