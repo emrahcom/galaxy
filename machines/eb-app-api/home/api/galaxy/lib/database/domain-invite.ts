@@ -106,7 +106,7 @@ export async function updateInviteEnabled(
       SET
         enabled = $3,
         updated_at = now(),
-        expired_at = CASE $3
+        expired_at = CASE $3::boolean
                        WHEN true THEN now() + interval '3 days'
                        ELSE now() + interval '3 hours'
                      END
