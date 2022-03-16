@@ -117,6 +117,7 @@ CREATE TABLE domain_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "enabled" boolean NOT NULL DEFAULT true,
@@ -181,6 +182,7 @@ CREATE TABLE room_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "enabled" boolean NOT NULL DEFAULT true,
@@ -262,6 +264,7 @@ CREATE TABLE meeting_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "as_host" boolean NOT NULL DEFAULT false,
