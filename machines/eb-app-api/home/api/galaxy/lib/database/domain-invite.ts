@@ -5,7 +5,7 @@ import type { DomainInvite, Id } from "./types.ts";
 export async function getInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
-      SELECT i.id, d.id as domain_id, d.name as domain_name,
+      SELECT i.id, i.name, d.id as domain_id, d.name as domain_name,
         d.domain_attr->>'url' as domain_url, i.code, i.enabled,
         i.created_at, i.updated_at, i.expired_at
       FROM domain_invite i
@@ -31,7 +31,7 @@ export async function listInvite(
 ) {
   const sql = {
     text: `
-      SELECT i.id, d.id as domain_id, d.name as domain_name,
+      SELECT i.id, i.name, d.id as domain_id, d.name as domain_name,
         d.domain_attr->>'url' as domain_url, i.code, i.enabled,
         i.created_at, i.updated_at, i.expired_at
       FROM domain_invite i
@@ -56,21 +56,24 @@ export async function listInvite(
 export async function addInvite(
   identityId: string,
   domainId: string,
+  name: string,
 ) {
   const sql = {
     text: `
-      INSERT INTO domain_invite (identity_id, domain_id)
+      INSERT INTO domain_invite (identity_id, domain_id, name)
       VALUES (
         $1,
         (SELECT id
          FROM domain
          WHERE id = $2
-           AND identity_id = $1)
+           AND identity_id = $1),
+        $3
       )
       RETURNING id, created_at as at`,
     args: [
       identityId,
       domainId,
+      name,
     ],
   };
 
