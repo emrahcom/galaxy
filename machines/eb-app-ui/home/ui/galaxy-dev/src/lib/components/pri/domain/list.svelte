@@ -3,6 +3,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import Invite from "$lib/components/common/link-invite.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
   export let domains: DomainReduced[];
@@ -31,6 +32,7 @@
               {/if}
 
               <Update href="/pri/domain/update/{p.id}" />
+              <Invite href="/pri/domain/invite/{p.id}" />
             {/if}
           </div>
         </div>
