@@ -45,7 +45,6 @@ export async function getInviteByCode(code: string) {
 export async function listInvite(
   identityId: string,
   meetingId: string,
-  name: string,
   limit: number,
   offset: number,
 ) {
@@ -62,7 +61,6 @@ export async function listInvite(
     args: [
       identityId,
       meetingId,
-      name,
       limit,
       offset,
     ],
@@ -75,23 +73,26 @@ export async function listInvite(
 export async function addInvite(
   identityId: string,
   meetingId: string,
+  name: string,
   asHost: boolean,
   disposable: boolean,
 ) {
   const sql = {
     text: `
-      INSERT INTO meeting_invite (identity_id, meeting_id, as_host, disposable)
+      INSERT INTO meeting_invite (identity_id, meeting_id, name, as_host,
+        disposable)
       VALUES (
         $1,
         (SELECT id
          FROM meeting
          WHERE id = $2
            AND identity_id = $1),
-        $3, $4)
+        $3, $4, $5)
       RETURNING id, created_at as at`,
     args: [
       identityId,
       meetingId,
+      name,
       asHost,
       disposable,
     ],
