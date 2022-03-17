@@ -26,7 +26,7 @@
   async function onSubmit() {
     try {
       warning = false;
-      await action("/api/pri/room/add", p);
+      await action("/api/pri/domain/invite/add", p);
       window.location.href = `/pri/domain/invite/${uuid}`;
     } catch {
       warning = true;
@@ -36,37 +36,33 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  {#await pr then domain}
-    <div class="d-flex mt-2 justify-content-center">
-      <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-        <Text name="name" label="Name" bind:value={p.name} required={true} />
-        <Text
-          name="name"
-          label="Jitsi Domain Name"
-          value={domain.name}
-          readonly={true}
-        />
-        <Text
-          name="url"
-          label="Jitsi Domain URL"
-          value={domain.domain_attr.url}
-          readonly={true}
-        />
+  <div class="d-flex mt-2 justify-content-center">
+    <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+      <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Text
+        name="name"
+        label="Jitsi Domain Name"
+        value={domain.name}
+        readonly={true}
+      />
+      <Text
+        name="url"
+        label="Jitsi Domain URL"
+        value={domain.domain_attr.url}
+        readonly={true}
+      />
 
-        {#if warning}
-          <Warning>
-            The add request is not accepted. Please check your inputs.
-          </Warning>
-        {/if}
+      {#if warning}
+        <Warning>
+          The add request is not accepted. Please check your inputs.
+        </Warning>
+      {/if}
 
-        <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
-          <SubmitBlocker />
-          <Submit label="Add" />
-        </div>
-      </form>
-    </div>
-  {:catch}
-    <Warning>Something went wrong</Warning>
-  {/await}
+      <div class="d-flex gap-5 mt-5 justify-content-center">
+        <Cancel on:click={cancel} />
+        <SubmitBlocker />
+        <Submit label="Add" />
+      </div>
+    </form>
+  </div>
 </section>
