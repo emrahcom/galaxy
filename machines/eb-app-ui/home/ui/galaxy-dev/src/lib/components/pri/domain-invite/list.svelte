@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { toLocaleTime } from "$lib/common";
   import type { DomainInvite } from "$lib/types";
   import Copy from "$lib/components/common/button-copy.svelte";
@@ -10,7 +11,7 @@
 
   // ---------------------------------------------------------------------------
   function copy(code: string) {
-    const text = `/pri/domain/partnership/add/${code}`;
+    const text = `${$page.url.origin}/pri/domain/partnership/add/${code}`;
 
     navigator.clipboard.writeText(text);
   }
