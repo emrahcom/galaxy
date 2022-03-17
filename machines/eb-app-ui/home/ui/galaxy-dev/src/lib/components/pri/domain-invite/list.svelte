@@ -1,16 +1,11 @@
 <script lang="ts">
+  import { toLocaleTime } from "$lib/common";
   import type { DomainInvite } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
 
   export let invites: DomainInvite[];
-
-  function toLocaleTime(date: string) {
-    const _date = new Date(date);
-
-    return _date.toLocaleString();
-  }
 </script>
 
 <!-- -------------------------------------------------------------------------->
