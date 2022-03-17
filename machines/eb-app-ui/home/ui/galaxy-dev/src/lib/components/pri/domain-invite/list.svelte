@@ -34,7 +34,9 @@
               {$page.url.origin}/pri/domain/partnership/add/{p.code}
             </p>
 
-            <Copy label="copy" on:click={() => copy(p.code)} />
+            {#if p.enabled}
+              <Copy label="copy" on:click={() => copy(p.code)} />
+            {/if}
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
