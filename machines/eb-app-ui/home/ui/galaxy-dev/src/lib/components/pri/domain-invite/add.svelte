@@ -11,9 +11,11 @@
   export let uuid: string;
   export let domain: Domain;
 
+  const date = new Date();
+
   let warning = false;
   let p = {
-    name: "",
+    name: `invite-${date.getTime() % 10000000000}`,
     domain_id: uuid,
   };
 
