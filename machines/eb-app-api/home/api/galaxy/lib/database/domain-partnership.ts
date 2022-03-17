@@ -1,10 +1,10 @@
 import { fetch, query } from "./common.ts";
-import type { Id. DomainPartnership } from "./types.ts";
+import type { DomainPartnership, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getPartnership(
   identityId: string,
-  partnershipId: string
+  partnershipId: string,
 ) {
   const sql = {
     text: `

@@ -2,7 +2,8 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import {
   addPartnership,
-  getPartnership
+  delPartnership,
+  getPartnership,
 } from "../database/domain-partnership.ts";
 
 const PRE = "/api/pri/domain/partnership";
@@ -24,6 +25,14 @@ async function add(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function del(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const partnershipId = pl.id;
+
+  return await delPartnership(identityId, partnershipId);
+}
+
+// -----------------------------------------------------------------------------
 export default async function (
   req: Request,
   path: string,
@@ -33,6 +42,8 @@ export default async function (
     return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/add`) {
     return await wrapper(add, req, identityId);
+  } else if (path === `${PRE}/del`) {
+    return await wrapper(del, req, identityId);
   } else {
     return notFound();
   }
