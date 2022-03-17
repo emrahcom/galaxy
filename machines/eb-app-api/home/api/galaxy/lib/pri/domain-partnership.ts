@@ -1,27 +1,27 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import {
-  addPartnership,
+  addPartnershipByCode,
   delPartnership,
-  getPartnership,
+  getPartnershipByDomain,
 } from "../database/domain-partnership.ts";
 
 const PRE = "/api/pri/domain/partnership";
 
 // -----------------------------------------------------------------------------
-async function get(req: Request, identityId: string): Promise<unknown> {
+async function getByDomain(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const domainId = pl.id;
 
-  return await getPartnership(identityId, domainId);
+  return await getPartnershipByDomain(identityId, domainId);
 }
 
 // -----------------------------------------------------------------------------
-async function add(req: Request, identityId: string): Promise<unknown> {
+async function addByCode(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  return await addPartnership(identityId, code);
+  return await addPartnershipByCode(identityId, code);
 }
 
 // -----------------------------------------------------------------------------
@@ -38,10 +38,10 @@ export default async function (
   path: string,
   identityId: string,
 ): Promise<Response> {
-  if (path === `${PRE}/get`) {
-    return await wrapper(get, req, identityId);
-  } else if (path === `${PRE}/add`) {
-    return await wrapper(add, req, identityId);
+  if (path === `${PRE}/get/bydomain`) {
+    return await wrapper(getByDomain, req, identityId);
+  } else if (path === `${PRE}/add/bycode`) {
+    return await wrapper(addByCode, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
   } else {
