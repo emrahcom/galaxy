@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { DomainInvite, Id } from "./types.ts";
+import type { DomainInvite, DomainInviteReduced, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getInvite(identityId: string, inviteId: string) {
@@ -20,6 +20,24 @@ export async function getInvite(identityId: string, inviteId: string) {
   };
 
   return await fetch(sql) as DomainInvite[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getInviteByCode(code: string) {
+  const sql = {
+    text: `
+      SELECT d.name as domain_name, d.domain_attr->>'url' as domain_url, i.code
+      FROM domain_invite i
+        JOIN domain d ON i.domain_id = d.id
+      WHERE i.code = $1
+        AND i.enabled = true
+        AND i.expired_at > now()`,
+    args: [
+      code,
+    ],
+  };
+
+  return await fetch(sql) as DomainInviteReduced[];
 }
 
 // -----------------------------------------------------------------------------
