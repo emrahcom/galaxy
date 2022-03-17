@@ -31,7 +31,7 @@
             </p>
 
             <p class="card-text text-muted">
-              /pri/domain/partnership/add/{p.code}
+              {$page.url.origin}/pri/domain/partnership/add/{p.code}
             </p>
 
             <Copy label="copy" on:click={() => copy(p.code)} />
