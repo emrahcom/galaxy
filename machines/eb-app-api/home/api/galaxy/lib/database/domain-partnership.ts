@@ -64,3 +64,23 @@ export async function addPartnership(
 
   return rows;
 }
+
+// -----------------------------------------------------------------------------
+export async function delPartnership(
+  identityId: string,
+  partnershipId: string,
+) {
+  const sql = {
+    text: `
+      DELETE FROM domain_partner
+      WHERE id = $2
+        AND identity_id = $1
+      RETURNING id, now() as at`,
+    args: [
+      identityId,
+      partnershipId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
