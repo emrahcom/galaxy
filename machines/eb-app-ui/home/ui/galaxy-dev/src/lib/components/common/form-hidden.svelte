@@ -4,9 +4,4 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<input
-  type="hidden"
-  id={name}
-  {name}
-  bind:value
-/>
+<input type="hidden" id={name} {name} bind:value />

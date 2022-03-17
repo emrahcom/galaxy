@@ -13,7 +13,7 @@
 <Subheader subheader="Add a partner key" />
 
 {#await pr then domain}
-<Add {uuid} {domain} />
+  <Add {uuid} {domain} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
