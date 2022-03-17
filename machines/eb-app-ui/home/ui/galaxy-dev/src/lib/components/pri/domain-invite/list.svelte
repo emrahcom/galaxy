@@ -6,10 +6,10 @@
 
   export let invites: DomainInvite[];
 
-  function toLocalTime(date: string) {
+  function toLocaleTime(date: string) {
     const _date = new Date(date);
 
-    return _date.toLocalString();
+    return _date.toLocaleString();
   }
 </script>
 
@@ -22,7 +22,7 @@
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
             <p class="card-text text-muted small">
-              {toLocalTime(p.expired_at)}
+              {toLocaleTime(p.expired_at)}
             </p>
             <p class="card-text text-muted">
               /pri/domain/partnership/add/{p.code}
