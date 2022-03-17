@@ -33,7 +33,8 @@ export async function listDomain(
 
       UNION
 
-      SELECT id, name, auth_type, domain_attr->>'url' as url, true,
+      SELECT id, name, auth_type, domain_attr->>'url' as url,
+        (p.enabled AND d.enabled AND i.enabled) as enabled,
         'partner' as ownership
       FROM domain
       WHERE id IN (SELECT domain_id
