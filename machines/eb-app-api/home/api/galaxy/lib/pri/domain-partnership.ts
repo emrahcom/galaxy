@@ -11,9 +11,9 @@ const PRE = "/api/pri/domain/partnership";
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const partnershipId = pl.id;
+  const domainId = pl.id;
 
-  return await getPartnership(identityId, partnershipId);
+  return await getPartnership(identityId, domainId);
 }
 
 // -----------------------------------------------------------------------------

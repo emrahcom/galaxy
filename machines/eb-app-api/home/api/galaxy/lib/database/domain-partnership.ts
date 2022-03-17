@@ -4,7 +4,7 @@ import type { DomainPartnership, Id } from "./types.ts";
 // -----------------------------------------------------------------------------
 export async function getPartnership(
   identityId: string,
-  partnershipId: string,
+  domainId: string,
 ) {
   const sql = {
     text: `
@@ -13,11 +13,11 @@ export async function getPartnership(
         p.created_at, p.updated_at
       FROM domain_partner p
         JOIN domain d ON p.domain_id = d.id
-      WHERE p.id = $2
-        AND p.identity_id = $1`,
+      WHERE p.identity_id = $1
+        AND p.domain_id = $2`,
     args: [
       identityId,
-      partnershipId,
+      domainId,
     ],
   };
 
