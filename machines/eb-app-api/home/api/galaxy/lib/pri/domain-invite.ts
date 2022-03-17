@@ -5,6 +5,7 @@ import {
   addInvite,
   delInvite,
   getInvite,
+  getInviteByCode,
   listInvite,
   updateInviteEnabled,
 } from "../database/domain-invite.ts";
@@ -17,6 +18,14 @@ async function get(req: Request, identityId: string): Promise<unknown> {
   const inviteId = pl.id;
 
   return await getInvite(identityId, inviteId);
+}
+
+// -----------------------------------------------------------------------------
+async function getByCode(req: Request, _identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const code = pl.code;
+
+  return await getInviteByCode(code);
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +79,8 @@ export default async function (
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req, identityId);
+  } else if (path === `${PRE}/get/bycode`) {
+    return await wrapper(getByCode, req, identityId);
   } else if (path === `${PRE}/list`) {
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
