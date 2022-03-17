@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { getById } from "$lib/api";
-  import Del from "$lib/components/pri/domain-invite/del.svelte";
+  import Disable from "$lib/components/pri/domain-invite/disable.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -9,10 +9,10 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Delete this partner key" />
+<Subheader subheader="Disable this partner key" />
 
 {#await pr then invite}
-  <Del p={invite} />
+  <Disable p={invite} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
