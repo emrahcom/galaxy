@@ -29,11 +29,11 @@
               {toLocaleTime(p.expired_at)}
             </p>
 
-            <Copy label="copy" on:click={() => copy(p.code)} />
-
             <p class="card-text text-muted">
               /pri/domain/partnership/add/{p.code}
             </p>
+
+            <Copy label="copy" on:click={() => copy(p.code)} />
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
