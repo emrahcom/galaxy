@@ -38,7 +38,6 @@ export interface DomainInvite {
 
 // -----------------------------------------------------------------------------
 export interface DomainInviteReduced {
-  name: string;
   domain_name: string;
   domain_url: string;
   code: string;
