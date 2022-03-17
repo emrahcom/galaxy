@@ -8,7 +8,6 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let uuid: string;
   export let domain: Domain;
 
   const date = new Date();
@@ -16,12 +15,12 @@
   let warning = false;
   let p = {
     name: `invite-${date.getTime() % 10000000000}`,
-    domain_id: uuid,
+    domain_id: domain.id,
   };
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/domain/invite/${uuid}`;
+    window.location.href = `/pri/domain/invite/${domain.id}`;
   }
 
   // ---------------------------------------------------------------------------
@@ -29,7 +28,7 @@
     try {
       warning = false;
       await action("/api/pri/domain/invite/add", p);
-      window.location.href = `/pri/domain/invite/${uuid}`;
+      window.location.href = `/pri/domain/invite/${domain.id}`;
     } catch {
       warning = true;
     }
