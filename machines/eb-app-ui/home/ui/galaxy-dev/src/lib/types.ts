@@ -25,6 +25,7 @@ export interface DomainReduced {
 // -----------------------------------------------------------------------------
 export interface DomainInvite {
   id: string;
+  name: string;
   domain_id: string;
   domain_name: string;
   domain_url: string;
@@ -37,6 +38,7 @@ export interface DomainInvite {
 
 // -----------------------------------------------------------------------------
 export interface DomainInviteReduced {
+  name: string;
   domain_name: string;
   domain_url: string;
   code: string;
