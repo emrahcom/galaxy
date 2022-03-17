@@ -15,6 +15,7 @@
         <div class="card h-100 {!p.enabled ? 'border-danger' : ''}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
+            <p class="card-text text-muted small">{p.expired_at}</p>
             <p class="card-text text-muted">
               /pri/domain/partnership/add/{p.code}
             </p>
