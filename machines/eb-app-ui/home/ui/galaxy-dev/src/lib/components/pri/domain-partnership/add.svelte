@@ -24,7 +24,7 @@
   async function onSubmit() {
     try {
       warning = false;
-      await action("/api/pri/domain/partnership/add", p);
+      await action("/api/pri/domain/partnership/add/bycode", p);
       window.location.href = `/pri/domain`;
     } catch {
       warning = true;
