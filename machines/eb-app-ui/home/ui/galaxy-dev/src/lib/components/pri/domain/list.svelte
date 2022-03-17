@@ -33,7 +33,7 @@
 
               <Update href="/pri/domain/update/{p.id}" />
               <Invite href="/pri/domain/invite/{p.id}" />
-            {#elseif p.ownership === "partner"}
+            {:else if p.ownership === "partner"}
               <Del href="/pri/domain/partnership/del/{p.id}" />
             {/if}
           </div>
