@@ -1,5 +1,28 @@
 import { fetch, query } from "./common.ts";
-import type { Id } from "./types.ts";
+import type { Id. DomainPartnership } from "./types.ts";
+
+// -----------------------------------------------------------------------------
+export async function getPartnership(
+  identityId: string,
+  partnershipId: string
+) {
+  const sql = {
+    text: `
+      SELECT p.id, d.id as domain_id, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, p.enabled,
+        p.created_at, p.updated_at
+      FROM domain_partner p
+        JOIN domain d ON p.domain_id = d.id
+      WHERE p.id = $2
+        AND p.identity_id = $1`,
+    args: [
+      identityId,
+      partnershipId,
+    ],
+  };
+
+  return await fetch(sql) as DomainPartnership[];
+}
 
 // -----------------------------------------------------------------------------
 export async function addPartnership(
