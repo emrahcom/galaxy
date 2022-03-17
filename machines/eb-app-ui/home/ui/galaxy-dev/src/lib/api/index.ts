@@ -39,6 +39,15 @@ export async function getById(url: string, id: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function getByCode(url: string, code: string) {
+  const payload = {
+    code: code,
+  };
+
+  return await action(url, payload);
+}
+
+// -----------------------------------------------------------------------------
 export async function list(url: string, limit = 10, offset = 0) {
   const payload = {
     limit: limit,
