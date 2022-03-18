@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { getById } from "$lib/api";
-  import Del from "$lib/components/pri/domain/partnership/del.svelte";
+  import Del from "$lib/components/pri/domain-partnership/del.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
