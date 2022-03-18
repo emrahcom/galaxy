@@ -24,7 +24,7 @@
     try {
       warning = false;
       await actionById("/api/pri/domain/del", p.id);
-      window.location.replace = "/pri/domain";
+      window.location.replace("/pri/domain");
     } catch {
       warning = true;
     }
