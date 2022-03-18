@@ -6,13 +6,15 @@
   import Subheader from "$lib/components/common/subheader-pri-list.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const uuid = $page.params.uuid;
+  const domain_uuid = $page.params.domain_uuid;
   let domain_name = "";
 
-  const pr1 = getById("/api/pri/domain/get", uuid).then((item: Domain) => {
-    domain_name = item.name;
-  });
-  const pr2 = listById("/api/pri/domain/invite/list", uuid, 100);
+  const pr1 = getById("/api/pri/domain/get", domain_uuid).then(
+    (item: Domain) => {
+      domain_name = item.name;
+    },
+  );
+  const pr2 = listById("/api/pri/domain/invite/list", domain_uuid, 100);
 </script>
 
 <!-- -------------------------------------------------------------------------->
