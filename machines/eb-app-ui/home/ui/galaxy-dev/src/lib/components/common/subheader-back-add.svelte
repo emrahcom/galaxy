@@ -13,7 +13,7 @@
       <a
         class="btn btn-outline-secondary ms-auto me-2 my-auto"
         role="button"
-        {hrefBack}
+        href={hrefBack}
       >
         <span class="bi bi-box-arrow-in-left" />
       </a>
@@ -22,7 +22,7 @@
     <a
       class="btn btn-outline-secondary ms-auto me-2 my-auto"
       role="button"
-      {hrefAdd}
+      href={hrefAdd}
     >
       <span class="bi bi-plus-lg" />
     </a>
