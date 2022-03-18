@@ -15,7 +15,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   let warning = false;
-  let domain_id = "";
+  let domainId = "";
   let p = {
     profile_id: "",
     room_id: "",
@@ -50,7 +50,7 @@
 
   const pr4 = domainsAsOptions().then((items) => {
     const enableds = items.filter((i) => i.enabled);
-    if (enableds[0]) domain_id = enableds[0].id;
+    if (enableds[0]) domainId = enableds[0].id;
 
     return items.map((i) => [
       i.id,
@@ -70,7 +70,7 @@
 
       if (p.schedule_type === "ephemeral") {
         let r = {
-          domain_id: domain_id,
+          domain_id: domainId,
         };
 
         const room = await action("/api/pri/room/add-ephemeral", r);
@@ -121,7 +121,7 @@
           <Select
             id="domain_id"
             label="Jitsi Domain"
-            bind:value={domain_id}
+            bind:value={domainId}
             options={domains}
           />
         {:else}

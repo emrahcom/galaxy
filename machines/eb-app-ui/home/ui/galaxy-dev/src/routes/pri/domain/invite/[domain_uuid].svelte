@@ -6,21 +6,19 @@
   import Subheader from "$lib/components/common/subheader-pri-list.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const domain_uuid = $page.params.domain_uuid;
-  let domain_name = "";
+  const domainId = $page.params.domain_uuid;
+  let domainName = "";
 
-  const pr1 = getById("/api/pri/domain/get", domain_uuid).then(
-    (item: Domain) => {
-      domain_name = item.name;
-    },
-  );
-  const pr2 = listById("/api/pri/domain/invite/list", domain_uuid, 100);
+  const pr1 = getById("/api/pri/domain/get", domainId).then((item: Domain) => {
+    domainName = item.name;
+  });
+  const pr2 = listById("/api/pri/domain/invite/list", domainId, 100);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader
-  subheader="The partner keys for {domain_name}"
-  href="/pri/domain/invite/add/{domain_uuid}"
+  subheader="The partner keys for {domainName}"
+  href="/pri/domain/invite/add/{domainId}"
 />
 
 {#await Promise.all([pr1, pr2]) then [_domain, invites]}
