@@ -11,11 +11,11 @@
       {subheader}
 
       <a
-        class="btn btn-outline-secondary ms-auto me-2 my-auto"
+        class="btn btn-lg btn-outline-secondary ms-auto me-2 my-auto"
         role="button"
         href={hrefBack}
       >
-        <span class="bi bi-arrow-left-left" />
+        <span class="bi bi-arrow-return-left" />
       </a>
     </h3>
 
