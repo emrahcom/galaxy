@@ -82,6 +82,8 @@ bash $BASEDIR/scripts/pri/domain-invite/add-invalid-post $SET1
 bash $BASEDIR/scripts/pri/domain-invite/add-new $SET1
 bash $BASEDIR/scripts/pri/domain-invite/get-exist $SET1
 bash $BASEDIR/scripts/pri/domain-invite/get-nonexist $SET1
+bash $BASEDIR/scripts/pri/domain-invite/get-bycode-exist $SET1
+bash $BASEDIR/scripts/pri/domain-invite/get-bycode-nonexist $SET1
 
 bash $BASEDIR/scripts/pri/domain-invite/disable-exist $SET1
 bash $BASEDIR/scripts/pri/domain-invite/disable-nonexist $SET1
