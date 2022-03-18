@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# the partner id
+[[ -z "$1" ]] && SET1=2 || SET1=$1
+# the invite owner id
+[[ -z "$2" ]] && SET2=1 || SET2=$2
+[[ -z "$3" ]] && NUM=1 || NUM=$3
+
+# ------------------------------------------------------------------------------
+# add many new partnership
+# ------------------------------------------------------------------------------
+for i in $(seq 1 $NUM); do
+    invite_id=$(jq -r ".[0].id" $TMP/api-pri-domain-invite-add-id-$SET2-$i-res)
+    JSON=$(cat <<EOF
+    {
+        "id": "$invite_id"
+    }
+EOF
+)
+
+    bash $TEMPLATES/action-member-attr "$SET2" "pri" "domain/invite" \
+        "get" "id" "$JSON" $i
+
+    invite_code=$(jq -r ".[0].code" \
+                      $TMP/api-pri-domain-invite-get-id-$SET2-$i-res)
+    JSON=$(cat <<EOF
+    {
+        "code": "$invite_code"
+    }
+EOF
+)
+
+    bash $TEMPLATES/action-member-attr "$SET1" "pri" "domain/partnership" \
+        "add/bycode" "id" "$JSON" $i
+done
