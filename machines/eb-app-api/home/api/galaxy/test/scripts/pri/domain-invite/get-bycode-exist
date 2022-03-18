@@ -19,4 +19,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-attr "$SET" "pri" "domain/invite" "get/bycode" \
-    "id" "$JSON" 1
+    "domain_name" "$JSON" 1
