@@ -23,7 +23,7 @@
     try {
       warning = false;
       await actionById("/api/pri/profile/del", p.id);
-      window.location.href = "/pri/profile";
+      window.location.replace = "/pri/profile";
     } catch {
       warning = true;
     }

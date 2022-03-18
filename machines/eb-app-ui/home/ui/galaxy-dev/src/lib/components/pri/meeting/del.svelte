@@ -40,7 +40,7 @@
     try {
       warning = false;
       await actionById("/api/pri/meeting/del", p.id);
-      window.location.href = "/pri/meeting";
+      window.location.replace = "/pri/meeting";
     } catch {
       warning = true;
     }

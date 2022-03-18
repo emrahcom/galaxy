@@ -22,7 +22,7 @@
     try {
       warning = false;
       await actionById("/api/pri/domain/invite/del", p.id);
-      window.location.href = `/pri/domain/invite/${p.domain_id}`;
+      window.location.replace = `/pri/domain/invite/${p.domain_id}`;
     } catch {
       warning = true;
     }
