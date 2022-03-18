@@ -48,9 +48,7 @@
       />
 
       {#if warning}
-        <Warning>
-          The delete request is not accepted. Please check your inputs.
-        </Warning>
+        <Warning>The delete request is not accepted.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
