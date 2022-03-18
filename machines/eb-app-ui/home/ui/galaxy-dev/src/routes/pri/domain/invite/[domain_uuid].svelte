@@ -12,7 +12,7 @@
   const pr1 = getById("/api/pri/domain/get", domainId).then((item: Domain) => {
     domainName = item.name;
   });
-  const pr2 = listById("/api/pri/domain/invite/list", domainId, 100);
+  const pr2 = listById("/api/pri/domain/invite/list/bydomain", domainId, 100);
 </script>
 
 <!-- -------------------------------------------------------------------------->
