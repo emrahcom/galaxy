@@ -13,9 +13,9 @@ const PRE = "/api/pri/domain/partner";
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const domainId = pl.id;
+  const partnershipId = pl.id;
 
-  return await getDomainPartner(identityId, domainId);
+  return await getDomainPartner(identityId, partnershipId);
 }
 
 // -----------------------------------------------------------------------------
@@ -24,35 +24,35 @@ async function listByDomain(
   identityId: string,
 ): Promise<unknown> {
   const pl = await req.json();
-  const domain_id = pl.id;
+  const domainId = pl.id;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listDomainPartnerByDomain(identityId, domain_id, limit, offset);
+  return await listDomainPartnerByDomain(identityId, domainId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
 async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const domainId = pl.id;
+  const partnershipId = pl.id;
 
-  return await delDomainPartner(identityId, domainId);
+  return await delDomainPartner(identityId, partnershipId);
 }
 
 // -----------------------------------------------------------------------------
 async function enable(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const domainId = pl.id;
+  const partnershipId = pl.id;
 
-  return await updateDomainPartnerEnabled(identityId, domainId, true);
+  return await updateDomainPartnerEnabled(identityId, partnershipId, true);
 }
 
 // -----------------------------------------------------------------------------
 async function disable(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const domainId = pl.id;
+  const partnershipId = pl.id;
 
-  return await updateDomainPartnerEnabled(identityId, domainId, false);
+  return await updateDomainPartnerEnabled(identityId, partnershipId, false);
 }
 
 // -----------------------------------------------------------------------------
