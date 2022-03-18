@@ -2,7 +2,7 @@ import { fetch, query } from "./common.ts";
 import type { DomainPartnership, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getPartnershipByDomain(
+export async function getDomainPartnershipByDomain(
   identityId: string,
   domainId: string,
 ) {
@@ -25,7 +25,7 @@ export async function getPartnershipByDomain(
 }
 
 // -----------------------------------------------------------------------------
-export async function addPartnershipByCode(
+export async function addDomainPartnershipByCode(
   identityId: string,
   code: string,
 ) {
@@ -67,7 +67,7 @@ export async function addPartnershipByCode(
 }
 
 // -----------------------------------------------------------------------------
-export async function delPartnership(
+export async function delDomainPartnership(
   identityId: string,
   partnershipId: string,
 ) {

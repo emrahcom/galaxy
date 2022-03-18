@@ -1,9 +1,9 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import {
-  addPartnershipByCode,
-  delPartnership,
-  getPartnershipByDomain,
+  addDomainPartnershipByCode,
+  delDomainPartnership,
+  getDomainPartnershipByDomain,
 } from "../database/domain-partnership.ts";
 
 const PRE = "/api/pri/domain/partnership";
@@ -13,7 +13,7 @@ async function getByDomain(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const domainId = pl.id;
 
-  return await getPartnershipByDomain(identityId, domainId);
+  return await getDomainPartnershipByDomain(identityId, domainId);
 }
 
 // -----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ async function addByCode(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  return await addPartnershipByCode(identityId, code);
+  return await addDomainPartnershipByCode(identityId, code);
 }
 
 // -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const partnershipId = pl.id;
 
-  return await delPartnership(identityId, partnershipId);
+  return await delDomainPartnership(identityId, partnershipId);
 }
 
 // -----------------------------------------------------------------------------
