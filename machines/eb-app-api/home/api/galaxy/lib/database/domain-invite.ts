@@ -2,7 +2,7 @@ import { fetch } from "./common.ts";
 import type { DomainInvite, DomainInviteReduced, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getInvite(identityId: string, inviteId: string) {
+export async function getDomainInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT i.id, i.name, d.id as domain_id, d.name as domain_name,
@@ -23,7 +23,7 @@ export async function getInvite(identityId: string, inviteId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function getInviteByCode(code: string) {
+export async function getDomainInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT d.name as domain_name, d.domain_attr->>'url' as domain_url, i.code
@@ -41,7 +41,7 @@ export async function getInviteByCode(code: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listInvite(
+export async function listDomainInvite(
   identityId: string,
   domainId: string,
   limit: number,
@@ -71,7 +71,7 @@ export async function listInvite(
 }
 
 // -----------------------------------------------------------------------------
-export async function addInvite(
+export async function addDomainInvite(
   identityId: string,
   domainId: string,
   name: string,
@@ -99,7 +99,7 @@ export async function addInvite(
 }
 
 // -----------------------------------------------------------------------------
-export async function delInvite(identityId: string, inviteId: string) {
+export async function delDomainInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       DELETE FROM domain_invite
@@ -116,7 +116,7 @@ export async function delInvite(identityId: string, inviteId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updateInviteEnabled(
+export async function updateDomainInviteEnabled(
   identityId: string,
   inviteId: string,
   value: boolean,

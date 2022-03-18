@@ -2,12 +2,12 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
-  addInvite,
-  delInvite,
-  getInvite,
-  getInviteByCode,
-  listInvite,
-  updateInviteEnabled,
+  addDomainInvite,
+  delDomainInvite,
+  getDomainInvite,
+  getDomainInviteByCode,
+  listDomainInvite,
+  updateDomainInviteEnabled,
 } from "../database/domain-invite.ts";
 
 const PRE = "/api/pri/domain/invite";
@@ -17,7 +17,7 @@ async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await getInvite(identityId, inviteId);
+  return await getDomainInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ async function getByCode(req: Request, _identityId: string): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  return await getInviteByCode(code);
+  return await getDomainInviteByCode(code);
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ async function list(req: Request, identityId: string): Promise<unknown> {
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listInvite(identityId, domainId, limit, offset);
+  return await listDomainInvite(identityId, domainId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const domainId = pl.domain_id;
   const name = pl.name;
 
-  return await addInvite(identityId, domainId, name);
+  return await addDomainInvite(identityId, domainId, name);
 }
 
 // -----------------------------------------------------------------------------
@@ -52,7 +52,7 @@ async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await delInvite(identityId, inviteId);
+  return await delDomainInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ async function enable(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await updateInviteEnabled(identityId, inviteId, true);
+  return await updateDomainInviteEnabled(identityId, inviteId, true);
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ async function disable(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await updateInviteEnabled(identityId, inviteId, false);
+  return await updateDomainInviteEnabled(identityId, inviteId, false);
 }
 
 // -----------------------------------------------------------------------------

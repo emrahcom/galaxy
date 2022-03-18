@@ -8,6 +8,7 @@ import {
 import { getIdentityId } from "./lib/pri/kratos.ts";
 import domain from "./lib/pri/domain.ts";
 import domainInvite from "./lib/pri/domain-invite.ts";
+import domainPartner from "./lib/pri/domain-partner.ts";
 import domainPartnership from "./lib/pri/domain-partnership.ts";
 import hello from "./lib/pri/hello.ts";
 import meeting from "./lib/pri/meeting.ts";
@@ -30,6 +31,8 @@ async function route(
     return hello(identityId);
   } else if (path.match(`^${PRE}/domain/invite/`)) {
     return await domainInvite(req, path, identityId);
+  } else if (path.match(`^${PRE}/domain/partner/`)) {
+    return await domainPartner(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/partnership/`)) {
     return await domainPartnership(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/`)) {
