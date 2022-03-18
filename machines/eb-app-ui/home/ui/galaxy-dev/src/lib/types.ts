@@ -44,6 +44,17 @@ export interface DomainInviteReduced {
 }
 
 // -----------------------------------------------------------------------------
+export interface DomainPartnership {
+  id: string;
+  domain_id: string;
+  domain_name: string;
+  domain_url: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Meeting {
   id: string;
   profile_id: string;
