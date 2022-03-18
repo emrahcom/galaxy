@@ -8,7 +8,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My meetings" href="/pri/meeting/add" />
+<Subheader subheader="My meetings" hrefAdd="/pri/meeting/add" />
 
 {#await pr then meetings}
   <List {meetings} />

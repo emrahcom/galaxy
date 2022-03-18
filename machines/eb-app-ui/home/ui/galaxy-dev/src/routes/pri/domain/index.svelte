@@ -8,7 +8,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My Jitsi domains" href="/pri/domain/add" />
+<Subheader subheader="My Jitsi domains" hrefAdd="/pri/domain/add" />
 
 {#await pr then domains}
   <List {domains} />

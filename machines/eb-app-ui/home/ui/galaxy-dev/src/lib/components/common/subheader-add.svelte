@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let href: string;
+  export let hrefAdd: string;
   export let subheader: string;
 </script>
 
@@ -10,7 +10,7 @@
     <a
       class="btn btn-outline-secondary ms-auto me-2 my-auto"
       role="button"
-      {href}
+      {hrefAdd}
     >
       <span class="bi bi-plus-lg" />
     </a>
