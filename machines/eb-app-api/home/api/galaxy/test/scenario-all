@@ -91,10 +91,10 @@ bash $BASEDIR/scripts/pri/domain-invite/del-exist $SET1
 bash $BASEDIR/scripts/pri/domain-invite/del-nonexist $SET1
 
 bash $BASEDIR/scripts/pri/domain-invite/add-new $SET1 10
-bash $BASEDIR/scripts/pri/domain-invite/list-nolimit-nooffset $SET1
-bash $BASEDIR/scripts/pri/domain-invite/list-limit $SET1
-bash $BASEDIR/scripts/pri/domain-invite/list-huge-offset $SET1
-bash $BASEDIR/scripts/pri/domain-invite/list-invalid-post $SET1
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-limit $SET1
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-huge-offset $SET1
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-invalid-post $SET1
 
 # domain-partnership
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-invalid-post $SET2 $SET1
