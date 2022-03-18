@@ -15,7 +15,7 @@
         role="button"
         href={hrefBack}
       >
-        <span class="bi bi-box-arrow-in-left" />
+        <span class="bi bi-arrow-left-left" />
       </a>
     </h3>
 
