@@ -4,6 +4,7 @@
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
   import Invite from "$lib/components/common/link-invite.svelte";
+  import People from "$lib/components/common/link-people.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
   export let domains: DomainReduced[];
@@ -33,6 +34,7 @@
 
               <Update href="/pri/domain/update/{p.id}" />
               <Invite href="/pri/domain/invite/{p.id}" />
+              <People href="/pri/domain/partner/{p.id}" />
             {:else if p.ownership === "partner"}
               <Del href="/pri/domain/partnership/del/{p.id}" />
             {/if}
