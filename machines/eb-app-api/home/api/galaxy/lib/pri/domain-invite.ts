@@ -6,7 +6,7 @@ import {
   delDomainInvite,
   getDomainInvite,
   getDomainInviteByCode,
-  listDomainInvite,
+  listDomainInviteByDomain,
   updateDomainInviteEnabled,
 } from "../database/domain-invite.ts";
 
@@ -29,13 +29,16 @@ async function getByCode(req: Request, _identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function list(req: Request, identityId: string): Promise<unknown> {
+async function listByDomain(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
   const pl = await req.json();
   const domainId = pl.id;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listDomainInvite(identityId, domainId, limit, offset);
+  return await listDomainInviteByDomain(identityId, domainId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
@@ -81,8 +84,8 @@ export default async function (
     return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/get/bycode`) {
     return await wrapper(getByCode, req, identityId);
-  } else if (path === `${PRE}/list`) {
-    return await wrapper(list, req, identityId);
+  } else if (path === `${PRE}/list/bydomain`) {
+    return await wrapper(listByDomain, req, identityId);
   } else if (path === `${PRE}/add`) {
     return await wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {

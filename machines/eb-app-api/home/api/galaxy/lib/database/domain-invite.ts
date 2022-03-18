@@ -41,7 +41,7 @@ export async function getDomainInviteByCode(code: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listDomainInvite(
+export async function listDomainInviteByDomain(
   identityId: string,
   domainId: string,
   limit: number,
