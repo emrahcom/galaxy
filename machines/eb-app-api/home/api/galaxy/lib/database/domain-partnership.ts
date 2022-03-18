@@ -37,6 +37,7 @@ export async function addPartnershipByCode(
         (SELECT domain_id
          FROM domain_invite
          WHERE code = $2
+           AND id != $1
            AND enabled = true
            AND expired_at > now())
       )
