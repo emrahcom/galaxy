@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import { getById } from "$lib/api";
   import Add from "$lib/components/pri/domain-invite/add.svelte";
-  import Subheader from "$lib/components/common/subheader.svelte";
+  import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const domainId = $page.params.domain_uuid;
