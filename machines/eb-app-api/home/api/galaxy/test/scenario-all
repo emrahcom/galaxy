@@ -99,7 +99,7 @@ bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-huge-offset $SET1
 bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-invalid-post $SET1
 
 # domain-partnership
-bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-invalid-post $SET2 $SET1
+bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-invalid-post $SET2
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $SET2 $SET1
 bash $BASEDIR/scripts/pri/domain-partnership/get-bydomain-exist $SET2
 bash $BASEDIR/scripts/pri/domain-partnership/get-bydomain-nonexist $SET2
