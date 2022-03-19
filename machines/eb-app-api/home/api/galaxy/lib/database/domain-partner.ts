@@ -90,7 +90,7 @@ export async function updateDomainPartnerEnabled(
       UPDATE domain_partner
       SET
         enabled = $3,
-        updated_at = now(),
+        updated_at = now()
       WHERE id = $2
         AND domain_id IN (SELECT id
                           FROM domain
