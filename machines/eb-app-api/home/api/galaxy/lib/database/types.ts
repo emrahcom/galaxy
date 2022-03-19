@@ -50,6 +50,7 @@ export interface DomainInviteReduced {
 // -----------------------------------------------------------------------------
 export interface DomainPartner {
   id: string;
+  domain_id: string;
   profile_name: string;
   profile_email: string;
   enabled: boolean;
