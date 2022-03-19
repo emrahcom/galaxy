@@ -90,24 +90,6 @@ INSERT INTO domain VALUES (
 );
 
 -- -----------------------------------------------------------------------------
--- DOMAIN_PARTNER
--- -----------------------------------------------------------------------------
--- - identity cannot update enabled but she can delete the partnership
--- - domain owner can update enabled or delete the partnership
--- -----------------------------------------------------------------------------
-CREATE TABLE domain_partner (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
-    "enabled" boolean NOT NULL DEFAULT true,
-    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX ON domain_partner("identity_id", "domain_id");
-CREATE INDEX ON domain_partner("domain_id");
-ALTER TABLE domain_partner OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
 -- DOMAIN_INVITE
 -- -----------------------------------------------------------------------------
 -- - domain invite can only be used once, then it will be disabled
@@ -129,6 +111,24 @@ CREATE TABLE domain_invite (
 CREATE UNIQUE INDEX ON domain_invite("code");
 CREATE INDEX ON domain_invite("identity_id", "domain_id", "expired_at");
 ALTER TABLE domain_invite OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
+-- DOMAIN_PARTNER
+-- -----------------------------------------------------------------------------
+-- - identity cannot update enabled but she can delete the partnership
+-- - domain owner can update enabled or delete the partnership
+-- -----------------------------------------------------------------------------
+CREATE TABLE domain_partner (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON domain_partner("identity_id", "domain_id");
+CREATE INDEX ON domain_partner("domain_id");
+ALTER TABLE domain_partner OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- ROOM
@@ -155,24 +155,6 @@ CREATE UNIQUE INDEX ON room("identity_id", "domain_id", "name");
 ALTER TABLE room OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
--- ROOM_PARTNER
--- -----------------------------------------------------------------------------
--- - identity cannot update enabled but she can delete the partnership
--- - room owner can update enabled or delete the partnership
--- -----------------------------------------------------------------------------
-CREATE TABLE room_partner (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
-    "enabled" boolean NOT NULL DEFAULT true,
-    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX ON room_partner("identity_id", "room_id");
-CREATE INDEX ON room_partner("room_id");
-ALTER TABLE room_partner OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
 -- ROOM_INVITE
 -- -----------------------------------------------------------------------------
 -- - room invite can only be used once, then it will be disabled
@@ -194,6 +176,24 @@ CREATE TABLE room_invite (
 CREATE UNIQUE INDEX ON room_invite("code");
 CREATE INDEX ON room_invite("identity_id", "room_id", "expired_at");
 ALTER TABLE room_invite OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
+-- ROOM_PARTNER
+-- -----------------------------------------------------------------------------
+-- - identity cannot update enabled but she can delete the partnership
+-- - room owner can update enabled or delete the partnership
+-- -----------------------------------------------------------------------------
+CREATE TABLE room_partner (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON room_partner("identity_id", "room_id");
+CREATE INDEX ON room_partner("room_id");
+ALTER TABLE room_partner OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- MEETING
@@ -231,28 +231,6 @@ CREATE TABLE meeting (
 CREATE UNIQUE INDEX ON meeting("host_key");
 CREATE UNIQUE INDEX ON meeting("guest_key");
 ALTER TABLE meeting OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
--- MEETING_MEMBER
--- -----------------------------------------------------------------------------
--- - identity cannot update enabled but she can delete the membership
--- - identity cannot update is_host
--- - meeting owner can update enabled or delete the membership
--- - meeting owner can update is_host
--- -----------------------------------------------------------------------------
-CREATE TABLE meeting_member (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
-    "is_host" boolean NOT NULL DEFAULT false,
-    "enabled" boolean NOT NULL DEFAULT true,
-    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX ON meeting_member("identity_id", "meeting_id", "is_host");
-CREATE INDEX ON meeting_member("meeting_id", "is_host");
-ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- MEETING_INVITE
@@ -305,6 +283,28 @@ CREATE TABLE meeting_request (
 CREATE UNIQUE INDEX ON meeting_request("identity_id", "meeting_id");
 CREATE INDEX ON meeting_request("meeting_id", "status");
 ALTER TABLE meeting_request OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
+-- MEETING_MEMBER
+-- -----------------------------------------------------------------------------
+-- - identity cannot update enabled but she can delete the membership
+-- - identity cannot update is_host
+-- - meeting owner can update enabled or delete the membership
+-- - meeting owner can update is_host
+-- -----------------------------------------------------------------------------
+CREATE TABLE meeting_member (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "is_host" boolean NOT NULL DEFAULT false,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON meeting_member("identity_id", "meeting_id", "is_host");
+CREATE INDEX ON meeting_member("meeting_id", "is_host");
+ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- MEETING_SCHEDULE
