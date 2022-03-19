@@ -33,7 +33,7 @@
 <section id="disable">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" bind:value={p.name} readonly={true} />
+      <Text name="name" label="Name" value={p.name} readonly={true} />
       <Text
         name="name"
         label="Jitsi Domain Name"
