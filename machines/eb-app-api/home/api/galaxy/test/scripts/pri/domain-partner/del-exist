@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# the domain owner id
+[[ -z "$1" ]] && SET1=1 || SET1=$1
+# the partner id
+[[ -z "$2" ]] && SET2=2 || SET2=$2
+
+# ------------------------------------------------------------------------------
+# delete an existing partner
+# ------------------------------------------------------------------------------
+partner_id=$(jq -r ".[0].id" \
+                 $TMP/api-pri-domain-partnership-add-bycode-id-$SET2-1-res)
+JSON=$(cat <<EOF
+{
+    "id": "$partner_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr "$SET1" "pri" "domain/partner" "del" "id" \
+    "$JSON" 1
