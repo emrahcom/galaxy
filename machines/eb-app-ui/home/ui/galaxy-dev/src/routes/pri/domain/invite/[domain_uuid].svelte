@@ -17,7 +17,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <Subheader
-  subheader="Partner keys for {domainName}"
+  subheader="Partner keys of {domainName}"
   hrefBack="/pri/domain"
   hrefAdd="/pri/domain/invite/add/{domainId}"
 />
