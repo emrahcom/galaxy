@@ -19,7 +19,7 @@
 <Subheader subheader="Partners for {domainName}" hrefBack="/pri/domain" />
 
 {#await Promise.all([pr1, pr2]) then [_domain, partners]}
-  <List {partner} />
+  <List {partners} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
