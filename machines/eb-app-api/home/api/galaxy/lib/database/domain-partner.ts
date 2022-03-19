@@ -87,7 +87,7 @@ export async function updateDomainPartnerEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE domain_invite
+      UPDATE domain_partner
       SET
         enabled = $3,
         updated_at = now(),
