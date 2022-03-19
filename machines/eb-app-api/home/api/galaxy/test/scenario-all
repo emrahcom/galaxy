@@ -111,6 +111,23 @@ bash $BASEDIR/scripts/pri/domain-partnership/del-nonexist $SET2
 bash $BASEDIR/scripts/pri/domain-invite/enable-exist $SET1
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $SET2 $SET1 10
 
+# domain-partner
+bash $BASEDIR/scripts/pri/domain-partner/get-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/domain-partner/get-nonexist $SET1
+
+bash $BASEDIR/scripts/pri/domain-partner/disable-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/domain-partner/disable-nonexist $SET1
+bash $BASEDIR/scripts/pri/domain-partner/enable-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/domain-partner/enable-nonexist $SET1
+
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-limit $SET1
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-huge-offset $SET1
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-invalid-post $SET1
+
+bash $BASEDIR/scripts/pri/domain-partner/del-exist $SET1 $SET2
+bash $BASEDIR/scripts/pri/domain-partner/del-nonexist $SET1
+
 # room
 bash $BASEDIR/scripts/pri/room/add-invalid-post $SET1
 bash $BASEDIR/scripts/pri/room/add-new $SET1
