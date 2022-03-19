@@ -11,9 +11,8 @@ export async function getDomainPartner(
       SELECT pa.id as partnership_id, pr.name as profile_name,
         pr.email as profile_email, pa.enabled, pa.created_at, pa.updated_at
       FROM domain_partner pa
-        LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
+        LEFT JOIN profile pr ON pr.is_default = true USING identity_id
       WHERE pa.id = $2
-        AND pr.is_default = true
         AND pa.domain_id IN (SELECT id
                              FROM domain
                              WHERE identity_id = $1)`,
@@ -38,9 +37,8 @@ export async function listDomainPartnerByDomain(
       SELECT pa.id as partnership_id, pr.name as profile_name,
         pr.email as profile_email, pa.enabled, pa.created_at, pa.updated_at
       FROM domain_partner pa
-        LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
+        LEFT JOIN profile pr ON pr.is_default = true USING identity_id
       WHERE pa.domain_id = $2
-        AND pr.is_default = true
         AND pa.domain_id IN (SELECT id
                              FROM domain
                              WHERE identity_id = $1)
