@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=1 || SET=$1
+
+# ------------------------------------------------------------------------------
+# get partner list (no limit, offset 1000000)
+# ------------------------------------------------------------------------------
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
+JSON=$(cat <<EOF
+{
+    "id": "$domain_id",
+    "offset": 1000000
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "$SET" "pri" "domain/partner" \
+    "list/bydomain" "$JSON" 1
