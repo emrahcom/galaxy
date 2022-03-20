@@ -55,7 +55,7 @@
       <Text
         name="domain_url"
         label="Jitsi Domain URL"
-        value={room.domain_.url}
+        value={room.domain_url}
         readonly={true}
       />
 
