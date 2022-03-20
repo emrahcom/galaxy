@@ -49,6 +49,7 @@ export async function listDomain(
       FROM domain
       WHERE public = true
         AND enabled = true
+
       ORDER BY name
       LIMIT $2 OFFSET $3`,
     args: [
