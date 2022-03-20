@@ -57,7 +57,7 @@ export async function listDomainInviteByDomain(
       WHERE i.identity_id = $1
         AND i.domain_id = $2
         AND expired_at > now()
-      ORDER BY updated_at DESC
+      ORDER BY i.updated_at DESC
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,

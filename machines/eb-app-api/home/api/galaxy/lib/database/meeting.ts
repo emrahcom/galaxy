@@ -95,7 +95,7 @@ export async function listMeeting(
         JOIN identity i2 ON r.identity_id = i2.id
         LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.identity_id = $1
-      ORDER BY name
+      ORDER BY m.name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,

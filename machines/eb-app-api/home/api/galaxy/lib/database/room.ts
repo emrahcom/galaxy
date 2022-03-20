@@ -65,7 +65,7 @@ export async function listRoom(
         JOIN identity i2 ON r.identity_id = i2.id
       WHERE r.identity_id = $1
         AND r.ephemeral = false
-      ORDER BY name
+      ORDER BY r.name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
