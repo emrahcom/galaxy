@@ -96,14 +96,37 @@ export async function listRoom(
     text: `
       SELECT r.id, r.name, d.name as domain_name,
         d.domain_attr->>'url' as domain_url, r.enabled,
-        (r.enabled AND d.enabled AND i1.enabled AND i2.enabled)
-        as chain_enabled, r.updated_at, 'private' as ownership
+        (r.enabled AND d.enabled AND i.enabled
+         AND CASE d.identity_id
+             WHEN $1 THEN true
+             ELSE CASE d.public
+                  WHEN true THEN true
+                  ELSE LATERAL (SELECT enabled
+                                FROM domain_partner
+                                WHERE identity_id = $1
+                                  AND domain_id = r.domain_id)
+        ) as chain_enabled,
+        r.updated_at, 'private' as ownership
       FROM room r
+        JOIN domain d ON r.domain_id = d.id
+        JOIN identity i ON d.identity_id = i.id
+      WHERE r.identity_id = $1
+        AND r.ephemeral = false
+
+      UNION
+
+      SELECT r.id, r.name, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, r.enabled,
+        (p.enabled AND r.enabled AND d.enabled AND i1.enabled AND i2.enabled)
+        as chain_enabled, r.updated_at, 'partner' as ownership
+      FROM room_partner p
+        JOIN room r ON p.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
-      WHERE r.identity_id = $1
+      WHERE p.identity_id = $1
         AND r.ephemeral = false
+
       ORDER BY name
       LIMIT $2 OFFSET $3`,
     args: [
