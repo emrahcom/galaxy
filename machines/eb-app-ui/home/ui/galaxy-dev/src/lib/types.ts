@@ -118,3 +118,15 @@ export interface Room {
   updated_at: string;
   accessed_at: string;
 }
+
+// -----------------------------------------------------------------------------
+export interface RoomReduced {
+  id: string;
+  name: string;
+  domain_name: string;
+  domain_url: string;
+  enabled: boolean;
+  chain_enabled: boolean;
+  updated_at: string;
+  ownership: string;
+}
