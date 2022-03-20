@@ -201,11 +201,9 @@ export interface Room {
   domain_id: string;
   domain_name: string;
   domain_enabled: boolean;
-  domain_owner_enabled: boolean;
   has_suffix: boolean;
   suffix: string;
   enabled: boolean;
-  owner_enabled: boolean;
   chain_enabled: boolean;
   created_at: string;
   updated_at: string;
