@@ -205,7 +205,6 @@ export interface Room {
   has_suffix: boolean;
   suffix: string;
   enabled: boolean;
-  chain_enabled: boolean;
   created_at: string;
   updated_at: string;
   accessed_at: string;
