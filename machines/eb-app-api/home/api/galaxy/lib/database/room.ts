@@ -95,8 +95,15 @@ export async function addRoom(
          FROM domain
          WHERE id = $2
            AND (identity_id = $1
-                OR public = true)),
-        $3, $4, false)
+                OR id IN (SELECT domain_id
+                          FROM domain_partner
+                          WHERE identity_id = $1
+                         )
+                OR public = true
+               )
+        ),
+        $3, $4, false
+      )
       RETURNING id, created_at as at`,
     args: [
       identityId,
