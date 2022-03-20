@@ -19,6 +19,7 @@ export interface DomainReduced {
   auth_type: string;
   url: string;
   enabled: boolean;
+  updated_at: string;
   ownership: string;
 }
 
