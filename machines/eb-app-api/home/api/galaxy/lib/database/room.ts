@@ -129,6 +129,10 @@ export async function addEphemeralRoom(
          FROM domain
          WHERE id = $2
            AND (identity_id = $1
+                OR id IN (SELECT domain_id
+                          FROM domain_partner
+                          WHERE identity_id = $1
+                         )
                 OR public = true
                )
         ),
@@ -177,6 +181,10 @@ export async function updateRoom(
                      FROM domain
                      WHERE id = $3
                        AND (identity_id = $1
+                            OR id IN (SELECT domain_id
+                                      FROM domain_partner
+                                      WHERE identity_id = $1
+                                     )
                             OR public = true
                            )
                     ),
