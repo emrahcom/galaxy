@@ -64,17 +64,21 @@ export async function addMembershipByInvite(
         (SELECT id
          FROM profile
          WHERE id = $2
-           AND identity_id = $1),
+           AND identity_id = $1
+        ),
         (SELECT meeting_id
          FROM meeting_invite
          WHERE code = $3
            AND enabled = true
-           AND expired_at > now()),
+           AND expired_at > now()
+        ),
         (SELECT as_host
          FROM meeting_invite
          WHERE code = $3
            AND enabled = true
-           AND expired_at > now()))
+           AND expired_at > now()
+        )
+      )
       RETURNING id, created_at as at`,
     args: [
       identityId,
@@ -120,7 +124,8 @@ export async function updateMembership(
         profile_id= (SELECT id
                      FROM profile
                      WHERE id = $3
-                       AND identity_id = $1),
+                       AND identity_id = $1
+                    ),
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1

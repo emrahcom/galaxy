@@ -63,7 +63,8 @@ export async function addRequest(
         (SELECT id
          FROM profile
          WHERE id = $2
-           AND identity_id = $1),
+           AND identity_id = $1
+        ),
         (SELECT id
          FROM meeting
          WHERE id = $3
@@ -72,7 +73,10 @@ export async function addRequest(
            AND NOT EXISTS (SELECT 1
                            FROM meeting_member
                            WHERE identity_id = $1
-                             AND meeting_id = $3)))
+                             AND meeting_id = $3
+                          )
+        )
+      )
       RETURNING id, created_at as at`,
     args: [
       identityId,
@@ -115,7 +119,8 @@ export async function updateRequest(
         profile_id = (SELECT id
                       FROM profile
                       WHERE id = $3
-                        AND identity_id = $1),
+                        AND identity_id = $1
+                     ),
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
@@ -136,20 +141,25 @@ export async function acceptRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
       INSERT INTO meeting_member (identity_id, profile_id, meeting_id)
-        VALUES (
-          (SELECT identity_id
-           FROM meeting_request
-           WHERE id = $2),
-          (SELECT profile_id
-           FROM meeting_request
-           WHERE id = $2),
-          (SELECT meeting_id
-           FROM meeting_request req
-           WHERE id = $2
-             AND EXISTS (SELECT 1
-                         FROM meeting
-                         WHERE id = req.meeting_id
-                           AND identity_id = $1)))
+      VALUES (
+        (SELECT identity_id
+         FROM meeting_request
+         WHERE id = $2
+        ),
+        (SELECT profile_id
+         FROM meeting_request
+         WHERE id = $2
+        ),
+        (SELECT meeting_id
+         FROM meeting_request req
+         WHERE id = $2
+           AND EXISTS (SELECT 1
+                       FROM meeting
+                       WHERE id = req.meeting_id
+                         AND identity_id = $1
+                      )
+        )
+      )
       RETURNING id, created_at as at`,
     args: [
       identityId,
@@ -173,7 +183,8 @@ export async function rejectRequest(identityId: string, requestId: string) {
         AND EXISTS (SELECT 1
                     FROM meeting
                     WHERE id = req.meeting_id
-                      AND identity_id = $1)
+                      AND identity_id = $1
+                   )
       RETURNING id, updated_at as at`,
     args: [
       identityId,
@@ -193,7 +204,8 @@ export async function dropRequest(identityId: string, requestId: string) {
         AND EXISTS (SELECT 1
                     FROM meeting
                     WHERE id = req.meeting_id
-                      AND identity_id = $1)
+                      AND identity_id = $1
+                   )
       RETURNING id, now() as at`,
     args: [
       identityId,

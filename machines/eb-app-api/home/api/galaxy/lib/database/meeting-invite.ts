@@ -86,8 +86,10 @@ export async function addInvite(
         (SELECT id
          FROM meeting
          WHERE id = $2
-           AND identity_id = $1),
-        $3, $4, $5)
+           AND identity_id = $1
+        ),
+        $3, $4, $5
+      )
       RETURNING id, created_at as at`,
     args: [
       identityId,

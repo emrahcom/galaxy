@@ -13,7 +13,8 @@ export async function getMember(identityId: string, membershipId: string) {
         AND EXISTS (SELECT 1
                     FROM meeting m
                     WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1)`,
+                      AND m.identity_id = $1
+                   )`,
     args: [
       identityId,
       membershipId,
@@ -40,7 +41,8 @@ export async function listMember(
         AND EXISTS (SELECT 1
                     FROM meeting m
                     WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1)
+                      AND m.identity_id = $1
+                   )
       ORDER BY profile_name, mem.created_at
       LIMIT $3 OFFSET $4`,
     args: [
@@ -63,7 +65,8 @@ export async function delMember(identityId: string, membershipId: string) {
         AND EXISTS (SELECT 1
                     FROM meeting m
                     WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1)
+                      AND m.identity_id = $1
+                   )
       RETURNING id, now() as at`,
     args: [
       identityId,
@@ -90,7 +93,8 @@ export async function updateMemberEnabled(
         AND EXISTS (SELECT 1
                     FROM meeting m
                     WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1)
+                      AND m.identity_id = $1
+                   )
       RETURNING id, updated_at as at`,
     args: [
       identityId,
@@ -118,7 +122,8 @@ export async function updateMemberIsHost(
         AND EXISTS (SELECT 1
                     FROM meeting m
                     WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1)
+                      AND m.identity_id = $1
+                   )
       RETURNING id, updated_at as at`,
     args: [
       identityId,

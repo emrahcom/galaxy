@@ -39,7 +39,8 @@ export async function addDomainPartnershipByCode(
          WHERE code = $2
            AND identity_id != $1
            AND enabled = true
-           AND expired_at > now())
+           AND expired_at > now()
+        )
       )
       RETURNING id, created_at as at`,
     args: [

@@ -102,8 +102,7 @@ export async function addRoom(
                 OR public = true
                )
         ),
-        $3, $4, false
-      )
+        $3, $4, false)
       RETURNING id, created_at as at`,
     args: [
       identityId,
@@ -130,7 +129,9 @@ export async function addEphemeralRoom(
          FROM domain
          WHERE id = $2
            AND (identity_id = $1
-                OR public = true)),
+                OR public = true
+               )
+        ),
         'room-' || md5(gen_random_uuid()::text),
         false, true)
       RETURNING id, created_at as at`,
@@ -176,7 +177,9 @@ export async function updateRoom(
                      FROM domain
                      WHERE id = $3
                        AND (identity_id = $1
-                            OR public = true)),
+                            OR public = true
+                           )
+                    ),
         name = $4,
         has_suffix = $5,
         updated_at = now()

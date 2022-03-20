@@ -161,11 +161,13 @@ export async function addMeeting(
         (SELECT id
          FROM profile
          WHERE id = $2
-           AND identity_id = $1),
+           AND identity_id = $1
+        ),
         (SELECT id
          FROM room
          WHERE id = $3
-           AND identity_id = $1),
+           AND identity_id = $1
+        ),
         $4, $5, $6, $7, $8, $9)
       RETURNING id, created_at as at`,
     args: [
@@ -221,11 +223,13 @@ export async function updateMeeting(
         profile_id= (SELECT id
                      FROM profile
                      WHERE id = $3
-                       AND identity_id = $1),
+                       AND identity_id = $1
+                    ),
         room_id = (SELECT id
                    FROM room
                    WHERE id = $4
-                     AND identity_id = $1),
+                     AND identity_id = $1
+                  ),
         name = $5,
         info = $6,
         schedule_type = $7,
@@ -287,7 +291,8 @@ export async function updateMeetingRoomSuffix(meetingId: string) {
         suffix = DEFAULT
       WHERE id = (SELECT room_id
                   FROM meeting
-                  WHERE id = $1)
+                  WHERE id = $1
+                 )
         AND has_suffix = true
         AND accessed_at + interval '4 hours' < now()
       RETURNING id, accessed_at as at`,
@@ -308,7 +313,8 @@ export async function updateMeetingRoomAccessTime(meetingId: string) {
         accessed_at = now()
       WHERE id = (SELECT room_id
                   FROM meeting
-                  WHERE id = $1)
+                  WHERE id = $1
+                 )
       RETURNING id, accessed_at as at`,
     args: [
       meetingId,

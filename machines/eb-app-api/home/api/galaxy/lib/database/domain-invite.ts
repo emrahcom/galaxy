@@ -84,7 +84,8 @@ export async function addDomainInvite(
         (SELECT id
          FROM domain
          WHERE id = $2
-           AND identity_id = $1),
+           AND identity_id = $1
+        ),
         $3
       )
       RETURNING id, created_at as at`,

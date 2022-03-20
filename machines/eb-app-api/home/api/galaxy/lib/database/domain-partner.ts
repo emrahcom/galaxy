@@ -16,7 +16,8 @@ export async function getDomainPartner(
       WHERE pa.id = $2
         AND pa.domain_id IN (SELECT id
                              FROM domain
-                             WHERE identity_id = $1)`,
+                             WHERE identity_id = $1
+                            )`,
     args: [
       identityId,
       partnershipId,
@@ -43,7 +44,8 @@ export async function listDomainPartnerByDomain(
       WHERE pa.domain_id = $2
         AND pa.domain_id IN (SELECT id
                              FROM domain
-                             WHERE identity_id = $1)
+                             WHERE identity_id = $1
+                            )
       ORDER BY profile_name, profile_email
       LIMIT $3 OFFSET $4`,
     args: [
@@ -68,7 +70,8 @@ export async function delDomainPartner(
       WHERE id = $2
         AND domain_id IN (SELECT id
                           FROM domain
-                          WHERE identity_id = $1)
+                          WHERE identity_id = $1
+                         )
       RETURNING id, now() as at`,
     args: [
       identityId,
@@ -94,7 +97,8 @@ export async function updateDomainPartnerEnabled(
       WHERE id = $2
         AND domain_id IN (SELECT id
                           FROM domain
-                          WHERE identity_id = $1)
+                          WHERE identity_id = $1
+                         )
       RETURNING id, updated_at as at`,
     args: [
       identityId,
