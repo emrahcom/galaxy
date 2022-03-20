@@ -130,3 +130,19 @@ export interface RoomReduced {
   updated_at: string;
   ownership: string;
 }
+
+// -----------------------------------------------------------------------------
+export interface RoomInvite {
+  id: string;
+  name: string;
+  room_id: string;
+  room_name: string;
+  domain_id: string;
+  domain_name: string;
+  domain_url: string;
+  code: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
