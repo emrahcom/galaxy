@@ -1,12 +1,13 @@
 import { fetch } from "./common.ts";
-import type { Id, Room, RoomLinkSet } from "./types.ts";
+import type { Id, Room, RoomLinkSet, RoomReduced } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoom(identityId: string, roomId: string) {
   const sql = {
     text: `
       SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-        d.enabled as domain_enabled, r.has_suffix, r.suffix, r.enabled,
+        d.domain_attr->>'url' as domain_url, d.enabled as domain_enabled,
+        r.has_suffix, r.suffix, r.enabled,
         (r.enabled AND d.enabled AND i1.enabled AND i2.enabled)
         as chain_enabled, r.created_at, r.updated_at, r.accessed_at
       FROM room r
@@ -36,7 +37,45 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
       FROM room r
         JOIN domain d ON r.domain_id = d.id
       WHERE r.id = $2
-        AND r.identity_id = $1
+        AND (
+              (
+                r.identity_id = $1
+                AND d.identity_id = $1
+              )
+
+              OR
+
+              (
+                r.identity_id = $1
+                AND d.id IN (SELECT p.domain_id
+                             FROM domain_partner p
+                               JOIN domain d ON p.domain_id = d.id
+                               JOIN identity i ON d.identity_id = i.id
+                             WHERE p.identity_id = $1
+                               AND p.enabled = true
+                               AND d.enabled = true
+                               AND i.enabled = true
+                            )
+              )
+
+              OR
+
+              (
+                r.id IN (SELECT room_id
+                         FROM room_partner p
+                           JOIN room r ON p.room_id = r.id
+                           JOIN domain d ON r.domain_id = d.id
+                           JOIN identity i ON d.identity = i.id
+                           JOIN identity i2 ON r.identity = i2.id
+                         WHERE p.identity_id = $1
+                           AND p.enabled = true
+                           AND r.enabled = true
+                           AND d.emabled = true
+                           AND i.enabled = true
+                           AND i2.enabled = true
+                        )
+              )
+            )
         AND r.ephemeral = false`,
     args: [
       identityId,
@@ -53,19 +92,20 @@ export async function listRoom(
   limit: number,
   offset: number,
 ) {
+  // updated_at is used by UI to pick the newest one
   const sql = {
     text: `
-      SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-        d.enabled as domain_enabled, r.has_suffix, r.suffix, r.enabled,
+      SELECT r.id, r.name, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, r.enabled,
         (r.enabled AND d.enabled AND i1.enabled AND i2.enabled)
-        as chain_enabled, r.created_at, r.updated_at, r.accessed_at
+        as chain_enabled, r.updated_at, 'private' as ownership
       FROM room r
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
       WHERE r.identity_id = $1
         AND r.ephemeral = false
-      ORDER BY r.name
+      ORDER BY name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
@@ -74,7 +114,7 @@ export async function listRoom(
     ],
   };
 
-  return await fetch(sql) as Room[];
+  return await fetch(sql) as RoomReduced[];
 }
 
 // -----------------------------------------------------------------------------
