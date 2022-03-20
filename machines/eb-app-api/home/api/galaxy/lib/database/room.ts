@@ -119,8 +119,18 @@ export async function listRoom(
 
       SELECT r.id, r.name, d.name as domain_name,
         d.domain_attr->>'url' as domain_url, r.enabled,
-        (p.enabled AND r.enabled AND d.enabled AND i1.enabled AND i2.enabled)
-        as chain_enabled, r.updated_at, 'partner' as ownership
+        (p.enabled AND r.enabled AND d.enabled AND i1.enabled AND i2.enabled
+         AND CASE d.identity_id
+             WHEN $1 THEN true
+             ELSE CASE d.public
+                  WHEN true THEN true
+                  ELSE (SELECT enabled
+                        FROM domain_partner
+                        WHERE identity_id = $1
+                          AND domain_id = r.domain_id)
+                  END
+             END
+        ) as chain_enabled, r.updated_at, 'partner' as ownership
       FROM room_partner p
         JOIN room r ON p.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
