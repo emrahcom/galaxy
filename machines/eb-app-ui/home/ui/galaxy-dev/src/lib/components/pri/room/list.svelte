@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { Room } from "$lib/types";
+  import type { RoomReduced } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
   import Join from "$lib/components/common/link-join.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
-  export let rooms: Room[];
+  export let rooms: RoomReduced[];
 </script>
 
 <!-- -------------------------------------------------------------------------->
