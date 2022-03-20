@@ -101,10 +101,12 @@ export async function listRoom(
              WHEN $1 THEN true
              ELSE CASE d.public
                   WHEN true THEN true
-                  ELSE LATERAL (SELECT enabled
-                                FROM domain_partner
-                                WHERE identity_id = $1
-                                  AND domain_id = r.domain_id)
+                  ELSE (SELECT enabled
+                        FROM domain_partner
+                        WHERE identity_id = $1
+                          AND domain_id = r.domain_id)
+                  END
+             END
         ) as chain_enabled,
         r.updated_at, 'private' as ownership
       FROM room r
