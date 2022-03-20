@@ -77,7 +77,7 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
                          WHERE p.identity_id = $1
                            AND p.enabled = true
                            AND r.enabled = true
-                           AND d.emabled = true
+                           AND d.enabled = true
                            AND i.enabled = true
                            AND i2.enabled = true
                         )
