@@ -14,15 +14,15 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/domain/invite/${p.domain_id}`;
+    window.location.href = `/pri/room/invite/${p.room_id}`;
   }
 
   // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;
-      await actionById("/api/pri/domain/invite/enable", p.id);
-      window.location.href = `/pri/domain/invite/${p.domain_id}`;
+      await actionById("/api/pri/room/invite/enable", p.id);
+      window.location.href = `/pri/room/invite/${p.room_id}`;
     } catch {
       warning = true;
     }
