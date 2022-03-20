@@ -3,7 +3,9 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import Invite from "$lib/components/common/link-invite.svelte";
   import Join from "$lib/components/common/link-join.svelte";
+  import People from "$lib/components/common/link-people.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
   export let rooms: RoomReduced[];
@@ -32,6 +34,8 @@
               {/if}
 
               <Update href="/pri/room/update/{p.id}" />
+              <Invite href="/pri/room/invite/{p.id}" />
+              <People href="/pri/room/partner/{p.id}" />
               <Join href="/pri/room/join/{p.id}" />
             {:else if p.ownership === "partner"}
               <Del href="/pri/room/del/{p.id}" />
