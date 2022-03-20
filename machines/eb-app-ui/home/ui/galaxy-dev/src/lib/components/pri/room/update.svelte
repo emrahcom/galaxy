@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action } from "$lib/api";
-  import { domainsAsOptions } from "$lib/pri/domain";
+  import { action, list } from "$lib/api";
   import type { Room } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -15,12 +14,20 @@
 
   let warning = false;
 
-  const pr = domainsAsOptions().then((items) => {
-    return items.map((i) => [
-      i.id,
-      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
-    ]);
-  });
+
+  const pr = list("/api/pri/domain/list", 100).then(
+    (items: DomainReduced[]) => {
+      const enableds = items
+        .filter((i) => i.enabled)
+        .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
+      if (enableds[0]) p.domain_id = enableds[0].id;
+
+      return items.map((i) => [
+        i.id,
+        `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+      ]);
+    },
+  );
 
   // ---------------------------------------------------------------------------
   function cancel() {
