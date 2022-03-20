@@ -24,10 +24,11 @@ export async function listDomain(
   limit: number,
   offset: number,
 ) {
+  // updated_at is used to choice the newest one on UI
   const sql = {
     text: `
       SELECT id, name, auth_type, domain_attr->>'url' as url, enabled,
-        'private' as ownership
+        updated_at, 'private' as ownership
       FROM domain
       WHERE identity_id = $1
 
@@ -35,7 +36,7 @@ export async function listDomain(
 
       SELECT d.id, d.name, d.auth_type, d.domain_attr->>'url' as url,
         (p.enabled AND d.enabled AND i.enabled) as enabled,
-        'partner' as ownership
+        p.updated_at, 'partner' as ownership
       FROM domain_partner p
         JOIN domain d ON p.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
@@ -44,7 +45,7 @@ export async function listDomain(
       UNION
 
       SELECT id, name, auth_type, domain_attr->>'url' as url, true,
-        'public' as ownership
+        created_at as updated_at, 'public' as ownership
       FROM domain
       WHERE public = true
         AND enabled = true
