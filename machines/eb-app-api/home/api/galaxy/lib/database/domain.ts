@@ -24,7 +24,7 @@ export async function listDomain(
   limit: number,
   offset: number,
 ) {
-  // updated_at is used to choice the newest one on UI
+  // updated_at is used by UI to pick the newest one
   const sql = {
     text: `
       SELECT id, name, auth_type, domain_attr->>'url' as url, enabled,
