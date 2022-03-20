@@ -72,8 +72,8 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
                          FROM room_partner p
                            JOIN room r ON p.room_id = r.id
                            JOIN domain d ON r.domain_id = d.id
-                           JOIN identity i ON d.identity = i.id
-                           JOIN identity i2 ON r.identity = i2.id
+                           JOIN identity i ON d.identity_id = i.id
+                           JOIN identity i2 ON r.identity_id = i2.id
                          WHERE p.identity_id = $1
                            AND p.enabled = true
                            AND r.enabled = true
