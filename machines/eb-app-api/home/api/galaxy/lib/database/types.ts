@@ -200,6 +200,7 @@ export interface Room {
   name: string;
   domain_id: string;
   domain_name: string;
+  domain_url: string;
   domain_enabled: boolean;
   has_suffix: boolean;
   suffix: string;
@@ -208,6 +209,18 @@ export interface Room {
   created_at: string;
   updated_at: string;
   accessed_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface RoomReduced {
+  id: string;
+  name: string;
+  domain_name: string;
+  domain_url: string;
+  enabled: boolean;
+  chain_enabled: boolean;
+  updated_at: string;
+  ownership: string;
 }
 
 // -----------------------------------------------------------------------------
