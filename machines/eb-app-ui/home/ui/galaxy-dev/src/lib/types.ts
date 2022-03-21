@@ -154,3 +154,14 @@ export interface RoomInviteReduced {
   domain_url: string;
   code: string;
 }
+
+// -----------------------------------------------------------------------------
+export interface RoomPartner {
+  id: string;
+  room_id: string;
+  profile_name: string;
+  profile_email: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
