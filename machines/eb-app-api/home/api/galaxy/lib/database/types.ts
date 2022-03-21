@@ -259,6 +259,17 @@ export interface RoomPartnership {
 }
 
 // -----------------------------------------------------------------------------
+export interface RoomPartner {
+  id: string;
+  room_id: string;
+  profile_name: string;
+  profile_email: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface RoomLinkSet {
   name: string;
   has_suffix: boolean;
