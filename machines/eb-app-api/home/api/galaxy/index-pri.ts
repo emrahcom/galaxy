@@ -52,11 +52,11 @@ async function route(
     return await meeting(req, path, identityId);
   } else if (path.match(`^${PRE}/profile/`)) {
     return await profile(req, path, identityId);
-  } else if (path.match(`^${PRE}/room/invite`)) {
+  } else if (path.match(`^${PRE}/room/invite/`)) {
     return await roomInvite(req, path, identityId);
-  } else if (path.match(`^${PRE}/room/partner`)) {
+  } else if (path.match(`^${PRE}/room/partner/`)) {
     return await roomPartner(req, path, identityId);
-  } else if (path.match(`^${PRE}/room/partnership`)) {
+  } else if (path.match(`^${PRE}/room/partnership/`)) {
     return await roomPartnership(req, path, identityId);
   } else if (path.match(`^${PRE}/room/`)) {
     return await room(req, path, identityId);
