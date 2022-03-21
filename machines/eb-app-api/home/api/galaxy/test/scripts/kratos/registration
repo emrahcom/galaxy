@@ -25,7 +25,6 @@ curl -ks https://$KRATOS_FQDN/self-service/registration/browser \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json"
 actionUrl=$(jq -r .ui.action $TMP/kratos-$SET-registration-flow)
-echo 1
 csrfToken=$(jq -r \
     '.ui.nodes[] | select(.attributes.name=="csrf_token") | .attributes.value' \
     $TMP/kratos-$SET-registration-flow)
