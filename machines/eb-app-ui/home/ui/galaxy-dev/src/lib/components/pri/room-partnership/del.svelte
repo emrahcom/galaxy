@@ -36,19 +36,19 @@
       <Text
         name="room_name"
         label="Room"
-        value={invite.room_name}
+        value={p.room_name}
         readonly={true}
       />
       <Text
         name="domain_name"
         label="Jitsi Domain Name"
-        value={invite.domain_name}
+        value={p.domain_name}
         readonly={true}
       />
       <Text
         name="domain_url"
         label="Jitsi Domain URL"
-        value={invite.domain_url}
+        value={p.domain_url}
         readonly={true}
       />
 
