@@ -247,6 +247,18 @@ export interface RoomInviteReduced {
 }
 
 // -----------------------------------------------------------------------------
+export interface RoomPartnership {
+  id: string;
+  room_id: string;
+  room_name: string;
+  domain_name: string;
+  domain_url: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface RoomLinkSet {
   name: string;
   has_suffix: boolean;
