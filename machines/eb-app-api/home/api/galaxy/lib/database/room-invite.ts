@@ -7,8 +7,8 @@ export async function getRoomInvite(identityId: string, inviteId: string) {
     text: `
       SELECT i.id, i.name, r.id as room_id, r.name as room_name,
         d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, i.code, i.enabled,
-        i.created_at, i.updated_at, i.expired_at
+        d.domain_attr->>'url' as domain_url, i.code, i.enabled, i.created_at,
+        i.updated_at, i.expired_at
       FROM room_invite i
         JOIN room r ON i.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -55,8 +55,8 @@ export async function listRoomInviteByRoom(
     text: `
       SELECT i.id, i.name, r.id as room_id, r.name as room_name,
         d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, i.code, i.enabled,
-        i.created_at, i.updated_at, i.expired_at
+        d.domain_attr->>'url' as domain_url, i.code, i.enabled, i.created_at,
+        i.updated_at, i.expired_at
       FROM room_invite i
         JOIN room r ON i.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
