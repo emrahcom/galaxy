@@ -39,7 +39,9 @@
               <Join href="/pri/room/join/{p.id}" />
             {:else if p.ownership === "partner"}
               <Del href="/pri/room/partnership/del/{p.id}" />
-              <Join href="/pri/room/join/{p.id}" />
+              {#if p.enabled}
+                <Join href="/pri/room/join/{p.id}" />
+              {/if}
             {/if}
           </div>
         </div>
