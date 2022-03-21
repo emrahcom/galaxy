@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=1 || SET=$1
+
+# ------------------------------------------------------------------------------
+# get partner list (invalid limit, invalid offset)
+# ------------------------------------------------------------------------------
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-$SET-1-res)
+JSON=$(cat <<EOF
+{
+    "id": "$room_id",
+    "limit": "INVALID",
+    "offset": "INVALID"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error "$SET" "pri" "room/partner" "list/byroom" \
+    "$JSON" 1
