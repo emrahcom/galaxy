@@ -177,6 +177,19 @@ bash $BASEDIR/scripts/pri/room-invite/list-byroom-limit $SET1
 bash $BASEDIR/scripts/pri/room-invite/list-byroom-huge-offset $SET1
 bash $BASEDIR/scripts/pri/room-invite/list-byroom-invalid-post $SET1
 
+# room-partnership
+bash $BASEDIR/scripts/pri/room-partnership/add-bycode-invalid-post $SET2
+bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $SET2 $SET1
+bash $BASEDIR/scripts/pri/room-partnership/get-byroom-exist $SET2
+bash $BASEDIR/scripts/pri/room-partnership/get-byroom-nonexist $SET2
+bash $BASEDIR/scripts/pri/room-partnership/add-bycode-exist $SET2
+
+bash $BASEDIR/scripts/pri/room-partnership/del-exist $SET2
+bash $BASEDIR/scripts/pri/room-partnership/del-nonexist $SET2
+
+bash $BASEDIR/scripts/pri/room-invite/enable-exist $SET1
+bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $SET2 $SET1 10
+
 # meeting
 bash $BASEDIR/scripts/pri/meeting/add-invalid-post $SET1
 bash $BASEDIR/scripts/pri/meeting/add-new $SET1
