@@ -39,7 +39,7 @@
               <Join href="/pri/room/join/{p.id}" />
             {:else if p.ownership === "partner"}
               <Del href="/pri/room/partnership/del/{p.id}" />
-              {#if p.enabled}
+              {#if p.chain_enabled}
                 <Join href="/pri/room/join/{p.id}" />
               {/if}
             {/if}
