@@ -14,7 +14,6 @@
 
   let warning = false;
 
-
   const pr = list("/api/pri/domain/list", 100).then(
     (items: DomainReduced[]) => {
       return items.map((i) => [
