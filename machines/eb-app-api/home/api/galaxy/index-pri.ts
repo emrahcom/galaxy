@@ -19,6 +19,7 @@ import meetingRequest from "./lib/pri/meeting-request.ts";
 import profile from "./lib/pri/profile.ts";
 import room from "./lib/pri/room.ts";
 import roomInvite from "./lib/pri/room-invite.ts";
+import roomPartner from "./lib/pri/room-partner.ts";
 
 const PRE = "/api/pri";
 
@@ -52,6 +53,8 @@ async function route(
     return await profile(req, path, identityId);
   } else if (path.match(`^${PRE}/room/invite`)) {
     return await roomInvite(req, path, identityId);
+  } else if (path.match(`^${PRE}/room/partner`)) {
+    return await roomPartner(req, path, identityId);
   } else if (path.match(`^${PRE}/room/`)) {
     return await room(req, path, identityId);
   } else {
