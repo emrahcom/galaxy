@@ -1,5 +1,5 @@
 import { fetch, query } from "./common.ts";
-import type { RoomPartnership, Id } from "./types.ts";
+import type { Id, RoomPartnership } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoomPartnershipByRoom(
