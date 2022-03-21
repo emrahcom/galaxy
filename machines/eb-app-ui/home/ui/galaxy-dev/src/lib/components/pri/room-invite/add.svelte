@@ -40,12 +40,7 @@
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
-      <Text
-        name="room_name"
-        label="Room"
-        value={room.name}
-        readonly={true}
-      />
+      <Text name="room_name" label="Room" value={room.name} readonly={true} />
       <Text
         name="domain_name"
         label="Jitsi Domain Name"
