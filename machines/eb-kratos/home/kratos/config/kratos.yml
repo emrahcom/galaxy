@@ -15,7 +15,7 @@ serve:
 
 selfservice:
   default_browser_return_url: https://___APP_FQDN___/
-  whitelisted_return_urls:
+  allowed_return_urls:
     - https://___APP_FQDN___
 
   methods:
@@ -97,7 +97,9 @@ hashers:
     key_length: 16
 
 identity:
-  default_schema_url: file:///home/kratos/config/identity.schema.json
+  schemas:
+    - id: default
+      url: file:///home/kratos/config/identity.schema.json
 
 courier:
   smtp:
