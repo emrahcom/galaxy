@@ -29,7 +29,7 @@ export async function getRoomInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT r.name as room_name, d.name as domain_name,
-        d.room_attr->>'url' as domain_url, i.code
+        d.domain_attr->>'url' as domain_url, i.code
       FROM room_invite i
         JOIN room r ON i.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
