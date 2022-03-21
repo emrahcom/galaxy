@@ -38,7 +38,7 @@
               <People href="/pri/room/partner/{p.id}" />
               <Join href="/pri/room/join/{p.id}" />
             {:else if p.ownership === "partner"}
-              <Del href="/pri/room/del/{p.id}" />
+              <Del href="/pri/room/partnership/del/{p.id}" />
               <Join href="/pri/room/join/{p.id}" />
             {/if}
           </div>
