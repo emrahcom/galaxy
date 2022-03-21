@@ -6,8 +6,8 @@ export async function getDomainInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT i.id, i.name, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, i.code, i.enabled,
-        i.created_at, i.updated_at, i.expired_at
+        d.domain_attr->>'url' as domain_url, i.code, i.enabled, i.created_at,
+        i.updated_at, i.expired_at
       FROM domain_invite i
         JOIN domain d ON i.domain_id = d.id
       WHERE i.id = $2
@@ -50,8 +50,8 @@ export async function listDomainInviteByDomain(
   const sql = {
     text: `
       SELECT i.id, i.name, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, i.code, i.enabled,
-        i.created_at, i.updated_at, i.expired_at
+        d.domain_attr->>'url' as domain_url, i.code, i.enabled, i.created_at,
+        i.updated_at, i.expired_at
       FROM domain_invite i
         JOIN domain d ON i.domain_id = d.id
       WHERE i.identity_id = $1
