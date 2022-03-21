@@ -247,23 +247,23 @@ export interface RoomInviteReduced {
 }
 
 // -----------------------------------------------------------------------------
-export interface RoomPartnership {
+export interface RoomPartner {
   id: string;
   room_id: string;
-  room_name: string;
-  domain_name: string;
-  domain_url: string;
+  profile_name: string;
+  profile_email: string;
   enabled: boolean;
   created_at: string;
   updated_at: string;
 }
 
 // -----------------------------------------------------------------------------
-export interface RoomPartner {
+export interface RoomPartnership {
   id: string;
   room_id: string;
-  profile_name: string;
-  profile_email: string;
+  room_name: string;
+  domain_name: string;
+  domain_url: string;
   enabled: boolean;
   created_at: string;
   updated_at: string;
