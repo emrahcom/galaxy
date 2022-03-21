@@ -156,6 +156,27 @@ bash $BASEDIR/scripts/pri/room/get-link-exist $SET1
 bash $BASEDIR/scripts/pri/room/get-link-nonexist $SET1
 bash $BASEDIR/scripts/pri/room/add-ephemeral $SET1 10
 
+# room-invite
+bash $BASEDIR/scripts/pri/room-invite/add-invalid-post $SET1
+bash $BASEDIR/scripts/pri/room-invite/add-new $SET1
+bash $BASEDIR/scripts/pri/room-invite/get-exist $SET1
+bash $BASEDIR/scripts/pri/room-invite/get-nonexist $SET1
+bash $BASEDIR/scripts/pri/room-invite/get-bycode-exist $SET1
+bash $BASEDIR/scripts/pri/room-invite/get-bycode-nonexist $SET1
+
+bash $BASEDIR/scripts/pri/room-invite/disable-exist $SET1
+bash $BASEDIR/scripts/pri/room-invite/disable-nonexist $SET1
+bash $BASEDIR/scripts/pri/room-invite/enable-exist $SET1
+bash $BASEDIR/scripts/pri/room-invite/enable-nonexist $SET1
+bash $BASEDIR/scripts/pri/room-invite/del-exist $SET1
+bash $BASEDIR/scripts/pri/room-invite/del-nonexist $SET1
+
+bash $BASEDIR/scripts/pri/room-invite/add-new $SET1 10
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-limit $SET1
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-huge-offset $SET1
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-invalid-post $SET1
+
 # meeting
 bash $BASEDIR/scripts/pri/meeting/add-invalid-post $SET1
 bash $BASEDIR/scripts/pri/meeting/add-new $SET1
