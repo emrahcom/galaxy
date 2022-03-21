@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=1 || SET=$1
+
+# ------------------------------------------------------------------------------
+# get for a nonexistent partner
+# ------------------------------------------------------------------------------
+partner_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$partner_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "$SET" "pri" "room/partner" "get" "$JSON" 1
