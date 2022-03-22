@@ -112,7 +112,6 @@ export interface Room {
   domain_url: string;
   domain_enabled: boolean;
   has_suffix: boolean;
-  suffix: string;
   enabled: boolean;
   created_at: string;
   updated_at: string;
