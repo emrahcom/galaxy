@@ -15,10 +15,6 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#if !rooms}
-      <Warning>No room has been added yet</Warning>
-    {/if}
-
     {#each rooms as p}
       <div class="col-md-6 col-xl-4">
         <div class="card h-100 {p.chain_enabled ? '' : 'border-danger'}">
@@ -51,6 +47,8 @@
           </div>
         </div>
       </div>
+    {:else}
+      <Warning>No room has been added yet</Warning>
     {/each}
   </div>
 </section>
