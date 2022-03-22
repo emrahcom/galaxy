@@ -60,7 +60,8 @@ selfservice:
 
   methods:
     password:
-      identifier_similarity_check_enabled: false
+      config:
+        identifier_similarity_check_enabled: false
       enabled: true
 
   allowed_return_urls:
@@ -114,7 +115,7 @@ session:
     same_site: Strict
     persistent: true
 
-version: v0.9.0-alpha.1.pre.1
+version: v0.9.0-alpha.2
 
 courier:
   smtp:
