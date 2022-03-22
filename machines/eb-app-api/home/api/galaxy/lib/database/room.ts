@@ -34,68 +34,47 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
       SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.domain_attr
       FROM room r
         JOIN domain d ON r.domain_id = d.id
+        JOIN identity i ON d.identity_id = i.id
       WHERE r.id = $2
-        AND (
-              (
-                r.identity_id = $1
-                AND d.identity_id = $1
-              )
-
-              OR
-
-              (
-                r.identity_id = $1
-                AND d.public = true
-                AND d.enabled = true
-              )
-
-              OR
-
-              (
-                r.identity_id = $1
-                AND d.id IN (SELECT p.domain_id
-                             FROM domain_partner p
-                               JOIN domain d ON p.domain_id = d.id
-                               JOIN identity i ON d.identity_id = i.id
-                             WHERE p.identity_id = $1
-                               AND p.enabled = true
-                               AND d.enabled = true
-                               AND i.enabled = true
+        AND r.identity_id = $1
+        AND r.ephemeral = false
+        AND (d.identity_id = $1
+             OR (d.enabled = true AND d.public = true)
+             OR (d.enabled = true AND i.enabled = true
+                 AND EXISTS (SELECT 1
+                             FROM domain_partner
+                             WHERE identity_id = $1
+                               AND domain_id = d.id
+                               AND enabled = true
                             )
-              )
-
-              OR
-
-              (
-                r.identity_id = d.identity_id
-                AND r.enabled = true
-                AND d.enabled = true
-                AND EXISTS (SELECT 1
-                            FROM identity
-                            WHERE id = r.identity_id
-                              AND enabled = true
-                           )
-              )
-
-              OR
-
-              (
-                r.id IN (SELECT room_id
-                         FROM room_partner p
-                           JOIN room r ON p.room_id = r.id
-                           JOIN domain d ON r.domain_id = d.id
-                           JOIN identity i ON d.identity_id = i.id
-                           JOIN identity i2 ON r.identity_id = i2.id
-                         WHERE p.identity_id = $1
-                           AND p.enabled = true
-                           AND r.enabled = true
-                           AND d.enabled = true
-                           AND i.enabled = true
-                           AND i2.enabled = true
-                        )
-              )
+                )
             )
-        AND r.ephemeral = false`,
+
+      UNION
+
+      SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.domain_attr
+      FROM room_partner p
+        JOIN room r ON p.room_id = r.id
+        JOIN domain d ON r.domain_id = d.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+      WHERE p.identity_id = $1
+        AND p.room_id = $2
+        AND p.enabled = true
+        AND r.ephemeral = false
+        AND r.enabled = true
+        AND d.enabled = true
+        AND i1.enabled = true
+        AND i2.enabled = true
+        AND (d.identity_id = $1
+             OR d.public = true
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = i2.id
+                          AND domain_id = d.id
+                          AND enabled = true
+                       )
+            )`,
     args: [
       identityId,
       roomId,
@@ -124,7 +103,7 @@ export async function listRoom(
                   ELSE (SELECT enabled
                         FROM domain_partner
                         WHERE identity_id = $1
-                          AND domain_id = r.domain_id)
+                          AND domain_id = d.id)
                   END
              END
         ) as chain_enabled,
@@ -148,7 +127,7 @@ export async function listRoom(
                   ELSE (SELECT enabled
                         FROM domain_partner
                         WHERE identity_id = i2.id
-                          AND domain_id = r.domain_id)
+                          AND domain_id = d.id)
                   END
              END
         ) as chain_enabled, r.updated_at, 'partner' as ownership
