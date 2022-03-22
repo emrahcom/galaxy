@@ -48,7 +48,7 @@
         </div>
       </div>
     {:else}
-      <Warning>No room has been added yet</Warning>
+      <Warning>No room found</Warning>
     {/each}
   </div>
 </section>
