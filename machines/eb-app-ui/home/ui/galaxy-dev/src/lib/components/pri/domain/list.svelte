@@ -6,6 +6,7 @@
   import Invite from "$lib/components/common/link-invite.svelte";
   import People from "$lib/components/common/link-people.svelte";
   import Update from "$lib/components/common/link-update.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let domains: DomainReduced[];
 </script>
@@ -41,6 +42,8 @@
           </div>
         </div>
       </div>
+    {:else}
+      <Warning>No domain has been added yet</Warning>
     {/each}
   </div>
 </section>
