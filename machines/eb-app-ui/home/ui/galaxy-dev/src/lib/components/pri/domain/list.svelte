@@ -43,7 +43,7 @@
         </div>
       </div>
     {:else}
-      <Warning>No domain has been added yet</Warning>
+      <Warning>No domain found</Warning>
     {/each}
   </div>
 </section>
