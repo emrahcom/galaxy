@@ -129,11 +129,12 @@ export async function listRoom(
         (p.enabled AND r.enabled AND d.enabled AND i1.enabled AND i2.enabled
          AND CASE d.identity_id
              WHEN $1 THEN true
+             WHEN i2.id THEN true
              ELSE CASE d.public
                   WHEN true THEN true
                   ELSE (SELECT enabled
                         FROM domain_partner
-                        WHERE identity_id = $1
+                        WHERE identity_id = i2.id
                           AND domain_id = r.domain_id)
                   END
              END
