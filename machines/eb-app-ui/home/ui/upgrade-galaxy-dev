@@ -35,6 +35,7 @@ cp -arp $APP /home/ui/
     cp -arp /tmp/galaxy-dev.old/node_modules /home/ui/galaxy-dev/
 cd /home/ui/galaxy-dev
 npm install
+npm upgrade
 
 # upgrade this script
 cp $UI/upgrade-galaxy-dev /home/ui/
