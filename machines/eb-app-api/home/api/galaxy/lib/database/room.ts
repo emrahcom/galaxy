@@ -68,6 +68,7 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
         AND i2.enabled = true
         AND (d.identity_id = $1
              OR d.public = true
+             OR i1.id = i2.id
              OR EXISTS (SELECT 1
                         FROM domain_partner
                         WHERE identity_id = i2.id
