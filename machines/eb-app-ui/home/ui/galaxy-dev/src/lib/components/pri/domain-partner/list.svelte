@@ -3,6 +3,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let partners: DomainPartner[];
 </script>
@@ -32,6 +33,8 @@
           </div>
         </div>
       </div>
+    {:else}
+      <Warning>No partner found for this domain</Warning>
     {/each}
   </div>
 </section>
