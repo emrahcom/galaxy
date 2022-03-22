@@ -67,6 +67,17 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
               OR
 
               (
+                r.identity_id = d.identity_id
+                AND r.enabled = true
+                AND d.enabled = true
+                AND EXISTS (SELECT 1
+                            FROM identity
+                            WHERE id = r.identity_id
+                              AND enabled = true
+                           )
+              )
+
+              (
                 r.id IN (SELECT room_id
                          FROM room_partner p
                            JOIN room r ON p.room_id = r.id
