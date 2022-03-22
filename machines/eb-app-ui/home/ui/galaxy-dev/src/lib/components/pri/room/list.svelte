@@ -7,6 +7,7 @@
   import Join from "$lib/components/common/link-join.svelte";
   import People from "$lib/components/common/link-people.svelte";
   import Update from "$lib/components/common/link-update.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let rooms: RoomReduced[];
 </script>
@@ -14,6 +15,10 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
+    {#if !rooms}
+      <Warning>No room has been added yet</Warning>
+    {/if}
+
     {#each rooms as p}
       <div class="col-md-6 col-xl-4">
         <div class="card h-100 {p.chain_enabled ? '' : 'border-danger'}">
