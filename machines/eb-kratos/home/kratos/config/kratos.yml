@@ -19,6 +19,13 @@ selfservice:
     registration:
       ui_url: https://___APP_FQDN___/id/registration
       lifespan: 1h
+      before:
+        hooks:
+          - hook: web_hook
+            config:
+              url: http://eb-app-api:8000/api/adm/hello
+              method: POST
+              body: file:///home/kratos/jsonnet/empty.jsonnet
       after:
         password:
           hooks:
@@ -26,7 +33,7 @@ selfservice:
               config:
                 url: http://eb-app-api:8000/api/adm/identity/add
                 method: POST
-                body: /home/kratos/jsonnet/identity.jsonnet
+                body: file:///home/kratos/jsonnet/identity.jsonnet
             - hook: session
           default_browser_return_url: https://___APP_FQDN___/id/welcome
       enabled: true
@@ -73,8 +80,6 @@ serve:
     cors:
       allowed_origins:
         - https://___APP_FQDN___
-      allowed_methods:
-        - POST
       enabled: true
 
   admin:
