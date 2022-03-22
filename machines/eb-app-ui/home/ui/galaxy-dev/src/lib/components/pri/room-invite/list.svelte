@@ -6,6 +6,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invites: RoomInvite[];
 
@@ -50,6 +51,8 @@
           </div>
         </div>
       </div>
+    {:else}
+      <Warning>No partner key found for this room</Warning>
     {/each}
   </div>
 </section>
