@@ -7,8 +7,7 @@ export async function getRoom(identityId: string, roomId: string) {
     text: `
       SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
         d.domain_attr->>'url' as domain_url, d.enabled as domain_enabled,
-        r.has_suffix, r.suffix, r.enabled, r.created_at, r.updated_at,
-        r.accessed_at
+        r.has_suffix, r.enabled, r.created_at, r.updated_at, r.accessed_at
       FROM room r
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
