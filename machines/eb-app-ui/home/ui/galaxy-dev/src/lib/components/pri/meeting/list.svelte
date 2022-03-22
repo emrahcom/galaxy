@@ -5,6 +5,7 @@
   import Enable from "$lib/components/common/link-enable.svelte";
   import Join from "$lib/components/common/link-join.svelte";
   import Update from "$lib/components/common/link-update.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let meetings: Meeting[];
 </script>
@@ -43,6 +44,8 @@
           </div>
         </div>
       </div>
+    {:else}
+      <Warning>No meeting found</Warning>
     {/each}
   </div>
 </section>
