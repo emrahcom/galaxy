@@ -3,6 +3,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Set from "$lib/components/common/link-set-default-profile.svelte";
   import Update from "$lib/components/common/link-update.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let profiles: Profile[];
 </script>
@@ -28,6 +29,8 @@
           </div>
         </div>
       </div>
+    {:else}
+      <Warning>No profile found</Warning>
     {/each}
   </div>
 </section>
