@@ -77,6 +77,8 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
                            )
               )
 
+              OR
+
               (
                 r.id IN (SELECT room_id
                          FROM room_partner p
