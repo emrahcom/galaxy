@@ -1,58 +1,24 @@
-version: v0.9.0-alpha.1.pre.1
+identity:
+  schemas:
+    - id: default
+      url: file:///home/kratos/config/identity.schema.json
+
+  default_schema_id: default
 
 dsn: "postgres://kratos:___DB_PASSWD___@eb-postgres:5432/kratos?\
       sslmode=disable&max_conns=20&max_idle_conns=4"
 
-serve:
-  public:
-    base_url: https://___KRATOS_FQDN___/
-    cors:
-      enabled: true
-      allowed_origins:
-        - https://___APP_FQDN___
-  admin:
-    base_url: https://___KRATOS_FQDN___:4434/
-
 selfservice:
   default_browser_return_url: https://___APP_FQDN___/
-  allowed_return_urls:
-    - https://___APP_FQDN___
-
-  methods:
-    password:
-      enabled: true
 
   flows:
-    error:
-      ui_url: https://___APP_FQDN___/id/error
-
-    settings:
-      ui_url: https://___APP_FQDN___/id/settings
-      privileged_session_max_age: 15m
-
-    recovery:
-      enabled: true
-      ui_url: https://___APP_FQDN___/id/recovery
-
-    verification:
-      enabled: true
-      ui_url: https://___APP_FQDN___/id/verification
-      after:
-        default_browser_return_url: https://___APP_FQDN___/id/welcome
-
     logout:
       after:
         default_browser_return_url: https://___APP_FQDN___/id/login
 
-    login:
-      ui_url: https://___APP_FQDN___/id/login
-      lifespan: 10m
-      after:
-        default_browser_return_url: https://___APP_FQDN___/id/welcome
-
     registration:
-      lifespan: 10m
       ui_url: https://___APP_FQDN___/id/registration
+      lifespan: 1h
       after:
         password:
           hooks:
@@ -62,31 +28,67 @@ selfservice:
                 method: POST
                 body: /home/kratos/jsonnet/identity.jsonnet
             - hook: session
+          default_browser_return_url: https://___APP_FQDN___/id/welcome
+      enabled: true
+
+    login:
+      ui_url: https://___APP_FQDN___/id/login
+      lifespan: 1h
+      after:
+        password:
+          default_browser_return_url: https://___APP_FQDN___/id/welcome
+
+    verification:
+      ui_url: https://___APP_FQDN___/id/verification
+      lifespan: 1h
+      after:
+        default_browser_return_url: https://___APP_FQDN___/id/welcome
+      enabled: true
+
+    recovery:
+      ui_url: https://___APP_FQDN___/id/recovery
+      lifespan: 1h
+      enabled: true
+
+    error:
+      ui_url: https://___APP_FQDN___/id/error
+
+    settings:
+      ui_url: https://___APP_FQDN___/id/settings
+      lifespan: 1h
+      privileged_session_max_age: 1h
+
+  methods:
+    password:
+      identifier_similarity_check_enabled: false
+      enabled: true
+
+  allowed_return_urls:
+    - https://___APP_FQDN___
+
+serve:
+  public:
+    base_url: https://___KRATOS_FQDN___/
+    cors:
+      allowed_origins:
+        - https://___APP_FQDN___
+      allowed_methods:
+        - POST
+      enabled: true
+
+  admin:
+    base_url: https://___KRATOS_FQDN___:4434/
 
 log:
-  level: debug
-  format: text
   leak_sensitive_values: true
+  format: text
+  level: warning
 
 secrets:
   cookie:
     - ___COOKIE_SECRET___
   cipher:
     - ___CIPHER_SECRET___
-
-cookies:
-  domain: ___BASE_DOMAIN___
-  path: /
-  same_site: Strict
-
-session:
-  cookie:
-    domain: ___BASE_DOMAIN___
-    path: /
-    same_site: Strict
-
-ciphers:
-  algorithm: xchacha20-poly1305
 
 hashers:
   argon2:
@@ -96,10 +98,23 @@ hashers:
     salt_length: 16
     key_length: 16
 
-identity:
-  schemas:
-    - id: default
-      url: file:///home/kratos/config/identity.schema.json
+ciphers:
+  algorithm: xchacha20-poly1305
+
+cookies:
+  domain: ___BASE_DOMAIN___
+  path: /
+  same_site: Strict
+
+session:
+  lifespan: 720h
+  cookie:
+    domain: ___BASE_DOMAIN___
+    path: /
+    same_site: Strict
+    persistent: true
+
+version: v0.9.0-alpha.1.pre.1
 
 courier:
   smtp:
