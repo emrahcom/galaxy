@@ -68,7 +68,9 @@ selfservice:
   methods:
     password:
       config:
-        identifier_similarity_check_enabled: false
+        identifier_similarity_check_enabled: true
+        haveibeenpwned_enabled: false
+        min_password_length: 8
       enabled: true
 
   allowed_return_urls:
@@ -99,6 +101,7 @@ secrets:
 hashers:
   argon2:
     parallelism: 1
+    dedicated_memory: 512MB
     memory: 128MB
     iterations: 2
     salt_length: 16
