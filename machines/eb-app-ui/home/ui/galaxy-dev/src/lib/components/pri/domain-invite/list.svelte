@@ -52,7 +52,7 @@
         </div>
       </div>
     {:else}
-      <Warning>No partner key has been added yet</Warning>
+      <Warning>No partner key found for this domain</Warning>
     {/each}
   </div>
 </section>
