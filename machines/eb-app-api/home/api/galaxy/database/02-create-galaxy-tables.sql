@@ -303,7 +303,6 @@ CREATE TABLE meeting_member (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON meeting_member("identity_id", "meeting_id", "is_host");
-CREATE INDEX ON meeting_member("meeting_id", "is_host");
 ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
