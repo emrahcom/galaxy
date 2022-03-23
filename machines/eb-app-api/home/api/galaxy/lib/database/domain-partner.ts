@@ -70,7 +70,7 @@ export async function delDomainPartner(
     text: `
       DELETE FROM domain_partner
       WHERE id = $2
-        AND EXISTS (SELECT id
+        AND EXISTS (SELECT 1
                     FROM domain
                     WHERE id = domain_id
                       AND identity_id = $1
@@ -98,7 +98,7 @@ export async function updateDomainPartnerEnabled(
         enabled = $3,
         updated_at = now()
       WHERE id = $2
-        AND EXISTS (SELECT id
+        AND EXISTS (SELECT 1
                     FROM domain
                     WHERE id = domain_id
                       AND identity_id = $1
