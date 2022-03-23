@@ -125,6 +125,9 @@ export async function listMeeting(
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
       WHERE m.identity_id = $1
+        AND (m.schedule_type != 'ephemeral'
+             OR r.accessed_at + interval '4 hours' > now()
+            )
 
       UNION
 
