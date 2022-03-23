@@ -75,14 +75,14 @@ export interface Meeting {
   id: string;
   profile_id: string;
   profile_name: string;
+  profile_email: string;
   domain_id: string;
   domain_name: string;
+  domain_url: string;
   domain_enabled: boolean;
-  domain_owner_enabled: boolean;
   room_id: string;
   room_name: string;
   room_enabled: boolean;
-  room_owner_enabled: boolean;
   host_key: string;
   guest_key: string;
   name: string;
@@ -92,7 +92,6 @@ export interface Meeting {
   restricted: boolean;
   subscribable: boolean;
   enabled: boolean;
-  chain_enabled: boolean;
   created_at: string;
   updated_at: string;
 }
