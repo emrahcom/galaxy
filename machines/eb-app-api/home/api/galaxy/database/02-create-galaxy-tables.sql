@@ -319,7 +319,7 @@ CREATE TABLE meeting_schedule (
     "duration" integer NOT NULL,
     "ended_at" timestamp with time zone NOT NULL
 );
-CREATE INDEX ON meeting_schedule(meeting_id);
+CREATE INDEX ON meeting_schedule(meeting_id, started_at);
 ALTER TABLE meeting_schedule OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
