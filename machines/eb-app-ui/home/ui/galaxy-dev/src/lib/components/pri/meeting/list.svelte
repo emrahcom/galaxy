@@ -31,20 +31,32 @@
               {/if}
             </p>
 
+            <p class="card-text text-muted small">{p.ownership}</p>
             <p class="card-text text-muted">{p.info}</p>
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
-            <Del href="/pri/meeting/del/{p.id}" />
+            {#if p.ownership === "private"}
+              <Del href="/pri/meeting/del/{p.id}" />
 
-            {#if p.enabled}
-              <Disable href="/pri/meeting/disable/{p.id}" />
-            {:else}
-              <Enable href="/pri/meeting/enable/{p.id}" />
+              {#if p.enabled}
+                <Disable href="/pri/meeting/disable/{p.id}" />
+              {:else}
+                <Enable href="/pri/meeting/enable/{p.id}" />
+              {/if}
+
+              <Update href="/pri/meeting/update/{p.id}" />
+
+              {#if p.chain_enabled}
+                <Join href="/pri/meeting/join/{p.id}" />
+              {/if}
+            {:else if p.ownership === "member"}
+              <Del href="/pri/meeting/membership/del/{p.id}" />
+
+              {#if p.enabled && p.chain_enabled}
+                <Join href="/pri/meeting/join/{p.id}" />
+              {/if}
             {/if}
-
-            <Update href="/pri/meeting/update/{p.id}" />
-            <Join href="/pri/meeting/join/{p.id}" />
           </div>
         </div>
       </div>
