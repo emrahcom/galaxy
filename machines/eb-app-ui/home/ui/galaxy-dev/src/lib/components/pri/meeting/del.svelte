@@ -18,15 +18,10 @@
   let domainName = p.domain_name;
   let roomName = `${p.room_name} on ${p.domain_name}`;
 
-  if (!p.domain_enabled || !p.domain_owner_enabled) {
+  if (!p.domain_enabled) {
     domainName = `${p.domain_name} - DISABLED`;
   }
-  if (
-    !p.domain_enabled ||
-    !p.domain_owner_enabled ||
-    !p.room_enabled ||
-    !p.room_owner_enabled
-  ) {
+  if (!p.domain_enabled || !p.room_enabled) {
     roomName = `${p.room_name} on ${p.domain_name} - DISABLED`;
   }
 
