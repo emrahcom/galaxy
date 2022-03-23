@@ -98,10 +98,11 @@ export async function updateDomainPartnerEnabled(
         enabled = $3,
         updated_at = now()
       WHERE id = $2
-        AND domain_id IN (SELECT id
-                          FROM domain
-                          WHERE identity_id = $1
-                         )
+        AND EXISTS (SELECT id
+                    FROM domain
+                    WHERE id = domain_id
+                      AND identity_id = $1
+                   )
       RETURNING id, updated_at as at`,
     args: [
       identityId,
