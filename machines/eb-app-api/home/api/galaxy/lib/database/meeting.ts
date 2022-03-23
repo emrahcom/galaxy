@@ -1,24 +1,25 @@
 import { fetch } from "./common.ts";
-import type { Id, Meeting, MeetingLinkSet, MeetingPublic } from "./types.ts";
+import type {
+  Id,
+  Meeting,
+  MeetingLinkSet,
+  MeetingPublic,
+  MeetingReduced,
+} from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeeting(identityId: string, meetingId: string) {
   const sql = {
     text: `
-      SELECT m.id, p.id as profile_id, p.name as profile_name,
-        d.id as domain_id, d.name as domain_name, d.enabled as domain_enabled,
-        i1.enabled as domain_owner_enabled, r.id as room_id,
-        r.name as room_name, r.enabled as room_enabled,
-        i2.enabled as room_owner_enabled, m.host_key, m.guest_key, m.name,
-        m.info, m.schedule_type, m.hidden, m.restricted, m.subscribable,
-        m.enabled,
-        (i1.enabled AND d.enabled AND r.enabled AND i2.enabled AND m.enabled) as
-        chain_enabled, m.created_at, m.updated_at
+      SELECT m.id, m.name, m.info, p.id as profile_id, p.name as profile_name,
+        p.email as profile_email, d.id as domain_id, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, d.enabled as domain_enabled,
+        r.id as room_id, r.name as room_name, r.enabled as room_enabled,
+        m.host_key, m.guest_key, m.schedule_type, m.hidden, m.restricted,
+        m.subscribable, m.enabled, m.created_at, m.updated_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
-        JOIN identity i1 ON d.identity_id = i1.id
-        JOIN identity i2 ON r.identity_id = i2.id
         LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.id = $2
         AND m.identity_id = $1`,
@@ -104,7 +105,7 @@ export async function listMeeting(
     ],
   };
 
-  return await fetch(sql) as Meeting[];
+  return await fetch(sql) as MeetingReduced[];
 }
 
 // -----------------------------------------------------------------------------
