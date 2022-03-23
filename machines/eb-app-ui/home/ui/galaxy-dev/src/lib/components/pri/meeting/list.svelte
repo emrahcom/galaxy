@@ -25,15 +25,18 @@
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
 
-            <p class="card-text text-muted small">
-              {#if p.schedule_type === "ephemeral"}
-                {`${p.domain_name}`}
-              {:else}
-                {`${p.room_name} on ${p.domain_name}`}
-              {/if}
-            </p>
-
             <p class="card-text text-muted small">{p.ownership}</p>
+
+            {#if p.ownership === "private"}
+              <p class="card-text text-muted small">
+                {#if p.schedule_type === "ephemeral"}
+                  {`${p.domain_name}`}
+                {:else}
+                  {`${p.room_name} on ${p.domain_name}`}
+                {/if}
+              </p>
+            {/if}
+
             <p class="card-text text-muted">{p.info}</p>
           </div>
 
