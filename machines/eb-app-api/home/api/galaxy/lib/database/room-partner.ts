@@ -43,10 +43,11 @@ export async function listRoomPartnerByRoom(
         LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
                                 AND pr.is_default = true
       WHERE pa.room_id = $2
-        AND pa.room_id IN (SELECT id
-                           FROM room
-                           WHERE identity_id = $1
-                          )
+        AND EXISTS (SELECT 1
+                    FROM room
+                    WHERE id = pa.room_id
+                      AND identity_id = $1
+                   )
       ORDER BY profile_name, profile_email
       LIMIT $3 OFFSET $4`,
     args: [
