@@ -43,10 +43,11 @@ export async function listDomainPartnerByDomain(
         LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
                                 AND pr.is_default = true
       WHERE pa.domain_id = $2
-        AND pa.domain_id IN (SELECT id
-                             FROM domain
-                             WHERE identity_id = $1
-                            )
+        AND EXISTS (SELECT 1
+                    FROM domain
+                    WHERE id = pa.domain_id
+                      AND identity_id = $1
+                   )
       ORDER BY profile_name, profile_email
       LIMIT $3 OFFSET $4`,
     args: [
