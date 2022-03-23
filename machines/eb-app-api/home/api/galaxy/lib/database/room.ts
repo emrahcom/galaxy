@@ -10,8 +10,6 @@ export async function getRoom(identityId: string, roomId: string) {
         r.has_suffix, r.enabled, r.created_at, r.updated_at, r.accessed_at
       FROM room r
         JOIN domain d ON r.domain_id = d.id
-        JOIN identity i1 ON d.identity_id = i1.id
-        JOIN identity i2 ON r.identity_id = i2.id
       WHERE r.id = $2
         AND r.identity_id = $1
         AND r.ephemeral = false`,
