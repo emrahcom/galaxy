@@ -244,10 +244,11 @@ export async function addMeeting(
          FROM room
          WHERE id = $3
            AND (identity_id = $1
-                OR $3 IN (SELECT room_id
-                          FROM room_partner
-                          WHERE identity_id = $1
-                         )
+                OR EXISTS (SELECT 1
+                           FROM room_partner
+                           WHERE identity_id = $1
+                             AND room_id = $3
+                          )
                )
         ),
         $4, $5, $6, $7, $8, $9)
@@ -311,10 +312,11 @@ export async function updateMeeting(
                    FROM room
                    WHERE id = $4
                      AND (identity_id = $1
-                          OR $4 IN (SELECT room_id
-                                    FROM room_partner
-                                    WHERE identity_id = $1
-                                   )
+                          OR EXISTS (SELECT 1
+                                     FROM room_partner
+                                     WHERE identity_id = $1
+                                       AND room_id = $4
+                                    )
                          )
                   ),
         name = $5,
