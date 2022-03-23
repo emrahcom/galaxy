@@ -12,11 +12,16 @@ export async function getMeeting(identityId: string, meetingId: string) {
   const sql = {
     text: `
       SELECT m.id, m.name, m.info, p.id as profile_id, p.name as profile_name,
-        p.email as profile_email, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, d.enabled as domain_enabled,
-        r.id as room_id, r.name as room_name, r.enabled as room_enabled,
-        m.host_key, m.guest_key, m.schedule_type, m.hidden, m.restricted,
-        m.subscribable, m.enabled, m.created_at, m.updated_at
+        p.email as profile_email,
+        (CASE m.schedule_type
+         WHEN 'ephemeral' THEN d.id
+         ELSE ''
+        ) as domain_id,
+        d.name as domain_name, d.domain_attr->>'url' as domain_url,
+        d.enabled as domain_enabled, r.id as room_id, r.name as room_name,
+        r.enabled as room_enabled, m.host_key, m.guest_key, m.schedule_type,
+        m.hidden, m.restricted, m.subscribable, m.enabled, m.created_at,
+        m.updated_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -80,22 +85,87 @@ export async function listMeeting(
 ) {
   const sql = {
     text: `
-      SELECT m.id, p.id as profile_id, p.name as profile_name,
-        d.id as domain_id, d.name as domain_name, d.enabled as domain_enabled,
-        i1.enabled as domain_owner_enabled, r.id as room_id,
-        r.name as room_name, r.enabled as room_enabled,
-        i2.enabled as room_owner_enabled, m.host_key, m.guest_key, m.name,
-        m.info, m.schedule_type, m.hidden, m.restricted, m.subscribable,
-        m.enabled,
-        (i1.enabled AND d.enabled AND r.enabled AND i2.enabled AND m.enabled) as
-        chain_enabled, m.created_at, m.updated_at
+      SELECT m.id, m.name, m.info, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, r.name as room_name,
+        m.schedule_type,
+        (CASE m.schedule_type
+         WHEN 'scheduled' THEN (SELECT min(started_at)
+                                FROM meeting_schedule
+                                WHERE meeting_id = m.id
+                                  AND started_at > now()
+                               )
+         ELSE ''
+        ) as scheduled_at,
+        m.hidden, m.restricted, m.subscribable, m.enabled,
+        (r.enabled AND i2.enabled
+         AND d.enabled AND i1.enabled
+         AND CASE r.identity_id
+             WHEN $1 THEN true
+             ELSE (SELECT enabled
+                   FROM room_partner
+                   WHERE identity_id = $1
+                     AND room_id = r.id
+                  )
+         AND CASE d.identity_id
+             WHEN r.identity_id THEN true
+             ELSE CASE d.public
+                  WHEN true THEN true
+                  ELSE (SELECT enabled
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                       )
+        ) as chain_enabled, m.updated_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
-        LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.identity_id = $1
+
+      UNION
+
+      SELECT m.id, m.name, m.info, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, r.name as room_name,
+        m.schedule_type,
+        (CASE m.schedule_type
+         WHEN 'scheduled' THEN (SELECT min(started_at)
+                                FROM meeting_schedule
+                                WHERE meeting_id = m.id
+                                  AND started_at > now()
+                               )
+         ELSE ''
+        ) as scheduled_at,
+        m.hidden, m.restricted, m.subscribable, m.enabled,
+        (mem.enabled AND i3.enabled
+         AND r.enabled AND i2.enabled
+         AND d.enabled AND i1.enabled
+         AND CASE r.identity_id
+             WHEN m.identity_id THEN true
+             ELSE (SELECT enabled
+                   FROM room_partner
+                   WHERE identity_id = m.identity_id
+                     AND room_id = r.id
+                  )
+         AND CASE d.identity_id
+             WHEN r.identity_id THEN true
+             ELSE CASE d.public
+                  WHEN true THEN true
+                  ELSE (SELECT enabled
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                       )
+        ) as chain_enabled, m.updated_at
+      FROM meeting_member mem
+        JOIN meeting m ON mem.meeting_id = m.id
+        JOIN room r ON m.room_id = r.id
+        JOIN domain d ON r.domain_id = d.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+        JOIN identity i3 ON m.identity_id = i3.id
+      WHERE mem.identity_id = $1
+
       ORDER BY m.name
       LIMIT $2 OFFSET $3`,
     args: [
