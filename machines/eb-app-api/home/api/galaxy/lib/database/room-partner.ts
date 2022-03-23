@@ -14,10 +14,11 @@ export async function getRoomPartner(
         LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
                                 AND pr.is_default = true
       WHERE pa.id = $2
-        AND pa.room_id IN (SELECT id
-                           FROM room
-                           WHERE identity_id = $1
-                           )`,
+        AND EXISTS (SELECT 1
+                    FROM room
+                    WHERE id = pa.room_id
+                      AND identity_id = $1
+                   )`,
     args: [
       identityId,
       partnershipId,
