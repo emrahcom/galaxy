@@ -2,7 +2,7 @@
   import { FORM_WIDTH } from "$lib/config";
   import { action, get, list } from "$lib/api";
   import { SCHEDULE_TYPE_OPTIONS } from "$lib/pri/meeting";
-  import type { DomainReduced, Profile, Room } from "$lib/types";
+  import type { DomainReduced, Profile, RoomReduced } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Radio from "$lib/components/common/form-radio.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -35,15 +35,17 @@
     return items.map((i) => [i.id, i.name]);
   });
 
-  const pr3 = list("/api/pri/room/list", 100).then((items: Room[]) => {
+  const pr3 = list("/api/pri/room/list", 100).then((items: RoomReduced[]) => {
     const enableds = items
-      .filter((i) => i.chain_enabled)
+      .filter((i) => i.enabled && i.chain_enabled)
       .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
     if (enableds[0]) p.room_id = enableds[0].id;
 
     return items.map((i) => [
       i.id,
-      `${i.name} on ${i.domain_name}${i.chain_enabled ? "" : " - DISABLED"}`,
+      `${i.name} on ${i.domain_name}${
+        i.enabled && i.chain_enabled ? "" : " - DISABLED"
+      }`,
     ]);
   });
 
