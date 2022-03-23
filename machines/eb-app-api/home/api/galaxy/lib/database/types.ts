@@ -112,6 +112,7 @@ export interface MeetingReduced {
   enabled: boolean;
   chain_enabled: boolean;
   updated_at: string;
+  ownership: string;
 }
 
 // -----------------------------------------------------------------------------
