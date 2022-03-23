@@ -118,9 +118,9 @@ export async function listRoom(
 
       SELECT r.id, r.name, d.name as domain_name,
         d.domain_attr->>'url' as domain_url, r.enabled,
-        (i2.enabled AND p.enabled AND d.enabled AND i1.enabled
+        (p.enabled AND i2.enabled
+         AND d.enabled AND i1.enabled
          AND CASE d.identity_id
-             WHEN $1 THEN true
              WHEN i2.id THEN true
              ELSE CASE d.public
                   WHEN true THEN true
