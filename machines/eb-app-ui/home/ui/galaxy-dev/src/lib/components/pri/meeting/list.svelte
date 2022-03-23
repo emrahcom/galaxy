@@ -3,7 +3,9 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import Invite from "$lib/components/common/link-invite.svelte";
   import Join from "$lib/components/common/link-join.svelte";
+  import People from "$lib/components/common/link-people.svelte";
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -46,6 +48,8 @@
               {/if}
 
               <Update href="/pri/meeting/update/{p.id}" />
+              <Invite href="/pri/meeting/invite/{p.id}" />
+              <People href="/pri/meeting/member/{p.id}" />
 
               {#if p.chain_enabled}
                 <Join href="/pri/meeting/join/{p.id}" />
