@@ -131,9 +131,8 @@ export async function listMeeting(
 
       UNION
 
-      SELECT m.id, m.name, m.info, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, r.name as room_name,
-        m.schedule_type,
+      SELECT m.id, m.name, m.info, '' as domain_name, '' as domain_url,
+        '' as room_name, m.schedule_type,
         (CASE m.schedule_type
          WHEN 'scheduled' THEN (SELECT min(started_at)
                                 FROM meeting_schedule
