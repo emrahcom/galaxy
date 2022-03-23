@@ -27,7 +27,9 @@
   const pr2 = list("/api/pri/room/list", 100).then((items: RoomReduced[]) => {
     return items.map((i) => [
       i.id,
-      `${i.name} on ${i.domain_name}${i.chain_enabled ? "" : " - DISABLED"}`,
+      `${i.name} on ${i.domain_name}${
+        i.enabled && i.chain_enabled ? "" : " - DISABLED"
+      }`,
     ]);
   });
 
