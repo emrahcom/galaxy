@@ -199,14 +199,15 @@ export async function addEphemeralRoom(
       VALUES (
         $1,
         (SELECT id
-         FROM domain
+         FROM domain d
          WHERE id = $2
            AND (identity_id = $1
-                OR id IN (SELECT domain_id
-                          FROM domain_partner
-                          WHERE identity_id = $1
-                         )
                 OR public = true
+                OR EXISTS (SELECT 1
+                           FROM domain_partner
+                           WHERE identity_id = $1
+                             AND domain_id = d.id
+                          )
                )
         ),
         'room-' || md5(gen_random_uuid()::text),
