@@ -94,7 +94,6 @@ export async function listMeeting(
                                 WHERE meeting_id = m.id
                                   AND started_at > now()
                                )
-         ELSE ''
          END
         ) as scheduled_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
@@ -138,7 +137,6 @@ export async function listMeeting(
                                 WHERE meeting_id = m.id
                                   AND started_at > now()
                                )
-         ELSE ''
          END
         ) as scheduled_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
@@ -174,7 +172,7 @@ export async function listMeeting(
         JOIN identity i3 ON m.identity_id = i3.id
       WHERE mem.identity_id = $1
 
-      ORDER BY m.name
+      ORDER BY name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
