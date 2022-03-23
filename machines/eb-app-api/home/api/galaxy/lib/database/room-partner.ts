@@ -70,10 +70,11 @@ export async function delRoomPartner(
     text: `
       DELETE FROM room_partner
       WHERE id = $2
-        AND room_id IN (SELECT id
-                        FROM room
-                        WHERE identity_id = $1
-                       )
+        AND EXISTS (SELECT 1
+                    FROM room
+                    WHERE id = room_id
+                      AND identity_id = $1
+                   )
       RETURNING id, now() as at`,
     args: [
       identityId,
