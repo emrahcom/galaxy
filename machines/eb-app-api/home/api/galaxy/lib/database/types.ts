@@ -98,6 +98,23 @@ export interface Meeting {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingReduced {
+  id: string;
+  domain_name: string;
+  domain_url: boolean;
+  room_name: string;
+  name: string;
+  info: string;
+  schedule_type: string;
+  hidden: boolean;
+  restricted: boolean;
+  subscribable: boolean;
+  enabled: boolean;
+  chain_enabled: boolean;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingPublic {
   id: string;
   name: string;
