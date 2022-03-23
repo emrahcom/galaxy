@@ -73,6 +73,8 @@ export interface DomainPartnership {
 // -----------------------------------------------------------------------------
 export interface Meeting {
   id: string;
+  name: string;
+  info: string;
   profile_id: string;
   profile_name: string;
   profile_email: string;
@@ -85,8 +87,6 @@ export interface Meeting {
   room_enabled: boolean;
   host_key: string;
   guest_key: string;
-  name: string;
-  info: string;
   schedule_type: string;
   hidden: boolean;
   restricted: boolean;
@@ -99,12 +99,13 @@ export interface Meeting {
 // -----------------------------------------------------------------------------
 export interface MeetingReduced {
   id: string;
+  name: string;
+  info: string;
   domain_name: string;
   domain_url: boolean;
   room_name: string;
-  name: string;
-  info: string;
   schedule_type: string;
+  scheduled_at: string;
   hidden: boolean;
   restricted: boolean;
   subscribable: boolean;
