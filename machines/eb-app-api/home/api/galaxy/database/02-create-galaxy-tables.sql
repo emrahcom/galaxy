@@ -228,6 +228,7 @@ CREATE TABLE meeting (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
+CREATE INDEX meeting(identity_id, schedule_type);
 CREATE UNIQUE INDEX ON meeting("host_key");
 CREATE UNIQUE INDEX ON meeting("guest_key");
 ALTER TABLE meeting OWNER TO galaxy;
