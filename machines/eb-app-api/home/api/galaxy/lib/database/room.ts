@@ -65,10 +65,10 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
         AND i1.enabled = true
         AND i2.enabled = true
         AND (d.public = true
-             OR i1.id = i2.id
+             OR d.identity_id = r.identity_id
              OR EXISTS (SELECT 1
                         FROM domain_partner
-                        WHERE identity_id = i2.id
+                        WHERE identity_id = r.identity_id
                           AND domain_id = d.id
                           AND enabled = true
                        )
@@ -120,12 +120,12 @@ export async function listRoom(
         (p.enabled AND i2.enabled
          AND d.enabled AND i1.enabled
          AND CASE d.identity_id
-             WHEN i2.id THEN true
+             WHEN r.identity_id THEN true
              ELSE CASE d.public
                   WHEN true THEN true
                   ELSE (SELECT enabled
                         FROM domain_partner
-                        WHERE identity_id = i2.id
+                        WHERE identity_id = r.identity_id
                           AND domain_id = d.id
                        )
                   END
