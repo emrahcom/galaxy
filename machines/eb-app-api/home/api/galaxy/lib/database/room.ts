@@ -102,7 +102,8 @@ export async function listRoom(
                   ELSE (SELECT enabled
                         FROM domain_partner
                         WHERE identity_id = $1
-                          AND domain_id = d.id)
+                          AND domain_id = d.id
+                       )
                   END
              END
         ) as chain_enabled,
@@ -126,7 +127,8 @@ export async function listRoom(
                   ELSE (SELECT enabled
                         FROM domain_partner
                         WHERE identity_id = i2.id
-                          AND domain_id = d.id)
+                          AND domain_id = d.id
+                       )
                   END
              END
         ) as chain_enabled, r.updated_at, 'partner' as ownership
