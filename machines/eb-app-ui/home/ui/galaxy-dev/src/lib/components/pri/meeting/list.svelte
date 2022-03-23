@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Meeting } from "$lib/types";
+  import type { MeetingReduced } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
@@ -7,7 +7,7 @@
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let meetings: Meeting[];
+  export let meetings: MeetingReduced[];
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -15,7 +15,11 @@
   <div class="row mx-auto mt-2 g-3">
     {#each meetings as p}
       <div class="col-md-6 col-xl-4">
-        <div class="card h-100 {p.chain_enabled ? '' : 'border-danger'}">
+        <div
+          class="card h-100 {p.enabled && p.chain_enabled
+            ? ''
+            : 'border-danger'}"
+        >
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
 
