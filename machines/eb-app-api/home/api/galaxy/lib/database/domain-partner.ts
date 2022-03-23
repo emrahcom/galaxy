@@ -70,10 +70,11 @@ export async function delDomainPartner(
     text: `
       DELETE FROM domain_partner
       WHERE id = $2
-        AND domain_id IN (SELECT id
-                          FROM domain
-                          WHERE identity_id = $1
-                         )
+        AND EXISTS (SELECT id
+                    FROM domain
+                    WHERE id = domain_id
+                      AND identity_id = $1
+                   )
       RETURNING id, now() as at`,
     args: [
       identityId,
