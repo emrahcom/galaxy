@@ -98,10 +98,11 @@ export async function updateRoomPartnerEnabled(
         enabled = $3,
         updated_at = now()
       WHERE id = $2
-        AND room_id IN (SELECT id
-                        FROM room
-                        WHERE identity_id = $1
-                       )
+        AND EXISTS (SELECT 1
+                    FROM room
+                    WHERE id = room_id
+                      AND identity_id = $1
+                   )
       RETURNING id, updated_at as at`,
     args: [
       identityId,
