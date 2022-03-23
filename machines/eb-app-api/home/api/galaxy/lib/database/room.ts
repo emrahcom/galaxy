@@ -252,14 +252,15 @@ export async function updateRoom(
       UPDATE room
       SET
         domain_id = (SELECT id
-                     FROM domain
+                     FROM domain d
                      WHERE id = $3
                        AND (identity_id = $1
-                            OR id IN (SELECT domain_id
-                                      FROM domain_partner
-                                      WHERE identity_id = $1
-                                     )
                             OR public = true
+                            OR EXISTS (SELECT 1
+                                       FROM domain_partner
+                                       WHERE identity_id = $1
+                                         AND domain_id = d.id
+                                      )
                            )
                     ),
         name = $4,
