@@ -15,7 +15,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
         p.email as profile_email,
         (CASE m.schedule_type
          WHEN 'ephemeral' THEN d.id
-         ELSE ''
+         END
         ) as domain_id,
         d.name as domain_name, d.domain_attr->>'url' as domain_url,
         d.enabled as domain_enabled, r.id as room_id, r.name as room_name,
@@ -95,6 +95,7 @@ export async function listMeeting(
                                   AND started_at > now()
                                )
          ELSE ''
+         END
         ) as scheduled_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
         (r.enabled AND i2.enabled
@@ -106,6 +107,7 @@ export async function listMeeting(
                    WHERE identity_id = $1
                      AND room_id = r.id
                   )
+             END
          AND CASE d.identity_id
              WHEN r.identity_id THEN true
              ELSE CASE d.public
@@ -115,6 +117,8 @@ export async function listMeeting(
                         WHERE identity_id = r.identity_id
                           AND domain_id = d.id
                        )
+                  END
+             END
         ) as chain_enabled, m.updated_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
@@ -135,6 +139,7 @@ export async function listMeeting(
                                   AND started_at > now()
                                )
          ELSE ''
+         END
         ) as scheduled_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
         (mem.enabled AND i3.enabled
@@ -147,6 +152,7 @@ export async function listMeeting(
                    WHERE identity_id = m.identity_id
                      AND room_id = r.id
                   )
+             END
          AND CASE d.identity_id
              WHEN r.identity_id THEN true
              ELSE CASE d.public
@@ -156,6 +162,8 @@ export async function listMeeting(
                         WHERE identity_id = r.identity_id
                           AND domain_id = d.id
                        )
+                  END
+             END
         ) as chain_enabled, m.updated_at
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
