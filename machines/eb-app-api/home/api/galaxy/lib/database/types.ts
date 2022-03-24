@@ -131,7 +131,8 @@ export interface MeetingInvite {
   meeting_name: string;
   meeting_info: string;
   code: string;
-  as_host: boolean;
+  invite_type: string;
+  affiliation: string;
   disposable: boolean;
   enabled: boolean;
   created_at: string;
@@ -144,7 +145,8 @@ export interface MeetingInvitePublic {
   meeting_name: string;
   meeting_info: string;
   code: string;
-  as_host: boolean;
+  invite_type: string;
+  affiliation: string;
   expired_at: string;
 }
 

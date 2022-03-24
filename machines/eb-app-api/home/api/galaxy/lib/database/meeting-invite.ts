@@ -6,8 +6,8 @@ export async function getInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
-        m.info as meeting_info, i.code, i.as_host, i.disposable, i.enabled,
-        i.created_at, i.updated_at, i.expired_at
+        m.info as meeting_info, i.code, i.invite_type, i.affiliation,
+        i.disposable, i.enabled, i.created_at, i.updated_at, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.id = $2
@@ -27,7 +27,7 @@ export async function getInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, i.code,
-        i.as_host, i.expired_at
+        i.invite_type, .affiliation, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.code = $1
@@ -50,8 +50,8 @@ export async function listInvite(
 ) {
   const sql = {
     text: `
-      SELECT id, name, code, as_host, disposable, enabled, created_at,
-        updated_at, expired_at
+      SELECT id, name, code, invite_type, affiliation, disposable, enabled,
+        created_at, updated_at, expired_at
       FROM meeting_invite
       WHERE identity_id = $1
         AND meeting_id = $2
@@ -74,13 +74,14 @@ export async function addInvite(
   identityId: string,
   meetingId: string,
   name: string,
-  asHost: boolean,
+  inviteType: string,
+  affiliation: string,
   disposable: boolean,
 ) {
   const sql = {
     text: `
-      INSERT INTO meeting_invite (identity_id, meeting_id, name, as_host,
-        disposable)
+      INSERT INTO meeting_invite (identity_id, meeting_id, name, invite_type,
+        affiliation, disposable)
       VALUES (
         $1,
         (SELECT id
@@ -88,14 +89,15 @@ export async function addInvite(
          WHERE id = $2
            AND identity_id = $1
         ),
-        $3, $4, $5
+        $3, $4, $5, $6
       )
       RETURNING id, created_at as at`,
     args: [
       identityId,
       meetingId,
       name,
-      asHost,
+      inviteType,
+      affiliation,
       disposable,
     ],
   };
