@@ -20,7 +20,6 @@ for i in $(seq 1 $NUM); do
     {
         "meeting_id": "$meeting_id",
         "name": "invite-$RANDOM",
-        "as_host": $as_host,
         "invite_type": "$invite_type",
         "affiliation": "$affiliation",
         "disposable": $disposable
