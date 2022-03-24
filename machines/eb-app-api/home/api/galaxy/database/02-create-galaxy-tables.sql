@@ -139,6 +139,7 @@ CREATE TABLE room (
     "accessed_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON room("identity_id", "domain_id", "name");
+CREATE INDEX ON room("identity_id", "ephemeral");
 ALTER TABLE room OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
