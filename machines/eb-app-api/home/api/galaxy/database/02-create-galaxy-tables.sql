@@ -286,21 +286,22 @@ ALTER TABLE meeting_request OWNER TO galaxy;
 -- MEETING_MEMBER
 -- -----------------------------------------------------------------------------
 -- - identity cannot update enabled but she can delete the membership
--- - identity cannot update is_host
+-- - identity cannot update affiliation
 -- - meeting owner can update enabled or delete the membership
--- - meeting owner can update is_host
+-- - meeting owner can update affiliation
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_member (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
-    "is_host" boolean NOT NULL DEFAULT false,
+    "affiliation" meeting_affiliation_type NOT NULL DEFAULT 'guest',
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON meeting_member("identity_id", "meeting_id", "is_host");
+CREATE UNIQUE INDEX ON
+  meeting_member("identity_id", "meeting_id", "affiliation");
 ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
