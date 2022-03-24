@@ -11,6 +11,7 @@ source $BASEDIR/../../common
 # get invite list (limit 2, no offset)
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
+echo $meeting_id
 JSON=$(cat <<EOF
 {
     "meeting_id": "$meeting_id",
@@ -19,5 +20,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" "list" "id" \
-    "$JSON" 2
+bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" \
+    "list/bymeeting" "id" "$JSON" 2

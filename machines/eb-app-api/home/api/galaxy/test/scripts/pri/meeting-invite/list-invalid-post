@@ -20,5 +20,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET" "pri" "meeting/invite" "list" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-error "$SET" "pri" "meeting/invite" \
+    "list/bymeeting" "$JSON" 1
