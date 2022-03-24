@@ -204,7 +204,7 @@ ALTER TABLE room_partner OWNER TO galaxy;
 -- - allow to change the schedule type if it is not ephemeral
 -- - non-hidden meeting can be seen by everyone but permission will be needed to
 --   participate it if it is restricted
--- - anybody can participate a restricted meeting if she has the key
+-- - anybody can participate a restricted meeting if she has the audience key
 -- - a non-restricted meeting may be hidden
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_schedule_type AS ENUM
@@ -214,10 +214,6 @@ CREATE TABLE meeting (
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
-    "host_key" varchar(250) NOT NULL
-        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
-    "guest_key" varchar(250) NOT NULL
-        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "name" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
     "schedule_type" meeting_schedule_type NOT NULL DEFAULT 'permanent',
@@ -229,8 +225,6 @@ CREATE TABLE meeting (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE INDEX meeting(identity_id, schedule_type);
-CREATE UNIQUE INDEX ON meeting("host_key");
-CREATE UNIQUE INDEX ON meeting("guest_key");
 ALTER TABLE meeting OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
