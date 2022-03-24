@@ -110,6 +110,23 @@ export interface MeetingReduced {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingInvite {
+  id: string;
+  name: string;
+  meeting_id: string;
+  meeting_name: string;
+  meeting_info: string;
+  code: string;
+  invite_type: string;
+  affiliation: string;
+  disposable: boolean;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Profile {
   id: string;
   name: string;
