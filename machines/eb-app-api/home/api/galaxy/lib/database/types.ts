@@ -152,7 +152,7 @@ export interface MeetingInvitePublic {
 export interface MeetingMember {
   id: string;
   profile_name: string;
-  is_host: boolean;
+  affiliation: string;
   enabled: boolean;
   created_at: string;
   updated_at: string;
@@ -165,7 +165,7 @@ export interface MeetingMembership {
   meeting_id: string;
   meeting_name: string;
   meeting_info: string;
-  is_host: boolean;
+  affiliation: string;
   enabled: boolean;
   created_at: string;
   updated_at: string;
