@@ -141,6 +141,14 @@ export interface MeetingInvite {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingInviteReduced {
+  meeting_name: string;
+  meeting_info: string;
+  code: string;
+  invite_type: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingInvitePublic {
   meeting_name: string;
   meeting_info: string;
