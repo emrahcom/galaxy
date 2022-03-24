@@ -9,14 +9,14 @@ source $BASEDIR/../../common
 [[ -z "$2" ]] && NUM=1 || NUM=$2
 
 # ------------------------------------------------------------------------------
-# add many new invites for members (for 2. meeting)
+# add many new invites for members
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-2-res)
 invite_type="member"
 
 affiliation="host"
 disposable=true
 for i in $(seq 1 $NUM); do
+    meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-$i-res)
     JSON=$(cat <<EOF
     {
         "meeting_id": "$meeting_id",

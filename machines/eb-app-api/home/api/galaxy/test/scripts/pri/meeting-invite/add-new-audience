@@ -9,7 +9,7 @@ source $BASEDIR/../../common
 [[ -z "$2" ]] && NUM=1 || NUM=$2
 
 # ------------------------------------------------------------------------------
-# add many new invites for audiences (for 1. meeting)
+# add many new invites for audiences
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
 

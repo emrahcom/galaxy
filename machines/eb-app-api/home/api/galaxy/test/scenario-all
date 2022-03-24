@@ -11,6 +11,7 @@ source $BASEDIR/scripts/common
 # kratos
 # ------------------------------------------------------------------------------
 for i in $(seq 1 10); do
+    declare SET${i}=$i
     bash $BASEDIR/scripts/kratos/registration $i
     bash $BASEDIR/scripts/kratos/login $i
 done
@@ -23,9 +24,6 @@ bash $BASEDIR/scripts/adm/hello
 # ------------------------------------------------------------------------------
 # pri
 # ------------------------------------------------------------------------------
-SET1=1
-SET2=2
-
 bash $BASEDIR/scripts/pri/hello $SET1
 
 # profile
