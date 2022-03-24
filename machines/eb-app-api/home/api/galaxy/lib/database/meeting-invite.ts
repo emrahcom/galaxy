@@ -133,7 +133,11 @@ export async function updateInviteEnabled(
       UPDATE meeting_invite
       SET
         enabled = $3,
-        updated_at = now()
+        updated_at = now(),
+        expired_at = CASE $3::boolean
+                       WHEN true THEN now() + interval '3 days'
+                       ELSE now() + interval '3 hours'
+                     END
       WHERE id = $2
         AND identity_id = $1
       RETURNING id, updated_at as at`,
