@@ -289,8 +289,8 @@ CREATE TABLE meeting_member (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON
-  meeting_member("identity_id", "meeting_id", "affiliation");
+CREATE UNIQUE INDEX ON meeting_member(
+    "identity_id", "meeting_id", "affiliation");
 ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
