@@ -220,6 +220,7 @@ ALTER TABLE meeting OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- - meeting invite can be shared with multiple members and can be used multiple
 --   times before the expire time if it is not disposable
+-- - audience invite is not disposable
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_invite_type AS ENUM ('audience', 'member');
 CREATE TYPE meeting_affiliation_type AS ENUM ('guest', 'host');
