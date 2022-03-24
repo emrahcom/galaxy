@@ -27,7 +27,7 @@ export async function getInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, i.code,
-        i.invite_type, .affiliation, i.expired_at
+        i.invite_type, i.affiliation, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.code = $1
