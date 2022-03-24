@@ -15,7 +15,8 @@ JSON=$(cat <<EOF
 {
     "meeting_id": "$meeting_fake",
     "name": "invite-$RANDOM",
-    "as_host": false,
+    "invite_type": "audience",
+    "affiliation": "guest",
     "disposable": false
 }
 EOF

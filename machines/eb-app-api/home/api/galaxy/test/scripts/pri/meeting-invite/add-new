@@ -11,8 +11,9 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # add many new invites
 # ------------------------------------------------------------------------------
-as_host=true
-disposable=true
+invite_type="audience"
+affiliation="guest"
+disposable=false
 for i in $(seq 1 $NUM); do
     meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-$i-res)
     JSON=$(cat <<EOF
@@ -20,12 +21,17 @@ for i in $(seq 1 $NUM); do
         "meeting_id": "$meeting_id",
         "name": "invite-$RANDOM",
         "as_host": $as_host,
+        "invite_type": "$invite_type",
+        "affiliation": "$affiliation",
         "disposable": $disposable
     }
 EOF
 )
-    [[ "$as_host" = false ]] && as_host=true || as_host=false
-    disposable=$as_host
+    [[ "$invite_type" = "audience" ]] && invite_type="member" \
+        || invite_type="audience"
+    [[ "$invite_type" = "audience" ]] && affiliation="guest" \
+        || affiliation="host"
+    [[ "$affiliation" = "host" ]] && disposable=true || disposable=false
 
     bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" "add" \
         "id" "$JSON" $i
