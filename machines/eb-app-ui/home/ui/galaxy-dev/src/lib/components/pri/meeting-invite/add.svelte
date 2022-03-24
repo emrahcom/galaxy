@@ -25,7 +25,6 @@
     invite_type: "audience",
     affiliation: "guest",
     disposable: true,
-
   };
 
   // ---------------------------------------------------------------------------
@@ -64,7 +63,7 @@
       <Radio bind:value={p.affiliation} options={AFFILIATION_OPTIONS} />
 
       {#if p.invite_type === "member"}
-        <p class="text-muted me-3 mt-3 mb-1"></p>
+        <p class="text-muted me-3 mt-3 mb-1" />
         <Switch
           name="disposable"
           label="Disposable"
