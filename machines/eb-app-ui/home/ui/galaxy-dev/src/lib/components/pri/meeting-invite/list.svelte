@@ -38,6 +38,10 @@
                 {toLocaleTime(p.expired_at)}
               </p>
 
+              <p class="card-text text-muted small">
+                {p.invite_type} as {p.affiliation}
+              </p>
+
               <p class="card-text text-muted">
                 {$page.url.origin}/pri/meeting/partnership/add/{p.code}
               </p>
@@ -47,6 +51,10 @@
               {/if}
             {:else}
               <p class="card-text text-muted small">permanent</p>
+
+              <p class="card-text text-muted small">
+                {p.invite_type} as {p.affiliation}
+              </p>
 
               <p class="card-text text-muted">
                 {$page.url.origin}/pub/meeting/join/{p.code}
