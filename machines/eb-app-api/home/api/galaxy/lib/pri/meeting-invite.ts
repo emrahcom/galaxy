@@ -6,7 +6,7 @@ import {
   delMeetingInvite,
   getMeetingInvite,
   getMeetingInviteByCode,
-  listMeetingInvite,
+  listMeetingInviteByMeeting,
   updateMeetingInviteEnabled,
 } from "../database/meeting-invite.ts";
 
@@ -29,13 +29,16 @@ async function getByCode(req: Request, _identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function list(req: Request, identityId: string): Promise<unknown> {
+async function listByMeeting(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.meeting_id;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listMeetingInvite(identityId, meetingId, limit, offset);
+  return await listMeetingInviteByMeeting(identityId, meetingId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
@@ -92,7 +95,7 @@ export default async function (
   } else if (path === `${PRE}/get/bycode`) {
     return await wrapper(getByCode, req, identityId);
   } else if (path === `${PRE}/list/bymeeting`) {
-    return await wrapper(list, req, identityId);
+    return await wrapper(listByMeeting, req, identityId);
   } else if (path === `${PRE}/add`) {
     return await wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
