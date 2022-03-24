@@ -43,10 +43,17 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.meeting_id;
   const name = pl.name;
-  const asHost = pl.as_host;
+  const inviteType = pl.invite_type;
+  const affiliation = pl.affiliation;
   const disposable = pl.disposable;
 
-  return await addInvite(identityId, meetingId, name, asHost, disposable);
+  return await addInvite(
+    identityId,
+    meetingId,
+    name,
+    inviteType,
+    affiliation,
+    disposable);
 }
 
 // -----------------------------------------------------------------------------
