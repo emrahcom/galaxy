@@ -2,12 +2,12 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
-  addInvite,
-  delInvite,
-  getInvite,
-  getInviteByCode,
-  listInvite,
-  updateInviteEnabled,
+  addMeetingInvite,
+  delMeetingInvite,
+  getMeetingInvite,
+  getMeetingInviteByCode,
+  listMeetingInvite,
+  updateMeetingInviteEnabled,
 } from "../database/meeting-invite.ts";
 
 const PRE = "/api/pri/meeting/invite";
@@ -17,7 +17,7 @@ async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await getInvite(identityId, inviteId);
+  return await getMeetingInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ async function getByCode(req: Request, _identityId: string): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  return await getInviteByCode(code);
+  return await getMeetingInviteByCode(code);
 }
 
 // -----------------------------------------------------------------------------
@@ -35,7 +35,7 @@ async function list(req: Request, identityId: string): Promise<unknown> {
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listInvite(identityId, meetingId, limit, offset);
+  return await listMeetingInvite(identityId, meetingId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const affiliation = pl.affiliation;
   const disposable = pl.disposable;
 
-  return await addInvite(
+  return await addMeetingInvite(
     identityId,
     meetingId,
     name,
@@ -61,7 +61,7 @@ async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await delInvite(identityId, inviteId);
+  return await delMeetingInvite(identityId, inviteId);
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ async function enable(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await updateInviteEnabled(identityId, inviteId, true);
+  return await updateMeetingInviteEnabled(identityId, inviteId, true);
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ async function disable(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const inviteId = pl.id;
 
-  return await updateInviteEnabled(identityId, inviteId, false);
+  return await updateMeetingInviteEnabled(identityId, inviteId, false);
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +90,7 @@ export default async function (
     return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/get/bycode`) {
     return await wrapper(getByCode, req, identityId);
-  } else if (path === `${PRE}/list`) {
+  } else if (path === `${PRE}/list/bymeeting`) {
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
     return await wrapper(add, req, identityId);

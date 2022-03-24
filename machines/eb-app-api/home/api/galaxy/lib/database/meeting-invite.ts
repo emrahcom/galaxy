@@ -42,7 +42,7 @@ export async function getMeetingInviteByCode(code: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listMeetingInviteByRoom(
+export async function listMeetingInviteByMeeting(
   identityId: string,
   meetingId: string,
   limit: number,
