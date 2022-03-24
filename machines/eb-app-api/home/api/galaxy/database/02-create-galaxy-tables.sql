@@ -233,6 +233,7 @@ ALTER TABLE meeting OWNER TO galaxy;
 -- - meeting invite can be shared with multiple members and can be used multiple
 --   times before the expire time if it is not disposable
 -- -----------------------------------------------------------------------------
+CREATE TYPE meeting_invite_type AS ENUM ('audience', 'member');
 CREATE TABLE meeting_invite (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
@@ -240,6 +241,7 @@ CREATE TABLE meeting_invite (
     "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "invite_type" meeting_invite_type NOT NULL DEFAULT 'audience',
     "as_host" boolean NOT NULL DEFAULT false,
     "disposable" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
