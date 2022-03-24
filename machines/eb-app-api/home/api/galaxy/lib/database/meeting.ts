@@ -19,9 +19,8 @@ export async function getMeeting(identityId: string, meetingId: string) {
         ) as domain_id,
         d.name as domain_name, d.domain_attr->>'url' as domain_url,
         d.enabled as domain_enabled, r.id as room_id, r.name as room_name,
-        r.enabled as room_enabled, m.host_key, m.guest_key, m.schedule_type,
-        m.hidden, m.restricted, m.subscribable, m.enabled, m.created_at,
-        m.updated_at
+        r.enabled as room_enabled, m.schedule_type, m.hidden, m.restricted,
+        m.subscribable, m.enabled, m.created_at, m.updated_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
