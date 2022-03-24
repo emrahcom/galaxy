@@ -110,7 +110,7 @@ export async function updateMemberEnabled(
 export async function updateMemberAffiliation(
   identityId: string,
   membershipId: string,
-  value: boolean,
+  value: string,
 ) {
   const sql = {
     text: `
