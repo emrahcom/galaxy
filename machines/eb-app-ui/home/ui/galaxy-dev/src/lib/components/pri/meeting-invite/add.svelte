@@ -57,7 +57,10 @@
         readonly={true}
       />
 
+      <p class="text-muted me-3 mb-1">Invite Type</p>
       <Radio bind:value={p.invite_type} options={INVITE_TYPE_OPTIONS} />
+
+      <p class="text-muted me-3 mb-1">Affiliation</p>
       <Radio bind:value={p.affiliation} options={AFFILIATION_OPTIONS} />
 
       {#if p.invite_type === "member"}
