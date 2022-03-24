@@ -15,19 +15,6 @@
 BEGIN;
 
 -- -----------------------------------------------------------------------------
--- PARAM
--- -----------------------------------------------------------------------------
--- - contains the (key, value) pairs for miscellaneous use cases
--- -----------------------------------------------------------------------------
-CREATE TABLE param (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "key" varchar(50) NOT NULL,
-    "value" varchar(250) NOT NULL
-);
-CREATE UNIQUE INDEX ON param("key");
-ALTER TABLE param OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
 -- IDENTITY
 -- -----------------------------------------------------------------------------
 CREATE TABLE identity (
