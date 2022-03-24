@@ -62,7 +62,7 @@ export async function listRoomInviteByRoom(
         JOIN domain d ON r.domain_id = d.id
       WHERE i.identity_id = $1
         AND i.room_id = $2
-        AND expired_at > now()
+        AND i.expired_at > now()
       ORDER BY i.updated_at DESC
       LIMIT $3 OFFSET $4`,
     args: [

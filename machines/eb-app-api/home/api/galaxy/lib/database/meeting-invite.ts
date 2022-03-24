@@ -2,7 +2,7 @@ import { fetch } from "./common.ts";
 import type { Id, MeetingInvite, MeetingInviteReduced } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getInvite(identityId: string, inviteId: string) {
+export async function getMeetingInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
@@ -23,11 +23,11 @@ export async function getInvite(identityId: string, inviteId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function getInviteByCode(code: string) {
+export async function getMeetingInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, i.code,
-        i.invite_type, i.affiliation, i.expired_at
+        i.invite_type
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.code = $1
@@ -42,7 +42,7 @@ export async function getInviteByCode(code: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function listInvite(
+export async function listMeetingInviteByRoom(
   identityId: string,
   meetingId: string,
   limit: number,
@@ -50,13 +50,15 @@ export async function listInvite(
 ) {
   const sql = {
     text: `
-      SELECT id, name, code, invite_type, affiliation, disposable, enabled,
-        created_at, updated_at, expired_at
-      FROM meeting_invite
-      WHERE identity_id = $1
-        AND meeting_id = $2
-        AND expired_at > now()
-      ORDER BY as_host, expired_at
+      SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
+        m.info as meeting_info, i.code, i.invite_type, i.affiliation,
+        i.disposable, i.enabled, i.created_at, i.updated_at, i.expired_at
+      FROM meeting_invite i
+        JOIN meeting m ON i.meeting_id = m.id
+      WHERE i.identity_id = $1
+        AND i.meeting_id = $2
+        AND i.expired_at > now()
+      ORDER BY i.updated_at DESC
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
@@ -70,7 +72,7 @@ export async function listInvite(
 }
 
 // -----------------------------------------------------------------------------
-export async function addInvite(
+export async function addMeetingInvite(
   identityId: string,
   meetingId: string,
   name: string,
@@ -106,7 +108,7 @@ export async function addInvite(
 }
 
 // -----------------------------------------------------------------------------
-export async function delInvite(identityId: string, inviteId: string) {
+export async function delMeetingInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       DELETE FROM meeting_invite
@@ -123,7 +125,7 @@ export async function delInvite(identityId: string, inviteId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updateInviteEnabled(
+export async function updateMeetingInviteEnabled(
   identityId: string,
   inviteId: string,
   value: boolean,
