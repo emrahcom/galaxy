@@ -53,7 +53,8 @@ async function add(req: Request, identityId: string): Promise<unknown> {
     name,
     inviteType,
     affiliation,
-    disposable);
+    disposable,
+  );
 }
 
 // -----------------------------------------------------------------------------
