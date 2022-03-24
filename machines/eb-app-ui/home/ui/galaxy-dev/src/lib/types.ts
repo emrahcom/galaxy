@@ -81,8 +81,6 @@ export interface Meeting {
   room_id: string;
   room_name: string;
   room_enabled: boolean;
-  host_key: string;
-  guest_key: string;
   schedule_type: string;
   hidden: boolean;
   restricted: boolean;
