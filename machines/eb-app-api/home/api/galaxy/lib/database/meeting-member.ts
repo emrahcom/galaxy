@@ -107,7 +107,7 @@ export async function updateMemberEnabled(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateMemberIsHost(
+export async function updateMemberAffiliation(
   identityId: string,
   membershipId: string,
   value: boolean,

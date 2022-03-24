@@ -6,7 +6,7 @@ import {
   getMember,
   listMember,
   updateMemberEnabled,
-  updateMemberIsHost,
+  updateMemberAffiliation,
 } from "../database/meeting-member.ts";
 
 const PRE = "/api/pri/meeting/member";
@@ -58,7 +58,7 @@ async function setHost(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const membershipId = pl.id;
 
-  return await updateMemberIsHost(identityId, membershipId, true);
+  return await updateMemberAffiliation(identityId, membershipId, "host");
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ async function setGuest(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const membershipId = pl.id;
 
-  return await updateMemberIsHost(identityId, membershipId, false);
+  return await updateMemberAffiliation(identityId, membershipId, "guest");
 }
 
 // -----------------------------------------------------------------------------
