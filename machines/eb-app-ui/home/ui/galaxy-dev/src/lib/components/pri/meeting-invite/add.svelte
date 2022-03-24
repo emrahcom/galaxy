@@ -1,10 +1,16 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
+  import {
+    INVITE_TYPE_OPTIONS,
+    AFFILIATION_OPTIONS,
+  } from "$lib/pri/meeting-invite";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Radio from "$lib/components/common/form-radio.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
+  import Switch from "$lib/components/common/form-switch.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -16,6 +22,10 @@
   let p = {
     name: `invite-${date.getTime() % 10000000000}`,
     meeting_id: meeting.id,
+    invite_type: "audience",
+    affiliation: "guest",
+    disposable: true,
+
   };
 
   // ---------------------------------------------------------------------------
@@ -46,6 +56,18 @@
         value={meeting.name}
         readonly={true}
       />
+
+      <Radio bind:value={p.invite_type} options={INVITE_TYPE_OPTIONS} />
+      <Radio bind:value={p.affiliation} options={AFFILIATION_OPTIONS} />
+
+      {#if p.invite_type === "member"}
+        <Switch
+          name="disposable"
+          label="Disposable"
+          desc="(can only be used once)"
+          bind:value={p.disposable}
+        />
+      {/if}
 
       {#if warning}
         <Warning>
