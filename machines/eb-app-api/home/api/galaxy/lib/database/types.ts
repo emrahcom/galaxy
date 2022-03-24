@@ -149,16 +149,6 @@ export interface MeetingInviteReduced {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingInvitePublic {
-  meeting_name: string;
-  meeting_info: string;
-  code: string;
-  invite_type: string;
-  affiliation: string;
-  expired_at: string;
-}
-
-// -----------------------------------------------------------------------------
 export interface MeetingMember {
   id: string;
   profile_name: string;
