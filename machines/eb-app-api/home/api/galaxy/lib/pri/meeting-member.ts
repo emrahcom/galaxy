@@ -5,8 +5,8 @@ import {
   delMember,
   getMember,
   listMember,
-  updateMemberEnabled,
   updateMemberAffiliation,
+  updateMemberEnabled,
 } from "../database/meeting-member.ts";
 
 const PRE = "/api/pri/meeting/member";
