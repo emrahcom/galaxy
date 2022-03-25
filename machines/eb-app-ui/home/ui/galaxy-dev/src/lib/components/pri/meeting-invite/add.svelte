@@ -59,7 +59,7 @@
       <p class="text-muted me-3 mt-3 mb-1">Allow to become</p>
       <Radio bind:value={p.invite_type} options={INVITE_TYPE_OPTIONS} />
 
-      <p class="text-muted me-3 mt-3 mb-1">Allow to participate as</p>
+      <p class="text-muted me-3 mt-3 mb-1">Allow to join as</p>
       <Radio bind:value={p.affiliation} options={AFFILIATION_OPTIONS} />
 
       {#if p.invite_type === "member"}
