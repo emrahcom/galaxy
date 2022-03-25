@@ -21,7 +21,7 @@ async function get(req: Request, identityId: string): Promise<unknown> {
 async function addByCode(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const profileId = pl.profile_id;
-  const inviteCode = pl.invite_code;
+  const inviteCode = pl.code;
 
   return await addMembershipByCode(identityId, profileId, inviteCode);
 }
