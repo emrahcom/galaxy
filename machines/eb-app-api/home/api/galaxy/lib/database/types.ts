@@ -131,7 +131,7 @@ export interface MeetingInvite {
   meeting_name: string;
   meeting_info: string;
   code: string;
-  invite_type: string;
+  invite_to: string;
   join_as: string;
   disposable: boolean;
   enabled: boolean;
@@ -145,7 +145,7 @@ export interface MeetingInviteReduced {
   meeting_name: string;
   meeting_info: string;
   code: string;
-  invite_type: string;
+  invite_to: string;
 }
 
 // -----------------------------------------------------------------------------
