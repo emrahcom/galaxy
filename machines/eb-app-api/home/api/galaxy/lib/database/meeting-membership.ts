@@ -25,32 +25,6 @@ export async function getMembership(
 }
 
 // -----------------------------------------------------------------------------
-export async function listMembership(
-  identityId: string,
-  limit: number,
-  offset: number,
-) {
-  const sql = {
-    text: `
-      SELECT mem.id, mem.profile_id, m.id as meeting_id,
-        m.name as meeting_name, m.info as meeting_info, mem.join_as,
-        mem.enabled, mem.created_at, mem.updated_at
-      FROM meeting_member mem
-        JOIN meeting m ON mem.meeting_id = m.id
-      WHERE mem.identity_id = $1
-      ORDER BY m.name, mem.created_at
-      LIMIT $2 OFFSET $3`,
-    args: [
-      identityId,
-      limit,
-      offset,
-    ],
-  };
-
-  return await fetch(sql) as MeetingMembership[];
-}
-
-// -----------------------------------------------------------------------------
 export async function addMembershipByInvite(
   identityId: string,
   profileId: string,
