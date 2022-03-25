@@ -232,7 +232,7 @@ CREATE TABLE meeting_invite (
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "invite_type" meeting_invite_type NOT NULL DEFAULT 'audience',
-    "affiliation" meeting_affiliation_type NOT NULL DEFAULT 'guest',
+    "join_as" meeting_affiliation_type NOT NULL DEFAULT 'guest',
     "disposable" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -275,22 +275,22 @@ ALTER TABLE meeting_request OWNER TO galaxy;
 -- MEETING_MEMBER
 -- -----------------------------------------------------------------------------
 -- - identity cannot update enabled but she can delete the membership
--- - identity cannot update affiliation
+-- - identity cannot update join_as
 -- - meeting owner can update enabled or delete the membership
--- - meeting owner can update affiliation
+-- - meeting owner can update join_as
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_member (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
-    "affiliation" meeting_affiliation_type NOT NULL DEFAULT 'guest',
+    "join_as" meeting_affiliation_type NOT NULL DEFAULT 'guest',
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON meeting_member(
-    "identity_id", "meeting_id", "affiliation");
+    "identity_id", "meeting_id", "join_as");
 ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
