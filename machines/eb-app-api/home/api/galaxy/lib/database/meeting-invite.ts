@@ -6,7 +6,7 @@ export async function getMeetingInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
-        m.info as meeting_info, i.code, i.invite_type, i.join_as, i.disposable,
+        m.info as meeting_info, i.code, i.invite_to, i.join_as, i.disposable,
         i.enabled, i.created_at, i.updated_at, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
@@ -27,7 +27,7 @@ export async function getMeetingInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, i.code,
-        i.invite_type
+        i.invite_to
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.code = $1
@@ -51,7 +51,7 @@ export async function listMeetingInviteByMeeting(
   const sql = {
     text: `
       SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
-        m.info as meeting_info, i.code, i.invite_type, i.join_as, i.disposable,
+        m.info as meeting_info, i.code, i.invite_to, i.join_as, i.disposable,
         i.enabled, i.created_at, i.updated_at, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
@@ -76,13 +76,13 @@ export async function addMeetingInvite(
   identityId: string,
   meetingId: string,
   name: string,
-  inviteType: string,
+  inviteTo: string,
   joinAs: string,
   disposable: boolean,
 ) {
   const sql = {
     text: `
-      INSERT INTO meeting_invite (identity_id, meeting_id, name, invite_type,
+      INSERT INTO meeting_invite (identity_id, meeting_id, name, invite_to,
         join_as, disposable)
       VALUES (
         $1,
@@ -98,7 +98,7 @@ export async function addMeetingInvite(
       identityId,
       meetingId,
       name,
-      inviteType,
+      inviteTo,
       joinAs,
       disposable,
     ],
