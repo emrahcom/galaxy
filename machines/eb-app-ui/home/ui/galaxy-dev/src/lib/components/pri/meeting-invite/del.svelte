@@ -47,12 +47,14 @@
         readonly={true}
       />
 
-      <p class="text-muted me-3 mt-3 mb-1">Invite to become</p>
-      <Radio
-        bind:value={p.invite_to}
-        options={INVITE_TYPE_OPTIONS}
-        disabled={true}
-      />
+      {#if p.meeting_schedule_type !== "ephemeral"}
+        <p class="text-muted me-3 mt-3 mb-1">Invite to become</p>
+        <Radio
+          bind:value={p.invite_to}
+          options={INVITE_TYPE_OPTIONS}
+          disabled={true}
+        />
+      {/if}
 
       <p class="text-muted me-3 mt-3 mb-1">Allow to join as</p>
       <Radio
