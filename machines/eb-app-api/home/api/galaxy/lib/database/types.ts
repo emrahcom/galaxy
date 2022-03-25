@@ -132,7 +132,7 @@ export interface MeetingInvite {
   meeting_info: string;
   code: string;
   invite_type: string;
-  affiliation: string;
+  join_as: string;
   disposable: boolean;
   enabled: boolean;
   created_at: string;
@@ -152,7 +152,7 @@ export interface MeetingInviteReduced {
 export interface MeetingMember {
   id: string;
   profile_name: string;
-  affiliation: string;
+  join_as: string;
   enabled: boolean;
   created_at: string;
   updated_at: string;
@@ -165,7 +165,7 @@ export interface MeetingMembership {
   meeting_id: string;
   meeting_name: string;
   meeting_info: string;
-  affiliation: string;
+  join_as: string;
   enabled: boolean;
   created_at: string;
   updated_at: string;
