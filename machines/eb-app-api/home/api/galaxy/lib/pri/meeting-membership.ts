@@ -5,7 +5,6 @@ import {
   addMembershipByInvite,
   delMembership,
   getMembership,
-  listMembership,
   updateMembership,
 } from "../database/meeting-membership.ts";
 
@@ -17,15 +16,6 @@ async function get(req: Request, identityId: string): Promise<unknown> {
   const membershipId = pl.id;
 
   return await getMembership(identityId, membershipId);
-}
-
-// -----------------------------------------------------------------------------
-async function list(req: Request, identityId: string): Promise<unknown> {
-  const pl = await req.json();
-  const limit = getLimit(pl.limit);
-  const offset = getOffset(pl.offset);
-
-  return await listMembership(identityId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
@@ -62,8 +52,6 @@ export default async function (
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req, identityId);
-  } else if (path === `${PRE}/list`) {
-    return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add/byinvite`) {
     return await wrapper(addByInvite, req, identityId);
   } else if (path === `${PRE}/del`) {
