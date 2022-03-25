@@ -249,10 +249,10 @@ bash $BASEDIR/scripts/pri/meeting-invite/del-nonexist $SET1
 
 bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $SET1 10
 bash $BASEDIR/scripts/pri/meeting-invite/add-new-member $SET1 10
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting/nolimit-nooffset $SET1
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting/limit $SET1
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting/huge-offset $SET1
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting/invalid-post $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-limit $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-huge-offset $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-invalid-post $SET1
 
 # meeting-membership
 bash $BASEDIR/scripts/pri/meeting-membership/add-byinvite-invalid-post $SET2
