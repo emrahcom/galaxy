@@ -267,11 +267,6 @@ bash $BASEDIR/scripts/pri/meeting-membership/del-exist $SET2
 bash $BASEDIR/scripts/pri/meeting-membership/del-nonexist $SET2
 
 bash $BASEDIR/scripts/pri/meeting-membership/add-byinvite-new $SET2 $SET1 10
-bash $BASEDIR/scripts/pri/meeting-membership/list-nolimit-nooffset $SET2
-bash $BASEDIR/scripts/pri/meeting-membership/list-limit $SET2
-bash $BASEDIR/scripts/pri/meeting-membership/list-limit-offset $SET2
-bash $BASEDIR/scripts/pri/meeting-membership/list-huge-offset $SET2
-bash $BASEDIR/scripts/pri/meeting-membership/list-invalid-post $SET2
 
 # meeting-member
 bash $BASEDIR/scripts/pri/meeting-member/get-exist $SET1 $SET2
