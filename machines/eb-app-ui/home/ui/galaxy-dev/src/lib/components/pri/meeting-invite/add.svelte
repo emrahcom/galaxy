@@ -22,7 +22,7 @@
   let p = {
     name: `invite-${date.getTime() % 10000000000}`,
     meeting_id: meeting.id,
-    invite_type: "audience",
+    invite_to: "audience",
     join_as: "guest",
     disposable: true,
   };
@@ -56,13 +56,13 @@
         readonly={true}
       />
 
-      <p class="text-muted me-3 mt-3 mb-1">Allow to become</p>
-      <Radio bind:value={p.invite_type} options={INVITE_TYPE_OPTIONS} />
+      <p class="text-muted me-3 mt-3 mb-1">Invite to become</p>
+      <Radio bind:value={p.invite_to} options={INVITE_TYPE_OPTIONS} />
 
       <p class="text-muted me-3 mt-3 mb-1">Allow to join as</p>
       <Radio bind:value={p.join_as} options={AFFILIATION_OPTIONS} />
 
-      {#if p.invite_type === "member"}
+      {#if p.invite_to === "member"}
         <p class="text-muted me-3 mt-3 mb-1" />
         <Switch
           name="disposable"

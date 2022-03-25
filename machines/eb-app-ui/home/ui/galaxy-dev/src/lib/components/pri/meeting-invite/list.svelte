@@ -33,13 +33,13 @@
         <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
-            {#if p.invite_type === "member"}
+            {#if p.invite_to === "member"}
               <p class="card-text text-muted small">
                 {toLocaleTime(p.expired_at)}
               </p>
 
               <p class="card-text text-muted small">
-                {p.invite_type} as {p.join_as}
+                {p.invite_to} as {p.join_as}
               </p>
 
               <p class="card-text text-muted">
@@ -53,7 +53,7 @@
               <p class="card-text text-muted small">permanent</p>
 
               <p class="card-text text-muted small">
-                {p.invite_type} as {p.join_as}
+                {p.invite_to} as {p.join_as}
               </p>
 
               <p class="card-text text-muted">

@@ -47,9 +47,9 @@
         readonly={true}
       />
 
-      <p class="text-muted me-3 mt-3 mb-1">Allow to become</p>
+      <p class="text-muted me-3 mt-3 mb-1">Invite to become</p>
       <Radio
-        bind:value={p.invite_type}
+        bind:value={p.invite_to}
         options={INVITE_TYPE_OPTIONS}
         disabled={true}
       />
@@ -61,7 +61,7 @@
         disabled={true}
       />
 
-      {#if p.invite_type === "member"}
+      {#if p.invite_to === "member"}
         <p class="text-muted me-3 mt-3 mb-1" />
         <Switch
           name="disposable"
