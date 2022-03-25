@@ -6,8 +6,9 @@ export async function getMeetingInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
-        m.info as meeting_info, i.code, i.invite_to, i.join_as, i.disposable,
-        i.enabled, i.created_at, i.updated_at, i.expired_at
+        m.info as meeting_info, m.schedule_type as meeting_schedule_type,
+        i.code, i.invite_to, i.join_as, i.disposable, i.enabled, i.created_at,
+        i.updated_at, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.id = $2
@@ -51,8 +52,9 @@ export async function listMeetingInviteByMeeting(
   const sql = {
     text: `
       SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
-        m.info as meeting_info, i.code, i.invite_to, i.join_as, i.disposable,
-        i.enabled, i.created_at, i.updated_at, i.expired_at
+        m.info as meeting_info, m.schedule_type as meeting_schedule_type,
+        i.code, i.invite_to, i.join_as, i.disposable, i.enabled, i.created_at,
+        i.updated_at, i.expired_at
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.identity_id = $1
