@@ -16,19 +16,19 @@ meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
 invite_type="audience"
 disposable=false
 
-affiliation="host"
+join_as="host"
 for i in $(seq 1 $NUM); do
     JSON=$(cat <<EOF
     {
         "meeting_id": "$meeting_id",
         "name": "invite-$RANDOM",
         "invite_type": "$invite_type",
-        "affiliation": "$affiliation",
+        "join_as": "$join_as",
         "disposable": $disposable
     }
 EOF
 )
-    [[ "$affiliation" = "host" ]] && affiliation="guest" || affiliation="host"
+    [[ "$join_as" = "host" ]] && join_as="guest" || join_as="host"
 
     bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" "add" \
         "id" "$JSON" $i

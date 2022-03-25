@@ -13,7 +13,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 invite_type="member"
 
-affiliation="host"
+join_as="host"
 disposable=true
 for i in $(seq 1 $NUM); do
     meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-$i-res)
@@ -22,13 +22,13 @@ for i in $(seq 1 $NUM); do
         "meeting_id": "$meeting_id",
         "name": "invite-$RANDOM",
         "invite_type": "$invite_type",
-        "affiliation": "$affiliation",
+        "join_as": "$join_as",
         "disposable": $disposable
     }
 EOF
 )
-    [[ "$affiliation" = "host" ]] && affiliation="guest" || affiliation="host"
-    [[ "$affiliation" = "host" ]] && disposable=true || disposable=false
+    [[ "$join_as" = "host" ]] && join_as="guest" || join_as="host"
+    [[ "$join_as" = "host" ]] && disposable=true || disposable=false
 
     bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/invite" "add" \
         "id" "$JSON" $i
