@@ -27,7 +27,7 @@ export async function getMembership(
 }
 
 // -----------------------------------------------------------------------------
-export async function addMembershipByInvite(
+export async function addMembershipByCode(
   identityId: string,
   profileId: string,
   inviteCode: string,

@@ -1,7 +1,7 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import {
-  addMembershipByInvite,
+  addMembershipByCode,
   delMembership,
   getMembership,
   updateMembership,
@@ -18,12 +18,12 @@ async function get(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function addByInvite(req: Request, identityId: string): Promise<unknown> {
+async function addByCode(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const profileId = pl.profile_id;
   const inviteCode = pl.invite_code;
 
-  return await addMembershipByInvite(identityId, profileId, inviteCode);
+  return await addMembershipByCode(identityId, profileId, inviteCode);
 }
 
 // -----------------------------------------------------------------------------
@@ -51,8 +51,8 @@ export default async function (
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req, identityId);
-  } else if (path === `${PRE}/add/byinvite`) {
-    return await wrapper(addByInvite, req, identityId);
+  } else if (path === `${PRE}/add/bycode`) {
+    return await wrapper(addByCode, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
