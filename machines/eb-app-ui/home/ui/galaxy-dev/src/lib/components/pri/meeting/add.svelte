@@ -116,7 +116,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  {#await Promise.all([pr1, pr2, pr3, pr4]) then [_d, profiles, rooms, domains]}
+  {#await Promise.all([pr1, pr2, pr3, pr4]) then [_p, profiles, rooms, domains]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />

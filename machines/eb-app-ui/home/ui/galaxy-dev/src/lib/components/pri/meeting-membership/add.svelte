@@ -3,6 +3,7 @@
   import { action } from "$lib/api";
   import type { MeetingInviteReduced } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Select from "$lib/components/common/form-select.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
@@ -13,7 +14,17 @@
   let warning = false;
   let p = {
     code: invite.code,
+    profile_id: "",
   };
+
+  const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
+    if (item) p.profile_id = item.id;
+    return item;
+  });
+
+  const pr2 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
+    return items.map((i) => [i.id, i.name]);
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -34,30 +45,40 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  <div class="d-flex mt-2 justify-content-center">
-    <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text
-        name="meeting_name"
-        label="Meeting"
-        value={invite.meeting_name}
-        readonly={true}
-      />
-      <Text
-        name="meeting_info"
-        label="Info"
-        value={invite.meeting_info}
-        readonly={true}
-      />
+  {#await Promise.all([pr1, pr2, pr3, pr4]) then [_p, profiles]}
+    <div class="d-flex mt-2 justify-content-center">
+      <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+        <Text
+          name="meeting_name"
+          label="Meeting"
+          value={invite.meeting_name}
+          readonly={true}
+        />
+        <Text
+          name="meeting_info"
+          label="Info"
+          value={invite.meeting_info}
+          readonly={true}
+        />
+        <Select
+          id="profile_id"
+          label="Profile"
+          bind:value={p.profile_id}
+          options={profiles}
+        />
 
-      {#if warning}
-        <Warning>The add request is not accepted.</Warning>
-      {/if}
+        {#if warning}
+          <Warning>The add request is not accepted.</Warning>
+        {/if}
 
-      <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
-        <SubmitBlocker />
-        <Submit label="Add" />
-      </div>
-    </form>
-  </div>
+        <div class="d-flex gap-5 mt-5 justify-content-center">
+          <Cancel on:click={cancel} />
+          <SubmitBlocker />
+          <Submit label="Add" />
+        </div>
+      </form>
+    </div>
+  {:catch}
+    <Warning>Something went wrong</Warning>
+  {/await}
 </section>
