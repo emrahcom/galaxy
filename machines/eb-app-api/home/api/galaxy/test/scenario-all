@@ -237,6 +237,8 @@ bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $SET1
 bash $BASEDIR/scripts/pri/meeting-invite/add-new-member $SET1
 bash $BASEDIR/scripts/pri/meeting-invite/get-exist $SET1
 bash $BASEDIR/scripts/pri/meeting-invite/get-nonexist $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-exist $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-nonexist $SET1
 
 bash $BASEDIR/scripts/pri/meeting-invite/disable-exist $SET1
 bash $BASEDIR/scripts/pri/meeting-invite/disable-nonexist $SET1
