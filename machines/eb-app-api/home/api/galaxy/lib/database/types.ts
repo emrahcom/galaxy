@@ -162,7 +162,8 @@ export interface MeetingMember {
 export interface MeetingMembership {
   id: string;
   profile_id: string;
-  meeting_id: string;
+  profile_name: string;
+  profile_email: string;
   meeting_name: string;
   meeting_info: string;
   join_as: string;
