@@ -56,7 +56,7 @@
 
       <p class="text-muted me-3 mt-3 mb-1">Allow to join as</p>
       <Radio
-        bind:value={p.affiliation}
+        bind:value={p.join_as}
         options={AFFILIATION_OPTIONS}
         disabled={true}
       />

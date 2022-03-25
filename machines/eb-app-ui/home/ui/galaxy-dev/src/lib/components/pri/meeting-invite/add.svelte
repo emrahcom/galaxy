@@ -23,7 +23,7 @@
     name: `invite-${date.getTime() % 10000000000}`,
     meeting_id: meeting.id,
     invite_type: "audience",
-    affiliation: "guest",
+    join_as: "guest",
     disposable: true,
   };
 
@@ -60,7 +60,7 @@
       <Radio bind:value={p.invite_type} options={INVITE_TYPE_OPTIONS} />
 
       <p class="text-muted me-3 mt-3 mb-1">Allow to join as</p>
-      <Radio bind:value={p.affiliation} options={AFFILIATION_OPTIONS} />
+      <Radio bind:value={p.join_as} options={AFFILIATION_OPTIONS} />
 
       {#if p.invite_type === "member"}
         <p class="text-muted me-3 mt-3 mb-1" />

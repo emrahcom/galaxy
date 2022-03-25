@@ -39,7 +39,7 @@
               </p>
 
               <p class="card-text text-muted small">
-                {p.invite_type} as {p.affiliation}
+                {p.invite_type} as {p.join_as}
               </p>
 
               <p class="card-text text-muted">
@@ -53,7 +53,7 @@
               <p class="card-text text-muted small">permanent</p>
 
               <p class="card-text text-muted small">
-                {p.invite_type} as {p.affiliation}
+                {p.invite_type} as {p.join_as}
               </p>
 
               <p class="card-text text-muted">
