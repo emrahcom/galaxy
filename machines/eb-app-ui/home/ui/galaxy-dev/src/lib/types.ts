@@ -135,6 +135,20 @@ export interface MeetingInviteReduced {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingMembership {
+  id: string;
+  profile_id: string;
+  profile_name: string;
+  profile_email: string;
+  meeting_name: string;
+  meeting_info: string;
+  join_as: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Profile {
   id: string;
   name: string;
