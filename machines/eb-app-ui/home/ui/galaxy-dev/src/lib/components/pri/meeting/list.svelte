@@ -52,7 +52,10 @@
 
               <Update href="/pri/meeting/update/{p.id}" />
               <Invite href="/pri/meeting/invite/{p.id}" />
-              <People href="/pri/meeting/member/{p.id}" />
+
+              {#if p.schedule_type !== "ephemeral"}
+                <People href="/pri/meeting/member/{p.id}" />
+              {/if}
 
               {#if p.chain_enabled}
                 <Join href="/pri/meeting/join/{p.id}" />
