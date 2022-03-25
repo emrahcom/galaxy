@@ -118,7 +118,7 @@ export interface MeetingInvite {
   meeting_info: string;
   code: string;
   invite_type: string;
-  affiliation: string;
+  join_as: string;
   disposable: boolean;
   enabled: boolean;
   created_at: string;
