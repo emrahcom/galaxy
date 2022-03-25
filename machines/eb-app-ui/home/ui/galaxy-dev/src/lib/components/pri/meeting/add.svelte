@@ -69,12 +69,26 @@
   }
 
   // ---------------------------------------------------------------------------
+  async function addMeetingInvite(meetingId: string) {
+    const date = new Date();
+    const i = {
+      name: `invite-${date.getTime() % 10000000000}`,
+      meeting_id: meetingId,
+      invite_to: "audience",
+      join_as: "guest",
+      disposable: false,
+    };
+
+    await action("/api/pri/meeting/invite/add", i);
+  }
+
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;
 
       if (p.schedule_type === "ephemeral") {
-        let r = {
+        const r = {
           domain_id: domainId,
         };
 
@@ -86,7 +100,8 @@
         p.subscribable = false;
       }
 
-      let meeting = await action("/api/pri/meeting/add", p);
+      const meeting = await action("/api/pri/meeting/add", p);
+      await addMeetingInvite(meeting.id);
 
       if (p.schedule_type === "scheduled") {
         window.location.href = `/pri/meeting/schedule/add/${meeting.id}`;
