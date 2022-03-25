@@ -275,7 +275,6 @@ export interface RoomPartner {
 // -----------------------------------------------------------------------------
 export interface RoomPartnership {
   id: string;
-  room_id: string;
   room_name: string;
   domain_name: string;
   domain_url: string;
