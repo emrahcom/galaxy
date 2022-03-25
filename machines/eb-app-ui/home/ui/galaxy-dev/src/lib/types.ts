@@ -116,6 +116,7 @@ export interface MeetingInvite {
   meeting_id: string;
   meeting_name: string;
   meeting_info: string;
+  meeting_schedule_type: string;
   code: string;
   invite_to: string;
   join_as: string;
