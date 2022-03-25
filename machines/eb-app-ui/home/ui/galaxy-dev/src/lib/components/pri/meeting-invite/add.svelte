@@ -36,6 +36,9 @@
   async function onSubmit() {
     try {
       warning = false;
+
+      if (p.invite_to === "audience") p.disposable = false;
+
       await action("/api/pri/meeting/invite/add", p);
       window.location.href = `/pri/meeting/invite/${meeting.id}`;
     } catch {
