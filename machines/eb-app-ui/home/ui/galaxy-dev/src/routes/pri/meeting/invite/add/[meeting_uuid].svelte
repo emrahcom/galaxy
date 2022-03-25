@@ -11,7 +11,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Add a participant key" />
+<Subheader subheader="Create a participant key" />
 
 {#await pr then meeting}
   <Add {meeting} />

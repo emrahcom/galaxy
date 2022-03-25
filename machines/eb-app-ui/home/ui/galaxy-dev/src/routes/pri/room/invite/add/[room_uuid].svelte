@@ -11,7 +11,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Add a partner key" />
+<Subheader subheader="Create a partner key" />
 
 {#await pr then room}
   <Add {room} />
