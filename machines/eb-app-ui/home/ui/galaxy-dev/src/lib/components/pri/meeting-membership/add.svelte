@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action } from "$lib/api";
-  import type { MeetingInviteReduced } from "$lib/types";
+  import { action, get, list } from "$lib/api";
+  import type { MeetingInviteReduced, Profile } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Select from "$lib/components/common/form-select.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
@@ -45,7 +45,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
-  {#await Promise.all([pr1, pr2, pr3, pr4]) then [_p, profiles]}
+  {#await Promise.all([pr1, pr2]) then [_p, profiles]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text
