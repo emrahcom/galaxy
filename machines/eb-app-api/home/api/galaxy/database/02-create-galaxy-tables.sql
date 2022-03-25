@@ -231,7 +231,7 @@ CREATE TABLE meeting_invite (
     "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
-    "invite_type" meeting_invite_type NOT NULL DEFAULT 'audience',
+    "invite_to" meeting_invite_type NOT NULL DEFAULT 'audience',
     "join_as" meeting_affiliation_type NOT NULL DEFAULT 'guest',
     "disposable" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
