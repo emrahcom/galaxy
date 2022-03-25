@@ -58,7 +58,6 @@ export interface DomainPartner {
 // -----------------------------------------------------------------------------
 export interface DomainPartnership {
   id: string;
-  domain_id: string;
   domain_name: string;
   domain_url: string;
   enabled: boolean;
