@@ -13,7 +13,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
 
-invite_type="audience"
+invite_to="audience"
 disposable=false
 
 join_as="host"
@@ -22,7 +22,7 @@ for i in $(seq 1 $NUM); do
     {
         "meeting_id": "$meeting_id",
         "name": "invite-$RANDOM",
-        "invite_type": "$invite_type",
+        "invite_to": "$invite_to",
         "join_as": "$join_as",
         "disposable": $disposable
     }
