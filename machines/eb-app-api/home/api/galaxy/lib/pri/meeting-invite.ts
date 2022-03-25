@@ -47,7 +47,7 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const meetingId = pl.meeting_id;
   const name = pl.name;
   const inviteType = pl.invite_type;
-  const affiliation = pl.affiliation;
+  const joinAs = pl.join_as;
   const disposable = pl.disposable;
 
   return await addMeetingInvite(
@@ -55,7 +55,7 @@ async function add(req: Request, identityId: string): Promise<unknown> {
     meetingId,
     name,
     inviteType,
-    affiliation,
+    joinAs,
     disposable,
   );
 }

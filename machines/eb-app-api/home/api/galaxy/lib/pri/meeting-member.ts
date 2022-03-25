@@ -5,7 +5,7 @@ import {
   delMember,
   getMember,
   listMember,
-  updateMemberAffiliation,
+  updateMemberJoinAs,
   updateMemberEnabled,
 } from "../database/meeting-member.ts";
 
@@ -58,7 +58,7 @@ async function setHost(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const membershipId = pl.id;
 
-  return await updateMemberAffiliation(identityId, membershipId, "host");
+  return await updateMemberJoinAs(identityId, membershipId, "host");
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ async function setGuest(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const membershipId = pl.id;
 
-  return await updateMemberAffiliation(identityId, membershipId, "guest");
+  return await updateMemberJoinAs(identityId, membershipId, "guest");
 }
 
 // -----------------------------------------------------------------------------

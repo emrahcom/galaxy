@@ -9,7 +9,7 @@ export async function getMembership(
   const sql = {
     text: `
       SELECT mem.id, mem.profile_id, m.id as meeting_id,
-        m.name as meeting_name, m.info as meeting_info, mem.affiliation,
+        m.name as meeting_name, m.info as meeting_info, mem.join_as,
         mem.enabled, mem.created_at, mem.updated_at
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
@@ -33,7 +33,7 @@ export async function listMembership(
   const sql = {
     text: `
       SELECT mem.id, mem.profile_id, m.id as meeting_id,
-        m.name as meeting_name, m.info as meeting_info, mem.affiliation,
+        m.name as meeting_name, m.info as meeting_info, mem.join_as,
         mem.enabled, mem.created_at, mem.updated_at
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
@@ -59,7 +59,7 @@ export async function addMembershipByInvite(
   const sql = {
     text: `
       INSERT INTO meeting_member (identity_id, profile_id, meeting_id,
-        affiliation)
+        join_as)
       VALUES (
         $1,
         (SELECT id
@@ -73,7 +73,7 @@ export async function addMembershipByInvite(
            AND enabled = true
            AND expired_at > now()
         ),
-        (SELECT affiliation
+        (SELECT join_as
          FROM meeting_invite
          WHERE code = $3
            AND enabled = true

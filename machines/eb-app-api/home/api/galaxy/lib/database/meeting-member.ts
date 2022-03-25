@@ -5,7 +5,7 @@ import type { Id, MeetingMember } from "./types.ts";
 export async function getMember(identityId: string, membershipId: string) {
   const sql = {
     text: `
-      SELECT mem.id, p.name as profile_name, mem.affiliation, mem.enabled,
+      SELECT mem.id, p.name as profile_name, mem.join_as, mem.enabled,
         mem.created_at, mem.updated_at
       FROM meeting_member mem
         JOIN profile p ON mem.profile_id = p.id
@@ -33,7 +33,7 @@ export async function listMember(
 ) {
   const sql = {
     text: `
-      SELECT mem.id, p.name as profile_name, mem.affiliation, mem.enabled,
+      SELECT mem.id, p.name as profile_name, mem.join_as, mem.enabled,
         mem.created_at, mem.updated_at
       FROM meeting_member mem
         JOIN profile p ON mem.profile_id = p.id
@@ -107,7 +107,7 @@ export async function updateMemberEnabled(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateMemberAffiliation(
+export async function updateMemberJoinAs(
   identityId: string,
   membershipId: string,
   value: string,
@@ -116,7 +116,7 @@ export async function updateMemberAffiliation(
     text: `
       UPDATE meeting_member mem
       SET
-        affiliation = $3,
+        join_as = $3,
         updated_at = now()
       WHERE id = $2
         AND EXISTS (SELECT 1
