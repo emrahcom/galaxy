@@ -37,6 +37,7 @@
     try {
       warning = false;
 
+      if (meeting.schedule_type === "ephemeral") p.invite_to = "audience";
       if (p.invite_to === "audience") p.disposable = false;
 
       await action("/api/pri/meeting/invite/add", p);
@@ -59,8 +60,10 @@
         readonly={true}
       />
 
-      <p class="text-muted me-3 mt-3 mb-1">Invite to become</p>
-      <Radio bind:value={p.invite_to} options={INVITE_TYPE_OPTIONS} />
+      {#if meeting.schedule_type !== "ephemeral"}
+        <p class="text-muted me-3 mt-3 mb-1">Invite to become</p>
+        <Radio bind:value={p.invite_to} options={INVITE_TYPE_OPTIONS} />
+      {/if}
 
       <p class="text-muted me-3 mt-3 mb-1">Allow to join as</p>
       <Radio bind:value={p.join_as} options={AFFILIATION_OPTIONS} />
