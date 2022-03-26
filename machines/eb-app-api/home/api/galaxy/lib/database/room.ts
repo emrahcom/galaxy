@@ -106,7 +106,7 @@ export async function listRoom(
                   END
              END
         ) as chain_enabled,
-        r.updated_at, 'private' as ownership
+        r.updated_at, 'private' as ownership, '' as partnership_id
       FROM room r
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
@@ -130,7 +130,8 @@ export async function listRoom(
                        )
                   END
              END
-        ) as chain_enabled, r.updated_at, 'partner' as ownership
+        ) as chain_enabled, r.updated_at, 'partner' as ownership,
+        p.id as partnership_id
       FROM room_partner p
         JOIN room r ON p.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
