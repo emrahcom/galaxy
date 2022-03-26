@@ -1,9 +1,9 @@
 identity:
   schemas:
-    - id: default
-      url: file:///home/kratos/config/identity.schema.json
+    - id: schema_v0
+      url: file:///home/kratos/config/identity.schema.v0.json
 
-  default_schema_id: default
+  default_schema_id: schema_v0
 
 dsn: "postgres://kratos:___DB_PASSWD___@eb-postgres:5432/kratos?\
       sslmode=disable&max_conns=20&max_idle_conns=4"
