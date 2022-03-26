@@ -3,21 +3,21 @@ import { pri as wrapper } from "../http/wrapper.ts";
 import {
   addMeetingMembershipByCode,
   delMeetingMembership,
-  getMeetingMembershipByMeeting,
+  getMeetingMembership,
   updateMembership,
 } from "../database/meeting-membership.ts";
 
 const PRE = "/api/pri/meeting/membership";
 
 // -----------------------------------------------------------------------------
-async function getByMeeting(
+async function get(
   req: Request,
   identityId: string,
 ): Promise<unknown> {
   const pl = await req.json();
-  const meetingId = pl.id;
+  const membershipId = pl.id;
 
-  return await getMeetingMembershipByMeeting(identityId, meetingId);
+  return await getMeetingMembership(identityId, membershipId);
 }
 
 // -----------------------------------------------------------------------------
@@ -52,8 +52,8 @@ export default async function (
   path: string,
   identityId: string,
 ): Promise<Response> {
-  if (path === `${PRE}/get/bymeeting`) {
-    return await wrapper(getByMeeting, req, identityId);
+  if (path === `${PRE}/get`) {
+    return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/add/bycode`) {
     return await wrapper(addByCode, req, identityId);
   } else if (path === `${PRE}/del`) {
