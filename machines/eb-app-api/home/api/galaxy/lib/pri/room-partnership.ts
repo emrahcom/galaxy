@@ -3,17 +3,17 @@ import { pri as wrapper } from "../http/wrapper.ts";
 import {
   addRoomPartnershipByCode,
   delRoomPartnership,
-  getRoomPartnershipByRoom,
+  getRoomPartnership,
 } from "../database/room-partnership.ts";
 
 const PRE = "/api/pri/room/partnership";
 
 // -----------------------------------------------------------------------------
-async function getByRoom(req: Request, identityId: string): Promise<unknown> {
+async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const roomId = pl.id;
+  const partnershipId = pl.id;
 
-  return await getRoomPartnershipByRoom(identityId, roomId);
+  return await getRoomPartnership(identityId, partnershipId);
 }
 
 // -----------------------------------------------------------------------------
@@ -38,8 +38,8 @@ export default async function (
   path: string,
   identityId: string,
 ): Promise<Response> {
-  if (path === `${PRE}/get/byroom`) {
-    return await wrapper(getByRoom, req, identityId);
+  if (path === `${PRE}/get`) {
+    return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/add/bycode`) {
     return await wrapper(addByCode, req, identityId);
   } else if (path === `${PRE}/del`) {
