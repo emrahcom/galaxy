@@ -11,6 +11,7 @@
   <textarea
     id={name}
     class="form-control"
+    style="height: 128px"
     {name}
     placeholder=""
     bind:value
