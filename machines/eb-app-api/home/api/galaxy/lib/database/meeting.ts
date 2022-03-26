@@ -118,7 +118,7 @@ export async function listMeeting(
                   END
              END
         ) as chain_enabled, m.updated_at, 'private' as ownership,
-        m.id as membership_id
+        m.id as membership_id, 'host' as join_as
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -165,7 +165,7 @@ export async function listMeeting(
                   END
              END
         ) as chain_enabled, m.updated_at, 'member' as ownership,
-        mem.id as membership_id
+        mem.id as membership_id, mem.join_as
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
