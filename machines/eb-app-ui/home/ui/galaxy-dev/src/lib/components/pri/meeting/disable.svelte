@@ -63,12 +63,7 @@
         disabled={true}
       />
 
-      <Text
-        name="profile"
-        label="Profile"
-        value={profile}
-        readonly={true}
-      />
+      <Text name="profile" label="Profile" value={profile} readonly={true} />
 
       {#if p.schedule_type === "ephemeral"}
         <Text
