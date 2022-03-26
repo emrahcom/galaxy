@@ -99,8 +99,8 @@ bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-invalid-post $SET1
 # domain-partnership
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-invalid-post $SET2
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $SET2 $SET1
-bash $BASEDIR/scripts/pri/domain-partnership/get-bydomain-exist $SET2
-bash $BASEDIR/scripts/pri/domain-partnership/get-bydomain-nonexist $SET2
+bash $BASEDIR/scripts/pri/domain-partnership/get-exist $SET2
+bash $BASEDIR/scripts/pri/domain-partnership/get-nonexist $SET2
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-exist $SET2
 
 bash $BASEDIR/scripts/pri/domain-partnership/del-exist $SET2
