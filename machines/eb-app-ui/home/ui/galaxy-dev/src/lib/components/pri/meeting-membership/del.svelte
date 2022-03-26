@@ -12,6 +12,13 @@
   export let p: MeetingMembership;
 
   let warning = false;
+  let profile: string;
+
+  if (p.profile_email) {
+    profile = `${p.profile_name} (${p.profile_email})`;
+  } else {
+    profile = p.profile_name;
+  }
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -46,6 +53,7 @@
         value={p.meeting_info}
         readonly={true}
       />
+      <Text name="profile" label="Profile" value={profile} readonly={true} />
 
       {#if warning}
         <Warning>The unsubscribe request is not accepted.</Warning>
