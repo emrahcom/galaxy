@@ -78,13 +78,13 @@
         />
 
         {#if warning}
-          <Warning>The add request is not accepted.</Warning>
+          <Warning>The subscribe request is not accepted.</Warning>
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
           <Cancel on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Add" />
+          <Submit label="Subscribe" />
         </div>
       </form>
     </div>

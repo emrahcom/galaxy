@@ -47,13 +47,13 @@
       />
 
       {#if warning}
-        <Warning>The delete request is not accepted.</Warning>
+        <Warning>The unsubscribe request is not accepted.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Delete" />
+        <Submit label="Unsubscribe" />
       </div>
     </form>
   </div>
