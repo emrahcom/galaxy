@@ -38,7 +38,7 @@
             {/if}
 
             {#each p.info.split("\n") as line}
-              <p class="card-text text-muted">{line}</p>
+              <p class="card-text text-muted my-0">{line}&nbsp;</p>
             {/each}
           </div>
 
