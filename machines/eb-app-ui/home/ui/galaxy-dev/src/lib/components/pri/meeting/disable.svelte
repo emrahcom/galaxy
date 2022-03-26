@@ -17,6 +17,13 @@
   let warning = false;
   let domainName = p.domain_name;
   let roomName = `${p.room_name} on ${p.domain_name}`;
+  let profile: string;
+
+  if (p.profile_email) {
+    profile = `${p.profile_name} (${p.profile_email})`;
+  } else {
+    profile = p.profile_name;
+  }
 
   if (!p.domain_enabled) {
     domainName = `${p.domain_name} - DISABLED`;
@@ -59,7 +66,7 @@
       <Text
         name="profile"
         label="Profile"
-        value={p.profile_name}
+        value={profile}
         readonly={true}
       />
 
