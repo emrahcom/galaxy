@@ -107,7 +107,7 @@ export interface MeetingReduced {
   chain_enabled: boolean;
   updated_at: string;
   ownership: string;
-  memberhip_id: string;
+  membership_id: string;
 }
 
 // -----------------------------------------------------------------------------
