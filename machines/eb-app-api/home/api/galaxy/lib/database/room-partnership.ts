@@ -2,9 +2,9 @@ import { fetch, query } from "./common.ts";
 import type { Id, RoomPartnership } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getRoomPartnershipByRoom(
+export async function getRoomPartnership(
   identityId: string,
-  roomId: string,
+  partnershipId: string,
 ) {
   const sql = {
     text: `
@@ -14,11 +14,11 @@ export async function getRoomPartnershipByRoom(
       FROM room_partner p
         JOIN room r ON p.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
-      WHERE p.identity_id = $1
-        AND p.room_id = $2`,
+      WHERE p.id = $2
+        AND p.identity_id = $1`,
     args: [
       identityId,
-      roomId,
+      partnershipId,
     ],
   };
 
