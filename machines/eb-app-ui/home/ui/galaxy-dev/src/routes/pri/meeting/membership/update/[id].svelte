@@ -12,7 +12,7 @@
 <Subheader subheader="Update this subscription" />
 
 {#await pr then membership}
-  <Del p={membership} />
+  <Update p={membership} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
