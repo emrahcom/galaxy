@@ -21,6 +21,7 @@ export interface DomainReduced {
   enabled: boolean;
   updated_at: string;
   ownership: string;
+  partnership_id: string;
 }
 
 // -----------------------------------------------------------------------------
