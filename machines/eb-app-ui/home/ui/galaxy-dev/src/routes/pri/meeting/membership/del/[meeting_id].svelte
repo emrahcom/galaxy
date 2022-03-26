@@ -6,8 +6,8 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const pr = getById(
-    "/api/pri/meeting/membership/get/byroom",
-    $page.params.room_id,
+    "/api/pri/meeting/membership/get/bymeeting",
+    $page.params.meeting_id,
   );
 </script>
 
