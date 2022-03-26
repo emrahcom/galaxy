@@ -255,18 +255,18 @@ bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-huge-offset $SET1
 bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-invalid-post $SET1
 
 # meeting-membership
-bash $BASEDIR/scripts/pri/meeting-membership/add-byinvite-invalid-post $SET2
-bash $BASEDIR/scripts/pri/meeting-membership/add-byinvite-new $SET2 $SET1
+bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-invalid-post $SET2
+bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new $SET2 $SET1
 bash $BASEDIR/scripts/pri/meeting-membership/get-exist $SET2
 bash $BASEDIR/scripts/pri/meeting-membership/get-nonexist $SET2
-bash $BASEDIR/scripts/pri/meeting-membership/add-byinvite-exist $SET2
+bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-exist $SET2
 
 bash $BASEDIR/scripts/pri/meeting-membership/update-exist $SET2
 bash $BASEDIR/scripts/pri/meeting-membership/update-nonexist $SET2
 bash $BASEDIR/scripts/pri/meeting-membership/del-exist $SET2
 bash $BASEDIR/scripts/pri/meeting-membership/del-nonexist $SET2
 
-bash $BASEDIR/scripts/pri/meeting-membership/add-byinvite-new $SET2 $SET1 10
+bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new $SET2 $SET1 10
 
 # meeting-member
 bash $BASEDIR/scripts/pri/meeting-member/get-exist $SET1 $SET2
