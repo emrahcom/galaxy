@@ -2,9 +2,9 @@ import { fetch } from "./common.ts";
 import type { Id, MeetingMembership } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getMeetingMembershipByMeeting(
+export async function getMeetingMembership(
   identityId: string,
-  meetingId: string,
+  membershipId: string,
 ) {
   const sql = {
     text: `
@@ -15,11 +15,11 @@ export async function getMeetingMembershipByMeeting(
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
         JOIN profile p ON mem.profile_id = p.id
-      WHERE mem.meeting_id = $2
+      WHERE mem.id = $2
         AND mem.identity_id = $1`,
     args: [
       identityId,
-      meetingId,
+      membershipId,
     ],
   };
 
