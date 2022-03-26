@@ -266,6 +266,7 @@ bash $BASEDIR/scripts/pri/meeting-membership/update-nonexist $SET2
 bash $BASEDIR/scripts/pri/meeting-membership/del-exist $SET2
 bash $BASEDIR/scripts/pri/meeting-membership/del-nonexist $SET2
 
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-member $SET1 10
 bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new $SET2 $SET1 10
 
 # meeting-member
