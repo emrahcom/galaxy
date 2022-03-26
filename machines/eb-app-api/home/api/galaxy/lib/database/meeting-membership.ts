@@ -15,11 +15,11 @@ export async function getMeetingMembershipByMeeting(
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
         JOIN profile p ON mem.profile_id = p.id
-      WHERE mem.id = $2
+      WHERE mem.meeting_id = $2
         AND mem.identity_id = $1`,
     args: [
       identityId,
-      membershipId,
+      meetingId,
     ],
   };
 
