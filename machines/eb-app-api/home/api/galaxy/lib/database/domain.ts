@@ -45,7 +45,7 @@ export async function listDomain(
       UNION
 
       SELECT id, name, auth_type, domain_attr->>'url' as url, true,
-        created_at as updated_at, 'public' as ownership, '' as partnership_id
+        created_at as updated_at, 'public' as ownership, id as partnership_id
       FROM domain
       WHERE public = true
         AND enabled = true
