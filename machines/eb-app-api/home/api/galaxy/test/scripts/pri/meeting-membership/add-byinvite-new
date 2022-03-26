@@ -26,16 +26,16 @@ EOF
     bash $TEMPLATES/action-member-attr "$SET2" "pri" "meeting/invite" \
         "get" "id" "$JSON" $i
 
-    invite_code=$(jq -r ".[0].code" \
+    code=$(jq -r ".[0].code" \
                       $TMP/api-pri-meeting-invite-get-id-$SET2-$i-res)
     JSON=$(cat <<EOF
     {
         "profile_id": "$profile_id",
-        "invite_code": "$invite_code"
+        "code": "$code"
     }
 EOF
 )
 
     bash $TEMPLATES/action-member-attr "$SET1" "pri" "meeting/membership" \
-        "add/byinvite" "id" "$JSON" $i
+        "add/bycode" "id" "$JSON" $i
 done

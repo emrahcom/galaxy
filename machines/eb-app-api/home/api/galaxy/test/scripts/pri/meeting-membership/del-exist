@@ -11,7 +11,7 @@ source $BASEDIR/../../common
 # delete an existing membership
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-byinvite-id-$SET-1-res)
+    $TMP/api-pri-meeting-membership-add-bycode-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"

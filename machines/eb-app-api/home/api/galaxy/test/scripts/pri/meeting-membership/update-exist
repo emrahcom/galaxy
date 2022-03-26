@@ -11,7 +11,7 @@ source $BASEDIR/../../common
 # update with valid post
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-byinvite-id-$SET-1-res)
+    $TMP/api-pri-meeting-membership-add-bycode-id-$SET-1-res)
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {

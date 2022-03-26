@@ -14,14 +14,14 @@ source $BASEDIR/../../common
 # try to add an already existing membership
 # ------------------------------------------------------------------------------
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET1-1-res)
-invite_code=$(jq -r ".[0].code" $TMP/api-pri-meeting-invite-get-id-$SET2-1-res)
+code=$(jq -r ".[0].code" $TMP/api-pri-meeting-invite-get-id-$SET2-1-res)
 JSON=$(cat <<EOF
 {
     "profile_id": "$profile_id",
-    "invite_code": "$invite_code"
+    "code": "$code"
 }
 EOF
 )
 
 bash $TEMPLATES/action-member-error "$SET1" "pri" "meeting/membership" \
-    "add/byinvite" "$JSON" 1
+    "add/bycode" "$JSON" 1

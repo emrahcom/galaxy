@@ -14,7 +14,7 @@ source $BASEDIR/../../common
 # set as guest an existing member
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-byinvite-id-$SET2-1-res)
+    $TMP/api-pri-meeting-membership-add-bycode-id-$SET2-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"
