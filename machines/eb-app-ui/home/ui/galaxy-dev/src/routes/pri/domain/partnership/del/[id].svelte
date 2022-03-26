@@ -5,10 +5,7 @@
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = getById(
-    "/api/pri/domain/partnership/get/bydomain",
-    $page.params.domain_id,
-  );
+  const pr = getById("/api/pri/domain/partnership/get", $page.params.id);
 </script>
 
 <!-- -------------------------------------------------------------------------->

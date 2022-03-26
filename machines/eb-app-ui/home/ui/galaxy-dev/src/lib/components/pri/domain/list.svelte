@@ -37,7 +37,7 @@
               <Invite href="/pri/domain/invite/{p.id}" />
               <People href="/pri/domain/partner/{p.id}" />
             {:else if p.ownership === "partner"}
-              <Del href="/pri/domain/partnership/del/{p.id}" />
+              <Del href="/pri/domain/partnership/del/{p.partnership_id}" />
             {/if}
           </div>
         </div>
