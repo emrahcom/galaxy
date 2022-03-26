@@ -37,7 +37,9 @@
               </p>
             {/if}
 
-            <p class="card-text text-muted">{p.info}</p>
+            {#each p.info.split("\n") as line}
+              <p class="card-text text-muted">{line}</p>
+            {/each}
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
