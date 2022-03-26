@@ -178,8 +178,8 @@ bash $BASEDIR/scripts/pri/room-invite/list-byroom-invalid-post $SET1
 # room-partnership
 bash $BASEDIR/scripts/pri/room-partnership/add-bycode-invalid-post $SET2
 bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $SET2 $SET1
-bash $BASEDIR/scripts/pri/room-partnership/get-byroom-exist $SET2
-bash $BASEDIR/scripts/pri/room-partnership/get-byroom-nonexist $SET2
+bash $BASEDIR/scripts/pri/room-partnership/get-exist $SET2
+bash $BASEDIR/scripts/pri/room-partnership/get-nonexist $SET2
 bash $BASEDIR/scripts/pri/room-partnership/add-bycode-exist $SET2
 
 bash $BASEDIR/scripts/pri/room-partnership/del-exist $SET2
