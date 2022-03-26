@@ -2,9 +2,9 @@ import { fetch } from "./common.ts";
 import type { Id, MeetingMembership } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getMembership(
+export async function getMeetingMembershipByMeeting(
   identityId: string,
-  membershipId: string,
+  meetingId: string,
 ) {
   const sql = {
     text: `
@@ -27,10 +27,10 @@ export async function getMembership(
 }
 
 // -----------------------------------------------------------------------------
-export async function addMembershipByCode(
+export async function addMeetingMembershipByCode(
   identityId: string,
   profileId: string,
-  inviteCode: string,
+  code: string,
 ) {
   const sql = {
     text: `
@@ -60,7 +60,7 @@ export async function addMembershipByCode(
     args: [
       identityId,
       profileId,
-      inviteCode,
+      code,
     ],
   };
 
@@ -68,7 +68,7 @@ export async function addMembershipByCode(
 }
 
 // -----------------------------------------------------------------------------
-export async function delMembership(
+export async function delMeetingMembership(
   identityId: string,
   membershipId: string,
 ) {
@@ -88,7 +88,7 @@ export async function delMembership(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateMembership(
+export async function updateMeetingMembership(
   identityId: string,
   membershipId: string,
   profileId: string,
