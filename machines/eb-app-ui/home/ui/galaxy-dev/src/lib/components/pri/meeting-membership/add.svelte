@@ -23,7 +23,17 @@
   });
 
   const pr2 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
-    return items.map((i) => [i.id, i.name]);
+    return items.map((i) => {
+      let desc: string;
+
+      if (i.email) {
+        desc = `${i.name} (${i.email})`;
+      } else {
+        desc = i.name;
+      }
+
+      return [i.id, desc];
+    });
   });
 
   // ---------------------------------------------------------------------------
