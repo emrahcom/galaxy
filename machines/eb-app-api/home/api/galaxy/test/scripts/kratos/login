@@ -61,7 +61,7 @@ curl -ks -X POST "$actionUrl" \
     --data @- << EOF
     {
         "csrf_token": "$csrfToken",
-        "password_identifier": "$email",
+        "identifier": "$email",
         "password": "$passwd",
         "method": "password"
     }
