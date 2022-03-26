@@ -108,6 +108,7 @@ export interface MeetingReduced {
   updated_at: string;
   ownership: string;
   membership_id: string;
+  join_as: string;
 }
 
 // -----------------------------------------------------------------------------
