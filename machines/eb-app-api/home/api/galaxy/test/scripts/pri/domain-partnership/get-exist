@@ -12,7 +12,7 @@ source $BASEDIR/../../common
 # get for an existing partnership
 # ------------------------------------------------------------------------------
 partnership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-partnership-add-bycode-id-$SET-1-res)
+    $TMP/api-pri-domain-partnership-add-bycode-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$partnership_id"
