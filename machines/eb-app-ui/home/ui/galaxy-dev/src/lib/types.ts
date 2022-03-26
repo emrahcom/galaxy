@@ -184,6 +184,7 @@ export interface RoomReduced {
   chain_enabled: boolean;
   updated_at: string;
   ownership: string;
+  partnership_id: string;
 }
 
 // -----------------------------------------------------------------------------
