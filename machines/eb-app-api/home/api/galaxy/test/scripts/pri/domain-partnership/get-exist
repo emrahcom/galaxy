@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# the partner
+[[ -z "$1" ]] && SET1=2 || SET1=$1
+
+# ------------------------------------------------------------------------------
+# get for an existing partnership
+# ------------------------------------------------------------------------------
+partnership_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-partnership-add-bycode-id-$SET1-1-res)
+JSON=$(cat <<EOF
+{
+    "id": "$partnership_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr "$SET1" "pri" "domain/partnership" "get" \
+    "id" "$JSON" 1
