@@ -2,9 +2,9 @@ import { fetch, query } from "./common.ts";
 import type { DomainPartnership, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getDomainPartnershipByDomain(
+export async function getDomainPartnership(
   identityId: string,
-  domainId: string,
+  partnershipId: string,
 ) {
   const sql = {
     text: `
@@ -12,11 +12,11 @@ export async function getDomainPartnershipByDomain(
         p.enabled, p.created_at, p.updated_at
       FROM domain_partner p
         JOIN domain d ON p.domain_id = d.id
-      WHERE p.identity_id = $1
-        AND p.domain_id = $2`,
+      WHERE p.id = $2
+        AND p.identity_id = $1`,
     args: [
       identityId,
-      domainId,
+      partnershipId,
     ],
   };
 
