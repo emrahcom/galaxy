@@ -4,7 +4,7 @@ import {
   addMeetingMembershipByCode,
   delMeetingMembership,
   getMeetingMembership,
-  updateMembership,
+  updateMeetingMembership,
 } from "../database/meeting-membership.ts";
 
 const PRE = "/api/pri/meeting/membership";
