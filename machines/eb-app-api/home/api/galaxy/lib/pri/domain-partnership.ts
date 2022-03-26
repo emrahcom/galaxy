@@ -9,7 +9,7 @@ import {
 const PRE = "/api/pri/domain/partnership";
 
 // -----------------------------------------------------------------------------
-async function getByDomain(req: Request, identityId: string): Promise<unknown> {
+async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const partnershipId = pl.id;
 
