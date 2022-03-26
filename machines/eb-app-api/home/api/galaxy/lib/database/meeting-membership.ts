@@ -63,8 +63,26 @@ export async function addMeetingMembershipByCode(
       code,
     ],
   };
+  const rows = await fetch(sql) as Id[];
 
-  return await fetch(sql) as Id[];
+  // disable the invite key if the add action is successful
+  // don't disable audience keys and undisposable keys
+  const sql1 = {
+    text: `
+      UPDATE meeting_invite
+      SET
+        enabled = false,
+        updated_at = now()
+      WHERE code = $1
+        AND invite_to = 'member'
+        AND disposable = true`,
+    args: [
+      code,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql1);
+
+  return rows;
 }
 
 // -----------------------------------------------------------------------------
