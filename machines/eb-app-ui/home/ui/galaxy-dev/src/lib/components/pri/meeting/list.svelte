@@ -62,6 +62,7 @@
               {/if}
             {:else if p.ownership === "member"}
               <Del href="/pri/meeting/membership/del/{p.id}" />
+              <Update href="/pri/meeting/membership/update/{p.id}" />
 
               {#if p.enabled && p.chain_enabled}
                 <Join href="/pri/meeting/join/{p.id}" />
