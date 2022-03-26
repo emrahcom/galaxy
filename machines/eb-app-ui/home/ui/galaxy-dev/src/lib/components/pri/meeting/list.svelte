@@ -25,7 +25,13 @@
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
 
-            <p class="card-text text-muted small">{p.ownership}</p>
+            {#if p.ownership === "private"}
+              <p class="card-text text-muted small">{p.ownership}</p>
+            {:else}
+              <p class="card-text text-muted small">
+                {p.join_as} {p.ownership}
+              </p>
+            {/if}
 
             {#if p.ownership === "private"}
               <p class="card-text text-muted small">
