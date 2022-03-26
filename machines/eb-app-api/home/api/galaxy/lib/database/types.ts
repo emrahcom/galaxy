@@ -111,6 +111,7 @@ export interface MeetingReduced {
   chain_enabled: boolean;
   updated_at: string;
   ownership: string;
+  membership_id: string;
 }
 
 // -----------------------------------------------------------------------------
