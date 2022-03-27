@@ -3,6 +3,8 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import SetGuest from "$lib/components/common/link-set-guest.svelte";
+  import SetHost from "$lib/components/common/link-set-host.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let members: MeetingMember[];
@@ -28,6 +30,12 @@
               <Disable href="/pri/meeting/member/disable/{p.id}" />
             {:else}
               <Enable href="/pri/meeting/member/enable/{p.id}" />
+            {/if}
+
+            {#if p.join_as === "guest"}
+              <SetHost href="/pri/meeting/member/set/host/{p.id}" />
+            {:else}
+              <SetGuest href="/pri/meeting/member/set/guest/{p.id}" />
             {/if}
           </div>
         </div>
