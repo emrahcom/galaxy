@@ -44,10 +44,12 @@ export async function addMeetingMembershipByCode(
            AND identity_id = $1
         ),
         (SELECT meeting_id
-         FROM meeting_invite
-         WHERE code = $3
-           AND enabled = true
-           AND expired_at > now()
+         FROM meeting_invite mem
+           JOIN meeting m ON mem.meeting_id = m.id
+         WHERE mem.code = $3
+           AND mem.enabled = true
+           AND mem.expired_at > now()
+           AND m.schedule_type != 'ephemeral'
         ),
         (SELECT join_as
          FROM meeting_invite
