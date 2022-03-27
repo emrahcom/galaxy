@@ -115,22 +115,22 @@ export async function updateMeetingMemberEnabled(
 }
 
 // -----------------------------------------------------------------------------
-export async function updateMemberJoinAs(
+export async function updateMeetingMemberJoinAs(
   identityId: string,
   membershipId: string,
   value: string,
 ) {
   const sql = {
     text: `
-      UPDATE meeting_member mem
+      UPDATE meeting_member
       SET
         join_as = $3,
         updated_at = now()
       WHERE id = $2
         AND EXISTS (SELECT 1
-                    FROM meeting m
-                    WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1
+                    FROM meeting
+                    WHERE id = meeting_id
+                      AND identity_id = $1
                    )
       RETURNING id, updated_at as at`,
     args: [
