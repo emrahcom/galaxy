@@ -29,7 +29,8 @@
               <p class="card-text text-muted small">{p.ownership}</p>
             {:else}
               <p class="card-text text-muted small">
-                {p.join_as} {p.ownership}
+                {p.join_as}
+                {p.ownership}
               </p>
             {/if}
 

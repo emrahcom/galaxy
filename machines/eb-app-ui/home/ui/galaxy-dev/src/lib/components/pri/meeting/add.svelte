@@ -116,7 +116,7 @@
       if (p.schedule_type === "scheduled") {
         window.location.href = `/pri/meeting/schedule/add/${meeting.id}`;
       } else {
-        window.location.href = "/pri/meeting";
+        window.location.href = `/pri/meeting/invite/${meeting.id}`;
       }
     } catch {
       warning = true;
