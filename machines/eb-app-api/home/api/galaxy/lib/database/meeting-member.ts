@@ -2,11 +2,15 @@ import { fetch } from "./common.ts";
 import type { Id, MeetingMember } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getMember(identityId: string, membershipId: string) {
+export async function getMeetingMember(
+  identityId: string,
+  membershipId: string
+) {
   const sql = {
     text: `
-      SELECT mem.id, p.name as profile_name, mem.join_as, mem.enabled,
-        mem.created_at, mem.updated_at
+      SELECT mem.id, mem.meeting_id, p.name as profile_name,
+        p.email as profile_email, mem.join_as, mem.enabled, mem.created_at,
+        mem.updated_at
       FROM meeting_member mem
         JOIN profile p ON mem.profile_id = p.id
       WHERE mem.id = $2
