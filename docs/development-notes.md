@@ -4,6 +4,7 @@
 
 - categories and tags
 - P2P meeting with guest queue
+- querystring configs for session, member etc
 
 ## guest
 
