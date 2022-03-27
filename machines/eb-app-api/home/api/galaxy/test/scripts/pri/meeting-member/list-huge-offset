@@ -13,11 +13,11 @@ source $BASEDIR/../../common
 meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
-    "meeting_id": "$meeting_id",
+    "id": "$meeting_id",
     "offset": 1000000
 }
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "meeting/member" "list" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-empty "$SET" "pri" "meeting/member" \
+    "list/bymeeting" "$JSON" 1
