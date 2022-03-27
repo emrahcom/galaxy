@@ -29,7 +29,7 @@ export async function getMeetingMember(
 }
 
 // -----------------------------------------------------------------------------
-export async function listMeetingMember(
+export async function listMeetingMemberByMeeting(
   identityId: string,
   meetingId: string,
   limit: number,
