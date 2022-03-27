@@ -72,7 +72,7 @@ export async function delMeetingMember(
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
-                    WHERE d = meeting_id
+                    WHERE id = meeting_id
                       AND identity_id = $1
                    )
       RETURNING id, now() as at`,
