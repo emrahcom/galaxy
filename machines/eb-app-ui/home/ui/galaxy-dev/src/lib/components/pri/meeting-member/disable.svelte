@@ -45,6 +45,12 @@
         value={p.profile_email}
         readonly={true}
       />
+      <Text
+        name="type"
+        label="Type"
+        value={p.join_as}
+        readonly={true}
+      />
 
       {#if warning}
         <Warning>The disable request is not accepted.</Warning>
