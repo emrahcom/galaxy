@@ -35,13 +35,13 @@
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text
         name="name"
-        label="Member Name"
+        label="Name"
         value={p.profile_name}
         readonly={true}
       />
       <Text
         name="email"
-        label="Member Email"
+        label="Email"
         value={p.profile_email}
         readonly={true}
       />
