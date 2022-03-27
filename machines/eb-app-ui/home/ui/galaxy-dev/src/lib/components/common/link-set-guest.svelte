@@ -3,6 +3,4 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<a {href} class="btn btn-outline-secondary btn-sm" role="button">
-  <i class="bi bi-shield-minus" />
-</a>
+<a {href} class="btn btn-outline-secondary btn-sm" role="button">G</a>
