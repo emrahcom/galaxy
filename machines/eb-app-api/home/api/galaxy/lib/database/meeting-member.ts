@@ -4,7 +4,7 @@ import type { Id, MeetingMember } from "./types.ts";
 // -----------------------------------------------------------------------------
 export async function getMeetingMember(
   identityId: string,
-  membershipId: string
+  membershipId: string,
 ) {
   const sql = {
     text: `
@@ -62,15 +62,18 @@ export async function listMeetingMemberByMeeting(
 }
 
 // -----------------------------------------------------------------------------
-export async function delMember(identityId: string, membershipId: string) {
+export async function delMeetingMember(
+  identityId: string,
+  membershipId: string,
+) {
   const sql = {
     text: `
-      DELETE FROM meeting_member mem
+      DELETE FROM meeting_member
       WHERE id = $2
         AND EXISTS (SELECT 1
-                    FROM meeting m
-                    WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1
+                    FROM meeting
+                    WHERE d = meeting_id
+                      AND identity_id = $1
                    )
       RETURNING id, now() as at`,
     args: [
