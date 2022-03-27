@@ -4,7 +4,7 @@ import { getLimit, getOffset } from "../database/common.ts";
 import {
   delMeetingMember,
   getMeetingMember,
-  listMeetingMember,
+  listMeetingMemberByMeeting,
   updateMeetingMemberEnabled,
   updateMeetingMemberJoinAs,
 } from "../database/meeting-member.ts";
@@ -29,7 +29,7 @@ async function listByMeeting(
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listMeetingMember(identityId, meetingId, limit, offset);
+  return await listMeetingMemberByMeeting(identityId, meetingId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
