@@ -16,6 +16,7 @@ import meetingInvite from "./lib/pri/meeting-invite.ts";
 import meetingMember from "./lib/pri/meeting-member.ts";
 import meetingMembership from "./lib/pri/meeting-membership.ts";
 import meetingRequest from "./lib/pri/meeting-request.ts";
+import meetingSchedule from "./lib/pri/meeting-schedule.ts";
 import profile from "./lib/pri/profile.ts";
 import room from "./lib/pri/room.ts";
 import roomInvite from "./lib/pri/room-invite.ts";
@@ -48,6 +49,8 @@ async function route(
     return await meetingMembership(req, path, identityId);
   } else if (path.match(`^${PRE}/meeting/request/`)) {
     return await meetingRequest(req, path, identityId);
+  } else if (path.match(`^${PRE}/meeting/schedule/`)) {
+    return await meetingSchedule(req, path, identityId);
   } else if (path.match(`^${PRE}/meeting/`)) {
     return await meeting(req, path, identityId);
   } else if (path.match(`^${PRE}/profile/`)) {
