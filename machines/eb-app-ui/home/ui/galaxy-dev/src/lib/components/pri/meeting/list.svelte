@@ -6,6 +6,7 @@
   import Invite from "$lib/components/common/link-invite.svelte";
   import Join from "$lib/components/common/link-join.svelte";
   import People from "$lib/components/common/link-people.svelte";
+  import Schedule from "$lib/components/common/link-schedule.svelte";
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -64,6 +65,10 @@
 
               {#if p.schedule_type !== "ephemeral"}
                 <People href="/pri/meeting/member/{p.id}" />
+              {/if}
+
+              {#if p.schedule_type === "scheduled"}
+                <Schedule href="/pri/meeting/schedule/{p.id}" />
               {/if}
 
               {#if p.chain_enabled}
