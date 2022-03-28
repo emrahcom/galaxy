@@ -77,7 +77,7 @@ export async function addMeetingSchedule(
         $3, $4, $5,
         started_at + interval '$5 mins'
       )
-      RETURNING id, created_at as at`,
+      RETURNING id, now() as at`,
     args: [
       identityId,
       meetingId,
