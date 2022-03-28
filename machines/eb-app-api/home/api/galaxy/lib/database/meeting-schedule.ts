@@ -88,3 +88,27 @@ export async function addMeetingSchedule(
 
   return await fetch(sql) as Id[];
 }
+
+// -----------------------------------------------------------------------------
+export async function delMeetingSchedule(
+  identityId: string,
+  scheduleId: string,
+) {
+  const sql = {
+    text: `
+      DELETE FROM meeting_schedule
+      WHERE id = $2
+        AND EXISTS (SELECT 1
+                    FROM meeting
+                    WHERE id = meeting_id
+                      AND identity_id = $1
+                   )
+      RETURNING id, now() as at`,
+    args: [
+      identityId,
+      scheduleId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
