@@ -3,7 +3,7 @@
   import { getById, listById } from "$lib/api";
   import type { Meeting } from "$lib/types";
   import List from "$lib/components/pri/meeting-schedule/list.svelte";
-  import Subheader from "$lib/components/common/subheader-back.svelte";
+  import Subheader from "$lib/components/common/subheader-back-add.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const meetingId = $page.params.meeting_uuid;
@@ -22,7 +22,11 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Schedules of {meetingName}" hrefBack="/pri/meeting" />
+<Subheader
+  subheader="Schedules of {meetingName}"
+  hrefBack="/pri/meeting"
+  hrefAdd="/pri/meeting/schedule/add/{meetingId}"
+  />
 
 {#await Promise.all([pr1, pr2]) then [_meeting, schedules]}
   <List {schedules} />
