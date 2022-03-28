@@ -15,9 +15,9 @@ export async function getMeetingMember(
         JOIN profile p ON mem.profile_id = p.id
       WHERE mem.id = $2
         AND EXISTS (SELECT 1
-                    FROM meeting m
-                    WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1
+                    FROM meeting
+                    WHERE id = mem.meeting_id
+                      AND identity_id = $1
                    )`,
     args: [
       identityId,
@@ -44,9 +44,9 @@ export async function listMeetingMemberByMeeting(
         JOIN profile p ON mem.profile_id = p.id
       WHERE mem.meeting_id = $2
         AND EXISTS (SELECT 1
-                    FROM meeting m
-                    WHERE m.id = mem.meeting_id
-                      AND m.identity_id = $1
+                    FROM meeting
+                    WHERE id = mem.meeting_id
+                      AND identity_id = $1
                    )
       ORDER BY profile_name, mem.created_at
       LIMIT $3 OFFSET $4`,
