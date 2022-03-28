@@ -16,7 +16,7 @@
   let p = {
     name: "",
     meeting_id: meeting.id,
-    started_at: date.getTime(),
+    started_at: date.toUTCString(),
     duration: 30,
   };
 
