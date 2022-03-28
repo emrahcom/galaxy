@@ -137,7 +137,7 @@ export async function updateMeetingSchedule(
                     WHERE id = meeting_id
                       AND identity_id = $1
                    )
-      RETURNING id, updated_at as at`,
+      RETURNING id, now() as at`,
     args: [
       identityId,
       scheduleId,
