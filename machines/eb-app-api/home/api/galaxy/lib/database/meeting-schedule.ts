@@ -112,3 +112,38 @@ export async function delMeetingSchedule(
 
   return await fetch(sql) as Id[];
 }
+
+// -----------------------------------------------------------------------------
+export async function updateMeetingSchedule(
+  identityId: string,
+  scheduleId: string,
+  name: string,
+  started_at: string,
+  duration: number,
+) {
+  const sql = {
+    text: `
+      UPDATE meeting_member
+        name = $3,
+        started_at = $4,
+        duration = $5,
+        ended_at = started_at + interval '$5 mins'
+      SET
+      WHERE id = $2
+        AND EXISTS (SELECT 1
+                    FROM meeting
+                    WHERE id = meeting_id
+                      AND identity_id = $1
+                   )
+      RETURNING id, updated_at as at`,
+    args: [
+      identityId,
+      scheduleId,
+      name,
+      started_at,
+      duration,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
