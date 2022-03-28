@@ -11,11 +11,11 @@
 
   export let meeting: Meeting;
 
-  const time1 = new Date();
-  const time2 = new Date(
-    time1.getTime() - 60 * 1000 * time1.getTimezoneOffset(),
+  const _time1 = new Date();
+  const _time2 = new Date(
+    _time1.getTime() - 60 * 1000 * _time1.getTimezoneOffset(),
   );
-  let time = time2.toISOString().slice(0, 16);
+  let time = _time2.toISOString().slice(0, 16);
   const min = time;
 
   let warning = false;
@@ -35,6 +35,10 @@
   async function onSubmit() {
     try {
       warning = false;
+
+      const started_at = new Date(time);
+      p.started_at = started_at.toISOString();
+
       await action("/api/pri/meeting/schedule/add", p);
       window.location.href = `/pri/meeting/schedule/${meeting.id}`;
     } catch {
