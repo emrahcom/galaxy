@@ -52,18 +52,18 @@
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+      <Text
+        name="name"
+        label="Tag (optional)"
+        bind:value={p.name}
+        required={false}
+      />
       <Datetime
         name="time"
         label="Time"
         bind:value={time}
         {min}
         required={true}
-      />
-      <Text
-        name="name"
-        label="Tag (optional)"
-        bind:value={p.name}
-        required={false}
       />
       <Range
         name="duration"
