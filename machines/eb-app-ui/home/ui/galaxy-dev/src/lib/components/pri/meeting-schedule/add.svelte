@@ -13,7 +13,7 @@
 
   const time1 = new Date();
   const time2 = new Date(time1 - (60 * 1000 * time1.getTimezoneOffset()));
-  let time = time2.toISOString().slice(0, -1);
+  let time = time2.toISOString().slice(0, 16);
 
   let warning = false;
   let p = {
