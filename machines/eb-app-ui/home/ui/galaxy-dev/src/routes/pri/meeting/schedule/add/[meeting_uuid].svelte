@@ -11,7 +11,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Add a schedule" />
+<Subheader subheader="Create a schedule" />
 
 {#await pr then meeting}
   <Add {meeting} />
