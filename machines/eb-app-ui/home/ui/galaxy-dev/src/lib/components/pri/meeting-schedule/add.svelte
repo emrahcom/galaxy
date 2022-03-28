@@ -69,9 +69,9 @@
         name="duration"
         label="Duration (minutes)"
         bind:value={p.duration}
-        min="5"
-        max="120"
-        step="5"
+        min={5}
+        max={120}
+        step={5}
         required={true}
       />
 

@@ -6,7 +6,7 @@
   export let readonly = false;
   export let required = false;
   export let step: number;
-  export let value: string;
+  export let value: number;
 </script>
 
 <!-- -------------------------------------------------------------------------->
