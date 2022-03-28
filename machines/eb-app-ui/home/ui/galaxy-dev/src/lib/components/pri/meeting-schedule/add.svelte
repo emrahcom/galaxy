@@ -10,13 +10,15 @@
 
   export let meeting: Meeting;
 
-  const date = new Date();
+  const date1 = new Date();
+  const date2 = new Date(date1 - (60 * 1000 * date1.getTimezoneOffset()));
+  let date = date2.toISOString().slice(0, -1);
 
   let warning = false;
   let p = {
     name: "",
     meeting_id: meeting.id,
-    started_at: date.toUTCString(),
+    started_at: "",
     duration: 30,
   };
 
