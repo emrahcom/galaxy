@@ -26,7 +26,7 @@
   subheader="Schedules of {meetingName}"
   hrefBack="/pri/meeting"
   hrefAdd="/pri/meeting/schedule/add/{meetingId}"
-  />
+/>
 
 {#await Promise.all([pr1, pr2]) then [_meeting, schedules]}
   <List {schedules} />
