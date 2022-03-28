@@ -36,12 +36,6 @@
               </p>
             {/if}
 
-            {#if p.scheduled_at}
-              <p class="card-text text-muted small">
-                {toLocaleTime(p.scheduled_at)}
-              </p>
-            {/if}
-
             {#if p.ownership === "private"}
               <p class="card-text text-muted small">
                 {#if p.schedule_type === "ephemeral"}
@@ -49,6 +43,12 @@
                 {:else}
                   {`${p.room_name} on ${p.domain_name}`}
                 {/if}
+              </p>
+            {/if}
+
+            {#if p.scheduled_at}
+              <p class="card-text text-muted">
+                {toLocaleTime(p.scheduled_at)}
               </p>
             {/if}
 
