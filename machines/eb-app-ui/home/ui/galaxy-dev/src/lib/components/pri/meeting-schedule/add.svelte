@@ -4,6 +4,7 @@
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Datetime from "$lib/components/common/form-datetime.svelte";
+  import Range from "$lib/components/common/form-range.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
@@ -63,6 +64,15 @@
         label="Tag (optional)"
         bind:value={p.name}
         required={false}
+      />
+      <Range
+        name="duration"
+        label="Duration (minutes)"
+        bind:value={p.duration}
+        min=5
+        max=120
+        step=5
+        required={true}
       />
 
       {#if warning}
