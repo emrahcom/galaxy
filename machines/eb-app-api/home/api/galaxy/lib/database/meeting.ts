@@ -91,7 +91,7 @@ export async function listMeeting(
          WHEN 'scheduled' THEN (SELECT min(started_at)
                                 FROM meeting_schedule
                                 WHERE meeting_id = m.id
-                                  AND started_at > now()
+                                  AND ended_at > now()
                                )
          END
         ) as scheduled_at,
