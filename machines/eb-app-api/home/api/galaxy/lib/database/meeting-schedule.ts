@@ -75,7 +75,7 @@ export async function addMeetingSchedule(
            AND identity_id = $1
         ),
         $3, $4, $5,
-        started_at + interval '$5 mins'
+        $4::timestamptz + interval '$5 mins'
       )
       RETURNING id, now() as at`,
     args: [
@@ -128,7 +128,7 @@ export async function updateMeetingSchedule(
         name = $3,
         started_at = $4,
         duration = $5,
-        ended_at = started_at + interval '$5 mins'
+        ended_at = $4::timestamptz + interval '$5 mins'
       SET
       WHERE id = $2
         AND EXISTS (SELECT 1
