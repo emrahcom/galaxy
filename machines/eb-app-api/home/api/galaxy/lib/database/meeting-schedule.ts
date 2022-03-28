@@ -42,6 +42,7 @@ export async function listMeetingScheduleByMeeting(
                     WHERE id = meeting_id
                       AND identity_id = $1
                    )
+        AND ended_at + interval '20 mins' > now()
       ORDER BY started_at
       LIMIT $3 OFFSET $4`,
     args: [
