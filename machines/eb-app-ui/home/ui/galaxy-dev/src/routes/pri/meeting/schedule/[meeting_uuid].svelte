@@ -22,7 +22,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Schedule of {meetingName}" hrefBack="/pri/meeting" />
+<Subheader subheader="Schedules of {meetingName}" hrefBack="/pri/meeting" />
 
 {#await Promise.all([pr1, pr2]) then [_meeting, schedules]}
   <List {schedules} />
