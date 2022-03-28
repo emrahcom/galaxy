@@ -44,7 +44,12 @@
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Text
+        name="name"
+        label="Name (optional)"
+        bind:value={p.name}
+        required={true}
+      />
       <Datetime
         name="time"
         label="Time"
