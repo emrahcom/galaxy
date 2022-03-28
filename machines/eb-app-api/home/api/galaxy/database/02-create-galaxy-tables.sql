@@ -301,6 +301,7 @@ ALTER TABLE meeting_member OWNER TO galaxy;
 CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL DEFAULT '',
     "started_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
     "ended_at" timestamp with time zone NOT NULL
