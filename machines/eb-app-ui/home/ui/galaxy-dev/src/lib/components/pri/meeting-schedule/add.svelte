@@ -3,6 +3,7 @@
   import { action } from "$lib/api";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Datetime from "$lib/components/common/form-datetime.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
@@ -10,9 +11,9 @@
 
   export let meeting: Meeting;
 
-  const date1 = new Date();
-  const date2 = new Date(date1 - (60 * 1000 * date1.getTimezoneOffset()));
-  let date = date2.toISOString().slice(0, -1);
+  const time1 = new Date();
+  const time2 = new Date(time1 - (60 * 1000 * time1.getTimezoneOffset()));
+  let time = time2.toISOString().slice(0, -1);
 
   let warning = false;
   let p = {
@@ -44,6 +45,13 @@
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
+      <Datetime
+        name="time"
+        label="Time"
+        bind:value={time}
+        min={time}
+        required={true}
+      />
 
       {#if warning}
         <Warning>
