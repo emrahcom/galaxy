@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
+  import { toInputTime } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Datetime from "$lib/components/common/form-datetime.svelte";
@@ -12,14 +13,9 @@
 
   export let p: MeetingSchedule;
 
+  const min = toInputTime();
+  let time = toInputTime(p.started_at);
   let warning = false;
-
-  const _time1 = new Date(p.started_at);
-  const _time2 = new Date(
-    _time1.getTime() - 60 * 1000 * _time1.getTimezoneOffset(),
-  );
-  let time = _time2.toISOString().slice(0, 16);
-  const min = time;
 
   // ---------------------------------------------------------------------------
   function cancel() {

@@ -5,7 +5,7 @@ export function toLocaleTime(date: string) {
 }
 
 // -----------------------------------------------------------------------------
-export function toInputTime(date: string) {
+export function toInputTime(date = "") {
   let _time1 = new Date();
 
   if (date) {
