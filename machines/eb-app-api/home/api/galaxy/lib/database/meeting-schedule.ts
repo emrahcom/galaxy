@@ -54,3 +54,37 @@ export async function listMeetingScheduleByMeeting(
 
   return await fetch(sql) as MeetingSchedule[];
 }
+
+// -----------------------------------------------------------------------------
+export async function addMeetingSchedule(
+  identityId: string,
+  meetingId: string,
+  name: string,
+  started_at: string,
+  duration: number,
+) {
+  const sql = {
+    text: `
+      INSERT INTO meeting_schedule (meeting_id, name, started_at, duration,
+        ended_at)
+      VALUES (
+        (SELECT id
+         FROM meeting
+         WHERE id = $2
+           AND identity_id = $1
+        ),
+        $3, $4, $5,
+        started_at + interval '$5 mins'
+      )
+      RETURNING id, created_at as at`,
+    args: [
+      identityId,
+      meetingId,
+      name,
+      started_at,
+      duration,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
