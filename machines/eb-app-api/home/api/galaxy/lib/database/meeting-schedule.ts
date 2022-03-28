@@ -124,7 +124,7 @@ export async function updateMeetingSchedule(
 ) {
   const sql = {
     text: `
-      UPDATE meeting_member
+      UPDATE meeting_schedule
         name = $3,
         started_at = $4,
         duration = $5,
