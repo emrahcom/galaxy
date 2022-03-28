@@ -126,11 +126,11 @@ export async function updateMeetingSchedule(
   const sql = {
     text: `
       UPDATE meeting_schedule
+      SET
         name = $3,
         started_at = $4,
         duration = $5,
         ended_at = $4::timestamptz + $6::interval
-      SET
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
