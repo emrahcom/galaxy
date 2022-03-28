@@ -12,8 +12,11 @@
   export let meeting: Meeting;
 
   const time1 = new Date();
-  const time2 = new Date(time1 - (60 * 1000 * time1.getTimezoneOffset()));
+  const time2 = new Date(
+    time1.getTime() - 60 * 1000 * time1.getTimezoneOffset(),
+  );
   let time = time2.toISOString().slice(0, 16);
+  const min = time;
 
   let warning = false;
   let p = {
@@ -48,7 +51,7 @@
         name="time"
         label="Time"
         bind:value={time}
-        min={time}
+        {min}
         required={true}
       />
       <Text
