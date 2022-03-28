@@ -46,9 +46,9 @@
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text
         name="name"
-        label="Name (optional)"
+        label="Tag (optional)"
         bind:value={p.name}
-        required={true}
+        required={false}
       />
       <Datetime
         name="time"
