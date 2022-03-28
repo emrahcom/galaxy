@@ -65,14 +65,14 @@ async function del(req: Request, identityId: string): Promise<unknown> {
 // -----------------------------------------------------------------------------
 async function update(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const meetingId = pl.meeting_id;
+  const scheduleId = pl.id;
   const name = pl.name;
   const started_at = pl.started_at;
   const duration = pl.duration;
 
   return await updateMeetingSchedule(
     identityId,
-    meetingId,
+    scheduleId,
     name,
     started_at,
     duration,
