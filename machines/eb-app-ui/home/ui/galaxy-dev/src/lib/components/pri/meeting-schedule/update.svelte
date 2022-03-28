@@ -23,7 +23,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/meeting/schedule/${p.id}`;
+    window.location.href = `/pri/meeting/schedule/${p.meeting_id}`;
   }
 
   // ---------------------------------------------------------------------------
@@ -34,8 +34,8 @@
       const started_at = new Date(time);
       p.started_at = started_at.toISOString();
 
-      await action("/api/pri/meeting/schedule/add", p);
-      window.location.href = `/pri/meeting/schedule/${p.id}`;
+      await action("/api/pri/meeting/schedule/update", p);
+      window.location.href = `/pri/meeting/schedule/${p.meeting_id}`;
     } catch {
       warning = true;
     }
