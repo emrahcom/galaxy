@@ -31,7 +31,7 @@
   class="form-range"
   name="range-{name}"
   bind:value
-  {readonly}
+  disabled={readonly}
   {min}
   {max}
   {step}
