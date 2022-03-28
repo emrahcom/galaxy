@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { MeetingMember } from "$lib/types";
+  import type { MeetingSchedule } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
