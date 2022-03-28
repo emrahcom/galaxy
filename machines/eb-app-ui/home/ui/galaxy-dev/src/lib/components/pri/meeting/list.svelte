@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { toLocaleTime } from "$lib/common";
   import type { MeetingReduced } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -32,6 +33,12 @@
               <p class="card-text text-muted small">
                 {p.join_as}
                 {p.ownership}
+              </p>
+            {/if}
+
+            {#if p.scheduled_at}
+              <p class="card-text text-muted small">
+                {toLocaleTime(p.scheduled_at)}
               </p>
             {/if}
 
