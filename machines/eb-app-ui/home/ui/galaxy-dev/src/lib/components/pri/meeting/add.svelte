@@ -114,7 +114,7 @@
       await addMeetingInvite(meeting.id);
 
       if (p.schedule_type === "scheduled") {
-        window.location.href = `/pri/meeting/schedule/add/${meeting.id}`;
+        window.location.href = `/pri/meeting/schedule/add/${meeting.id}#0`;
       } else {
         window.location.href = `/pri/meeting/invite/${meeting.id}`;
       }
