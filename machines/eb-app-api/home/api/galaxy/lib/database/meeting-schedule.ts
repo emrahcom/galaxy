@@ -64,6 +64,9 @@ export async function addMeetingSchedule(
   started_at: string,
   duration: number,
 ) {
+  if (duration < 1) throw new Error("duration is out of range");
+  if (duration > 1440) throw new Error("duration is out of range");
+
   const sql = {
     text: `
       INSERT INTO meeting_schedule (meeting_id, name, started_at, duration,
