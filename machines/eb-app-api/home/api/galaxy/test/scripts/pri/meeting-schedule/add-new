@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$2" ]] && NUM=1 || NUM=$2
+
+# ------------------------------------------------------------------------------
+# add many new schedule
+# ------------------------------------------------------------------------------
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
+
+for i in $(seq 1 $NUM); do
+    JSON=$(cat <<EOF
+    {
+        "meeting_id": "$meeting_id",
+        "name": "name-$RANDOM",
+        "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+        "duration": 30
+    }
+EOF
+)
+
+    bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/schedule" "add" \
+        "id" "$JSON" $i
+done
