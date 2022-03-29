@@ -37,19 +37,8 @@
 <section id="del">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text
-        name="name"
-        label="Tag (optional)"
-        value={p.name}
-        readonly={true}
-      />
-      <Datetime
-        name="time"
-        label="Time"
-        value={time}
-        {min}
-        readonly={true}
-      />
+      <Text name="name" label="Tag (optional)" value={p.name} readonly={true} />
+      <Datetime name="time" label="Time" value={time} {min} readonly={true} />
       <Text
         name="duration"
         label="Duration (minutes)"
@@ -58,9 +47,7 @@
       />
 
       {#if warning}
-        <Warning>
-          The delete request is not accepted.
-        </Warning>
+        <Warning>The delete request is not accepted.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
