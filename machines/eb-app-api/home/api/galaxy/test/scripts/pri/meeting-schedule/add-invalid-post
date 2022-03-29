@@ -22,4 +22,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-error "$SET" "pri" "meeting/schedule" "add" \
-    "$JSON" 2
+    "$JSON" 1
