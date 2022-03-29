@@ -78,7 +78,7 @@ export async function addMeetingSchedule(
            AND identity_id = $1
         ),
         $3, $4, $5,
-        $4::timestamptz + $5 * interval '1 min'
+        $4::timestamptz + $5::integer * interval '1 min'
       )
       RETURNING id, now() as at`,
     args: [
