@@ -8,9 +8,7 @@ export function toLocaleTime(date: string) {
 export function toInputTime(date = "") {
   let _time1 = new Date();
 
-  if (date) {
-    _time1 = new Date(date);
-  }
+  if (date) _time1 = new Date(date);
 
   const _time2 = new Date(
     _time1.getTime() - 60 * 1000 * _time1.getTimezoneOffset(),
