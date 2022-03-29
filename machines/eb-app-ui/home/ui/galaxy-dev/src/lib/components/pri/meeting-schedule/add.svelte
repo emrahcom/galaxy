@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
   import { toInputTime } from "$lib/common";
@@ -12,6 +13,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let meeting: Meeting;
+  const hash = $page.url.hash;
 
   const min = toInputTime();
   let time = min;
@@ -38,7 +40,12 @@
       p.started_at = started_at.toISOString();
 
       await action("/api/pri/meeting/schedule/add", p);
-      window.location.href = `/pri/meeting/schedule/${meeting.id}`;
+
+      if (hash === "#0") {
+        window.location.href = `/pri/meeting/invite/${meeting.id}`;
+      } else {
+        window.location.href = `/pri/meeting/schedule/${meeting.id}`;
+      }
     } catch {
       warning = true;
     }
