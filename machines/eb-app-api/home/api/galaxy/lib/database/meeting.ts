@@ -3,8 +3,8 @@ import type {
   Id,
   Meeting,
   MeetingForAudience,
+  MeetingForPublic,
   MeetingLinkSet,
-  MeetingPublic,
   MeetingReduced,
 } from "./types.ts";
 
@@ -65,7 +65,7 @@ export async function getPublicMeeting(meetingId: string) {
     ],
   };
 
-  return await fetch(sql) as MeetingPublic[];
+  return await fetch(sql) as MeetingForPublic[];
 }
 
 // -----------------------------------------------------------------------------
@@ -233,7 +233,7 @@ export async function listPublicMeeting(
     ],
   };
 
-  return await fetch(sql) as MeetingPublic[];
+  return await fetch(sql) as MeetingForPublic[];
 }
 
 // -----------------------------------------------------------------------------
