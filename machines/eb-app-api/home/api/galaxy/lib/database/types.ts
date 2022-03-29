@@ -116,6 +116,16 @@ export interface MeetingReduced {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingForAudience {
+  name: string;
+  info: string;
+  schedule_type: string;
+  schedule_at: string;
+  schedule_tag: string;
+  schedule_duration: number;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingPublic {
   id: string;
   name: string;
