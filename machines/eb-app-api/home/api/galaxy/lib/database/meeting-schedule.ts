@@ -132,7 +132,7 @@ export async function updateMeetingSchedule(
         name = $3,
         started_at = $4,
         duration = $5,
-        ended_at = $4::timestamptz + $5 * interval '1 min'
+        ended_at = $4::timestamptz + $5::integer * interval '1 min'
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
