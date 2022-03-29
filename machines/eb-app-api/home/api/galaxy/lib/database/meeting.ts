@@ -53,7 +53,7 @@ export async function getMeetingByCode(code: string) {
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
       WHERE i.code = $1
         AND i.expired_at > now()
-        AND s.ended_at > now()
+        AND (s.ended_at is null OR s.ended_at > now())
         AND i.enabled = true
         AND m.enabled = true
         AND r.enabled = true
