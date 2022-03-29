@@ -20,6 +20,7 @@
             </h5>
 
             <p class="card-text text-muted">{p.duration} mins</p>
+
             {#if p.name}
               <p class="card-text text-muted">{p.name}</p>
             {/if}

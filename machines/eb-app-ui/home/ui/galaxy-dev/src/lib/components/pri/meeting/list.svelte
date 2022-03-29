@@ -52,9 +52,11 @@
               </p>
             {/if}
 
-            {#each p.info.split("\n") as line}
-              <p class="card-text text-muted my-0">{line}&nbsp;</p>
-            {/each}
+            {#if p.info}
+              {#each p.info.split("\n") as line}
+                <p class="card-text text-muted my-0">{line}&nbsp;</p>
+              {/each}
+            {/if}
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
