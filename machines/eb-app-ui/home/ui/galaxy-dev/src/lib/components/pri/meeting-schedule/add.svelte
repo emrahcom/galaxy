@@ -28,7 +28,11 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/meeting/schedule/${meeting.id}`;
+    if (hash === "#0") {
+      window.location.href = `/pri/meeting`;
+    } else {
+      window.location.href = `/pri/meeting/schedule/${meeting.id}`;
+    }
   }
 
   // ---------------------------------------------------------------------------
