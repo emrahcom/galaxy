@@ -2,6 +2,7 @@ import { fetch } from "./common.ts";
 import type {
   Id,
   Meeting,
+  MeetingForAudience,
   MeetingLinkSet,
   MeetingPublic,
   MeetingReduced,
@@ -34,6 +35,21 @@ export async function getMeeting(identityId: string, meetingId: string) {
   };
 
   return await fetch(sql) as Meeting[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getMeetingByCode(code: string) {
+  const sql = {
+    text: `
+      SELECT name, info, schedule_type
+      FROM meeting
+      WHERE id = $1`,
+    args: [
+      code,
+    ],
+  };
+
+  return await fetch(sql) as MeetingForAudience[];
 }
 
 // -----------------------------------------------------------------------------
