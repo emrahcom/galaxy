@@ -42,7 +42,7 @@
       <Text
         name="duration"
         label="Duration (minutes)"
-        value={p.duration}
+        value={`${p.duration}`}
         readonly={true}
       />
 
