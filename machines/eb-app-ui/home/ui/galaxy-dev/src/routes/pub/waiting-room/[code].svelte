@@ -15,5 +15,5 @@
 {#await pr then meeting}
   {console.log(meeting)}
 {:catch}
-  <Warning>Something went wrong</Warning>
+  <Warning>Invite code is not accepted</Warning>
 {/await}
