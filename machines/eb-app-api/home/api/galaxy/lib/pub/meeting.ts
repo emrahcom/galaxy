@@ -2,8 +2,8 @@ import { notFound } from "../http/response.ts";
 import { pub as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
-  getPublicMeeting,
   getMeetingByCode,
+  getPublicMeeting,
   listPublicMeeting,
 } from "../database/meeting.ts";
 
