@@ -273,10 +273,10 @@ bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new $SET2 $SET1 10
 bash $BASEDIR/scripts/pri/meeting-member/get-exist $SET1 $SET2
 bash $BASEDIR/scripts/pri/meeting-member/get-nonexist $SET1
 
-bash $BASEDIR/scripts/pri/meeting-member/list-nolimit-nooffset $SET1
-bash $BASEDIR/scripts/pri/meeting-member/list-limit $SET1
-bash $BASEDIR/scripts/pri/meeting-member/list-huge-offset $SET1
-bash $BASEDIR/scripts/pri/meeting-member/list-invalid-post $SET1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-limit $SET1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-huge-offset $SET1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-invalid-post $SET1
 
 bash $BASEDIR/scripts/pri/meeting-member/disable-exist $SET1 $SET2
 bash $BASEDIR/scripts/pri/meeting-member/disable-nonexist $SET1
@@ -326,6 +326,24 @@ bash $BASEDIR/scripts/pri/meeting-request/list-limit $SET2
 bash $BASEDIR/scripts/pri/meeting-request/list-limit-offset $SET2
 bash $BASEDIR/scripts/pri/meeting-request/list-huge-offset $SET2
 bash $BASEDIR/scripts/pri/meeting-request/list-invalid-post $SET2
+
+# meeting-schedule
+bash $BASEDIR/scripts/pri/meeting-schedule/add-invalid-post $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/add-new $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-exist $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-nonexist $SET1
+
+bash $BASEDIR/scripts/pri/meeting-schedule/update-exist $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/update-nonexist $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/update-invalid-post $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/del-exist $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/del-nonexist $SET1
+
+bash $BASEDIR/scripts/pri/meeting-schedule/add-new $SET1 10
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-nolimit-nooffset $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-limit $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-huge-offset $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-invalid-post $SET1
 
 # ------------------------------------------------------------------------------
 # pub
