@@ -57,7 +57,7 @@
               </p>
 
               <p class="card-text text-muted">
-                {$page.url.origin}/pub/meeting/join/{p.code}
+                {$page.url.origin}/pub/waiting-room/{p.code}
               </p>
 
               {#if p.enabled}
