@@ -19,7 +19,7 @@
 
   // ---------------------------------------------------------------------------
   function copyForAudience(code: string) {
-    const text = `${$page.url.origin}/pub/meeting-room/${code}`;
+    const text = `${$page.url.origin}/pub/waiting-room/${code}`;
 
     navigator.clipboard.writeText(text);
   }
