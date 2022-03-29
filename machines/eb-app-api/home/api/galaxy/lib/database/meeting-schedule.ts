@@ -125,6 +125,9 @@ export async function updateMeetingSchedule(
   started_at: string,
   duration: number,
 ) {
+  if (duration < 1) throw new Error("duration is out of range");
+  if (duration > 1440) throw new Error("duration is out of range");
+
   const sql = {
     text: `
       UPDATE meeting_schedule
