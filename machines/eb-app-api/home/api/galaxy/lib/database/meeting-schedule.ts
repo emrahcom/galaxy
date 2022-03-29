@@ -39,7 +39,7 @@ export async function listMeetingScheduleByMeeting(
       WHERE meeting_id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
-                    WHERE id = meeting_id
+                    WHERE id = $2
                       AND identity_id = $1
                    )
         AND ended_at + interval '20 mins' > now()
