@@ -101,7 +101,7 @@ export async function getPublicMeeting(meetingId: string) {
       SELECT id, name, info, schedule_type, restricted, subscribable
       FROM meeting
       WHERE id = $1
-        AND hidden = false`,
+        AND NOT hidden`,
     args: [
       meetingId,
     ],
