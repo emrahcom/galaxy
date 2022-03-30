@@ -54,9 +54,9 @@ export async function getMeetingByCode(code: string) {
         JOIN identity i3 ON m.identity_id = i3.id
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
       WHERE iv.code = $1
+        AND iv.enabled
         AND iv.expired_at > now()
         AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
-        AND iv.enabled
         AND m.enabled
         AND r.enabled
         AND d.enabled
