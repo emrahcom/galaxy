@@ -224,6 +224,9 @@ export interface MeetingLinkSet {
     app_secret: string;
   };
   join_as: string;
+  started_at: string;
+  ended_at: string;
+  duration: number;
   profile_name: string;
   profile_email: string;
 }
