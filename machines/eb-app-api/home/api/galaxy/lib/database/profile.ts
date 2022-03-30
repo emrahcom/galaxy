@@ -25,7 +25,7 @@ export async function getDefaultProfile(identityId: string) {
       SELECT id, name, email, is_default, created_at, updated_at
       FROM profile
       WHERE identity_id = $1
-        AND is_default = true
+        AND is_default
       LIMIT 1`,
     args: [
       identityId,
@@ -157,7 +157,7 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
         updated_at = now()
       WHERE identity_id = $1
         AND id != $2
-        AND is_default = true`,
+        AND is_default`,
     args: [
       identityId,
       profileId,
