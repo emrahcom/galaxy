@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { RoomReduced } from "$lib/types";
+  import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
@@ -56,7 +57,9 @@
         </div>
       </div>
     {:else}
-      <Warning>No room found</Warning>
+      <Warning>
+        No room found. Click <Add href="/pri/room/add" /> to add one.
+      </Warning>
     {/each}
   </div>
 </section>
