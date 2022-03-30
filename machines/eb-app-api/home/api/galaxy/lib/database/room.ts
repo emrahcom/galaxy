@@ -12,7 +12,7 @@ export async function getRoom(identityId: string, roomId: string) {
         JOIN domain d ON r.domain_id = d.id
       WHERE r.id = $2
         AND r.identity_id = $1
-        AND r.ephemeral = false`,
+        AND NOT r.ephemeral`,
     args: [
       identityId,
       roomId,
@@ -35,7 +35,7 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
         JOIN identity i ON d.identity_id = i.id
       WHERE r.id = $2
         AND r.identity_id = $1
-        AND r.ephemeral = false
+        AND NOT r.ephemeral
         AND (d.identity_id = $1
              OR (d.enabled AND d.public AND i.enabled))
              OR (d.enabled
@@ -112,7 +112,7 @@ export async function listRoom(
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
       WHERE r.identity_id = $1
-        AND r.ephemeral = false
+        AND NOT r.ephemeral
 
       UNION
 
@@ -139,7 +139,7 @@ export async function listRoom(
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
       WHERE p.identity_id = $1
-        AND r.ephemeral = false
+        AND NOT r.ephemeral
 
       ORDER BY name
       LIMIT $2 OFFSET $3`,
