@@ -132,54 +132,27 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
         LEFT JOIN profile pr ON m.profile_id = pr.id
       WHERE m.id = $2
         AND m.identity_id = $1
-        AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
-        AND (r.identity_id = $1
-             OR (r.enabled
-                 AND i2.enabled
-                 AND EXISTS (SELECT 1
-                             FROM room_partner
-                             WHERE identity_id = $1
-                               AND room_id = r.id
-                               AND enabled
-                            )
-                )
-            )
-        AND (d.identity_id = $1
-             OR (d.enabled AND d.public)
-             OR (d.enabled
-                 AND i1.enabled
-                 AND EXISTS (SELECT 1
-                             FROM domain_partner
-                             WHERE identity_id - r.identity_id
-                               AND domain_id = d.id
-                               AND enabled
-                            )
-                )
-            )
-
         AND r.enabled
         AND d.enabled
         AND i1.enabled
         AND i2.enabled
-        AND CASE r.identity_id
-            WHEN $1 THEN true
-            ELSE (SELECT enabled
-                  FROM room_partner
-                  WHERE identity_id = $1
-                    AND room_id = r.id
-                 )
-            END
-        AND CASE d.identity_id
-            WHEN r.identity_id THEN true
-            ELSE CASE d.public
-                 WHEN true THEN true
-                 ELSE (SELECT enabled
-                       FROM domain_partner
-                       WHERE identity_id = r.identity_id
-                         AND domain_id = d.id
-                      )
-                 END
-            END
+        AND (r.identity_id = $1
+             OR EXISTS (SELECT 1
+                        FROM room_partner
+                        WHERE identity_id = $1
+                          AND room_id = r.id
+                          AND enabled
+                       )
+            )
+        AND (d.public
+             OR d.identity_id = r.identity_id
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                          AND enabled
+                       )
+            )
       ORDER BY s.started_at
       LIMIT 1
 
@@ -200,32 +173,33 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
       WHERE mem.identity_id = $1
         AND mem.meeting_id = $2
         AND mem.enabled
-        AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
+        AND CASE mem.join_as
+            WHEN 'host' THEN true
+            ELSE (m.schedule_type != 'scheduled' OR s.ended_at > now())
+            END
         AND m.enabled
         AND r.enabled
         AND d.enabled
         AND i1.enabled
         AND i2.enabled
         AND i3.enabled
-        AND CASE r.identity_id
-            WHEN m.identity_id THEN true
-            ELSE (SELECT enabled
-                  FROM room_partner
-                  WHERE identity_id = m.identity_id
-                    AND room_id = r.id
-                 )
-            END
-        AND CASE d.identity_id
-            WHEN r.identity_id THEN true
-            ELSE CASE d.public
-                 WHEN true THEN true
-                 ELSE (SELECT enabled
-                       FROM domain_partner
-                       WHERE identity_id = r.identity_id
-                         AND domain_id = d.id
-                      )
-                 END
-            END
+        AND (r.identity_id = m.identity_id
+             OR EXISTS (SELECT 1
+                        FROM room_partner
+                        WHERE identity_id = m.identity_id
+                          AND room_id = r.id
+                          AND enabled
+                       )
+            )
+        AND (d.public
+             OR d.identity_id = r.identity_id
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                          AND enabled
+                       )
+            )
       ORDER BY s.started_at
       LIMIT 1
         `,
