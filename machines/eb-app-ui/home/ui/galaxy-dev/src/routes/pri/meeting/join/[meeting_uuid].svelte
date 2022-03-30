@@ -5,7 +5,7 @@
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = join($page.params.uuid);
+  const pr = join($page.params.meeting_uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->
