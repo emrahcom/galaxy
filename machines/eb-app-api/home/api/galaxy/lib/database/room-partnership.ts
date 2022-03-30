@@ -39,7 +39,7 @@ export async function addRoomPartnershipByCode(
          FROM room_invite
          WHERE code = $2
            AND identity_id != $1
-           AND enabled = true
+           AND enabled
            AND expired_at > now()
         )
       )
