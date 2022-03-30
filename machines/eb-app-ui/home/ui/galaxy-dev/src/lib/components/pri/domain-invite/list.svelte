@@ -10,6 +10,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invites: DomainInvite[];
+  const domain_id = $page.params.domain_uuid;
 
   // ---------------------------------------------------------------------------
   function copy(code: string) {
@@ -55,7 +56,7 @@
     {:else}
       <Warning>
         There is no partner key in the list. Click
-        <Add href="/pri/domain/invite/add/{p.domain_id}" /> to create a new partner
+        <Add href="/pri/domain/invite/add/{domain_id}" /> to create a new partner
         key and share it with your partners.
       </Warning>
     {/each}
