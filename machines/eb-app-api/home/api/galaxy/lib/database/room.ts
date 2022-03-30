@@ -60,7 +60,7 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
       WHERE p.identity_id = $1
         AND p.room_id = $2
         AND p.enabled
-        AND not r.ephemeral
+        AND NOT r.ephemeral
         AND r.enabled
         AND d.enabled
         AND i1.enabled
