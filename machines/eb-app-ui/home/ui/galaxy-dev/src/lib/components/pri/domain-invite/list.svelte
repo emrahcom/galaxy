@@ -56,8 +56,8 @@
     {:else}
       <Warning>
         This domain has no partner keys. Click
-        <Add href="/pri/domain/invite/add/{domain_id}" /> to create a new
-        partner key and share it with your partners.
+        <Add href="/pri/domain/invite/add/{domain_id}" /> to create a new partner
+        key and share it with your partners.
       </Warning>
     {/each}
   </div>
