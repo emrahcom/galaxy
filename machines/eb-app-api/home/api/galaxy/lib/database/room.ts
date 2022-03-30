@@ -37,13 +37,14 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
         AND r.identity_id = $1
         AND r.ephemeral = false
         AND (d.identity_id = $1
-             OR (d.enabled = true AND d.public = true)
-             OR (d.enabled = true AND i.enabled = true
+             OR (d.enabled AND d.public AND i.enabled))
+             OR (d.enabled
+                 AND i.enabled
                  AND EXISTS (SELECT 1
                              FROM domain_partner
                              WHERE identity_id = $1
                                AND domain_id = d.id
-                               AND enabled = true
+                               AND enabled
                             )
                 )
             )
@@ -58,19 +59,19 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
         JOIN identity i2 ON r.identity_id = i2.id
       WHERE p.identity_id = $1
         AND p.room_id = $2
-        AND p.enabled = true
-        AND r.ephemeral = false
-        AND r.enabled = true
-        AND d.enabled = true
-        AND i1.enabled = true
-        AND i2.enabled = true
-        AND (d.public = true
+        AND p.enabled
+        AND not r.ephemeral
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
+        AND (d.public
              OR d.identity_id = r.identity_id
              OR EXISTS (SELECT 1
                         FROM domain_partner
                         WHERE identity_id = r.identity_id
                           AND domain_id = d.id
-                          AND enabled = true
+                          AND enabled
                        )
             )`,
     args: [
@@ -168,7 +169,7 @@ export async function addRoom(
          FROM domain d
          WHERE id = $2
            AND (identity_id = $1
-                OR public = true
+                OR public
                 OR EXISTS (SELECT 1
                            FROM domain_partner
                            WHERE identity_id = $1
@@ -203,7 +204,7 @@ export async function addEphemeralRoom(
          FROM domain d
          WHERE id = $2
            AND (identity_id = $1
-                OR public = true
+                OR public
                 OR EXISTS (SELECT 1
                            FROM domain_partner
                            WHERE identity_id = $1
@@ -256,7 +257,7 @@ export async function updateRoom(
                      FROM domain d
                      WHERE id = $3
                        AND (identity_id = $1
-                            OR public = true
+                            OR public
                             OR EXISTS (SELECT 1
                                        FROM domain_partner
                                        WHERE identity_id = $1
@@ -315,7 +316,7 @@ export async function updateRoomSuffix(roomId: string) {
       SET
         suffix = DEFAULT
       WHERE id = $1
-        AND has_suffix = true
+        AND has_suffix
         AND accessed_at + interval '4 hours' < now()
       RETURNING id, now() as at`,
     args: [
