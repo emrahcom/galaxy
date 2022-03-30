@@ -38,23 +38,25 @@ export async function getMeeting(identityId: string, meetingId: string) {
 }
 
 // -----------------------------------------------------------------------------
+// consumer is public
+// -----------------------------------------------------------------------------
 export async function getMeetingByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name, m.info, m.schedule_type, s.started_at as schedule_at,
         s.name as schedule_tag, s.duration as schedule_duration
-      FROM meeting_invite i
-        JOIN meeting m ON i.meeting_id = m.id
+      FROM meeting_invite i0
+        JOIN meeting m ON i0.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
         JOIN identity i3 ON m.identity_id = i3.id
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
-      WHERE i.code = $1
-        AND i.expired_at > now()
+      WHERE i0.code = $1
+        AND i0.expired_at > now()
         AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
-        AND i.enabled = true
+        AND i0.enabled = true
         AND m.enabled = true
         AND r.enabled = true
         AND d.enabled = true
@@ -91,6 +93,8 @@ export async function getMeetingByCode(code: string) {
 }
 
 // -----------------------------------------------------------------------------
+// consumer is public
+// -----------------------------------------------------------------------------
 export async function getPublicMeeting(meetingId: string) {
   const sql = {
     text: `
@@ -113,14 +117,91 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
 
   const sql = {
     text: `
-      SELECT m.name, r.name as room_name, r.has_suffix, r.suffix, d.auth_type,
-        d.domain_attr, p.name as profile_name, p.email as profile_email
+      SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
+        r.suffix, d.auth_type, d.domain_attr, 'host' as join_as,
+        p.name as profile_name, p.email as profile_email
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+        LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
         LEFT JOIN profile p ON m.profile_id = p.id
       WHERE m.id = $2
-        AND m.identity_id = $1`,
+        AND m.identity_id = $1
+        AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
+        AND r.enabled = true
+        AND d.enabled = true
+        AND i1.enabled = true
+        AND i2.enabled = true
+        AND CASE r.identity_id
+            WHEN $1 THEN true
+            ELSE (SELECT enabled
+                  FROM room_partner
+                  WHERE identity_id = $1
+                    AND room_id = r.id
+                 )
+            END
+        AND CASE d.identity_id
+            WHEN r.identity_id THEN true
+            ELSE CASE d.public
+                 WHEN true THEN true
+                 ELSE (SELECT enabled
+                       FROM domain_partner
+                       WHERE identity_id = r.identity_id
+                         AND domain_id = d.id
+                      )
+                 END
+            END
+      ORDER BY s.started_at
+      LIMIT 1
+
+      UNION
+
+      SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
+        r.suffix, d.auth_type, d.domain_attr, mem.join_as,
+        p.name as profile_name, p.email as profile_email
+      FROM meeting_member mem
+        JOIN meeting m ON mem.meeting_id = m.id
+        JOIN room r ON m.room_id = r.id
+        JOIN domain d ON r.domain_id = d.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+        JOIN identity i3 ON m.identity_id = i3.id
+        LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
+        LEFT JOIN profile p ON mem.profile_id = p.id
+      WHERE mem.identity_id = $1
+        AND mem.meeting_id = $2
+        AND mem.enabled = true
+        AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
+        AND m.enabled = true
+        AND r.enabled = true
+        AND d.enabled = true
+        AND i1.enabled = true
+        AND i2.enabled = true
+        AND i3.enabled = true
+        AND CASE r.identity_id
+            WHEN m.identity_id THEN true
+            ELSE (SELECT enabled
+                  FROM room_partner
+                  WHERE identity_id = m.identity_id
+                    AND room_id = r.id
+                 )
+            END
+        AND CASE d.identity_id
+            WHEN r.identity_id THEN true
+            ELSE CASE d.public
+                 WHEN true THEN true
+                 ELSE (SELECT enabled
+                       FROM domain_partner
+                       WHERE identity_id = r.identity_id
+                         AND domain_id = d.id
+                      )
+                 END
+            END
+      ORDER BY s.started_at
+      LIMIT 1
+        `,
     args: [
       identityId,
       meetingId,
@@ -241,6 +322,8 @@ export async function listMeeting(
   return await fetch(sql) as MeetingReduced[];
 }
 
+// -----------------------------------------------------------------------------
+// consumer is public
 // -----------------------------------------------------------------------------
 export async function listPublicMeeting(
   limit: number,
