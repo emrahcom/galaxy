@@ -34,7 +34,7 @@
         </div>
       </div>
     {:else}
-      <Warning>This domain has no partner.</Warning>
+      <Warning>This domain has no partners.</Warning>
     {/each}
   </div>
 </section>

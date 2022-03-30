@@ -41,7 +41,7 @@
         </div>
       </div>
     {:else}
-      <Warning>This meeting has no member.</Warning>
+      <Warning>This meeting has no members.</Warning>
     {/each}
   </div>
 </section>

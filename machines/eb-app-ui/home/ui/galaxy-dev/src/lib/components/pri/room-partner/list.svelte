@@ -34,7 +34,7 @@
         </div>
       </div>
     {:else}
-      <Warning>This room has no partner.</Warning>
+      <Warning>This room has no partners.</Warning>
     {/each}
   </div>
 </section>
