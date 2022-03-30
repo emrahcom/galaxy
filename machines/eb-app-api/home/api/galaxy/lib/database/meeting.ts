@@ -56,13 +56,13 @@ export async function getMeetingByCode(code: string) {
       WHERE i0.code = $1
         AND i0.expired_at > now()
         AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
-        AND i0.enabled = true
-        AND m.enabled = true
-        AND r.enabled = true
-        AND d.enabled = true
-        AND i1.enabled = true
-        AND i2.enabled = true
-        AND i3.enabled = true
+        AND i0.enabled
+        AND m.enabled
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
+        AND i3.enabled
         AND CASE r.identity_id
             WHEN m.identity_id THEN true
             ELSE (SELECT enabled
@@ -130,10 +130,34 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
       WHERE m.id = $2
         AND m.identity_id = $1
         AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
-        AND r.enabled = true
-        AND d.enabled = true
-        AND i1.enabled = true
-        AND i2.enabled = true
+        AND (r.identity_id = $1
+             OR (r.enabled
+                 AND i2.enabled
+                 AND EXISTS (SELECT 1
+                             FROM room_partner
+                             WHERE identity_id = $1
+                               AND room_id = r.id
+                               AND enabled
+                            )
+                )
+            )
+        AND (d.identity_id = $1
+             OR (d.enabled AND d.public)
+             OR (d.enabled
+                 AND i1.enabled
+                 AND EXISTS (SELECT 1
+                             FROM domain_partner
+                             WHERE identity_id - r.identity_id
+                               AND domain_id = d.id
+                               AND enabled
+                            )
+                )
+            )
+
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
         AND CASE r.identity_id
             WHEN $1 THEN true
             ELSE (SELECT enabled
@@ -172,14 +196,14 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
         LEFT JOIN profile p ON mem.profile_id = p.id
       WHERE mem.identity_id = $1
         AND mem.meeting_id = $2
-        AND mem.enabled = true
+        AND mem.enabled
         AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
-        AND m.enabled = true
-        AND r.enabled = true
-        AND d.enabled = true
-        AND i1.enabled = true
-        AND i2.enabled = true
-        AND i3.enabled = true
+        AND m.enabled
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
+        AND i3.enabled
         AND CASE r.identity_id
             WHEN m.identity_id THEN true
             ELSE (SELECT enabled
@@ -339,13 +363,13 @@ export async function listPublicMeeting(
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
         JOIN identity i3 ON m.identity_id = i3.id
-      WHERE m.hidden = false
-        AND m.enabled = true
-        AND r.enabled = true
-        AND d.enabled = true
-        AND i1.enabled = true
-        AND i2.enabled = true
-        AND i3.enabled = true
+      WHERE NOT m.hidden
+        AND m.enabled
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
+        AND i3.enabled
       ORDER BY m.created_at DESC
       LIMIT $1 OFFSET $2`,
     args: [
@@ -522,7 +546,7 @@ export async function updateMeetingRoomSuffix(meetingId: string) {
                   FROM meeting
                   WHERE id = $1
                  )
-        AND has_suffix = true
+        AND has_suffix
         AND accessed_at + interval '4 hours' < now()
       RETURNING id, accessed_at as at`,
     args: [
