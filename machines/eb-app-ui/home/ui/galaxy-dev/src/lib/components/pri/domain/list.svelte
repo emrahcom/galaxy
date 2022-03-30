@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { DomainReduced } from "$lib/types";
+  import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
@@ -43,7 +44,10 @@
         </div>
       </div>
     {:else}
-      <Warning>No domain found</Warning>
+      <Warning>
+        There is no domain in the list. Click <Add href="/pri/domain/add" /> to
+        add a new domain.
+      </Warning>
     {/each}
   </div>
 </section>
