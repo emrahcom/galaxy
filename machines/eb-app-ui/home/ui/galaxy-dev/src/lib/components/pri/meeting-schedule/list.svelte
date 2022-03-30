@@ -33,7 +33,7 @@
         </div>
       </div>
     {:else}
-      <Warning>No schedule found for this meeting</Warning>
+      <Warning>This meeting has no schedules.</Warning>
     {/each}
   </div>
 </section>

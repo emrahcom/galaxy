@@ -78,7 +78,7 @@
         </div>
       </div>
     {:else}
-      <Warning>No participant key found for this meeting</Warning>
+      <Warning>This meeting has no participant keys.</Warning>
     {/each}
   </div>
 </section>

@@ -32,7 +32,7 @@
       </div>
     {:else}
       <Warning>
-        There is no profile in the list. Click <Add href="/pri/profile/add" />
+        There is no profiles in the list. Click <Add href="/pri/profile/add" />
         to add a new profile.
       </Warning>
     {/each}

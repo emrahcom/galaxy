@@ -97,7 +97,7 @@
       </div>
     {:else}
       <Warning>
-        There is no meeting in the list. Click <Add href="/pri/meeting/add" />
+        There is no meetings in the list. Click <Add href="/pri/meeting/add" />
         to add a new meeting.
       </Warning>
     {/each}

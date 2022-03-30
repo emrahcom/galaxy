@@ -52,7 +52,7 @@
         </div>
       </div>
     {:else}
-      <Warning>No partner key found for this room</Warning>
+      <Warning>This room has no partner keys.</Warning>
     {/each}
   </div>
 </section>
