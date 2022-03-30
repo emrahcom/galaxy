@@ -68,8 +68,8 @@ export async function addRequest(
         (SELECT id
          FROM meeting
          WHERE id = $3
-           AND restricted = true
-           AND subscribable = true
+           AND restricted
+           AND subscribable
            AND NOT EXISTS (SELECT 1
                            FROM meeting_member
                            WHERE identity_id = $1
