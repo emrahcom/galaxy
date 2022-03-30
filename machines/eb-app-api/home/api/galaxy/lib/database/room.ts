@@ -36,17 +36,16 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
       WHERE r.id = $2
         AND r.identity_id = $1
         AND NOT r.ephemeral
-        AND (d.identity_id = $1
-             OR (d.enabled AND d.public AND i.enabled))
-             OR (d.enabled
-                 AND i.enabled
-                 AND EXISTS (SELECT 1
-                             FROM domain_partner
-                             WHERE identity_id = $1
-                               AND domain_id = d.id
-                               AND enabled
-                            )
-                )
+        AND d.enabled
+        AND i.enabled
+        AND (d.public
+             OR d.identity_id = $1
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = $1
+                          AND domain_id = d.id
+                          AND enabled
+                       )
             )
 
       UNION
