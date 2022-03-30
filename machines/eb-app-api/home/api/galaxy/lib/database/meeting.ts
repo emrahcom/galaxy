@@ -95,6 +95,9 @@ export async function getMeetingByCode(code: string) {
 // -----------------------------------------------------------------------------
 // consumer is public
 // -----------------------------------------------------------------------------
+
+// WARNING: add status checks
+
 export async function getPublicMeeting(meetingId: string) {
   const sql = {
     text: `
@@ -349,6 +352,9 @@ export async function listMeeting(
 // -----------------------------------------------------------------------------
 // consumer is public
 // -----------------------------------------------------------------------------
+
+// WARNING: add partnership status too
+
 export async function listPublicMeeting(
   limit: number,
   offset: number,
