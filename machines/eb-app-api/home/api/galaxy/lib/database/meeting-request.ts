@@ -5,11 +5,11 @@ import type { Id, MeetingRequest } from "./types.ts";
 export async function getRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      SELECT req.id, p.id as profile_id, p.name as profile_name,
+      SELECT req.id, pr.id as profile_id, pr.name as profile_name,
         m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
         req.updated_at, req.expired_at
       FROM meeting_request req
-        JOIN profile p ON req.profile_id = p.id
+        JOIN profile pr ON req.profile_id = pr.id
         JOIN meeting m ON req.meeting_id = m.id
       WHERE req.id = $2
         AND req.identity_id = $1`,
@@ -30,11 +30,11 @@ export async function listRequest(
 ) {
   const sql = {
     text: `
-      SELECT req.id, p.id as profile_id, p.name as profile_name,
+      SELECT req.id, pr.id as profile_id, pr.name as profile_name,
         m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
         req.updated_at, req.expired_at
       FROM meeting_request req
-        JOIN profile p ON req.profile_id = p.id
+        JOIN profile pr ON req.profile_id = pr.id
         JOIN meeting m ON req.meeting_id = m.id
       WHERE req.identity_id = $1
       ORDER BY req.status, meeting_name
