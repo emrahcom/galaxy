@@ -201,7 +201,7 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
                        )
             )
 
-      ORDER BY s.started_at
+      ORDER BY started_at
       LIMIT 1
         `,
     args: [
