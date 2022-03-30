@@ -47,8 +47,8 @@ export async function listDomain(
       SELECT id, name, auth_type, domain_attr->>'url' as url, true,
         created_at as updated_at, 'public' as ownership, id as partnership_id
       FROM domain
-      WHERE public = true
-        AND enabled = true
+      WHERE public
+        AND enabled
 
       ORDER BY name
       LIMIT $2 OFFSET $3`,
