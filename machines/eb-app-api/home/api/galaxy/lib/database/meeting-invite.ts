@@ -5,15 +5,15 @@ import type { Id, MeetingInvite, MeetingInviteReduced } from "./types.ts";
 export async function getMeetingInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
-      SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
+      SELECT iv.id, iv.name, m.id as meeting_id, m.name as meeting_name,
         m.info as meeting_info, m.schedule_type as meeting_schedule_type,
-        i.code, i.invite_to, i.join_as, i.disposable, i.enabled, i.created_at,
-        i.updated_at, i.expired_at
-      FROM meeting_invite i
-        JOIN meeting m ON i.meeting_id = m.id
-      WHERE i.id = $2
-        AND i.identity_id = $1
-        AND i.expired_at > now()`,
+        iv.code, iv.invite_to, iv.join_as, iv.disposable, iv.enabled,
+        iv.created_at, iv.updated_at, iv.expired_at
+      FROM meeting_invite iv
+        JOIN meeting m ON iv.meeting_id = m.id
+      WHERE iv.id = $2
+        AND iv.identity_id = $1
+        AND iv.expired_at > now()`,
     args: [
       identityId,
       inviteId,
@@ -27,13 +27,13 @@ export async function getMeetingInvite(identityId: string, inviteId: string) {
 export async function getMeetingInviteByCode(code: string) {
   const sql = {
     text: `
-      SELECT m.name as meeting_name, m.info as meeting_info, i.code,
-        i.invite_to
-      FROM meeting_invite i
-        JOIN meeting m ON i.meeting_id = m.id
-      WHERE i.code = $1
-        AND i.enabled
-        AND i.expired_at > now()`,
+      SELECT m.name as meeting_name, m.info as meeting_info, iv.code,
+        iv.invite_to
+      FROM meeting_invite iv
+        JOIN meeting m ON iv.meeting_id = m.id
+      WHERE iv.code = $1
+        AND iv.enabled
+        AND iv.expired_at > now()`,
     args: [
       code,
     ],
@@ -51,16 +51,16 @@ export async function listMeetingInviteByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT i.id, i.name, m.id as meeting_id, m.name as meeting_name,
+      SELECT iv.id, iv.name, m.id as meeting_id, m.name as meeting_name,
         m.info as meeting_info, m.schedule_type as meeting_schedule_type,
-        i.code, i.invite_to, i.join_as, i.disposable, i.enabled, i.created_at,
-        i.updated_at, i.expired_at
-      FROM meeting_invite i
-        JOIN meeting m ON i.meeting_id = m.id
-      WHERE i.identity_id = $1
-        AND i.meeting_id = $2
-        AND i.expired_at > now()
-      ORDER BY i.updated_at DESC
+        iv.code, iv.invite_to, iv.join_as, iv.disposable, iv.enabled,
+        iv.created_at, iv.updated_at, iv.expired_at
+      FROM meeting_invite iv
+        JOIN meeting m ON iv.meeting_id = m.id
+      WHERE iv.identity_id = $1
+        AND iv.meeting_id = $2
+        AND iv.expired_at > now()
+      ORDER BY iv.updated_at DESC
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
