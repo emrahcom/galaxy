@@ -32,7 +32,7 @@ export async function getMeetingInviteByCode(code: string) {
       FROM meeting_invite i
         JOIN meeting m ON i.meeting_id = m.id
       WHERE i.code = $1
-        AND i.enabled = true
+        AND i.enabled
         AND i.expired_at > now()`,
     args: [
       code,
