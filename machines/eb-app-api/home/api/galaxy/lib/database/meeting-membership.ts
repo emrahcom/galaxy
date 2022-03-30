@@ -47,14 +47,14 @@ export async function addMeetingMembershipByCode(
          FROM meeting_invite i
            JOIN meeting m ON i.meeting_id = m.id
          WHERE i.code = $3
-           AND i.enabled = true
+           AND i.enabled
            AND i.expired_at > now()
            AND m.schedule_type != 'ephemeral'
         ),
         (SELECT join_as
          FROM meeting_invite
          WHERE code = $3
-           AND enabled = true
+           AND enabled
            AND expired_at > now()
         )
       )
@@ -77,7 +77,7 @@ export async function addMeetingMembershipByCode(
         updated_at = now()
       WHERE code = $1
         AND invite_to = 'member'
-        AND disposable = true`,
+        AND disposable`,
     args: [
       code,
     ],
