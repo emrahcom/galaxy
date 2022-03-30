@@ -8,11 +8,11 @@ export async function getMeetingMember(
 ) {
   const sql = {
     text: `
-      SELECT mem.id, mem.meeting_id, p.name as profile_name,
-        p.email as profile_email, mem.join_as, mem.enabled, mem.created_at,
+      SELECT mem.id, mem.meeting_id, pr.name as profile_name,
+        pr.email as profile_email, mem.join_as, mem.enabled, mem.created_at,
         mem.updated_at
       FROM meeting_member mem
-        JOIN profile p ON mem.profile_id = p.id
+        JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
@@ -37,11 +37,11 @@ export async function listMeetingMemberByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT mem.id, mem.meeting_id, p.name as profile_name,
-        p.email as profile_email, mem.join_as, mem.enabled, mem.created_at,
+      SELECT mem.id, mem.meeting_id, pr.name as profile_name,
+        pr.email as profile_email, mem.join_as, mem.enabled, mem.created_at,
         mem.updated_at
       FROM meeting_member mem
-        JOIN profile p ON mem.profile_id = p.id
+        JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.meeting_id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
