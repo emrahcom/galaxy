@@ -51,14 +51,14 @@ export async function getRoomLinkSet(identityId: string, roomId: string) {
       UNION
 
       SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.domain_attr
-      FROM room_partner p
-        JOIN room r ON p.room_id = r.id
+      FROM room_partner pa
+        JOIN room r ON pa.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
-      WHERE p.identity_id = $1
-        AND p.room_id = $2
-        AND p.enabled
+      WHERE pa.identity_id = $1
+        AND pa.room_id = $2
+        AND pa.enabled
         AND NOT r.ephemeral
         AND r.enabled
         AND d.enabled
@@ -117,7 +117,7 @@ export async function listRoom(
 
       SELECT r.id, r.name, d.name as domain_name,
         d.domain_attr->>'url' as domain_url, r.enabled,
-        (p.enabled
+        (pa.enabled
          AND r.enabled AND i2.enabled
          AND d.enabled AND i1.enabled
          AND CASE d.identity_id
@@ -132,13 +132,13 @@ export async function listRoom(
                   END
              END
         ) as chain_enabled, r.updated_at, 'partner' as ownership,
-        p.id as partnership_id
-      FROM room_partner p
-        JOIN room r ON p.room_id = r.id
+        pa.id as partnership_id
+      FROM room_partner pa
+        JOIN room r ON pa.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
-      WHERE p.identity_id = $1
+      WHERE pa.identity_id = $1
         AND NOT r.ephemeral
 
       ORDER BY name
