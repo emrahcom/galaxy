@@ -34,7 +34,7 @@ export async function getRoomInviteByCode(code: string) {
         JOIN room r ON i.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
       WHERE i.code = $1
-        AND i.enabled = true
+        AND i.enabled
         AND i.expired_at > now()`,
     args: [
       code,
