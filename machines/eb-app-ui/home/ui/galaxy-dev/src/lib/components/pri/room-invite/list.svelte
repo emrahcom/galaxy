@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import { toLocaleTime } from "$lib/common";
   import type { RoomInvite } from "$lib/types";
+  import Add from "$lib/components/common/link-add.svelte";
   import Copy from "$lib/components/common/button-copy.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -9,6 +10,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invites: RoomInvite[];
+  const room_id = $page.params.room_uuid;
 
   // ---------------------------------------------------------------------------
   function copy(code: string) {
@@ -52,7 +54,11 @@
         </div>
       </div>
     {:else}
-      <Warning>This room has no partner keys.</Warning>
+      <Warning>
+        This room has no partner keys. Click
+        <Add href="/pri/room/invite/add/{room_id}" /> to create a new partner
+        key and share it with your partners.
+      </Warning>
     {/each}
   </div>
 </section>
