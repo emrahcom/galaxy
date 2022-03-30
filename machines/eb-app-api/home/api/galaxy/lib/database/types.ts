@@ -214,6 +214,7 @@ export interface MeetingSchedule {
 export interface MeetingLinkSet {
   name: string;
   room_name: string;
+  schedule_name: string;
   has_suffix: boolean;
   suffix: string;
   auth_type: string;
@@ -222,6 +223,7 @@ export interface MeetingLinkSet {
     app_id: string;
     app_secret: string;
   };
+  join_as: string;
   profile_name: string;
   profile_email: string;
 }
