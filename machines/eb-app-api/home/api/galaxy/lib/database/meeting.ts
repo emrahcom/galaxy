@@ -12,8 +12,8 @@ import type {
 export async function getMeeting(identityId: string, meetingId: string) {
   const sql = {
     text: `
-      SELECT m.id, m.name, m.info, p.id as profile_id, p.name as profile_name,
-        p.email as profile_email,
+      SELECT m.id, m.name, m.info, pr.id as profile_id, pr.name as profile_name,
+        pr.email as profile_email,
         (CASE m.schedule_type
          WHEN 'ephemeral' THEN d.id
          END
@@ -25,7 +25,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
-        LEFT JOIN profile p ON m.profile_id = p.id
+        LEFT JOIN profile pr ON m.profile_id = pr.id
       WHERE m.id = $2
         AND m.identity_id = $1`,
     args: [
@@ -122,14 +122,14 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
     text: `
       SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
         r.suffix, d.auth_type, d.domain_attr, 'host' as join_as,
-        p.name as profile_name, p.email as profile_email
+        pr.name as profile_name, pr.email as profile_email
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
-        LEFT JOIN profile p ON m.profile_id = p.id
+        LEFT JOIN profile pr ON m.profile_id = pr.id
       WHERE m.id = $2
         AND m.identity_id = $1
         AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
@@ -187,7 +187,7 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
 
       SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
         r.suffix, d.auth_type, d.domain_attr, mem.join_as,
-        p.name as profile_name, p.email as profile_email
+        pr.name as profile_name, pr.email as profile_email
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
@@ -196,7 +196,7 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
         JOIN identity i2 ON r.identity_id = i2.id
         JOIN identity i3 ON m.identity_id = i3.id
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
-        LEFT JOIN profile p ON mem.profile_id = p.id
+        LEFT JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.identity_id = $1
         AND mem.meeting_id = $2
         AND mem.enabled
