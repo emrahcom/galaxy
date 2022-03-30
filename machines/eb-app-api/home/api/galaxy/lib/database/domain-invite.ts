@@ -30,7 +30,7 @@ export async function getDomainInviteByCode(code: string) {
       FROM domain_invite i
         JOIN domain d ON i.domain_id = d.id
       WHERE i.code = $1
-        AND i.enabled = true
+        AND i.enabled
         AND i.expired_at > now()`,
     args: [
       code,
