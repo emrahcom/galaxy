@@ -45,18 +45,18 @@ export async function getMeetingByCode(code: string) {
     text: `
       SELECT m.name, m.info, m.schedule_type, s.started_at as schedule_at,
         s.name as schedule_tag, s.duration as schedule_duration
-      FROM meeting_invite i0
-        JOIN meeting m ON i0.meeting_id = m.id
+      FROM meeting_invite iv
+        JOIN meeting m ON iv.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
         JOIN identity i3 ON m.identity_id = i3.id
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
-      WHERE i0.code = $1
-        AND i0.expired_at > now()
+      WHERE iv.code = $1
+        AND iv.expired_at > now()
         AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
-        AND i0.enabled
+        AND iv.enabled
         AND m.enabled
         AND r.enabled
         AND d.enabled
