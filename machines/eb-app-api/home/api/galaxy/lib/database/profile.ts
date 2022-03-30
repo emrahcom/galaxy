@@ -88,7 +88,7 @@ export async function delProfile(identityId: string, profileId: string) {
       DELETE FROM profile
       WHERE id = $2
         AND identity_id = $1
-        AND is_default = false
+        AND NOT is_default
       RETURNING id, now() as at`,
     args: [
       identityId,
