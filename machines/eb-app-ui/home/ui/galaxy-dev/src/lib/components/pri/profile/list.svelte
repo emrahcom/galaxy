@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Profile } from "$lib/types";
+  import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Set from "$lib/components/common/link-set-default-profile.svelte";
   import Update from "$lib/components/common/link-update.svelte";
@@ -30,7 +31,10 @@
         </div>
       </div>
     {:else}
-      <Warning>No profile found</Warning>
+      <Warning>
+        There is no profile in the list. Click <Add href="/pri/profile/add" />
+        to add a new profile.
+      </Warning>
     {/each}
   </div>
 </section>
