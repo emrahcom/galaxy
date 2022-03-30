@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import { toLocaleTime } from "$lib/common";
   import type { DomainInvite } from "$lib/types";
+  import Add from "$lib/components/common/link-add.svelte";
   import Copy from "$lib/components/common/button-copy.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -52,7 +53,11 @@
         </div>
       </div>
     {:else}
-      <Warning>No partner key found for this domain</Warning>
+      <Warning>
+        There is no partner key in the list. Click
+        <Add href="/pri/domain/invite/add/{p.domain_id}" /> to create a new partner
+        key and share it with your partners.
+      </Warning>
     {/each}
   </div>
 </section>
