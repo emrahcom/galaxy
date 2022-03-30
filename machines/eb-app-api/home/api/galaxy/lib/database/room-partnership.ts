@@ -8,14 +8,14 @@ export async function getRoomPartnership(
 ) {
   const sql = {
     text: `
-      SELECT p.id, r.name as room_name, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, p.enabled, p.created_at,
-        p.updated_at
-      FROM room_partner p
-        JOIN room r ON p.room_id = r.id
+      SELECT pa.id, r.name as room_name, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, pa.enabled, pa.created_at,
+        pa.updated_at
+      FROM room_partner pa
+        JOIN room r ON pa.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
-      WHERE p.id = $2
-        AND p.identity_id = $1`,
+      WHERE pa.id = $2
+        AND pa.identity_id = $1`,
     args: [
       identityId,
       partnershipId,
