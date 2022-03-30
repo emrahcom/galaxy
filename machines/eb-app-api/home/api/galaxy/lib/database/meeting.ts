@@ -121,8 +121,9 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
   const sql = {
     text: `
       SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
-        r.suffix, d.auth_type, d.domain_attr, 'host' as join_as,
-        pr.name as profile_name, pr.email as profile_email
+        r.suffix, d.auth_type, d.domain_attr, 'host' as join_as, s.started_at,
+        s.ended_at, s.duration, pr.name as profile_name,
+        pr.email as profile_email
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -153,14 +154,13 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
                           AND enabled
                        )
             )
-      ORDER BY s.started_at
-      LIMIT 1
 
       UNION
 
       SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
-        r.suffix, d.auth_type, d.domain_attr, mem.join_as,
-        pr.name as profile_name, pr.email as profile_email
+        r.suffix, d.auth_type, d.domain_attr, mem.join_as, s.started_at,
+        s.ended_at, s.duration, pr.name as profile_name,
+        pr.email as profile_email
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
@@ -200,6 +200,7 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
                           AND enabled
                        )
             )
+
       ORDER BY s.started_at
       LIMIT 1
         `,
