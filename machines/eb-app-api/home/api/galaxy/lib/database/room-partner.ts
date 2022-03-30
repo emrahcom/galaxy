@@ -12,7 +12,7 @@ export async function getRoomPartner(
         pr.email as profile_email, pa.enabled, pa.created_at, pa.updated_at
       FROM room_partner pa
         LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
-                                AND pr.is_default = true
+                                AND pr.is_default
       WHERE pa.id = $2
         AND EXISTS (SELECT 1
                     FROM room
@@ -41,7 +41,7 @@ export async function listRoomPartnerByRoom(
         pr.email as profile_email, pa.enabled, pa.created_at, pa.updated_at
       FROM room_partner pa
         LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
-                                AND pr.is_default = true
+                                AND pr.is_default
       WHERE pa.room_id = $2
         AND EXISTS (SELECT 1
                     FROM room
