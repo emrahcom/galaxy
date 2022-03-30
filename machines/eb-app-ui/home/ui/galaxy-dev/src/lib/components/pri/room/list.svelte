@@ -58,8 +58,8 @@
       </div>
     {:else}
       <Warning>
-        There is no room in the list. Click <Add href="/pri/room/add" /> to add
-        a new room.
+        There is no room in the list. Click <Add href="/pri/room/add" /> to add a
+        new room.
       </Warning>
     {/each}
   </div>
