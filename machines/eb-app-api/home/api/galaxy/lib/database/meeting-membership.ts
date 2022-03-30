@@ -8,13 +8,13 @@ export async function getMeetingMembership(
 ) {
   const sql = {
     text: `
-      SELECT mem.id, p.id as profile_id, p.name as profile_name,
-        p.email as profile_email, m.name as meeting_name,
+      SELECT mem.id, pr.id as profile_id, pr.name as profile_name,
+        pr.email as profile_email, m.name as meeting_name,
         m.info as meeting_info, mem.join_as, mem.enabled, mem.created_at,
         mem.updated_at
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
-        JOIN profile p ON mem.profile_id = p.id
+        JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.id = $2
         AND mem.identity_id = $1`,
     args: [
