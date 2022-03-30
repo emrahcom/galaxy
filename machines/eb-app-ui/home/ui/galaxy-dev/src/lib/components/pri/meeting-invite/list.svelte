@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import { toLocaleTime } from "$lib/common";
   import type { MeetingInvite } from "$lib/types";
+  import Add from "$lib/components/common/link-add.svelte";
   import Copy from "$lib/components/common/button-copy.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -9,6 +10,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invites: MeetingInvite[];
+  const meeting_id = $page.params.meeting_uuid;
 
   // ---------------------------------------------------------------------------
   function copyForMember(code: string) {
@@ -78,7 +80,11 @@
         </div>
       </div>
     {:else}
-      <Warning>This meeting has no participant keys.</Warning>
+      <Warning>
+        This meeting has no participant keys. Click
+        <Add href="/pri/meeting/invite/add/{meeting_id}" /> to create a new
+        participant key and share it with your participants.
+      </Warning>
     {/each}
   </div>
 </section>
