@@ -1,6 +1,7 @@
 <script lang="ts">
   import { toLocaleTime } from "$lib/common";
   import type { MeetingReduced } from "$lib/types";
+  import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
@@ -95,7 +96,10 @@
         </div>
       </div>
     {:else}
-      <Warning>No meeting found</Warning>
+      <Warning>
+        There is no meeting in the list. Click <Add href="/pri/meeting/add" />
+        to add a new meeting.
+      </Warning>
     {/each}
   </div>
 </section>
