@@ -5,14 +5,14 @@ import type { DomainInvite, DomainInviteReduced, Id } from "./types.ts";
 export async function getDomainInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
-      SELECT i.id, i.name, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, i.code, i.enabled, i.created_at,
-        i.updated_at, i.expired_at
-      FROM domain_invite i
-        JOIN domain d ON i.domain_id = d.id
-      WHERE i.id = $2
-        AND i.identity_id = $1
-        AND i.expired_at > now()`,
+      SELECT iv.id, iv.name, d.id as domain_id, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, iv.code, iv.enabled, iv.created_at,
+        iv.updated_at, iv.expired_at
+      FROM domain_invite iv
+        JOIN domain d ON iv.domain_id = d.id
+      WHERE iv.id = $2
+        AND iv.identity_id = $1
+        AND iv.expired_at > now()`,
     args: [
       identityId,
       inviteId,
@@ -26,12 +26,12 @@ export async function getDomainInvite(identityId: string, inviteId: string) {
 export async function getDomainInviteByCode(code: string) {
   const sql = {
     text: `
-      SELECT d.name as domain_name, d.domain_attr->>'url' as domain_url, i.code
-      FROM domain_invite i
-        JOIN domain d ON i.domain_id = d.id
-      WHERE i.code = $1
-        AND i.enabled
-        AND i.expired_at > now()`,
+      SELECT d.name as domain_name, d.domain_attr->>'url' as domain_url, iv.code
+      FROM domain_invite iv
+        JOIN domain d ON iv.domain_id = d.id
+      WHERE iv.code = $1
+        AND iv.enabled
+        AND iv.expired_at > now()`,
     args: [
       code,
     ],
@@ -49,15 +49,15 @@ export async function listDomainInviteByDomain(
 ) {
   const sql = {
     text: `
-      SELECT i.id, i.name, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, i.code, i.enabled, i.created_at,
-        i.updated_at, i.expired_at
-      FROM domain_invite i
-        JOIN domain d ON i.domain_id = d.id
-      WHERE i.identity_id = $1
-        AND i.domain_id = $2
-        AND i.expired_at > now()
-      ORDER BY i.updated_at DESC
+      SELECT iv.id, iv.name, d.id as domain_id, d.name as domain_name,
+        d.domain_attr->>'url' as domain_url, iv.code, iv.enabled, iv.created_at,
+        iv.updated_at, iv.expired_at
+      FROM domain_invite iv
+        JOIN domain d ON iv.domain_id = d.id
+      WHERE iv.identity_id = $1
+        AND iv.domain_id = $2
+        AND iv.expired_at > now()
+      ORDER BY iv.updated_at DESC
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
