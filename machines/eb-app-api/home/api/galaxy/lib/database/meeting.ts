@@ -15,7 +15,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
       SELECT m.id, m.name, m.info, pr.id as profile_id, pr.name as profile_name,
         pr.email as profile_email,
         (CASE m.schedule_type
-         WHEN 'ephemeral' THEN d.id
+           WHEN 'ephemeral' THEN d.id
          END
         ) as domain_id,
         d.name as domain_name, d.domain_attr->>'url' as domain_url,
@@ -64,23 +64,23 @@ export async function getMeetingByCode(code: string) {
         AND i2.enabled
         AND i3.enabled
         AND CASE r.identity_id
-            WHEN m.identity_id THEN true
-            ELSE (SELECT enabled
-                  FROM room_partner
-                  WHERE identity_id = m.identity_id
-                    AND room_id = r.id
-                 )
+              WHEN m.identity_id THEN true
+              ELSE (SELECT enabled
+                    FROM room_partner
+                    WHERE identity_id = m.identity_id
+                      AND room_id = r.id
+                   )
             END
         AND CASE d.identity_id
-            WHEN r.identity_id THEN true
-            ELSE CASE d.public
-                 WHEN true THEN true
-                 ELSE (SELECT enabled
-                       FROM domain_partner
-                       WHERE identity_id = r.identity_id
-                         AND domain_id = d.id
-                      )
-                 END
+              WHEN r.identity_id THEN true
+              ELSE CASE d.public
+                     WHEN true THEN true
+                     ELSE (SELECT enabled
+                           FROM domain_partner
+                           WHERE identity_id = r.identity_id
+                             AND domain_id = d.id
+                          )
+                   END
             END
       ORDER BY s.started_at
       LIMIT 1`,
@@ -174,10 +174,12 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
         AND mem.meeting_id = $2
         AND mem.enabled
         AND CASE mem.join_as
-            WHEN 'host' THEN true
-            ELSE (m.schedule_type != 'scheduled'
-                  OR (s.started_at - interval '1 min' < now() AND s.ended_at > now())
-                 )
+              WHEN 'host' THEN true
+              ELSE (m.schedule_type != 'scheduled'
+                    OR (s.started_at - interval '1 min' < now()
+                        AND s.ended_at > now()
+                       )
+                   )
             END
         AND m.enabled
         AND r.enabled
@@ -231,34 +233,34 @@ export async function listMeeting(
         d.domain_attr->>'url' as domain_url, r.name as room_name,
         m.schedule_type,
         (CASE m.schedule_type
-         WHEN 'scheduled' THEN (SELECT min(started_at)
-                                FROM meeting_schedule
-                                WHERE meeting_id = m.id
-                                  AND ended_at > now()
-                               )
+           WHEN 'scheduled' THEN (SELECT min(started_at)
+                                  FROM meeting_schedule
+                                  WHERE meeting_id = m.id
+                                    AND ended_at > now()
+                                 )
          END
         ) as scheduled_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
         (r.enabled AND i2.enabled
          AND d.enabled AND i1.enabled
          AND CASE r.identity_id
-             WHEN $1 THEN true
-             ELSE (SELECT enabled
-                   FROM room_partner
-                   WHERE identity_id = $1
-                     AND room_id = r.id
-                  )
+               WHEN $1 THEN true
+               ELSE (SELECT enabled
+                     FROM room_partner
+                     WHERE identity_id = $1
+                       AND room_id = r.id
+                    )
              END
          AND CASE d.identity_id
-             WHEN r.identity_id THEN true
-             ELSE CASE d.public
-                  WHEN true THEN true
-                  ELSE (SELECT enabled
-                        FROM domain_partner
-                        WHERE identity_id = r.identity_id
-                          AND domain_id = d.id
-                       )
-                  END
+               WHEN r.identity_id THEN true
+               ELSE CASE d.public
+                      WHEN true THEN true
+                      ELSE (SELECT enabled
+                            FROM domain_partner
+                            WHERE identity_id = r.identity_id
+                              AND domain_id = d.id
+                           )
+                    END
              END
         ) as chain_enabled, m.updated_at, 'private' as ownership,
         m.id as membership_id, 'host' as join_as
@@ -277,11 +279,11 @@ export async function listMeeting(
       SELECT m.id, m.name, m.info, '' as domain_name, '' as domain_url,
         '' as room_name, m.schedule_type,
         (CASE m.schedule_type
-         WHEN 'scheduled' THEN (SELECT min(started_at)
-                                FROM meeting_schedule
-                                WHERE meeting_id = m.id
-                                  AND ended_at > now()
-                               )
+           WHEN 'scheduled' THEN (SELECT min(started_at)
+                                  FROM meeting_schedule
+                                  WHERE meeting_id = m.id
+                                    AND ended_at > now()
+                                 )
          END
         ) as scheduled_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
@@ -289,23 +291,23 @@ export async function listMeeting(
          AND r.enabled AND i2.enabled
          AND d.enabled AND i1.enabled
          AND CASE r.identity_id
-             WHEN m.identity_id THEN true
-             ELSE (SELECT enabled
-                   FROM room_partner
-                   WHERE identity_id = m.identity_id
-                     AND room_id = r.id
-                  )
+               WHEN m.identity_id THEN true
+               ELSE (SELECT enabled
+                     FROM room_partner
+                     WHERE identity_id = m.identity_id
+                       AND room_id = r.id
+                    )
              END
          AND CASE d.identity_id
-             WHEN r.identity_id THEN true
-             ELSE CASE d.public
-                  WHEN true THEN true
-                  ELSE (SELECT enabled
-                        FROM domain_partner
-                        WHERE identity_id = r.identity_id
-                          AND domain_id = d.id
-                       )
-                  END
+               WHEN r.identity_id THEN true
+               ELSE CASE d.public
+                      WHEN true THEN true
+                      ELSE (SELECT enabled
+                            FROM domain_partner
+                            WHERE identity_id = r.identity_id
+                              AND domain_id = d.id
+                           )
+                    END
              END
         ) as chain_enabled, m.updated_at, 'member' as ownership,
         mem.id as membership_id, mem.join_as
