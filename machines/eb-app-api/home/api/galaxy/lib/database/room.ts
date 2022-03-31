@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Room, RoomLinkSet, RoomReduced } from "./types.ts";
+import type { Id, Room, RoomLinkSet, Room333 } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoom(identityId: string, roomId: string) {
@@ -150,7 +150,7 @@ export async function listRoom(
     ],
   };
 
-  return await fetch(sql) as RoomReduced[];
+  return await fetch(sql) as Room333[];
 }
 
 // -----------------------------------------------------------------------------

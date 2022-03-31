@@ -276,7 +276,7 @@ export interface Room {
 }
 
 // -----------------------------------------------------------------------------
-export interface RoomReduced {
+export interface Room333 {
   id: string;
   name: string;
   domain_name: string;
