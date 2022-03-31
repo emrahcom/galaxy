@@ -32,7 +32,7 @@ export async function getMeetingScheduleByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT m.id as meeting_id, m.name as meeting_name,
+      SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration
       FROM meeting_schedule s
         JOIN meeting m ON s.meeting_id = m.id
