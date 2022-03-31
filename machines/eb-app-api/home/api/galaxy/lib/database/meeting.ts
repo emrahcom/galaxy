@@ -2,8 +2,8 @@ import { fetch } from "./common.ts";
 import type {
   Id,
   Meeting,
+  Meeting111,
   Meeting222,
-  MeetingForAudience,
   MeetingForPublic,
   MeetingLinkSet,
 } from "./types.ts";
@@ -89,7 +89,7 @@ export async function getMeetingByCode(code: string) {
     ],
   };
 
-  return await fetch(sql) as MeetingForAudience[];
+  return await fetch(sql) as Meeting111[];
 }
 
 // -----------------------------------------------------------------------------

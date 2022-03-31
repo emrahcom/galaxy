@@ -125,7 +125,7 @@ export interface Meeting222 {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingForAudience {
+export interface Meeting111 {
   name: string;
   info: string;
   schedule_type: string;
