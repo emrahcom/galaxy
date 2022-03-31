@@ -6,7 +6,7 @@
 
   const meetingId = $page.params.meeting_uuid;
 
-  const pr = getByCode("/api/pri/schedule/get/bymeeting", meetingId);
+  const pr = getByCode("/api/pri/meeting/schedule/get/bymeeting", meetingId);
 </script>
 
 <!-- -------------------------------------------------------------------------->
