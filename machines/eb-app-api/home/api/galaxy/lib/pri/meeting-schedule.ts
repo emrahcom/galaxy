@@ -5,6 +5,7 @@ import {
   addMeetingSchedule,
   delMeetingSchedule,
   getMeetingSchedule,
+  getMeetingScheduleByMeeting,
   listMeetingScheduleByMeeting,
   updateMeetingSchedule,
 } from "../database/meeting-schedule.ts";
@@ -17,6 +18,17 @@ async function get(req: Request, identityId: string): Promise<unknown> {
   const scheduleId = pl.id;
 
   return await getMeetingSchedule(identityId, scheduleId);
+}
+
+// -----------------------------------------------------------------------------
+async function getByMeeting(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
+  const pl = await req.json();
+  const meetingId = pl.id;
+
+  return await getMeetingScheduleByMeeting(identityId, meetingId);
 }
 
 // -----------------------------------------------------------------------------
@@ -87,6 +99,8 @@ export default async function (
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req, identityId);
+  } else if (path === `${PRE}/get/bymeeting`) {
+    return await wrapper(getByMeeting, req, identityId);
   } else if (path === `${PRE}/list/bymeeting`) {
     return await wrapper(listByMeeting, req, identityId);
   } else if (path === `${PRE}/add`) {
