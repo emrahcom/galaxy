@@ -40,10 +40,7 @@ export async function getMeetingScheduleByMeeting(
                 FROM meeting_member
                 WHERE identity_id = $1
                   AND meeting_id = $2
-                ORDER BY CASE join_as
-                           WHEN 'host' THEN 0
-                           WHEN 'guest' THEN 1
-                         END
+                ORDER BY join_as DESC
                 LIMIT 1
                )
         END as join_as

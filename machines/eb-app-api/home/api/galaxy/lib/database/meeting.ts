@@ -205,11 +205,7 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
                        )
             )
 
-      ORDER BY started_at,
-        CASE join_as
-          WHEN 'host' THEN 0
-          WHEN 'guest' THEN 1
-        END
+      ORDER BY started_at, join_as DESC
       LIMIT 1
         `,
     args: [
