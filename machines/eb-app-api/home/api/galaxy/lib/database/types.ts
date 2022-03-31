@@ -220,7 +220,7 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingScheduleReduced {
+export interface MeetingSchedule222 {
   id: string;
   meeting_id: string;
   name: string;
