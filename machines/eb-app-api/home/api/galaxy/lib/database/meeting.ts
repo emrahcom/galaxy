@@ -121,7 +121,7 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
   const sql = {
     text: `
       SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
-        r.suffix, d.auth_type, d.domain_attr, 'owner' as join_as, s.started_at,
+        r.suffix, d.auth_type, d.domain_attr, 'host' as join_as, s.started_at,
         s.ended_at, s.duration, pr.name as profile_name,
         pr.email as profile_email
       FROM meeting m
