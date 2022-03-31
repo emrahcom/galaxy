@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Domain, DomainReduced, Id } from "./types.ts";
+import type { Domain, Domain333, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getDomain(identityId: string, domainId: string) {
@@ -59,7 +59,7 @@ export async function listDomain(
     ],
   };
 
-  return await fetch(sql) as DomainReduced[];
+  return await fetch(sql) as Domain333[];
 }
 
 // -----------------------------------------------------------------------------

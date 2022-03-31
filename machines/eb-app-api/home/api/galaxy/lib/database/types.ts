@@ -26,7 +26,7 @@ export interface Domain {
 }
 
 // -----------------------------------------------------------------------------
-export interface DomainReduced {
+export interface Domain333 {
   id: string;
   name: string;
   auth_type: string;
