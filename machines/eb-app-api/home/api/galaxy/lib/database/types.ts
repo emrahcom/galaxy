@@ -223,6 +223,7 @@ export interface MeetingSchedule {
 export interface MeetingSchedule222 {
   meeting_id: string;
   meeting_name: string;
+  meeting_info: string;
   schedule_name: string;
   started_at: string;
   ended_at: string;
