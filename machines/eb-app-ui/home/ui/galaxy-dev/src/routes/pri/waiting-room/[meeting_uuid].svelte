@@ -12,8 +12,8 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Welcome to the meeting" />
 
-{#await pr then meeting}
-  {console.log(meeting)}
+{#await pr then schedule}
+  {console.log(schedule)}
 {:catch}
-  <Warning>Invite code is not accepted</Warning>
+  <Warning>Something went wrong</Warning>
 {/await}
