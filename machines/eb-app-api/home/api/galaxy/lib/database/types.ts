@@ -305,7 +305,7 @@ export interface RoomInvite {
 }
 
 // -----------------------------------------------------------------------------
-export interface RoomInviteReduced {
+export interface RoomInvite111 {
   room_name: string;
   domain_name: string;
   domain_url: string;
