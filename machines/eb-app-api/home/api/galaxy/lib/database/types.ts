@@ -135,7 +135,7 @@ export interface Meeting111 {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingForPublic {
+export interface Meeting000 {
   id: string;
   name: string;
   info: string;

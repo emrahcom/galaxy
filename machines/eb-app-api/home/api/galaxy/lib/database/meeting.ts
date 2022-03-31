@@ -2,9 +2,9 @@ import { fetch } from "./common.ts";
 import type {
   Id,
   Meeting,
+  Meeting000,
   Meeting111,
   Meeting222,
-  MeetingForPublic,
   MeetingLinkSet,
 } from "./types.ts";
 
@@ -110,7 +110,7 @@ export async function getPublicMeeting(meetingId: string) {
     ],
   };
 
-  return await fetch(sql) as MeetingForPublic[];
+  return await fetch(sql) as Meeting000[];
 }
 
 // -----------------------------------------------------------------------------
@@ -359,7 +359,7 @@ export async function listPublicMeeting(
     ],
   };
 
-  return await fetch(sql) as MeetingForPublic[];
+  return await fetch(sql) as Meeting000[];
 }
 
 // -----------------------------------------------------------------------------
