@@ -175,7 +175,9 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
         AND mem.enabled
         AND CASE mem.join_as
             WHEN 'host' THEN true
-            ELSE (m.schedule_type != 'scheduled' OR s.ended_at > now())
+            ELSE (m.schedule_type != 'scheduled'
+                  OR (s.started_at - interval '1 min' < now() AND s.ended_at > now())
+                 )
             END
         AND m.enabled
         AND r.enabled
