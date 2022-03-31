@@ -95,15 +95,15 @@ export async function listRoom(
         d.domain_attr->>'url' as domain_url, r.enabled,
         (d.enabled AND i.enabled
          AND CASE d.identity_id
-             WHEN $1 THEN true
-             ELSE CASE d.public
-                  WHEN true THEN true
-                  ELSE (SELECT enabled
-                        FROM domain_partner
-                        WHERE identity_id = $1
-                          AND domain_id = d.id
-                       )
-                  END
+               WHEN $1 THEN true
+               ELSE CASE d.public
+                      WHEN true THEN true
+                      ELSE (SELECT enabled
+                            FROM domain_partner
+                            WHERE identity_id = $1
+                              AND domain_id = d.id
+                           )
+                    END
              END
         ) as chain_enabled,
         r.updated_at, 'private' as ownership, r.id as partnership_id
@@ -121,15 +121,15 @@ export async function listRoom(
          AND r.enabled AND i2.enabled
          AND d.enabled AND i1.enabled
          AND CASE d.identity_id
-             WHEN r.identity_id THEN true
-             ELSE CASE d.public
-                  WHEN true THEN true
-                  ELSE (SELECT enabled
-                        FROM domain_partner
-                        WHERE identity_id = r.identity_id
-                          AND domain_id = d.id
-                       )
-                  END
+               WHEN r.identity_id THEN true
+               ELSE CASE d.public
+                      WHEN true THEN true
+                      ELSE (SELECT enabled
+                            FROM domain_partner
+                            WHERE identity_id = r.identity_id
+                              AND domain_id = d.id
+                           )
+                    END
              END
         ) as chain_enabled, r.updated_at, 'partner' as ownership,
         pa.id as partnership_id
