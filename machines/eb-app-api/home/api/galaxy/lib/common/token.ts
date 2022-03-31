@@ -65,3 +65,43 @@ export async function generateHostToken(
 
   return jwt;
 }
+
+// -----------------------------------------------------------------------------
+export async function generateGuestToken(
+  appId: string,
+  appSecret: string,
+  roomName: string,
+  username: string,
+  email: string,
+  exp = 3600,
+): Promise<string> {
+  const alg: Algorithm = "HS512";
+  const hash = "SHA-512";
+
+  const header = { alg: alg, typ: "JWT" };
+  const cryptoKey = await generateCryptoKey(appSecret, hash);
+  const payload: Payload = {
+    aud: appId,
+    iss: appId,
+    sub: "*",
+    room: roomName,
+    iat: getNumericDate(0),
+    exp: getNumericDate(exp),
+    context: {
+      user: {
+        name: username,
+        email: email,
+        affiliation: "member",
+      },
+      features: {
+        recording: false,
+        livestreaming: false,
+        "screen-sharing": true,
+      },
+    },
+  };
+
+  const jwt = await create(header, payload, cryptoKey);
+
+  return jwt;
+}
