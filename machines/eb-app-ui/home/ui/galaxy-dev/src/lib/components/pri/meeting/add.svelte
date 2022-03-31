@@ -2,7 +2,7 @@
   import { FORM_WIDTH } from "$lib/config";
   import { action, get, list } from "$lib/api";
   import { SCHEDULE_TYPE_OPTIONS } from "$lib/pri/meeting";
-  import type { DomainReduced, Profile, RoomReduced } from "$lib/types";
+  import type { Domain333, Profile, RoomReduced } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Radio from "$lib/components/common/form-radio.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -60,7 +60,7 @@
   });
 
   const pr4 = list("/api/pri/domain/list", 100).then(
-    (items: DomainReduced[]) => {
+    (items: Domain333[]) => {
       const enableds = items
         .filter((i) => i.enabled)
         .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));

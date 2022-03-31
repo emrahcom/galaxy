@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action, list } from "$lib/api";
-  import type { DomainReduced, Room } from "$lib/types";
+  import type { Domain333, Room } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Select from "$lib/components/common/form-select.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
@@ -15,7 +15,7 @@
   let warning = false;
 
   const pr = list("/api/pri/domain/list", 100).then(
-    (items: DomainReduced[]) => {
+    (items: Domain333[]) => {
       return items.map((i) => [
         i.id,
         `${i.name}${i.enabled ? "" : " - DISABLED"}`,

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { DomainReduced } from "$lib/types";
+  import type { Domain333 } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -9,7 +9,7 @@
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let domains: DomainReduced[];
+  export let domains: Domain333[];
 </script>
 
 <!-- -------------------------------------------------------------------------->
