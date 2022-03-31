@@ -211,6 +211,16 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingScheduleReduced {
+  id: string;
+  meeting_id: string;
+  name: string;
+  started_at: string;
+  ended_at: string;
+  duration: number;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingLinkSet {
   name: string;
   room_name: string;
