@@ -32,14 +32,26 @@ export async function getMeetingScheduleByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT id, meeting_id, name, started_at, ended_at, duration
-      FROM meeting_schedule
-      WHERE id = $2
-        AND EXISTS (SELECT 1
-                    FROM meeting
-                    WHERE id = meeting_id
-                      AND identity_id = $1
-                   )`,
+      SELECT m.id as meeting_id, m.name as meeting_name,
+        s.name as schedule_name, s.started_at, s.ended_at, s.duration
+      FROM meeting_schedule s
+        JOIN meeting m ON s.meeting_id = m.id
+      WHERE s.meeting_id = $2
+        AND s.ended_at > now()
+        AND (EXISTS (SELECT 1
+                     FROM meeting
+                     WHERE id = $2
+                       AND identity_id = $1
+                    )
+             OR EXISTS (SELECT 1
+                        FROM meeting_member
+                        WHERE identity_id = $1
+                          AND meeting_id = $2
+                          AND enabled
+                       )
+            )
+      ORDER BY s.started_at
+      LIMIT 1`,
     args: [
       identityId,
       meetingId,
