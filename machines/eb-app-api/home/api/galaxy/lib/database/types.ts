@@ -1,9 +1,9 @@
 // -----------------------------------------------------------------------------
 // 000  - public interfaces
 // 111  - interfaces accessed by codes
-// 222  - interfaces shared by members
-// 333  - interfaces shared by partners
-// none - interfaces for owners
+// 222  - interfaces shared with members
+// 333  - interfaces shared with partners
+// none - interfaces shared with owners
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
