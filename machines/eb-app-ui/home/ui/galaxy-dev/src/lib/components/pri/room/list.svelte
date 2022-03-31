@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { RoomReduced } from "$lib/types";
+  import type { Room333 } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -10,7 +10,7 @@
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let rooms: RoomReduced[];
+  export let rooms: Room333[];
 </script>
 
 <!-- -------------------------------------------------------------------------->

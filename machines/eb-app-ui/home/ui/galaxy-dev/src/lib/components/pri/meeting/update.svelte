@@ -5,7 +5,7 @@
     SCHEDULE_TYPE_OPTIONS,
     SCHEDULE_TYPE_OPTIONS_2,
   } from "$lib/pri/meeting";
-  import type { Domain, Meeting, Profile, RoomReduced } from "$lib/types";
+  import type { Domain, Meeting, Profile, Room333 } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Radio from "$lib/components/common/form-radio.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -34,7 +34,7 @@
     });
   });
 
-  const pr2 = list("/api/pri/room/list", 100).then((items: RoomReduced[]) => {
+  const pr2 = list("/api/pri/room/list", 100).then((items: Room333[]) => {
     return items.map((i) => [
       i.id,
       `${i.name} on ${i.domain_name}${
