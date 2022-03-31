@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action, get, list } from "$lib/api";
-  import type { MeetingInviteReduced, Profile } from "$lib/types";
+  import type { MeetingInvite111, Profile } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Select from "$lib/components/common/form-select.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
@@ -10,7 +10,7 @@
   import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invite: MeetingInviteReduced;
+  export let invite: MeetingInvite111;
 
   let warning = false;
   let p = {

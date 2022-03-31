@@ -139,7 +139,7 @@ export interface MeetingInvite {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingInviteReduced {
+export interface MeetingInvite111 {
   meeting_name: string;
   meeting_info: string;
   code: string;
