@@ -33,7 +33,20 @@ export async function getMeetingScheduleByMeeting(
   const sql = {
     text: `
       SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
-        s.name as schedule_name, s.started_at, s.ended_at, s.duration
+        s.name as schedule_name, s.started_at, s.ended_at, s.duration,
+        CASE m.identity_id
+          WHEN $1 then 'host'
+          ELSE (SELECT join_as
+                FROM meeting_member
+                WHERE identity_id = $1
+                  AND meeting_id = $2
+                ORDER BY CASE join_as
+                           WHEN 'host' THEN 0
+                           WHEN 'guest' THEN 1
+                         END
+                LIMIT 1
+               )
+        END as join_as
       FROM meeting_schedule s
         JOIN meeting m ON s.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
