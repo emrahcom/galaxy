@@ -226,7 +226,7 @@ set -e
 su -l ui <<EOSS
     set -e
     cd kratos-test
-    npm ci
+    npm ci --fetch-timeout=600000
     npm run build
 EOSS
 EOS
