@@ -63,23 +63,23 @@ export async function getMeetingScheduleByMeeting(
         AND i2.enabled
         AND i3.enabled
         AND CASE r.identity_id
-            WHEN m.identity_id THEN true
-            ELSE (SELECT enabled
-                  FROM room_partner
-                  WHERE identity_id = m.identity_id
-                    AND room_id = r.id
-                 )
+              WHEN m.identity_id THEN true
+              ELSE (SELECT enabled
+                    FROM room_partner
+                    WHERE identity_id = m.identity_id
+                      AND room_id = r.id
+                   )
             END
         AND CASE d.identity_id
-            WHEN r.identity_id THEN true
-            ELSE CASE d.public
-                 WHEN true THEN true
-                 ELSE (SELECT enabled
-                       FROM domain_partner
-                       WHERE identity_id = r.identity_id
-                         AND domain_id = d.id
-                      )
-                 END
+              WHEN r.identity_id THEN true
+              ELSE CASE d.public
+                     WHEN true THEN true
+                     ELSE (SELECT enabled
+                           FROM domain_partner
+                           WHERE identity_id = r.identity_id
+                             AND domain_id = d.id
+                          )
+                   END
             END
         AND (m.identity_id = $1
              OR EXISTS (SELECT 1
