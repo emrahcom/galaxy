@@ -121,6 +121,16 @@ export interface Meeting222 {
 }
 
 // -----------------------------------------------------------------------------
+export interface Meeting111 {
+  name: string;
+  info: string;
+  schedule_type: string;
+  schedule_at: string;
+  schedule_tag: string;
+  schedule_duration: number;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingInvite {
   id: string;
   name: string;
