@@ -73,7 +73,13 @@ export async function generateMeetingUrl(
     url = `${url}?jwt=${jwt}`;
   }
 
-  const subject = encodeURIComponent(`"${meeting.name}"`);
+  let subject: string;
+  if (meeting.schedule_name) {
+    subject = encodeURIComponent(`"${meeting.schedule_name}, ${meeting.name}"`);
+  } else {
+    subject = encodeURIComponent(`"${meeting.name}"`);
+  }
+
   const displayName = encodeURIComponent(`"${meeting.profile_name}"`);
   const email = encodeURIComponent(`"${meeting.profile_email}"`);
 
