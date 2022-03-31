@@ -36,13 +36,39 @@ export async function getMeetingScheduleByMeeting(
         s.name as schedule_name, s.started_at, s.ended_at, s.duration
       FROM meeting_schedule s
         JOIN meeting m ON s.meeting_id = m.id
+        JOIN room r ON m.room_id = r.id
+        JOIN domain d ON r.domain_id = d.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+        JOIN identity i3 ON m.identity_id = i3.id
       WHERE s.meeting_id = $2
         AND s.ended_at > now()
-        AND (EXISTS (SELECT 1
-                     FROM meeting
-                     WHERE id = $2
-                       AND identity_id = $1
-                    )
+        AND m.enabled
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
+        AND i3.enabled
+        AND CASE r.identity_id
+            WHEN m.identity_id THEN true
+            ELSE (SELECT enabled
+                  FROM room_partner
+                  WHERE identity_id = m.identity_id
+                    AND room_id = r.id
+                 )
+            END
+        AND CASE d.identity_id
+            WHEN r.identity_id THEN true
+            ELSE CASE d.public
+                 WHEN true THEN true
+                 ELSE (SELECT enabled
+                       FROM domain_partner
+                       WHERE identity_id = r.identity_id
+                         AND domain_id = d.id
+                      )
+                 END
+            END
+        AND (m.identity_id = $1
              OR EXISTS (SELECT 1
                         FROM meeting_member
                         WHERE identity_id = $1
