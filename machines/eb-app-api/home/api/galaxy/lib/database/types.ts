@@ -52,7 +52,7 @@ export interface DomainInvite {
 }
 
 // -----------------------------------------------------------------------------
-export interface DomainInviteReduced {
+export interface DomainInvite111 {
   domain_name: string;
   domain_url: string;
   code: string;

@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { DomainInvite, DomainInviteReduced, Id } from "./types.ts";
+import type { DomainInvite, DomainInvite111, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getDomainInvite(identityId: string, inviteId: string) {
@@ -37,7 +37,7 @@ export async function getDomainInviteByCode(code: string) {
     ],
   };
 
-  return await fetch(sql) as DomainInviteReduced[];
+  return await fetch(sql) as DomainInvite111[];
 }
 
 // -----------------------------------------------------------------------------
