@@ -184,9 +184,10 @@ export interface MeetingSchedule {
 
 // -----------------------------------------------------------------------------
 export interface MeetingSchedule222 {
-  id: string;
   meeting_id: string;
-  name: string;
+  meeting_name: string;
+  meeting_info: string;
+  schedule_name: string;
   started_at: string;
   ended_at: string;
   duration: number;
