@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import { getById } from "$lib/api";
   import Subheader from "$lib/components/common/subheader-center.svelte";
+  import Wait from "$lib/components/pri/waiting-room/wait.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const meetingId = $page.params.meeting_uuid;
@@ -13,7 +14,7 @@
 <Subheader subheader="Welcome to the meeting" />
 
 {#await pr then schedule}
-  {console.log(schedule)}
+  <Wait p={schedule} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
