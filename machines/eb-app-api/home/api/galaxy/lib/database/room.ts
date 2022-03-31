@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Room, RoomLinkSet, Room333 } from "./types.ts";
+import type { Id, Room, Room333, RoomLinkSet } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoom(identityId: string, roomId: string) {
