@@ -100,7 +100,7 @@ export interface Meeting {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingReduced {
+export interface Meeting222 {
   id: string;
   name: string;
   info: string;

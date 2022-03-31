@@ -1,6 +1,6 @@
 <script lang="ts">
   import { toLocaleTime } from "$lib/common";
-  import type { MeetingReduced } from "$lib/types";
+  import type { Meeting222 } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -12,7 +12,7 @@
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let meetings: MeetingReduced[];
+  export let meetings: Meeting222[];
 </script>
 
 <!-- -------------------------------------------------------------------------->
