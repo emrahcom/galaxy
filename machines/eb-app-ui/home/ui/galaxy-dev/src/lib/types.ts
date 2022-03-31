@@ -1,3 +1,12 @@
+// -----------------------------------------------------------------------------
+// 000  - public interfaces
+// 111  - interfaces accessed by codes
+// 222  - interfaces shared with members
+// 333  - interfaces shared with partners
+// none - interfaces shared with owners
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
 export interface Domain {
   id: string;
   name: string;
