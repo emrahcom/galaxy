@@ -1,14 +1,14 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import type { DomainInviteReduced } from "$lib/types";
+  import type { DomainInvite111 } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invite: DomainInviteReduced;
+  export let invite: DomainInvite111;
 
   let warning = false;
   let p = {
