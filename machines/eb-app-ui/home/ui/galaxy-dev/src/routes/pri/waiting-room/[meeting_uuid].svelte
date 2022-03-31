@@ -11,7 +11,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Welcome to the meeting" />
+<Subheader subheader="Welcome to the waiting room" />
 
 {#await pr then schedule}
   <Wait p={schedule} />
