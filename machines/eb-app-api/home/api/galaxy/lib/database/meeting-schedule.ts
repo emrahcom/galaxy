@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, MeetingSchedule } from "./types.ts";
+import type { Id, MeetingSchedule, MeetingScheduleReduced } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeetingSchedule(
@@ -46,7 +46,7 @@ export async function getMeetingScheduleByMeeting(
     ],
   };
 
-  return await fetch(sql) as MeetingSchedule[];
+  return await fetch(sql) as MeetingScheduleReduced[];
 }
 
 // -----------------------------------------------------------------------------
