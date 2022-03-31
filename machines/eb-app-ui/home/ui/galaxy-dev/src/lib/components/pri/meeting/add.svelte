@@ -59,19 +59,17 @@
     ]);
   });
 
-  const pr4 = list("/api/pri/domain/list", 100).then(
-    (items: Domain333[]) => {
-      const enableds = items
-        .filter((i) => i.enabled)
-        .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
-      if (enableds[0]) domainId = enableds[0].id;
+  const pr4 = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
+    const enableds = items
+      .filter((i) => i.enabled)
+      .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
+    if (enableds[0]) domainId = enableds[0].id;
 
-      return items.map((i) => [
-        i.id,
-        `${i.name}${i.enabled ? "" : " - DISABLED"}`,
-      ]);
-    },
-  );
+    return items.map((i) => [
+      i.id,
+      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+    ]);
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

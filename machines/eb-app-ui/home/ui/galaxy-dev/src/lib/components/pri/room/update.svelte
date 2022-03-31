@@ -14,14 +14,12 @@
 
   let warning = false;
 
-  const pr = list("/api/pri/domain/list", 100).then(
-    (items: Domain333[]) => {
-      return items.map((i) => [
-        i.id,
-        `${i.name}${i.enabled ? "" : " - DISABLED"}`,
-      ]);
-    },
-  );
+  const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
+    return items.map((i) => [
+      i.id,
+      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+    ]);
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {
