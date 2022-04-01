@@ -344,6 +344,9 @@ bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-nolimit-nooffset $SET1
 bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-limit $SET1
 bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-huge-offset $SET1
 bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-invalid-post $SET1
+####
+#### get bymeeting tests
+####
 
 # ------------------------------------------------------------------------------
 # pub
@@ -353,6 +356,9 @@ bash $BASEDIR/scripts/pub/hello
 # meeting
 bash $BASEDIR/scripts/pub/meeting/get-exist
 bash $BASEDIR/scripts/pub/meeting/get-nonexist
+####
+#### get link bycode tests
+####
 bash $BASEDIR/scripts/pub/meeting/list-nolimit-nooffset
 bash $BASEDIR/scripts/pub/meeting/list-limit
 bash $BASEDIR/scripts/pub/meeting/list-limit-offset
