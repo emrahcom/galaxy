@@ -10,7 +10,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Welcome to the waiting room" />
+<Subheader subheader="Welcome to the meeting" />
 
 {#await pr then meeting}
   {console.log(meeting)}
