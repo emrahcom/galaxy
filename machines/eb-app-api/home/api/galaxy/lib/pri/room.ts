@@ -8,7 +8,7 @@ import {
   addRoom,
   delRoom,
   getRoom,
-  getRoomLinkSet,
+  getRoomLinkset,
   listRoom,
   updateRoom,
   updateRoomEnabled,
@@ -29,7 +29,7 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const roomId = pl.id;
 
-  const room = await getRoomLinkSet(identityId, roomId)
+  const room = await getRoomLinkset(identityId, roomId)
     .then((rows) => rows[0]);
   const profile = await getDefaultProfile(identityId)
     .then((rows) => rows[0]);
