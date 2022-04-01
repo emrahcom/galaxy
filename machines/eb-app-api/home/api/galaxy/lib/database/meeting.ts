@@ -5,7 +5,7 @@ import type {
   Meeting000,
   Meeting111,
   Meeting222,
-  MeetingLinkSet,
+  MeetingLinkset,
 } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ export async function getPublicMeeting(meetingId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function getMeetingLinkSet(identityId: string, meetingId: string) {
+export async function getMeetingLinkset(identityId: string, meetingId: string) {
   await updateMeetingRoomSuffix(meetingId);
   await updateMeetingRoomAccessTime(meetingId);
 
@@ -214,7 +214,7 @@ export async function getMeetingLinkSet(identityId: string, meetingId: string) {
     ],
   };
 
-  return await fetch(sql) as MeetingLinkSet[];
+  return await fetch(sql) as MeetingLinkset[];
 }
 
 // -----------------------------------------------------------------------------
