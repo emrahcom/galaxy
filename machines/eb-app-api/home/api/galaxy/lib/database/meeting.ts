@@ -39,7 +39,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
 // -----------------------------------------------------------------------------
 // consumer is public
 // -----------------------------------------------------------------------------
-export async function getMeetingLinkByCode(code: string) {
+export async function getMeetingLinksetByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
