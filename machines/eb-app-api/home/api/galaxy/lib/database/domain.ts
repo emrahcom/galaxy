@@ -28,7 +28,7 @@ export async function listDomain(
   const sql = {
     text: `
       SELECT id, name, auth_type, domain_attr->>'url' as url, enabled,
-        updated_at, 'private' as ownership, id as partnership_id
+        updated_at, 'owner' as ownership, id as partnership_id
       FROM domain
       WHERE identity_id = $1
 
