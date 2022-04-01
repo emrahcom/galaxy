@@ -25,7 +25,7 @@
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
-            {#if p.ownership === "private"}
+            {#if p.ownership === "owner"}
               <Del href="/pri/domain/del/{p.id}" />
 
               {#if p.enabled}
