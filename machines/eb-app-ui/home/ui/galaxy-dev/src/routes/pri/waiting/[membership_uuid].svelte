@@ -8,7 +8,10 @@
 
   const membershipId = $page.params.membership_uuid;
 
-  const pr = getById("/api/pri/meeting/schedule/get/bymeeting", membershipId);
+  const pr = getById(
+    "/api/pri/meeting/schedule/get/bymembership",
+    membershipId,
+  );
 
   // ---------------------------------------------------------------------------
   function goBack() {
