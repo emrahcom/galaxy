@@ -26,6 +26,8 @@ export async function getMeetingSchedule(
 }
 
 // -----------------------------------------------------------------------------
+// consumer is owner
+// -----------------------------------------------------------------------------
 export async function getMeetingScheduleByMeeting(
   identityId: string,
   meetingId: string,
@@ -34,25 +36,76 @@ export async function getMeetingScheduleByMeeting(
     text: `
       SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        CASE m.identity_id
-          WHEN $1 then 'host'
-          ELSE (SELECT join_as
-                FROM meeting_member
-                WHERE identity_id = $1
-                  AND meeting_id = $2
-                ORDER BY join_as DESC
-                LIMIT 1
-               )
-        END as join_as
-      FROM meeting_schedule s
-        JOIN meeting m ON s.meeting_id = m.id
+        'host' as join_as
+      FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
         JOIN identity i3 ON m.identity_id = i3.id
-      WHERE s.meeting_id = $2
+        JOIN schedule s ON m.id = s.meeting_id
+      WHERE m.id = $2
+        AND m.identity_id = $1
+        AND m.enabled
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
+        AND i3.enabled
+        AND CASE r.identity_id
+              WHEN $1 THEN true
+              ELSE (SELECT enabled
+                    FROM room_partner
+                    WHERE identity_id = $1
+                      AND room_id = r.id
+                   )
+            END
+        AND CASE d.identity_id
+              WHEN r.identity_id THEN true
+              ELSE CASE d.public
+                     WHEN true THEN true
+                     ELSE (SELECT enabled
+                           FROM domain_partner
+                           WHERE identity_id = r.identity_id
+                             AND domain_id = d.id
+                          )
+                   END
+            END
         AND s.ended_at > now()
+      ORDER BY s.started_at
+      LIMIT 1`,
+    args: [
+      identityId,
+      meetingId,
+    ],
+  };
+
+  return await fetch(sql) as MeetingSchedule222[];
+}
+
+// -----------------------------------------------------------------------------
+// consumer is member
+// -----------------------------------------------------------------------------
+export async function getMeetingScheduleByMembership(
+  identityId: string,
+  meetingId: string,
+) {
+  const sql = {
+    text: `
+      SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
+        s.name as schedule_name, s.started_at, s.ended_at, s.duration,
+        mem.join_as
+      FROM meeting_member mem
+        JOIN meeting m ON mem.meeting_id = m.id
+        JOIN room r ON m.room_id = r.id
+        JOIN domain d ON r.domain_id = d.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+        JOIN identity i3 ON m.identity_id = i3.id
+        JOIN schedule s ON m.id = s.meeting_id
+      WHERE mem.id = $2
+        AND mem.identity_id = $1
+        AND mem.enabled
         AND m.enabled
         AND r.enabled
         AND d.enabled
@@ -78,14 +131,7 @@ export async function getMeetingScheduleByMeeting(
                           )
                    END
             END
-        AND (m.identity_id = $1
-             OR EXISTS (SELECT 1
-                        FROM meeting_member
-                        WHERE identity_id = $1
-                          AND meeting_id = $2
-                          AND enabled
-                       )
-            )
+        AND s.ended_at > now()
       ORDER BY s.started_at
       LIMIT 1`,
     args: [
