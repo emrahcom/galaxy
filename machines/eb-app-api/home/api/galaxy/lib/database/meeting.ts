@@ -3,7 +3,6 @@ import type {
   Id,
   Meeting,
   Meeting000,
-  Meeting111,
   Meeting222,
   MeetingLinkset,
 } from "./types.ts";
@@ -40,11 +39,12 @@ export async function getMeeting(identityId: string, meetingId: string) {
 // -----------------------------------------------------------------------------
 // consumer is public
 // -----------------------------------------------------------------------------
-export async function getMeetingByCode(code: string) {
+export async function getMeetingLinkByCode(code: string) {
   const sql = {
     text: `
-      SELECT m.name, m.info, m.schedule_type, s.started_at as schedule_at,
-        s.name as schedule_tag, s.duration as schedule_duration
+      SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
+        r.suffix, d.auth_type, d.domain_attr, iv.join_as, s.started_at,
+        s.ended_at, s.duration, '' as profile_name, '' as profile_email
       FROM meeting_invite iv
         JOIN meeting m ON iv.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
@@ -55,33 +55,38 @@ export async function getMeetingByCode(code: string) {
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
       WHERE iv.code = $1
         AND iv.enabled
-        AND iv.expired_at > now()
-        AND (m.schedule_type != 'scheduled' OR s.ended_at > now())
+        AND iv.invite_to = 'audience'
+        AND CASE iv.join_as
+              WHEN 'host' THEN true
+              ELSE (m.schedule_type != 'scheduled'
+                    OR (s.started_at - interval '1 min' < now()
+                        AND s.ended_at > now()
+                       )
+                   )
+            END
         AND m.enabled
         AND r.enabled
         AND d.enabled
         AND i1.enabled
         AND i2.enabled
         AND i3.enabled
-        AND CASE r.identity_id
-              WHEN m.identity_id THEN true
-              ELSE (SELECT enabled
-                    FROM room_partner
-                    WHERE identity_id = m.identity_id
-                      AND room_id = r.id
-                   )
-            END
-        AND CASE d.identity_id
-              WHEN r.identity_id THEN true
-              ELSE CASE d.public
-                     WHEN true THEN true
-                     ELSE (SELECT enabled
-                           FROM domain_partner
-                           WHERE identity_id = r.identity_id
-                             AND domain_id = d.id
-                          )
-                   END
-            END
+        AND (r.identity_id = m.identity_id
+             OR EXISTS (SELECT 1
+                        FROM room_partner
+                        WHERE identity_id = m.identity_id
+                          AND room_id = r.id
+                          AND enabled
+                       )
+            )
+        AND (d.public
+             OR d.identity_id = r.identity_id
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                          AND enabled
+                       )
+            )
       ORDER BY s.started_at
       LIMIT 1`,
     args: [
@@ -89,7 +94,7 @@ export async function getMeetingByCode(code: string) {
     ],
   };
 
-  return await fetch(sql) as Meeting111[];
+  return await fetch(sql) as MeetingLinkset[];
 }
 
 // -----------------------------------------------------------------------------
