@@ -6,7 +6,7 @@ import {
   addMeeting,
   delMeeting,
   getMeeting,
-  getMeetingLinkSet,
+  getMeetingLinkset,
   listMeeting,
   updateMeeting,
   updateMeetingEnabled,
@@ -27,7 +27,7 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.id;
 
-  const meeting = await getMeetingLinkSet(identityId, meetingId)
+  const meeting = await getMeetingLinkset(identityId, meetingId)
     .then((rows) => rows[0]);
   const url = await generateMeetingUrl(meeting);
 
