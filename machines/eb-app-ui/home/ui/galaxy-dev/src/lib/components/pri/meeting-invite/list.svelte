@@ -20,10 +20,10 @@
   }
 
   // ---------------------------------------------------------------------------
-  function copyForAudience(code: string) {
+  function copyForAudience(code: string, schedule_type: string) {
     let text: string;
 
-    if (p.meeting_schedule_type === "scheduled") {
+    if (schedule_type === "scheduled") {
       text = `${page.url.origin}/aud/waiting/${p.code}`;
     } else {
       text = `${page.url.origin}/aud/join/${p.code}`;
@@ -73,7 +73,11 @@
               </p>
 
               {#if p.enabled}
-                <Copy label="copy" on:click={() => copyForAudience(p.code)} />
+                <Copy
+                  label="copy"
+                  on:click={() =>
+                    copyForAudience(p.code, p.meeting_schedule_type)}
+                />
               {/if}
             {/if}
           </div>
