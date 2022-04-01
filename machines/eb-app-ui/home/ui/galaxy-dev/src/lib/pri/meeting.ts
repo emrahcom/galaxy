@@ -14,7 +14,16 @@ export const SCHEDULE_TYPE_OPTIONS_2 = [
 ];
 
 // -----------------------------------------------------------------------------
-export async function join(uuid: string) {
+export async function joinAsOwner(uuid: string) {
+  const link = await getById("/api/pri/meeting/get/link", uuid);
+
+  if (!link.url) throw new Error("URL not found");
+
+  window.location.replace(link.url);
+}
+
+// -----------------------------------------------------------------------------
+export async function joinAsMember(uuid: string) {
   const link = await getById("/api/pri/meeting/get/link", uuid);
 
   if (!link.url) throw new Error("URL not found");
