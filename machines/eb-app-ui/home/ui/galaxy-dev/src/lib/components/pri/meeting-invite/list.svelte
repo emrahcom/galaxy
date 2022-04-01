@@ -24,9 +24,9 @@
     let text: string;
 
     if (schedule_type === "scheduled") {
-      text = `${$page.url.origin}/aud/waiting/${p.code}`;
+      text = `${$page.url.origin}/aud/waiting/${code}`;
     } else {
-      text = `${$page.url.origin}/aud/join/${p.code}`;
+      text = `${$page.url.origin}/aud/join/${code}`;
     }
 
     navigator.clipboard.writeText(text);
