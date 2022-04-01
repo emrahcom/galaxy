@@ -1,11 +1,11 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { join } from "$lib/pri/meeting";
+  import { joinAsOwner } from "$lib/pri/meeting";
   import Spinner from "$lib/components/common/spinner.svelte";
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = join($page.params.meeting_uuid);
+  const pr = joinAsOwner($page.params.meeting_uuid);
 </script>
 
 <!-- -------------------------------------------------------------------------->
