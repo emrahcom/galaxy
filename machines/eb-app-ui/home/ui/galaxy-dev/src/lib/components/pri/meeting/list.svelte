@@ -83,7 +83,7 @@
 
               {#if p.chain_enabled}
                 {#if p.schedule_type === "scheduled"}
-                  <Join href="/pri/waiting-room/{p.id}" />
+                  <Join href="/pri/waiting/{p.id}" />
                 {:else}
                   <Join href="/pri/meeting/join/{p.id}" />
                 {/if}
@@ -94,7 +94,7 @@
 
               {#if p.enabled && p.chain_enabled}
                 {#if p.schedule_type === "scheduled"}
-                  <Join href="/pri/waiting-room/{p.id}" />
+                  <Join href="/pri/waiting/{p.id}" />
                 {:else}
                   <Join href="/pri/meeting/join/{p.id}" />
                 {/if}
