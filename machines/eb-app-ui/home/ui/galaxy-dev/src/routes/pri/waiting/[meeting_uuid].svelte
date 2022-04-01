@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { getById } from "$lib/api";
-  import Back from "$lib/components/common/button-back.svelte";
+  import Back from "$lib/components/common/button-on-click.svelte";
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Wait from "$lib/components/pri/waiting/wait.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";

@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let label = "Back";
+  export let label = "Click";
 </script>
 
 <!-- -------------------------------------------------------------------------->
