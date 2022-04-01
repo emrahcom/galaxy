@@ -24,7 +24,7 @@ export async function joinAsOwner(uuid: string) {
 
 // -----------------------------------------------------------------------------
 export async function joinAsMember(uuid: string) {
-  const link = await getById("/api/pri/meeting/get/link", uuid);
+  const link = await getById("/api/pri/meeting/get/link/bymembership", uuid);
 
   if (!link.url) throw new Error("URL not found");
 
