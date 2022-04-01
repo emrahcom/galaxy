@@ -28,9 +28,9 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.id;
 
-  const meeting = await getMeetingLinkset(identityId, meetingId)
+  const linkset = await getMeetingLinkset(identityId, meetingId)
     .then((rows) => rows[0]);
-  const url = await generateMeetingUrl(meeting);
+  const url = await generateMeetingUrl(linkset);
 
   const link = [{
     url: url,
@@ -47,9 +47,9 @@ async function getLinkByMembership(
   const pl = await req.json();
   const membershipId = pl.id;
 
-  const meeting = await getMeetingLinksetByMembership(identityId, membershipId)
+  const linkset = await getMeetingLinksetByMembership(identityId, membershipId)
     .then((rows) => rows[0]);
-  const url = await generateMeetingUrl(meeting);
+  const url = await generateMeetingUrl(linkset);
 
   const link = [{
     url: url,
