@@ -232,7 +232,7 @@ export interface MeetingSchedule222 {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingLinkSet {
+export interface MeetingLinkset {
   name: string;
   room_name: string;
   schedule_name: string;
@@ -337,7 +337,7 @@ export interface RoomPartnership {
 }
 
 // -----------------------------------------------------------------------------
-export interface RoomLinkSet {
+export interface RoomLinkset {
   name: string;
   has_suffix: boolean;
   suffix: string;
