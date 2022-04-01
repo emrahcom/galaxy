@@ -47,26 +47,26 @@ export async function generateRoomUrl(
 
 // -----------------------------------------------------------------------------
 export async function generateMeetingUrl(
-  meeting: MeetingLinkset,
+  linkset: MeetingLinkset,
   exp = 86400,
 ): Promise<string> {
-  if (!meeting.profile_name) meeting.profile_name = "";
-  if (!meeting.profile_email) meeting.profile_email = "";
+  if (!linkset.profile_name) linkset.profile_name = "";
+  if (!linkset.profile_email) linkset.profile_email = "";
 
-  let url = encodeURI(meeting.domain_attr.url);
-  let roomName = encodeURIComponent(meeting.room_name);
+  let url = encodeURI(linkset.domain_attr.url);
+  let roomName = encodeURIComponent(linkset.room_name);
 
-  if (meeting.has_suffix) roomName = `${roomName}-${meeting.suffix}`;
+  if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
 
   url = `${url}/${roomName}`;
 
-  if (meeting.auth_type === "token") {
+  if (linkset.auth_type === "token") {
     const jwt = await generateHostToken(
-      meeting.domain_attr.app_id,
-      meeting.domain_attr.app_secret,
+      linkset.domain_attr.app_id,
+      linkset.domain_attr.app_secret,
       roomName,
-      meeting.profile_name,
-      meeting.profile_email,
+      linkset.profile_name,
+      linkset.profile_email,
       exp,
     );
 
@@ -74,18 +74,18 @@ export async function generateMeetingUrl(
   }
 
   let subject: string;
-  if (meeting.schedule_name) {
-    subject = encodeURIComponent(`"${meeting.schedule_name}, ${meeting.name}"`);
+  if (linkset.schedule_name) {
+    subject = encodeURIComponent(`"${linkset.schedule_name}, ${linkset.name}"`);
   } else {
-    subject = encodeURIComponent(`"${meeting.name}"`);
+    subject = encodeURIComponent(`"${linkset.name}"`);
   }
 
-  const displayName = encodeURIComponent(`"${meeting.profile_name}"`);
-  const email = encodeURIComponent(`"${meeting.profile_email}"`);
+  const displayName = encodeURIComponent(`"${linkset.profile_name}"`);
+  const email = encodeURIComponent(`"${linkset.profile_email}"`);
 
   url = `${url}#config.subject=${subject}`;
-  if (meeting.profile_name) url = `${url}&userInfo.displayName=${displayName}`;
-  if (meeting.profile_email) url = `${url}&userInfo.email=${email}`;
+  if (linkset.profile_name) url = `${url}&userInfo.displayName=${displayName}`;
+  if (linkset.profile_email) url = `${url}&userInfo.email=${email}`;
 
   return url;
 }
