@@ -7,24 +7,24 @@ import type {
 
 // -----------------------------------------------------------------------------
 export async function generateRoomUrl(
-  room: RoomLinkset,
+  linkset: RoomLinkset,
   profile: Profile,
   exp = 86400,
 ): Promise<string> {
   if (!profile.name) profile.name = "";
   if (!profile.email) profile.email = "";
 
-  let url = encodeURI(room.domain_attr.url);
-  let roomName = encodeURIComponent(room.name);
+  let url = encodeURI(linkset.domain_attr.url);
+  let roomName = encodeURIComponent(linkset.name);
 
-  if (room.has_suffix) roomName = `${roomName}-${room.suffix}`;
+  if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
 
   url = `${url}/${roomName}`;
 
-  if (room.auth_type === "token") {
+  if (linkset.auth_type === "token") {
     const jwt = await generateHostToken(
-      room.domain_attr.app_id,
-      room.domain_attr.app_secret,
+      linkset.domain_attr.app_id,
+      linkset.domain_attr.app_secret,
       roomName,
       profile.name,
       profile.email,
@@ -34,7 +34,7 @@ export async function generateRoomUrl(
     url = `${url}?jwt=${jwt}`;
   }
 
-  const subject = encodeURIComponent(`"${room.name}"`);
+  const subject = encodeURIComponent(`"${linkset.name}"`);
   const displayName = encodeURIComponent(`"${profile.name}"`);
   const email = encodeURIComponent(`"${profile.email}"`);
 
