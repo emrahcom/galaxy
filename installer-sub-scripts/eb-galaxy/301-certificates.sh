@@ -41,8 +41,9 @@ subjectAltName = @alt_names
 EOF
 
 # FQDNs
-echo "DNS.1 = $KRATOS_FQDN" >>eb-galaxy.ext
+echo "DNS.1 = $ROOT_FQDN" >>eb-galaxy.ext
 echo "DNS.2 = $APP_FQDN" >>eb-galaxy.ext
+echo "DNS.3 = $KRATOS_FQDN" >>eb-galaxy.ext
 
 # internal IPs
 i=1
