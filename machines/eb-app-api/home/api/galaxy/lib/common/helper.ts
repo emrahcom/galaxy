@@ -1,13 +1,13 @@
 import { generateHostToken } from "./token.ts";
 import type {
-  MeetingLinkSet,
+  MeetingLinkset,
   Profile,
-  RoomLinkSet,
+  RoomLinkset,
 } from "../database/types.ts";
 
 // -----------------------------------------------------------------------------
 export async function generateRoomUrl(
-  room: RoomLinkSet,
+  room: RoomLinkset,
   profile: Profile,
   exp = 86400,
 ): Promise<string> {
@@ -47,7 +47,7 @@ export async function generateRoomUrl(
 
 // -----------------------------------------------------------------------------
 export async function generateMeetingUrl(
-  meeting: MeetingLinkSet,
+  meeting: MeetingLinkset,
   exp = 86400,
 ): Promise<string> {
   if (!meeting.profile_name) meeting.profile_name = "";
