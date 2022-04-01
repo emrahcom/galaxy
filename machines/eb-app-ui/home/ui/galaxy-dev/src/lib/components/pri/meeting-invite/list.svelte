@@ -14,14 +14,20 @@
 
   // ---------------------------------------------------------------------------
   function copyForMember(code: string) {
-    const text = `${$page.url.origin}/pri/meeting/membership/add/${code}`;
+    let text = `${$page.url.origin}/pri/meeting/membership/add/${code}`;
 
     navigator.clipboard.writeText(text);
   }
 
   // ---------------------------------------------------------------------------
   function copyForAudience(code: string) {
-    const text = `${$page.url.origin}/pub/waiting-room/${code}`;
+    let text: string;
+
+    if (p.meeting_schedule_type === "scheduled") {
+      text = `${page.url.origin}/aud/waiting/${p.code}`;
+    } else {
+      text = `${page.url.origin}/aud/join/${p.code}`;
+    }
 
     navigator.clipboard.writeText(text);
   }
@@ -59,7 +65,11 @@
               </p>
 
               <p class="card-text text-muted">
-                {$page.url.origin}/pub/waiting-room/{p.code}
+                {#if p.meeting_schedule_type === "scheduled"}
+                  {$page.url.origin}/aud/waiting/{p.code}
+                {:else}
+                  {$page.url.origin}/aud/join/{p.code}
+                {/if}
               </p>
 
               {#if p.enabled}
