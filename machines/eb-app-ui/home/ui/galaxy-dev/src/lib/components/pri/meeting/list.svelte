@@ -28,7 +28,7 @@
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
 
-            {#if p.ownership === "private"}
+            {#if p.ownership === "owner"}
               <p class="card-text text-muted small my-0">{p.ownership}</p>
             {:else}
               <p class="card-text text-muted small my-0">
@@ -37,7 +37,7 @@
               </p>
             {/if}
 
-            {#if p.ownership === "private"}
+            {#if p.ownership === "owner"}
               <p class="card-text text-muted small">
                 {#if p.schedule_type === "ephemeral"}
                   {`${p.domain_name}`}
@@ -61,7 +61,7 @@
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
-            {#if p.ownership === "private"}
+            {#if p.ownership === "owner"}
               <Del href="/pri/meeting/del/{p.id}" />
 
               {#if p.enabled}
