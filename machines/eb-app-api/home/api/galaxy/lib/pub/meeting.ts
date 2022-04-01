@@ -1,8 +1,9 @@
 import { notFound } from "../http/response.ts";
 import { pub as wrapper } from "../http/wrapper.ts";
+import { generateMeetingUrl } from "../common/helper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
-  getMeetingByCode,
+  getMeetingLinksetByCode,
   getPublicMeeting,
   listPublicMeeting,
 } from "../database/meeting.ts";
@@ -22,7 +23,15 @@ async function getLinkByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  return await getMeetingByCode(code);
+  const meeting = await getMeetingLinksetByCode(identityId, code)
+    .then((rows) => rows[0]);
+  const url = await generateMeetingUrl(meeting);
+
+  const link = [{
+    url: url,
+  }];
+
+  return link;
 }
 
 // -----------------------------------------------------------------------------
