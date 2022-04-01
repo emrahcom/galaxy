@@ -39,6 +39,25 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function getLinkByMembership(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
+  const pl = await req.json();
+  const membershipId = pl.id;
+
+  const meeting = await getMeetingLinksetByMembership(identityId, membershipId)
+    .then((rows) => rows[0]);
+  const url = await generateMeetingUrl(meeting);
+
+  const link = [{
+    url: url,
+  }];
+
+  return link;
+}
+
+// -----------------------------------------------------------------------------
 async function list(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const limit = getLimit(pl.limit);
@@ -133,6 +152,8 @@ export default async function (
     return await wrapper(get, req, identityId);
   } else if (path === `${PRE}/get/link`) {
     return await wrapper(getLink, req, identityId);
+  } else if (path === `${PRE}/get/link/bymembership`) {
+    return await wrapper(getLinkByMembership, req, identityId);
   } else if (path === `${PRE}/list`) {
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/add`) {
