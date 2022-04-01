@@ -7,6 +7,7 @@ import {
   delMeeting,
   getMeeting,
   getMeetingLinkset,
+  getMeetingLinksetByMembership,
   listMeeting,
   updateMeeting,
   updateMeetingEnabled,
