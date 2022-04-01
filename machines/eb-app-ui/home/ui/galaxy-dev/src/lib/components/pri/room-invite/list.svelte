@@ -57,7 +57,7 @@
       <Warning>
         This room has no partner keys. Click
         <Add href="/pri/room/invite/add/{room_id}" /> to create a new partner key
-        and share it with your partners.
+        and share it with your partner.
       </Warning>
     {/each}
   </div>

@@ -97,7 +97,7 @@
       <Warning>
         This meeting has no participant keys. Click
         <Add href="/pri/meeting/invite/add/{meeting_id}" /> to create a new participant
-        key and share it with your participants.
+        key and share it with your participant.
       </Warning>
     {/each}
   </div>
