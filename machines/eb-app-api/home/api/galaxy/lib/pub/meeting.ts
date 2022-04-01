@@ -18,7 +18,7 @@ async function get(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function getByCode(req: Request): Promise<unknown> {
+async function getLinkByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
@@ -38,8 +38,8 @@ async function listEnabled(req: Request): Promise<unknown> {
 export default async function (req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req);
-  } else if (path === `${PRE}/get/bycode`) {
-    return await wrapper(getByCode, req);
+  } else if (path === `${PRE}/get/link/bycode`) {
+    return await wrapper(getLinkByCode, req);
   } else if (path === `${PRE}/list`) {
     return await wrapper(listEnabled, req);
   } else {
