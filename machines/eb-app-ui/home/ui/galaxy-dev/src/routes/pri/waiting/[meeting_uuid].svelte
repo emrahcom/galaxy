@@ -16,5 +16,5 @@
 {#await pr then schedule}
   <Wait p={schedule} />
 {:catch}
-  <Warning>Something went wrong</Warning>
+  <Warning>No scheduled meeting found</Warning>
 {/await}
