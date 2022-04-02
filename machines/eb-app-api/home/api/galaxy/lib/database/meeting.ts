@@ -169,7 +169,6 @@ export async function getMeetingLinksetByMembership(
                           AND enabled
                        )
             )
-
       ORDER BY started_at
       LIMIT 1
         `,
