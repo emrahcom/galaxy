@@ -210,8 +210,11 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
+// id is meeting_id for bymeeting request
+// id is membership_id for bymembership request
+// -----------------------------------------------------------------------------
 export interface MeetingSchedule222 {
-  meeting_id: string;
+  id: string;
   meeting_name: string;
   meeting_info: string;
   schedule_name: string;
