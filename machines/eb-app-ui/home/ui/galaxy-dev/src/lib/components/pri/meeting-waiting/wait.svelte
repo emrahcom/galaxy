@@ -18,6 +18,11 @@
   function getRemainingTime() {
     const interval = (started_at.getTime() - Date.now()) / 1000;
 
+    if (interval < 0) {
+      join(p.meeting_id);
+      return;
+    }
+
     remainingTime = epochToIntervalString(interval);
 
     setTimeout(getRemainingTime, 1000);
