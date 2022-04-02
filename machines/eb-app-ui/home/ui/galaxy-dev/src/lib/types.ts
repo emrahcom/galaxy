@@ -191,6 +191,7 @@ export interface MeetingSchedule222 {
   started_at: string;
   ended_at: string;
   duration: number;
+  waiting_time: number;
   join_as: string;
 }
 
