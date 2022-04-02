@@ -3,7 +3,7 @@ export function epochToIntervalString(time: number) {
     let sign = "";
 
     if (time < 0) {
-      sign = "-"
+      sign = "-";
       time = -1 * time;
     }
 
