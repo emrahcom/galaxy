@@ -223,6 +223,7 @@ export interface MeetingSchedule222 {
 
 // -----------------------------------------------------------------------------
 export interface MeetingLinkset {
+  id: string;
   name: string;
   room_name: string;
   schedule_name: string;
