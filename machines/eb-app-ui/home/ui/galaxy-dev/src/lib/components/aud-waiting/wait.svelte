@@ -88,7 +88,7 @@
           class="card-footer d-flex justify-content-center bg-body border-0
           mt-3 gap-5"
         >
-          <Back label="Cancel" on:click={goHome} />
+          <Cancel label="Cancel" on:click={goHome} />
 
           {#if p.join_as === "host"}
             <Join
