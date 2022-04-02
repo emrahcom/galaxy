@@ -36,7 +36,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="del">
   <div class="d-flex mt-2 justify-content-center">
-    <form on:submit|preventDefault={onSubmit} style="max-width:{FORM_WIDTH};">
+    <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Tag (optional)" value={p.name} readonly={true} />
       <Datetime name="time" label="Time" value={time} {min} readonly={true} />
       <Text

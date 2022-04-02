@@ -4,7 +4,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <div class="d-flex mt-2 justify-content-center">
-  <div class="text-center" style="max-width:{FORM_WIDTH};">
+  <div class="text-center" style="width:{FORM_WIDTH};">
     <slot />
   </div>
 </div>

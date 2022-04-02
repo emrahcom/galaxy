@@ -35,7 +35,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
-    <form on:submit|preventDefault={onSubmit} style="max-width:{FORM_WIDTH};">
+    <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text
         name="room_name"
         label="Room"
