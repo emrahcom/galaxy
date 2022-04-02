@@ -43,7 +43,7 @@ export async function getMeetingScheduleByMeeting(
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
         JOIN identity i3 ON m.identity_id = i3.id
-        JOIN schedule s ON m.id = s.meeting_id
+        JOIN meeting_schedule s ON m.id = s.meeting_id
       WHERE m.id = $2
         AND m.identity_id = $1
         AND m.enabled
@@ -102,7 +102,7 @@ export async function getMeetingScheduleByMembership(
         JOIN identity i1 ON d.identity_id = i1.id
         JOIN identity i2 ON r.identity_id = i2.id
         JOIN identity i3 ON m.identity_id = i3.id
-        JOIN schedule s ON m.id = s.meeting_id
+        JOIN meeting_schedule s ON m.id = s.meeting_id
       WHERE mem.id = $2
         AND mem.identity_id = $1
         AND mem.enabled
