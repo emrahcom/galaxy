@@ -3,6 +3,7 @@ import { HOSTNAME, PORT_PUBLIC } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import hello from "./lib/pub/hello.ts";
 import meeting from "./lib/pub/meeting.ts";
+import meetingSchedule from "./lib/pub/meeting-schedule.ts";
 
 const PRE = "/api/pub";
 
@@ -10,6 +11,8 @@ const PRE = "/api/pub";
 async function route(req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/hello`) {
     return hello();
+  } else if (path.match(`^${PRE}/meeting/schedule`)) {
+    return await meetingSchedule(req, path);
   } else if (path.match(`^${PRE}/meeting/`)) {
     return await meeting(req, path);
   } else {
