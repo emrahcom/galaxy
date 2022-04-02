@@ -15,7 +15,7 @@ async function getByCode(req: Request): Promise<unknown> {
 // -----------------------------------------------------------------------------
 export default async function (req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/get/bycode`) {
-    return await wrapper(getByMeeting, req, identityId);
+    return await wrapper(getByCode, req);
   } else {
     return notFound();
   }
