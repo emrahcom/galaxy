@@ -23,9 +23,9 @@ async function getLinkByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  const meeting = await getMeetingLinksetByCode(code)
+  const linkset = await getMeetingLinksetByCode(code)
     .then((rows) => rows[0]);
-  const url = await generateMeetingUrl(meeting);
+  const url = await generateMeetingUrl(linkset);
 
   const link = [{
     url: url,
