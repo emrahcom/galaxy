@@ -35,7 +35,9 @@
           p = s;
           started_at = new Date(Date.now() + p.waiting_time * 1000);
         })
-        .catch();
+        .catch(() => {
+          // do nothing
+        });
     }
 
     remainingTime = epochToIntervalString(interval);
