@@ -61,37 +61,35 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="waiting">
-  <div class="row mx-auto mt-2 justify-content-center">
-    <div class="col">
-      <div class="card border-0 mx-auto" style="max-width:{FORM_WIDTH};">
-        <div class="card-body text-center">
-          <h2 class="card-title text-muted mt-3 mb-4">{remainingTime}</h2>
+  <div class="d-flex mt-2 justify-content-center">
+    <div class="card border-0 mx-auto" style="max-width:{FORM_WIDTH};">
+      <div class="card-body text-center">
+        <h2 class="card-title text-muted mt-3 mb-4">{remainingTime}</h2>
 
-          <h5 class="card-title text-muted">{p.meeting_name}</h5>
+        <h5 class="card-title text-muted">{p.meeting_name}</h5>
 
-          {#if p.schedule_name}
-            <h5 class="card-title text-muted">{p.schedule_name}</h5>
-          {/if}
+        {#if p.schedule_name}
+          <h5 class="card-title text-muted">{p.schedule_name}</h5>
+        {/if}
 
-          <p class="card-text text-muted small">
-            {toLocaleTime(p.started_at)}
-          </p>
+        <p class="card-text text-muted small">
+          {toLocaleTime(p.started_at)}
+        </p>
 
-          {#if p.meeting_info}
-            {#each p.meeting_info.split("\n") as line}
-              <p class="card-text text-muted my-0">{line}&nbsp;</p>
-            {/each}
-          {/if}
+        {#if p.meeting_info}
+          {#each p.meeting_info.split("\n") as line}
+            <p class="card-text text-muted my-0">{line}&nbsp;</p>
+          {/each}
+        {/if}
 
-          <div class="card-footer bg-body border-0 text-center mt-3">
-            <Back label="Back" on:click={goBack} />
-            <Join
-              label="Join Now"
-              on:click={() => {
-                join(p.meeting_id);
-              }}
-            />
-          </div>
+        <div class="card-footer bg-body border-0 text-center mt-3">
+          <Back label="Back" on:click={goBack} />
+          <Join
+            label="Join Now"
+            on:click={() => {
+              join(p.meeting_id);
+            }}
+          />
         </div>
       </div>
     </div>
