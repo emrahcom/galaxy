@@ -106,10 +106,9 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
     ],
   };
 
-  const linkset = await fetch(sql) as MeetingLinkset[]
-    .then((rows) => rows[0]);
-  await updateMeetingRoomSuffix(linkset.id);
-  await updateMeetingRoomAccessTime(linkset.id);
+  const linkset = await fetch(sql) as MeetingLinkset[];
+  await updateMeetingRoomSuffix(linkset[0].id);
+  await updateMeetingRoomAccessTime(linkset[0].id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
@@ -180,10 +179,9 @@ export async function getMeetingLinksetByMembership(
     ],
   };
 
-  const linkset = await fetch(sql) as MeetingLinkset[]
-    .then((rows) => rows[0]);
-  await updateMeetingRoomSuffix(linkset.id);
-  await updateMeetingRoomAccessTime(linkset.id);
+  const linkset = await fetch(sql) as MeetingLinkset[];
+  await updateMeetingRoomSuffix(linkset[0].id);
+  await updateMeetingRoomAccessTime(linkset[0].id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
@@ -248,10 +246,9 @@ export async function getMeetingLinksetByCode(code: string) {
     ],
   };
 
-  const linkset = await fetch(sql) as MeetingLinkset[]
-    .then((rows) => rows[0]);
-  await updateMeetingRoomSuffix(linkset.id);
-  await updateMeetingRoomAccessTime(linkset.id);
+  const linkset = await fetch(sql) as MeetingLinkset[];
+  await updateMeetingRoomSuffix(linkset[0].id);
+  await updateMeetingRoomAccessTime(linkset[0].id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
