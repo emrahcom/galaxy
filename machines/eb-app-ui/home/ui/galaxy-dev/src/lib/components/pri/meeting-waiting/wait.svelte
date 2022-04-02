@@ -8,6 +8,15 @@
   export let p: MeetingSchedule222;
 
   let warning = false;
+  let started_at = new Date(Date.now() + p.waiting_time * 1000);
+  let remainingTime = "";
+
+  getRemainingTime();
+
+  // ---------------------------------------------------------------------------
+  function getRemainingTime() {
+    remainingTime = epochToIntervalString(started_at.getTime() - Date.now());
+  }
 
   // ---------------------------------------------------------------------------
   function goBack() {
@@ -31,9 +40,7 @@
     <div class="col">
       <div class="card border-0">
         <div class="card-body text-center">
-          <h2 class="card-title text-muted mt-3 mb-4">
-            {epochToIntervalString(p.waiting_time)}
-          </h2>
+          <h2 class="card-title text-muted mt-3 mb-4">{remainingTime}</h2>
 
           <h5 class="card-title text-muted">{p.meeting_name}</h5>
 
