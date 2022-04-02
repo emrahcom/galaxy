@@ -34,7 +34,7 @@ export async function getMeetingScheduleByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
+      SELECT m.id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration,
         extract('epoch' from age(started_at, now()))::integer as waiting_time,
         'host' as join_as
@@ -93,7 +93,7 @@ export async function getMeetingScheduleByMembership(
 ) {
   const sql = {
     text: `
-      SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
+      SELECT mem.id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration,
         extract('epoch' from age(started_at, now()))::integer as waiting_time,
         mem.join_as
