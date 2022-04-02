@@ -54,7 +54,7 @@
   async function join(meetingId: string) {
     try {
       warning = false;
-      window.location.href = `/pri/meeting/join/${meetingId}`;
+      window.location.href = `/pri/owner/join/${meetingId}`;
     } catch {
       warning = true;
     }

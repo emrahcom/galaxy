@@ -54,7 +54,7 @@
   async function join(membershipId: string) {
     try {
       warning = false;
-      window.location.href = `/pri/join/${membershipId}`;
+      window.location.href = `/pri/member/join/${membershipId}`;
     } catch {
       warning = true;
     }

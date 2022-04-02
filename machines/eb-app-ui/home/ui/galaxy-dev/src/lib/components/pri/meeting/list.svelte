@@ -83,9 +83,9 @@
 
               {#if p.chain_enabled}
                 {#if p.schedule_type === "scheduled"}
-                  <Join href="/pri/meeting/waiting/{p.id}" />
+                  <Join href="/pri/owner/waiting/{p.id}" />
                 {:else}
-                  <Join href="/pri/meeting/join/{p.id}" />
+                  <Join href="/pri/owner/join/{p.id}" />
                 {/if}
               {/if}
             {:else if p.ownership === "member"}
