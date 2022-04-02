@@ -8,7 +8,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let p: MeetingSchedule222;
-  const REFRESH_SEC = 120;
+  const REFRESH_SEC = 60;
 
   let warning = false;
   let started_at = new Date(Date.now() + p.waiting_time * 1000);
