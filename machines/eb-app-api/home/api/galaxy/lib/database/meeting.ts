@@ -61,9 +61,6 @@ export async function getPublicMeeting(meetingId: string) {
 // consumer is owner but object isn't sent to the client side.
 // -----------------------------------------------------------------------------
 export async function getMeetingLinkset(identityId: string, meetingId: string) {
-  await updateMeetingRoomSuffix(meetingId);
-  await updateMeetingRoomAccessTime(meetingId);
-
   const sql = {
     text: `
       SELECT m.id, m.name, r.name as room_name, s.name as schedule_name,
@@ -109,6 +106,11 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
     ],
   };
 
+  const linkset = await fetch(sql) as MeetingLinkset[];
+    .then((rows) => rows[0]);
+  await updateMeetingRoomSuffix(linkset.id);
+  await updateMeetingRoomAccessTime(linkset.id);
+
   return await fetch(sql) as MeetingLinkset[];
 }
 
@@ -119,9 +121,6 @@ export async function getMeetingLinksetByMembership(
   identityId: string,
   membershipId: string,
 ) {
-  //await updateMeetingRoomSuffix(meetingId);
-  //await updateMeetingRoomAccessTime(meetingId);
-
   const sql = {
     text: `
       SELECT m.id, m.name, r.name as room_name, s.name as schedule_name,
@@ -180,6 +179,11 @@ export async function getMeetingLinksetByMembership(
       membershipId,
     ],
   };
+
+  const linkset = await fetch(sql) as MeetingLinkset[];
+    .then((rows) => rows[0]);
+  await updateMeetingRoomSuffix(linkset.id);
+  await updateMeetingRoomAccessTime(linkset.id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
@@ -243,6 +247,11 @@ export async function getMeetingLinksetByCode(code: string) {
       code,
     ],
   };
+
+  const linkset = await fetch(sql) as MeetingLinkset[];
+    .then((rows) => rows[0]);
+  await updateMeetingRoomSuffix(linkset.id);
+  await updateMeetingRoomAccessTime(linkset.id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
