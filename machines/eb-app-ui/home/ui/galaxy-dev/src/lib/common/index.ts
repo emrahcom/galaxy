@@ -1,12 +1,12 @@
 export function epochToIntervalString(time: number) {
   try {
-    const day = Math.floor(time / 86400);
+    const day = Math.trunc(time / 86400);
     let remainder = time % 86400;
 
-    const hour = Math.floor(remainder / 3600);
+    const hour = Math.trunc(remainder / 3600);
     remainder = remainder % 3600;
 
-    const min = Math.floor(remainder / 60);
+    const min = Math.trunc(remainder / 60);
     const sec = Math.trunc(remainder % 60);
 
     let interval = "";
