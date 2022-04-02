@@ -36,7 +36,7 @@ export async function getMeetingScheduleByMeeting(
     text: `
       SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        'host' as join_as
+        s.started_at - now() as waiting_time, 'host' as join_as
       FROM meeting m
         JOIN room r ON m.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -94,7 +94,7 @@ export async function getMeetingScheduleByMembership(
     text: `
       SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        mem.join_as
+        s.started_at - now() as waiting_time, mem.join_as
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
