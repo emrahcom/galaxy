@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FORM_WIDTH } from "$lib/config";
   import { epochToIntervalString, toLocaleTime } from "$lib/common";
   import type { MeetingSchedule222 } from "$lib/types";
   import Back from "$lib/components/common/button-on-click.svelte";
@@ -40,8 +41,8 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="waiting">
-  <div class="row mx-auto mt-2">
-    <div class="col">
+  <div class="row mx-auto mt-2 justify-content-center">
+    <div class="col" style="width:{FORM_WIDTH};">
       <div class="card border-0">
         <div class="card-body text-center">
           <h2 class="card-title text-muted mt-3 mb-4">{remainingTime}</h2>
