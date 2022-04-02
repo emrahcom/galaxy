@@ -94,9 +94,9 @@
 
               {#if p.enabled && p.chain_enabled}
                 {#if p.schedule_type === "scheduled"}
-                  <Join href="/pri/waiting/{p.membership_id}" />
+                  <Join href="/pri/member/waiting/{p.membership_id}" />
                 {:else}
-                  <Join href="/pri/join/{p.membership_id}" />
+                  <Join href="/pri/member/join/{p.membership_id}" />
                 {/if}
               {/if}
             {/if}
