@@ -8,7 +8,7 @@
   export let p: MeetingSchedule222;
 
   let warning = false;
-  let started_at = new Date(Date.now() + p.waiting_time * 1000);
+  let started_at = new Date(Date.now() + p.waiting_time);
   let remainingTime = "";
 
   getRemainingTime();
