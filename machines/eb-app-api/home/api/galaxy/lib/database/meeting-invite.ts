@@ -85,7 +85,7 @@ export async function addMeetingInvite(
   const sql = {
     text: `
       INSERT INTO meeting_invite (identity_id, meeting_id, name, invite_to,
-        join_as, disposable)
+        join_as, disposable, expired_at)
       VALUES (
         $1,
         (SELECT id
@@ -93,7 +93,11 @@ export async function addMeetingInvite(
          WHERE id = $2
            AND identity_id = $1
         ),
-        $3, $4, $5, $6
+        $3, $4, $5, $6,
+        CASE $4
+          WHEN 'audience' THEN now() + interval '365 days'
+          WHEN 'member' THEN now() + interval '3 days'
+        END
       )
       RETURNING id, created_at as at`,
     args: [
