@@ -41,15 +41,15 @@
         <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
+            <p class="card-text text-muted small">
+              {toLocaleTime(p.expired_at)}
+            </p>
+
+            <p class="card-text text-muted small">
+              {p.invite_to} as {p.join_as}
+            </p>
+
             {#if p.invite_to === "member"}
-              <p class="card-text text-muted small">
-                {toLocaleTime(p.expired_at)}
-              </p>
-
-              <p class="card-text text-muted small">
-                {p.invite_to} as {p.join_as}
-              </p>
-
               <p class="card-text text-muted">
                 {$page.url.origin}/pri/meeting/partnership/add/{p.code}
               </p>
@@ -58,12 +58,6 @@
                 <Copy label="copy" on:click={() => copyForMember(p.code)} />
               {/if}
             {:else}
-              <p class="card-text text-muted small">permanent</p>
-
-              <p class="card-text text-muted small">
-                {p.invite_to} as {p.join_as}
-              </p>
-
               <p class="card-text text-muted">
                 {#if p.meeting_schedule_type === "scheduled"}
                   {$page.url.origin}/aud/waiting/{p.code}
