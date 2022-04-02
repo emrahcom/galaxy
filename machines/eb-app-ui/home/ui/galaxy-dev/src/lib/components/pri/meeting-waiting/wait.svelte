@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { toLocaleTime } from "$lib/common";
+  import { epochToIntervalString, toLocaleTime } from "$lib/common";
   import type { MeetingSchedule222 } from "$lib/types";
   import Back from "$lib/components/common/button-on-click.svelte";
   import Join from "$lib/components/common/button-on-click.svelte";
@@ -31,6 +31,10 @@
     <div class="col">
       <div class="card border-0">
         <div class="card-body text-center">
+          <h5 class="card-title text-muted">
+            {epochToIntervalString(p.waiting_time)}
+          </h5>
+
           <h5 class="card-title text-muted">{p.meeting_name}</h5>
 
           {#if p.schedule_name}
