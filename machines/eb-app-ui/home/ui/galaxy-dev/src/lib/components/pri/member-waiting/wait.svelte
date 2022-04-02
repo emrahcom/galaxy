@@ -22,7 +22,7 @@
     const interval = (started_at.getTime() - Date.now()) / 1000;
 
     if (interval < 0) {
-      join(p.meeting_id);
+      join(p.id);
       return;
     }
 
@@ -30,7 +30,7 @@
     if (counter > REFRESH_SEC) {
       counter = 0;
 
-      await getById("/api/pri/meeting/schedule/get/bymeeting", p.meeting_id)
+      await getById("/api/pri/meeting/schedule/get/bymembership", p.id)
         .then((s) => {
           p = s;
           started_at = new Date(Date.now() + p.waiting_time * 1000);
@@ -49,10 +49,10 @@
   }
 
   // ---------------------------------------------------------------------------
-  async function join(meetingId: string) {
+  async function join(membershipId: string) {
     try {
       warning = false;
-      window.location.href = `/pri/meeting/join/${meetingId}`;
+      window.location.href = `/pri/join/${membershipId}`;
     } catch {
       warning = true;
     }
@@ -87,12 +87,15 @@
           mt-3 gap-5"
         >
           <Back label="Back" on:click={goBack} />
-          <Join
-            label="Join Now"
-            on:click={() => {
-              join(p.meeting_id);
-            }}
-          />
+
+          {#if p.join_as === "host"}
+            <Join
+              label="Join Now"
+              on:click={() => {
+                join(p.id);
+              }}
+            />
+          {/if}
         </div>
       </div>
     </div>

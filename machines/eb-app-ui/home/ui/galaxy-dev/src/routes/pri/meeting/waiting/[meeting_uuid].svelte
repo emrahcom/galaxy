@@ -3,7 +3,7 @@
   import { getById } from "$lib/api";
   import Back from "$lib/components/common/button-on-click.svelte";
   import Subheader from "$lib/components/common/subheader-center.svelte";
-  import Wait from "$lib/components/pri/meeting-waiting/wait.svelte";
+  import Wait from "$lib/components/pri/owner-waiting/wait.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const meetingId = $page.params.meeting_uuid;
