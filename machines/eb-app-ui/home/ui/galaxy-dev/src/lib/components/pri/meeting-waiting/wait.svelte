@@ -82,7 +82,10 @@
           {/each}
         {/if}
 
-        <div class="card-footer bg-body border-0 text-center mt-3">
+        <div
+          class="card-footer d-flex justify-content-center bg-body border-0
+          mt-3 gap-5"
+        >
           <Back label="Back" on:click={goBack} />
           <Join
             label="Join Now"
