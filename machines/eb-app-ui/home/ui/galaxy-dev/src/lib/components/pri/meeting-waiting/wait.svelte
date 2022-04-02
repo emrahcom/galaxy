@@ -31,9 +31,9 @@
     <div class="col">
       <div class="card border-0">
         <div class="card-body text-center">
-          <h5 class="card-title text-muted">
+          <h2 class="card-title text-muted mt-3 mb-4">
             {epochToIntervalString(p.waiting_time)}
-          </h5>
+          </h2>
 
           <h5 class="card-title text-muted">{p.meeting_name}</h5>
 
