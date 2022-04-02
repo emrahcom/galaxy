@@ -106,7 +106,7 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
     ],
   };
 
-  const linkset = await fetch(sql) as MeetingLinkset[];
+  const linkset = await fetch(sql) as MeetingLinkset[]
     .then((rows) => rows[0]);
   await updateMeetingRoomSuffix(linkset.id);
   await updateMeetingRoomAccessTime(linkset.id);
@@ -180,7 +180,7 @@ export async function getMeetingLinksetByMembership(
     ],
   };
 
-  const linkset = await fetch(sql) as MeetingLinkset[];
+  const linkset = await fetch(sql) as MeetingLinkset[]
     .then((rows) => rows[0]);
   await updateMeetingRoomSuffix(linkset.id);
   await updateMeetingRoomAccessTime(linkset.id);
@@ -248,7 +248,7 @@ export async function getMeetingLinksetByCode(code: string) {
     ],
   };
 
-  const linkset = await fetch(sql) as MeetingLinkset[];
+  const linkset = await fetch(sql) as MeetingLinkset[]
     .then((rows) => rows[0]);
   await updateMeetingRoomSuffix(linkset.id);
   await updateMeetingRoomAccessTime(linkset.id);
