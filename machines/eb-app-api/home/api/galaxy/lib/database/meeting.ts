@@ -185,7 +185,7 @@ export async function getMeetingLinksetByMembership(
 }
 
 // -----------------------------------------------------------------------------
-// consumer is public
+// consumer is audience
 // -----------------------------------------------------------------------------
 export async function getMeetingLinksetByCode(code: string) {
   const sql = {
