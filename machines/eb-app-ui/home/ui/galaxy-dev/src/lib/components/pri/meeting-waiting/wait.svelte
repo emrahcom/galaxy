@@ -1,26 +1,41 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { epochToIntervalString, toLocaleTime } from "$lib/common";
+  import { getById } from "$lib/api";
   import type { MeetingSchedule222 } from "$lib/types";
   import Back from "$lib/components/common/button-on-click.svelte";
   import Join from "$lib/components/common/button-on-click.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let p: MeetingSchedule222;
+  const REFRESH_SEC = 120;
 
   let warning = false;
   let started_at = new Date(Date.now() + p.waiting_time * 1000);
   let remainingTime = "";
+  let counter = 0;
 
   getRemainingTime();
 
   // ---------------------------------------------------------------------------
-  function getRemainingTime() {
+  async function getRemainingTime() {
     const interval = (started_at.getTime() - Date.now()) / 1000;
 
     if (interval < 0) {
       join(p.meeting_id);
       return;
+    }
+
+    counter++;
+    if (counter > REFRESH_SEC) {
+      counter = 0;
+
+      await getById("/api/pri/meeting/schedule/get/bymeeting", p.meeting_id)
+        .then((s) => {
+          p = s;
+          started_at = new Date(Date.now() + p.waiting_time * 1000);
+        })
+        .catch();
     }
 
     remainingTime = epochToIntervalString(interval);
