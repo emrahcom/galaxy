@@ -7,7 +7,7 @@ export function epochToIntervalString(time: number) {
     remainder = remainder % 3600;
 
     const min = Math.floor(remainder / 60);
-    const sec = remainder % 60;
+    const sec = Math.trunc(remainder % 60);
 
     let interval = "";
 

@@ -8,14 +8,18 @@
   export let p: MeetingSchedule222;
 
   let warning = false;
-  let started_at = new Date(Date.now() + p.waiting_time);
+  let started_at = new Date(Date.now() + p.waiting_time * 1000);
   let remainingTime = "";
 
   getRemainingTime();
 
   // ---------------------------------------------------------------------------
   function getRemainingTime() {
-    remainingTime = epochToIntervalString(started_at.getTime() - Date.now());
+    const interval = (started_at.getTime() - Date.now()) / 1000;
+
+    remainingTime = epochToIntervalString(interval);
+
+    setTimeout(getRemainingTime, 1000);
   }
 
   // ---------------------------------------------------------------------------
