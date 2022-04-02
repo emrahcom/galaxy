@@ -226,6 +226,19 @@ export interface MeetingSchedule222 {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingSchedule111 {
+  code: string;
+  meeting_name: string;
+  meeting_info: string;
+  schedule_name: string;
+  started_at: string;
+  ended_at: string;
+  duration: number;
+  waiting_time: number;
+  join_as: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingLinkset {
   id: string;
   name: string;
