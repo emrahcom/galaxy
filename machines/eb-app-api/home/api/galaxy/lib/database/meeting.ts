@@ -58,7 +58,7 @@ export async function getPublicMeeting(meetingId: string) {
 }
 
 // -----------------------------------------------------------------------------
-// consumer is owner
+// consumer is owner but object isn't sent to the client side.
 // -----------------------------------------------------------------------------
 export async function getMeetingLinkset(identityId: string, meetingId: string) {
   await updateMeetingRoomSuffix(meetingId);
@@ -66,9 +66,9 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
 
   const sql = {
     text: `
-      SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
-        r.suffix, d.auth_type, d.domain_attr, 'host' as join_as, s.started_at,
-        s.ended_at, s.duration, pr.name as profile_name,
+      SELECT m.id, m.name, r.name as room_name, s.name as schedule_name,
+        r.has_suffix, r.suffix, d.auth_type, d.domain_attr, 'host' as join_as,
+        s.started_at, s.ended_at, s.duration, pr.name as profile_name,
         pr.email as profile_email
       FROM meeting m
         JOIN room r ON m.room_id = r.id
@@ -113,7 +113,7 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
 }
 
 // -----------------------------------------------------------------------------
-// consumer is member
+// consumer is member but object isn't sent to the client side.
 // -----------------------------------------------------------------------------
 export async function getMeetingLinksetByMembership(
   identityId: string,
@@ -124,9 +124,9 @@ export async function getMeetingLinksetByMembership(
 
   const sql = {
     text: `
-      SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
-        r.suffix, d.auth_type, d.domain_attr, mem.join_as, s.started_at,
-        s.ended_at, s.duration, pr.name as profile_name,
+      SELECT m.id, m.name, r.name as room_name, s.name as schedule_name,
+        r.has_suffix, r.suffix, d.auth_type, d.domain_attr, mem.join_as,
+        s.started_at, s.ended_at, s.duration, pr.name as profile_name,
         pr.email as profile_email
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
@@ -185,14 +185,15 @@ export async function getMeetingLinksetByMembership(
 }
 
 // -----------------------------------------------------------------------------
-// consumer is audience
+// consumer is audience but object isn't sent to the client side.
 // -----------------------------------------------------------------------------
 export async function getMeetingLinksetByCode(code: string) {
   const sql = {
     text: `
-      SELECT m.name, r.name as room_name, s.name as schedule_name, r.has_suffix,
-        r.suffix, d.auth_type, d.domain_attr, iv.join_as, s.started_at,
-        s.ended_at, s.duration, '' as profile_name, '' as profile_email
+      SELECT m.id, m.name, r.name as room_name, s.name as schedule_name,
+        r.has_suffix, r.suffix, d.auth_type, d.domain_attr, iv.join_as,
+        s.started_at, s.ended_at, s.duration, '' as profile_name,
+        '' as profile_email
       FROM meeting_invite iv
         JOIN meeting m ON iv.meeting_id = m.id
         JOIN room r ON m.room_id = r.id
