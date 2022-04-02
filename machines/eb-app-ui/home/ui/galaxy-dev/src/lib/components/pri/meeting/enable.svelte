@@ -52,7 +52,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="enable">
   <div class="d-flex mt-2 justify-content-center">
-    <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+    <form on:submit|preventDefault={onSubmit} style="max-width:{FORM_WIDTH};">
       <Text name="name" label="Name" value={p.name} readonly={true} />
       <Textarea name="info" label="Info" value={p.info} readonly={true} />
 

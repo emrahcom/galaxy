@@ -63,7 +63,7 @@
 <section id="waiting">
   <div class="row mx-auto mt-2 justify-content-center">
     <div class="col">
-      <div class="card border-0 mx-auto" style="width:{FORM_WIDTH};">
+      <div class="card border-0 mx-auto" style="max-width:{FORM_WIDTH};">
         <div class="card-body text-center">
           <h2 class="card-title text-muted mt-3 mb-4">{remainingTime}</h2>
 
