@@ -1,5 +1,10 @@
 import { fetch } from "./common.ts";
-import type { Id, MeetingSchedule, MeetingSchedule222 } from "./types.ts";
+import type {
+  Id,
+  MeetingSchedule,
+  MeetingSchedule111,
+  MeetingSchedule222,
+} from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeetingSchedule(
@@ -53,25 +58,23 @@ export async function getMeetingScheduleByMeeting(
         AND i1.enabled
         AND i2.enabled
         AND i3.enabled
-        AND CASE r.identity_id
-              WHEN $1 THEN true
-              ELSE (SELECT enabled
-                    FROM room_partner
-                    WHERE identity_id = $1
-                      AND room_id = r.id
-                   )
-            END
-        AND CASE d.identity_id
-              WHEN r.identity_id THEN true
-              ELSE CASE d.public
-                     WHEN true THEN true
-                     ELSE (SELECT enabled
-                           FROM domain_partner
-                           WHERE identity_id = r.identity_id
-                             AND domain_id = d.id
-                          )
-                   END
-            END
+        AND (r.identity_id = $1
+             OR EXISTS (SELECT 1
+                        FROM room_partner
+                        WHERE identity_id = $1
+                          AND room_id = r.id
+                          AND enabled
+                       )
+            )
+        AND (d.public
+             OR d.identity_id = r.identity_id
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                          AND enabled
+                       )
+            )
         AND s.ended_at > now()
       ORDER BY s.started_at
       LIMIT 1`,
@@ -114,25 +117,23 @@ export async function getMeetingScheduleByMembership(
         AND i1.enabled
         AND i2.enabled
         AND i3.enabled
-        AND CASE r.identity_id
-              WHEN m.identity_id THEN true
-              ELSE (SELECT enabled
-                    FROM room_partner
-                    WHERE identity_id = m.identity_id
-                      AND room_id = r.id
-                   )
-            END
-        AND CASE d.identity_id
-              WHEN r.identity_id THEN true
-              ELSE CASE d.public
-                     WHEN true THEN true
-                     ELSE (SELECT enabled
-                           FROM domain_partner
-                           WHERE identity_id = r.identity_id
-                             AND domain_id = d.id
-                          )
-                   END
-            END
+        AND (r.identity_id = m.identity_id
+             OR EXISTS (SELECT 1
+                        FROM room_partner
+                        WHERE identity_id = m.identity_id
+                          AND room_id = r.id
+                          AND enabled
+                       )
+            )
+        AND (d.public
+             OR d.identity_id = r.identity_id
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                          AND enabled
+                       )
+            )
         AND s.ended_at > now()
       ORDER BY s.started_at
       LIMIT 1`,
@@ -143,6 +144,62 @@ export async function getMeetingScheduleByMembership(
   };
 
   return await fetch(sql) as MeetingSchedule222[];
+}
+
+// -----------------------------------------------------------------------------
+// consumer is audience
+// -----------------------------------------------------------------------------
+export async function getMeetingScheduleByCode(code: string) {
+  const sql = {
+    text: `
+      SELECT iv.code, m.name as meeting_name, m.info as meeting_info,
+        s.name as schedule_name, s.started_at, s.ended_at, s.duration,
+        extract('epoch' from age(started_at, now()))::integer as waiting_time,
+        iv.join_as
+      FROM meeting_invite iv
+        JOIN meeting m ON iv.meeting_id = m.id
+        JOIN room r ON m.room_id = r.id
+        JOIN domain d ON r.domain_id = d.id
+        JOIN identity i1 ON d.identity_id = i1.id
+        JOIN identity i2 ON r.identity_id = i2.id
+        JOIN identity i3 ON m.identity_id = i3.id
+        JOIN meeting_schedule s ON m.id = s.meeting_id
+      WHERE iv.code = $1
+        AND iv.enabled
+        AND iv.invite_to = 'audience'
+        AND iv.expired_at > now()
+        AND m.enabled
+        AND r.enabled
+        AND d.enabled
+        AND i1.enabled
+        AND i2.enabled
+        AND i3.enabled
+        AND (r.identity_id = m.identity_id
+             OR EXISTS (SELECT 1
+                        FROM room_partner
+                        WHERE identity_id = m.identity_id
+                          AND room_id = r.id
+                          AND enabled
+                       )
+            )
+        AND (d.public
+             OR d.identity_id = r.identity_id
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = r.identity_id
+                          AND domain_id = d.id
+                          AND enabled
+                       )
+            )
+        AND s.ended_at > now()
+      ORDER BY s.started_at
+      LIMIT 1`,
+    args: [
+      code,
+    ],
+  };
+
+  return await fetch(sql) as MeetingSchedule111[];
 }
 
 // -----------------------------------------------------------------------------
