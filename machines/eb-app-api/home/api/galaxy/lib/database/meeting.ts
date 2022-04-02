@@ -204,6 +204,7 @@ export async function getMeetingLinksetByCode(code: string) {
       WHERE iv.code = $1
         AND iv.enabled
         AND iv.invite_to = 'audience'
+        AND iv.expired_at > now()
         AND CASE iv.join_as
               WHEN 'host' THEN true
               ELSE (m.schedule_type != 'scheduled'
