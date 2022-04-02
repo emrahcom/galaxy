@@ -94,7 +94,7 @@ export async function addMeetingInvite(
            AND identity_id = $1
         ),
         $3, $4, $5, $6,
-        CASE $4
+        CASE $4::meeting_invite_type
           WHEN 'audience' THEN now() + interval '365 days'
           WHEN 'member' THEN now() + interval '3 days'
         END
