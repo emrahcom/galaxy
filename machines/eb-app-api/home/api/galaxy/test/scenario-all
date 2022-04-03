@@ -369,6 +369,11 @@ bash $BASEDIR/scripts/pub/meeting/list-limit-offset
 bash $BASEDIR/scripts/pub/meeting/list-huge-offset
 bash $BASEDIR/scripts/pub/meeting/list-invalid-post
 
+# meeting-schedule
+####
+#### get bycode tests
+####
+
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
