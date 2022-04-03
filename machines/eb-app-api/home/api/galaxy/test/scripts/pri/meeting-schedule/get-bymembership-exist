@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=2 || SET=$1
+
+# ------------------------------------------------------------------------------
+# get bymembership for an existing schedule
+# ------------------------------------------------------------------------------
+membership_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-membership-add-bycode-id-$SET-2-res)
+JSON=$(cat <<EOF
+{
+    "id": "$membership_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/schedule" \
+    "get/bymembership" "id" "$JSON" 1
