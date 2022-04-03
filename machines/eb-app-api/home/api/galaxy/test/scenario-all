@@ -347,8 +347,10 @@ bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-nolimit-nooffset $SET1
 bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-limit $SET1
 bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-huge-offset $SET1
 bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-invalid-post $SET1
+
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-exist $SET1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-nonexist $SET1
 ####
-#### get bymeeting tests
 #### get bymembership tests
 ####
 
