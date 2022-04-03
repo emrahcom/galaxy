@@ -54,7 +54,7 @@
   async function join(code: string) {
     try {
       warning = false;
-      window.location.href = `/pub/aud/join/${code}`;
+      window.location.href = `/aud/join/${code}`;
     } catch {
       warning = true;
     }
