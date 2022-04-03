@@ -29,7 +29,9 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
   const meetingId = pl.id;
 
   const linkset = await getMeetingLinkset(identityId, meetingId)
-    .then((rows) => rows[0]);
+    .then((rows) => rows[0])
+    .catch(() => null);
+  if (!linkset) return [];
 
   let remaining = 3600;
   if (linkset.remaining) remaining = linkset.remaining;
@@ -52,7 +54,10 @@ async function getLinkByMembership(
   const membershipId = pl.id;
 
   const linkset = await getMeetingLinksetByMembership(identityId, membershipId)
-    .then((rows) => rows[0]);
+    .then((rows) => rows[0])
+    .catch(() => null);
+  if (!linkset) return [];
+
   const url = await generateMeetingUrl(linkset);
 
   const link = [{
