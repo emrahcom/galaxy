@@ -360,9 +360,12 @@ bash $BASEDIR/scripts/pub/hello
 # meeting
 bash $BASEDIR/scripts/pub/meeting/get-exist
 bash $BASEDIR/scripts/pub/meeting/get-nonexist
-####
-#### get link bycode tests
-####
+
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist $SET1
+bash $BASEDIR/scripts/pub/meeting/get-link-bycode-exist
+bash $BASEDIR/scripts/pub/meeting/get-link-bycode-nonexist
+
 bash $BASEDIR/scripts/pub/meeting/list-nolimit-nooffset
 bash $BASEDIR/scripts/pub/meeting/list-limit
 bash $BASEDIR/scripts/pub/meeting/list-limit-offset
