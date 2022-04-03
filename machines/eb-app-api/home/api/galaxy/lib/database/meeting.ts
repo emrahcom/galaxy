@@ -97,6 +97,7 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
                           AND enabled
                        )
             )
+        AND s.ended_at > now()
       ORDER BY started_at
       LIMIT 1
         `,
@@ -169,6 +170,7 @@ export async function getMeetingLinksetByMembership(
                           AND enabled
                        )
             )
+        AND s.ended_at > now()
       ORDER BY started_at
       LIMIT 1
         `,
@@ -238,6 +240,7 @@ export async function getMeetingLinksetByCode(code: string) {
                           AND enabled
                        )
             )
+        AND s.ended_at > now()
       ORDER BY s.started_at
       LIMIT 1`,
     args: [
