@@ -89,6 +89,7 @@ export async function getMeetingScheduleByMeeting(
 
 // -----------------------------------------------------------------------------
 // consumer is member
+// add some random delay for guests to prevent them to login at the same time
 // -----------------------------------------------------------------------------
 export async function getMeetingScheduleByMembership(
   identityId: string,
@@ -98,7 +99,11 @@ export async function getMeetingScheduleByMembership(
     text: `
       SELECT mem.id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        extract('epoch' from age(started_at, now()))::integer as waiting_time,
+        extract('epoch' from age(started_at, now()))::integer
+          + CASE mem.join_as
+              WHEN 'host' THEN 0
+              WHEN 'guest' THEN 3 + floor(random()*27)
+            END as waiting_time,
         mem.join_as
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
@@ -148,13 +153,18 @@ export async function getMeetingScheduleByMembership(
 
 // -----------------------------------------------------------------------------
 // consumer is audience
+// add some random delay for guests to prevent them to login at the same time
 // -----------------------------------------------------------------------------
 export async function getMeetingScheduleByCode(code: string) {
   const sql = {
     text: `
       SELECT iv.code, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        extract('epoch' from age(started_at, now()))::integer as waiting_time,
+        extract('epoch' from age(started_at, now()))::integer
+          + CASE iv.join_as
+              WHEN 'host' THEN 0
+              WHEN 'guest' THEN 3 + floor(random()*27)
+            END as waiting_time,
         iv.join_as
       FROM meeting_invite iv
         JOIN meeting m ON iv.meeting_id = m.id
