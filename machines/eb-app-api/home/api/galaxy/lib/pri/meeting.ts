@@ -30,7 +30,7 @@ async function getLink(req: Request, identityId: string): Promise<unknown> {
 
   const linkset = await getMeetingLinkset(identityId, meetingId)
     .then((rows) => rows[0]);
-  const url = await generateMeetingUrl(linkset);
+  const url = await generateMeetingUrl(linkset, linkset.remaining);
 
   const link = [{
     url: url,
