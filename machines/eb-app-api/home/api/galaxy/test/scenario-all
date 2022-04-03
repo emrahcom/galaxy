@@ -350,9 +350,8 @@ bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-invalid-post $SET1
 
 bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-exist $SET1
 bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-nonexist $SET1
-####
-#### get bymembership tests
-####
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymembership-exist $SET2
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymembership-nonexist $SET2
 
 # ------------------------------------------------------------------------------
 # pub
