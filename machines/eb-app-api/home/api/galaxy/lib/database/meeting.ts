@@ -174,7 +174,6 @@ export async function getMeetingLinksetByMembership(
                           AND enabled
                        )
             )
-        AND s.ended_at > now()
         AND (m.schedule_type != 'scheduled'
              OR s.ended_at > now()
             )
