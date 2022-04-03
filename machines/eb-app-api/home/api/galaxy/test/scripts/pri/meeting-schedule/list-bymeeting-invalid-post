@@ -10,7 +10,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # get schedule list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
+meeting_id=$(jq -r ".[1].id" $TMP/api-pri-meeting-list-id-$SET-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id",
