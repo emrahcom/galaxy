@@ -24,7 +24,9 @@ async function getLinkByCode(req: Request): Promise<unknown> {
   const code = pl.code;
 
   const linkset = await getMeetingLinksetByCode(code)
-    .then((rows) => rows[0]);
+    .then((rows) => rows[0])
+    .catch(() => null);
+  if (!linkset) return [];
 
   let remaining = 3600;
   if (linkset.remaining) remaining = linkset.remaining;
