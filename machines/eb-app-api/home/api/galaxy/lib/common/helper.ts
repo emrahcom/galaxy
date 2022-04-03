@@ -1,4 +1,4 @@
-import { generateHostToken } from "./token.ts";
+import { generateGuestToken, generateHostToken } from "./token.ts";
 import type {
   MeetingLinkset,
   Profile,
@@ -9,7 +9,7 @@ import type {
 export async function generateRoomUrl(
   linkset: RoomLinkset,
   profile: Profile,
-  exp = 86400,
+  exp = 3600,
 ): Promise<string> {
   if (!profile.name) profile.name = "";
   if (!profile.email) profile.email = "";
@@ -48,7 +48,7 @@ export async function generateRoomUrl(
 // -----------------------------------------------------------------------------
 export async function generateMeetingUrl(
   linkset: MeetingLinkset,
-  exp = 86400,
+  exp = 3600,
 ): Promise<string> {
   if (!linkset.profile_name) linkset.profile_name = "";
   if (!linkset.profile_email) linkset.profile_email = "";
@@ -61,14 +61,25 @@ export async function generateMeetingUrl(
   url = `${url}/${roomName}`;
 
   if (linkset.auth_type === "token") {
-    const jwt = await generateHostToken(
-      linkset.domain_attr.app_id,
-      linkset.domain_attr.app_secret,
-      roomName,
-      linkset.profile_name,
-      linkset.profile_email,
-      exp,
-    );
+    if (linkset.join_as === "host") {
+      const jwt = await generateHostToken(
+        linkset.domain_attr.app_id,
+        linkset.domain_attr.app_secret,
+        roomName,
+        linkset.profile_name,
+        linkset.profile_email,
+        exp,
+      );
+    } else {
+      const jwt = await generateGuestToken(
+        linkset.domain_attr.app_id,
+        linkset.domain_attr.app_secret,
+        roomName,
+        linkset.profile_name,
+        linkset.profile_email,
+        exp,
+      );
+    }
 
     url = `${url}?jwt=${jwt}`;
   }

@@ -256,6 +256,7 @@ export interface MeetingLinkset {
   started_at: string;
   ended_at: string;
   duration: number;
+  remaining: number;
   profile_name: string;
   profile_email: string;
 }
