@@ -14,6 +14,7 @@ source $BASEDIR/../../common
 room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-$SET-1-res)
 
 hidden=false
+schedule_type="permanent"
 for i in $(seq 1 $NUM); do
     name="meeting-$(date +'%s')-$i-$RANDOM"
     JSON=$(cat <<EOF
@@ -21,7 +22,7 @@ for i in $(seq 1 $NUM); do
         "room_id": "$room_id",
         "name": "$name",
         "info": "some meeting info",
-        "schedule_type": "permanent",
+        "schedule_type": "$schedule_type",
         "hidden": $hidden,
         "restricted": true,
         "subscribable": true
@@ -29,6 +30,8 @@ for i in $(seq 1 $NUM); do
 EOF
 )
     [[ "$hidden" = false ]] && hidden=true || hidden=false
+    [[ "$schedule_type" = "permanent" ]] && schedule_type="scheduled" || \
+        schedule_type="permanent"
 
     bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting" "add" "id" \
         "$JSON" $i
