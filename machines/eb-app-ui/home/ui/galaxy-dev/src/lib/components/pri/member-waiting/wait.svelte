@@ -66,7 +66,9 @@
   <div class="d-flex mt-2 justify-content-center">
     <div class="card border-0 mx-auto" style="max-width:{FORM_WIDTH};">
       <div class="card-body text-center">
-        <h2 class="card-title text-muted mt-3 mb-4">{remainingTime}</h2>
+        <h2 class="card-title text-muted bg-light mt-2 mb-3 py-3">
+          {remainingTime}
+        </h2>
 
         <h5 class="card-title text-muted">{p.meeting_name}</h5>
 
