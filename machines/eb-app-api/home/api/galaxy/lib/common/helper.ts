@@ -61,7 +61,7 @@ export async function generateMeetingUrl(
   url = `${url}/${roomName}`;
 
   if (linkset.auth_type === "token") {
-    const jwt: string;
+    let jwt: string;
 
     if (linkset.join_as === "host") {
       jwt = await generateHostToken(
