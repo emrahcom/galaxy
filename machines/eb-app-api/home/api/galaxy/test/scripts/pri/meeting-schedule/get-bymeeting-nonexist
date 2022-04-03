@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && SET=1 || SET=$1
+
+# ------------------------------------------------------------------------------
+# get bymeeting for a nonexistent schedule
+# ------------------------------------------------------------------------------
+meeting_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$meeting_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-empty "$SET" "pri" "meeting/schedule" \
+    "get/bymeeting" "$JSON" 1
