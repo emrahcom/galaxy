@@ -11,7 +11,7 @@ source $BASEDIR/../../common
 # ------------------------------------------------------------------------------
 # add many new schedules
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
+meeting_id=$(jq -r ".[1].id" $TMP/api-pri-meeting-list-id-$SET-1-res)
 
 for i in $(seq 1 $NUM); do
     JSON=$(cat <<EOF
