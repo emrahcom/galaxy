@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get bycode for a nonexistent schedule
+# ------------------------------------------------------------------------------
+code_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "code": "$code_fake"
+}
+EOF
+)
+
+bash $TEMPLATES/action-guest-empty "pub" "meeting/schedule" "get/bycode" \
+    "$JSON" 1
