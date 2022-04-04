@@ -15,23 +15,23 @@ ACTION=$3
 ACTION_DASHED=$(echo $ACTION | sed 's~/~-~g')
 ATTR=$4
 JSON=$5
-[[ -z "$6" ]] && NUM=0 || NUM=$6
+[[ -z "$6" ]] && IDX=0 || IDX=$6
 
 # ------------------------------------------------------------------------------
 # /api/<service>/<class>/<action> -> attr
 # ------------------------------------------------------------------------------
 header <<< "/api/$SERVICE/$CLASS/$ACTION -> attr"
-rm -f $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$NUM-*
+rm -f $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$IDX-*
 
-echo "$JSON" >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$NUM-req
+echo "$JSON" >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$IDX-req
 
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
     --output-dir $TMP \
-    --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$NUM-res \
+    --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$IDX-res \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data "$JSON"
-res=$(jq . $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$NUM-res)
+res=$(jq . $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$IDX-res)
 
 inp <<< "$(echo $JSON | jq .)"
 out <<< "$res"
