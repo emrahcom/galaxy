@@ -13,27 +13,28 @@ CLASS=$2
 CLASS_DASHED=$(echo $CLASS | sed 's~/~-~g')
 ACTION=$3
 ACTION_DASHED=$(echo $ACTION | sed 's~/~-~g')
-JSON=$4
-[[ -z "$5" ]] && IDX=0 || IDX=$5
+TAG=$4
+JSON=$5
+[[ -z "$6" ]] && IDX=0 || IDX=$6
 
 # ------------------------------------------------------------------------------
 # /api/<service>/<class>/<action> -> empty
 # ------------------------------------------------------------------------------
-header <<< "/api/$SERVICE/$CLASS/$ACTION -> empty"
-rm -f $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-empty-$IDX-*
+header <<< "/api/$SERVICE/$CLASS/$ACTION [$TAG] -> empty"
+rm -f $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-empty-$IDX-*
 
-echo "$JSON" >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-empty-$IDX-req
+echo "$JSON" >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-empty-$IDX-req
 
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
     --output-dir $TMP \
-    --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-empty-$IDX-res \
+    --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-empty-$IDX-res \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data "$JSON"
-res=$(jq . $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-empty-$IDX-res)
+res=$(jq . $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-empty-$IDX-res)
 
 inp <<< "$(echo $JSON | jq .)"
 out <<< "$res"
 
 [[ "$res" != "[]" ]] && exit 1
-footer <<< "/api/$SERVICE/$CLASS/$ACTION -> empty"
+footer <<< "/api/$SERVICE/$CLASS/$ACTION [$TAG] -> empty"
