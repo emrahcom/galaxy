@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../common
+
+# ------------------------------------------------------------------------------
+# get bycode for an existing schedule
+# ------------------------------------------------------------------------------
+code=$(jq -r ".[0].code" $TMP/api-pri-meeting-invite-get-id-1-1-res)
+JSON=$(cat <<EOF
+{
+    "code": "$code"
+}
+EOF
+)
+
+bash $TEMPLATES/action-guest-attr "pub" "meeting/schedule" "get/bycode" "id" \
+    "$JSON" 1
