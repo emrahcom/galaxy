@@ -1,11 +1,11 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { get } from "$lib/api";
-  import identity from "$lib/stores/kratos/identity";
+  import type { Profile } from "$lib/types";
 
   let profileName = "";
 
-  const pr = get("/api/pri/profile/get/default")
+  get("/api/pri/profile/get/default")
     .then((item: Profile) => {
       profileName = item.name.charAt(0).toUpperCase() + item.name.slice(1);
     })
