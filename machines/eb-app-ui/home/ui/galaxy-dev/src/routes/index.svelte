@@ -4,9 +4,9 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="welcome">
-  <div class="row d-flex mt-2 justify-content-center">
-    <div class="col mx-auto" style="max-width:{FORM_WIDTH};">
-      hello
+  <div class="row d-flex mt-5 justify-content-center">
+    <div class="col mx-auto text-center" style="max-width:{FORM_WIDTH};">
+      <h2 class="text-muted">hello</h2>
     </div>
   </div>
 </section>
