@@ -375,9 +375,10 @@ bash $BASEDIR/scripts/pub/meeting/list-huge-offset
 bash $BASEDIR/scripts/pub/meeting/list-invalid-post
 
 # meeting-schedule
-####
-#### get bycode tests
-####
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $SET1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist $SET1
+bash $BASEDIR/scripts/pub/meeting-schedule/get-bycode-exist
+bash $BASEDIR/scripts/pub/meeting-schedule/get-bycode-nonexist
 
 # ------------------------------------------------------------------------------
 # completed
