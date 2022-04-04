@@ -6,7 +6,14 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="profile"
+ACTION="list"
+TAG="invalid"
+ATTR="id"
 
 # ------------------------------------------------------------------------------
 # get profile list (invalid limit, invalid offset)
@@ -19,4 +26,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET" "pri" "profile" "list" "$JSON" 1
+bash $TEMPLATES/action-member-empty $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
