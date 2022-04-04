@@ -7,7 +7,7 @@
 
   const pr = get("/api/pri/profile/get/default")
     .then((item: Profile) => {
-      profileName = item.profile_name;
+      profileName = item.name;
     })
     .catch(() => {
       // do nothing
