@@ -82,7 +82,7 @@ bash $BASEDIR/scripts/pri/domain/list-invalid-post $ID1
 
 # domain-invite
 bash $BASEDIR/scripts/pri/domain-invite/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1
+bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 1
 bash $BASEDIR/scripts/pri/domain-invite/get-exist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/get-nonexist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/get-bycode-exist $ID1
@@ -95,7 +95,9 @@ bash $BASEDIR/scripts/pri/domain-invite/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/del-exist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/del-nonexist $ID1
 
-bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 10
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 $i
+done
 bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-limit $ID1
 bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-huge-offset $ID1
