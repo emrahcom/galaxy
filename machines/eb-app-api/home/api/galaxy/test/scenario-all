@@ -29,7 +29,7 @@ bash $BASEDIR/scripts/pri/hello $ID1
 
 # profile
 bash $BASEDIR/scripts/pri/profile/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/profile/add-new $ID1
+bash $BASEDIR/scripts/pri/profile/add-new $ID1 1
 bash $BASEDIR/scripts/pri/profile/get-exist $ID1
 bash $BASEDIR/scripts/pri/profile/get-nonexist $ID1
 bash $BASEDIR/scripts/pri/profile/get-default $ID1
@@ -41,7 +41,9 @@ bash $BASEDIR/scripts/pri/profile/update-invalid-post $ID1
 bash $BASEDIR/scripts/pri/profile/del-exist $ID1
 bash $BASEDIR/scripts/pri/profile/del-nonexist $ID1
 
-bash $BASEDIR/scripts/pri/profile/add-new $ID1 10
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/profile/add-new $ID1 $i
+done
 bash $BASEDIR/scripts/pri/profile/set-default-exist $ID1
 bash $BASEDIR/scripts/pri/profile/set-default-nonexist $ID1
 bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset $ID1
@@ -50,7 +52,7 @@ bash $BASEDIR/scripts/pri/profile/list-limit-offset $ID1
 bash $BASEDIR/scripts/pri/profile/list-huge-offset $ID1
 bash $BASEDIR/scripts/pri/profile/list-invalid-post $ID1
 
-bash $BASEDIR/scripts/pri/profile/add-new $ID2
+bash $BASEDIR/scripts/pri/profile/add-new $ID2 1
 
 # domain
 bash $BASEDIR/scripts/pri/domain/add-invalid-post $ID1
