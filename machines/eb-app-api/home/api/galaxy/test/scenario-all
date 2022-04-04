@@ -5,6 +5,7 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+source $BASEDIR/scripts/config
 source $BASEDIR/scripts/common
 
 # ------------------------------------------------------------------------------
