@@ -8,7 +8,7 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/../../config
 source $BASEDIR/../common
 
-SET=$1
+ID=$1
 SERVICE=$2
 CLASS=$3
 CLASS_DASHED=$(echo $CLASS | sed 's~/~-~g')
@@ -16,25 +16,25 @@ ACTION=$4
 ACTION_DASHED=$(echo $ACTION | sed 's~/~-~g')
 ATTR=$5
 JSON=$6
-[[ -z "$7" ]] && NUM=0 || NUM=$7
+[[ -z "$7" ]] && IDX=0 || IDX=$7
 
 # ------------------------------------------------------------------------------
 # /api/<service>/<class>/<action> -> attr
 # ------------------------------------------------------------------------------
-header <<< "/api/$SERVICE/$CLASS/$ACTION -> $ATTR (set: $SET)"
-rm -f $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$SET-$NUM-*
+header <<< "/api/$SERVICE/$CLASS/$ACTION -> $ATTR (identity: $ID, index: $IDX)"
+rm -f $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$ID-$IDX-*
 
-echo "$JSON" >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$SET-$NUM-req
+echo "$JSON" >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$ID-$IDX-req
 
-cookieJar=$(cat $TMP/kratos-$SET-login-cookie)
+cookieJar=$(cat $TMP/kratos-$ID-login-cookie)
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
     --output-dir $TMP \
-    --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$SET-$NUM-res \
+    --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$ID-$IDX-res \
     --cookie $cookieJar --cookie-jar $cookieJar \
     -H "Accept: application/json" \
     -H "Content-Type: application/json" \
     --data "$JSON"
-res=$(jq . $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$SET-$NUM-res)
+res=$(jq . $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$ATTR-$ID-$IDX-res)
 
 inp <<< "$(echo $JSON | jq .)"
 out <<< "$res"
@@ -42,4 +42,4 @@ out <<< "$res"
 [[ -z "$(echo $res | jq .[0])" ]] && exit 1
 [[ -z "$(echo $res | jq -r .[0].$ATTR)" ]] && exit 1
 [[ "$(echo $res | jq -r .[0].$ATTR)" = "null" ]] && exit 1
-footer <<< "/api/$SERVICE/$CLASS/$ACTION -> $ATTR (set: $SET)"
+footer <<< "/api/$SERVICE/$CLASS/$ACTION -> $ATTR (identity: $ID, index: $IDX)"
