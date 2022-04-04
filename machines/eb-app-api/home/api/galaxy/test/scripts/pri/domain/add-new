@@ -18,7 +18,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # add new domain
 # ------------------------------------------------------------------------------
-name="sub-$(date +'%s')-$i-$RANDOM.mydomain.corp"
+name="sub-$(date +'%s')-$IDX-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
 {
     "name": "$name",
