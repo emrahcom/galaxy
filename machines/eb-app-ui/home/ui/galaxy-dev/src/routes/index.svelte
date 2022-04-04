@@ -13,7 +13,7 @@
         meeting rooms, etc), meeting schedules and attendees.
       </h4>
 
-      <h4 class="text-muted mb-5">
+      <h4 class="text-muted small mb-5">
         Please <a class="text-primary" href="/id/registration">Sign Up</a> if
         you don't have an account.
       </h4>
