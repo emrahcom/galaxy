@@ -6,12 +6,18 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="domain/invite"
+ACTION="list/bydomain"
+TAG="huge-offset"
 
 # ------------------------------------------------------------------------------
 # get invite list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$domain_id",
@@ -20,5 +26,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "domain/invite" \
-    "list/bydomain" "$JSON" 1
+bash $TEMPLATES/action-member-empty $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
