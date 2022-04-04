@@ -25,5 +25,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty $ID $SERVICE $CLASS $ACTION \
+bash $TEMPLATES/action-member-empty $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX
