@@ -12,7 +12,7 @@ source $BASEDIR/scripts/common
 # kratos
 # ------------------------------------------------------------------------------
 for i in $(seq 1 10); do
-    declare SET${i}=$i
+    declare ID${i}=$i
     bash $BASEDIR/scripts/kratos/registration $i
     bash $BASEDIR/scripts/kratos/login $i
 done
