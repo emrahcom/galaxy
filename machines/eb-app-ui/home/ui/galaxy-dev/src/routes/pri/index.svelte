@@ -20,7 +20,7 @@
     <div class="col mx-auto text-center" style="max-width:{FORM_WIDTH};">
       <h2 class="text-muted mb-5">Hello {profileName}</h2>
 
-      <h4 class="text-muted mb-5">
+      <h5 class="text-muted mb-5">
         Click
         <button
           class="btn btn-sm btn-outline-primary mx-2"
@@ -32,7 +32,7 @@
           <span class="bi bi-list" />
         </button>
         to start.
-      </h4>
+      </h5>
     </div>
   </div>
 </section>
