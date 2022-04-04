@@ -22,6 +22,20 @@
           If you don't have an account yet, please
           <a class="text-primary" href="/id/registration">Sign Up</a>.
         </h4>
+      {:else}
+        <h5 class="text-muted mb-5">
+          Click
+          <button
+            class="btn btn-sm btn-outline-primary mx-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasMenu"
+            aria-controls="offcanvasMenu"
+          >
+            <span class="bi bi-list" />
+          </button>
+          to start.
+        </h5>
       {/if}
     </div>
   </div>
