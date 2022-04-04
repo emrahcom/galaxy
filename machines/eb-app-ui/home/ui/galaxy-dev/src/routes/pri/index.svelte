@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { FORM_WIDTH } from "$lib/config";
+  import { get } from "$lib/api";
   import identity from "$lib/stores/kratos/identity";
 
   let profileName = "";
