@@ -1,5 +1,9 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
+  import { get } from "svelte/store";
+  import identity from "$lib/stores/kratos/identity";
+
+  const _identity = get(identity);
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -13,10 +17,12 @@
         meeting rooms, etc.), meeting schedules and attendees.
       </h4>
 
-      <h4 class="text-muted small mb-5">
-        If you don't have an account yet, please
-        <a class="text-primary" href="/id/registration">Sign Up</a>.
-      </h4>
+      {#if !_identity}
+        <h4 class="text-muted small mb-5">
+          If you don't have an account yet, please
+          <a class="text-primary" href="/id/registration">Sign Up</a>.
+        </h4>
+      {/if}
     </div>
   </div>
 </section>
