@@ -29,4 +29,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
-    "$JSON" $i
+    "$JSON" $IDX
