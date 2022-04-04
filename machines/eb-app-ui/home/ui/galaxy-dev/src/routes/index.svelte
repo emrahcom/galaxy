@@ -13,8 +13,8 @@
       <h2 class="text-muted mb-5">Welcome to eparto.net</h2>
 
       <h4 class="text-muted mb-5">
-        This site is for Fellow Jitsters to organize Jitsi resources (servers,
-        meeting rooms, etc.), meeting schedules and attendees.
+        This site is for Fellow Jitsters to organize Jitsi meetings, meeting
+        schedules and attendees.
       </h4>
 
       {#if !_identity}
