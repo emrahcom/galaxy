@@ -56,7 +56,7 @@ bash $BASEDIR/scripts/pri/profile/add-new $ID2 1
 
 # domain
 bash $BASEDIR/scripts/pri/domain/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/domain/add-new $ID1
+bash $BASEDIR/scripts/pri/domain/add-new $ID1 1
 bash $BASEDIR/scripts/pri/domain/get-exist $ID1
 bash $BASEDIR/scripts/pri/domain/get-nonexist $ID1
 bash $BASEDIR/scripts/pri/domain/add-exist $ID1
@@ -71,7 +71,9 @@ bash $BASEDIR/scripts/pri/domain/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/domain/del-exist $ID1
 bash $BASEDIR/scripts/pri/domain/del-nonexist $ID1
 
-bash $BASEDIR/scripts/pri/domain/add-new $ID1 10
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/domain/add-new $ID1 $i
+done
 bash $BASEDIR/scripts/pri/domain/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/domain/list-limit $ID1
 bash $BASEDIR/scripts/pri/domain/list-limit-offset $ID1
