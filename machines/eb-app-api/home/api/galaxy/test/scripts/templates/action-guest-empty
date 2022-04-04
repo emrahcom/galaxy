@@ -5,6 +5,7 @@ set -e
 # environment
 # ------------------------------------------------------------------------------
 BASEDIR=$(dirname $0)
+source $BASEDIR/../../config
 source $BASEDIR/../common
 
 SERVICE=$1
