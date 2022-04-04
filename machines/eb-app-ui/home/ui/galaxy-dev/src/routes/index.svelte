@@ -10,7 +10,7 @@
 
       <h4 class="text-muted mb-5">
         This site is for Fellow Jitsters to organize Jitsi resources (servers,
-        meeting rooms, etc), meeting schedules and attendees.
+        meeting rooms, etc.), meeting schedules and attendees.
       </h4>
 
       <h4 class="text-muted small mb-5">
