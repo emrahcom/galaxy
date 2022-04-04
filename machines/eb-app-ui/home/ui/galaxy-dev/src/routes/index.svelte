@@ -14,8 +14,8 @@
       </h4>
 
       <h4 class="text-muted small mb-5">
-        Please <a class="text-primary" href="/id/registration">Sign Up</a> if
-        you don't have an account.
+        If you don't have an account yet, please
+        <a class="text-primary" href="/id/registration">Sign Up</a>.
       </h4>
     </div>
   </div>
