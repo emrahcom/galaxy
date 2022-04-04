@@ -13,7 +13,6 @@ SERVICE="pri"
 CLASS="profile"
 ACTION="list"
 TAG="huge-offset"
-ATTR="id"
 
 # ------------------------------------------------------------------------------
 # get profile list (no limit, offset 1000000)

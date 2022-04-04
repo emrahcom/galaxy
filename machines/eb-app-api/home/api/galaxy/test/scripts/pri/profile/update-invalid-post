@@ -13,7 +13,6 @@ SERVICE="pri"
 CLASS="profile"
 ACTION="add"
 TAG="invalid"
-ATTR="id"
 
 # ------------------------------------------------------------------------------
 # try to update with invalid post

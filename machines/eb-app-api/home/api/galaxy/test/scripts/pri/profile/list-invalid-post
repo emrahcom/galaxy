@@ -13,7 +13,6 @@ SERVICE="pri"
 CLASS="profile"
 ACTION="list"
 TAG="invalid"
-ATTR="id"
 
 # ------------------------------------------------------------------------------
 # get profile list (invalid limit, invalid offset)
@@ -26,5 +25,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX

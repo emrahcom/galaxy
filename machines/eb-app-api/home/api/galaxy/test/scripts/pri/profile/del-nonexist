@@ -13,7 +13,6 @@ SERVICE="pri"
 CLASS="profile"
 ACTION="del"
 TAG="none"
-ATTR="id"
 
 # ------------------------------------------------------------------------------
 # delete a nonexistent profile

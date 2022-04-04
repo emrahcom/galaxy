@@ -13,7 +13,6 @@ SERVICE="pri"
 CLASS="profile"
 ACTION="update"
 TAG="none"
-ATTR="id"
 
 # ------------------------------------------------------------------------------
 # try to update a nonexistent profile

@@ -13,7 +13,6 @@ SERVICE="pri"
 CLASS="profile"
 ACTION="set/default"
 TAG="none"
-ATTR="id"
 
 # ------------------------------------------------------------------------------
 # set as default a nonexistent profile

@@ -13,7 +13,6 @@ SERVICE="pri"
 CLASS="profile"
 ACTION="add"
 TAG="exist"
-ATTR="id"
 
 # ------------------------------------------------------------------------------
 # try to add an already existing profile
