@@ -23,7 +23,7 @@
       <h4 class="text-muted mb-5">
         Click
         <button
-          class="btn btn-sm btn-outline-primary"
+          class="btn btn-sm btn-outline-primary mx-2"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasMenu"
