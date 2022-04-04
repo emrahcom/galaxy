@@ -6,7 +6,13 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="domain"
+ACTION="enable"
+TAG="none"
 
 # ------------------------------------------------------------------------------
 # enable a nonexistent domain
@@ -19,4 +25,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-empty "$SET" "pri" "domain" "enable" "$JSON" 1
+bash $TEMPLATES/action-member-empty $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
