@@ -9,18 +9,18 @@ source $BASEDIR/../../config
 source $BASEDIR/../common
 
 SERVICE=$1
-[[ -z "$2" ]] && NUM=0 || NUM=$2
+[[ -z "$2" ]] && IDX=0 || IDX=$2
 
 # ------------------------------------------------------------------------------
 # /api/<service>/hello -> text
 # ------------------------------------------------------------------------------
 header <<< "/api/$SERVICE/hello -> text"
-rm -f $TMP/api-$SERVICE-hello-text-$NUM
+rm -f $TMP/api-$SERVICE-hello-text-$IDX
 
 curl -ks -X POST https://$APP_FQDN/api/$SERVICE/hello \
-    --output-dir $TMP --output api-$SERVICE-hello-text-$NUM \
+    --output-dir $TMP --output api-$SERVICE-hello-text-$IDX \
     -H "Accept: application/json"
-res=$(jq . $TMP/api-$SERVICE-hello-text-$NUM)
+res=$(jq . $TMP/api-$SERVICE-hello-text-$IDX)
 
 out <<< "$res"
 
