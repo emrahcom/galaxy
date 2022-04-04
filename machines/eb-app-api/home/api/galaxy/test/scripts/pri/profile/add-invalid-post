@@ -7,12 +7,12 @@ source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
 [[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
 
 SERVICE="pri"
 CLASS="profile"
 ACTION="add"
 TAG="invalid-post"
-IDX=2
 
 # ------------------------------------------------------------------------------
 # try to add a new profile without an email field
