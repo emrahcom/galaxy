@@ -3,6 +3,7 @@ set -e
 
 BASEDIR=$(dirname $0)
 TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
 [[ -z "$1" ]] && SET=2 || SET=$1
