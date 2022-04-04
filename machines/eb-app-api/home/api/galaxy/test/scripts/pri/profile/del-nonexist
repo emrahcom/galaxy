@@ -26,4 +26,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-empty $ID $SERVICE $CLASS $ACTION $TAG \
-    "$JSON" $i
+    "$JSON" $IDX

@@ -18,8 +18,8 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # add new profile
 # ------------------------------------------------------------------------------
-name="profile-$(date +'%s')-$i-$RANDOM"
-email="profile-$i@mydomain.com"
+name="profile-$(date +'%s')-$IDX-$RANDOM"
+email="profile-$IDX@mydomain.com"
 JSON=$(cat <<EOF
 {
     "name": "$name",
