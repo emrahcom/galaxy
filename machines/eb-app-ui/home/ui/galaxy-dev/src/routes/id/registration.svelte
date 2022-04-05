@@ -30,7 +30,7 @@
         </section>
       </Layout>
     {:else}
-      <p class="text-center">Something went wrong</p>
+      <p class="text-center">...</p>
     {/if}
   {/await}
 </section>
