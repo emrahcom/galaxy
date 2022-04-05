@@ -6,12 +6,18 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="room/partner"
+ACTION="list/byroom"
+TAG="invalid"
 
 # ------------------------------------------------------------------------------
 # get partner list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-id-$SET-1-res)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$room_id",
@@ -21,5 +27,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET" "pri" "room/partner" "list/byroom" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
