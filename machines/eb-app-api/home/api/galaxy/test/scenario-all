@@ -82,7 +82,7 @@ bash $BASEDIR/scripts/pri/domain/list-invalid-post $ID1
 
 # domain-invite
 bash $BASEDIR/scripts/pri/domain-invite/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 1 1
 bash $BASEDIR/scripts/pri/domain-invite/get-exist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/get-nonexist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/get-bycode-exist $ID1
@@ -95,8 +95,9 @@ bash $BASEDIR/scripts/pri/domain-invite/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/del-exist $ID1
 bash $BASEDIR/scripts/pri/domain-invite/del-nonexist $ID1
 
-for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 $i
+for i in $(seq 1 100); do
+    (( d = (i - 1) % 10 + 1 ))
+    bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 $i $d
 done
 bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-limit $ID1
@@ -154,6 +155,7 @@ bash $BASEDIR/scripts/pri/room/del-nonexist $ID1
 
 for i in $(seq 1 10); do
     bash $BASEDIR/scripts/pri/room/add-new $ID1 $i
+    bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 $i
 done
 bash $BASEDIR/scripts/pri/room/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/room/list-limit $ID1
@@ -163,13 +165,10 @@ bash $BASEDIR/scripts/pri/room/list-invalid-post $ID1
 
 bash $BASEDIR/scripts/pri/room/get-link-exist $ID1
 bash $BASEDIR/scripts/pri/room/get-link-nonexist $ID1
-for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 $i
-done
 
 # room-invite
 bash $BASEDIR/scripts/pri/room-invite/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/room-invite/add-new $ID1
+bash $BASEDIR/scripts/pri/room-invite/add-new $ID1 1 1
 bash $BASEDIR/scripts/pri/room-invite/get-exist $ID1
 bash $BASEDIR/scripts/pri/room-invite/get-nonexist $ID1
 bash $BASEDIR/scripts/pri/room-invite/get-bycode-exist $ID1
@@ -182,8 +181,9 @@ bash $BASEDIR/scripts/pri/room-invite/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/room-invite/del-exist $ID1
 bash $BASEDIR/scripts/pri/room-invite/del-nonexist $ID1
 
-for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/room-invite/add-new $ID1 $i
+for i in $(seq 1 100); do
+    (( r = (i - 1) % 10 + 1 ))
+    bash $BASEDIR/scripts/pri/room-invite/add-new $ID1 $i $r
 done
 bash $BASEDIR/scripts/pri/room-invite/list-byroom-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/room-invite/list-byroom-limit $ID1
@@ -253,8 +253,10 @@ bash $BASEDIR/scripts/pri/meeting/get-link-nonexist $ID1
 
 # meeting-invite
 bash $BASEDIR/scripts/pri/meeting-invite/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-member $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member $ID1 1 1
 bash $BASEDIR/scripts/pri/meeting-invite/get-exist $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/get-nonexist $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-exist $ID1
@@ -267,8 +269,13 @@ bash $BASEDIR/scripts/pri/meeting-invite/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/del-exist $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/del-nonexist $ID1
 
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $ID1 10
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-member $ID1 10
+for i in $(seq 1 100); do
+    (( m = (i - 1) % 10 + 1 ))
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member $ID1 $i $m
+done
 bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-limit $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-huge-offset $ID1
