@@ -6,22 +6,26 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
-[[ -z "$2" ]] && NUM=1 || NUM=$2
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="room"
+ACTION="add-ephemeral"
+TAG="new"
+ATTR="id"
 
 # ------------------------------------------------------------------------------
 # add many new ephemeral rooms
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-id-$SET-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
 
-for i in $(seq 1 $NUM); do
-    JSON=$(cat <<EOF
-    {
-        "domain_id": "$domain_id"
-    }
+JSON=$(cat <<EOF
+{
+    "domain_id": "$domain_id"
+}
 EOF
 )
 
-    bash $TEMPLATES/action-member-attr "$SET" "pri" "room" "add-ephemeral" \
-        "id" "$JSON" $i
-done
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
