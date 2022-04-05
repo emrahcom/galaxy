@@ -182,7 +182,9 @@ bash $BASEDIR/scripts/pri/room-invite/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/room-invite/del-exist $ID1
 bash $BASEDIR/scripts/pri/room-invite/del-nonexist $ID1
 
-bash $BASEDIR/scripts/pri/room-invite/add-new $ID1 10
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/room-invite/add-new $ID1 $i
+done
 bash $BASEDIR/scripts/pri/room-invite/list-byroom-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/room-invite/list-byroom-limit $ID1
 bash $BASEDIR/scripts/pri/room-invite/list-byroom-huge-offset $ID1
