@@ -6,12 +6,20 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="meeting"
+ACTION="disable"
+TAG="exist"
+ATTR="id"
 
 # ------------------------------------------------------------------------------
 # disable an existing meeting
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-$SET-1-res)
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-permanent-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id"
@@ -19,5 +27,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting" "disable" "id" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
