@@ -224,7 +224,7 @@ bash $BASEDIR/scripts/pri/room-partner/del-nonexist $ID1
 
 # meeting
 bash $BASEDIR/scripts/pri/meeting/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1
+bash $BASEDIR/scripts/pri/meeting/add-new-permanent $ID1
 bash $BASEDIR/scripts/pri/meeting/get-exist $ID1
 bash $BASEDIR/scripts/pri/meeting/get-nonexist $ID1
 
@@ -238,7 +238,10 @@ bash $BASEDIR/scripts/pri/meeting/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/meeting/del-exist $ID1
 bash $BASEDIR/scripts/pri/meeting/del-nonexist $ID1
 
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1 10
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/meeting/add-new-permanent $ID1 $i
+    bash $BASEDIR/scripts/pri/meeting/add-new-scheduled $ID1 $i
+done
 bash $BASEDIR/scripts/pri/meeting/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/meeting/list-limit $ID1
 bash $BASEDIR/scripts/pri/meeting/list-limit-offset $ID1
