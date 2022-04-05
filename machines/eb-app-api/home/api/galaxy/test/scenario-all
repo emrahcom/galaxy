@@ -201,7 +201,9 @@ bash $BASEDIR/scripts/pri/room-partnership/del-exist $ID2
 bash $BASEDIR/scripts/pri/room-partnership/del-nonexist $ID2
 
 bash $BASEDIR/scripts/pri/room-invite/enable-exist $ID1
-bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 $ID1 10
+for i in $(seq 1 10); do
+  bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 $ID1 $i
+done
 
 # room-partner
 bash $BASEDIR/scripts/pri/room-partner/get-exist $ID1 $ID2
