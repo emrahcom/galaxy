@@ -175,6 +175,16 @@ sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
 
+# set-letsencrypt-cert
+cp $MACHINES/common/usr/local/sbin/set-letsencrypt-cert $ROOTFS/usr/local/sbin/
+chmod 744 $ROOTFS/usr/local/sbin/set-letsencrypt-cert
+
+# certbot service
+mkdir -p $ROOTFS/etc/systemd/system/certbot.service.d
+cp $MACHINES/common/etc/systemd/system/certbot.service.d/override.conf \
+    $ROOTFS/etc/systemd/system/certbot.service.d/
+lxc-attach -n $MACH -- systemctl daemon-reload
+
 # ------------------------------------------------------------------------------
 # CONTAINER SERVICES
 # ------------------------------------------------------------------------------
@@ -182,3 +192,9 @@ lxc-stop -n $MACH
 lxc-wait -n $MACH -s STOPPED
 lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
+
+# ------------------------------------------------------------------------------
+# HOST CUSTOMIZATION FOR REVERSE PROXY
+# ------------------------------------------------------------------------------
+cp $MACHINES/galaxy-host/usr/local/sbin/set-letsencrypt-cert /usr/local/sbin/
+chmod 744 /usr/local/sbin/set-letsencrypt-cert
