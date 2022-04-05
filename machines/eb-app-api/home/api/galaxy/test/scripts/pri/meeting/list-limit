@@ -6,7 +6,14 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="meeting"
+ACTION="list"
+TAG="limit"
+ATTR="id"
 
 # ------------------------------------------------------------------------------
 # get meeting list (limit 2, no offset)
@@ -18,4 +25,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting" "list" "id" "$JSON" 2
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
