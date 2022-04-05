@@ -152,7 +152,9 @@ bash $BASEDIR/scripts/pri/room/enable-nonexist $ID1
 bash $BASEDIR/scripts/pri/room/del-exist $ID1
 bash $BASEDIR/scripts/pri/room/del-nonexist $ID1
 
-bash $BASEDIR/scripts/pri/room/add-new $ID1 10
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/room/add-new $ID1 $i
+done
 bash $BASEDIR/scripts/pri/room/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/room/list-limit $ID1
 bash $BASEDIR/scripts/pri/room/list-limit-offset $ID1
@@ -161,7 +163,9 @@ bash $BASEDIR/scripts/pri/room/list-invalid-post $ID1
 
 bash $BASEDIR/scripts/pri/room/get-link-exist $ID1
 bash $BASEDIR/scripts/pri/room/get-link-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 10
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 $i
+done
 
 # room-invite
 bash $BASEDIR/scripts/pri/room-invite/add-invalid-post $ID1
