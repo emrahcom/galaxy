@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../../config
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="meeting"
+ACTION="add"
+TAG="new-scheduled"
+ATTR="id"
+
+# ------------------------------------------------------------------------------
+# add many new meetings
+# ------------------------------------------------------------------------------
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-1-res)
+
+hidden=true
+schedule_type="scheduled"
+name="meeting-$(date +'%s')-$i-$RANDOM"
+JSON=$(cat <<EOF
+{
+    "room_id": "$room_id",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "$schedule_type",
+    "hidden": $hidden,
+    "restricted": true,
+    "subscribable": true
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
