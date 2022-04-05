@@ -7,15 +7,23 @@ source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
 # the room owner id
-[[ -z "$1" ]] && SET1=1 || SET1=$1
+[[ -z "$1" ]] && ID1=1 || ID1=$1
 # the partner id
-[[ -z "$2" ]] && SET2=2 || SET2=$2
+[[ -z "$2" ]] && ID2=2 || ID2=$2
+
+[[ -z "$3" ]] && IDX=1 || IDX=$3
+
+SERVICE="pri"
+CLASS="room/partner"
+ACTION="get"
+TAG="exist"
+ATTR="id"
 
 # ------------------------------------------------------------------------------
 # get for an existing partner
 # ------------------------------------------------------------------------------
 partner_id=$(jq -r ".[0].id" \
-                 $TMP/api-pri-room-partnership-add-bycode-id-$SET2-1-res)
+                 $TMP/api-pri-room-partnership-add-bycode-new-id-$ID2-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$partner_id"
@@ -23,5 +31,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET1" "pri" "room/partner" "get" "id" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-attr $ID1 $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
