@@ -7,7 +7,10 @@ source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
 [[ -z "$1" ]] && ID=1 || ID=$1
+# room index
 [[ -z "$2" ]] && IDX=1 || IDX=$2
+# domain index
+[[ -z "$3" ]] && IDX2=1 || IDX2=$3
 
 SERVICE="pri"
 CLASS="room"
@@ -18,7 +21,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # add many new ephemeral rooms
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX2-res)
 
 JSON=$(cat <<EOF
 {
