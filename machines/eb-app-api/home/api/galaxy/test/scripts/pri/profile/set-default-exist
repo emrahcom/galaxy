@@ -18,7 +18,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # set as default an existing profile
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$profile_id"
