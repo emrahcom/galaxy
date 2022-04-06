@@ -18,7 +18,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-$IDX-res)
 name="profile-$(date +'%s')-$RANDOM"
 email="myprofile@mydomain.com"
 JSON=$(cat <<EOF
