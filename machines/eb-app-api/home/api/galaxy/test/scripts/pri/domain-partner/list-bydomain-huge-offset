@@ -12,12 +12,12 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="domain/partner"
 ACTION="list/bydomain"
-TAG="huge"
+TAG="huge-offset"
 
 # ------------------------------------------------------------------------------
 # get partner list (no limit, offset 1000000)
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$domain_id",
