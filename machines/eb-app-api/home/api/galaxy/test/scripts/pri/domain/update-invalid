@@ -18,7 +18,7 @@ ACTION="update"
 # ------------------------------------------------------------------------------
 TAG="invalid-auth"
 
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
 name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
 {
@@ -42,7 +42,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 # ------------------------------------------------------------------------------
 TAG="invalid-auth"
 
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
 name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
 JSON=$(cat <<EOF
 {
