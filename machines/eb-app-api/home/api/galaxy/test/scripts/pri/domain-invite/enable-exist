@@ -18,7 +18,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # enable an existing invite
 # ------------------------------------------------------------------------------
-invite_id=$(jq -r ".[0].id" $TMP/api-pri-domain-invite-add-new-id-$ID-1-res)
+invite_id=$(jq -r ".[0].id" $TMP/api-pri-domain-invite-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$invite_id"
