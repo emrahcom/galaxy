@@ -16,9 +16,9 @@ TAG="limit"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
-# get partner list (limit 1, no offset)
+# get partner list (limit 2, no offset)
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$domain_id",
