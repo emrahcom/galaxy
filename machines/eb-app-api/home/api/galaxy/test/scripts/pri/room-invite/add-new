@@ -6,10 +6,10 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
+# invite
 [[ -z "$1" ]] && ID=1 || ID=$1
-# invite index
-[[ -z "$2" ]] && IDX=1 || IDX=$2
-# room index
+[[ -z "$2" ]] && IDX1=1 || IDX1=$2
+# room
 [[ -z "$3" ]] && IDX2=1 || IDX2=$3
 
 SERVICE="pri"
@@ -31,4 +31,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
-    "$JSON" $IDX
+    "$JSON" $IDX1
