@@ -6,8 +6,11 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
+# room
 [[ -z "$1" ]] && ID=1 || ID=$1
-[[ -z "$2" ]] && IDX=1 || IDX=$2
+[[ -z "$2" ]] && IDX1=1 || IDX1=$2
+# domain
+[[ -z "$3" ]] && IDX2=1 || IDX2=$3
 
 SERVICE="pri"
 CLASS="room"
@@ -18,8 +21,8 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-1-res)
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-$IDX1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX2-res)
 name="room-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {
@@ -32,4 +35,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
-    "$JSON" $IDX
+    "$JSON" $IDX1
