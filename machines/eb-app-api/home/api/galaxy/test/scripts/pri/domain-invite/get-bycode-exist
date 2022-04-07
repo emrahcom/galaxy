@@ -19,7 +19,7 @@ ATTR="domain_name"
 # get by code for an existing invite
 # ------------------------------------------------------------------------------
 invite_code=$(jq -r ".[0].code" \
-    $TMP/api-pri-domain-invite-get-exist-id-$ID-1-res)
+    $TMP/api-pri-domain-invite-get-exist-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "code": "$invite_code"
