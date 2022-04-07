@@ -19,7 +19,7 @@ TAG="new"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
-# add many new invites
+# add new invite
 # ------------------------------------------------------------------------------
 domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX2-res)
 JSON=$(cat <<EOF
