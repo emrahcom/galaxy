@@ -18,7 +18,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # get invite list (limit 2, no offset)
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-1-res)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$room_id",
