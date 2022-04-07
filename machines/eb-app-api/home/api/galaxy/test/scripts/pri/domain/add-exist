@@ -18,7 +18,7 @@ TAG="exist"
 # try to add an already existing domain
 # duplicated (identity_id, name)
 # ------------------------------------------------------------------------------
-name=$(jq -r ".[0].name" $TMP/api-pri-domain-get-exist-id-$ID-1-res)
+name=$(jq -r ".[0].name" $TMP/api-pri-domain-get-exist-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "name": "$name",
