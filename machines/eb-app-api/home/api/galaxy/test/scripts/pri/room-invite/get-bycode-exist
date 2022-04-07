@@ -18,7 +18,8 @@ ATTR="code"
 # ------------------------------------------------------------------------------
 # get by code for an existing invite
 # ------------------------------------------------------------------------------
-invite_code=$(jq -r ".[0].code" $TMP/api-pri-room-invite-get-exist-id-$ID-1-res)
+invite_code=$(jq -r ".[0].code" \
+    $TMP/api-pri-room-invite-get-exist-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "code": "$invite_code"
