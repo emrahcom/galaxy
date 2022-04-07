@@ -12,13 +12,13 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="domain/invite"
 ACTION="list/bydomain"
-TAG="nolimit-noofset"
+TAG="nolimit-nooffset"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
 # get invite list (no limit, no offset)
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$domain_id"
