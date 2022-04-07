@@ -6,12 +6,12 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-# the domain owner id
+# the domain owner
 [[ -z "$1" ]] && ID1=1 || ID1=$1
-# the partner id
-[[ -z "$2" ]] && ID2=1 || ID2=$2
-
-[[ -z "$3" ]] && IDX=1 || IDX=$3
+[[ -z "$2" ]] && IDX1=1 || IDX1=$2
+# the partner
+[[ -z "$3" ]] && ID2=2 || ID2=$3
+[[ -z "$4" ]] && IDX2=1 || IDX2=$4
 
 SERVICE="pri"
 CLASS="domain/partner"
@@ -23,7 +23,7 @@ ATTR="id"
 # disable an existing partner
 # ------------------------------------------------------------------------------
 partner_id=$(jq -r ".[0].id" \
-                 $TMP/api-pri-domain-partnership-add-bycode-new-id-$ID2-1-res)
+    $TMP/api-pri-domain-partnership-add-bycode-new-id-$ID2-$IDX2-res)
 JSON=$(cat <<EOF
 {
     "id": "$partner_id"
@@ -32,4 +32,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-attr $ID1 $SERVICE $CLASS $ACTION $TAG $ATTR \
-    "$JSON" $IDX
+    "$JSON" $IDX1
