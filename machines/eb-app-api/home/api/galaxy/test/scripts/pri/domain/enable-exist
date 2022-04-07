@@ -18,7 +18,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # enable an existing domain
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$domain_id"
