@@ -7,15 +7,21 @@ source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
 # the membership owner id
-[[ -z "$1" ]] && SET1=2 || SET1=$1
+[[ -z "$1" ]] && ID1=2 || ID1=$1
 # the invite owner id
-[[ -z "$2" ]] && SET2=1 || SET2=$2
+[[ -z "$2" ]] && ID2=1 || ID2=$2
+[[ -z "$3" ]] && IDX=1 || IDX=$3
+
+SERVICE="pri"
+CLASS="meeting/membership"
+ACTION="add/bycode"
+TAG="exist"
 
 # ------------------------------------------------------------------------------
 # try to add an already existing membership
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET1-1-res)
-code=$(jq -r ".[0].code" $TMP/api-pri-meeting-invite-get-id-$SET2-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID1-1-res)
+code=$(jq -r ".[0].code" $TMP/api-pri-meeting-invite-get-exist-id-$ID2-1-res)
 JSON=$(cat <<EOF
 {
     "profile_id": "$profile_id",
@@ -24,5 +30,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET1" "pri" "meeting/membership" \
-    "add/bycode" "$JSON" 1
+bash $TEMPLATES/action-member-error $ID1 $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX

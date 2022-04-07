@@ -31,180 +31,189 @@ bash $BASEDIR/scripts/pri/hello $ID1
 bash $BASEDIR/scripts/pri/profile/add-invalid $ID1
 bash $BASEDIR/scripts/pri/profile/add-new $ID1 1
 bash $BASEDIR/scripts/pri/profile/get-exist $ID1 1
-bash $BASEDIR/scripts/pri/profile/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/profile/get-none $ID1
 bash $BASEDIR/scripts/pri/profile/get-default $ID1 1
 bash $BASEDIR/scripts/pri/profile/add-exist $ID1 1
 
 bash $BASEDIR/scripts/pri/profile/update-exist $ID1 1
-bash $BASEDIR/scripts/pri/profile/update-nonexist $ID1
+bash $BASEDIR/scripts/pri/profile/update-none $ID1
 bash $BASEDIR/scripts/pri/profile/update-invalid $ID1 1
 bash $BASEDIR/scripts/pri/profile/del-exist $ID1 1
-bash $BASEDIR/scripts/pri/profile/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/profile/del-none $ID1
 
 for i in $(seq 1 10); do
     bash $BASEDIR/scripts/pri/profile/add-new $ID1 $i
 done
+
 bash $BASEDIR/scripts/pri/profile/set-default-exist $ID1 1
-bash $BASEDIR/scripts/pri/profile/set-default-nonexist $ID1
+bash $BASEDIR/scripts/pri/profile/set-default-none $ID1
 bash $BASEDIR/scripts/pri/profile/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/profile/list-limit $ID1
 bash $BASEDIR/scripts/pri/profile/list-limit-offset $ID1
 bash $BASEDIR/scripts/pri/profile/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/profile/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/profile/list-invalid $ID1
 
 bash $BASEDIR/scripts/pri/profile/add-new $ID2 1
 
 # domain
-bash $BASEDIR/scripts/pri/domain/add-invalid-post $ID1
+bash $BASEDIR/scripts/pri/domain/add-invalid $ID1
 bash $BASEDIR/scripts/pri/domain/add-new $ID1 1
-bash $BASEDIR/scripts/pri/domain/get-exist $ID1
-bash $BASEDIR/scripts/pri/domain/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/add-exist $ID1
+bash $BASEDIR/scripts/pri/domain/get-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain/get-none $ID1
+bash $BASEDIR/scripts/pri/domain/add-exist $ID1 1
 
-bash $BASEDIR/scripts/pri/domain/update-exist $ID1
-bash $BASEDIR/scripts/pri/domain/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/domain/disable-exist $ID1
-bash $BASEDIR/scripts/pri/domain/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/enable-exist $ID1
-bash $BASEDIR/scripts/pri/domain/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain/del-exist $ID1
-bash $BASEDIR/scripts/pri/domain/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/domain/update-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain/update-none $ID1
+bash $BASEDIR/scripts/pri/domain/update-invalid $ID1 1
+bash $BASEDIR/scripts/pri/domain/disable-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain/disable-none $ID1
+bash $BASEDIR/scripts/pri/domain/enable-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain/enable-none $ID1
+bash $BASEDIR/scripts/pri/domain/del-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain/del-none $ID1
 
 for i in $(seq 1 10); do
     bash $BASEDIR/scripts/pri/domain/add-new $ID1 $i
 done
+
 bash $BASEDIR/scripts/pri/domain/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/domain/list-limit $ID1
 bash $BASEDIR/scripts/pri/domain/list-limit-offset $ID1
 bash $BASEDIR/scripts/pri/domain/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/domain/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/domain/list-invalid $ID1
 
 # domain-invite
-bash $BASEDIR/scripts/pri/domain-invite/add-invalid-post $ID1
+bash $BASEDIR/scripts/pri/domain-invite/add-invalid $ID1
 bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 1 1
-bash $BASEDIR/scripts/pri/domain-invite/get-exist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/get-bycode-exist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/get-bycode-nonexist $ID1
+bash $BASEDIR/scripts/pri/domain-invite/get-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/get-none $ID1
+bash $BASEDIR/scripts/pri/domain-invite/get-bycode-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/get-bycode-none $ID1
 
-bash $BASEDIR/scripts/pri/domain-invite/disable-exist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/enable-exist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/del-exist $ID1
-bash $BASEDIR/scripts/pri/domain-invite/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/domain-invite/disable-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/disable-none $ID1
+bash $BASEDIR/scripts/pri/domain-invite/enable-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/enable-none $ID1
+bash $BASEDIR/scripts/pri/domain-invite/del-exist $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/del-none $ID1
 
 for i in $(seq 1 20); do
     (( d = (i - 1) % 10 + 1 ))
     bash $BASEDIR/scripts/pri/domain-invite/add-new $ID1 $i $d
 done
-bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-limit $ID1
-bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-huge-offset $ID1
-bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-invalid-post $ID1
+
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-nolimit-nooffset $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-limit $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-huge-offset $ID1 1
+bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-invalid $ID1 1
 
 # domain-partnership
-bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-invalid-post $ID2
-bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $ID2 $ID1
-bash $BASEDIR/scripts/pri/domain-partnership/get-exist $ID2
-bash $BASEDIR/scripts/pri/domain-partnership/get-nonexist $ID2
-bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-exist $ID2
+bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-invalid $ID2
+bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $ID2 1 $ID1 1
+bash $BASEDIR/scripts/pri/domain-partnership/get-exist $ID2 1
+bash $BASEDIR/scripts/pri/domain-partnership/get-none $ID2
+bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-exist $ID2 1
 
-bash $BASEDIR/scripts/pri/domain-partnership/del-exist $ID2
-bash $BASEDIR/scripts/pri/domain-partnership/del-nonexist $ID2
+bash $BASEDIR/scripts/pri/domain-partnership/del-exist $ID2 1
+bash $BASEDIR/scripts/pri/domain-partnership/del-none $ID2
 
-bash $BASEDIR/scripts/pri/domain-invite/enable-exist $ID1
+bash $BASEDIR/scripts/pri/domain-invite/enable-exist $ID1 1
 for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $ID2 $ID1 $i
+    bash $BASEDIR/scripts/pri/domain-invite/get-exist $ID1 $i
+    bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $ID2 $i $ID1 $i
 done
 
 # domain-partner
-bash $BASEDIR/scripts/pri/domain-partner/get-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/domain-partner/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/domain-partner/get-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/domain-partner/get-none $ID1
 
-bash $BASEDIR/scripts/pri/domain-partner/disable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/domain-partner/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/domain-partner/enable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/domain-partner/enable-nonexist $ID1
+bash $BASEDIR/scripts/pri/domain-partner/disable-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/domain-partner/disable-none $ID1
+bash $BASEDIR/scripts/pri/domain-partner/enable-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/domain-partner/enable-none $ID1
 
-bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-limit $ID1
-bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-huge-offset $ID1
-bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-invalid-post $ID1
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-nolimit-nooffset $ID1 1
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-limit $ID1 1
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-huge-offset $ID1 1
+bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-invalid $ID1 1
 
-bash $BASEDIR/scripts/pri/domain-partner/del-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/domain-partner/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/domain-partner/del-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/domain-partner/del-none $ID1
 
 # room
-bash $BASEDIR/scripts/pri/room/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/room/add-new $ID1
-bash $BASEDIR/scripts/pri/room/get-exist $ID1
-bash $BASEDIR/scripts/pri/room/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/add-exist $ID1
+bash $BASEDIR/scripts/pri/room/add-invalid $ID1
+bash $BASEDIR/scripts/pri/room/add-new $ID1 1 1
+bash $BASEDIR/scripts/pri/room/get-exist $ID1 1
+bash $BASEDIR/scripts/pri/room/get-none $ID1
+bash $BASEDIR/scripts/pri/room/add-exist $ID1 1
 
-bash $BASEDIR/scripts/pri/room/update-exist $ID1
-bash $BASEDIR/scripts/pri/room/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/room/disable-exist $ID1
-bash $BASEDIR/scripts/pri/room/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/enable-exist $ID1
-bash $BASEDIR/scripts/pri/room/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/room/del-exist $ID1
-bash $BASEDIR/scripts/pri/room/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/room/update-exist $ID1 1 1
+bash $BASEDIR/scripts/pri/room/update-none $ID1
+bash $BASEDIR/scripts/pri/room/update-invalid $ID1
+bash $BASEDIR/scripts/pri/room/disable-exist $ID1 1
+bash $BASEDIR/scripts/pri/room/disable-none $ID1
+bash $BASEDIR/scripts/pri/room/enable-exist $ID1 1
+bash $BASEDIR/scripts/pri/room/enable-none $ID1
+bash $BASEDIR/scripts/pri/room/del-exist $ID1 1
+bash $BASEDIR/scripts/pri/room/del-none $ID1
 
 for i in $(seq 1 20); do
     (( d = (i - 1) % 10 + 1 ))
     bash $BASEDIR/scripts/pri/room/add-new $ID1 $i $d
     bash $BASEDIR/scripts/pri/room/add-ephemeral $ID1 $i $d
 done
+
 bash $BASEDIR/scripts/pri/room/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/room/list-limit $ID1
 bash $BASEDIR/scripts/pri/room/list-limit-offset $ID1
 bash $BASEDIR/scripts/pri/room/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/room/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/room/list-invalid $ID1
 
-bash $BASEDIR/scripts/pri/room/get-link-exist $ID1
-bash $BASEDIR/scripts/pri/room/get-link-nonexist $ID1
+bash $BASEDIR/scripts/pri/room/get-link-exist $ID1 1
+bash $BASEDIR/scripts/pri/room/get-link-none $ID1
 
 # room-invite
-bash $BASEDIR/scripts/pri/room-invite/add-invalid-post $ID1
+bash $BASEDIR/scripts/pri/room-invite/add-invalid $ID1
 bash $BASEDIR/scripts/pri/room-invite/add-new $ID1 1 1
-bash $BASEDIR/scripts/pri/room-invite/get-exist $ID1
-bash $BASEDIR/scripts/pri/room-invite/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/room-invite/get-bycode-exist $ID1
-bash $BASEDIR/scripts/pri/room-invite/get-bycode-nonexist $ID1
+bash $BASEDIR/scripts/pri/room-invite/get-exist $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/get-none $ID1
+bash $BASEDIR/scripts/pri/room-invite/get-bycode-exist $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/get-bycode-none $ID1
 
-bash $BASEDIR/scripts/pri/room-invite/disable-exist $ID1
-bash $BASEDIR/scripts/pri/room-invite/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/room-invite/enable-exist $ID1
-bash $BASEDIR/scripts/pri/room-invite/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/room-invite/del-exist $ID1
-bash $BASEDIR/scripts/pri/room-invite/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/room-invite/disable-exist $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/disable-none $ID1
+bash $BASEDIR/scripts/pri/room-invite/enable-exist $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/enable-none $ID1
+bash $BASEDIR/scripts/pri/room-invite/del-exist $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/del-none $ID1
 
 for i in $(seq 1 20); do
     (( r = (i - 1) % 10 + 1 ))
     bash $BASEDIR/scripts/pri/room-invite/add-new $ID1 $i $r
 done
-bash $BASEDIR/scripts/pri/room-invite/list-byroom-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/room-invite/list-byroom-limit $ID1
-bash $BASEDIR/scripts/pri/room-invite/list-byroom-huge-offset $ID1
-bash $BASEDIR/scripts/pri/room-invite/list-byroom-invalid-post $ID1
+
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-nolimit-nooffset $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-limit $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-huge-offset $ID1 1
+bash $BASEDIR/scripts/pri/room-invite/list-byroom-invalid $ID1 1
 
 # room-partnership
-bash $BASEDIR/scripts/pri/room-partnership/add-bycode-invalid-post $ID2
-bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 $ID1
-bash $BASEDIR/scripts/pri/room-partnership/get-exist $ID2
-bash $BASEDIR/scripts/pri/room-partnership/get-nonexist $ID2
-bash $BASEDIR/scripts/pri/room-partnership/add-bycode-exist $ID2
+bash $BASEDIR/scripts/pri/room-partnership/add-bycode-invalid $ID2
+bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 1 $ID1 1
+bash $BASEDIR/scripts/pri/room-partnership/get-exist $ID2 1
+bash $BASEDIR/scripts/pri/room-partnership/get-none $ID2
+bash $BASEDIR/scripts/pri/room-partnership/add-bycode-exist $ID2 1 $ID1 1
 
-bash $BASEDIR/scripts/pri/room-partnership/del-exist $ID2
-bash $BASEDIR/scripts/pri/room-partnership/del-nonexist $ID2
+bash $BASEDIR/scripts/pri/room-partnership/del-exist $ID2 1
+bash $BASEDIR/scripts/pri/room-partnership/del-none $ID2
 
-bash $BASEDIR/scripts/pri/room-invite/enable-exist $ID1
+bash $BASEDIR/scripts/pri/room-invite/enable-exist $ID1 1
 for i in $(seq 1 10); do
-  bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 $ID1 $i
+  bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 $i $ID1 $i
 done
+
+echo xxxxxxxxxxxxxxxxxxxxx
+exit 0
 
 # room-partner
 bash $BASEDIR/scripts/pri/room-partner/get-exist $ID1 $ID2
@@ -244,6 +253,7 @@ for i in $(seq 1 20); do
     bash $BASEDIR/scripts/pri/meeting/add-new-permanent $ID1 $i $r
     bash $BASEDIR/scripts/pri/meeting/add-new-scheduled $ID1 $i $r
 done
+
 bash $BASEDIR/scripts/pri/meeting/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/meeting/list-limit $ID1
 bash $BASEDIR/scripts/pri/meeting/list-limit-offset $ID1
@@ -278,6 +288,7 @@ for i in $(seq 1 20); do
     bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member $ID1 $i $m
     bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member $ID1 $i $m
 done
+
 bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-limit $ID1
 bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-huge-offset $ID1
@@ -299,7 +310,6 @@ for i in $(seq 1 10); do
     bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new $ID2 $ID1 $i
 done
 
-echo xxxxxxxxxxxxxxxxxxxxx
 # meeting-member
 bash $BASEDIR/scripts/pri/meeting-member/get-exist $ID1 $ID2
 bash $BASEDIR/scripts/pri/meeting-member/get-nonexist $ID1

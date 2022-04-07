@@ -6,14 +6,21 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+[[ -z "$1" ]] && ID=2 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="meeting/membership"
+ACTION="update"
+TAG="exist"
+ATTR="id"
 
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-bycode-id-$SET-1-res)
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
+    $TMP/api-pri-meeting-membership-add-bycode-new-id-$ID-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id",
@@ -22,5 +29,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-attr "$SET" "pri" "meeting/membership" "update" \
-    "id" "$JSON" 1
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
