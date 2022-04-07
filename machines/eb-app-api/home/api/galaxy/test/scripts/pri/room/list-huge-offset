@@ -12,7 +12,7 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="room"
 ACTION="list"
-TAG="huge"
+TAG="huge-offset"
 
 # ------------------------------------------------------------------------------
 # get room list (no limit, offset 1000000)
