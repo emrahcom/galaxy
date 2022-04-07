@@ -12,7 +12,7 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="profile"
 ACTION="add"
-TAG="invalid-post"
+TAG="invalid"
 
 # ------------------------------------------------------------------------------
 # try to add a new profile without an email field
