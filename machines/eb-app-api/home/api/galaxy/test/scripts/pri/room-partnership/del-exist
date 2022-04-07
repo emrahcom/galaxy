@@ -19,7 +19,7 @@ ATTR="id"
 # delete an existing partnership
 # ------------------------------------------------------------------------------
 partnership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-room-partnership-add-bycode-new-id-$ID-1-res)
+    $TMP/api-pri-room-partnership-add-bycode-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$partnership_id"
