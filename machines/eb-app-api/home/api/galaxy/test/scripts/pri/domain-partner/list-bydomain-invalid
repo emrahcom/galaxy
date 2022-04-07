@@ -17,7 +17,7 @@ TAG="invalid"
 # ------------------------------------------------------------------------------
 # get partner list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-1-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$domain_id",
