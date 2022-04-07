@@ -6,11 +6,12 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-# the partner id
+# the partner
 [[ -z "$1" ]] && ID1=2 || ID1=$1
-# the invite owner id
-[[ -z "$2" ]] && ID2=1 || ID2=$2
-[[ -z "$3" ]] && IDX=1 || IDX=$3
+[[ -z "$2" ]] && IDX1=1 || IDX1=$2
+# the invite owner
+[[ -z "$3" ]] && ID2=1 || ID2=$3
+[[ -z "$4" ]] && IDX2=1 || IDX2=$4
 
 SERVICE="pri"
 CLASS="room/partnership"
@@ -21,7 +22,7 @@ TAG="exist"
 # try to add an already existing partnership
 # ------------------------------------------------------------------------------
 invite_code=$(jq -r ".[0].code" \
-    $TMP/api-pri-room-invite-get-exist-id-$ID2-1-res)
+    $TMP/api-pri-room-invite-get-exist-id-$ID2-$IDX2-res)
 JSON=$(cat <<EOF
 {
     "invite_code": "$invite_code"
@@ -30,4 +31,4 @@ EOF
 )
 
 bash $TEMPLATES/action-member-error $ID1 $SERVICE $CLASS $ACTION $TAG \
-    "$JSON" $IDX
+    "$JSON" $IDX1
