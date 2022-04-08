@@ -21,13 +21,14 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # add new meeting
 # ------------------------------------------------------------------------------
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
 room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-$IDX2-res)
-
-hidden=true
-schedule_type="scheduled"
 name="meeting-$(date +'%s')-$IDX1-$RANDOM"
+schedule_type="scheduled"
+hidden=true
 JSON=$(cat <<EOF
 {
+    "profile_id": "$profile_id",
     "room_id": "$room_id",
     "name": "$name",
     "info": "some meeting info",
