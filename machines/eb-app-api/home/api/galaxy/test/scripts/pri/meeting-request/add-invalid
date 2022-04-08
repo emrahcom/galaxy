@@ -6,12 +6,19 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+# the request owner
+[[ -z "$1" ]] && ID=2 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="meeting/request"
+ACTION="add"
+TAG="invalid"
 
 # ------------------------------------------------------------------------------
 # try to add a new request for a nonexistent meeting
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-id-$SET-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
 meeting_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
@@ -21,5 +28,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET" "pri" "meeting/request" "add" \
-    "$JSON" 2
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
