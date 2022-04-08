@@ -20,10 +20,12 @@ TAG="invalid"
 # ------------------------------------------------------------------------------
 meeting_fake=$(uuidgen)
 room_fake=$(uuidgen)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
     {
     "id": "$meeting_fake",
+    "profile_id": "$profile_id",
     "room_id": "$room_fake",
     "name": "$name",
     "info": "some meeting info",
