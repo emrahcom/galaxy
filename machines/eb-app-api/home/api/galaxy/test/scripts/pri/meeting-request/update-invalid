@@ -6,13 +6,21 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
-[[ -z "$1" ]] && SET=1 || SET=$1
+# the request owner
+[[ -z "$1" ]] && ID=2 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="meeting/request"
+ACTION="update"
+TAG="invalid"
 
 # ------------------------------------------------------------------------------
 # try to update with invalid post
 # a nonexistent profile in the example
 # ------------------------------------------------------------------------------
-request_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-request-add-id-$SET-1-res)
+request_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-request-add-new-id-$ID-$IDX-res)
 profile_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
@@ -22,5 +30,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-member-error "$SET" "pri" "meeting/request" "update" \
-    "$JSON" 1
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
