@@ -19,7 +19,7 @@ ATTR="id"
 # get for an existing invite
 # ------------------------------------------------------------------------------
 invite_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-invite-add-new-host-member-id-$ID-1-res)
+    $TMP/api-pri-meeting-invite-add-new-host-member-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$invite_id"
