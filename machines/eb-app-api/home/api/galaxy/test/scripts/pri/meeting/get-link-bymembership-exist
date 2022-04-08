@@ -19,7 +19,7 @@ ATTR="url"
 # get link bymembership for an existing membership
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-bycode-new-id-$ID-3-res)
+    $TMP/api-pri-meeting-membership-add-bycode-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"
