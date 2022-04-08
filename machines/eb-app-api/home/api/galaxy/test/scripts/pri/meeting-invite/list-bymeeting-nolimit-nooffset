@@ -19,7 +19,7 @@ ATTR="id"
 # get invite list (no limit, no offset)
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-add-new-permanent-id-$ID-1-res)
+    $TMP/api-pri-meeting-add-new-permanent-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id"
