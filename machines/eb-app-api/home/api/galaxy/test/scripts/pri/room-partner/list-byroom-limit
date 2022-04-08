@@ -16,9 +16,9 @@ TAG="limit"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
-# get partner list (limit 1, no offset)
+# get partner list (limit 2, no offset)
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-1-res)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$room_id",
