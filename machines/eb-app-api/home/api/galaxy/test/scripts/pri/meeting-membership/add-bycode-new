@@ -21,17 +21,6 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # add new membership
 # ------------------------------------------------------------------------------
-invite_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-invite-add-new-host-member-id-$ID2-$IDX-res)
-JSON=$(cat <<EOF
-{
-    "id": "$invite_id"
-}
-EOF
-)
-bash $TEMPLATES/action-member-attr $ID2 "pri" "meeting/invite" "get" "exist" \
-    "id" "$JSON" $IDX
-
 code=$(jq -r ".[0].code" $TMP/api-pri-meeting-invite-get-exist-id-$ID2-$IDX-res)
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID1-1-res)
 JSON=$(cat <<EOF
