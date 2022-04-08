@@ -12,13 +12,13 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="room/partner"
 ACTION="list/byroom"
-TAG="nolimit"
+TAG="nolimit-nooffset"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
 # get partner list (no limit, no offset)
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-1-res)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$room_id"
