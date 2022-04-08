@@ -18,8 +18,8 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-get-exist-id-$ID-1-res)
-room_id=$(jq -r ".[0].room_id" $TMP/api-pri-meeting-get-exist-id-$ID-1-res)
+meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-get-exist-id-$ID-$IDX-res)
+room_id=$(jq -r ".[0].room_id" $TMP/api-pri-meeting-get-exist-id-$ID-$IDX-res)
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {
