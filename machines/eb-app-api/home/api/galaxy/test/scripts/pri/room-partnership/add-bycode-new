@@ -22,17 +22,6 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # add new partnership
 # ------------------------------------------------------------------------------
-invite_id=$(jq -r ".[0].id" $TMP/api-pri-room-invite-add-new-id-$ID2-$IDX2-res)
-JSON=$(cat <<EOF
-{
-    "id": "$invite_id"
-}
-EOF
-)
-
-bash $TEMPLATES/action-member-attr $ID2 "pri" "room/invite" "get" "exist" "id" \
-    "$JSON" $IDX2
-
 invite_code=$(jq -r ".[0].code" \
     $TMP/api-pri-room-invite-get-exist-id-$ID2-$IDX2-res)
 JSON=$(cat <<EOF
