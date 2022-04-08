@@ -17,7 +17,7 @@ TAG="invalid"
 # ------------------------------------------------------------------------------
 # get partner list (invalid limit, invalid offset)
 # ------------------------------------------------------------------------------
-room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-1-res)
+room_id=$(jq -r ".[0].id" $TMP/api-pri-room-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$room_id",
