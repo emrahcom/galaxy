@@ -18,7 +18,7 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 # try to add a new membership for a nonexistent invite
 # ------------------------------------------------------------------------------
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
 code_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
