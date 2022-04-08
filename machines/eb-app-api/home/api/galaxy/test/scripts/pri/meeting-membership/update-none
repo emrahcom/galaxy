@@ -19,7 +19,7 @@ ATTR="id"
 # try to update with invalid criteria
 # ------------------------------------------------------------------------------
 membership_fake=$(uuidgen)
-profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-1-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_fake",
