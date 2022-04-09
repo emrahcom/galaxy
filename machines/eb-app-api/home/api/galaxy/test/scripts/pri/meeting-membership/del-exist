@@ -19,7 +19,7 @@ ATTR="id"
 # delete an existing membership
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-bycode-new-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-membership-add-bycode-new-host-member-of-permanent-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"
