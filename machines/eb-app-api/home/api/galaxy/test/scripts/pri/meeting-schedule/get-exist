@@ -19,7 +19,7 @@ ATTR="id"
 # get for an existing schedule
 # ------------------------------------------------------------------------------
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$schedule_id"
