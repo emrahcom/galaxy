@@ -54,6 +54,7 @@ bash $BASEDIR/scripts/pri/profile/list-huge-offset $ID1
 bash $BASEDIR/scripts/pri/profile/list-invalid $ID1
 
 bash $BASEDIR/scripts/pri/profile/add-new $ID2 1
+bash $BASEDIR/scripts/pri/profile/get-default $ID2 1
 
 # domain
 bash $BASEDIR/scripts/pri/domain/add-invalid $ID1
@@ -109,6 +110,7 @@ bash $BASEDIR/scripts/pri/domain-invite/list-bydomain-invalid $ID1 1
 
 # domain-partnership
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-invalid $ID2
+bash $BASEDIR/scripts/pri/domain-invite/get-exist $ID1 1
 bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $ID2 1 $ID1 1
 bash $BASEDIR/scripts/pri/domain-partnership/get-exist $ID2 1
 bash $BASEDIR/scripts/pri/domain-partnership/get-none $ID2
@@ -199,6 +201,7 @@ bash $BASEDIR/scripts/pri/room-invite/list-byroom-invalid $ID1 1
 
 # room-partnership
 bash $BASEDIR/scripts/pri/room-partnership/add-bycode-invalid $ID2
+bash $BASEDIR/scripts/pri/room-invite/get-exist $ID1 1
 bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 1 $ID1 1
 bash $BASEDIR/scripts/pri/room-partnership/get-exist $ID2 1
 bash $BASEDIR/scripts/pri/room-partnership/get-none $ID2
@@ -209,44 +212,42 @@ bash $BASEDIR/scripts/pri/room-partnership/del-none $ID2
 
 bash $BASEDIR/scripts/pri/room-invite/enable-exist $ID1 1
 for i in $(seq 1 10); do
+  bash $BASEDIR/scripts/pri/room-invite/get-exist $ID1 $i
   bash $BASEDIR/scripts/pri/room-partnership/add-bycode-new $ID2 $i $ID1 $i
 done
 
-echo xxxxxxxxxxxxxxxxxxxxx
-exit 0
-
 # room-partner
-bash $BASEDIR/scripts/pri/room-partner/get-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/room-partner/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/room-partner/get-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/room-partner/get-none $ID1
 
-bash $BASEDIR/scripts/pri/room-partner/disable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/room-partner/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/room-partner/enable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/room-partner/enable-nonexist $ID1
+bash $BASEDIR/scripts/pri/room-partner/disable-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/room-partner/disable-none $ID1
+bash $BASEDIR/scripts/pri/room-partner/enable-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/room-partner/enable-none $ID1
 
-bash $BASEDIR/scripts/pri/room-partner/list-byroom-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/room-partner/list-byroom-limit $ID1
-bash $BASEDIR/scripts/pri/room-partner/list-byroom-huge-offset $ID1
-bash $BASEDIR/scripts/pri/room-partner/list-byroom-invalid-post $ID1
+bash $BASEDIR/scripts/pri/room-partner/list-byroom-nolimit-nooffset $ID1 1
+bash $BASEDIR/scripts/pri/room-partner/list-byroom-limit $ID1 1
+bash $BASEDIR/scripts/pri/room-partner/list-byroom-huge-offset $ID1 1
+bash $BASEDIR/scripts/pri/room-partner/list-byroom-invalid $ID1 1
 
-bash $BASEDIR/scripts/pri/room-partner/del-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/room-partner/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/room-partner/del-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/room-partner/del-none $ID1
 
 # meeting
-bash $BASEDIR/scripts/pri/meeting/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting/add-new-permanent $ID1
-bash $BASEDIR/scripts/pri/meeting/get-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting/add-invalid $ID1
+bash $BASEDIR/scripts/pri/meeting/add-new-permanent $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting/get-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting/get-none $ID1
 
-bash $BASEDIR/scripts/pri/meeting/update-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting/disable-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting/enable-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting/del-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting/update-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting/update-none $ID1
+bash $BASEDIR/scripts/pri/meeting/update-invalid $ID1
+bash $BASEDIR/scripts/pri/meeting/disable-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting/disable-none $ID1
+bash $BASEDIR/scripts/pri/meeting/enable-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting/enable-none $ID1
+bash $BASEDIR/scripts/pri/meeting/del-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting/del-none $ID1
 
 for i in $(seq 1 20); do
     (( r = (i - 1) % 10 + 1 ))
@@ -258,142 +259,204 @@ bash $BASEDIR/scripts/pri/meeting/list-nolimit-nooffset $ID1
 bash $BASEDIR/scripts/pri/meeting/list-limit $ID1
 bash $BASEDIR/scripts/pri/meeting/list-limit-offset $ID1
 bash $BASEDIR/scripts/pri/meeting/list-huge-offset $ID1
-bash $BASEDIR/scripts/pri/meeting/list-invalid-post $ID1
+bash $BASEDIR/scripts/pri/meeting/list-invalid $ID1
 
-bash $BASEDIR/scripts/pri/meeting/get-link-exist $ID1
-bash $BASEDIR/scripts/pri/meeting/get-link-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting/get-link-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting/get-link-none $ID1
 
 # meeting-invite
-bash $BASEDIR/scripts/pri/meeting-invite/add-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience $ID1 1 1
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience $ID1 1 1
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member $ID1 1 1
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member $ID1 1 1
-bash $BASEDIR/scripts/pri/meeting-invite/get-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/get-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/add-invalid $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience-of-permanent \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience-of-permanent \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member-of-permanent \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member-of-permanent \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience-of-scheduled \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience-of-scheduled \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member-of-scheduled \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member-of-scheduled \
+    $ID1 1 1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-member-of-permanent \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-member-of-scheduled \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-audience-of-permanent \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-audience-of-scheduled \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/get-none $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-exist-host-member-of-permanent \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-exist-host-member-of-scheduled \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/get-bycode-none $ID1
 
-bash $BASEDIR/scripts/pri/meeting-invite/disable-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/enable-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/del-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/disable-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/disable-none $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/enable-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/enable-none $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/del-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/del-none $ID1
 
 for i in $(seq 1 20); do
     (( m = (i - 1) % 10 + 1 ))
-    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience $ID1 $i $m
-    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience $ID1 $i $m
-    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member $ID1 $i $m
-    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience-of-permanent \
+        $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience-of-permanent \
+        $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member-of-permanent \
+        $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member-of-permanent \
+        $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience-of-scheduled \
+        $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-audience-of-scheduled \
+        $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-member-of-scheduled \
+        $ID1 $i $m
+    bash $BASEDIR/scripts/pri/meeting-invite/add-new-guest-member-of-scheduled \
+        $ID1 $i $m
 done
 
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-limit $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-huge-offset $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-invalid-post $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-permanent-nolimit-nooffset \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-permanent-limit $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-permanent-huge-offset \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-permanent-invalid \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-scheduled-nolimit-nooffset \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-scheduled-limit $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-scheduled-huge-offset \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-invite/list-bymeeting-scheduled-invalid $ID1 1
 
 # meeting-membership
-bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-invalid-post $ID2
-bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new $ID2 $ID1
-bash $BASEDIR/scripts/pri/meeting-membership/get-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-membership/get-nonexist $ID2
-bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-exist $ID2
+bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-invalid $ID2
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-member-of-permanent \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new-host-member-of-permanent \
+    $ID2 1 $ID1 1
+bash $BASEDIR/scripts/pri/meeting-membership/get-exist-host-member-of-permanent \
+    $ID2 1
+bash $BASEDIR/scripts/pri/meeting-membership/get-none $ID2
+bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-exist $ID2 1
 
-bash $BASEDIR/scripts/pri/meeting-membership/update-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-membership/update-nonexist $ID2
-bash $BASEDIR/scripts/pri/meeting-membership/del-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-membership/del-nonexist $ID2
+bash $BASEDIR/scripts/pri/meeting-membership/update-exist $ID2 1
+bash $BASEDIR/scripts/pri/meeting-membership/update-none $ID2
+bash $BASEDIR/scripts/pri/meeting-membership/del-exist $ID2 1
+bash $BASEDIR/scripts/pri/meeting-membership/del-none $ID2
 
+bash $BASEDIR/scripts/pri/meeting-invite/enable-exist $ID1 1
 for i in $(seq 1 10); do
-    bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new $ID2 $ID1 $i
+    bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-member-of-permanent \
+        $ID1 $i
+    bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new-host-member-of-permanent \
+        $ID2 $i $ID1 $i
+    bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-member-of-scheduled \
+        $ID1 $i
+    bash $BASEDIR/scripts/pri/meeting-membership/add-bycode-new-host-member-of-scheduled \
+        $ID2 $i $ID1 $i
 done
 
 # meeting-member
-bash $BASEDIR/scripts/pri/meeting-member/get-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/meeting-member/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting-member/get-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/meeting-member/get-none $ID1
 
-bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-limit $ID1
-bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-huge-offset $ID1
-bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-invalid-post $ID1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-nolimit-nooffset $ID1 1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-limit $ID1 1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-huge-offset $ID1 1
+bash $BASEDIR/scripts/pri/meeting-member/list-bymeeting-invalid $ID1 1
 
-bash $BASEDIR/scripts/pri/meeting-member/disable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/meeting-member/disable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-member/enable-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/meeting-member/enable-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-member/set-guest-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/meeting-member/set-guest-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-member/set-host-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/meeting-member/set-host-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-member/del-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/meeting-member/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting-member/disable-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/meeting-member/disable-none $ID1
+bash $BASEDIR/scripts/pri/meeting-member/enable-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/meeting-member/enable-none $ID1
+bash $BASEDIR/scripts/pri/meeting-member/set-guest-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/meeting-member/set-guest-none $ID1
+bash $BASEDIR/scripts/pri/meeting-member/set-host-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/meeting-member/set-host-none $ID1
+bash $BASEDIR/scripts/pri/meeting-member/del-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/meeting-member/del-none $ID1
 
 # meeting-request
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1 1
+bash $BASEDIR/scripts/pri/meeting-request/add-invalid $ID2
+bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2 1 $ID1 1
+bash $BASEDIR/scripts/pri/meeting-request/get-exist $ID2 1
+bash $BASEDIR/scripts/pri/meeting-request/get-none $ID2
+bash $BASEDIR/scripts/pri/meeting-request/add-exist-request $ID2 1
+bash $BASEDIR/scripts/pri/meeting-request/add-exist-membership $ID2 1
 
-bash $BASEDIR/scripts/pri/meeting-request/add-invalid-post $ID2
-bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2 $ID1
-bash $BASEDIR/scripts/pri/meeting-request/get-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-request/get-nonexist $ID2
-bash $BASEDIR/scripts/pri/meeting-request/add-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-request/add-exist-meeting-member $ID2
+bash $BASEDIR/scripts/pri/meeting-request/update-exist $ID2 1
+bash $BASEDIR/scripts/pri/meeting-request/update-none $ID2
+bash $BASEDIR/scripts/pri/meeting-request/update-invalid $ID2
+bash $BASEDIR/scripts/pri/meeting-request/del-exist $ID2 1
+bash $BASEDIR/scripts/pri/meeting-request/del-none $ID2
 
-bash $BASEDIR/scripts/pri/meeting-request/update-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-request/update-nonexist $ID2
-bash $BASEDIR/scripts/pri/meeting-request/update-invalid-post $ID2
-bash $BASEDIR/scripts/pri/meeting-request/del-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-request/del-nonexist $ID2
+bash $BASEDIR/scripts/pri/meeting-request/drop-none $ID1
+bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2 1 $ID1 1
+bash $BASEDIR/scripts/pri/meeting-request/drop-exist $ID1 1 $ID2 1
 
-bash $BASEDIR/scripts/pri/meeting-request/drop-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2
-bash $BASEDIR/scripts/pri/meeting-request/drop-exist $ID1 $ID2
+bash $BASEDIR/scripts/pri/meeting-request/reject-none $ID1
+bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2 1 $ID1 1
+bash $BASEDIR/scripts/pri/meeting-request/reject-exist $ID1 1 $ID2 1
+bash $BASEDIR/scripts/pri/meeting-request/drop-exist $ID1 1 $ID2 1
 
-bash $BASEDIR/scripts/pri/meeting-request/reject-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2
-bash $BASEDIR/scripts/pri/meeting-request/reject-exist $ID1 $ID2
-bash $BASEDIR/scripts/pri/meeting-request/drop-exist $ID1 $ID2
+bash $BASEDIR/scripts/pri/meeting-request/accept-none $ID1
+bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2 1 $ID1 1
+bash $BASEDIR/scripts/pri/meeting-request/accept-exist $ID1 1 $ID2 1
 
-bash $BASEDIR/scripts/pri/meeting-request/accept-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2
-bash $BASEDIR/scripts/pri/meeting-request/accept-exist $ID1 $ID2
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/meeting/add-new-permanent $ID1 $i
+    bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2 $i $ID1 $i
+done
 
-bash $BASEDIR/scripts/pri/meeting/add-new $ID1 10
-
-bash $BASEDIR/scripts/pri/meeting-request/add-new $ID2 $ID1 10
 bash $BASEDIR/scripts/pri/meeting-request/list-nolimit-nooffset $ID2
 bash $BASEDIR/scripts/pri/meeting-request/list-limit $ID2
 bash $BASEDIR/scripts/pri/meeting-request/list-limit-offset $ID2
 bash $BASEDIR/scripts/pri/meeting-request/list-huge-offset $ID2
-bash $BASEDIR/scripts/pri/meeting-request/list-invalid-post $ID2
+bash $BASEDIR/scripts/pri/meeting-request/list-invalid $ID2
 
 # meeting-schedule
-bash $BASEDIR/scripts/pri/meeting-schedule/add-invalid-post $ID1
+bash $BASEDIR/scripts/pri/meeting-schedule/add-invalid $ID1
 bash $BASEDIR/scripts/pri/meeting-schedule/add-new $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/get-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/get-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-none $ID1
 
-bash $BASEDIR/scripts/pri/meeting-schedule/update-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/update-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/update-invalid-post $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/del-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/del-nonexist $ID1
+bash $BASEDIR/scripts/pri/meeting-schedule/update-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting-schedule/update-none $ID1
+bash $BASEDIR/scripts/pri/meeting-schedule/update-invalid $ID1
+bash $BASEDIR/scripts/pri/meeting-schedule/del-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting-schedule/del-none $ID1
 
-bash $BASEDIR/scripts/pri/meeting-schedule/add-new $ID1 10
-bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-nolimit-nooffset $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-limit $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-huge-offset $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-invalid-post $ID1
+for i in $(seq 1 10); do
+    bash $BASEDIR/scripts/pri/meeting-schedule/add-new $ID1 $i
+done
 
-bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-exist $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-nonexist $ID1
-bash $BASEDIR/scripts/pri/meeting-schedule/get-bymembership-exist $ID2
-bash $BASEDIR/scripts/pri/meeting-schedule/get-bymembership-nonexist $ID2
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-nolimit-nooffset \
+    $ID1 1
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-limit $ID1 1
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-huge-offset $ID1 1
+bash $BASEDIR/scripts/pri/meeting-schedule/list-bymeeting-invalid $ID1 1
+
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-exist $ID1 1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymeeting-none $ID1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymembership-exist $ID2 1
+bash $BASEDIR/scripts/pri/meeting-schedule/get-bymembership-none $ID2
 
 # meeting (stage 2)
-bash $BASEDIR/scripts/pri/meeting/get-link-bymembership-exist $ID2
-bash $BASEDIR/scripts/pri/meeting/get-link-bymembership-nonexist $ID2
+bash $BASEDIR/scripts/pri/meeting/get-link-bymembership-exist-host-member-of-permanent \
+    $ID2 2
+bash $BASEDIR/scripts/pri/meeting/get-link-bymembership-exist-host-member-of-scheduled \
+    $ID2 2
+bash $BASEDIR/scripts/pri/meeting/get-link-bymembership-none $ID2
 
 # ------------------------------------------------------------------------------
 # pub
@@ -402,24 +465,28 @@ bash $BASEDIR/scripts/pub/hello
 
 # meeting
 bash $BASEDIR/scripts/pub/meeting/get-exist
-bash $BASEDIR/scripts/pub/meeting/get-nonexist
+bash $BASEDIR/scripts/pub/meeting/get-none
 
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/get-exist $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience-of-permanent \
+    $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-audience-of-permanent \
+    $ID1
 bash $BASEDIR/scripts/pub/meeting/get-link-bycode-exist
-bash $BASEDIR/scripts/pub/meeting/get-link-bycode-nonexist
+bash $BASEDIR/scripts/pub/meeting/get-link-bycode-none
 
 bash $BASEDIR/scripts/pub/meeting/list-nolimit-nooffset
 bash $BASEDIR/scripts/pub/meeting/list-limit
 bash $BASEDIR/scripts/pub/meeting/list-limit-offset
 bash $BASEDIR/scripts/pub/meeting/list-huge-offset
-bash $BASEDIR/scripts/pub/meeting/list-invalid-post
+bash $BASEDIR/scripts/pub/meeting/list-invalid
 
 # meeting-schedule
-bash $BASEDIR/scripts/pri/meeting-invite/add-new-audience $ID1
-bash $BASEDIR/scripts/pri/meeting-invite/get-exist $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/add-new-host-audience-of-scheduled \
+    $ID1
+bash $BASEDIR/scripts/pri/meeting-invite/get-exist-host-audience-of-scheduled \
+    $ID1
 bash $BASEDIR/scripts/pub/meeting-schedule/get-bycode-exist
-bash $BASEDIR/scripts/pub/meeting-schedule/get-bycode-nonexist
+bash $BASEDIR/scripts/pub/meeting-schedule/get-bycode-none
 
 # ------------------------------------------------------------------------------
 # completed
