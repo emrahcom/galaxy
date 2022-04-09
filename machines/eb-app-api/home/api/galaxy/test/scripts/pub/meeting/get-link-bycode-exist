@@ -6,10 +6,19 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && IDX=1 || IDX=$1
+
+SERVICE="pub"
+CLASS="meeting"
+ACTION="get/link/bycode"
+TAG="exist"
+ATTR="url"
+
 # ------------------------------------------------------------------------------
 # get bycode for an existing meeting
 # ------------------------------------------------------------------------------
-code=$(jq -r ".[0].code" $TMP/api-pri-meeting-invite-get-id-1-1-res)
+code=$(jq -r ".[0].code" \
+    $TMP/api-pri-meeting-invite-get-exist-host-audience-of-permanent-id-1-$IDX-res)
 JSON=$(cat <<EOF
 {
     "code": "$code"
@@ -17,5 +26,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-attr "pub" "meeting" "get/link/bycode" "url" \
-    "$JSON" 1
+bash $TEMPLATES/action-guest-attr $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
