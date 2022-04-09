@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../../config
+source $BASEDIR/../../common
+
+# the membership owner
+[[ -z "$1" ]] && ID1=2 || ID1=$1
+[[ -z "$2" ]] && IDX1=1 || IDX1=$2
+# the invite owner
+[[ -z "$3" ]] && ID2=1 || ID2=$3
+[[ -z "$4" ]] && IDX2=1 || IDX2=$4
+
+SERVICE="pri"
+CLASS="meeting/membership"
+ACTION="add/bycode"
+TAG="new-host-member-of-scheduled"
+ATTR="id"
+
+# ------------------------------------------------------------------------------
+# add new membership (host member of scheduled meeting)
+# ------------------------------------------------------------------------------
+code=$(jq -r ".[0].code" \
+    $TMP/api-pri-meeting-invite-get-exist-host-member-of-scheduled-id-$ID2-$IDX2-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID1-1-res)
+JSON=$(cat <<EOF
+{
+    "profile_id": "$profile_id",
+    "code": "$code"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID1 $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX1
