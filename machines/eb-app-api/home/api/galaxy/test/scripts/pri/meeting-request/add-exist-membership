@@ -21,7 +21,7 @@ TAG="exist-membership"
 profile_id=$(jq -r ".[0].profile_id" \
     $TMP/api-pri-meeting-request-get-exist-id-$ID-$IDX-res)
 meeting_id=$(jq -r ".[0].meeting_id" \
-    $TMP/api-pri-meeting-membership-add-bycode-new-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-membership-add-bycode-new-host-member-of-permanent-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "profile_id": "$profile_id",
