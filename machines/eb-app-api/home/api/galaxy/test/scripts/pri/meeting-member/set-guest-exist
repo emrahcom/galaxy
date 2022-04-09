@@ -23,7 +23,7 @@ ATTR="id"
 # set as guest an existing member
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-bycode-new-id-$ID2-$IDX2-res)
+    $TMP/api-pri-meeting-membership-add-bycode-new-host-member-of-permanent-id-$ID2-$IDX2-res)
 JSON=$(cat <<EOF
 {
     "id": "$membership_id"
