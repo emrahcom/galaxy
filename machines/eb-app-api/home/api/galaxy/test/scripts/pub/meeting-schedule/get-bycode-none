@@ -6,6 +6,13 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && IDX=1 || IDX=$1
+
+SERVICE="pub"
+CLASS="meeting/schedule"
+ACTION="get/bycode"
+TAG="none"
+
 # ------------------------------------------------------------------------------
 # get bycode for a nonexistent schedule
 # ------------------------------------------------------------------------------
@@ -17,5 +24,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-empty "pub" "meeting/schedule" "get/bycode" \
-    "$JSON" 1
+bash $TEMPLATES/action-guest-empty $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
