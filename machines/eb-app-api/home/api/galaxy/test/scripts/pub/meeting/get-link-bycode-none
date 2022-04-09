@@ -6,15 +6,23 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && IDX=1 || IDX=$1
+
+SERVICE="pub"
+CLASS="meeting"
+ACTION="get/link/bycode"
+TAG="none"
+
 # ------------------------------------------------------------------------------
-# get for a nonexistent meeting
+# get bycode for a nonexistent meeting
 # ------------------------------------------------------------------------------
-meeting_fake=$(uuidgen)
+code_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
-    "id": "$meeting_fake"
+    "code": "$code_fake"
 }
 EOF
 )
 
-bash $TEMPLATES/action-guest-empty "pub" "meeting" "get" "$JSON" 1
+bash $TEMPLATES/action-guest-empty $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
