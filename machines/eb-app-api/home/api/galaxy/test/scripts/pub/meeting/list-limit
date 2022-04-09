@@ -6,6 +6,14 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && IDX=1 || IDX=$1
+
+SERVICE="pub"
+CLASS="meeting"
+ACTION="list"
+TAG="limit"
+ATTR="id"
+
 # ------------------------------------------------------------------------------
 # get public meeting list (limit 2, no offset)
 # ------------------------------------------------------------------------------
@@ -16,4 +24,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-attr "pub" "meeting" "list" "id" "$JSON" 2
+bash $TEMPLATES/action-guest-attr $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
