@@ -6,10 +6,19 @@ TEMPLATES=$BASEDIR/../../templates
 source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
+[[ -z "$1" ]] && IDX=1 || IDX=$1
+
+SERVICE="pub"
+CLASS="meeting"
+ACTION="get"
+TAG="exist"
+ATTR="id"
+
 # ------------------------------------------------------------------------------
 # get for an existing meeting
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-add-id-1-1-res)
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-permanent-id-1-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id"
@@ -17,4 +26,5 @@ JSON=$(cat <<EOF
 EOF
 )
 
-bash $TEMPLATES/action-guest-attr "pub" "meeting" "get" "id" "$JSON" 1
+bash $TEMPLATES/action-guest-attr $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
