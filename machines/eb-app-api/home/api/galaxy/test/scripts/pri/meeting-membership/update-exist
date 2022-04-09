@@ -19,7 +19,7 @@ ATTR="id"
 # update with valid post
 # ------------------------------------------------------------------------------
 membership_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-membership-add-bycode-new-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-membership-add-bycode-new-host-member-of-permanent-id-$ID-$IDX-res)
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
