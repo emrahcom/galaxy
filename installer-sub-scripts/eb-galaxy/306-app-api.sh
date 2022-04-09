@@ -95,6 +95,12 @@ sed -i "s/___GATEWAY___/$HOST/" $ROOTFS/etc/systemd/network/eth0.network
 lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
 
+# wait for the network to be up
+for i in $(seq 0 9); do
+    lxc-attach -n $MACH -- ping -c1 host && break || true
+    sleep 1
+done
+
 # ------------------------------------------------------------------------------
 # HOSTNAME
 # ------------------------------------------------------------------------------
@@ -205,3 +211,9 @@ lxc-stop -n $MACH
 lxc-wait -n $MACH -s STOPPED
 lxc-start -n $MACH -d
 lxc-wait -n $MACH -s RUNNING
+
+# wait for the network to be up
+for i in $(seq 0 9); do
+    lxc-attach -n $MACH -- ping -c1 host && break || true
+    sleep 1
+done
