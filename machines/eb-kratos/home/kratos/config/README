@@ -1,0 +1,6 @@
+## smtp
+
+For STARTTLS SMTP server:
+
+courier.smtp.connection_uri:
+smtp://name%40maildomain.com:url_encoded_passwd@mailmydomain.corp:587/
