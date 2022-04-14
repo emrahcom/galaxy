@@ -65,6 +65,28 @@ _/etc/nginx/sites-enabled/ui.conf_
 ```bash
 systemctl restart nginx
 ```
+#### host
+
+##### ssh
+
+- key only
+- port
+
+##### swap
+
+```bash
+dd if=/dev/zero of=/swapfile bs=1M count=4096
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none  swap  sw  0  0' >>/etc/fstab
+```
+
+##### letsencrypt
+
+```bash
+set-letsencrypt-cert mydomain.corp,app.mydomain.corp,id.mydomain.corp
+```
 
 #### test
 
