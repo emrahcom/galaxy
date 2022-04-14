@@ -14,6 +14,10 @@ courier:
     from_address: myname@mydomain.corp
 ```
 
+```bash
+lxc-attach -n eb-kratos -- reboot
+```
+
 #### eb-mailslurper
 
 Stop this container and remove it from auto-start group.
