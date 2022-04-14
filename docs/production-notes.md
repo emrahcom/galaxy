@@ -65,6 +65,13 @@ _/etc/nginx/sites-enabled/ui.conf_
 ```bash
 systemctl restart nginx
 ```
+
+##### Disable UI service
+
+```bash
+systemctl stop galaxy-ui.service
+systemctl disable galaxy-ui.service
+```
 #### host
 
 ##### ssh
