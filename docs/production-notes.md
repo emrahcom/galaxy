@@ -65,3 +65,8 @@ _/etc/nginx/sites-enabled/ui.conf_
 ```bash
 systemctl restart nginx
 ```
+
+#### test
+
+- try `forget password` and check mailbox.
+- add and remove meetings
