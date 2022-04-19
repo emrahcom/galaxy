@@ -3,6 +3,6 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<a {href} class="btn btn-outline-secondary btn-sm" role="button">
+<a {href} class="btn btn-outline-dark btn-sm" role="button">
   <i class="bi bi-link-45deg" />
 </a>
