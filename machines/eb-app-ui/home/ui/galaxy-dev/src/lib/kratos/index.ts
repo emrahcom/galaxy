@@ -10,8 +10,11 @@ import type {
 // -----------------------------------------------------------------------------
 export function getFlowId(urlSearch: string): string {
   const qs = new URLSearchParams(urlSearch);
+  const flowId = qs.get("flow");
 
-  return qs.get("flow");
+  if (flowId) return flowId;
+
+  return "";
 }
 
 // -----------------------------------------------------------------------------
