@@ -6,11 +6,8 @@
   const attr = node.attributes;
   let labelText: string;
 
-  try {
-    labelText = node.meta.label.text;
-  } catch {
-    labelText = "Submit";
-  }
+  labelText = "Submit";
+  if (node.meta && node.meta.label) labelText = node.meta.label.text;
 </script>
 
 <!-- -------------------------------------------------------------------------->

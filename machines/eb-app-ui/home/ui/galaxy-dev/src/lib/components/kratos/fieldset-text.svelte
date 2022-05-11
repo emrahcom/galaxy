@@ -8,12 +8,9 @@
   let labelText: string;
   let inputType: string;
 
-  try {
-    labelText = node.meta.label.text;
-    if (labelText === "ID") labelText = "Email";
-  } catch {
-    labelText = attr.name;
-  }
+  labelText = attr.name;
+  if (node.meta && node.meta.label) labelText = node.meta.label.text;
+  if (labelText === "ID") labelText = "Email";
 
   inputType = "text";
   if (labelText === "Email") inputType = "email";
