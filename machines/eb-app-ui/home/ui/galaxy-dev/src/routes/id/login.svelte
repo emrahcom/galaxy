@@ -19,7 +19,9 @@
       <Layout>
         <p class="h3 text-muted">Sign in to your account</p>
 
-        <Messages messages={dm.ui.messages} />
+        {#if dm.ui.messages}
+          <Messages messages={dm.ui.messages} />
+        {/if}
         <Form {dm} groups={["default", "password"]} />
 
         <hr class="divider" />
