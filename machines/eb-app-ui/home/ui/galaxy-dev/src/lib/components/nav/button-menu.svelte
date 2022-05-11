@@ -2,7 +2,7 @@
   function closeMenu() {
     let closeButton = document.getElementById("closeMenuButton");
 
-    closeButton.click();
+    if (closeButton) closeButton.click();
   }
 </script>
 

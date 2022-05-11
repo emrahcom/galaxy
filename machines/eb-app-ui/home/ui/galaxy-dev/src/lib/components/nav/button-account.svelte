@@ -5,7 +5,7 @@
   function closeMenu() {
     let closeButton = document.getElementById("closeAccountButton");
 
-    closeButton.click();
+    if (closeButton) closeButton.click();
   }
 </script>
 
