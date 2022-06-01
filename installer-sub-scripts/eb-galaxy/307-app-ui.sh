@@ -210,7 +210,7 @@ su -l ui <<EOSS
     set -e
     git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos-test
     cd kratos-test
-    git checkout $KRATOS_VERSION
+    [[ "$KRATOS_VERSION" != "latest" ]] && git checkout $KRATOS_VERSION || true
 EOSS
 EOS
 
