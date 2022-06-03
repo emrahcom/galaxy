@@ -136,7 +136,8 @@ CREATE TABLE room (
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "accessed_at" timestamp with time zone NOT NULL DEFAULT now()
+    "accessed_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "attendance" integer NOT NULL DEFAULT 0
 );
 CREATE UNIQUE INDEX ON room("identity_id", "domain_id", "name");
 CREATE INDEX ON room("identity_id", "ephemeral");
@@ -210,7 +211,9 @@ CREATE TABLE meeting (
     "subscribable" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "accessed_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "attendance" integer NOT NULL DEFAULT 0
 );
 CREATE INDEX ON meeting(identity_id, schedule_type);
 ALTER TABLE meeting OWNER TO galaxy;
