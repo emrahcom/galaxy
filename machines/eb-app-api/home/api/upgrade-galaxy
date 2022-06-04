@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+# ------------------------------------------------------------------------------
+# Run this script as api user. Stop api services before running this script:
+#
+#   systemctl stop galaxy-api-pub.service
+#   systemctl stop galaxy-api-pri.service
+#   systemctl stop galaxy-api-adm.service
+# ------------------------------------------------------------------------------
+
 REMOTE="https://github.com/emrahcom/galaxy.git"
 LOCAL="/tmp/galaxy"
 API="$LOCAL/machines/eb-app-api/home/api"
@@ -38,9 +46,11 @@ cp $API/upgrade-galaxy /home/api/
 # reminder
 cat <<EOF
 
-Dont forget to clear caches:
+Dont forget to clear caches. Run as root:
 
   rm -rf /home/api-adm/.cache/deno
   rm -rf /home/api-pri/.cache/deno
   rm -rf /home/api-pub/.cache/deno
+
+  reboot
 EOF
