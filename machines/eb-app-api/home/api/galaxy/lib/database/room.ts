@@ -333,7 +333,8 @@ export async function updateRoomAccessTime(roomId: string) {
     text: `
       UPDATE room
       SET
-        accessed_at = now()
+        accessed_at = now(),
+        attendance = attendance + 1
       WHERE id = $1
       RETURNING id, accessed_at as at`,
     args: [
