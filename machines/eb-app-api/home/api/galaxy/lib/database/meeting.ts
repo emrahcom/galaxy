@@ -113,6 +113,7 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
   const linkset = await fetch(sql) as MeetingLinkset[];
   await updateMeetingRoomSuffix(linkset[0].id);
   await updateMeetingRoomAccessTime(linkset[0].id);
+  await updateMeetingAccessTime(linkset[0].id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
@@ -189,6 +190,7 @@ export async function getMeetingLinksetByMembership(
   const linkset = await fetch(sql) as MeetingLinkset[];
   await updateMeetingRoomSuffix(linkset[0].id);
   await updateMeetingRoomAccessTime(linkset[0].id);
+  await updateMeetingAccessTime(linkset[0].id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
@@ -260,6 +262,7 @@ export async function getMeetingLinksetByCode(code: string) {
   const linkset = await fetch(sql) as MeetingLinkset[];
   await updateMeetingRoomSuffix(linkset[0].id);
   await updateMeetingRoomAccessTime(linkset[0].id);
+  await updateMeetingAccessTime(linkset[0].id);
 
   return await fetch(sql) as MeetingLinkset[];
 }
@@ -601,6 +604,24 @@ export async function updateMeetingRoomAccessTime(meetingId: string) {
                   FROM meeting
                   WHERE id = $1
                  )
+      RETURNING id, accessed_at as at`,
+    args: [
+      meetingId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function updateMeetingAccessTime(meetingId: string) {
+  const sql = {
+    text: `
+      UPDATE meeting
+      SET
+        accessed_at = now(),
+        attendance = attendance + 1
+      WHERE id = $1
       RETURNING id, accessed_at as at`,
     args: [
       meetingId,
