@@ -595,7 +595,8 @@ export async function updateMeetingRoomAccessTime(meetingId: string) {
     text: `
       UPDATE room
       SET
-        accessed_at = now()
+        accessed_at = now(),
+        attendance = attendance + 1
       WHERE id = (SELECT room_id
                   FROM meeting
                   WHERE id = $1
