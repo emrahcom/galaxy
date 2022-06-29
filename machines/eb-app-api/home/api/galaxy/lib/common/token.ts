@@ -35,8 +35,8 @@ export async function generateHostToken(
   email: string,
   exp = 3600,
 ): Promise<string> {
-  const alg: Algorithm = "HS512";
-  const hash = "SHA-512";
+  const alg: Algorithm = "HS256";
+  const hash = "SHA-256";
 
   const header = { alg: alg, typ: "JWT" };
   const cryptoKey = await generateCryptoKey(appSecret, hash);
@@ -75,8 +75,8 @@ export async function generateGuestToken(
   email: string,
   exp = 3600,
 ): Promise<string> {
-  const alg: Algorithm = "HS512";
-  const hash = "SHA-512";
+  const alg: Algorithm = "HS256";
+  const hash = "SHA-256";
 
   const header = { alg: alg, typ: "JWT" };
   const cryptoKey = await generateCryptoKey(appSecret, hash);
