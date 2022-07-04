@@ -6,16 +6,16 @@ LOCAL="/tmp/galaxy"
 UI="$LOCAL/machines/eb-app-ui/home/ui"
 APP="$UI/galaxy-dev"
 
-# get ROOT FQDN
-[[ -z "$ROOT_FQDN" ]] && \
-    ROOT_FQDN=$(ack "^export const ROOT =" \
-                  /home/ui/galaxy-dev/src/lib/config.ts | \
-                  cut -d'"' -f2 | cut -d '/' -f3)
-if [[ -z "$ROOT_FQDN" ]]; then
-    echo "error: ROOT_FQDN is not found"
+# get APP FQDN
+[[ -z "$APP_FQDN" ]] && \
+    APP_FQDN=$(ack "^export const APP =" \
+               /home/ui/galaxy-dev/src/lib/config.ts | \
+               cut -d'"' -f2 | cut -d '/' -f3)
+if [[ -z "$APP_FQDN" ]]; then
+    echo "error: APP_FQDN is not found"
     exit 1
 else
-   echo "ROOT_FQDN: $ROOT_FQDN"
+   echo "APP_FQDN: $APP_FQDN"
 fi
 
 # get KRATOS FQDN
@@ -34,7 +34,7 @@ fi
 rm -rf $LOCAL
 git clone --depth=1 $REMOTE $LOCAL
 
-sed -i "s/___ROOT_FQDN___/$ROOT_FQDN/" $APP/src/lib/config.ts
+sed -i "s/___APP_FQDN___/$APP_FQDN/" $APP/src/lib/config.ts
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/" $APP/src/lib/config.ts
 cat $APP/src/lib/config.ts
 
