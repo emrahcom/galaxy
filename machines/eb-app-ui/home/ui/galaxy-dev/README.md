@@ -1,3 +1,13 @@
+#### clean up
+
+```bash
+cd /home/ui/galaxy-dev
+
+rm package-lock.json
+rm -rf node_modules
+rm -rf .svelte-kit
+```
+
 #### running
 
 ```bash
