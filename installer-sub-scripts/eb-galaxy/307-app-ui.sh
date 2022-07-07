@@ -260,25 +260,34 @@ sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
     $ROOTFS/home/ui/galaxy-dev/src/lib/config.ts
 
-# galaxy-ui-dev systemd service
-cp etc/systemd/system/galaxy-ui-dev.service $ROOTFS/etc/systemd/system/
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-systemctl daemon-reload
-systemctl enable galaxy-ui-dev.service
-systemctl start galaxy-ui-dev.service
-EOS
-
 # ------------------------------------------------------------------------------
-# GALAXY UI (prod, inactive)
+# GALAXY UI (prod)
 # ------------------------------------------------------------------------------
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 su -l ui <<EOSS
     set -e
-    ln -s galaxy-dev/build /home/ui/galaxy-static
+    cd /home/ui/galaxy-dev
+    npm run build
 EOSS
+EOS
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l ui <<EOSS
+    set -e
+    ln -s galaxy-dev/build /home/ui/galaxy-build
+EOSS
+EOS
+
+# galaxy-ui systemd service
+cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+systemctl daemon-reload
+systemctl enable galaxy-ui.service
+systemctl start galaxy-ui.service
 EOS
 
 # ------------------------------------------------------------------------------
