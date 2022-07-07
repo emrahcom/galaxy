@@ -23,7 +23,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-{#if $identity}
+{#if $identity && $identity.id !== undefined}
   <NavBarPri />
 {:else}
   <NavBarPub />
