@@ -1,13 +1,14 @@
 <script lang="ts">
   import { KRATOS } from "$lib/config";
   import { page } from "$app/stores";
+  import { browser } from "$app/env";
   import { getFlowId, getDataModels } from "$lib/kratos";
   import Form from "$lib/components/kratos/form.svelte";
   import Layout from "$lib/components/kratos/layout.svelte";
   import Messages from "$lib/components/kratos/messages.svelte";
 
   const flowId = getFlowId($page.url.search);
-  if (!flowId)
+  if (browser && !flowId)
     window.location.href = `${KRATOS}/self-service/registration/browser`;
 
   const pr = getDataModels("registration", flowId);

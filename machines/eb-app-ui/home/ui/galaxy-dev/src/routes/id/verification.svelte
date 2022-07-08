@@ -1,6 +1,7 @@
 <script lang="ts">
   import { KRATOS } from "$lib/config";
   import { page } from "$app/stores";
+  import { browser } from "$app/env";
   import { get } from "svelte/store";
   import { getFlowId, getDataModels } from "$lib/kratos";
   import identity from "$lib/stores/kratos/identity";
@@ -9,11 +10,11 @@
   import Messages from "$lib/components/kratos/messages.svelte";
 
   const _identity = get(identity);
-  if (!_identity.id)
+  if (browser && !_identity.id)
     window.location.href = `${KRATOS}/self-service/login/browser`;
 
   const flowId = getFlowId($page.url.search);
-  if (!flowId)
+  if (browser && !flowId)
     window.location.href = `${KRATOS}/self-service/verification/browser`;
 
   const pr = getDataModels("verification", flowId);
