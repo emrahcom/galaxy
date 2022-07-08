@@ -6,12 +6,8 @@ cd /home/ui/galaxy-dev
 rm package-lock.json
 rm -rf node_modules
 rm -rf .svelte-kit
-```
 
-#### running
-
-```bash
-(cd /home/ui/galaxy-dev && npm run dev -- --host --port 3000)
+npm install
 ```
 
 #### check
@@ -20,4 +16,16 @@ rm -rf .svelte-kit
 npm run check
 npm run lint
 deno fmt --check src
+```
+
+#### run
+
+```bash
+(cd /home/ui/galaxy-dev && npm run dev)
+```
+
+or
+
+```bash
+(cd /home/ui/galaxy-dev && npm run dev -- --host 127.0.0.1 --port 3000)
 ```
