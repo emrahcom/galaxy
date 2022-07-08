@@ -20,12 +20,8 @@ deno fmt --check src
 
 #### run
 
-```bash
-(cd /home/ui/galaxy-dev && npm run dev)
-```
-
-or
+`internal IP` is required for websockets during development.
 
 ```bash
-(cd /home/ui/galaxy-dev && npm run dev -- --host 127.0.0.1 --port 3000)
+(cd /home/ui/galaxy-dev && npm run dev -- --host --port 3000)
 ```
