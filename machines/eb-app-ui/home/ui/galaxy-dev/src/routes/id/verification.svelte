@@ -9,7 +9,8 @@
   import Messages from "$lib/components/kratos/messages.svelte";
 
   const _identity = get(identity);
-  if (!_identity) window.location.href = `${KRATOS}/self-service/login/browser`;
+  if (!_identity.id)
+    window.location.href = `${KRATOS}/self-service/login/browser`;
 
   const flowId = getFlowId($page.url.search);
   if (!flowId)

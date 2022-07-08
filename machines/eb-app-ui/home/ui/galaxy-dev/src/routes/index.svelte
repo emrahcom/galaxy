@@ -17,7 +17,7 @@
         schedules and attendees.
       </h4>
 
-      {#if !_identity}
+      {#if !_identity.id}
         <h4 class="text-muted small mb-5">
           If you don't have an account yet, please
           <a class="text-primary" href="/id/registration">Sign Up</a>.
