@@ -222,15 +222,16 @@ cp home/ui/kratos-test/src/routes/static.ts \
 diff $ROOTFS/home/ui/kratos-test/src/routes/static.ts.org \
     $ROOTFS/home/ui/kratos-test/src/routes/static.ts || true
 
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-su -l ui <<EOSS
-    set -e
-    cd kratos-test
-    npm ci --fetch-timeout=600000
-    npm run build
-EOSS
-EOS
+# DISABLE BUILD, IT WILL BE FIXED LATER
+#lxc-attach -n $MACH -- zsh <<EOS
+#set -e
+#su -l ui <<EOSS
+#    set -e
+#    cd kratos-test
+#    npm ci --fetch-timeout=600000
+#    npm run build
+#EOSS
+#EOS
 
 # kratos-ui-test systemd service (disabled by default)
 cp etc/systemd/system/kratos-ui-test.service $ROOTFS/etc/systemd/system/
