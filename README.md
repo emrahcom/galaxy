@@ -8,8 +8,8 @@ Jitsi meetings, meeting schedules and attendees.
 - `Debian 11 Bullseye` server
 - At least 1 GB RAM
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
-- A DNS `A record` for the web application pointing to the server.
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
+- A DNS `A record` for the web application pointing to the server.
 - A DNS `A record` for the identity service pointing to the server.
 
 ### Installation
