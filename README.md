@@ -15,6 +15,7 @@ Jitsi meetings, meeting schedules and attendees.
 ### Installation
 
 Run the following commands as `root`.
+
 _Update the value of `APP_FQDN` and `KRATOS_FQDN` according to your domain
 names._
 
