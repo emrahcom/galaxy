@@ -11,6 +11,9 @@ Jitsi meetings, meeting schedules and attendees.
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
 - A DNS `A record` for the web application pointing to the server.
 - A DNS `A record` for the identity service pointing to the server.
+- Allow the following ports if the server is behind a firewall
+  - `TCP/80`
+  - `TCP/443`
 
 ### Installation
 
