@@ -88,11 +88,11 @@ mkdir -p $ROOTFS/var/cache/apt/archives
 cat >> /var/lib/lxc/$MACH/config <<EOF
 
 # Start options
-lxc.start.auto = 1
-lxc.start.order = 308
-lxc.start.delay = 2
-lxc.group = eb-group
-lxc.group = onboot
+#lxc.start.auto = 1
+#lxc.start.order = 308
+#lxc.start.delay = 2
+#lxc.group = eb-group
+#lxc.group = onboot
 EOF
 
 # container network
@@ -231,3 +231,7 @@ for i in $(seq 0 9); do
     lxc-attach -n $MACH -- ping -c1 host.loc && break || true
     sleep 1
 done
+
+# keep closed, it's only useful in development environment
+lxc-stop -n $MACH
+lxc-wait -n $MACH -s STOPPED
