@@ -264,24 +264,6 @@ sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
 # ------------------------------------------------------------------------------
 # GALAXY UI (prod)
 # ------------------------------------------------------------------------------
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-su -l ui <<EOSS
-    set -e
-    cd /home/ui/galaxy-dev
-    npm run build
-EOSS
-EOS
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-su -l ui <<EOSS
-    set -e
-    ln -s galaxy-dev/build /home/ui/galaxy-build
-EOSS
-EOS
-
-# galaxy-ui systemd service
 cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
