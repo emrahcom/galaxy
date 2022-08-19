@@ -5,6 +5,8 @@ Jitsi meetings, meeting schedules and attendees.
 
 ### Features
 
+- Built-in highly secure identity management system. No need for external
+  services. Thanks go to [Ory/Kratos](https://github.com/ory/kratos)
 - Add as many Jitsi servers as you want
 - Allow your partners to access your Jitsi server for different use-cases:
   - `domain partnership`: allow them to access the whole Jitsi server without
