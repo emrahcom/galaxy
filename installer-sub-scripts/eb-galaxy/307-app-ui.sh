@@ -143,7 +143,7 @@ EOS
 cp etc/apt/sources.list.d/nodesource.list $ROOTFS/etc/apt/sources.list.d/
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-wget -qO /tmp/nodesource.gpg.key \
+wget -T 30 -qO /tmp/nodesource.gpg.key \
     https://deb.nodesource.com/gpgkey/nodesource.gpg.key
 cat /tmp/nodesource.gpg.key | gpg --dearmor >/usr/share/keyrings/nodesource.gpg
 apt-get $APT_PROXY_OPTION update
@@ -163,7 +163,7 @@ LATEST=$(curl -sSf https://github.com/denoland/deno/releases | \
     head -n1)
 
 cd /tmp
-wget -O deno.zip https://github.com/\$LATEST
+wget -T 30 -O deno.zip https://github.com/\$LATEST
 unzip deno.zip
 cp /tmp/deno /usr/local/bin/
 deno --version

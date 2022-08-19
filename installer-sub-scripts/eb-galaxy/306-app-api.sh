@@ -145,7 +145,7 @@ LATEST=$(curl -sSf https://github.com/denoland/deno/releases | \
     head -n1)
 
 cd /tmp
-wget -O deno.zip https://github.com/\$LATEST
+wget -T 30 -O deno.zip https://github.com/\$LATEST
 unzip deno.zip
 cp /tmp/deno /usr/local/bin/
 deno --version
