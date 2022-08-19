@@ -20,6 +20,11 @@ Jitsi meetings, meeting schedules and attendees.
 - Manage your Jitsi profiles
 - Transfer all your Jitsi resources (rooms, meetings, partners, members, etc.)
   to a new Jitsi server in one simple step.
+- Built-in JWT support
+- Unpredictable room name support. Create secure rooms on anonymous Jitsi
+  servers (such as `meet.jit.si`) and share a static link with your members.
+  Although the room link is updated periodically in the background, members can
+  access the active meeting room using their static link.
 
 ### Prerequisites
 
