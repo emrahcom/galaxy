@@ -3,6 +3,21 @@
 `Galaxy` is a web application for `Jitsi` admins and users to organize their
 Jitsi meetings, meeting schedules and attendees.
 
+### Features
+
+- Add as many Jitsi servers as you want
+- Allow your partners to access your Jitsi server for different use-cases:
+  - `domain partnership`: allow them to access the whole Jitsi server without
+    sharing your secret key
+  - `room partnership`: allow them to manage some Jitsi rooms
+  - `meeting membership`: allow them to access some meetings as `moderator` or
+    as `limited participant`
+- Allow partnership using an invite link
+- Allow membership using an invite link
+- Create access links for unregistered users
+- Create scheduled meetings
+- Waiting room for scheduled meeting
+
 ### Prerequisites
 
 - `Debian 11 Bullseye` server
