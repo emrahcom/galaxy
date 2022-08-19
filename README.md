@@ -15,16 +15,18 @@ Jitsi meetings, meeting schedules and attendees.
 - Allow partnership using an invite link
 - Allow membership using an invite link
 - Create access links for unregistered users
+- Create disposable or permanent access links
 - Create scheduled meetings
 - Waiting room for scheduled meeting
 - Manage your Jitsi profiles
-- Transfer all your Jitsi resources (rooms, meetings, partners, members, etc.)
-  to a new Jitsi server in one simple step.
-- Built-in JWT support
+- Ability to attach each profile for a specific meeting
 - Unpredictable room name support. Create secure rooms on anonymous Jitsi
   servers (such as `meet.jit.si`) and share a static link with your members.
   Although the room link is updated periodically in the background, members can
   access the active meeting room using their static link.
+- Built-in JWT support
+- Transfer all your Jitsi resources (rooms, meetings, partners, members, etc.)
+  in one simple step to a new Jitsi server.
 
 ### Prerequisites
 
