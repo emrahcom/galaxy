@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { redirect } from "@sveltejs/kit";
 import { browser } from "$app/env";
 import { getLogoutDataModels } from "$lib/kratos";
 import type { KratosLoad } from "$lib/kratos/types";

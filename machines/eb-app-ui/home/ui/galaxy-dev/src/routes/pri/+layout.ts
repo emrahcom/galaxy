@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { redirect } from "@sveltejs/kit";
 import { browser } from "$app/env";
 import { KRATOS } from "$lib/config";
 import { get } from "svelte/store";
