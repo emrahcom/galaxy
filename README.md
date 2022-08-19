@@ -17,6 +17,9 @@ Jitsi meetings, meeting schedules and attendees.
 - Create access links for unregistered users
 - Create scheduled meetings
 - Waiting room for scheduled meeting
+- Manage your Jitsi profiles
+- Transfer all your Jitsi resources (rooms, meetings, partners, members, etc.)
+  to a new Jitsi server in one simple step.
 
 ### Prerequisites
 
