@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/env";
   import { KRATOS } from "$lib/config";
   import { get } from "svelte/store";
   import identity from "$lib/stores/kratos/identity";
