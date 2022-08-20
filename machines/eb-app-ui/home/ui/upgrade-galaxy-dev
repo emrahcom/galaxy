@@ -6,6 +6,13 @@ LOCAL="/tmp/galaxy"
 UI="$LOCAL/machines/eb-app-ui/home/ui"
 APP="$UI/galaxy-dev"
 
+# clone
+rm -rf $LOCAL
+git clone --depth=1 $REMOTE $LOCAL
+
+# upgrade this script
+cp $UI/upgrade-galaxy-dev /home/ui/
+
 # get APP FQDN
 [[ -z "$APP_FQDN" ]] && \
     APP_FQDN=$(ack "^export const APP =" \
@@ -30,10 +37,7 @@ else
    echo "KRATOS_FQDN: $KRATOS_FQDN"
 fi
 
-# clone
-rm -rf $LOCAL
-git clone --depth=1 $REMOTE $LOCAL
-
+# set FQDNs
 sed -i "s/___APP_FQDN___/$APP_FQDN/" $APP/src/lib/config.ts
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/" $APP/src/lib/config.ts
 cat $APP/src/lib/config.ts
@@ -49,8 +53,9 @@ cp -arp $APP /home/ui/
 cd /home/ui/galaxy-dev
 npm install
 
-# upgrade this script
-cp $UI/upgrade-galaxy-dev /home/ui/
+# linter
+npm run check
+npm run lint
 
 # warning
 echo
