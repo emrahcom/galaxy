@@ -136,7 +136,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get $APT_PROXY_OPTION -y install nginx
 apt-get $APT_PROXY_OPTION -y install postgresql-client
 apt-get $APT_PROXY_OPTION -y install gnupg git build-essential
-apt-get $APT_PROXY_OPTION -y install unzip
+apt-get $APT_PROXY_OPTION -y install unzip tree
 EOS
 
 # nodejs
