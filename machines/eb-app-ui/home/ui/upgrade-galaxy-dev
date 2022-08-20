@@ -51,3 +51,8 @@ npm install
 
 # upgrade this script
 cp $UI/upgrade-galaxy-dev /home/ui/
+
+# warning
+echo
+echo "Dont forget to build the application"
+echo "npm run build"

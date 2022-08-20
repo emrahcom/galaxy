@@ -245,6 +245,7 @@ sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
 # ------------------------------------------------------------------------------
 cp -arp home/ui/upgrade-galaxy-dev $ROOTFS/home/ui/
 cp -arp home/ui/galaxy-dev $ROOTFS/home/ui/
+
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 chown ui:ui /home/ui/upgrade-galaxy-dev
@@ -264,6 +265,24 @@ sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
 # ------------------------------------------------------------------------------
 # GALAXY UI (prod)
 # ------------------------------------------------------------------------------
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l ui <<EOSS
+    set -e
+    cd /home/ui/galaxy-dev
+    npm run build
+EOSS
+EOS
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l ui <<EOSS
+    set -e
+    ln -s galaxy-dev/build /home/ui/galaxy-build
+EOSS
+EOS
+
+# galaxy-ui systemd service
 cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
