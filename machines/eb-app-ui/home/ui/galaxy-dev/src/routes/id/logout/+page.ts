@@ -1,17 +1,15 @@
-import { redirect } from "@sveltejs/kit";
 import { browser } from "$app/env";
 import { getLogoutDataModels } from "$lib/kratos";
-import type { KratosLoad } from "$lib/kratos/types";
 
 // ---------------------------------------------------------------------------
-export async function load(): Promise<KratosLoad> {
+export async function load() {
   if (!browser) return {};
 
   const dm = await getLogoutDataModels();
 
   if (dm.instanceOf === "KratosLogout") {
-    throw redirect(302, `${dm.logout_url}`);
+    window.location.replace(dm.logout_url);
+  } else {
+    window.location.replace("/");
   }
-
-  throw redirect(302, "/");
 }
