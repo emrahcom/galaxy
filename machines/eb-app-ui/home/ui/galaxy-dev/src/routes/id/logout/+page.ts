@@ -1,7 +1,7 @@
 import { browser } from "$app/env";
 import { getLogoutDataModels } from "$lib/kratos";
 
-// ---------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 export async function load() {
   if (!browser) return {};
 
