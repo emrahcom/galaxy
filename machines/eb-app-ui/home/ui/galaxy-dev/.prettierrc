@@ -1,4 +1,6 @@
 {
+  "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }],
+  "pluginSearchDirs": ["."],
   "printWidth": 80,
   "quoteProps": "preserve",
   "singleQuote": false,
