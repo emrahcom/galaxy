@@ -6,7 +6,7 @@ Jitsi meetings, meeting schedules and attendees.
 ### Try it
 
 Try `Galaxy` using publicly available implementation on
-[https://eparto.net](https://eparto.net]
+[https://eparto.net](https://eparto.net)
 
 ### Features
 
