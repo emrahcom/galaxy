@@ -1,4 +1,4 @@
-import { browser } from "$app/env";
+import { browser } from "$app/environment";
 import { KRATOS } from "$lib/config";
 import { get } from "$lib/http";
 import type {

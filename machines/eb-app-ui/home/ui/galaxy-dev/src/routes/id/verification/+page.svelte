@@ -1,7 +1,7 @@
 <script lang="ts">
   import { KRATOS } from "$lib/config";
   import { page } from "$app/stores";
-  import { browser } from "$app/env";
+  import { browser } from "$app/environment";
   import { get } from "svelte/store";
   import { getFlowId, getDataModels } from "$lib/kratos";
   import identity from "$lib/stores/kratos/identity";
