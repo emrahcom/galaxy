@@ -14,6 +14,7 @@
     role="switch"
     id={name}
     bind:checked={value}
+    aria-checked={value}
     {disabled}
   />
   <label class="form-check-label" for={name}>{label}</label>
