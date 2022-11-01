@@ -118,23 +118,23 @@ EOS
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION -dy reinstall hostname
+apt-get $APT_PROXY -dy reinstall hostname
 EOS
 
 # update
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION update
-apt-get $APT_PROXY_OPTION -y dist-upgrade
+apt-get $APT_PROXY update
+apt-get $APT_PROXY -y dist-upgrade
 EOS
 
 # the packages
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
-apt-get $APT_PROXY_OPTION -y install git patch unzip
-apt-get $APT_PROXY_OPTION -y install postgresql-client
+apt-get $APT_PROXY -y install git patch unzip
+apt-get $APT_PROXY -y install postgresql-client
 EOS
 
 # deno
