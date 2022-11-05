@@ -14,6 +14,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="form-floating d-flex my-3">
   <input
     type={isHidden ? "password" : "text"}
