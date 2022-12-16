@@ -19,7 +19,7 @@ cd $MACHINES/$MACH
 # NETWORK CONFIG
 # ------------------------------------------------------------------------------
 # changed/added system files
-cp etc/dnsmasq.d/eb-galaxy /etc/dnsmasq.d/
+cp etc/dnsmasq.d/$TAG-galaxy /etc/dnsmasq.d/
 
 # ------------------------------------------------------------------------------
 # NETWORK RELATED SERVICES
