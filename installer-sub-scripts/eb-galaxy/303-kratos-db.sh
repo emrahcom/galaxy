@@ -7,7 +7,7 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-postgres"
+MACH="$TAG-postgres"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
@@ -32,14 +32,14 @@ echo "------------------------ KRATOS DB ------------------------"
 # ------------------------------------------------------------------------------
 # drop the old database if RECREATE_KRATOS_DB_IF_EXISTS is set
 if [[ "$RECREATE_KRATOS_DB_IF_EXISTS" = true ]]; then
-    lxc-attach -n eb-postgres -- zsh <<EOS
+    lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     dropdb -f --if-exists kratos
 EOSS
 EOS
 
-    lxc-attach -n eb-postgres -- zsh <<EOS
+    lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     dropuser --if-exists kratos
@@ -50,7 +50,7 @@ fi
 # ------------------------------------------------------------------------------
 # EXISTENCE CHECK
 # ------------------------------------------------------------------------------
-IS_DB_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
+IS_DB_EXIST=$(lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     psql -v ON_ERROR_STOP=1 -At <<< '\l kratos'
@@ -58,7 +58,7 @@ EOSS
 EOS
 )
 
-IS_ROLE_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
+IS_ROLE_EXIST=$(lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     psql -v ON_ERROR_STOP=1 -At <<< '\dg kratos'
@@ -69,14 +69,14 @@ EOS
 # ------------------------------------------------------------------------------
 # CREATE ROLE & DATABASE
 # ------------------------------------------------------------------------------
-[[ -z "$IS_ROLE_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
+[[ -z "$IS_ROLE_EXIST" ]] && lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     createuser -l kratos
 EOSS
 EOS
 
-[[ -z "$IS_DB_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
+[[ -z "$IS_DB_EXIST" ]] && lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     createdb -T template0 -O kratos -E UTF-8 -l en_US.UTF-8 kratos
@@ -99,7 +99,7 @@ fi
 chmod 600 $ROOTFS/root/postgresql-passwd.txt
 echo "DB_KRATOS_PASSWD=$DB_KRATOS_PASSWD" >> $INSTALLER/000-source
 
-lxc-attach -n eb-postgres -- zsh <<EOS
+lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres -s /usr/bin/psql -- -v ON_ERROR_STOP=1 <<PSQL
     ALTER ROLE kratos WITH PASSWORD '$DB_KRATOS_PASSWD';
@@ -109,7 +109,7 @@ EOS
 # ------------------------------------------------------------------------------
 # ALLOWED HOSTS
 # ------------------------------------------------------------------------------
-lxc-attach -n eb-postgres -- zsh <<EOS
+lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 sed -i '/kratos/d' /etc/postgresql/13/main/pg_hba.conf
 EOS
@@ -120,7 +120,7 @@ cat etc/postgresql/13/main/pg_hba.conf.kratos \
 # ------------------------------------------------------------------------------
 # RESTART POSTGRESQL SERVICE
 # ------------------------------------------------------------------------------
-lxc-attach -n eb-postgres -- systemctl restart postgresql.service
+lxc-attach -n $TAG-postgres -- systemctl restart postgresql.service
 
 # wait for postgresql
 lxc-attach -n $MACH -- zsh <<EOS
