@@ -20,8 +20,8 @@ echo "---------------------- CERTIFICATES -----------------------"
 # ------------------------------------------------------------------------------
 # SELF-SIGNED CERTIFICATE
 # ------------------------------------------------------------------------------
-cd /root/$TAG-ssl
-rm -f /root/$TAG-ssl/$TAG-galaxy.*
+cd /root/$TAG-certs
+rm -f /root/$TAG-certs/$TAG-galaxy.*
 
 # the extension file for multiple hosts:
 # the container IP, the host IP and the host names
