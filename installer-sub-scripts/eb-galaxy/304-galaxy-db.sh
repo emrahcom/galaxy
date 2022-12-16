@@ -7,7 +7,7 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-postgres"
+MACH="$TAG-postgres"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
@@ -32,14 +32,14 @@ echo "------------------------ GALAXY DB ------------------------"
 # ------------------------------------------------------------------------------
 # drop the old database if RECREATE_GALAXY_DB_IF_EXISTS is set
 if [[ "$RECREATE_GALAXY_DB_IF_EXISTS" = true ]]; then
-    lxc-attach -n eb-postgres -- zsh <<EOS
+    lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     dropdb -f --if-exists galaxy
 EOSS
 EOS
 
-    lxc-attach -n eb-postgres -- zsh <<EOS
+    lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     dropuser --if-exists galaxy
@@ -50,7 +50,7 @@ fi
 # ------------------------------------------------------------------------------
 # EXISTENCE CHECK
 # ------------------------------------------------------------------------------
-IS_DB_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
+IS_DB_EXIST=$(lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     psql -v ON_ERROR_STOP=1 -At <<< '\l galaxy'
@@ -58,7 +58,7 @@ EOSS
 EOS
 )
 
-IS_ROLE_EXIST=$(lxc-attach -n eb-postgres -- zsh <<EOS
+IS_ROLE_EXIST=$(lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     psql -v ON_ERROR_STOP=1 -At <<< '\dg galaxy'
@@ -69,16 +69,16 @@ EOS
 # ------------------------------------------------------------------------------
 # CREATE ROLE & DATABASE
 # ------------------------------------------------------------------------------
-[[ -z "$IS_ROLE_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
+[[ -z "$IS_ROLE_EXIST" ]] && lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     createuser -l galaxy
 EOSS
 EOS
 
-cp $MACHINES/eb-app-api/home/api/galaxy/database/*.sql $ROOTFS/tmp/
+cp $MACHINES/$TAG-app-api/home/api/galaxy/database/*.sql $ROOTFS/tmp/
 
-[[ -z "$IS_DB_EXIST" ]] && lxc-attach -n eb-postgres -- zsh <<EOS
+[[ -z "$IS_DB_EXIST" ]] && lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     createdb -T template0 -O galaxy -E UTF-8 -l en_US.UTF-8 galaxy
@@ -102,7 +102,7 @@ fi
 chmod 600 $ROOTFS/root/postgresql-passwd.txt
 echo "DB_GALAXY_PASSWD=$DB_GALAXY_PASSWD" >> $INSTALLER/000-source
 
-lxc-attach -n eb-postgres -- zsh <<EOS
+lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres -s /usr/bin/psql -- -v ON_ERROR_STOP=1 <<PSQL
     ALTER ROLE galaxy WITH PASSWORD '$DB_GALAXY_PASSWD';
@@ -112,7 +112,7 @@ EOS
 # ------------------------------------------------------------------------------
 # ALLOWED HOSTS
 # ------------------------------------------------------------------------------
-lxc-attach -n eb-postgres -- zsh <<EOS
+lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 sed -i '/galaxy/d' /etc/postgresql/13/main/pg_hba.conf
 EOS
@@ -123,7 +123,7 @@ cat etc/postgresql/13/main/pg_hba.conf.galaxy \
 # ------------------------------------------------------------------------------
 # RESTART POSTGRESQL SERVICE
 # ------------------------------------------------------------------------------
-lxc-attach -n eb-postgres -- systemctl restart postgresql.service
+lxc-attach -n $TAG-postgres -- systemctl restart postgresql.service
 
 # wait for postgresql
 lxc-attach -n $MACH -- zsh <<EOS
