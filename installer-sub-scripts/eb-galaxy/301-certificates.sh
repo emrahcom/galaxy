@@ -56,6 +56,7 @@ echo "IP.$i = $REMOTE_IP" >>$TAG-galaxy.ext
 # the domain key and the domain certificate
 openssl req -nodes -newkey rsa:2048 \
     -keyout $TAG-galaxy.key -out $TAG-galaxy.csr \
-    -subj "/O=emrah-bullseye/OU=$TAG-galaxy/CN=$APP_FQDN"
-openssl x509 -req -CA $TAG-CA.pem -CAkey $TAG-CA.key -CAcreateserial -days 10950 \
-    -in $TAG-galaxy.csr -out $TAG-galaxy.pem -extfile $TAG-galaxy.ext
+    -subj "/O=$TAG/OU=$TAG-galaxy/CN=$APP_FQDN"
+openssl x509 -req -CA $TAG-CA.pem -CAkey $TAG-CA.key -CAcreateserial \
+    -days 10950 -in $TAG-galaxy.csr -out $TAG-galaxy.pem \
+    -extfile $TAG-galaxy.ext
