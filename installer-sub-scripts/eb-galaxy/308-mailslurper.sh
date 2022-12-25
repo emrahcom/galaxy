@@ -191,8 +191,10 @@ EOS
 
 # mailslurper config
 mkdir $ROOTFS/home/mailslurper/config
-cp /root/$TAG-ssl/$TAG-galaxy.key $ROOTFS/home/mailslurper/config/$TAG-cert.key
-cp /root/$TAG-ssl/$TAG-galaxy.pem $ROOTFS/home/mailslurper/config/$TAG-cert.pem
+cp /root/$TAG-certs/$TAG-galaxy.key \
+    $ROOTFS/home/mailslurper/config/$TAG-cert.key
+cp /root/$TAG-certs/$TAG-galaxy.pem \
+    $ROOTFS/home/mailslurper/config/$TAG-cert.pem
 cp home/mailslurper/config/config.json $ROOTFS/home/mailslurper/config/
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/home/mailslurper/config/config.json
