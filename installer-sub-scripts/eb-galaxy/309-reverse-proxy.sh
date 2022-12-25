@@ -161,13 +161,16 @@ cp /root/$TAG-certs/$TAG-galaxy.pem $ROOTFS/etc/ssl/certs/$TAG-cert.pem
 
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
-cp etc/nginx/sites-available/$TAG-default.conf $ROOTFS/etc/nginx/sites-available/
+cp etc/nginx/sites-available/$TAG-default.conf \
+    $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/$TAG-default.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/$TAG-kratos.conf $ROOTFS/etc/nginx/sites-available/
+cp etc/nginx/sites-available/$TAG-kratos.conf \
+    $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/$TAG-kratos.conf $ROOTFS/etc/nginx/sites-enabled/
 cp etc/nginx/sites-available/$TAG-app.conf $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/$TAG-app.conf $ROOTFS/etc/nginx/sites-enabled/
-cp etc/nginx/sites-available/$TAG-app-wss.conf $ROOTFS/etc/nginx/sites-available/
+cp etc/nginx/sites-available/$TAG-app-wss.conf \
+    $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/$TAG-app-wss.conf $ROOTFS/etc/nginx/sites-enabled/
 
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
