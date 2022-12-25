@@ -37,8 +37,7 @@ echo "-------------------------- $MACH --------------------------"
 # REINSTALL_IF_EXISTS
 # ------------------------------------------------------------------------------
 EXISTS=$(lxc-info -n $MACH | egrep '^State' || true)
-if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_APP_API_IF_EXISTS" != true ]]
-then
+if [[ -n "$EXISTS" ]] && [[ "$REINSTALL_APP_API_IF_EXISTS" != true ]]; then
     echo APP_API_SKIPPED=true >> $INSTALLER/000-source
 
     echo "Already installed. Skipped..."
@@ -129,7 +128,7 @@ apt-get $APT_PROXY update
 apt-get $APT_PROXY -y dist-upgrade
 EOS
 
-# the packages
+# packages
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
