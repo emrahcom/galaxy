@@ -180,7 +180,7 @@ lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
 
 # set-letsencrypt-cert
-cp $MACHINES/common/usr/local/sbin/set-letsencrypt-cert $ROOTFS/usr/local/sbin/
+cp usr/local/sbin/set-letsencrypt-cert $ROOTFS/usr/local/sbin/
 chmod 744 $ROOTFS/usr/local/sbin/set-letsencrypt-cert
 
 # certbot service
