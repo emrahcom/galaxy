@@ -1,7 +1,7 @@
 import { sveltekit } from "@sveltejs/kit/vite";
 
 /** @type {import('vite').UserConfig} */
-const config =  {
+const config = {
   plugins: [sveltekit()],
   server: {
     hmr: {
