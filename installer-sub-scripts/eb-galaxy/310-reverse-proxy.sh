@@ -184,8 +184,11 @@ cp usr/local/sbin/set-letsencrypt-cert $ROOTFS/usr/local/sbin/
 chmod 744 $ROOTFS/usr/local/sbin/set-letsencrypt-cert
 
 # certbot service
+cp usr/local/sbin/certbot-post.sh $ROOTFS/usr/local/sbin/
+chmod 755 $ROOTFS/usr/local/sbin/certbot-post.sh
+
 mkdir -p $ROOTFS/etc/systemd/system/certbot.service.d
-cp $MACHINES/common/etc/systemd/system/certbot.service.d/override.conf \
+cp etc/systemd/system/certbot.service.d/override.conf \
     $ROOTFS/etc/systemd/system/certbot.service.d/
 lxc-attach -n $MACH -- systemctl daemon-reload
 
