@@ -155,9 +155,9 @@ EOS
 # ------------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # ------------------------------------------------------------------------------
-# eb-cert
-cp /root/$TAG-ssl/$TAG-galaxy.key $ROOTFS/etc/ssl/private/$TAG-cert.key
-cp /root/$TAG-ssl/$TAG-galaxy.pem $ROOTFS/etc/ssl/certs/$TAG-cert.pem
+# certs
+cp /root/$TAG-certs/$TAG-galaxy.key $ROOTFS/etc/ssl/private/$TAG-cert.key
+cp /root/$TAG-certs/$TAG-galaxy.pem $ROOTFS/etc/ssl/certs/$TAG-cert.pem
 
 # nginx
 rm $ROOTFS/etc/nginx/sites-enabled/default
