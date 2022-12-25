@@ -202,9 +202,3 @@ for i in $(seq 0 9); do
     lxc-attach -n $MACH -- ping -c1 host.loc && break || true
     sleep 1
 done
-
-# ------------------------------------------------------------------------------
-# HOST CUSTOMIZATION FOR REVERSE PROXY
-# ------------------------------------------------------------------------------
-cp $MACHINES/galaxy-host/usr/local/sbin/set-letsencrypt-cert /usr/local/sbin/
-chmod 744 /usr/local/sbin/set-letsencrypt-cert
