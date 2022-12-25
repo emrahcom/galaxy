@@ -1,0 +1,41 @@
+#!/bin/bash
+set -e
+
+# -----------------------------------------------------------------------------
+# SET-LETSENCRYPT-CERT
+# -----------------------------------------------------------------------------
+# Get and set the Let's Encrypt certificate.
+# FQDN can be a single domain or comma-seperated list of domains (no space)
+#
+# Usage:
+#     set-letsencrypt-cert <FQDN>[,<FQDN>]
+# Example:
+#     set-letsencrypt-cert www.mydomain.com
+#     set-letsencrypt-cert www.mydomain.com,www2.mydomain.com,www.mydomain2.com
+# -----------------------------------------------------------------------------
+FQDN=$(echo $1 | cut -d',' -f1)
+FQDNS=$1
+
+[[ -z "$FQDN" ]] && cat <<EOF
+
+Usage:
+    set-letsencrypt-cert <FQDN>
+              or
+    set-letsencrypt-cert <FQDN>[,<FQDN>]
+EOF
+
+certbot certonly --dry-run --non-interactive -m info@$FQDN --agree-tos \
+    --duplicate --webroot -w /var/www/html -d $FQDNS || true
+sleep 3
+certbot certonly $DRYRUN --non-interactive -m info@$FQDN --agree-tos \
+    --duplicate --webroot -w /var/www/html -d $FQDNS
+
+find /etc/letsencrypt/archive -name 'privkey*.pem' -exec chmod 640 {} \;
+chmod 750 /etc/letsencrypt/{archive,live}
+chown root:ssl-cert /etc/letsencrypt/{archive,live} -R
+rm -f /etc/ssl/certs/eb-cert.pem
+rm -f /etc/ssl/private/eb-cert.key
+ln -s /etc/letsencrypt/live/$FQDN/fullchain.pem /etc/ssl/certs/eb-cert.pem
+ln -s /etc/letsencrypt/live/$FQDN/privkey.pem /etc/ssl/private/eb-cert.key
+
+systemctl reload nginx.service
