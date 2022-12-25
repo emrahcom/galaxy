@@ -7,11 +7,11 @@ source $INSTALLER/000-source
 # ------------------------------------------------------------------------------
 # ENVIRONMENT
 # ------------------------------------------------------------------------------
-MACH="eb-mailslurper"
+MACH="$TAG-mailslurper"
 cd $MACHINES/$MACH
 
 ROOTFS="/var/lib/lxc/$MACH/rootfs"
-DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/eb-galaxy | head -n1)
+DNS_RECORD=$(grep "address=/$MACH/" /etc/dnsmasq.d/$TAG-galaxy | head -n1)
 IP=${DNS_RECORD##*/}
 SSH_PORT="30$(printf %03d ${IP##*.})"
 echo MAILSLURPER="$IP" >> $INSTALLER/000-source
@@ -20,20 +20,20 @@ echo MAILSLURPER="$IP" >> $INSTALLER/000-source
 # NFTABLES RULES
 # ------------------------------------------------------------------------------
 # the public ssh
-nft delete element eb-nat tcp2ip { $SSH_PORT } 2>/dev/null || true
-nft add element eb-nat tcp2ip { $SSH_PORT : $IP }
-nft delete element eb-nat tcp2port { $SSH_PORT } 2>/dev/null || true
-nft add element eb-nat tcp2port { $SSH_PORT : 22 }
+nft delete element $TAG-nat tcp2ip { $SSH_PORT } 2>/dev/null || true
+nft add element $TAG-nat tcp2ip { $SSH_PORT : $IP }
+nft delete element $TAG-nat tcp2port { $SSH_PORT } 2>/dev/null || true
+nft add element $TAG-nat tcp2port { $SSH_PORT : 22 }
 # tcp/4436
-nft delete element eb-nat tcp2ip { 4436 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 4436 : $IP }
-nft delete element eb-nat tcp2port { 4436 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 4436 : 4436 }
+nft delete element $TAG-nat tcp2ip { 4436 } 2>/dev/null || true
+nft add element $TAG-nat tcp2ip { 4436 : $IP }
+nft delete element $TAG-nat tcp2port { 4436 } 2>/dev/null || true
+nft add element $TAG-nat tcp2port { 4436 : 4436 }
 # tcp/4437
-nft delete element eb-nat tcp2ip { 4437 } 2>/dev/null || true
-nft add element eb-nat tcp2ip { 4437 : $IP }
-nft delete element eb-nat tcp2port { 4437 } 2>/dev/null || true
-nft add element eb-nat tcp2port { 4437 : 4437 }
+nft delete element $TAG-nat tcp2ip { 4437 } 2>/dev/null || true
+nft add element $TAG-nat tcp2ip { 4437 : $IP }
+nft delete element $TAG-nat tcp2port { 4437 } 2>/dev/null || true
+nft add element $TAG-nat tcp2port { 4437 : 4437 }
 
 # ------------------------------------------------------------------------------
 # INIT
@@ -62,8 +62,8 @@ fi
 # ------------------------------------------------------------------------------
 # stop the template container if it's running
 set +e
-lxc-stop -n eb-bullseye
-lxc-wait -n eb-bullseye -s STOPPED
+lxc-stop -n $TAG-bullseye
+lxc-wait -n $TAG-bullseye -s STOPPED
 set -e
 
 # remove the old container if exists
@@ -76,7 +76,7 @@ sleep 1
 set -e
 
 # create the new one
-lxc-copy -n eb-bullseye -N $MACH -p /var/lib/lxc/
+lxc-copy -n $TAG-bullseye -N $MACH -p /var/lib/lxc/
 
 # the shared directories
 mkdir -p $SHARED/cache
@@ -91,7 +91,7 @@ cat >> /var/lib/lxc/$MACH/config <<EOF
 #lxc.start.auto = 1
 #lxc.start.order = 308
 #lxc.start.delay = 2
-#lxc.group = eb-group
+#lxc.group = $TAG-group
 #lxc.group = onboot
 EOF
 
@@ -191,8 +191,8 @@ EOS
 
 # mailslurper config
 mkdir $ROOTFS/home/mailslurper/config
-cp /root/eb-ssl/eb-galaxy.key $ROOTFS/home/mailslurper/config/eb-cert.key
-cp /root/eb-ssl/eb-galaxy.pem $ROOTFS/home/mailslurper/config/eb-cert.pem
+cp /root/$TAG-ssl/$TAG-galaxy.key $ROOTFS/home/mailslurper/config/$TAG-cert.key
+cp /root/$TAG-ssl/$TAG-galaxy.pem $ROOTFS/home/mailslurper/config/$TAG-cert.pem
 cp home/mailslurper/config/config.json $ROOTFS/home/mailslurper/config/
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
     $ROOTFS/home/mailslurper/config/config.json
@@ -201,8 +201,8 @@ lxc-attach -n $MACH -- zsh <<EOS
 set -e
 chown mailslurper:mailslurper /home/mailslurper/config -R
 chmod 700 /home/mailslurper/config
-chmod 644 /home/mailslurper/config/eb-cert.pem
-chmod 640 /home/mailslurper/config/eb-cert.key
+chmod 644 /home/mailslurper/config/$TAG-cert.pem
+chmod 640 /home/mailslurper/config/$TAG-cert.key
 
 mkdir /home/mailslurper/data
 chown mailslurper:mailslurper /home/mailslurper/data
