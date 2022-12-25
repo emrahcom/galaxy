@@ -138,7 +138,7 @@ apt-get $APT_PROXY update
 apt-get $APT_PROXY -y dist-upgrade
 EOS
 
-# the packages
+# packages
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
