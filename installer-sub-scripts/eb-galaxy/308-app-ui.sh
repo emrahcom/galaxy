@@ -138,8 +138,20 @@ apt-get $APT_PROXY -y install gnupg git build-essential
 apt-get $APT_PROXY -y install unzip tree
 EOS
 
+# deno
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+cd /tmp
+wget -T 30 -O deno.zip \
+    https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip
+unzip deno.zip
+cp /tmp/deno /usr/local/bin/
+deno --version
+EOS
+
 # nodejs
 cp etc/apt/sources.list.d/nodesource.list $ROOTFS/etc/apt/sources.list.d/
+
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 wget -T 30 -qO /tmp/nodesource.gpg.key \
@@ -152,17 +164,6 @@ lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
 apt-get $APT_PROXY -y install nodejs
-EOS
-
-# deno
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-cd /tmp
-wget -T 30 -O deno.zip \
-    https://github.com/denoland/deno/releases/latest/download/deno-x86_64-unknown-linux-gnu.zip
-unzip deno.zip
-cp /tmp/deno /usr/local/bin/
-deno --version
 EOS
 
 # ------------------------------------------------------------------------------
