@@ -28,7 +28,12 @@
   />
   <label for="password">Password</label>
 
-  <span class="input-group-text" on:click={toggleVisibility}>
+  <span
+    class="input-group-text"
+    role="button"
+    tabindex="0"
+    on:click={toggleVisibility}
+  >
     {#if isHidden}
       <span class="bi bi-eye-fill" />
     {:else}
