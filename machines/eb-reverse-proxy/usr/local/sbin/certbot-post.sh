@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/bash
 
 if [[ -d "/etc/letsencrypt/archive" ]]; then
     find /etc/letsencrypt/archive -name 'privkey*.pem' -exec chmod 640 {} \;
