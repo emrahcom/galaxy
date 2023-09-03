@@ -42,12 +42,12 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/id/settings" on:click={closeMenu}>
+        <a class="nav-link" href="/id/settings" target="_blank" rel="noopener noreferrer" on:click={closeMenu}>
           Settings
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/id/logout" on:click={closeMenu}> Log Out </a>
+        <a class="nav-link" href="/logout" on:click={closeMenu}> Log Out </a>
       </li>
     </ul>
   </div>
