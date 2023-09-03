@@ -47,20 +47,6 @@ export interface UI {
 }
 
 // -----------------------------------------------------------------------------
-export interface KratosForm {
-  instanceOf: "KratosForm";
-  id: string;
-  type: string;
-  forced?: boolean;
-  ui: UI;
-  "created_at"?: string;
-  "expires_at": string;
-  "issued_at": string;
-  "updated_at"?: string;
-  "request_url": string;
-}
-
-// -----------------------------------------------------------------------------
 export interface KratosError {
   instanceOf: "KratosError";
   error: {
@@ -92,18 +78,4 @@ export interface KratosIdentity {
   state: string;
   "created_at": string;
   "updated_at": string;
-}
-
-// -----------------------------------------------------------------------------
-export interface KratosLoad {
-  status?: number;
-  redirect?: string;
-  props?: {
-    [key: string]:
-      | string
-      | KratosError
-      | KratosForm
-      | KratosIdentity
-      | KratosLogout;
-  };
 }
