@@ -134,7 +134,6 @@ set -e
 export DEBIAN_FRONTEND=noninteractive
 apt-get $APT_PROXY -y install nginx
 apt-get $APT_PROXY -y install postgresql-client
-apt-get $APT_PROXY -y install gnupg git build-essential
 apt-get $APT_PROXY -y install unzip tree
 EOS
 
@@ -199,43 +198,39 @@ chown ui:ui /home/ui/.zshrc
 EOS
 
 # ------------------------------------------------------------------------------
-# KRATOS TEST UI
+# KRATOS UI (/id)
 # ------------------------------------------------------------------------------
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 su -l ui <<EOSS
     set -e
-    git clone https://github.com/ory/kratos-selfservice-ui-node.git kratos-test
-    cd kratos-test
-    [[ "$KRATOS_VERSION" != "latest" ]] && git checkout $KRATOS_VERSION || true
+    wget -T 30 -O /tmp/kratos-ui.tar.gz $KRATOS_UI_RELEASE
+    tar zxf /tmp/kratos-ui.tar.gz -C /tmp/
+    mv /tmp/kratos-selfservice-ui-node-* /home/ui/kratos-ui
 EOSS
 EOS
 
-# add galaxy customized routes
-cp $ROOTFS/home/ui/kratos-test/src/routes/static.ts \
-    $ROOTFS/home/ui/kratos-test/src/routes/static.ts.org
-cp home/ui/kratos-test/src/routes/static.ts \
-    $ROOTFS/home/ui/kratos-test/src/routes/
-diff $ROOTFS/home/ui/kratos-test/src/routes/static.ts.org \
-    $ROOTFS/home/ui/kratos-test/src/routes/static.ts || true
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l ui <<EOSS
+    set -e
+    cd kratos-ui
+    npm ci --fetch-timeout=600000
+    npm run build
+EOSS
+EOS
 
-# DISABLE BUILD, IT WILL BE FIXED LATER
-#lxc-attach -n $MACH -- zsh <<EOS
-#set -e
-#su -l ui <<EOSS
-#    set -e
-#    cd kratos-test
-#    npm ci --fetch-timeout=600000
-#    npm run build
-#EOSS
-#EOS
-
-# kratos-ui-test systemd service (disabled by default)
-cp etc/systemd/system/kratos-ui-test.service $ROOTFS/etc/systemd/system/
+# kratos-ui systemd service
+cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ui-test.service
-sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/etc/systemd/system/kratos-ui-test.service
+    $ROOTFS/etc/systemd/system/kratos-ui.service
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+systemctl daemon-reload
+systemctl enable kratos-ui.service
+systemctl start kratos-ui.service
+EOS
 
 # ------------------------------------------------------------------------------
 # GALAXY UI (dev)
