@@ -134,7 +134,7 @@ set -e
 export DEBIAN_FRONTEND=noninteractive
 apt-get $APT_PROXY -y install nginx
 apt-get $APT_PROXY -y install postgresql-client
-apt-get $APT_PROXY -y install unzip tree
+apt-get $APT_PROXY -y install gnupg unzip tree
 EOS
 
 # deno
