@@ -1,24 +1,78 @@
-identity:
-  schemas:
-    - id: schema_v0
-      url: file:///home/kratos/config/identity.schema.v0.json
-
-  default_schema_id: schema_v0
+version: v0.13.0
 
 dsn: "postgres://kratos:___DB_PASSWD___@eb-postgres:5432/kratos?\
       sslmode=disable&max_conns=20&max_idle_conns=4"
 
+serve:
+  public:
+    base_url: https://___KRATOS_FQDN___/
+    cors:
+      enabled: true
+      allowed_origins:
+        - https://___APP_FQDN___
+  admin:
+    base_url: https://___KRATOS_FQDN___:4434/
+
 selfservice:
   default_browser_return_url: https://___APP_FQDN___/
+  allowed_return_urls:
+    - https://___APP_FQDN___
+
+  methods:
+    password:
+      enabled: true
+      config:
+        identifier_similarity_check_enabled: true
+        haveibeenpwned_enabled: false
+        min_password_length: 8
+    totp:
+      enabled: true
+      config:
+        issuer: Kratos
+    lookup_secret:
+      enabled: true
+    link:
+      enabled: true
+    code:
+      enabled: true
 
   flows:
+    error:
+      ui_url: https://___APP_FQDN___/id/error
+
+    settings:
+      ui_url: https://___APP_FQDN___/id/settings
+      privileged_session_max_age: 15m
+      required_aal: highest_available
+
+    recovery:
+      enabled: true
+      ui_url: https://___APP_FQDN___/id/recovery
+      use: code
+
+    verification:
+      enabled: true
+      ui_url: https://___APP_FQDN___/id/verification
+      use: code
+      after:
+        default_browser_return_url: https://___APP_FQDN___/pri
+
     logout:
       after:
         default_browser_return_url: https://___APP_FQDN___/id/login
 
+    login:
+      ui_url: https://___APP_FQDN___/id/login
+      lifespan: 10m
+      after:
+        password:
+          default_browser_return_url: https://___APP_FQDN___/pri
+
+
     registration:
+      enabled: true
+      lifespan: 10m
       ui_url: https://___APP_FQDN___/id/registration
-      lifespan: 1h
       before:
         hooks:
           - hook: web_hook
@@ -35,77 +89,18 @@ selfservice:
                 method: POST
                 body: file:///home/kratos/jsonnet/identity.jsonnet
             - hook: session
-          default_browser_return_url: https://___APP_FQDN___/id/welcome
-      enabled: true
-
-    login:
-      ui_url: https://___APP_FQDN___/id/login
-      lifespan: 1h
-      after:
-        password:
-          default_browser_return_url: https://___APP_FQDN___/id/welcome
-
-    verification:
-      ui_url: https://___APP_FQDN___/id/verification
-      lifespan: 1h
-      after:
-        default_browser_return_url: https://___APP_FQDN___/id/welcome
-      enabled: true
-
-    recovery:
-      ui_url: https://___APP_FQDN___/id/recovery
-      lifespan: 1h
-      enabled: true
-
-    error:
-      ui_url: https://___APP_FQDN___/id/error
-
-    settings:
-      ui_url: https://___APP_FQDN___/id/settings
-      lifespan: 1h
-      privileged_session_max_age: 1h
-
-  methods:
-    password:
-      config:
-        identifier_similarity_check_enabled: true
-        haveibeenpwned_enabled: false
-        min_password_length: 8
-      enabled: true
-
-  allowed_return_urls:
-    - https://___APP_FQDN___
-
-serve:
-  public:
-    base_url: https://___KRATOS_FQDN___/
-    cors:
-      allowed_origins:
-        - https://___APP_FQDN___
-      enabled: true
-
-  admin:
-    base_url: https://___KRATOS_FQDN___:4434/
+            - hook: show_verification_ui
 
 log:
-  leak_sensitive_values: true
-  format: text
   level: warning
+  format: text
+  leak_sensitive_values: true
 
 secrets:
   cookie:
     - ___COOKIE_SECRET___
   cipher:
     - ___CIPHER_SECRET___
-
-hashers:
-  argon2:
-    parallelism: 1
-    dedicated_memory: 512MB
-    memory: 128MB
-    iterations: 2
-    salt_length: 16
-    key_length: 16
 
 ciphers:
   algorithm: xchacha20-poly1305
@@ -123,7 +118,16 @@ session:
     same_site: Strict
     persistent: true
 
-version: v0.10.1
+hashers:
+  algorithm: bcrypt
+  bcrypt:
+    cost: 8
+
+identity:
+  default_schema_id: schema_v0
+  schemas:
+    - id: schema_v0
+      url: file:///home/kratos/config/identity.schema.v0.json
 
 courier:
   smtp:
