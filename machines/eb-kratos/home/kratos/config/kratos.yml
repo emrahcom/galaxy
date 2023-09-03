@@ -49,6 +49,8 @@ selfservice:
       enabled: true
       ui_url: https://___APP_FQDN___/id/recovery
       use: code
+      after:
+        default_browser_return_url: https://___APP_FQDN___/pri
 
     verification:
       enabled: true
