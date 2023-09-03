@@ -3,7 +3,8 @@ Description=Kratos UI
 After=network-online.target
 
 [Service]
-Environment=KRATOS_PUBLIC_URL=https://___KRATOS_FQDN___/
+Environment=KRATOS_PUBLIC_URL=http://eb-kratos:4433/
+Environment=KRATOS_BROWSER_URL=https://___KRATOS_FQDN___/
 Environment=BASE_PATH=/id
 Environment=PORT=4455
 User=ui
