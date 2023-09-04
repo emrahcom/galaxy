@@ -261,7 +261,7 @@ chown ui:ui /home/ui/galaxy-dev -R
 su -l ui <<EOSS
     set -e
     cd /home/ui/galaxy-dev
-    npm install
+    yarn install
 EOSS
 EOS
 
@@ -278,7 +278,7 @@ set -e
 su -l ui <<EOSS
     set -e
     cd /home/ui/galaxy-dev
-    npm run build
+    yarn run build
 EOSS
 EOS
 
