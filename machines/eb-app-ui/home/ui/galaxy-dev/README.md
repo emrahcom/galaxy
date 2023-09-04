@@ -7,14 +7,14 @@ rm package-lock.json
 rm -rf node_modules
 rm -rf .svelte-kit
 
-npm install
+yarn install
 ```
 
 #### check
 
 ```bash
-npm run check
-npm run lint
+yarn run check
+yarn run lint
 deno fmt --check src
 ```
 
