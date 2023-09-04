@@ -165,6 +165,22 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get $APT_PROXY -y install nodejs
 EOS
 
+# yarn
+cp etc/apt/sources.list.d/yarn.list $ROOTFS/etc/apt/sources.list.d/
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+wget -T 30 -qO /tmp/yarn.gpg.key https://dl.yarnpkg.com/debian/pubkey.gpg
+cat /tmp/yarn.gpg.key | gpg --dearmor >/usr/share/keyrings/yarn.gpg
+apt-get $APT_PROXY update
+EOS
+
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+export DEBIAN_FRONTEND=noninteractive
+apt-get $APT_PROXY -y install yarn
+EOS
+
 # ------------------------------------------------------------------------------
 # SYSTEM CONFIGURATION
 # ------------------------------------------------------------------------------
