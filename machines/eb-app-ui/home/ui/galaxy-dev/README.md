@@ -4,6 +4,7 @@
 cd /home/ui/galaxy-dev
 
 rm package-lock.json
+rm yarn.json
 rm -rf node_modules
 rm -rf .svelte-kit
 
@@ -23,5 +24,5 @@ deno fmt --check src
 `internal IP` is required for websockets during development.
 
 ```bash
-(cd /home/ui/galaxy-dev && npm run dev -- --host --port 3000)
+(cd /home/ui/galaxy-dev && yarn run dev -- --host --port 3000)
 ```

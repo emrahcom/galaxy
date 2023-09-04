@@ -51,13 +51,13 @@ cp -arp $APP /home/ui/
 [[ -d "/tmp/galaxy-dev.old/node_modules" ]] && \
     cp -arp /tmp/galaxy-dev.old/node_modules /home/ui/galaxy-dev/
 cd /home/ui/galaxy-dev
-npm install
+yarn install
 
 # linter
-npm run check
-npm run lint
+yarn run check
+yarn run lint
 
 # warning
 echo
 echo "DONT FORGET TO BUILD THE APPLICATION"
-echo "npm run build"
+echo "yarn run build"
