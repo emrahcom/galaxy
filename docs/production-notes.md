@@ -22,56 +22,6 @@ lxc-attach -n eb-kratos -- reboot
 
 Stop this container and remove it from auto-start group.
 
-#### eb-app-ui
-
-##### build
-
-Build static files.
-
-```bash
-su -l ui
-
-cd galaxy-dev
-npm run build
-
-rm -rf /home/ui/galaxy-static
-cp -arp /home/ui/galaxy-dev/build /home/ui/galaxy-static
-```
-
-##### nginx
-
-Update `nginx` site config and restart `nginx`.
-
-_/etc/nginx/sites-enabled/ui.conf_
-
-```conf
-    # --------------------------------------------------------------------------
-    # dev
-    # --------------------------------------------------------------------------
-    #location / {
-    #    proxy_pass http://$ui;
-    #    proxy_set_header Host $host;
-    #}
-
-    # --------------------------------------------------------------------------
-    # prod
-    # --------------------------------------------------------------------------
-    location / {
-        root /home/ui/galaxy-static;
-        try_files $uri $uri.html /index.html;
-    }
-```
-
-```bash
-systemctl restart nginx
-```
-
-##### Disable UI service
-
-```bash
-systemctl stop galaxy-ui.service
-systemctl disable galaxy-ui.service
-```
 #### host
 
 ##### ssh
