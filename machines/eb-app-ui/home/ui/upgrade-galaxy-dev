@@ -9,7 +9,7 @@ APP="$UI/galaxy-dev"
 
 # clone
 rm -rf $LOCAL
-git clone --depth=1 -b $BRANCH $REMOTE $LOCAL
+git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
 
 # upgrade this script
 cp $UI/upgrade-galaxy-dev /home/ui/
