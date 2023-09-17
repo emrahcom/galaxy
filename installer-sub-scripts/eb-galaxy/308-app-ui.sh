@@ -132,9 +132,10 @@ EOS
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 export DEBIAN_FRONTEND=noninteractive
+apt-get $APT_PROXY -y install git patch unzip
 apt-get $APT_PROXY -y install nginx
 apt-get $APT_PROXY -y install postgresql-client
-apt-get $APT_PROXY -y install gnupg unzip tree
+apt-get $APT_PROXY -y install gnupg tree
 EOS
 
 # deno
