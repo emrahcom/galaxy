@@ -8,6 +8,8 @@ UI="$LOCAL/machines/eb-app-ui/home/ui"
 APP="$UI/galaxy-dev"
 
 # clone
+echo "BRANCH: $BRANCH"
+
 rm -rf $LOCAL
 git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
 
