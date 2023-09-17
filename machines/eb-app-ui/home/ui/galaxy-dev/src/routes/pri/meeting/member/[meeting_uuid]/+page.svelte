@@ -24,6 +24,7 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Members of {meetingName}" hrefBack="/pri/meeting" />
 
+<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 {#await Promise.all([pr1, pr2]) then [_meeting, members]}
   <List {members} />
 {:catch}
