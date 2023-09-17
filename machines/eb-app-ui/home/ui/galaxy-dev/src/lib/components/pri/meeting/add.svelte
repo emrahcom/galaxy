@@ -124,6 +124,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="add">
+  <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
   {#await Promise.all([pr1, pr2, pr3, pr4]) then [_p, profiles, rooms, domains]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
