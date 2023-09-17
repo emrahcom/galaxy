@@ -2,13 +2,14 @@
 set -e
 
 REMOTE="https://github.com/emrahcom/galaxy.git"
+BRANCH="main"
 LOCAL="/tmp/galaxy"
 UI="$LOCAL/machines/eb-app-ui/home/ui"
 APP="$UI/galaxy-dev"
 
 # clone
 rm -rf $LOCAL
-git clone --depth=1 $REMOTE $LOCAL
+git clone --depth=1 -b $BRANCH $REMOTE $LOCAL
 
 # upgrade this script
 cp $UI/upgrade-galaxy-dev /home/ui/
