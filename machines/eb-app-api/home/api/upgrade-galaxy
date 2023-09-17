@@ -10,6 +10,7 @@ set -e
 # ------------------------------------------------------------------------------
 
 REMOTE="https://github.com/emrahcom/galaxy.git"
+BRANCH="main"
 LOCAL="/tmp/galaxy"
 API="$LOCAL/machines/eb-app-api/home/api"
 APP="$API/galaxy"
@@ -27,7 +28,7 @@ fi
 
 # clone
 rm -rf $LOCAL
-git clone --depth=1 $REMOTE $LOCAL
+git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
 
 sed -i "s/___DB_PASSWD___/$DB_PASSWD/" $APP/config.ts
 cat $APP/config.ts
