@@ -63,4 +63,6 @@ yarn run lint
 # warning
 echo
 echo "DONT FORGET TO BUILD THE APPLICATION"
+echo
+echo "cd /home/ui/galaxy-dev"
 echo "yarn run build"
