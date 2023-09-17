@@ -2,7 +2,7 @@
 set -e
 
 REMOTE="https://github.com/emrahcom/galaxy.git"
-BRANCH="main"
+[[ -n "$BRANCH" ]] || BRANCH="main"
 LOCAL="/tmp/galaxy"
 UI="$LOCAL/machines/eb-app-ui/home/ui"
 APP="$UI/galaxy-dev"
