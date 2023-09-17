@@ -22,6 +22,7 @@
   hrefAdd="/pri/domain/invite/add/{domainId}"
 />
 
+<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 {#await Promise.all([pr1, pr2]) then [_domain, invites]}
   <List {invites} />
 {:catch}
