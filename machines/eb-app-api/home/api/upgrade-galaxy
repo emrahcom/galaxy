@@ -27,7 +27,11 @@ else
 fi
 
 # clone
-echo "BRANCH: $BRANCH"
+cat <<EOF
+
+BRANCH: $BRANCH
+
+EOF
 
 rm -rf $LOCAL
 git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
