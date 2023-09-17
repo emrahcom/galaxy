@@ -28,6 +28,7 @@
   hrefAdd="/pri/meeting/schedule/add/{meetingId}"
 />
 
+<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 {#await Promise.all([pr1, pr2]) then [_meeting, schedules]}
   <List {schedules} />
 {:catch}
