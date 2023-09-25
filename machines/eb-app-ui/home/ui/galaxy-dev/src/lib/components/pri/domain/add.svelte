@@ -15,6 +15,7 @@
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
+  import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   let warning = false;
@@ -79,6 +80,12 @@
           name="jaas_kid"
           label="API Key ID"
           bind:value={p.domain_attr.jaas_kid}
+          required={true}
+        />
+        <Textarea
+          name="jaas_key"
+          label="API Key Value (private)"
+          value={p.domain_attr.jaas_key}
           required={true}
         />
       {:else if p.auth_type === "token"}
