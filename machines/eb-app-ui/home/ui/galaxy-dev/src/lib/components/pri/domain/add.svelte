@@ -1,6 +1,13 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { AUTH_TYPE_OPTIONS } from "$lib/pri/domain";
+  import {
+    AUTH_TYPE_OPTIONS,
+    JAAS_ALGO,
+    JAAS_AUD,
+    JAAS_ISS,
+    JAAS_URL,
+    TOKEN_ALGO,
+  } from "$lib/pri/domain";
   import { action } from "$lib/api";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Password from "$lib/components/common/form-password.svelte";
@@ -18,6 +25,14 @@
       url: "",
       app_id: "",
       app_secret: "",
+      app_alg: TOKEN_ALGO,
+      jaas_url: JAAS_URL,
+      jaas_app_id: "",
+      jaas_kid: "",
+      jaas_key: "",
+      jaas_alg: JAAS_ALGO,
+      jaas_aud: JAAS_AUD,
+      jaas_iss: JAAS_ISS,
     },
   };
 
@@ -53,7 +68,20 @@
       <p class="text-muted me-3 mb-1">Authentication Type</p>
       <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
 
-      {#if p.auth_type === "token"}
+      {#if p.auth_type === "jaas"}
+        <Text
+          name="jaas_app_id"
+          label="App ID"
+          bind:value={p.domain_attr.jaas_app_id}
+          required={true}
+        />
+        <Text
+          name="jaas_kid"
+          label="API Key ID"
+          bind:value={p.domain_attr.jaas_kid}
+          required={true}
+        />
+      {#else if p.auth_type === "token"}
         <Text
           name="app_id"
           label="App ID"
