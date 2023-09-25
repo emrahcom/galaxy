@@ -85,7 +85,7 @@
         <Textarea
           name="jaas_key"
           label="API Key Value (private)"
-          value={p.domain_attr.jaas_key}
+          bind:value={p.domain_attr.jaas_key}
           required={true}
         />
       {:else if p.auth_type === "token"}
