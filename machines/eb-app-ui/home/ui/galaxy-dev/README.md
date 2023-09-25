@@ -24,5 +24,5 @@ deno fmt --check src
 `internal IP` is required for websockets during development.
 
 ```bash
-(cd /home/ui/galaxy-dev && yarn run dev -- --host --port 3000)
+(cd /home/ui/galaxy-dev && yarn run dev --host --port 3000)
 ```
