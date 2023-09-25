@@ -81,7 +81,7 @@
           bind:value={p.domain_attr.jaas_kid}
           required={true}
         />
-      {#else if p.auth_type === "token"}
+      {:else if p.auth_type === "token"}
         <Text
           name="app_id"
           label="App ID"
