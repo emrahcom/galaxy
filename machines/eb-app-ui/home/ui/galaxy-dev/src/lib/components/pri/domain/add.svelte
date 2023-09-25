@@ -58,18 +58,19 @@
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" bind:value={p.name} required={true} />
-      <Text
-        name="url"
-        label="URL"
-        bind:value={p.domain_attr.url}
-        required={true}
-      />
-
       <p class="text-muted me-3 mb-1">Authentication Type</p>
       <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
 
+      <Text name="name" label="Name" bind:value={p.name} required={true} />
+
       {#if p.auth_type === "jaas"}
+        <Text
+          name="jaas_url"
+          label="URL"
+          bind:value={p.domain_attr.jaas_url}
+          required={true}
+          readonly={true}
+        />
         <Text
           name="jaas_app_id"
           label="App ID"
@@ -90,6 +91,12 @@
         />
       {:else if p.auth_type === "token"}
         <Text
+          name="url"
+          label="URL"
+          bind:value={p.domain_attr.url}
+          required={true}
+        />
+        <Text
           name="app_id"
           label="App ID"
           bind:value={p.domain_attr.app_id}
@@ -99,6 +106,13 @@
           name="app_secret"
           label="App Secret"
           bind:value={p.domain_attr.app_secret}
+          required={true}
+        />
+      {:else}
+        <Text
+          name="url"
+          label="URL"
+          bind:value={p.domain_attr.url}
           required={true}
         />
       {/if}
