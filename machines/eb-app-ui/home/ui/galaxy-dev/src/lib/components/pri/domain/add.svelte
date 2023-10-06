@@ -70,6 +70,7 @@
           label="URL"
           bind:value={p.domain_attr.jaas_url}
           required={true}
+          disabled={true}
           readonly={true}
         />
         <Text
