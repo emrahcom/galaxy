@@ -52,10 +52,10 @@ ALTER TABLE profile OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- - public domain can only be added by system account
 -- - auth_type of public domain must be 'none' (to decrease complexity)
--- - only none and token are supported as auth_type (to decrease complexity)
+-- - only none, token and jaas are supported as auth_type
 -- - urls are in domain_attr depending on auth_type
 -- -----------------------------------------------------------------------------
-CREATE TYPE domain_auth_type AS ENUM ('none', 'token');
+CREATE TYPE domain_auth_type AS ENUM ('none', 'token', 'jaas');
 CREATE TABLE domain (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
