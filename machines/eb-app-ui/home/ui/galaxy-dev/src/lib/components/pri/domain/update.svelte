@@ -22,7 +22,6 @@
   export let p: Domain;
 
   // set default if there is no value
-  if (!p.domain_attr) p.domain_attr = {};
   if (!p.domain_attr.url) p.domain_attr.url = "";
   if (!p.domain_attr.app_id) p.domain_attr.app_id = "";
   if (!p.domain_attr.app_secret) p.domain_attr.app_secret = "";
