@@ -40,7 +40,6 @@
           value={p.auth_type}
           options={AUTH_TYPE_OPTIONS}
           disabled={true}
-          readonly={true}
         />
       </div>
 
