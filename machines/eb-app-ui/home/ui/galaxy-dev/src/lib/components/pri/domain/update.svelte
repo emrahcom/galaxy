@@ -16,6 +16,7 @@
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
+  import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let p: Domain;
