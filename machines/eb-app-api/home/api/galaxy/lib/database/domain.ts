@@ -27,14 +27,24 @@ export async function listDomain(
   // updated_at is used by UI to pick the newest one
   const sql = {
     text: `
-      SELECT id, name, auth_type, domain_attr->>'url' as url, enabled,
-        updated_at, 'owner' as ownership, id as partnership_id
+      SELECT id, name, auth_type,
+        (CASE auth_type
+           WHEN 'jaas' THEN domain_attr->>'jaas_url'
+           ELSE domain_attr->>'url'
+         END
+        ) as url,
+        enabled, updated_at, 'owner' as ownership, id as partnership_id
       FROM domain
       WHERE identity_id = $1
 
       UNION
 
-      SELECT d.id, d.name, d.auth_type, d.domain_attr->>'url' as url,
+      SELECT d.id, d.name, d.auth_type,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as url,
         (pa.enabled AND d.enabled AND i.enabled) as enabled,
         pa.updated_at, 'partner' as ownership, pa.id as partnership_id
       FROM domain_partner pa
@@ -44,8 +54,14 @@ export async function listDomain(
 
       UNION
 
-      SELECT id, name, auth_type, domain_attr->>'url' as url, true,
-        created_at as updated_at, 'public' as ownership, id as partnership_id
+      SELECT id, name, auth_type,
+        (CASE auth_type
+           WHEN 'jaas' THEN domain_attr->>'jaas_url'
+           ELSE domain_attr->>'url'
+         END
+        ) as url,
+        true, created_at as updated_at, 'public' as ownership,
+        id as partnership_id
       FROM domain
       WHERE public
         AND enabled
