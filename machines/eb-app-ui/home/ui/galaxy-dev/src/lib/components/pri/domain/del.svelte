@@ -35,14 +35,30 @@
 <section id="del">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" value={p.name} readonly={true} />
-      <Text name="url" label="URL" value={p.domain_attr.url} readonly={true} />
+      <div class="d-flex gap-3 my-5 justify-content-center">
+        <RadioInline
+          value={p.auth_type}
+          options={AUTH_TYPE_OPTIONS}
+          disabled={true}
+          readonly={true}
+        />
+      </div>
 
-      <p class="text-muted me-3 mb-1">Authentication Type</p>
-      <RadioInline
-        value={p.auth_type}
-        options={AUTH_TYPE_OPTIONS}
+      <Text
+        name="name"
+        label="Name"
+        value={p.name}
         disabled={true}
+        readonly={true}
+      />
+      <Text
+        name="url"
+        label="URL"
+        value={p.auth_type === "jaas"
+          ? p.domain_attr.url
+          : p.domain_attr.jaas_url}
+        disabled={true}
+        readonly={true}
       />
 
       {#if warning}
