@@ -54,8 +54,8 @@
         name="url"
         label="URL"
         value={p.auth_type === "jaas"
-          ? p.domain_attr.url
-          : p.domain_attr.jaas_url}
+          ? p.domain_attr.jaas_url
+          : p.domain_attr.url}
         disabled={true}
         readonly={true}
       />
