@@ -58,8 +58,9 @@
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <p class="text-muted me-3 mb-1">Authentication Type</p>
-      <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
+      <div class="d-flex gap-3 my-5 justify-content-center">
+        <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
+      </div>
 
       <Text name="name" label="Name" bind:value={p.name} required={true} />
 

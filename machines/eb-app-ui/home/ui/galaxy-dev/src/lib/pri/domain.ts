@@ -1,7 +1,7 @@
 export const AUTH_TYPE_OPTIONS = [
-  ["none", "anonymous"],
+  ["none", "Anonymous"],
   ["jaas", "JaaS"],
-  ["token", "token"],
+  ["token", "Token"],
 ];
 
 export const JAAS_ALGO = "RS256";
