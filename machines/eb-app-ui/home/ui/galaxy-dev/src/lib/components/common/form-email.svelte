@@ -1,6 +1,7 @@
 <script lang="ts">
   export let label: string;
   export let name: string;
+  export let disabled = false;
   export let readonly = false;
   export let required = false;
   export let value: string;
@@ -15,9 +16,10 @@
     {name}
     placeholder=""
     bind:value
+    {disabled}
     {readonly}
     {required}
-    tabindex={readonly ? -1 : undefined}
+    tabindex={disabled || readonly ? -1 : undefined}
   />
   <label for={name}>{label}</label>
 </div>

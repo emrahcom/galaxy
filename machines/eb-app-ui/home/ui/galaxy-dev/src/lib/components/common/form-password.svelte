@@ -1,6 +1,7 @@
 <script lang="ts">
   export let label: string;
   export let name: string;
+  export let disabled = false;
   export let readonly = false;
   export let required = false;
   export let value: string;
@@ -24,6 +25,7 @@
       {name}
       placeholder=""
       bind:value
+      {disabled}
       {readonly}
       {required}
     />
@@ -35,6 +37,7 @@
       {name}
       placeholder=""
       bind:value
+      {disabled}
       {readonly}
       {required}
     />

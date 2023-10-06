@@ -3,6 +3,7 @@
   export let max: number;
   export let min: number;
   export let name: string;
+  export let disabled = false;
   export let readonly = false;
   export let required = false;
   export let step: number;
@@ -18,9 +19,10 @@
     {name}
     placeholder=""
     bind:value
+    {disabled}
     {readonly}
     {required}
-    tabindex={readonly ? -1 : undefined}
+    tabindex={disabled || readonly ? -1 : undefined}
   />
   <label for={name}>{label}</label>
 </div>
@@ -31,7 +33,7 @@
   class="form-range"
   name="range-{name}"
   bind:value
-  disabled={readonly}
+  disabled={disabled || readonly}
   {min}
   {max}
   {step}

@@ -2,6 +2,7 @@
   export let label: string;
   export let min: string;
   export let name: string;
+  export let disabled = false;
   export let readonly = false;
   export let required = false;
   export let value: string;
@@ -17,9 +18,10 @@
     placeholder=""
     bind:value
     {min}
+    {disabled}
     {readonly}
     {required}
-    tabindex={readonly ? -1 : undefined}
+    tabindex={disabled || readonly ? -1 : undefined}
   />
   <label for={name}>{label}</label>
 </div>
