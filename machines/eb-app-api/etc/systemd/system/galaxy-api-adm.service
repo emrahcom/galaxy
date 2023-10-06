@@ -6,7 +6,7 @@ After=network-online.target
 User=api-adm
 Group=api-adm
 WorkingDirectory=/home/api/galaxy
-ExecStart=deno run --allow-net index-adm.ts
+ExecStart=deno run --allow-net --allow-env index-adm.ts
 Restart=always
 RestartSec=2s
 
