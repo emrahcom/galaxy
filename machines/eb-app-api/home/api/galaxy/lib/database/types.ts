@@ -251,6 +251,14 @@ export interface MeetingLinkset {
     url: string;
     app_id: string;
     app_secret: string;
+    app_alg: string;
+    jaas_url: string;
+    jaas_app_id: string;
+    jaas_kid: string;
+    jaas_key: string;
+    jaas_alg: string;
+    jaas_aud: string;
+    jaas_iss: string;
   };
   join_as: string;
   started_at: string;
