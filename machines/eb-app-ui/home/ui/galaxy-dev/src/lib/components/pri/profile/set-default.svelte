@@ -34,8 +34,20 @@
 <section id="set-default">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" value={p.name} readonly={true} />
-      <Email name="email" label="Email" value={p.email} readonly={true} />
+      <Text
+        name="name"
+        label="Name"
+        value={p.name}
+        disabled={true}
+        readonly={true}
+      />
+      <Email
+        name="email"
+        label="Email"
+        value={p.email}
+        disabled={true}
+        readonly={true}
+      />
 
       {#if warning}
         <Warning>The set request is not accepted.</Warning>
