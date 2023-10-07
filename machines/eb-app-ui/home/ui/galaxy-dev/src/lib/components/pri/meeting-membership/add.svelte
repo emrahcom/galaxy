@@ -64,12 +64,14 @@
           name="meeting_name"
           label="Meeting"
           value={invite.meeting_name}
+          disabled={true}
           readonly={true}
         />
         <Textarea
           name="meeting_info"
           label="Info"
           value={invite.meeting_info}
+          disabled={true}
           readonly={true}
         />
         <Select
