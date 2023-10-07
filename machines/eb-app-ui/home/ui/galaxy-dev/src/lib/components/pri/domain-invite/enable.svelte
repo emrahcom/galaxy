@@ -39,7 +39,7 @@
         value={p.name}
         disabled={true}
         readonly={true}
-    />
+      />
       <Text
         name="name"
         label="Jitsi Domain Name"
