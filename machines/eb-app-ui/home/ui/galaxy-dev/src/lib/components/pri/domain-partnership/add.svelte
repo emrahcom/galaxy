@@ -40,12 +40,14 @@
         name="name"
         label="Jitsi Domain Name"
         value={invite.domain_name}
+        disabled={true}
         readonly={true}
       />
       <Text
         name="url"
         label="Jitsi Domain URL"
         value={invite.domain_url}
+        disabled={true}
         readonly={true}
       />
 
