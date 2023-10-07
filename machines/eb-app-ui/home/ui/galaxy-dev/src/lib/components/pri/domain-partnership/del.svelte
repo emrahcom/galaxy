@@ -37,12 +37,14 @@
         name="name"
         label="Jitsi Domain Name"
         value={p.domain_name}
+        disabled={true}
         readonly={true}
       />
       <Text
         name="url"
         label="Jitsi Domain URL"
         value={p.domain_url}
+        disabled={true}
         readonly={true}
       />
 
