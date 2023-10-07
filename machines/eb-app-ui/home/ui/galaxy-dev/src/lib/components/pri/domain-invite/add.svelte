@@ -50,7 +50,9 @@
       <Text
         name="url"
         label="Jitsi Domain URL"
-        value={domain.domain_attr.url}
+        value={domain.auth_type === "jaas"
+          ? domain.domain_attr.jaas_url
+          : domain.domain_attr.url}
         disabled={true}
         readonly={true}
       />
