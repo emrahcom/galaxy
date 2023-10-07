@@ -1,4 +1,4 @@
-import { generateGuestToken, generateHostToken } from "./token.ts";
+import { generateGuestTokenHS, generateHostTokenHS } from "./token.ts";
 import type {
   MeetingLinkset,
   Profile,
@@ -22,7 +22,7 @@ export async function generateRoomUrl(
   url = `${url}/${roomName}`;
 
   if (linkset.auth_type === "token") {
-    const jwt = await generateHostToken(
+    const jwt = await generateHostTokenHS(
       linkset.domain_attr.app_id,
       linkset.domain_attr.app_secret,
       roomName,
@@ -64,7 +64,7 @@ export async function generateMeetingUrl(
     let jwt: string;
 
     if (linkset.join_as === "host") {
-      jwt = await generateHostToken(
+      jwt = await generateHostTokenHS(
         linkset.domain_attr.app_id,
         linkset.domain_attr.app_secret,
         roomName,
@@ -73,7 +73,7 @@ export async function generateMeetingUrl(
         exp,
       );
     } else {
-      jwt = await generateGuestToken(
+      jwt = await generateGuestTokenHS(
         linkset.domain_attr.app_id,
         linkset.domain_attr.app_secret,
         roomName,

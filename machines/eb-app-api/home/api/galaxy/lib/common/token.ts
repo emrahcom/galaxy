@@ -6,7 +6,7 @@ import {
 } from "https://deno.land/x/djwt/mod.ts";
 
 // -----------------------------------------------------------------------------
-async function generateCryptoKey(
+async function generateCryptoKeyHS(
   secret: string,
   hash: string,
 ): Promise<CryptoKey> {
@@ -27,7 +27,7 @@ async function generateCryptoKey(
 }
 
 // -----------------------------------------------------------------------------
-export async function generateHostToken(
+export async function generateHostTokenHS(
   appId: string,
   appSecret: string,
   roomName: string,
@@ -39,7 +39,7 @@ export async function generateHostToken(
   const hash = "SHA-256";
 
   const header = { alg: alg, typ: "JWT" };
-  const cryptoKey = await generateCryptoKey(appSecret, hash);
+  const cryptoKey = await generateCryptoKeyHS(appSecret, hash);
   const payload: Payload = {
     aud: appId,
     iss: appId,
@@ -67,7 +67,7 @@ export async function generateHostToken(
 }
 
 // -----------------------------------------------------------------------------
-export async function generateGuestToken(
+export async function generateGuestTokenHS(
   appId: string,
   appSecret: string,
   roomName: string,
@@ -79,7 +79,7 @@ export async function generateGuestToken(
   const hash = "SHA-256";
 
   const header = { alg: alg, typ: "JWT" };
-  const cryptoKey = await generateCryptoKey(appSecret, hash);
+  const cryptoKey = await generateCryptoKeyHS(appSecret, hash);
   const payload: Payload = {
     aud: appId,
     iss: appId,
