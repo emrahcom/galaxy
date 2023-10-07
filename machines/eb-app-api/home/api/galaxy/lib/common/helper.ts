@@ -1,4 +1,8 @@
-import { generateGuestTokenHS, generateHostTokenHS } from "./token.ts";
+import {
+  generateGuestTokenHS,
+  generateHostTokenHS,
+  generateHostTokenRS,
+} from "./token.ts";
 import type {
   MeetingLinkset,
   Profile,
@@ -11,21 +15,26 @@ export async function generateRoomUrl(
   profile: Profile,
   exp = 3600,
 ): Promise<string> {
+  let url: string;
+
   if (!profile.name) profile.name = "";
   if (!profile.email) profile.email = "";
 
-  let url = encodeURI(linkset.domain_attr.url);
-  let roomName = encodeURIComponent(linkset.name);
+  if (linkset.auth_type === "jaas") {
+    const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
+    let roomName = encodeURIComponent(linkset.name);
+    url = encodeURI(linkset.domain_attr.jaas_url);
 
-  if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+    if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+    url = `${url}/${sub}/${roomName}`;
 
-  url = `${url}/${roomName}`;
-
-  if (linkset.auth_type === "token") {
-    const jwt = await generateHostTokenHS(
-      linkset.domain_attr.app_id,
-      linkset.domain_attr.app_secret,
-      linkset.domain_attr.app_alg,
+    const jwt = await generateHostTokenRS(
+      linkset.domain_attr.jaas_app_id,
+      linkset.domain_attr.jaas_kid,
+      linkset.domain_attr.jaas_key,
+      linkset.domain_attr.jaas_alg,
+      linkset.domain_attr.jaas_aud,
+      linkset.domain_attr.jaas_iss,
       roomName,
       profile.name,
       profile.email,
@@ -33,6 +42,26 @@ export async function generateRoomUrl(
     );
 
     url = `${url}?jwt=${jwt}`;
+  } else {
+    let roomName = encodeURIComponent(linkset.name);
+    url = encodeURI(linkset.domain_attr.url);
+
+    if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+    url = `${url}/${roomName}`;
+
+    if (linkset.auth_type === "token") {
+      const jwt = await generateHostTokenHS(
+        linkset.domain_attr.app_id,
+        linkset.domain_attr.app_secret,
+        linkset.domain_attr.app_alg,
+        roomName,
+        profile.name,
+        profile.email,
+        exp,
+      );
+
+      url = `${url}?jwt=${jwt}`;
+    }
   }
 
   const subject = encodeURIComponent(`"${linkset.name}"`);
