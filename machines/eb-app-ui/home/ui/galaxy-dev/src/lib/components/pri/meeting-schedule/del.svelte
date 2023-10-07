@@ -37,12 +37,26 @@
 <section id="del">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Tag (optional)" value={p.name} readonly={true} />
-      <Datetime name="time" label="Time" value={time} {min} readonly={true} />
+      <Text
+        name="name"
+        label="Tag (optional)"
+        value={p.name}
+        disabled={true}
+        readonly={true}
+      />
+      <Datetime
+        name="time"
+        label="Time"
+        value={time}
+        {min}
+        disabled={true}
+        readonly={true}
+      />
       <Text
         name="duration"
         label="Duration (minutes)"
         value={`${p.duration}`}
+        disabled={true}
         readonly={true}
       />
 
