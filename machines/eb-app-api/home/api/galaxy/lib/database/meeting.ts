@@ -17,7 +17,12 @@ export async function getMeeting(identityId: string, meetingId: string) {
            WHEN 'ephemeral' THEN d.id
          END
         ) as domain_id,
-        d.name as domain_name, d.domain_attr->>'url' as domain_url,
+        d.name as domain_name,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
         d.enabled as domain_enabled, r.id as room_id, r.name as room_name,
         r.enabled as room_enabled, m.schedule_type, m.hidden, m.restricted,
         m.subscribable, m.enabled, m.created_at, m.updated_at
@@ -276,8 +281,12 @@ export async function listMeeting(
   const sql = {
     text: `
       SELECT m.id, m.name, m.info, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, r.name as room_name,
-        m.schedule_type,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        r.name as room_name, m.schedule_type,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN (SELECT min(started_at)
                                   FROM meeting_schedule
