@@ -43,7 +43,7 @@
       <Text
         name="room_name"
         label="Room"
-        value={p.room.name}
+        value={p.room_name}
         disabled={true}
         readonly={true}
       />
