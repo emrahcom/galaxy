@@ -57,6 +57,7 @@
         name="meeting_name"
         label="Meeting"
         value={meeting.name}
+        disabled={true}
         readonly={true}
       />
 
