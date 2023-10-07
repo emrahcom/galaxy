@@ -7,6 +7,9 @@ Environment=KRATOS_PUBLIC_URL=http://eb-kratos:4433/
 Environment=KRATOS_BROWSER_URL=https://___KRATOS_FQDN___/
 Environment=BASE_PATH=/id
 Environment=PORT=4455
+Environment=COOKIE_SECRET=___COOKIE_SECRET___
+Environment=CSRF_COOKIE_NAME=___CSRF_COOKIE_NAME___
+Environment=CSRF_COOKIE_SECRET=___CSRF_COOKIE_SECRET___
 User=ui
 Group=ui
 WorkingDirectory=/home/ui/kratos-ui
