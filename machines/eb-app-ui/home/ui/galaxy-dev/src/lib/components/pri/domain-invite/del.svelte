@@ -33,17 +33,25 @@
 <section id="del">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" value={p.name} readonly={true} />
+      <Text
+        name="name"
+        label="Name"
+        value={p.name}
+        disabled={true}
+        readonly={true}
+      />
       <Text
         name="name"
         label="Jitsi Domain Name"
         value={p.domain_name}
+        disabled={true}
         readonly={true}
       />
       <Text
         name="url"
         label="Jitsi Domain URL"
         value={p.domain_url}
+        disabled={true}
         readonly={true}
       />
 
