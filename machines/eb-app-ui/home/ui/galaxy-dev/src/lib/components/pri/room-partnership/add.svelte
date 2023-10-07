@@ -40,18 +40,21 @@
         name="room_name"
         label="Room"
         value={invite.room_name}
+        disabled={true}
         readonly={true}
       />
       <Text
         name="domain_name"
         label="Jitsi Domain Name"
         value={invite.domain_name}
+        disabled={true}
         readonly={true}
       />
       <Text
         name="domain_url"
         label="Jitsi Domain URL"
         value={invite.domain_url}
+        disabled={true}
         readonly={true}
       />
 
