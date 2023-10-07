@@ -7,8 +7,12 @@ export async function getRoomInvite(identityId: string, inviteId: string) {
     text: `
       SELECT iv.id, iv.name, r.id as room_id, r.name as room_name,
         d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, iv.code, iv.enabled, iv.created_at,
-        iv.updated_at, iv.expired_at
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        iv.code, iv.enabled, iv.created_at, iv.updated_at, iv.expired_at
       FROM room_invite iv
         JOIN room r ON iv.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -29,7 +33,12 @@ export async function getRoomInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT r.name as room_name, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, iv.code
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        iv.code
       FROM room_invite iv
         JOIN room r ON iv.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
@@ -55,8 +64,12 @@ export async function listRoomInviteByRoom(
     text: `
       SELECT iv.id, iv.name, r.id as room_id, r.name as room_name,
         d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, iv.code, iv.enabled, iv.created_at,
-        iv.updated_at, iv.expired_at
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        iv.code, iv.enabled, iv.created_at, iv.updated_at, iv.expired_at
       FROM room_invite iv
         JOIN room r ON iv.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
