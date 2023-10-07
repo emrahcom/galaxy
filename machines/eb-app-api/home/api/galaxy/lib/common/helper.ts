@@ -25,6 +25,7 @@ export async function generateRoomUrl(
     const jwt = await generateHostTokenHS(
       linkset.domain_attr.app_id,
       linkset.domain_attr.app_secret,
+      linkset.domain_attr.app_alg,
       roomName,
       profile.name,
       profile.email,
@@ -67,6 +68,7 @@ export async function generateMeetingUrl(
       jwt = await generateHostTokenHS(
         linkset.domain_attr.app_id,
         linkset.domain_attr.app_secret,
+        linkset.domain_attr.app_alg,
         roomName,
         linkset.profile_name,
         linkset.profile_email,
@@ -76,6 +78,7 @@ export async function generateMeetingUrl(
       jwt = await generateGuestTokenHS(
         linkset.domain_attr.app_id,
         linkset.domain_attr.app_secret,
+        linkset.domain_attr.app_alg,
         roomName,
         linkset.profile_name,
         linkset.profile_email,

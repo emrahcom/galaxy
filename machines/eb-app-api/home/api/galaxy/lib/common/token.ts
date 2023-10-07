@@ -30,13 +30,18 @@ async function generateCryptoKeyHS(
 export async function generateHostTokenHS(
   appId: string,
   appSecret: string,
+  appAlgo: string,
   roomName: string,
   username: string,
   email: string,
   exp = 3600,
 ): Promise<string> {
-  const alg: Algorithm = "HS256";
-  const hash = "SHA-256";
+  let alg: Algorithm = "HS256";
+  let hash = "SHA-256";
+  if (appAlgo === "HS512") {
+    alg = "HS512";
+    hash = "SHA-512";
+  }
 
   const header = { alg: alg, typ: "JWT" };
   const cryptoKey = await generateCryptoKeyHS(appSecret, hash);
@@ -70,13 +75,18 @@ export async function generateHostTokenHS(
 export async function generateGuestTokenHS(
   appId: string,
   appSecret: string,
+  appAlgo: string,
   roomName: string,
   username: string,
   email: string,
   exp = 3600,
 ): Promise<string> {
-  const alg: Algorithm = "HS256";
-  const hash = "SHA-256";
+  let alg: Algorithm = "HS256";
+  let hash = "SHA-256";
+  if (appAlgo === "HS512") {
+    alg = "HS512";
+    hash = "SHA-512";
+  }
 
   const header = { alg: alg, typ: "JWT" };
   const cryptoKey = await generateCryptoKeyHS(appSecret, hash);
