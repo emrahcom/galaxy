@@ -45,15 +45,23 @@
         name="meeting_name"
         label="Meeting"
         value={p.meeting_name}
+        disabled={true}
         readonly={true}
       />
       <Textarea
         name="meeting_info"
         label="Info"
         value={p.meeting_info}
+        disabled={true}
         readonly={true}
       />
-      <Text name="profile" label="Profile" value={profile} readonly={true} />
+      <Text
+        name="profile"
+        label="Profile"
+        value={profile}
+        disabled={true}
+        readonly={true}
+      />
 
       {#if warning}
         <Warning>The unsubscribe request is not accepted.</Warning>
