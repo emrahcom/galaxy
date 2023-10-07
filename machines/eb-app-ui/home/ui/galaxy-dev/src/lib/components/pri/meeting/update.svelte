@@ -108,6 +108,7 @@
             name="domain_name"
             label="Jitsi Domain"
             value={p.domain_name}
+            disabled={true}
             readonly={true}
           />
         {:else}
