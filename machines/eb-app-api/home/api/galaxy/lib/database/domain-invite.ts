@@ -6,8 +6,12 @@ export async function getDomainInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
       SELECT iv.id, iv.name, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, iv.code, iv.enabled, iv.created_at,
-        iv.updated_at, iv.expired_at
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        iv.code, iv.enabled, iv.created_at, iv.updated_at, iv.expired_at
       FROM domain_invite iv
         JOIN domain d ON iv.domain_id = d.id
       WHERE iv.id = $2
@@ -26,7 +30,13 @@ export async function getDomainInvite(identityId: string, inviteId: string) {
 export async function getDomainInviteByCode(code: string) {
   const sql = {
     text: `
-      SELECT d.name as domain_name, d.domain_attr->>'url' as domain_url, iv.code
+      SELECT d.name as domain_name,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        iv.code
       FROM domain_invite iv
         JOIN domain d ON iv.domain_id = d.id
       WHERE iv.code = $1
@@ -50,8 +60,12 @@ export async function listDomainInviteByDomain(
   const sql = {
     text: `
       SELECT iv.id, iv.name, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, iv.code, iv.enabled, iv.created_at,
-        iv.updated_at, iv.expired_at
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        iv.code, iv.enabled, iv.created_at, iv.updated_at, iv.expired_at
       FROM domain_invite iv
         JOIN domain d ON iv.domain_id = d.id
       WHERE iv.identity_id = $1
