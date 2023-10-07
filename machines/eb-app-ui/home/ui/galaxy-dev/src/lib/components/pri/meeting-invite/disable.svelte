@@ -39,11 +39,18 @@
 <section id="disable">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" value={p.name} readonly={true} />
+      <Text
+        name="name"
+        label="Name"
+        value={p.name}
+        disabled={true}
+        readonly={true}
+      />
       <Text
         name="meeting_name"
         label="Meeting"
         value={p.meeting_name}
+        disabled={true}
         readonly={true}
       />
 
