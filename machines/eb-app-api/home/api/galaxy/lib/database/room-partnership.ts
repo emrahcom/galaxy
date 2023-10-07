@@ -9,8 +9,12 @@ export async function getRoomPartnership(
   const sql = {
     text: `
       SELECT pa.id, r.name as room_name, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, pa.enabled, pa.created_at,
-        pa.updated_at
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        pa.enabled, pa.created_at, pa.updated_at
       FROM room_partner pa
         JOIN room r ON pa.room_id = r.id
         JOIN domain d ON r.domain_id = d.id
