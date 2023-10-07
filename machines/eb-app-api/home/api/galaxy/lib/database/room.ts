@@ -6,8 +6,13 @@ export async function getRoom(identityId: string, roomId: string) {
   const sql = {
     text: `
       SELECT r.id, r.name, d.id as domain_id, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, d.enabled as domain_enabled,
-        r.has_suffix, r.enabled, r.created_at, r.updated_at, r.accessed_at
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        d.enabled as domain_enabled, r.has_suffix, r.enabled, r.created_at,
+        r.updated_at, r.accessed_at
       FROM room r
         JOIN domain d ON r.domain_id = d.id
       WHERE r.id = $2
@@ -92,7 +97,12 @@ export async function listRoom(
   const sql = {
     text: `
       SELECT r.id, r.name, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, r.enabled,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        r.enabled,
         (d.enabled AND i.enabled
          AND CASE d.identity_id
                WHEN $1 THEN true
@@ -116,7 +126,12 @@ export async function listRoom(
       UNION
 
       SELECT r.id, r.name, d.name as domain_name,
-        d.domain_attr->>'url' as domain_url, r.enabled,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
+        r.enabled,
         (pa.enabled
          AND r.enabled AND i2.enabled
          AND d.enabled AND i1.enabled
