@@ -8,7 +8,12 @@ export async function getDomainPartnership(
 ) {
   const sql = {
     text: `
-      SELECT pa.id, d.name as domain_name, d.domain_attr->>'url' as domain_url,
+      SELECT pa.id, d.name as domain_name,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+         END
+        ) as domain_url,
         pa.enabled, pa.created_at, pa.updated_at
       FROM domain_partner pa
         JOIN domain d ON pa.domain_id = d.id
