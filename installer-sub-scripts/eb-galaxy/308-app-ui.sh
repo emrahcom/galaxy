@@ -242,6 +242,16 @@ cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
     $ROOTFS/etc/systemd/system/kratos-ui.service
 
+COOKIE_SECRET=$(openssl rand -hex 16)
+CSRF_COOKIE_NAME="kratos-ui-x-csrf-token"
+CSRF_COOKIE_SECRET=$(openssl rand -hex 16)
+sed -i "s/___COOKIE_SECRET___/$COOKIE_SECRET/g" \
+    $ROOTFS/etc/systemd/system/kratos-ui.service
+sed -i "s/___CSRF_COOKIE_NAME___/$CSRF_COOKIE_NAME/g" \
+    $ROOTFS/etc/systemd/system/kratos-ui.service
+sed -i "s/___CSRF_COOKIE_SECRET___/$CSRF_COOKIE_SECRET/g" \
+    $ROOTFS/etc/systemd/system/kratos-ui.service
+
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
