@@ -53,8 +53,20 @@
 <section id="enable">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text name="name" label="Name" value={p.name} readonly={true} />
-      <Textarea name="info" label="Info" value={p.info} readonly={true} />
+      <Text
+        name="name"
+        label="Name"
+        value={p.name}
+        disabled={true}
+        readonly={true}
+      />
+      <Textarea
+        name="info"
+        label="Info"
+        value={p.info}
+        disabled={true}
+        readonly={true}
+      />
 
       <p class="text-muted me-3 mb-1">Meeting Type</p>
       <Radio
@@ -63,17 +75,30 @@
         disabled={true}
       />
 
-      <Text name="profile" label="Profile" value={profile} readonly={true} />
+      <Text
+        name="profile"
+        label="Profile"
+        value={profile}
+        disabled={true}
+        readonly={true}
+      />
 
       {#if p.schedule_type === "ephemeral"}
         <Text
           name="domain"
           label="Jitsi Domain"
           value={domainName}
+          disabled={true}
           readonly={true}
         />
       {:else}
-        <Text name="room" label="Room" value={roomName} readonly={true} />
+        <Text
+          name="room"
+          label="Room"
+          value={roomName}
+          disabled={true}
+          readonly={true}
+        />
       {/if}
 
       {#if p.schedule_type !== "ephemeral"}
