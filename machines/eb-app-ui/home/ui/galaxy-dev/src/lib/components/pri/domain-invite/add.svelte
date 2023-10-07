@@ -44,12 +44,14 @@
         name="name"
         label="Jitsi Domain Name"
         value={domain.name}
+        disabled={true}
         readonly={true}
       />
       <Text
         name="url"
         label="Jitsi Domain URL"
         value={domain.domain_attr.url}
+        disabled={true}
         readonly={true}
       />
 
