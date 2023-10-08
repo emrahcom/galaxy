@@ -3,6 +3,9 @@
 `Galaxy` is a web application for `Jitsi` admins and users to organize their
 Jitsi meetings, meeting schedules and attendees.
 
+It has built-in support for [JaaS](https://jaas.8x8.vc) (_Jitsi as a Service by
+8x8_).
+
 ### Try it
 
 Try `Galaxy` using publicly available implementation on
@@ -15,7 +18,7 @@ Try `Galaxy` using publicly available implementation on
 - Add as many Jitsi servers as you want
 - Allow your partners to access your Jitsi server for different use-cases:
   - `domain partnership`: allow them to access the whole Jitsi server without
-    sharing your secret key
+    sharing your secret key or the private key
   - `room partnership`: allow them to manage some Jitsi rooms
   - `meeting membership`: allow them to access some meetings as `moderator` or
     as `limited participant`
@@ -32,6 +35,7 @@ Try `Galaxy` using publicly available implementation on
   Although the room link is updated periodically in the background, members can
   access the active meeting room using their static link.
 - Built-in JWT support
+- Built-in [JaaS](https://jaas.8x8.vc) support
 - Transfer all your Jitsi resources (rooms, meetings, partners, members, etc.)
   in one simple step to a new Jitsi server.
 
