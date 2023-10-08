@@ -11,6 +11,62 @@ import type {
 } from "../database/types.ts";
 
 // -----------------------------------------------------------------------------
+async function generateRoomUrlJaas(
+  linkset: RoomLinkset,
+  profile: Profile,
+  exp = 3600,
+): Promise<string> {
+  const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
+  let url: string;
+  let roomName = encodeURIComponent(linkset.name);
+
+  url = encodeURI(linkset.domain_attr.jaas_url);
+  if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+  url = `${url}/${sub}/${roomName}`;
+
+  const jwt = await generateHostTokenJaas(
+    linkset.domain_attr.jaas_app_id,
+    linkset.domain_attr.jaas_kid,
+    linkset.domain_attr.jaas_key,
+    linkset.domain_attr.jaas_alg,
+    linkset.domain_attr.jaas_aud,
+    linkset.domain_attr.jaas_iss,
+    roomName,
+    profile.name,
+    profile.email,
+    exp,
+  );
+
+  return `${url}?jwt=${jwt}`;
+}
+
+// -----------------------------------------------------------------------------
+async function generateRoomUrlToken(
+  linkset: RoomLinkset,
+  profile: Profile,
+  exp = 3600,
+): Promise<string> {
+  let url: string;
+  let roomName = encodeURIComponent(linkset.name);
+
+  url = encodeURI(linkset.domain_attr.url);
+  if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+  url = `${url}/${roomName}`;
+
+  const jwt = await generateHostTokenHS(
+    linkset.domain_attr.app_id,
+    linkset.domain_attr.app_secret,
+    linkset.domain_attr.app_alg,
+    roomName,
+    profile.name,
+    profile.email,
+    exp,
+  );
+
+  return `${url}?jwt=${jwt}`;
+}
+
+// -----------------------------------------------------------------------------
 export async function generateRoomUrl(
   linkset: RoomLinkset,
   profile: Profile,
@@ -22,47 +78,15 @@ export async function generateRoomUrl(
   if (!profile.email) profile.email = "";
 
   if (linkset.auth_type === "jaas") {
-    const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
-    let roomName = encodeURIComponent(linkset.name);
-    url = encodeURI(linkset.domain_attr.jaas_url);
-
-    if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
-    url = `${url}/${sub}/${roomName}`;
-
-    const jwt = await generateHostTokenJaas(
-      linkset.domain_attr.jaas_app_id,
-      linkset.domain_attr.jaas_kid,
-      linkset.domain_attr.jaas_key,
-      linkset.domain_attr.jaas_alg,
-      linkset.domain_attr.jaas_aud,
-      linkset.domain_attr.jaas_iss,
-      roomName,
-      profile.name,
-      profile.email,
-      exp,
-    );
-
-    url = `${url}?jwt=${jwt}`;
+    url = await generateRoomUrlJaas(linkset, profile, exp);
+  } else if (linkset.auth_type === "token") {
+    url = await generateRoomUrlToken(linkset, profile, exp);
   } else {
     let roomName = encodeURIComponent(linkset.name);
-    url = encodeURI(linkset.domain_attr.url);
 
+    url = encodeURI(linkset.domain_attr.url);
     if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
     url = `${url}/${roomName}`;
-
-    if (linkset.auth_type === "token") {
-      const jwt = await generateHostTokenHS(
-        linkset.domain_attr.app_id,
-        linkset.domain_attr.app_secret,
-        linkset.domain_attr.app_alg,
-        roomName,
-        profile.name,
-        profile.email,
-        exp,
-      );
-
-      url = `${url}?jwt=${jwt}`;
-    }
   }
 
   const subject = encodeURIComponent(`"${linkset.name}"`);
