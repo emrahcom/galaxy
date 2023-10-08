@@ -20,7 +20,7 @@ async function generateCryptoKeyHS(
       hash: hash,
     },
     true,
-    ["sign", "verify"],
+    ["sign"],
   );
 
   return cryptoKey;
@@ -57,6 +57,7 @@ export async function generateHostTokenHS(
         name: username,
         email: email,
         affiliation: "owner",
+        moderator: true,
       },
       features: {
         recording: true,
@@ -102,6 +103,7 @@ export async function generateGuestTokenHS(
         name: username,
         email: email,
         affiliation: "member",
+        moderator: false,
       },
       features: {
         recording: false,
@@ -121,22 +123,28 @@ async function generateCryptoKeyRS(
   privateKey: string,
   hash: string,
 ): Promise<CryptoKey> {
-  const data = privateKey.replace(/---.*---/g, "").replace(/\n/g, "");
-  const byteData = atob(data);
-  const byteArray = new Uint8Array(byteData.length);
-  for (let i = 0; i < byteData.length; i++) {
-    byteArray[i] = byteData.charCodeAt(i);
+  const pemHeader = "-----BEGIN PRIVATE KEY-----";
+  const pemFooter = "-----END PRIVATE KEY-----";
+  const pemContents = privateKey.substring(
+    pemHeader.length,
+    privateKey.length - pemFooter.length,
+  );
+  const binaryDerString = window.atob(pemContents);
+  const keyData = new ArrayBuffer(binaryDerString.length);
+  const bufView = new Uint8Array(keyData);
+  for (let i = 0; i < binaryDerString.length; i++) {
+    bufView[i] = binaryDerString.charCodeAt(i);
   }
 
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
-    byteArray,
+    keyData,
     {
       name: "RSASSA-PKCS1-v1_5",
       hash: hash,
     },
     true,
-    ["sign", "verify"],
+    ["sign"],
   );
 
   return cryptoKey;
@@ -176,6 +184,7 @@ export async function generateHostTokenRS(
         name: username,
         email: email,
         affiliation: "owner",
+        moderator: true,
       },
       features: {
         recording: true,
