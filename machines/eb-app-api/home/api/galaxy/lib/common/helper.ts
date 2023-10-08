@@ -81,34 +81,42 @@ export async function generateMeetingUrl(
   linkset: MeetingLinkset,
   exp = 3600,
 ): Promise<string> {
+  let url: string;
+
   if (!linkset.profile_name) linkset.profile_name = "";
   if (!linkset.profile_email) linkset.profile_email = "";
 
-  let url = encodeURI(linkset.domain_attr.url);
-  let roomName = encodeURIComponent(linkset.room_name);
+  if (linkset.auth_type === "jaas") {
+    const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
+    let roomName = encodeURIComponent(linkset.name);
+    url = encodeURI(linkset.domain_attr.jaas_url);
 
-  if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+    if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+    url = `${url}/${sub}/${roomName}`;
 
-  url = `${url}/${roomName}`;
-
-  if (linkset.auth_type === "token") {
     let jwt: string;
 
     if (linkset.join_as === "host") {
-      jwt = await generateHostTokenHS(
-        linkset.domain_attr.app_id,
-        linkset.domain_attr.app_secret,
-        linkset.domain_attr.app_alg,
+      jwt = await generateHostTokenJaas(
+        linkset.domain_attr.jaas_app_id,
+        linkset.domain_attr.jaas_kid,
+        linkset.domain_attr.jaas_key,
+        linkset.domain_attr.jaas_alg,
+        linkset.domain_attr.jaas_aud,
+        linkset.domain_attr.jaas_iss,
         roomName,
         linkset.profile_name,
         linkset.profile_email,
         exp,
       );
     } else {
-      jwt = await generateGuestTokenHS(
-        linkset.domain_attr.app_id,
-        linkset.domain_attr.app_secret,
-        linkset.domain_attr.app_alg,
+      jwt = await generateGuestTokenJaas(
+        linkset.domain_attr.jaas_app_id,
+        linkset.domain_attr.jaas_kid,
+        linkset.domain_attr.jaas_key,
+        linkset.domain_attr.jaas_alg,
+        linkset.domain_attr.jaas_aud,
+        linkset.domain_attr.jaas_iss,
         roomName,
         linkset.profile_name,
         linkset.profile_email,
@@ -117,6 +125,40 @@ export async function generateMeetingUrl(
     }
 
     url = `${url}?jwt=${jwt}`;
+  } else {
+    let roomName = encodeURIComponent(linkset.room_name);
+    url = encodeURI(linkset.domain_attr.url);
+
+    if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
+    url = `${url}/${roomName}`;
+
+    if (linkset.auth_type === "token") {
+      let jwt: string;
+
+      if (linkset.join_as === "host") {
+        jwt = await generateHostTokenHS(
+          linkset.domain_attr.app_id,
+          linkset.domain_attr.app_secret,
+          linkset.domain_attr.app_alg,
+          roomName,
+          linkset.profile_name,
+          linkset.profile_email,
+          exp,
+        );
+      } else {
+        jwt = await generateGuestTokenHS(
+          linkset.domain_attr.app_id,
+          linkset.domain_attr.app_secret,
+          linkset.domain_attr.app_alg,
+          roomName,
+          linkset.profile_name,
+          linkset.profile_email,
+          exp,
+        );
+      }
+
+      url = `${url}?jwt=${jwt}`;
+    }
   }
 
   let subject: string;
