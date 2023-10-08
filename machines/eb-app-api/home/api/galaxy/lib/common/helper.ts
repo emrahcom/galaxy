@@ -1,7 +1,8 @@
 import {
   generateGuestTokenHS,
+  generateGuestTokenJaas,
   generateHostTokenHS,
-  generateHostTokenRS,
+  generateHostTokenJaas,
 } from "./token.ts";
 import type {
   MeetingLinkset,
@@ -28,7 +29,7 @@ export async function generateRoomUrl(
     if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
     url = `${url}/${sub}/${roomName}`;
 
-    const jwt = await generateHostTokenRS(
+    const jwt = await generateHostTokenJaas(
       linkset.domain_attr.jaas_app_id,
       linkset.domain_attr.jaas_kid,
       linkset.domain_attr.jaas_key,

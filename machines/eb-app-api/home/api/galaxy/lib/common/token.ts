@@ -60,8 +60,9 @@ export async function generateHostTokenHS(
         moderator: true,
       },
       features: {
-        recording: true,
         livestreaming: true,
+        recording: true,
+        "lobby_bypass": true,
         "screen-sharing": true,
       },
     },
@@ -106,8 +107,6 @@ export async function generateGuestTokenHS(
         moderator: false,
       },
       features: {
-        recording: false,
-        livestreaming: false,
         "screen-sharing": true,
       },
     },
@@ -129,7 +128,7 @@ async function generateCryptoKeyRS(
     pemHeader.length,
     privateKey.length - pemFooter.length,
   );
-  const binaryDerString = window.atob(pemContents);
+  const binaryDerString = atob(pemContents);
   const keyData = new ArrayBuffer(binaryDerString.length);
   const bufView = new Uint8Array(keyData);
   for (let i = 0; i < binaryDerString.length; i++) {
@@ -151,7 +150,7 @@ async function generateCryptoKeyRS(
 }
 
 // -----------------------------------------------------------------------------
-export async function generateHostTokenRS(
+export async function generateHostTokenJaas(
   jaasAppId: string,
   jaasKid: string,
   jaasKey: string,
@@ -187,8 +186,58 @@ export async function generateHostTokenRS(
         moderator: true,
       },
       features: {
-        recording: true,
         livestreaming: true,
+        recording: true,
+        transcription: true,
+        "screen-sharing": true,
+        "sip-inbound-call": true,
+        "sip-outbound-call": true,
+      },
+    },
+  };
+
+  const jwt = await create(header, payload, cryptoKey);
+
+  return jwt;
+}
+
+// -----------------------------------------------------------------------------
+export async function generateGuestTokenJaas(
+  jaasAppId: string,
+  jaasKid: string,
+  jaasKey: string,
+  jaasAlg: string,
+  jaasAud: string,
+  jaasIss: string,
+  roomName: string,
+  username: string,
+  email: string,
+  exp = 3600,
+): Promise<string> {
+  let alg: Algorithm = "RS256";
+  let hash = "SHA-256";
+  if (jaasAlg === "RS512") {
+    alg = "RS512";
+    hash = "SHA-512";
+  }
+
+  const header = { alg: alg, typ: "JWT", kid: jaasKid };
+  const cryptoKey = await generateCryptoKeyRS(jaasKey, hash);
+  const payload: Payload = {
+    aud: jaasAud,
+    iss: jaasIss,
+    sub: jaasAppId,
+    room: roomName,
+    iat: getNumericDate(0),
+    exp: getNumericDate(exp),
+    context: {
+      user: {
+        name: username,
+        email: email,
+        affiliation: "member",
+        moderator: false,
+      },
+      features: {
         "screen-sharing": true,
       },
     },
