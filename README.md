@@ -29,7 +29,7 @@ Try `Galaxy` using publicly available implementation on
 - Create scheduled meetings
 - Waiting room for scheduled meeting
 - Manage your Jitsi profiles
-- Ability to attach each profile for a specific meeting
+- Ability to attach a profile to a specific meeting
 - Unpredictable room name support. Create secure rooms on anonymous Jitsi
   servers (such as `meet.jit.si`) and share a static link with your members.
   Although the room link is updated periodically in the background, members can
