@@ -30,10 +30,12 @@ Try `Galaxy` using publicly available implementation on
 - Waiting room for scheduled meeting
 - Manage your Jitsi profiles
 - Ability to attach a profile to a specific meeting
-- Unpredictable room name support. Create secure rooms on anonymous Jitsi
-  servers (such as `meet.jit.si`) and share a static link with your members.
-  Although the room link is updated periodically in the background, members can
-  access the active meeting room using their static link.
+- Unpredictable room name support. Create meeting links for anonymous Jitsi
+  servers (such as `meet.jit.si`) and share these links with your members.
+  Although the actual meeting link is updated periodically in the background
+  (using some hashing algorithm), members can always join the meeting using its
+  static `Galaxy` link. So, only your members can join this unprotected meeting
+  room.
 - Built-in JWT support
 - Built-in [JaaS](https://jaas.8x8.vc) support
 - Transfer all your Jitsi resources (rooms, meetings, partners, members, etc.)
