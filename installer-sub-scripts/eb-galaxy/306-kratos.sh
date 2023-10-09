@@ -186,12 +186,14 @@ echo BASE_DOMAIN="$BASE_DOMAIN" >> $INSTALLER/000-source
 
 COOKIE_SECRET=$(openssl rand -hex 32)
 CIPHER_SECRET=$(openssl rand -hex 16)
+[[ -z "$KRATOS_TOTP_ISSUER" ]] && KRATOS_TOTP_ISSUER="Galaxy"
 sed -i "s/___COOKIE_SECRET___/$COOKIE_SECRET/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___CIPHER_SECRET___/$CIPHER_SECRET/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___APP_FQDN___/$APP_FQDN/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___BASE_DOMAIN___/$BASE_DOMAIN/g" $ROOTFS/home/kratos/config/*
 sed -i "s/___DB_PASSWD___/$DB_KRATOS_PASSWD/g" $ROOTFS/home/kratos/config/*
+sed -i "s/___KRATOS_TOTP_ISSUER___/$KRATOS_TOTP_ISSUER/g" $ROOTFS/home/kratos/config/*
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e

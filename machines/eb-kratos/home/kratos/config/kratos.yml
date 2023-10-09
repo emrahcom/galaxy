@@ -28,7 +28,7 @@ selfservice:
     totp:
       enabled: true
       config:
-        issuer: Kratos
+        issuer: ___KRATOS_TOTP_ISSUER___
     lookup_secret:
       enabled: true
     link:
