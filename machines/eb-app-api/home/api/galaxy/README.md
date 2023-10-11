@@ -9,6 +9,9 @@
 #### checking
 
 ```bash
+cd /home/api/galaxy
+
 deno fmt --check
 deno lint
+deno check $(find -name '*.ts')
 ```
