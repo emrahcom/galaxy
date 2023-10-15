@@ -18,15 +18,34 @@ cd $INSTALLER
 # ------------------------------------------------------------------------------
 echo
 
-[[ -z "$APP_FQDN" ]] && echo "Error: APP_FQDN not found" && false
-[[ -z "$KRATOS_FQDN" ]] && echo "Error: KRATOS_FQDN not found" && false
+if [[ -z "$APP_FQDN" ]]; then
+  cat <<EOF
+Error: APP_FQDN not found
+
+Please set APP_FQDN before installation, e.g.
+
+    export APP_FQDN=app.mydomain.corp
+EOF
+  false
+fi
+
+if [[ -z "$KRATOS_FQDN" ]]; then
+  cat <<EOF
+Error: KRATOS_FQDN not found
+
+Please set KRATOS_FQDN before installation, e.g.
+
+    export KRATOS_FQDN=id.mydomain.corp
+EOF
+  false
+fi
 
 if [[ "$SKIP_DNS_CHECK" != true ]]; then
   if [[ -z "$(dig +short $APP_FQDN)" ]]; then
     cat <<EOF
 Error: Unresolvable APP_FQDN: $APP_FQDN
 
-if this is a test setup and you don't have a resolvable APP_FQDN,
+If this is a test setup and you don't have a resolvable APP_FQDN,
 please set SKIP_DNS_CHECK before installation
 
     export SKIP_DNS_CHECK=true
@@ -38,7 +57,7 @@ EOF
     cat <<EOF
 Error: Unresolvable APP_FQDN: $KRATOS_FQDN
 
-if this is a test setup and you don't have a resolvable KRATOS_FQDN,
+If this is a test setup and you don't have a resolvable KRATOS_FQDN,
 please set SKIP_DNS_CHECK before installation
 
     export SKIP_DNS_CHECK=true
