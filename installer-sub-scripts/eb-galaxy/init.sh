@@ -55,7 +55,7 @@ EOF
 
   if [[ -z "$(dig +short $KRATOS_FQDN)" ]]; then
     cat <<EOF
-Error: Unresolvable APP_FQDN: $KRATOS_FQDN
+Error: Unresolvable KRATOS_FQDN: $KRATOS_FQDN
 
 If this is a test setup and you don't have a resolvable KRATOS_FQDN,
 please set SKIP_DNS_CHECK before installation
