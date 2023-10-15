@@ -47,10 +47,11 @@ Try `Galaxy` using publicly available implementation on
 - At least 1 GB RAM
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
+- Both FQDNs must be subdomains of the same domain.
 - A DNS `A record` for the web application pointing to the server.
 - A DNS `A record` for the identity service pointing to the server.
 - Allow the following ports if the server is behind a firewall
-  - `TCP/80`
+  - `TCP/80` (_needed for Let's Encrypt certificate_)
   - `TCP/443`
 
 ### Installation
@@ -67,6 +68,13 @@ wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.
 export APP_FQDN=app.galaxy.corp
 export KRATOS_FQDN=id.galaxy.corp
 bash eb eb-galaxy
+```
+
+_If this is a test setup and you don't have resolvable FQDNs, please set
+`SKIP_DNS_CHECK` bfore installaton_
+
+```bash
+export SKIP_DNS_CHECK=true
 ```
 
 ### Let's Encrypt certificate
