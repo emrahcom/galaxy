@@ -71,7 +71,7 @@ bash eb eb-galaxy
 ```
 
 _If this is a test setup and you don't have resolvable FQDNs, please set
-`SKIP_DNS_CHECK` before installaton_
+`SKIP_DNS_CHECK` before installation_
 
 ```bash
 export SKIP_DNS_CHECK=true
