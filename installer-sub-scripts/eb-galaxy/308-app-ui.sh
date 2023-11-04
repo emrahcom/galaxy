@@ -276,8 +276,6 @@ su -l ui <<EOSS
 EOSS
 EOS
 
-sed -i "s/___APP_FQDN___/$APP_FQDN/g" \
-    $ROOTFS/home/ui/galaxy-dev/src/lib/config.ts
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
     $ROOTFS/home/ui/galaxy-dev/src/lib/config.ts
 
