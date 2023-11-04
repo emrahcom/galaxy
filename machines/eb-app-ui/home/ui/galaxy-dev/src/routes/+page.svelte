@@ -17,12 +17,7 @@
         schedules and attendees.
       </h4>
 
-      {#if !_identity.id}
-        <h4 class="text-muted small mb-5">
-          If you don't have an account yet, please
-          <a class="text-primary" href="/id/registration">Sign Up</a>.
-        </h4>
-      {:else}
+      {#if _identity.id}
         <h5 class="text-muted mb-5">
           Click
           <button
@@ -36,6 +31,11 @@
           </button>
           to start.
         </h5>
+      {:else}
+        <h4 class="text-muted small mb-5">
+          If you don't have an account yet, please
+          <a class="text-primary" href="/id/registration">Sign Up</a>.
+        </h4>
       {/if}
     </div>
   </div>
