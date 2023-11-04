@@ -53,3 +53,26 @@ export function toLocaleTime(date: string) {
 
   return _date.toLocaleString();
 }
+
+// -----------------------------------------------------------------------------
+// if the time difference is less than 15 min then accept it as online
+// -----------------------------------------------------------------------------
+export function isOnline(date: string) {
+  const _date = new Date(date);
+  const now = new Date();
+  const diff = _date.getTime() - now.getTime();
+
+  return diff < 15 * 60 * 1000;
+}
+
+// -----------------------------------------------------------------------------
+export function isToday(date: string) {
+  const _date = new Date(date);
+  const today = new Date();
+
+  return (
+    _date.getFullYear() === today.getFullYear() &&
+    _date.getMonth() === today.getMonth() &&
+    _date.getDate() === today.getDate()
+  );
+}
