@@ -50,8 +50,12 @@
             </p>
 
             <p class="card-text text-muted">
-              {#if p.scheduled_at}
-                {toLocaleTime(p.scheduled_at)}
+              {#if p.schedule_type === "scheduled"}
+                {#if p.scheduled_at}
+                  {toLocaleTime(p.scheduled_at)}
+                {:else}
+                  not planned
+                {/if}
               {:else}
                 online
               {/if}
