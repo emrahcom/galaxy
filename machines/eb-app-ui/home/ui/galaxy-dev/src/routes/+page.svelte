@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { APP, FORM_WIDTH } from "$lib/config";
+  import { FORM_WIDTH } from "$lib/config";
   import { get } from "svelte/store";
   import identity from "$lib/stores/kratos/identity";
 
@@ -10,7 +10,7 @@
 <section id="welcome">
   <div class="row d-flex mt-5 justify-content-center">
     <div class="col mx-auto text-center" style="max-width:{FORM_WIDTH};">
-      <h2 class="text-muted mb-5">Welcome to {APP}</h2>
+      <h2 class="text-muted mb-5">Welcome</h2>
 
       <h4 class="text-muted mb-5">
         This site is for Fellow Jitsters to organize Jitsi meetings, meeting
