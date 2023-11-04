@@ -37,21 +37,25 @@
               </p>
             {/if}
 
-            {#if p.ownership === "owner"}
-              <p class="card-text text-muted small">
+            <p class="card-text text-muted small">
+              {#if p.ownership === "owner"}
                 {#if p.schedule_type === "ephemeral"}
                   {`${p.domain_name}`}
                 {:else}
                   {`${p.room_name} on ${p.domain_name}`}
                 {/if}
-              </p>
-            {/if}
+              {:else}
+                external domain
+              {/if}
+            </p>
 
-            {#if p.scheduled_at}
-              <p class="card-text text-muted">
+            <p class="card-text text-muted">
+              {#if p.scheduled_at}
                 {toLocaleTime(p.scheduled_at)}
-              </p>
-            {/if}
+              {:else}
+                online
+              {/if}
+            </p>
 
             {#if p.info}
               <p
