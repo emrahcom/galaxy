@@ -89,7 +89,6 @@
           label="API Key Value (private)"
           bind:value={p.domain_attr.jaas_key}
           required={true}
-          wrap={false}
         />
       {:else if p.auth_type === "token"}
         <Text

@@ -4,7 +4,6 @@
   export let disabled = false;
   export let readonly = false;
   export let required = false;
-  export let wrap = true;
   export let value: string;
 </script>
 
@@ -12,8 +11,8 @@
 <div class="form-floating my-3">
   <textarea
     id={name}
-    class="form-control {wrap ? 'text-wrap' : 'text-nowrap'}"
-    style="height: 128px"
+    class="form-control"
+    style="height: 128px; white-space: pre"
     {name}
     placeholder=""
     bind:value
