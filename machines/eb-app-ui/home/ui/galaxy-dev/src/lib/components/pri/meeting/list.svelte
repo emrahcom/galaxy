@@ -68,7 +68,7 @@
                 <p class="card-text text-muted">not planned</p>
               {/if}
             {:else if p.schedule_type === "permanent"}
-              <p class="card-text text-success fw-bold">online</p>
+              <p class="card-text text-success fw-bold">permanent</p>
             {:else if p.schedule_type === "ephemeral"}
               <p class="card-text text-primary fw-bold">online</p>
             {/if}
