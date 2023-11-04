@@ -52,7 +52,7 @@
             {#if p.schedule_type === "scheduled"}
               {#if p.scheduled_at}
                 {#if isOnline(p.scheduled_at)}
-                  <p class="card-text text-success fw-bold">
+                  <p class="card-text text-primary fw-bold">
                     {toLocaleTime(p.scheduled_at)}
                   </p>
                 {:else if isToday(p.scheduled_at)}
@@ -68,9 +68,9 @@
                 <p class="card-text text-muted">not planned</p>
               {/if}
             {:else if p.schedule_type === "permanent"}
-              <p class="card-text text-primary fw-bold">online</p>
-            {:else if p.schedule_type === "ephemeral"}
               <p class="card-text text-success fw-bold">online</p>
+            {:else if p.schedule_type === "ephemeral"}
+              <p class="card-text text-primary fw-bold">online</p>
             {/if}
 
             {#if p.info}
