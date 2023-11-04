@@ -81,9 +81,12 @@
         </p>
 
         {#if p.meeting_info}
-          {#each p.meeting_info.split("\n") as line}
-            <p class="card-text text-muted my-0">{line}&nbsp;</p>
-          {/each}
+          <p
+            class="d-inline-block card-text text-muted text-start text-truncate bg-light w-auto"
+            style="max-width: 90%; white-space: pre"
+          >
+            {p.meeting_info}
+          </p>
         {/if}
 
         <div
