@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std/http/server.ts";
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import hello from "./lib/adm/hello.ts";
+import config from "./lib/adm/config.ts";
 import identity from "./lib/adm/identity.ts";
 
 const PRE = "/api/adm";
@@ -10,6 +11,8 @@ const PRE = "/api/adm";
 async function route(req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/hello`) {
     return hello();
+  } else if (path === `${PRE}/config`) {
+    return config();
   } else if (path.match(`^${PRE}/identity/`)) {
     return await identity(req, path);
   } else {
