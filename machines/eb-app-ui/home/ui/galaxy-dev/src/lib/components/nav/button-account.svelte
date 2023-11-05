@@ -1,5 +1,5 @@
 <script lang="ts">
-  import identity from "$lib/stores/kratos/identity";
+  const identity_email = window.sessionStorage.getItem("identity_email");
 
   // ---------------------------------------------------------------------------
   function closeMenu() {
@@ -27,7 +27,7 @@
 >
   <div class="offcanvas-header bg-light">
     <h5 class="offcanvas-title text-muted" id="offcanvasAccountLabel">
-      {$identity.traits.email}
+      {identity_email}
     </h5>
 
     <button
