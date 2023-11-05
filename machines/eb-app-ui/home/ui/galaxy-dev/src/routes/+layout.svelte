@@ -2,7 +2,7 @@
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
-  const identity_id = window.sessionStorage.getItem("identity_id");
+  const identity_id = window.localStorage.getItem("identity_id");
 </script>
 
 <!-- -------------------------------------------------------------------------->
