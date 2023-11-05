@@ -299,16 +299,6 @@ su -l ui <<EOSS
 EOSS
 EOS
 
-# galaxy-ui systemd service
-cp etc/systemd/system/galaxy-ui.service $ROOTFS/etc/systemd/system/
-
-lxc-attach -n $MACH -- zsh <<EOS
-set -e
-systemctl daemon-reload
-systemctl enable galaxy-ui.service
-systemctl start galaxy-ui.service
-EOS
-
 # ------------------------------------------------------------------------------
 # CONTAINER SERVICES
 # ------------------------------------------------------------------------------
