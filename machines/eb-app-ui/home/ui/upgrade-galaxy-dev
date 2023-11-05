@@ -20,22 +20,6 @@ git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
 # upgrade this script
 cp $UI/upgrade-galaxy-dev /home/ui/
 
-# get APP FQDN
-[[ -z "$APP_FQDN" ]] && \
-    APP_FQDN=$(ack "^export const APP =" \
-               /home/ui/galaxy-dev/src/lib/config.ts | \
-               cut -d'"' -f2 | cut -d '/' -f3)
-if [[ -z "$APP_FQDN" ]]; then
-    echo "error: APP_FQDN is not found"
-    exit 1
-else
-   echo "APP_FQDN: $APP_FQDN"
-fi
-
-# set FQDNs
-sed -i "s/___APP_FQDN___/$APP_FQDN/" $APP/src/lib/config.ts
-cat $APP/src/lib/config.ts
-
 # upgrade app
 rm -rf /tmp/galaxy-dev.old
 mv /home/ui/galaxy-dev /tmp/galaxy-dev.old
