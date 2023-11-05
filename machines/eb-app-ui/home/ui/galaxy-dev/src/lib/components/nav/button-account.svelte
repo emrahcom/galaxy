@@ -1,5 +1,10 @@
 <script lang="ts">
-  const identity_email = window.sessionStorage.getItem("identity_email");
+  let username = "";
+
+  // ---------------------------------------------------------------------------
+  function updateUsername() {
+    username = window.sessionStorage.getItem("identity_email") || "";
+  }
 
   // ---------------------------------------------------------------------------
   function closeMenu() {
@@ -16,6 +21,7 @@
   data-bs-toggle="offcanvas"
   data-bs-target="#offcanvasAccount"
   aria-controls="offcanvasAccount"
+  on:click={updateUsername}
 >
   <span class="bi bi-person" />
 </button>
@@ -27,7 +33,7 @@
 >
   <div class="offcanvas-header bg-light">
     <h5 class="offcanvas-title text-muted" id="offcanvasAccountLabel">
-      {identity_email}
+      {username}
     </h5>
 
     <button
