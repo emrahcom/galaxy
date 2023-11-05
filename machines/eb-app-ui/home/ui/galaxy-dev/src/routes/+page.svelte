@@ -1,9 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { get } from "svelte/store";
-  import identity from "$lib/stores/kratos/identity";
 
-  const _identity = get(identity);
+  const identity_id = window.sessionStorage.getItem("identity_id");
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -17,7 +15,7 @@
         schedules and attendees.
       </h4>
 
-      {#if _identity.id}
+      {#if identity_id}
         <h5 class="text-muted mb-5">
           Click
           <button
