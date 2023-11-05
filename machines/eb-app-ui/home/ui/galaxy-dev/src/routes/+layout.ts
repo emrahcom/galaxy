@@ -1,3 +1,4 @@
+import { get } from "$lib/api";
 import { getIdentity } from "$lib/kratos";
 
 // -----------------------------------------------------------------------------
