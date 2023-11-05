@@ -1,5 +1,3 @@
-import { browser } from "$app/environment";
-import { KRATOS } from "$lib/config";
 import { get } from "$lib/http";
 import type {
   KratosError,
@@ -19,9 +17,8 @@ export function getFlowId(urlSearch: string): string {
 
 // -----------------------------------------------------------------------------
 export async function getIdentity(): Promise<KratosIdentity> {
-  if (!browser) throw new Error("no browser env");
-
-  const url = `${KRATOS}/sessions/whoami`;
+  const KRATOS_FQDN = window.localStorage.getItem("kratos_fqdn");
+  const url = `https://${KRATOS_FQDN}/sessions/whoami`;
   const res = await get(url);
 
   if (res.status !== 200) {
@@ -36,9 +33,8 @@ export async function getIdentity(): Promise<KratosIdentity> {
 export async function getLogoutDataModels(): Promise<
   KratosLogout | KratosError
 > {
-  if (!browser) throw new Error("no browser env");
-
-  const url = `${KRATOS}/self-service/logout/browser`;
+  const KRATOS_FQDN = window.localStorage.getItem("kratos_fqdn");
+  const url = `https://${KRATOS_FQDN}/self-service/logout/browser`;
   const res = await get(url);
   const dm = await res.json();
 
