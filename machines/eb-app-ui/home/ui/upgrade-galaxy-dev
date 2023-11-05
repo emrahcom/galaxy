@@ -40,6 +40,6 @@ cat <<EOF
 
 DONT FORGET TO BUILD THE APPLICATION
 
-  cd /home/ui/galaxy-dev
-  yarn run build
+  (cd /home/ui/galaxy-dev; yarn run build)
+
 EOF
