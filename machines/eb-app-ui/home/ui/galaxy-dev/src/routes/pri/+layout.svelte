@@ -3,7 +3,7 @@
   const loginUrl = `https://${KRATOS_FQDN}/self-service/login/browser`;
   const identity_id = window.sessionStorage.getItem("identity_id");
 
-  if (identity_id) window.location.replace(loginUrl);
+  if (!identity_id) window.location.replace(loginUrl);
 </script>
 
 <!-- -------------------------------------------------------------------------->
