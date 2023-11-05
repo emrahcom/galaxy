@@ -1,12 +1,9 @@
 <script lang="ts">
-  import { get } from "svelte/store";
-  import identity from "$lib/stores/kratos/identity";
-
   const KRATOS_FQDN = window.localStorage.getItem("kratos_fqdn");
   const loginUrl = `https://${KRATOS_FQDN}/self-service/login/browser`;
-  const _identity = get(identity);
+  const identity_id = window.sessionStorage.getItem("identity_id");
 
-  if (!_identity.id) window.location.replace(loginUrl);
+  if (identity_id) window.location.replace(loginUrl);
 </script>
 
 <!-- -------------------------------------------------------------------------->
