@@ -5,6 +5,7 @@ export const PORT_PRIVATE = 8001;
 export const PORT_PUBLIC = 8002;
 
 // kratos
+export const KRATOS_FQDN = "___KRATOS_FQDN___";
 export const KRATOS = "http://eb-kratos:4433";
 
 // database
