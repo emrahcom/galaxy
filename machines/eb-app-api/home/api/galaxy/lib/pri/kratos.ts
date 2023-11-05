@@ -1,4 +1,4 @@
-import { KRATOS } from "../../config.ts";
+import { KRATOS_ORIGIN } from "../../config.ts";
 
 // -----------------------------------------------------------------------------
 export async function getIdentityId(req: Request): Promise<string | undefined> {
@@ -8,7 +8,7 @@ export async function getIdentityId(req: Request): Promise<string | undefined> {
   if (!cookie.match("ory_kratos_session")) return undefined;
 
   try {
-    const whoami = `${KRATOS}/sessions/whoami`;
+    const whoami = `${KRATOS_ORIGIN}/sessions/whoami`;
     const res = await fetch(whoami, {
       credentials: "include",
       headers: {
