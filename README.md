@@ -3,8 +3,9 @@
 `Galaxy` is a web application for `Jitsi` admins and users to organize their
 Jitsi meetings, meeting schedules and attendees.
 
-It has built-in support for [JaaS](https://jaas.8x8.vc) (_Jitsi as a Service by
-8x8_).
+This version has a built-in identity managment system. Check
+[Galaxy-kc](https://github.com/emrahcom/galaxy-kc) for version that uses
+`Keycloak` as the identity management system.
 
 ### Try it
 
