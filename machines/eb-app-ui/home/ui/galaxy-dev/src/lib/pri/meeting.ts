@@ -2,7 +2,7 @@ import { getById } from "$lib/api";
 
 // -----------------------------------------------------------------------------
 export const SCHEDULE_TYPE_OPTIONS = [
-  ["ephemeral", "ephemeral"],
+  ["ephemeral", "ad hoc"],
   ["permanent", "permanent"],
   ["scheduled", "scheduled"],
 ];
