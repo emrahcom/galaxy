@@ -288,6 +288,16 @@ export async function listMeeting(
         ) as domain_url,
         r.name as room_name, m.schedule_type,
         (CASE m.schedule_type
+           WHEN 'scheduled' THEN array(SELECT started_at
+                                       FROM meeting_schedule
+                                       WHERE meeting_id = m.id
+                                         AND ended_at > now()
+                                       ORDER BY started_at
+                                      )
+           ELSE array[]::timestamp with time zone[]
+         END
+        ) as schedule_list,
+        (CASE m.schedule_type
            WHEN 'scheduled' THEN (SELECT min(started_at)
                                   FROM meeting_schedule
                                   WHERE meeting_id = m.id
@@ -335,6 +345,16 @@ export async function listMeeting(
 
       SELECT m.id, m.name, m.info, '' as domain_name, '' as domain_url,
         '' as room_name, m.schedule_type,
+        (CASE m.schedule_type
+           WHEN 'scheduled' THEN array(SELECT started_at
+                                       FROM meeting_schedule
+                                       WHERE meeting_id = m.id
+                                         AND ended_at > now()
+                                       ORDER BY started_at
+                                      )
+           ELSE array[]::timestamp with time zone[]
+         END
+        ) as schedule_list,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN (SELECT min(started_at)
                                   FROM meeting_schedule
