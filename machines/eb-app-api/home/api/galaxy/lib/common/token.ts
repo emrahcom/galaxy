@@ -58,11 +58,12 @@ export async function generateHostTokenHS(
         email: email,
         affiliation: "owner",
         moderator: true,
+        "lobby_bypass": true,
+        "security_bypass": true,
       },
       features: {
         livestreaming: true,
         recording: true,
-        "lobby_bypass": true,
         "screen-sharing": true,
       },
     },
