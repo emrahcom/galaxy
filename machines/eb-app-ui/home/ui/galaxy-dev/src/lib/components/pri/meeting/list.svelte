@@ -49,33 +49,32 @@
               {/if}
             </p>
 
-            {#if p.schedule_type === "scheduled"}
-              {#if p.scheduled_at}
-                {#if isOnline(p.scheduled_at)}
-                  <p class="card-text text-primary fw-bold">
-                    {toLocaleTime(p.scheduled_at)}
-                  </p>
-                {:else if isToday(p.scheduled_at)}
-                  <p class="card-text text-warning fw-bold">
-                    {toLocaleTime(p.scheduled_at)}
-                  </p>
+            <div class="card-text fw-bold">
+              {#if p.schedule_type === "scheduled"}
+                {#if p.scheduled_at}
+                  {#each p.schedule_list.slice(0, 3) as at}
+                    {#if isOnline(at)}
+                      <p class="text-primary my-0">{toLocaleTime(at)}</p>
+                    {:else if isToday(at)}
+                      <p class="text-warning my-0">{toLocaleTime(at)}</p>
+                    {:else}
+                      <p class="text-secondary my-0">{toLocaleTime(at)}</p>
+                    {/if}
+                  {/each}
                 {:else}
-                  <p class="card-text text-secondary fw-bold">
-                    {toLocaleTime(p.scheduled_at)}
-                  </p>
+                  <p class="text-muted my-0">not planned</p>
                 {/if}
-              {:else}
-                <p class="card-text text-muted">not planned</p>
+              {:else if p.schedule_type === "permanent"}
+                <p class="text-success my-0">permanent</p>
+              {:else if p.schedule_type === "ephemeral"}
+                <p class="text-primary my-0">online</p>
               {/if}
-            {:else if p.schedule_type === "permanent"}
-              <p class="card-text text-success fw-bold">permanent</p>
-            {:else if p.schedule_type === "ephemeral"}
-              <p class="card-text text-primary fw-bold">online</p>
-            {/if}
+            </div>
 
             {#if p.info}
               <p
-                class="d-inline-block card-text text-muted text-start text-truncate bg-light w-auto"
+                class="d-inline-block card-text text-muted text-start
+                text-truncate bg-light w-auto mt-3"
                 style="max-width: 90%; white-space: pre"
               >
                 {p.info}

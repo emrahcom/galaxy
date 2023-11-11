@@ -116,6 +116,7 @@ export interface Meeting222 {
   domain_url: boolean;
   room_name: string;
   schedule_type: string;
+  schedule_list: string[];
   scheduled_at: string;
   hidden: boolean;
   restricted: boolean;
