@@ -90,7 +90,10 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel
+          label={hash === "#0" ? "Not Now" : "Cancel"}
+          on:click={cancel}
+        />
         <SubmitBlocker />
         <Submit label="Create" />
       </div>
