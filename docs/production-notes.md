@@ -18,10 +18,6 @@ courier:
 lxc-attach -n eb-kratos -- reboot
 ```
 
-#### eb-mailslurper
-
-Stop this container and remove it from auto-start group.
-
 #### host
 
 ##### ssh
