@@ -1,2 +1,2 @@
 # kratos database
-host    kratos          kratos          172.22.22.0/24          md5
+host    kratos          kratos          172.22.22.0/24          scram-sha-256
