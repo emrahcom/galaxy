@@ -23,8 +23,8 @@ echo "------------------------ KRATOS DB ------------------------"
 # ------------------------------------------------------------------------------
 # BACKUP
 # ------------------------------------------------------------------------------
-[[ -f $ROOTFS/etc/postgresql/13/main/pg_hba.conf ]] && \
-    cp $ROOTFS/etc/postgresql/13/main/pg_hba.conf \
+[[ -f $ROOTFS/etc/postgresql/15/main/pg_hba.conf ]] && \
+    cp $ROOTFS/etc/postgresql/15/main/pg_hba.conf \
         $OLD_FILES/pg_hba.conf.before_kratos
 
 # ------------------------------------------------------------------------------
@@ -111,11 +111,11 @@ EOS
 # ------------------------------------------------------------------------------
 lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
-sed -i '/kratos/d' /etc/postgresql/13/main/pg_hba.conf
+sed -i '/kratos/d' /etc/postgresql/15/main/pg_hba.conf
 EOS
 
-cat etc/postgresql/13/main/pg_hba.conf.kratos \
-    >>$ROOTFS/etc/postgresql/13/main/pg_hba.conf
+cat etc/postgresql/15/main/pg_hba.conf.kratos \
+    >>$ROOTFS/etc/postgresql/15/main/pg_hba.conf
 
 # ------------------------------------------------------------------------------
 # RESTART POSTGRESQL SERVICE
