@@ -138,7 +138,7 @@ EOS
 # ------------------------------------------------------------------------------
 # POSTGRESQL
 # ------------------------------------------------------------------------------
-cp etc/postgresql/13/main/conf.d/*.conf $ROOTFS/etc/postgresql/13/main/conf.d/
+cp etc/postgresql/15/main/conf.d/*.conf $ROOTFS/etc/postgresql/15/main/conf.d/
 lxc-attach -n $MACH -- systemctl restart postgresql.service
 
 # ------------------------------------------------------------------------------
