@@ -44,7 +44,7 @@ Try `Galaxy` using publicly available implementation on
 
 ### Prerequisites
 
-- `Debian 11 Bullseye` server
+- `Debian 12 Bookworm` server
 - At least 1 GB RAM
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
@@ -63,7 +63,7 @@ _Update the value of `APP_FQDN` and `KRATOS_FQDN` according to your domain
 names._
 
 ```bash
-wget https://raw.githubusercontent.com/emrahcom/emrah-bullseye-base/main/installer/eb
+wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
 wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.conf
 
 export APP_FQDN=app.galaxy.corp
