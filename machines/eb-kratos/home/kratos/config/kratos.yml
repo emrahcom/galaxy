@@ -133,5 +133,5 @@ identity:
 
 courier:
   smtp:
-    connection_uri: smtps://username:password@eb-mailslurper:1025/?skip_ssl_verify=true
-    from_address: no-reply@___APP_FQDN___
+    connection_uri: ___SMTP_CONNECTION_URI___
+    from_address: ___SMTP_FROM_ADDRESS___
