@@ -1,2 +1,2 @@
 # galaxy database
-host    galaxy          galaxy          172.22.22.0/24          md5
+host    galaxy          galaxy          172.22.22.0/24          scram-sha-256
