@@ -153,10 +153,11 @@ EOS
 # api user
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser api --system --group --disabled-password --shell /bin/zsh --gecos ''
-adduser api-adm --system --group --disabled-password --gecos ''
-adduser api-pri --system --group --disabled-password --gecos ''
-adduser api-pub --system --group --disabled-password --gecos ''
+adduser api --system --group --disabled-password --home /home/api \
+    --shell /bin/zsh
+adduser api-adm --system --group --disabled-password --home /home/api-adm
+adduser api-pri --system --group --disabled-password --home /home/api-pri
+adduser api-pub --system --group --disabled-password --home /home/api-pub
 EOS
 
 cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/api/
