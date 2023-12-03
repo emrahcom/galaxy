@@ -178,7 +178,7 @@ su -l mailslurper <<EOSS
     export CGO_CFLAGS="-g -O2 -Wno-return-local-addr"
     export PATH=$PATH:/home/mailslurper/go/bin
     cd /home/mailslurper/src/mailslurper/cmd/mailslurper/
-    go get github.com/mjibson/esc
+    go get -u github.com/mjibson/esc
     go get
     go generate
     go build
