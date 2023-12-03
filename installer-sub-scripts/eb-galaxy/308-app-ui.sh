@@ -198,7 +198,7 @@ lxc-attach -n $MACH -- systemctl start nginx.service
 # ------------------------------------------------------------------------------
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-adduser ui --system --group --disabled-password --shell /bin/zsh --gecos ''
+adduser ui --system --group --disabled-password --home /home/ui --shell /bin/zsh
 EOS
 
 cp $MACHINE_COMMON/home/user/.tmux.conf $ROOTFS/home/ui/
