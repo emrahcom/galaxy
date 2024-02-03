@@ -66,8 +66,8 @@ names._
 _Update the value of `SMTP_CONNECTION_URI` and `SMTP_FROM_ADDRESS` according to
 your email system. `username` and `password` in `SMTP_CONNECTION_URI` should be
 URL encoded if there is special character in it. For example if SMTP's username
-is `no-reply@mydomain.corp` then you should set it as
-`smtp://no-reply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
+is `noreply@mydomain.corp` then you should set it as
+`smtp://noreply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
 
 For more details about `SMTP_CONNECTION_URI`, see SMTP configuration inside
 [Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration).
@@ -79,7 +79,7 @@ wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.
 export APP_FQDN=app.galaxy.corp
 export KRATOS_FQDN=id.galaxy.corp
 export SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
-export SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
+export SMTP_FROM_ADDRESS="noreply@mydomain.corp"
 bash eb eb-galaxy
 ```
 
