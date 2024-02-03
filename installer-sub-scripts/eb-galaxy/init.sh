@@ -83,7 +83,7 @@ Error: SMTP_FROM_ADDRESS not found
 
 Please set SMTP_FROM_ADDRESS before installation, e.g.
 
-    export SMTP_FROM_ADDRESS="no-reply@mydomain.corp""
+    export SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
 EOF
   false
 fi
