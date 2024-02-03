@@ -64,13 +64,15 @@ _Update the value of `APP_FQDN` and `KRATOS_FQDN` according to your domain
 names._
 
 _Update the value of `SMTP_CONNECTION_URI` and `SMTP_FROM_ADDRESS` according to
-your email system. `username` and `password` in `SMTP_CONNECTION_URI` should be
+your email system._
+
+_`username` and `password` in `SMTP_CONNECTION_URI` should be
 URL encoded if there is special character in it. For example if SMTP's username
 is `noreply@mydomain.corp` then you should set it as
 `smtp://noreply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
 
-For more details about `SMTP_CONNECTION_URI`, see SMTP configuration inside
-[Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration).
+_For more details about `SMTP_CONNECTION_URI`, see SMTP configuration inside
+[Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration)._
 
 ```bash
 wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
