@@ -51,6 +51,7 @@ Try `Galaxy` using publicly available implementation on
 - Both FQDNs must be subdomains of the same domain.
 - A DNS `A record` for the web application pointing to the server.
 - A DNS `A record` for the identity service pointing to the server.
+- An email account for SMTP.
 - Allow the following ports if the server is behind a firewall
   - `TCP/80` (_needed for Let's Encrypt certificate_)
   - `TCP/443`
@@ -62,12 +63,17 @@ Run the following commands as `root`.
 _Update the value of `APP_FQDN` and `KRATOS_FQDN` according to your domain
 names._
 
+_Update the value of `SMTP_CONNECTION_URI` and `SMTP_FROM_ADDRESS` according to
+your email system._
+
 ```bash
 wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
 wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.conf
 
 export APP_FQDN=app.galaxy.corp
 export KRATOS_FQDN=id.galaxy.corp
+export SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
+export SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
 bash eb eb-galaxy
 ```
 
