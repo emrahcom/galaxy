@@ -40,9 +40,8 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const contactId = pl.id;
   const name = pl.name;
-  const email = pl.email;
 
-  return await updateContact(identityId, contactId, name, email);
+  return await updateContact(identityId, contactId, name);
 }
 
 // -----------------------------------------------------------------------------
