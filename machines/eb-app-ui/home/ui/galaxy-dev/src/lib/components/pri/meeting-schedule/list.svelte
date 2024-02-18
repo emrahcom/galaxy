@@ -37,7 +37,7 @@
       </div>
     {:else}
       <Warning>
-        This meeting has no schedules. Click
+        This meeting has no schedule. Click
         <Add href="/pri/meeting/schedule/add/{meeting_id}" /> to create a new schedule.
       </Warning>
     {/each}
