@@ -18,7 +18,7 @@
             <p class="card-text text-muted"></p>
             <p class="card-text text-muted">
               {p.profile_name}<br />
-              {p.profile_email ?? "-"}
+              {p.profile_email}
             </p>
           </div>
 
