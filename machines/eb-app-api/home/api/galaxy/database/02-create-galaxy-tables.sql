@@ -59,6 +59,7 @@ CREATE TABLE contact (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE UNIQUE INDEX ON contact("identity_id", "contact_id");
+CREATE INDEX ON contact("identity_id", "name");
 ALTER TABLE contact OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
