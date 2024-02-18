@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { actionById } from "$lib/api";
-  import type { Profile } from "$lib/types";
+  import type { Contact } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Email from "$lib/components/common/form-email.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
@@ -9,21 +9,21 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: Profile;
+  export let p: Contact;
 
   let warning = false;
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/profile";
+    window.location.href = "/pri/contact";
   }
 
   // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;
-      await actionById("/api/pri/profile/del", p.id);
-      window.location.replace("/pri/profile");
+      await actionById("/api/pri/contact/del", p.id);
+      window.location.replace("/pri/contact");
     } catch {
       warning = true;
     }
@@ -36,15 +36,22 @@
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text
         name="name"
-        label="Name"
+        label="Contact"
         value={p.name}
         disabled={true}
         readonly={true}
       />
+      <Text
+        name="profile_name"
+        label="Name"
+        value={p.profile_name}
+        disabled={true}
+        readonly={true}
+      />
       <Email
-        name="email"
+        name="profile_email"
         label="Email"
-        value={p.email}
+        value={p.profile_email}
         disabled={true}
         readonly={true}
       />
