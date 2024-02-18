@@ -48,6 +48,20 @@ CREATE UNIQUE INDEX ON profile("identity_id", "name", "email");
 ALTER TABLE profile OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- CONTACT
+-- -----------------------------------------------------------------------------
+CREATE TABLE contact (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "contact_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON contact("identity_id", "contact_id");
+ALTER TABLE contact OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- DOMAIN
 -- -----------------------------------------------------------------------------
 -- - public domain can only be added by system account
