@@ -52,6 +52,11 @@
           Profiles
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/pri/contact" on:click={closeMenu}>
+          Contacts
+        </a>
+      </li>
     </ul>
   </div>
 </div>
