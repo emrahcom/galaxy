@@ -18,7 +18,7 @@ export async function getContact(identityId: string, contactId: string) {
     ],
   };
 
-  return await fetch(sql) as Profile[];
+  return await fetch(sql) as Contact[];
 }
 
 // -----------------------------------------------------------------------------
