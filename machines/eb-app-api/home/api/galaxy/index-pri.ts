@@ -6,6 +6,7 @@ import {
   unauthorized,
 } from "./lib/http/response.ts";
 import { getIdentityId } from "./lib/pri/kratos.ts";
+import contact from "./lib/pri/contact.ts";
 import domain from "./lib/pri/domain.ts";
 import domainInvite from "./lib/pri/domain-invite.ts";
 import domainPartner from "./lib/pri/domain-partner.ts";
@@ -33,6 +34,8 @@ async function route(
 ): Promise<Response> {
   if (path === `${PRE}/hello`) {
     return hello(identityId);
+  } else if (path.match(`^${PRE}/contact/`)) {
+    return await contact(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/invite/`)) {
     return await domainInvite(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/partner/`)) {
