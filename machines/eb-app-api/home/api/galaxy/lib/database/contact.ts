@@ -1,5 +1,5 @@
 import { fetch, query } from "./common.ts";
-import type { Id, Contact } from "./types.ts";
+import type { Contact, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getContact(identityId: string, contactId: string) {
