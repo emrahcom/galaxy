@@ -86,6 +86,30 @@ export async function addMeetingMembershipByCode(
   };
   if (rows[0] !== undefined) await query(sql1);
 
+  // add partner to the contact list
+  const sql2 = {
+    text: `
+      INSERT INTO contact (identity_id, contact_id, name)
+      VALUES (
+        (SELECT identity_id
+         FROM meeting_invite
+         WHERE code = $2
+        ),
+        $1,
+        (SELECT name
+         FROM profile
+         WHERE identity_id = $1
+           AND is_default
+        )
+      )
+      ON CONFLICT DO NOTHING`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql2);
+
   return rows;
 }
 
