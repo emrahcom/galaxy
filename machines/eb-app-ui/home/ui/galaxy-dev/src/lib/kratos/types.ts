@@ -43,7 +43,7 @@ export interface UI {
   method: string;
   messages?: Message[];
   nodes: Node[];
-  "updated_at": string;
+  updated_at: string;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,8 +57,8 @@ export interface KratosError {
     details?: {
       docs: string;
       hint: string;
-      "redirect_to": string;
-      "reject_reason": string;
+      redirect_to: string;
+      reject_reason: string;
     };
   };
 }
@@ -66,7 +66,7 @@ export interface KratosError {
 // -----------------------------------------------------------------------------
 export interface KratosLogout {
   instanceOf: "KratosLogout";
-  "logout_url": string;
+  logout_url: string;
 }
 
 // -----------------------------------------------------------------------------
@@ -76,6 +76,6 @@ export interface KratosIdentity {
     email: string;
   };
   state: string;
-  "created_at": string;
-  "updated_at": string;
+  created_at: string;
+  updated_at: string;
 }

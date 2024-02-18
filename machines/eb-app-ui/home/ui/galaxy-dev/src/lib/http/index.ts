@@ -2,7 +2,7 @@ export async function get(url: string) {
   const res = await fetch(url, {
     credentials: "include",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
     },
     mode: "cors",
   });
@@ -15,7 +15,7 @@ export async function post(url: string, payload: unknown) {
   const res = await fetch(url, {
     credentials: "include",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
     },
     mode: "cors",
     method: "post",
