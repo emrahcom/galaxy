@@ -45,7 +45,7 @@
       </div>
     {:else}
       <Warning>
-        There is no domains in the list. Click <Add href="/pri/domain/add" /> to
+        There is no domain in the list. Click <Add href="/pri/domain/add" /> to
         add a new domain.
       </Warning>
     {/each}
