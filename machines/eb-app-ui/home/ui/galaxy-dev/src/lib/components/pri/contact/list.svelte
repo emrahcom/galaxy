@@ -15,8 +15,11 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
-            <p class="card-text text-muted">{p.profile_name}</p>
-            <p class="card-text text-muted">{p.profile_email ?? "-"}</p>
+            <p class="card-text text-muted"></p>
+            <p class="card-text text-muted">
+              {p.profile_name}<br />
+              {p.profile_email ?? "-"}
+            </p>
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
