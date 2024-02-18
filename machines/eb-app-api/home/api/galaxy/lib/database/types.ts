@@ -13,6 +13,16 @@ export interface Id {
 }
 
 // -----------------------------------------------------------------------------
+export interface Contact {
+  id: string;
+  name: string;
+  profile_name: string;
+  profile_email: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Domain {
   id: string;
   name: string;
