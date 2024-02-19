@@ -53,12 +53,12 @@ ALTER TABLE profile OWNER TO galaxy;
 CREATE TABLE contact (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "contact_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "remote_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON contact("identity_id", "contact_id");
+CREATE UNIQUE INDEX ON contact("identity_id", "remote_id");
 CREATE INDEX ON contact("identity_id", "name");
 ALTER TABLE contact OWNER TO galaxy;
 
