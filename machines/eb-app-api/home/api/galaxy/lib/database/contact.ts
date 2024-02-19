@@ -8,7 +8,7 @@ export async function getContact(identityId: string, contactId: string) {
       SELECT c.id, c.name, p.name as profile_name, p.email as profile_email,
         c.created_at, c.updated_at
       FROM contact c
-        JOIN profile p ON c.contact_id = p.identity_id
+        JOIN profile p ON c.remote_id = p.identity_id
                           AND p.is_default
       WHERE c.id = $2
         AND c.identity_id = $1`,
@@ -32,7 +32,7 @@ export async function listContact(
       SELECT c.id, c.name, p.name as profile_name, p.email as profile_email,
         c.created_at, c.updated_at
       FROM contact c
-        JOIN profile p ON c.contact_id = p.identity_id
+        JOIN profile p ON c.remote_id = p.identity_id
                           AND p.is_default
       WHERE c.identity_id = $1
       ORDER BY name, profile_name, profile_email
@@ -54,8 +54,8 @@ export async function delContact(identityId: string, contactId: string) {
   const sql0 = {
     text: `
       DELETE FROM contact
-      WHERE contact_id = $1
-        AND identity_id = (SELECT contact_id
+      WHERE remote_id = $1
+        AND identity_id = (SELECT remote_id
                            FROM contact
                            WHERE id = $2
                           )`,
