@@ -123,6 +123,7 @@ ALTER TABLE domain_invite OWNER TO galaxy;
 -- - invitee can accept an already rejected invite if it is not expired
 -- - delete all records which have expired_at older than now()
 -- IF A PARTNER INVITES THE SAME INVITEE TO THE SAME DOMAIN???
+-- DELETE EXPIRED BEFORE INSERTING
 -- -----------------------------------------------------------------------------
 CREATE TYPE invite_status AS ENUM ('pending', 'rejected');
 CREATE TABLE domain_invite_contact (
@@ -136,9 +137,7 @@ CREATE TABLE domain_invite_contact (
     "expired_at" timestamp with time zone NOT NULL
       DEFAULT now() + interval '7 days'
 );
-CREATE UNIQUE INDEX ON domain_invite_contact(
-    "identity_id", "domain_id", "remote_id");
-CREATE INDEX ON domain_invite_contact("remote_id", "expired_at");
+CREATE UNIQUE INDEX ON domain_invite_contact("remote_id", "domain_id");
 ALTER TABLE domain_invite_contact OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
