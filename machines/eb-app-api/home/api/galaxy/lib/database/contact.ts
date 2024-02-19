@@ -49,6 +49,23 @@ export async function listContact(
 
 // -----------------------------------------------------------------------------
 export async function delContact(identityId: string, contactId: string) {
+  // before deleting the contact, delete the contact owner from the contact's
+  // contact list.
+  const sql0 = {
+    text: `
+      DELETE FROM contact
+      WHERE contact_id = $1
+        AND identity_id = (SELECT contact_id
+                           FROM contact
+                           WHERE id = $2
+                          )`,
+    args: [
+      identityId,
+      contactId,
+    ],
+  };
+  await query(sql0);
+
   const sql = {
     text: `
       DELETE FROM contact
