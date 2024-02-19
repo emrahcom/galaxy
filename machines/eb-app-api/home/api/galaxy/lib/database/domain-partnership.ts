@@ -92,6 +92,33 @@ export async function addDomainPartnershipByCode(
   };
   if (rows[0] !== undefined) await query(sql2);
 
+  // add domain owner to the partner's contact list
+  const sql3 = {
+    text: `
+      INSERT INTO contact (identity_id, contact_id, name)
+      VALUES (
+        $1,
+        (SELECT identity_id
+         FROM domain_invite
+         WHERE code = $2
+        ),
+        (SELECT name
+         FROM profile
+         WHERE identity_id = (SELECT identity_id
+                              FROM domain_invite
+                              WHERE code = $2
+                             )
+           AND is_default
+        )
+      )
+      ON CONFLICT DO NOTHING`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql3);
+
   return rows;
 }
 
