@@ -115,6 +115,33 @@ CREATE INDEX ON domain_invite("identity_id", "domain_id", "expired_at");
 ALTER TABLE domain_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- DOMAIN_INVITE_CONTACT
+-- -----------------------------------------------------------------------------
+-- - allow to invite if the invitee is already in the contact list
+-- - domain owner can delete the invite only if the status is pending
+-- - when rejected, expired_at will be updated as now() + interval '7 days'
+-- - invitee can accept an already rejected invite if it is not expired
+-- - delete all records which have expired_at older than now()
+-- IF A PARTNER INVITES THE SAME INVITEE TO THE SAME DOMAIN???
+-- -----------------------------------------------------------------------------
+CREATE TYPE invite_status AS ENUM ('pending', 'rejected');
+CREATE TABLE domain_invite_contact (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "remote_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "status" invite_status NOT NULL DEFAULT 'pending',
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '7 days'
+);
+CREATE UNIQUE INDEX ON domain_invite_contact(
+    "identity_id", "domain_id", "remote_id");
+CREATE INDEX ON domain_invite_contact("remote_id", "expired_at");
+ALTER TABLE domain_invite_contact OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- DOMAIN_PARTNER
 -- -----------------------------------------------------------------------------
 -- - identity cannot update enabled but she can delete the partnership
