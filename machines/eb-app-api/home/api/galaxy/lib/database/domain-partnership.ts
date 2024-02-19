@@ -71,7 +71,7 @@ export async function addDomainPartnershipByCode(
   // add partner to the contact list
   const sql2 = {
     text: `
-      INSERT INTO contact (identity_id, contact_id, name)
+      INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
         (SELECT identity_id
          FROM domain_invite
@@ -95,7 +95,7 @@ export async function addDomainPartnershipByCode(
   // add domain owner to the partner's contact list
   const sql3 = {
     text: `
-      INSERT INTO contact (identity_id, contact_id, name)
+      INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
         $1,
         (SELECT identity_id
