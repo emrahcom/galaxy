@@ -89,7 +89,7 @@ export async function addMeetingMembershipByCode(
   // add partner to the contact list
   const sql2 = {
     text: `
-      INSERT INTO contact (identity_id, contact_id, name)
+      INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
         (SELECT identity_id
          FROM meeting_invite
@@ -113,7 +113,7 @@ export async function addMeetingMembershipByCode(
   // add meeting owner to the partner's contact list
   const sql3 = {
     text: `
-      INSERT INTO contact (identity_id, contact_id, name)
+      INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
         $1,
         (SELECT identity_id
