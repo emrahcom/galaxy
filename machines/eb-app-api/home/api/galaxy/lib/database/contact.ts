@@ -1,4 +1,4 @@
-import { fetch } from "./common.ts";
+import { fetch, query } from "./common.ts";
 import type { Contact, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
