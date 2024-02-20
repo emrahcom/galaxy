@@ -125,19 +125,20 @@ ALTER TABLE domain_invite OWNER TO galaxy;
 -- - Delete all candidates which have expired_at older than now().
 -- - Delete expired candidates before adding a new one.
 -- -----------------------------------------------------------------------------
-CREATE TYPE invite_status AS ENUM ('pending', 'rejected');
+CREATE TYPE candidate_status AS ENUM ('pending', 'rejected');
 CREATE TABLE domain_candidate (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
     "remote_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "status" invite_status NOT NULL DEFAULT 'pending',
+    "status" candidate_status NOT NULL DEFAULT 'pending',
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
       DEFAULT now() + interval '7 days'
 );
 CREATE UNIQUE INDEX ON domain_candidate("remote_id", "domain_id");
+CREATE INDEX ON domain_candidate("identity_id", "domain_id", "expired_at");
 ALTER TABLE domain_candidate OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
