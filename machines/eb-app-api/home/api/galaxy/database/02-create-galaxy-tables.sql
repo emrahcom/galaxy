@@ -117,7 +117,8 @@ ALTER TABLE domain_invite OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- DOMAIN_CANDIDATE
 -- -----------------------------------------------------------------------------
--- - The candidate can be added if she is already in the contact list.
+-- - The candidate can be added if she is already in the domain owner's contact
+--   list.
 -- - The domain owner can delete the candidate only if its status is pending.
 -- - When rejected, expired_at will be updated as now() + interval '7 days'.
 -- - The candidate can accept an already rejected invite if it is not expired
@@ -130,15 +131,14 @@ CREATE TABLE domain_candidate (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
-    "remote_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "status" candidate_status NOT NULL DEFAULT 'pending',
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
       DEFAULT now() + interval '7 days'
 );
-CREATE UNIQUE INDEX ON domain_candidate("remote_id", "domain_id");
-CREATE INDEX ON domain_candidate("identity_id", "domain_id", "expired_at");
+CREATE UNIQUE INDEX ON domain_candidate("identity_id", "domain_id");
+CREATE INDEX ON domain_candidate("identity_id", "expired_at");
 ALTER TABLE domain_candidate OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
