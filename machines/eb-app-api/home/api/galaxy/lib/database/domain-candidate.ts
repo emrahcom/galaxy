@@ -80,13 +80,6 @@ export async function addDomainCandidate(
   domainId: string,
   contactId: string,
 ) {
-  const sql0 = {
-    text: `
-      DELETE FROM domain_candidate
-      WHERE expired_at > now()`,
-  };
-  await query(sql0);
-
   const sql = {
     text: `
       INSERT INTO domain_candidate (identity_id, domain_id)
