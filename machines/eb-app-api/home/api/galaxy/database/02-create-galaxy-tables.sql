@@ -120,11 +120,11 @@ ALTER TABLE domain_invite OWNER TO galaxy;
 -- - The candidate can be added if she is already in the domain owner's contact
 --   list.
 -- - The domain owner can delete the candidate only if its status is pending.
+-- - The candidate cannot delete the candidacy but may reject it.
 -- - When rejected, expired_at will be updated as now() + interval '7 days'.
--- - The candidate can accept an already rejected invite if it is not expired
---   yet.
+-- - The candidate can accept an already rejected candidacy if it is not
+--   expired (deleted) yet.
 -- - Delete all candidates which have expired_at older than now().
--- - Delete expired candidates before adding a new one.
 -- - Delete expired candidates before listing candidacies.
 -- -----------------------------------------------------------------------------
 CREATE TYPE candidate_status AS ENUM ('pending', 'rejected');
@@ -298,8 +298,8 @@ ALTER TABLE meeting_invite OWNER TO galaxy;
 --   restricted. If not restricted, no need the request, create membership
 --   immediately.
 -- - When rejected, expired_at will be updated as now() + interval '7 days'.
--- - The request owner can update the profile only if the status is pending.
--- - The request owner can delete the request only if the status is pending.
+-- - The request owner can update the profile only if its status is pending.
+-- - The request owner can delete the request only if its status is pending.
 -- - The meeting owner can delete the request anytimes.
 -- - Delete all records which have expired_at older than now().
 -- -----------------------------------------------------------------------------
