@@ -125,6 +125,7 @@ ALTER TABLE domain_invite OWNER TO galaxy;
 --   yet.
 -- - Delete all candidates which have expired_at older than now().
 -- - Delete expired candidates before adding a new one.
+-- - Delete expired candidates before listing candidacies.
 -- -----------------------------------------------------------------------------
 CREATE TYPE candidate_status AS ENUM ('pending', 'rejected');
 CREATE TABLE domain_candidate (

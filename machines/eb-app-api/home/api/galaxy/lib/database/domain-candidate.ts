@@ -1,4 +1,4 @@
-import { fetch } from "./common.ts";
+import { fetch, query } from "./common.ts";
 import type { DomainCandidate, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -38,6 +38,13 @@ export async function listDomainCandidateByDomain(
   limit: number,
   offset: number,
 ) {
+  const sql0 = {
+    text: `
+      DELETE FROM domain_candidate
+      WHERE expired_at > now()`,
+  };
+  await query(sql0);
+
   const sql = {
     text: `
       SELECT ca.id, ca.domain_id, co.name as contact_name,
@@ -73,6 +80,13 @@ export async function addDomainCandidate(
   domainId: string,
   contactId: string,
 ) {
+  const sql0 = {
+    text: `
+      DELETE FROM domain_candidate
+      WHERE expired_at > now()`,
+  };
+  await query(sql0);
+
   const sql = {
     text: `
       INSERT INTO domain_candidate (identity_id, domain_id)
@@ -108,6 +122,7 @@ export async function delDomainCandidate(
     text: `
       DELETE FROM domain_candidate
       WHERE id = $2
+        AND status = 'pending'
         AND EXISTS (SELECT 1
                     FROM domain
                     WHERE id = domain_id
