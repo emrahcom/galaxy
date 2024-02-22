@@ -8,7 +8,7 @@ export async function getDomainPartner(
 ) {
   const sql = {
     text: `
-      SELECT pa.id, pa.domain_id, co.name ad contact_name,
+      SELECT pa.id, pa.domain_id, co.name as contact_name,
         pr.name as profile_name, pr.email as profile_email, pa.enabled,
         pa.created_at, pa.updated_at
       FROM domain_partner pa
@@ -40,7 +40,7 @@ export async function listDomainPartnerByDomain(
 ) {
   const sql = {
     text: `
-      SELECT pa.id, pa.domain_id, co.name ad contact_name,
+      SELECT pa.id, pa.domain_id, co.name as contact_name,
         pr.name as profile_name, pr.email as profile_email, pa.enabled,
         pa.created_at, pa.updated_at
       FROM domain_partner pa
