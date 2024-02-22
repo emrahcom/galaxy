@@ -76,6 +76,7 @@ export interface DomainInvite111 {
 export interface DomainPartner {
   id: string;
   domain_id: string;
+  contact_name: string;
   profile_name: string;
   profile_email: string;
   enabled: boolean;
