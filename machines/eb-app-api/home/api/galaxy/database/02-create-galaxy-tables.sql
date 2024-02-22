@@ -126,7 +126,6 @@ ALTER TABLE domain_invite OWNER TO galaxy;
 --   expired (deleted) yet.
 -- - Delete all candidates which have expired_at older than now().
 -- - Delete expired candidates before listing.
--- CREATE INDEX FOR expired_at???
 -- -----------------------------------------------------------------------------
 CREATE TYPE candidate_status AS ENUM ('pending', 'rejected');
 CREATE TABLE domain_candidate (
@@ -140,7 +139,7 @@ CREATE TABLE domain_candidate (
       DEFAULT now() + interval '7 days'
 );
 CREATE UNIQUE INDEX ON domain_candidate("identity_id", "domain_id");
-CREATE INDEX ON domain_candidate("identity_id", "expired_at");
+CREATE INDEX ON domain_candidate("expired_at");
 ALTER TABLE domain_candidate OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
