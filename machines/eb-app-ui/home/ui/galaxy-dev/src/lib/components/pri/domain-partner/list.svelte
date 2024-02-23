@@ -1,11 +1,13 @@
 <script lang="ts">
-  import type { DomainPartner } from "$lib/types";
+  import type { DomainCandidate, DomainPartner } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let partners: DomainPartner[];
+  export let candidates: DomainCandidate[];
+  console.log(candidates);
 </script>
 
 <!-- -------------------------------------------------------------------------->
