@@ -15,7 +15,7 @@
 
 {#await pr then domain}
   Add domain candidate
-  { console.log(domain) }
+  {console.log(domain)}
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
