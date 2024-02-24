@@ -42,8 +42,7 @@
 
     {#each candidates as c}
       <div class="col-md-6 col-xl-4">
-        <div
-          class="card h-100">
+        <div class="card h-100">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">
               {c.contact_name || c.profile_name}
