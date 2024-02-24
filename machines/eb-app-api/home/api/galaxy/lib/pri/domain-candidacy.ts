@@ -2,7 +2,7 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import {
   getDomainCandidacy,
-  listDomainCandidacyByDomain,
+  listDomainCandidacy,
 } from "../database/domain-candidacy.ts";
 
 const PRE = "/api/pri/domain/candidacy";
@@ -16,14 +16,12 @@ async function get(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function listByDomain(
-  req: Request,
-  identityId: string,
-): Promise<unknown> {
+async function list(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const domainId = pl.domain_id;
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
 
-  return await listDomainCandidacyByDomain(identityId, domain_id);
+  return await listDomainCandidacy(identityId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
@@ -34,8 +32,8 @@ export default async function (
 ): Promise<Response> {
   if (path === `${PRE}/get`) {
     return await wrapper(get, req, identityId);
-  } else if (path === `${PRE}/list/bydomain`) {
-    return await wrapper(listByDomain, req, identityId);
+  } else if (path === `${PRE}/list`) {
+    return await wrapper(list, req, identityId);
   } else {
     return notFound();
   }
