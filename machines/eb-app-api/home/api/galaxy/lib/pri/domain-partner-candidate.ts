@@ -2,20 +2,20 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
-  addDomainCandidate,
-  delDomainCandidate,
-  getDomainCandidate,
-  listDomainCandidateByDomain,
-} from "../database/domain-candidate.ts";
+  addDomainPartnerCandidate,
+  delDomainPartnerCandidate,
+  getDomainPartnerCandidate,
+  listDomainPartnerCandidateByDomain,
+} from "../database/domain-partner-candidate.ts";
 
-const PRE = "/api/pri/domain/candidate";
+const PRE = "/api/pri/domain/partner/candidate";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const candidacyId = pl.id;
 
-  return await getDomainCandidate(identityId, candidacyId);
+  return await getDomainPartnerCandidate(identityId, candidacyId);
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,12 @@ async function listByDomain(
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listDomainCandidateByDomain(identityId, domainId, limit, offset);
+  return await listDomainPartnerCandidateByDomain(
+    identityId,
+    domainId,
+    limit,
+    offset,
+  );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,7 +42,7 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const domainId = pl.domain_id;
   const contactId = pl.contact_id;
 
-  return await addDomainCandidate(identityId, domainId, contactId);
+  return await addDomainPartnerCandidate(identityId, domainId, contactId);
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +50,7 @@ async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const candidacyId = pl.id;
 
-  return await delDomainCandidate(identityId, candidacyId);
+  return await delDomainPartnerCandidate(identityId, candidacyId);
 }
 
 // -----------------------------------------------------------------------------
