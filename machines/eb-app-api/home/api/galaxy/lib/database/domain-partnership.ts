@@ -119,10 +119,10 @@ export async function addDomainPartnershipByCode(
   };
   if (rows[0] !== undefined) await query(sql3);
 
-  // remove domain candidancy if exists
+  // remove the domain-partner candidancy if exists
   const sql4 = {
     text: `
-      DELETE FROM domain_candidate
+      DELETE FROM domain_partner_candidate
       WHERE identity_id = $1
         AND domain_id IN (SELECT domain_id
                           FROM domain_invite
