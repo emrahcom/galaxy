@@ -48,6 +48,44 @@ export async function listContact(
 }
 
 // -----------------------------------------------------------------------------
+export async function listContactForDomain(
+  identityId: string,
+  domainId: string,
+  limit: number,
+  offset: number,
+) {
+  const sql = {
+    text: `
+      SELECT c.id, c.name, p.name as profile_name, p.email as profile_email,
+        c.created_at, c.updated_at
+      FROM contact c
+        JOIN profile p ON c.remote_id = p.identity_id
+                          AND p.is_default
+      WHERE c.identity_id = $1
+        AND NOT EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = c.remote_id
+                          AND domain_id = $2
+                       )
+        AND NOT EXISTS (SELECT 1
+                        FROM domain_candidate
+                        WHERE identity_id = c.remote_id
+                          AND domain_id = $2
+                       )
+      ORDER BY name, profile_name, profile_email
+      LIMIT $2 OFFSET $3`,
+    args: [
+      identityId,
+      domainId,
+      limit,
+      offset,
+    ],
+  };
+
+  return await fetch(sql) as Contact[];
+}
+
+// -----------------------------------------------------------------------------
 export async function delContact(identityId: string, contactId: string) {
   // before deleting the contact, delete the contact owner from the contact's
   // contact list.
