@@ -151,12 +151,13 @@ export async function acceptRequest(identityId: string, requestId: string) {
          WHERE id = $2
         ),
         (SELECT meeting_id
-         FROM meeting_request
+         FROM meeting_request req
          WHERE id = $2
-           AND meeting_id IN (SELECT id
-                              FROM meeting
-                              WHERE identity_id = $1
-                             )
+           AND EXISTS (SELECT 1
+                       FROM meeting
+                       WHERE id = req.meeting_id
+                         AND identity_id = $1
+                      )
         )
       )
       RETURNING id, created_at as at`,
@@ -173,16 +174,17 @@ export async function acceptRequest(identityId: string, requestId: string) {
 export async function rejectRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      UPDATE meeting_request
+      UPDATE meeting_request req
       SET
         status = 'rejected',
         expired_at = now() + interval '7 days',
         updated_at = now()
       WHERE id = $2
-        AND meeting_id IN (SELECT id
-                           FROM meeting
-                           WHERE identity_id = $1
-                          )
+        AND EXISTS (SELECT 1
+                    FROM meeting
+                    WHERE id = req.meeting_id
+                      AND identity_id = $1
+                   )
       RETURNING id, updated_at as at`,
     args: [
       identityId,
@@ -197,12 +199,13 @@ export async function rejectRequest(identityId: string, requestId: string) {
 export async function dropRequest(identityId: string, requestId: string) {
   const sql = {
     text: `
-      DELETE FROM meeting_request
+      DELETE FROM meeting_request req
       WHERE id = $2
-        AND meeting_id IN (SELECT id
-                           FROM meeting
-                           WHERE identity_id = $1
-                          )
+        AND EXISTS (SELECT 1
+                    FROM meeting
+                    WHERE id = req.meeting_id
+                      AND identity_id = $1
+                   )
       RETURNING id, now() as at`,
     args: [
       identityId,
