@@ -89,8 +89,71 @@ export async function acceptDomainPartnerCandidacy(
   };
   const rows = await fetch(sql) as Id[];
 
-  // remove the domain-partner candidancy
+  // add partner to the contact list if not exists
   const sql1 = {
+    text: `
+      INSERT INTO contact (identity_id, remote_id, name)
+      VALUES (
+        (SELECT identity_id
+         FROM domain
+         WHERE id IN (SELECT domain_id
+                      FROM domain_partner_candidate
+                      WHERE id = $2
+                        AND identity_id = $1
+                     )
+        ),
+        $1,
+        (SELECT name
+         FROM profile
+         WHERE identity_id = $1
+           AND is_default
+        )
+      )
+      ON CONFLICT DO NOTHING`,
+    args: [
+      identityId,
+      candidacyId,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql1);
+
+  // add domain owner to the partner's contact list if not exists
+  const sql2 = {
+    text: `
+      INSERT INTO contact (identity_id, remote_id, name)
+      VALUES (
+        $1,
+        (SELECT identity_id
+         FROM domain
+         WHERE id = (SELECT domain_id
+                     FROM domain_partner_candidate
+                     WHERE id = $2
+                       AND identity_id = $1
+                    )
+        ),
+        (SELECT name
+         FROM profile
+         WHERE identity_id = (SELECT identity_id
+                              FROM domain
+                              WHERE id = (SELECT domain_id
+                                          FROM domain_partner_candidate
+                                          WHERE id = $2
+                                            AND identity_id = $1
+                                         )
+                             )
+           AND is_default
+        )
+      )
+      ON CONFLICT DO NOTHING`,
+    args: [
+      identityId,
+      candidacyId,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql2);
+
+  // remove the domain-partner candidancy if the add action is successful
+  const sql3 = {
     text: `
         DELETE FROM domain_partner_candidate
         WHERE id = $2
@@ -100,7 +163,7 @@ export async function acceptDomainPartnerCandidacy(
       candidacyId,
     ],
   };
-  if (rows[0] !== undefined) await query(sql1);
+  if (rows[0] !== undefined) await query(sql3);
 
   return rows;
 }

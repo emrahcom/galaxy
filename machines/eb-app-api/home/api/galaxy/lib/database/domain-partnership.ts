@@ -124,10 +124,10 @@ export async function addDomainPartnershipByCode(
     text: `
       DELETE FROM domain_partner_candidate
       WHERE identity_id = $1
-        AND domain_id IN (SELECT domain_id
-                          FROM domain_invite
-                          WHERE code = $2
-                         )`,
+        AND domain_id = (SELECT domain_id
+                         FROM domain_invite
+                         WHERE code = $2
+                        )`,
     args: [
       identityId,
       code,
