@@ -41,7 +41,7 @@ export async function listDomainCandidateByDomain(
   const sql0 = {
     text: `
       DELETE FROM domain_candidate
-      WHERE expired_at > now()`,
+      WHERE expired_at < now()`,
   };
   await query(sql0);
 
