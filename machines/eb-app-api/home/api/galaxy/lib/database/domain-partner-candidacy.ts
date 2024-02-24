@@ -73,15 +73,15 @@ export async function acceptDomainPartnerCandidacy(
   const sql = {
     text: `
       INSERT INTO domain_partner (identity_id, domain_id)
-        VALUES (
-          $1,
-          (SELECT domain_id
-           FROM domain_partner_candidate
-           WHERE id = $2
-             AND identity_id != $1
-          )
+      VALUES (
+        $1,
+        (SELECT domain_id
+         FROM domain_partner_candidate
+         WHERE id = $2
+           AND identity_id = $1
         )
-        RETURNING id, created_at as at`,
+      )
+      RETURNING id, created_at as at`,
     args: [
       identityId,
       candidacyId,
