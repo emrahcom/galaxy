@@ -18,7 +18,7 @@ export async function getDomainCandidacy(
       FROM domain_candidate ca
         JOIN domain d ON ca.domain_id = d.id
       WHERE ca.id = $2
-        AND ca.identity_id = $1)`,
+        AND ca.identity_id = $1`,
     args: [
       identityId,
       candidacyId,
