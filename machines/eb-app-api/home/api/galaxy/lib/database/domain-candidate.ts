@@ -61,7 +61,7 @@ export async function listDomainCandidateByDomain(
                     WHERE id = ca.domain_id
                       AND identity_id = $1
                    )
-      ORDER BY contact_name, profile_name, profile_email
+      ORDER BY status, contact_name, profile_email
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
