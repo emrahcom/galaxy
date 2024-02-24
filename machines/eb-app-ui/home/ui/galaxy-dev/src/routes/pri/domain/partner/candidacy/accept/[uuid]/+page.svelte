@@ -1,11 +1,14 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { getById } from "$lib/api";
-  import Accept from "$lib/components/pri/domain-candidacy/accept.svelte";
+  import Accept from "$lib/components/pri/domain-partner-candidacy/accept.svelte";
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = getById("/api/pri/domain/candidacy/get", $page.params.uuid);
+  const pr = getById(
+    "/api/pri/domain/partner/candidacy/get",
+    $page.params.uuid,
+  );
 </script>
 
 <!-- -------------------------------------------------------------------------->
