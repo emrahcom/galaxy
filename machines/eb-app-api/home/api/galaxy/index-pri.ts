@@ -40,12 +40,12 @@ async function route(
     return await contact(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/invite/`)) {
     return await domainInvite(req, path, identityId);
-  } else if (path.match(`^${PRE}/domain/partner/`)) {
-    return await domainPartner(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/partner/candidacy/`)) {
     return await domainPartnerCandidacy(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/partner/candidate/`)) {
     return await domainPartnerCandidate(req, path, identityId);
+  } else if (path.match(`^${PRE}/domain/partner/`)) {
+    return await domainPartner(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/partnership/`)) {
     return await domainPartnership(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/`)) {
