@@ -52,6 +52,17 @@ export interface Domain333 {
 }
 
 // -----------------------------------------------------------------------------
+export interface DomainCandidacy {
+  id: string;
+  domain_name: string;
+  domain_url: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface DomainCandidate {
   id: string;
   domain_id: string;
