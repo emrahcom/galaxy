@@ -7,7 +7,8 @@
 
   export let partners: DomainPartner[];
   export let candidates: DomainCandidate[];
-  console.log(candidates);
+
+  const isEmpty = !(partners.length || candidates.length);
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -37,8 +38,42 @@
           </div>
         </div>
       </div>
-    {:else}
-      <Warning>This domain has no partner.</Warning>
     {/each}
+
+    {#each candidates as c}
+      <div class="col-md-6 col-xl-4">
+        <div
+          class="card h-100 {c.status == 'pending'
+            ? 'border-success'
+            : 'border-warning'}"
+        >
+          <div class="card-body text-center">
+            <h5 class="card-title text-muted">
+              {c.contact_name || c.profile_name}
+            </h5>
+
+            <p class="card-text text-muted">
+              {c.profile_email}
+            </p>
+
+            {#if c.status == "pending"}
+              <p class="card-text fw-bold text-success">pending</p>
+            {:else}
+              <p class="card-text fw-bold text-warning">rejected</p>
+            {/if}
+          </div>
+
+          <div class="card-footer bg-body border-0 text-center">
+            {#if c.status == "pending"}
+              <Del href="/pri/domain/candidate/del/{c.id}" />
+            {/if}
+          </div>
+        </div>
+      </div>
+    {/each}
+
+    {#if isEmpty}
+      <Warning>This domain has no partner.</Warning>
+    {/if}
   </div>
 </section>
