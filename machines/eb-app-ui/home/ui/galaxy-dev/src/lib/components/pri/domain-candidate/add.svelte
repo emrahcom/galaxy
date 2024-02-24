@@ -71,14 +71,14 @@
 
         {#if warning}
           <Warning>
-            The create request is not accepted. Please check your inputs.
+            The invite request is not accepted. Please check your inputs.
           </Warning>
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
           <Cancel on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Create" />
+          <Submit label="Invite" />
         </div>
       </form>
     </div>
