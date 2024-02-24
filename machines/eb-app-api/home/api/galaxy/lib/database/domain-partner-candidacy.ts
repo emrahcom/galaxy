@@ -1,5 +1,5 @@
 import { fetch, query } from "./common.ts";
-import type { DomainPartnerCandidacy } from "./types.ts";
+import type { DomainPartnerCandidacy, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getDomainPartnerCandidacy(
@@ -63,4 +63,68 @@ export async function listDomainPartnerCandidacy(
   };
 
   return await fetch(sql) as DomainPartnerCandidacy[];
+}
+
+// -----------------------------------------------------------------------------
+export async function acceptDomainPartnerCandidacy(
+  identityId: string,
+  candidacyId: string,
+) {
+  const sql = {
+    text: `
+      INSERT INTO domain_partner (identity_id, domain_id)
+        VALUES (
+          $1,
+          (SELECT domain_id
+           FROM domain_partner_candidate
+           WHERE id = $2
+             AND identity_id != $1
+          )
+        )
+        RETURNING id, created_at as at`,
+    args: [
+      identityId,
+      candidacyId,
+    ],
+  };
+  const rows = await fetch(sql) as Id[];
+
+  // remove the domain-partner candidancy
+  const sql1 = {
+    text: `
+        DELETE FROM domain_partner_candidate
+        WHERE id = $2
+          AND identity_id = $1`,
+    args: [
+      identityId,
+      candidacyId,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql1);
+
+  return rows;
+}
+
+// -----------------------------------------------------------------------------
+export async function rejectDomainPartnerCandidacy(
+  identityId: string,
+  candidacyId: string,
+) {
+  const sql = {
+    text: `
+      UPDATE domain_partner_candidate
+      SET
+        status = 'rejected',
+        updated_at = now(),
+        expired_at = now() + interval '7 days'
+      WHERE id = $2
+        AND identity_id = $1
+      RETURNING id, updated_at as at`,
+    args: [
+      identityId,
+      candidacyId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
 }
