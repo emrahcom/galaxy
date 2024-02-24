@@ -119,6 +119,22 @@ export async function addDomainPartnershipByCode(
   };
   if (rows[0] !== undefined) await query(sql3);
 
+  // remove domain candidancy if exists
+  const sql4 = {
+    text: `
+      DELETE FROM domain_candidate
+      WHERE identity_id = $1
+        AND domain_id IN (SELECT domain_id
+                          FROM domain_invite
+                          WHERE code = $2
+                         )`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql4);
+
   return rows;
 }
 
