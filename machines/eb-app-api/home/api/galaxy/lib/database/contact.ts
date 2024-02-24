@@ -48,7 +48,7 @@ export async function listContact(
 }
 
 // -----------------------------------------------------------------------------
-export async function listContactForDomain(
+export async function listContactByDomain(
   identityId: string,
   domainId: string,
   limit: number,
