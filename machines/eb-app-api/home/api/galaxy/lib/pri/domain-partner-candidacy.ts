@@ -2,9 +2,10 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
+  acceptDomainPartnerCandidacy,
   getDomainPartnerCandidacy,
   listDomainPartnerCandidacy,
-  updateDomainPartnerCandidacyStatus,
+  rejectDomainPartnerCandidacy,
 } from "../database/domain-partner-candidacy.ts";
 
 const PRE = "/api/pri/domain/partner/candidacy";
@@ -31,11 +32,15 @@ async function accept(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const candidacyId = pl.id;
 
-  return await updateDomainPartnerCandidacyStatus(
-    identityId,
-    candidacyId,
-    "accept",
-  );
+  return await acceptDomainPartnerCandidacy(identityId, candidacyId);
+}
+
+// -----------------------------------------------------------------------------
+async function reject(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const candidacyId = pl.id;
+
+  return await rejectDomainPartnerCandidacy(identityId, candidacyId);
 }
 
 // -----------------------------------------------------------------------------
