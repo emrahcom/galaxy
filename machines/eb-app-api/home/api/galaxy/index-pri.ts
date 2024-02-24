@@ -8,10 +8,10 @@ import {
 import { getIdentityId } from "./lib/pri/kratos.ts";
 import contact from "./lib/pri/contact.ts";
 import domain from "./lib/pri/domain.ts";
-import domainCandidacy from "./lib/pri/domain-candidacy.ts";
-import domainCandidate from "./lib/pri/domain-candidate.ts";
 import domainInvite from "./lib/pri/domain-invite.ts";
 import domainPartner from "./lib/pri/domain-partner.ts";
+import domainPartnerCandidacy from "./lib/pri/domain-partner-candidacy.ts";
+import domainPartnerCandidate from "./lib/pri/domain-partner-candidate.ts";
 import domainPartnership from "./lib/pri/domain-partnership.ts";
 import hello from "./lib/pri/hello.ts";
 import meeting from "./lib/pri/meeting.ts";
@@ -38,14 +38,14 @@ async function route(
     return hello(identityId);
   } else if (path.match(`^${PRE}/contact/`)) {
     return await contact(req, path, identityId);
-  } else if (path.match(`^${PRE}/domain/candidacy/`)) {
-    return await domainCandidacy(req, path, identityId);
-  } else if (path.match(`^${PRE}/domain/candidate/`)) {
-    return await domainCandidate(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/invite/`)) {
     return await domainInvite(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/partner/`)) {
     return await domainPartner(req, path, identityId);
+  } else if (path.match(`^${PRE}/domain/partner/candidacy/`)) {
+    return await domainPartnerCandidacy(req, path, identityId);
+  } else if (path.match(`^${PRE}/domain/partner/candidate/`)) {
+    return await domainPartnerCandidate(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/partnership/`)) {
     return await domainPartnership(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/`)) {
