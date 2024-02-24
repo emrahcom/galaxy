@@ -14,7 +14,7 @@
   });
   const pr2 = listById("/api/pri/domain/partner/list/bydomain", domainId, 100);
   const pr3 = listById(
-    "/api/pri/domain/candidate/list/bydomain",
+    "/api/pri/domain/partner/candidate/list/bydomain",
     domainId,
     100,
   );
@@ -24,7 +24,7 @@
 <Subheader
   subheader="Partners of {domainName}"
   hrefBack="/pri/domain"
-  hrefAdd="/pri/domain/candidate/add/{domainId}"
+  hrefAdd="/pri/domain/partner/candidate/add/{domainId}"
 />
 
 <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
