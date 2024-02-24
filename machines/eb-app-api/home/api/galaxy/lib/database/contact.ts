@@ -73,7 +73,7 @@ export async function listContactByDomain(
                           AND domain_id = $2
                        )
       ORDER BY name, profile_name, profile_email
-      LIMIT $2 OFFSET $3`,
+      LIMIT $3 OFFSET $4`,
     args: [
       identityId,
       domainId,
