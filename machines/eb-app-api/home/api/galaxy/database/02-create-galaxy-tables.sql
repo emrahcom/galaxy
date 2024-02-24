@@ -115,34 +115,6 @@ CREATE INDEX ON domain_invite("identity_id", "domain_id", "expired_at");
 ALTER TABLE domain_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
--- DOMAIN_CANDIDATE
--- -----------------------------------------------------------------------------
--- - The candidate can be added if she is already in the domain owner's contact
---   list.
--- - The domain owner can delete the candidate only if its status is pending.
--- - The candidate cannot delete the candidacy but may reject it.
--- - When rejected, expired_at will be updated as now() + interval '7 days'.
--- - The candidate can accept an already rejected candidacy if it is not
---   expired (deleted) yet.
--- - Delete all candidates which have expired_at older than now().
--- - Delete expired candidates before listing.
--- -----------------------------------------------------------------------------
-CREATE TYPE candidate_status AS ENUM ('pending', 'rejected');
-CREATE TABLE domain_candidate (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
-    "status" candidate_status NOT NULL DEFAULT 'pending',
-    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '7 days'
-);
-CREATE UNIQUE INDEX ON domain_candidate("identity_id", "domain_id");
-CREATE INDEX ON domain_candidate("expired_at");
-ALTER TABLE domain_candidate OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
 -- DOMAIN_PARTNER
 -- -----------------------------------------------------------------------------
 -- - The partner cannot update enabled but she can delete her partnership.
@@ -159,6 +131,34 @@ CREATE TABLE domain_partner (
 CREATE UNIQUE INDEX ON domain_partner("identity_id", "domain_id");
 CREATE INDEX ON domain_partner("domain_id");
 ALTER TABLE domain_partner OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
+-- DOMAIN_PARTNER_CANDIDATE
+-- -----------------------------------------------------------------------------
+-- - The candidate can be added if she is already in the domain owner's contact
+--   list.
+-- - The domain owner can delete the candidate only if its status is pending.
+-- - The candidate cannot delete the candidacy but may reject it.
+-- - When rejected, expired_at will be updated as now() + interval '7 days'.
+-- - The candidate can accept an already rejected candidacy if it is not
+--   expired (deleted) yet.
+-- - Delete all candidates which have expired_at older than now().
+-- - Delete expired candidates before listing.
+-- -----------------------------------------------------------------------------
+CREATE TYPE candidate_status AS ENUM ('pending', 'rejected');
+CREATE TABLE domain_partner_candidate (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "status" candidate_status NOT NULL DEFAULT 'pending',
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '7 days'
+);
+CREATE UNIQUE INDEX ON domain_partner_candidate("identity_id", "domain_id");
+CREATE INDEX ON domain_partner_candidate("expired_at");
+ALTER TABLE domain_partner_candidate OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 -- ROOM
