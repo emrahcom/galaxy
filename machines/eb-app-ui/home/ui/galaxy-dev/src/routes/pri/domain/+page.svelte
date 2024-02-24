@@ -5,7 +5,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const pr1 = list("/api/pri/domain/list", 100);
-  const pr2 = list("/api/pri/domain/candidacy/list", 100);
+  const pr2 = list("/api/pri/domain/partner/candidacy/list", 100);
 </script>
 
 <!-- -------------------------------------------------------------------------->
