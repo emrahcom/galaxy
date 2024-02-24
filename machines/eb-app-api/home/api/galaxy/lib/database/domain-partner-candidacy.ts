@@ -1,4 +1,4 @@
-import { fetch } from "./common.ts";
+import { fetch, query } from "./common.ts";
 import type { DomainPartnerCandidacy } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -34,6 +34,13 @@ export async function listDomainPartnerCandidacy(
   limit: number,
   offset: number,
 ) {
+  const sql0 = {
+    text: `
+      DELETE FROM domain_partner_candidate
+      WHERE expired_at < now()`,
+  };
+  await query(sql0);
+
   const sql = {
     text: `
       SELECT ca.id, d.name as domain_name,
