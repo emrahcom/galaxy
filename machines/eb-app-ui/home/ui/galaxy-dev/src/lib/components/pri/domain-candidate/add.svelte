@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action, list } from "$lib/api";
+  import { action, listById } from "$lib/api";
   import type { Contact, Domain } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -11,12 +11,14 @@
 
   export let domain: Domain;
 
-  const pr = list("/api/pri/contact/list", 1000).then((items: Contact[]) => {
-    return items.map((i) => [
-      i.id,
-      `${i.name}${i.profile_email ? ` (${i.profile_email})` : ""}`,
-    ]);
-  });
+  const pr = listById("/api/pri/contact/list/bydomain", domain.id, 1000).then(
+    (items: Contact[]) => {
+      return items.map((i) => [
+        i.id,
+        `${i.name}${i.profile_email ? ` (${i.profile_email})` : ""}`,
+      ]);
+    },
+  );
 
   let warning = false;
   let p = {
