@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Domain333, DomainCandidacy } from "$lib/types";
+  import type { Domain333, DomainPartnerCandidacy } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -10,7 +10,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let domains: Domain333[];
-  export let candidacies: DomainCandidacy[];
+  export let candidacies: DomainPartnerCandidacy[];
 
   const isEmpty = !(domains.length || candidacies.length);
 </script>
@@ -65,10 +65,10 @@
 
           <div class="card-footer bg-body border-0 text-center">
             {#if c.status == "pending"}
-              <Disable href="/pri/domain/candidacy/reject/{c.id}" />
+              <Disable href="/pri/domain/partner/candidacy/reject/{c.id}" />
             {/if}
 
-            <Enable href="/pri/domain/candidacy/accept/{c.id}" />
+            <Enable href="/pri/domain/partner/candidacy/accept/{c.id}" />
           </div>
         </div>
       </div>
