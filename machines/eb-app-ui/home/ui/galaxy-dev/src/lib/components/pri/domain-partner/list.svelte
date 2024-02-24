@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { DomainCandidate, DomainPartner } from "$lib/types";
+  import type { DomainPartner, DomainPartnerCandidate } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let partners: DomainPartner[];
-  export let candidates: DomainCandidate[];
+  export let candidates: DomainPartnerCandidate[];
 
   const isEmpty = !(partners.length || candidates.length);
 </script>
@@ -61,7 +61,7 @@
 
           <div class="card-footer bg-body border-0 text-center">
             {#if c.status == "pending"}
-              <Del href="/pri/domain/candidate/del/{c.id}" />
+              <Del href="/pri/domain/partner/candidate/del/{c.id}" />
             {/if}
           </div>
         </div>
