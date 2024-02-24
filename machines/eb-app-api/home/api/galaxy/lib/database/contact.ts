@@ -68,7 +68,7 @@ export async function listContactByDomain(
                           AND domain_id = $2
                        )
         AND NOT EXISTS (SELECT 1
-                        FROM domain_candidate
+                        FROM domain_partner_candidate
                         WHERE identity_id = c.remote_id
                           AND domain_id = $2
                        )
