@@ -12,8 +12,7 @@
 <Subheader subheader="My Jitsi domains" hrefAdd="/pri/domain/add" />
 
 {#await Promise.all([pr1, pr2]) then [domains, candidacies]}
-  <List {domains} />
-  {console.log(candidacies)}
+  <List {domains} {candidacies} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
