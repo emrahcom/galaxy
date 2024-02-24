@@ -1,8 +1,8 @@
 import { fetch, query } from "./common.ts";
-import type { DomainCandidate, Id } from "./types.ts";
+import type { DomainPartnerCandidate, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getDomainCandidate(
+export async function getDomainPartnerCandidate(
   identityId: string,
   candidacyId: string,
 ) {
@@ -11,7 +11,7 @@ export async function getDomainCandidate(
       SELECT ca.id, ca.domain_id, co.name as contact_name,
         pr.name as profile_name, pr.email as profile_email, ca.status,
         ca.created_at, ca.updated_at, ca.expired_at
-      FROM domain_candidate ca
+      FROM domain_partner_candidate ca
         LEFT JOIN contact co ON co.identity_id = $1
                                 AND co.remote_id = ca.identity_id
         LEFT JOIN profile pr ON ca.identity_id = pr.identity_id
@@ -28,11 +28,11 @@ export async function getDomainCandidate(
     ],
   };
 
-  return await fetch(sql) as DomainCandidate[];
+  return await fetch(sql) as DomainPartnerCandidate[];
 }
 
 // -----------------------------------------------------------------------------
-export async function listDomainCandidateByDomain(
+export async function listDomainPartnerCandidateByDomain(
   identityId: string,
   domainId: string,
   limit: number,
@@ -40,7 +40,7 @@ export async function listDomainCandidateByDomain(
 ) {
   const sql0 = {
     text: `
-      DELETE FROM domain_candidate
+      DELETE FROM domain_partner_candidate
       WHERE expired_at < now()`,
   };
   await query(sql0);
@@ -50,7 +50,7 @@ export async function listDomainCandidateByDomain(
       SELECT ca.id, ca.domain_id, co.name as contact_name,
         pr.name as profile_name, pr.email as profile_email, ca.status,
         ca.created_at, ca.updated_at, ca.expired_at
-      FROM domain_candidate ca
+      FROM domain_partner_candidate ca
         LEFT JOIN contact co ON co.identity_id = $1
                                 AND co.remote_id = ca.identity_id
         LEFT JOIN profile pr ON ca.identity_id = pr.identity_id
@@ -71,18 +71,18 @@ export async function listDomainCandidateByDomain(
     ],
   };
 
-  return await fetch(sql) as DomainCandidate[];
+  return await fetch(sql) as DomainPartnerCandidate[];
 }
 
 // -----------------------------------------------------------------------------
-export async function addDomainCandidate(
+export async function addDomainPartnerCandidate(
   identityId: string,
   domainId: string,
   contactId: string,
 ) {
   const sql = {
     text: `
-      INSERT INTO domain_candidate (identity_id, domain_id)
+      INSERT INTO domain_partner_candidate (identity_id, domain_id)
       VALUES (
         (SELECT remote_id
          FROM contact
@@ -107,13 +107,13 @@ export async function addDomainCandidate(
 }
 
 // -----------------------------------------------------------------------------
-export async function delDomainCandidate(
+export async function delDomainPartnerCandidate(
   identityId: string,
   candidacyId: string,
 ) {
   const sql = {
     text: `
-      DELETE FROM domain_candidate
+      DELETE FROM domain_partner_candidate
       WHERE id = $2
         AND status = 'pending'
         AND EXISTS (SELECT 1
