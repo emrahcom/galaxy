@@ -2,18 +2,18 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
-  getDomainCandidacy,
-  listDomainCandidacy,
-} from "../database/domain-candidacy.ts";
+  getDomainPartnerCandidacy,
+  listDomainPartnerCandidacy,
+} from "../database/domain-partner-candidacy.ts";
 
-const PRE = "/api/pri/domain/candidacy";
+const PRE = "/api/pri/domain/partner/candidacy";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const candidacyId = pl.id;
 
-  return await getDomainCandidacy(identityId, candidacyId);
+  return await getDomainPartnerCandidacy(identityId, candidacyId);
 }
 
 // -----------------------------------------------------------------------------
@@ -22,7 +22,7 @@ async function list(req: Request, identityId: string): Promise<unknown> {
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listDomainCandidacy(identityId, limit, offset);
+  return await listDomainPartnerCandidacy(identityId, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
