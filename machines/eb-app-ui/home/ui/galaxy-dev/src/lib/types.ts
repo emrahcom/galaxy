@@ -52,30 +52,6 @@ export interface Domain333 {
 }
 
 // -----------------------------------------------------------------------------
-export interface DomainCandidacy {
-  id: string;
-  domain_name: string;
-  domain_url: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
-  expired_at: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface DomainCandidate {
-  id: string;
-  domain_id: string;
-  contact_name: string;
-  profile_name: string;
-  profile_email: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
-  expired_at: string;
-}
-
-// -----------------------------------------------------------------------------
 export interface DomainInvite {
   id: string;
   name: string;
@@ -106,6 +82,30 @@ export interface DomainPartner {
   enabled: boolean;
   created_at: string;
   updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface DomainPartnerCandidacy {
+  id: string;
+  domain_name: string;
+  domain_url: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface DomainPartnerCandidate {
+  id: string;
+  domain_id: string;
+  contact_name: string;
+  profile_name: string;
+  profile_email: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
 }
 
 // -----------------------------------------------------------------------------
