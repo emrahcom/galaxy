@@ -1,8 +1,8 @@
 import { fetch } from "./common.ts";
-import type { DomainCandidacy } from "./types.ts";
+import type { DomainPartnerCandidacy } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function getDomainCandidacy(
+export async function getDomainPartnerCandidacy(
   identityId: string,
   candidacyId: string,
 ) {
@@ -15,7 +15,7 @@ export async function getDomainCandidacy(
          END
         ) as domain_url,
         ca.status, ca.created_at, ca.updated_at, ca.expired_at
-      FROM domain_candidate ca
+      FROM domain_partner_candidate ca
         JOIN domain d ON ca.domain_id = d.id
       WHERE ca.id = $2
         AND ca.identity_id = $1`,
@@ -25,11 +25,11 @@ export async function getDomainCandidacy(
     ],
   };
 
-  return await fetch(sql) as DomainCandidacy[];
+  return await fetch(sql) as DomainPartnerCandidacy[];
 }
 
 // -----------------------------------------------------------------------------
-export async function listDomainCandidacy(
+export async function listDomainPartnerCandidacy(
   identityId: string,
   limit: number,
   offset: number,
@@ -43,7 +43,7 @@ export async function listDomainCandidacy(
          END
         ) as domain_url,
         ca.status, ca.created_at, ca.updated_at, ca.expired_at
-      FROM domain_candidate ca
+      FROM domain_partner_candidate ca
         JOIN domain d ON ca.domain_id = d.id
       WHERE ca.identity_id = $1
       ORDER BY status, domain_name
@@ -55,5 +55,5 @@ export async function listDomainCandidacy(
     ],
   };
 
-  return await fetch(sql) as DomainCandidacy[];
+  return await fetch(sql) as DomainPartnerCandidacy[];
 }
