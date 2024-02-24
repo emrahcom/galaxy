@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { getById } from "$lib/api";
-  import Add from "$lib/components/pri/domain-candidate/add.svelte";
+  import Add from "$lib/components/pri/domain-partner-candidate/add.svelte";
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
