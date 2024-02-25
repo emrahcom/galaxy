@@ -41,8 +41,14 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.meeting_id;
   const contactId = pl.contact_id;
+  const joinAs = pl.join_as;
 
-  return await addMeetingMemberCandidate(identityId, meetingId, contactId);
+  return await addMeetingMemberCandidate(
+    identityId,
+    meetingId,
+    contactId,
+    joinAs,
+  );
 }
 
 // -----------------------------------------------------------------------------
