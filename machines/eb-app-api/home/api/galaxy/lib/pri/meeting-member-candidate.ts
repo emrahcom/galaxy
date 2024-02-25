@@ -24,7 +24,7 @@ async function listByMeeting(
   identityId: string,
 ): Promise<unknown> {
   const pl = await req.json();
-  const meeting = pl.id;
+  const meetingId = pl.id;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
