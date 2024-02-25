@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Room333 } from "$lib/types";
+  import type { Room333, RoomPartnerCandidacy } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
@@ -11,6 +11,9 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let rooms: Room333[];
+  export let candidacies: RoomPartnerCandidacy[];
+
+  const isEmpty = !(rooms.length || candidacies.length);
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -56,11 +59,39 @@
           </div>
         </div>
       </div>
-    {:else}
-      <Warning>
-        There is no room in the list. Click <Add href="/pri/room/add" /> to add a
-        new room.
-      </Warning>
     {/each}
+
+    {#each candidacies as c}
+      <div class="col-md-6 col-xl-4">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title text-muted">{c.room_name}</h5>
+            <p class="card-text text-muted">{c.domain_name}</p>
+            <p class="card-text text-muted small">partner</p>
+
+          {#if c.status == "pending"}
+            <p class="card-text fw-bold text-success">pending</p>
+          {:else}
+            <p class="card-text fw-bold text-warning">rejected</p>
+          {/if}
+          </div>
+
+          <div class="card-footer bg-body border-0 text-center">
+            {#if c.status == "pending"}
+              <Disable href="/pri/room/partner/candidacy/reject/{c.id}" />
+            {/if}
+
+            <Enable href="/pri/room/partner/candidacy/accept/{c.id}" />
+          </div>
+        </div>
+      </div>
+    {/each}
+
+    {#if isEmpty}
+      <Warning>
+        There is no room in the list. Click <Add href="/pri/room/add" /> to add
+        a new room.
+      </Warning>
+    {/if}
   </div>
 </section>
