@@ -86,6 +86,44 @@ export async function listContactByDomain(
 }
 
 // -----------------------------------------------------------------------------
+export async function listContactByRoom(
+  identityId: string,
+  roomId: string,
+  limit: number,
+  offset: number,
+) {
+  const sql = {
+    text: `
+      SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
+        co.created_at, co.updated_at
+      FROM contact co
+        JOIN profile pr ON co.remote_id = pr.identity_id
+                           AND pr.is_default
+      WHERE co.identity_id = $1
+        AND NOT EXISTS (SELECT 1
+                        FROM room_partner
+                        WHERE identity_id = co.remote_id
+                          AND room_id = $2
+                       )
+        AND NOT EXISTS (SELECT 1
+                        FROM room_partner_candidate
+                        WHERE identity_id = co.remote_id
+                          AND room_id = $2
+                       )
+      ORDER BY name, profile_name, profile_email
+      LIMIT $3 OFFSET $4`,
+    args: [
+      identityId,
+      roomId,
+      limit,
+      offset,
+    ],
+  };
+
+  return await fetch(sql) as Contact[];
+}
+
+// -----------------------------------------------------------------------------
 export async function delContact(identityId: string, contactId: string) {
   // before deleting the contact, delete the contact owner from the contact's
   // contact list.
