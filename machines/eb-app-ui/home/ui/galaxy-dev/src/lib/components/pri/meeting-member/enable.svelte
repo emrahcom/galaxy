@@ -36,7 +36,7 @@
       <Text
         name="name"
         label="Name"
-        value={p.profile_name}
+        value={p.contact_name || p.profile_name}
         disabled={true}
         readonly={true}
       />
