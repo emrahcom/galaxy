@@ -69,11 +69,11 @@
             <p class="card-text text-muted">{c.domain_name}</p>
             <p class="card-text text-muted small">partner</p>
 
-          {#if c.status == "pending"}
-            <p class="card-text fw-bold text-success">pending</p>
-          {:else}
-            <p class="card-text fw-bold text-warning">rejected</p>
-          {/if}
+            {#if c.status == "pending"}
+              <p class="card-text fw-bold text-success">pending</p>
+            {:else}
+              <p class="card-text fw-bold text-warning">rejected</p>
+            {/if}
           </div>
 
           <div class="card-footer bg-body border-0 text-center">
@@ -89,8 +89,8 @@
 
     {#if isEmpty}
       <Warning>
-        There is no room in the list. Click <Add href="/pri/room/add" /> to add
-        a new room.
+        There is no room in the list. Click <Add href="/pri/room/add" /> to add a
+        new room.
       </Warning>
     {/if}
   </div>
