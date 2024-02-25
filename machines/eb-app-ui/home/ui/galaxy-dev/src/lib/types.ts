@@ -329,6 +329,31 @@ export interface RoomPartner {
 }
 
 // -----------------------------------------------------------------------------
+export interface RoomPartnerCandidacy {
+  id: string;
+  room_name: string;
+  domain_name: string;
+  domain_url: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface RoomPartnerCandidate {
+  id: string;
+  room_id: string;
+  contact_name: string;
+  profile_name: string;
+  profile_email: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface RoomPartnership {
   id: string;
   room_name: string;
