@@ -377,6 +377,33 @@ CREATE UNIQUE INDEX ON meeting_member("identity_id", "meeting_id", "join_as");
 ALTER TABLE meeting_member OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- MEETING_MEMBER_CANDIDATE
+-- -----------------------------------------------------------------------------
+-- - The candidate can be added if she is already in the meeting owner's contact
+--   list.
+-- - The meeting owner can delete the candidate only if its status is pending.
+-- - The candidate cannot delete the candidacy but may reject it.
+-- - When rejected, expired_at will be updated as now() + interval '7 days'.
+-- - The candidate can accept an already rejected candidacy if it is not
+--   expired (deleted) yet.
+-- - Delete all candidates which have expired_at older than now().
+-- - Delete expired candidates before listing.
+-- -----------------------------------------------------------------------------
+CREATE TABLE meeting_member_candidate (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "status" candidate_status NOT NULL DEFAULT 'pending',
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '7 days'
+);
+CREATE UNIQUE INDEX ON meeting_member_candidate("identity_id", "meeting_id");
+CREATE INDEX ON meeting_member_candidate("expired_at");
+ALTER TABLE meeting_member_candidate OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- MEETING_SCHEDULE
 -- -----------------------------------------------------------------------------
 -- - This table contains only scheduled meetings.
