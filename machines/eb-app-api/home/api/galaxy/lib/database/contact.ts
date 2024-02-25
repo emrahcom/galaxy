@@ -5,13 +5,13 @@ import type { Contact, Id } from "./types.ts";
 export async function getContact(identityId: string, contactId: string) {
   const sql = {
     text: `
-      SELECT c.id, c.name, p.name as profile_name, p.email as profile_email,
-        c.created_at, c.updated_at
-      FROM contact c
-        JOIN profile p ON c.remote_id = p.identity_id
-                          AND p.is_default
-      WHERE c.id = $2
-        AND c.identity_id = $1`,
+      SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
+        co.created_at, co.updated_at
+      FROM contact co
+        JOIN profile pr ON co.remote_id = pr.identity_id
+                           AND pr.is_default
+      WHERE co.id = $2
+        AND co.identity_id = $1`,
     args: [
       identityId,
       contactId,
@@ -29,12 +29,12 @@ export async function listContact(
 ) {
   const sql = {
     text: `
-      SELECT c.id, c.name, p.name as profile_name, p.email as profile_email,
-        c.created_at, c.updated_at
-      FROM contact c
-        JOIN profile p ON c.remote_id = p.identity_id
-                          AND p.is_default
-      WHERE c.identity_id = $1
+      SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
+        co.created_at, co.updated_at
+      FROM contact co
+        JOIN profile pr ON co.remote_id = pr.identity_id
+                           AND pr.is_default
+      WHERE co.identity_id = $1
       ORDER BY name, profile_name, profile_email
       LIMIT $2 OFFSET $3`,
     args: [
@@ -56,20 +56,20 @@ export async function listContactByDomain(
 ) {
   const sql = {
     text: `
-      SELECT c.id, c.name, p.name as profile_name, p.email as profile_email,
-        c.created_at, c.updated_at
-      FROM contact c
-        JOIN profile p ON c.remote_id = p.identity_id
-                          AND p.is_default
-      WHERE c.identity_id = $1
+      SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
+        co.created_at, co.updated_at
+      FROM contact co
+        JOIN profile pr ON co.remote_id = pr.identity_id
+                           AND pr.is_default
+      WHERE co.identity_id = $1
         AND NOT EXISTS (SELECT 1
                         FROM domain_partner
-                        WHERE identity_id = c.remote_id
+                        WHERE identity_id = co.remote_id
                           AND domain_id = $2
                        )
         AND NOT EXISTS (SELECT 1
                         FROM domain_partner_candidate
-                        WHERE identity_id = c.remote_id
+                        WHERE identity_id = co.remote_id
                           AND domain_id = $2
                        )
       ORDER BY name, profile_name, profile_email
