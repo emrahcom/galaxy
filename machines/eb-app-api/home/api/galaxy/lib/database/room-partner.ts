@@ -8,9 +8,12 @@ export async function getRoomPartner(
 ) {
   const sql = {
     text: `
-      SELECT pa.id, pa.room_id, pr.name as profile_name,
-        pr.email as profile_email, pa.enabled, pa.created_at, pa.updated_at
+      SELECT pa.id, pa.room_id, co.name as contact_name,
+        pr.name as profile_name, pr.email as profile_email, pa.enabled,
+        pa.created_at, pa.updated_at
       FROM room_partner pa
+        LEFT JOIN contact co ON co.identity_id = $1
+                                AND co.remote_id = pa.identity_id
         LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
                                 AND pr.is_default
       WHERE pa.id = $2
@@ -37,9 +40,12 @@ export async function listRoomPartnerByRoom(
 ) {
   const sql = {
     text: `
-      SELECT pa.id, pa.room_id, pr.name as profile_name,
-        pr.email as profile_email, pa.enabled, pa.created_at, pa.updated_at
+      SELECT pa.id, pa.room_id, co.name as contact_name,
+        pr.name as profile_name, pr.email as profile_email, pa.enabled,
+        pa.created_at, pa.updated_at
       FROM room_partner pa
+        LEFT JOIN contact co ON co.identity_id = $1
+                                AND co.remote_id = pa.identity_id
         LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
                                 AND pr.is_default
       WHERE pa.room_id = $2
