@@ -120,6 +120,22 @@ export async function addRoomPartnershipByCode(
   };
   if (rows[0] !== undefined) await query(sql3);
 
+  // remove the room-partner candidancy if exists
+  const sql4 = {
+    text: `
+      DELETE FROM room_partner_candidate
+      WHERE identity_id = $1
+        AND room_id = (SELECT room_id
+                       FROM room_invite
+                       WHERE code = $2
+                      )`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql4);
+
   return rows;
 }
 
