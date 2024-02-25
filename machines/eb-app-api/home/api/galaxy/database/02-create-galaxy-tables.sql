@@ -393,13 +393,16 @@ CREATE TABLE meeting_member_candidate (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
+    "join_as" meeting_affiliation_type NOT NULL DEFAULT 'guest',
     "status" candidate_status NOT NULL DEFAULT 'pending',
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
       DEFAULT now() + interval '7 days'
 );
-CREATE UNIQUE INDEX ON meeting_member_candidate("identity_id", "meeting_id");
+CREATE UNIQUE INDEX ON meeting_member_candidate(
+    "identity_id", "meeting_id", "join_as"
+);
 CREATE INDEX ON meeting_member_candidate("expired_at");
 ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 
