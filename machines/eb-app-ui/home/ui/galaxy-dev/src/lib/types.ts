@@ -321,6 +321,7 @@ export interface RoomInvite111 {
 export interface RoomPartner {
   id: string;
   room_id: string;
+  contact_name: string;
   profile_name: string;
   profile_email: string;
   enabled: boolean;
