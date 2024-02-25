@@ -46,9 +46,16 @@
         readonly={true}
       />
       <Text
-        name="domain"
-        label="Jitsi Domain"
+        name="domain_name"
+        label="Jitsi Domain Name"
         value={p.domain_name}
+        disabled={true}
+        readonly={true}
+      />
+      <Text
+        name="domain_url"
+        label="Jitsi Domain URL"
+        value={p.domain_url}
         disabled={true}
         readonly={true}
       />
