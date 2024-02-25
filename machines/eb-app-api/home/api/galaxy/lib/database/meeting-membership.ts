@@ -145,7 +145,11 @@ export async function addMeetingMembershipByCode(
         AND meeting_id = (SELECT meeting_id
                           FROM meeting_invite
                           WHERE code = $2
-                         )`,
+                         )
+        AND join_as = (SELECT join_as
+                       FROM meeting_invite
+                       WHERE code = $2
+                      )`,
     args: [
       identityId,
       code,
