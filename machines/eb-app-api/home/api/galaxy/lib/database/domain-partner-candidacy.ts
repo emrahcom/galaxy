@@ -96,11 +96,11 @@ export async function acceptDomainPartnerCandidacy(
       VALUES (
         (SELECT identity_id
          FROM domain
-         WHERE id IN (SELECT domain_id
-                      FROM domain_partner_candidate
-                      WHERE id = $2
-                        AND identity_id = $1
-                     )
+         WHERE id = (SELECT domain_id
+                     FROM domain_partner_candidate
+                     WHERE id = $2
+                       AND identity_id = $1
+                    )
         ),
         $1,
         (SELECT name
