@@ -210,6 +210,34 @@ export interface MeetingMember {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingMemberCandidacy {
+  id: string;
+  meeting_name: string;
+  meeting_info: string;
+  schedule_type: string;
+  schedule_date: string[];
+  join_as: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface MeetingMemberCandidate {
+  id: string;
+  meeting_id: string;
+  contact_name: string;
+  profile_name: string;
+  profile_email: string;
+  join_as: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingMembership {
   id: string;
   profile_id: string;
