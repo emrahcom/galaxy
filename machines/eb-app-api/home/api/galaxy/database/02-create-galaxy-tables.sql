@@ -50,6 +50,11 @@ ALTER TABLE profile OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- CONTACT
 -- -----------------------------------------------------------------------------
+-- - Allow contact if both parties agree to be in touch. If one party deletes
+--   the contact, delete the other party's contact too.
+-- - Deleting contact works like blocking. A user cannot offer partnership to a
+--   registered user if she is not in their contact list.
+-- -----------------------------------------------------------------------------
 CREATE TABLE contact (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
