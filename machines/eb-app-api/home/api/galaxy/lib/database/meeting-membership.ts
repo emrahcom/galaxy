@@ -137,6 +137,22 @@ export async function addMeetingMembershipByCode(
   };
   if (rows[0] !== undefined) await query(sql3);
 
+  // remove the meeting-member candidancy if exists
+  const sql4 = {
+    text: `
+      DELETE FROM meeting_member_candidate
+      WHERE identity_id = $1
+        AND meeting_id = (SELECT meeting_id
+                          FROM meeting_invite
+                          WHERE code = $2
+                         )`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql4);
+
   return rows;
 }
 
