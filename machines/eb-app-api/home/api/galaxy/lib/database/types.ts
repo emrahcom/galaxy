@@ -200,6 +200,7 @@ export interface MeetingInvite111 {
 export interface MeetingMember {
   id: string;
   meeting_id: string;
+  contact_name: string;
   profile_name: string;
   profile_email: string;
   join_as: string;
