@@ -6,6 +6,7 @@ import {
   getContact,
   listContact,
   listContactByDomain,
+  listContactByRoom,
   updateContact,
 } from "../database/contact.ts";
 
@@ -42,6 +43,19 @@ async function listByDomain(
 }
 
 // -----------------------------------------------------------------------------
+async function listByRoom(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
+  const pl = await req.json();
+  const roomId = pl.id;
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
+
+  return await listContactByRoom(identityId, roomId, limit, offset);
+}
+
+// -----------------------------------------------------------------------------
 async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const contactId = pl.id;
@@ -70,6 +84,8 @@ export default async function (
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/list/bydomain`) {
     return await wrapper(listByDomain, req, identityId);
+  } else if (path === `${PRE}/list/byroom`) {
+    return await wrapper(listByRoom, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
