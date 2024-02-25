@@ -45,11 +45,11 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">
-              {p.contact_name || p.profile_name}
+              {c.contact_name || c.profile_name}
             </h5>
 
             <p class="card-text text-muted">
-              {p.profile_email}
+              {c.profile_email}
             </p>
 
             {#if c.status == "pending"}
