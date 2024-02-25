@@ -1,5 +1,5 @@
 import { fetch, query } from "./common.ts";
-import type { RoomPartnerCandidate, Id } from "./types.ts";
+import type { Id, RoomPartnerCandidate } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoomPartnerCandidate(
