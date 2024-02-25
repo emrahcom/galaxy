@@ -232,6 +232,33 @@ CREATE INDEX ON room_partner("room_id");
 ALTER TABLE room_partner OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- ROOM_PARTNER_CANDIDATE
+-- -----------------------------------------------------------------------------
+-- - The candidate can be added if she is already in the room owner's contact
+--   list.
+-- - The room owner can delete the candidate only if its status is pending.
+-- - The candidate cannot delete the candidacy but may reject it.
+-- - When rejected, expired_at will be updated as now() + interval '7 days'.
+-- - The candidate can accept an already rejected candidacy if it is not
+--   expired (deleted) yet.
+-- - Delete all candidates which have expired_at older than now().
+-- - Delete expired candidates before listing.
+-- -----------------------------------------------------------------------------
+CREATE TABLE room_partner_candidate (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
+    "status" candidate_status NOT NULL DEFAULT 'pending',
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+      DEFAULT now() + interval '7 days'
+);
+CREATE UNIQUE INDEX ON room_partner_candidate("identity_id", "room_id");
+CREATE INDEX ON room_partner_candidate("expired_at");
+ALTER TABLE room_partner_candidate OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- MEETING
 -- -----------------------------------------------------------------------------
 -- - Dont show the ephemeral meeting if it's over.
