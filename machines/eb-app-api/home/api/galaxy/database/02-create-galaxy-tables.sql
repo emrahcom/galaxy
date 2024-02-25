@@ -90,6 +90,10 @@ INSERT INTO domain VALUES (
     default, '00000000-0000-0000-0000-000000000000', 'meet.jit.si', 'none',
     '{"url": "https://meet.jit.si"}'::jsonb, true, true, default, default
 );
+INSERT INTO domain VALUES (
+    default, '00000000-0000-0000-0000-000000000000', 'meet.element.io', 'none',
+    '{"url": "https://meet.element.io"}'::jsonb, true, true, default, default
+);
 
 -- -----------------------------------------------------------------------------
 -- DOMAIN_INVITE
