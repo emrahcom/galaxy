@@ -25,11 +25,12 @@ export async function getMeetingInvite(identityId: string, inviteId: string) {
 
 // -----------------------------------------------------------------------------
 export async function getMeetingInviteByCode(code: string) {
+  // FIX SQL
   const sql = {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, iv.code,
         iv.invite_to, m.schedule_type,
-        array(SELECT started_at, duration
+        array(SELECT row(started_at, duration)
               FROM meeting_schedule
               WHERE meeting_id = m.id
                 AND ended_at > now()
