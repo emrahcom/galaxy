@@ -97,7 +97,7 @@
         {:else if invite.schedule_list.length === 1}
           <Text
             name="meeting_schedule"
-            label="Schedules"
+            label="Schedule"
             value={schedules}
             disabled={true}
             readonly={true}
