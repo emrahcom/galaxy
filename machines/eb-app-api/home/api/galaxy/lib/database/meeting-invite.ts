@@ -33,7 +33,7 @@ export async function getMeetingInviteByCode(code: string) {
               FROM meeting_schedule
               WHERE meeting_id = m.id
                 AND ended_at > now()
-              LIMIT 5
+              LIMIT 8
              ) as schedule_list
       FROM meeting_invite iv
         JOIN meeting m ON iv.meeting_id = m.id
