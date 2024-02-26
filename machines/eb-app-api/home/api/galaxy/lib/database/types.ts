@@ -195,7 +195,7 @@ export interface MeetingInvite111 {
   code: string;
   invite_to: string;
   schedule_type: string;
-  schedule_date: [string, number];
+  schedule_data: [string, number];
 }
 
 // -----------------------------------------------------------------------------
@@ -217,7 +217,7 @@ export interface MeetingMemberCandidacy {
   meeting_name: string;
   meeting_info: string;
   schedule_type: string;
-  schedule_date: string[];
+  schedule_data: [string, number];
   join_as: string;
   status: string;
   created_at: string;
