@@ -188,6 +188,8 @@ export interface MeetingInvite111 {
   meeting_info: string;
   code: string;
   invite_to: string;
+  schedule_type: string;
+  schedule_date: string[];
 }
 
 // -----------------------------------------------------------------------------
