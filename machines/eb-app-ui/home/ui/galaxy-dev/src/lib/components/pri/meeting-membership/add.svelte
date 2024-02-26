@@ -11,8 +11,6 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invite: MeetingInvite111;
-  //REMOVE ME
-  console.log(invite);
 
   let warning = false;
   let p = {
