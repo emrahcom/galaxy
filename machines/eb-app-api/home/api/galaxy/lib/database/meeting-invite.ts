@@ -28,7 +28,13 @@ export async function getMeetingInviteByCode(code: string) {
   const sql = {
     text: `
       SELECT m.name as meeting_name, m.info as meeting_info, iv.code,
-        iv.invite_to, m.schedule_type
+        iv.invite_to, m.schedule_type,
+        array(SELECT array[started_at, ended_at]
+              FROM meeting_schedule
+              WHERE meeting_id = m.id
+                AND ended_at > now()
+              LIMIT 5
+             ) as schedule_list
       FROM meeting_invite iv
         JOIN meeting m ON iv.meeting_id = m.id
       WHERE iv.code = $1
