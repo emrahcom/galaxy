@@ -12,6 +12,11 @@
 
   export let invite: MeetingInvite111;
 
+  let schedules = "";
+  for (const s of invite.schedule_list) {
+    schedules = `${s[0]}\n`;
+  }
+
   let warning = false;
   let p = {
     code: invite.code,
@@ -74,6 +79,23 @@
           disabled={true}
           readonly={true}
         />
+        {#if invite.schedule_list.length > 1}
+          <Textarea
+            name="meeting_schedule"
+            label="Schedules"
+            value={schedules}
+            disabled={true}
+            readonly={true}
+          />
+        {:else if invite.schedule_list.length === 1}
+          <Text
+            name="meeting_schedule"
+            label="Schedules"
+            value={schedules}
+            disabled={true}
+            readonly={true}
+          />
+        {/if}
         <Select
           id="profile_id"
           label="Profile"
