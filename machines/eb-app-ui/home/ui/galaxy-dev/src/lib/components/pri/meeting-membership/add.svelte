@@ -14,8 +14,15 @@
 
   let schedules = "";
   for (const s of invite.schedule_list) {
-    schedules = `${s[0]}\n`;
+    const startTime = new Date(s[0]);
+    const localStartTime = startTime.toLocaleString();
+    const endTime = new Date(s[1]);
+    const diff = startTime - endTime;
+    const minutes = Math.round(diff / (1000 * 60));
+
+    schedules = `${schedules}\n${localStartTime} (${minutes} min)`;
   }
+  schedules = schedules.trim();
 
   let warning = false;
   let p = {
