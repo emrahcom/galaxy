@@ -17,7 +17,7 @@
     const startTime = new Date(s[0]);
     const localStartTime = startTime.toLocaleString();
     const endTime = new Date(s[1]);
-    const diff = startTime - endTime;
+    const diff = endTime - startTime;
     const minutes = Math.round(diff / (1000 * 60));
 
     schedules = `${schedules}\n${localStartTime} (${minutes} min)`;
