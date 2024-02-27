@@ -3,7 +3,7 @@
   import { getById, listById } from "$lib/api";
   import type { Meeting } from "$lib/types";
   import List from "$lib/components/pri/meeting-member/list.svelte";
-  import Subheader from "$lib/components/common/subheader-back.svelte";
+  import Subheader from "$lib/components/common/subheader-back-add.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const meetingId = $page.params.meeting_uuid;
@@ -19,14 +19,23 @@
     meetingId,
     100,
   );
+  const pr3 = listById(
+    "/api/pri/meeting/member/candidate/list/bymeeting",
+    meetingId,
+    100,
+  );
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Members of {meetingName}" hrefBack="/pri/meeting" />
+<Subheader
+  subheader="Members of {meetingName}"
+  hrefBack="/pri/meeting"
+  hrefAdd="/pri/meeting/member/candidate/add/{meetingId}"
+/>
 
 <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-{#await Promise.all([pr1, pr2]) then [_meeting, members]}
-  <List {members} />
+{#await Promise.all([pr1, pr2, pr3]) then [_meeting, members, candidates]}
+  <List {members} {candidates} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
