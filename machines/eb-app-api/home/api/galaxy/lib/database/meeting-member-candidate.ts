@@ -46,12 +46,11 @@ export async function listMeetingMemberCandidateByMeeting(
   };
   await query(sql0);
 
-  // FIX THIS SQL
   const sql = {
     text: `
       SELECT ca.id, ca.meeting_id, co.name as contact_name,
-        pr.name as profile_name, pr.email as profile_email, ca.status,
-        ca.created_at, ca.updated_at, ca.expired_at
+        pr.name as profile_name, pr.email as profile_email, ca.join_as,
+        ca.status, ca.created_at, ca.updated_at, ca.expired_at
       FROM meeting_member_candidate ca
         LEFT JOIN contact co ON co.identity_id = $1
                                 AND co.remote_id = ca.identity_id
