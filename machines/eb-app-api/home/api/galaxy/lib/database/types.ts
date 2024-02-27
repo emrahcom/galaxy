@@ -217,7 +217,7 @@ export interface MeetingMemberCandidacy {
   meeting_name: string;
   meeting_info: string;
   schedule_type: string;
-  schedule_list: [string, string];
+  schedule_list: [[string, string]];
   join_as: string;
   status: string;
   created_at: string;
