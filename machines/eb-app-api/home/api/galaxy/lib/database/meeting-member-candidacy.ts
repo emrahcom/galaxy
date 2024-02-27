@@ -133,7 +133,7 @@ export async function acceptMeetingMemberCandidacy(
   };
   if (rows[0] !== undefined) await query(sql1);
 
-  // add meeting owner to the partner's contact list if not exists
+  // add meeting owner to the member's contact list if not exists
   const sql2 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
