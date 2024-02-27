@@ -6,7 +6,6 @@ export async function getMeetingMemberCandidate(
   identityId: string,
   candidacyId: string,
 ) {
-  // FIX THIS SQL
   const sql = {
     text: `
       SELECT ca.id, ca.meeting_id, co.name as contact_name,
