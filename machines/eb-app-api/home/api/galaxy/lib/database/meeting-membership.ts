@@ -34,8 +34,7 @@ export async function addMeetingMembershipByCode(
 ) {
   const sql = {
     text: `
-      INSERT INTO meeting_member (identity_id, profile_id, meeting_id,
-        join_as)
+      INSERT INTO meeting_member (identity_id, profile_id, meeting_id, join_as)
       VALUES (
         $1,
         (SELECT id
