@@ -72,16 +72,26 @@ export async function listMeetingMemberCandidacy(
 // -----------------------------------------------------------------------------
 export async function acceptMeetingMemberCandidacy(
   identityId: string,
+  profileId: string,
   candidacyId: string,
 ) {
-  // FIX THIS SQL
   const sql = {
     text: `
-      INSERT INTO room_partner (identity_id, room_id)
+      INSERT INTO meeting_member (identity_id, profile_id, meeting_id, join_as)
       VALUES (
         $1,
-        (SELECT room_id
-         FROM room_partner_candidate
+        (SELECT id
+         FROM profile
+         WHERE id = $3
+           AND identity_id = $1
+        ),
+        (SELECT meeting_id
+         FROM meeting_member_candidate
+         WHERE id = $2
+           AND identity_id = $1
+        ),
+        (SELECT join_as
+         FROM meeting_member_candidate
          WHERE id = $2
            AND identity_id = $1
         )
@@ -90,19 +100,20 @@ export async function acceptMeetingMemberCandidacy(
     args: [
       identityId,
       candidacyId,
+      profileId,
     ],
   };
   const rows = await fetch(sql) as Id[];
 
-  // add partner to the contact list if not exists
+  // add member to the contact list if not exists
   const sql1 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
         (SELECT identity_id
-         FROM room
-         WHERE id = (SELECT room_id
-                     FROM room_partner_candidate
+         FROM meeting
+         WHERE id = (SELECT meeting_id
+                     FROM meeting_member_candidate
                      WHERE id = $2
                        AND identity_id = $1
                     )
@@ -122,16 +133,16 @@ export async function acceptMeetingMemberCandidacy(
   };
   if (rows[0] !== undefined) await query(sql1);
 
-  // add room owner to the partner's contact list if not exists
+  // add meeting owner to the partner's contact list if not exists
   const sql2 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
         $1,
         (SELECT identity_id
-         FROM room
-         WHERE id = (SELECT room_id
-                     FROM room_partner_candidate
+         FROM meeting
+         WHERE id = (SELECT meeting_id
+                     FROM meeting_member_candidate
                      WHERE id = $2
                        AND identity_id = $1
                     )
@@ -139,9 +150,9 @@ export async function acceptMeetingMemberCandidacy(
         (SELECT name
          FROM profile
          WHERE identity_id = (SELECT identity_id
-                              FROM room
-                              WHERE id = (SELECT room_id
-                                          FROM room_partner_candidate
+                              FROM meeting
+                              WHERE id = (SELECT meeting_id
+                                          FROM meeting_member_candidate
                                           WHERE id = $2
                                             AND identity_id = $1
                                          )
@@ -157,10 +168,10 @@ export async function acceptMeetingMemberCandidacy(
   };
   if (rows[0] !== undefined) await query(sql2);
 
-  // remove the room-partner candidancy if the add action is successful
+  // remove the meeting-member candidancy if the add action is successful
   const sql3 = {
     text: `
-        DELETE FROM room_partner_candidate
+        DELETE FROM meeting_member_candidate
         WHERE id = $2
           AND identity_id = $1`,
     args: [
