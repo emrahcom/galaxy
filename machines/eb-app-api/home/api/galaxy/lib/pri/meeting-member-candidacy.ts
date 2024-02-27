@@ -31,8 +31,9 @@ async function list(req: Request, identityId: string): Promise<unknown> {
 async function accept(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const candidacyId = pl.id;
+  const profileId = pl.profile_id;
 
-  return await acceptMeetingMemberCandidacy(identityId, candidacyId);
+  return await acceptMeetingMemberCandidacy(identityId, profileId, candidacyId);
 }
 
 // -----------------------------------------------------------------------------
