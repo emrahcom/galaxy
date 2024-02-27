@@ -43,21 +43,21 @@ export async function listMeetingMemberCandidacy(
   };
   await query(sql0);
 
-  // FIX THIS SQL
   const sql = {
     text: `
-      SELECT ca.id, r.name as room_name, d.name as domain_name,
-        (CASE d.auth_type
-           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
-           ELSE d.domain_attr->>'url'
-         END
-        ) as domain_url,
-        ca.status, ca.created_at, ca.updated_at, ca.expired_at
-      FROM room_partner_candidate ca
-        JOIN room r ON ca.room_id = r.id
-        JOIN domain d ON r.domain_id = d.id
+      SELECT ca.id, m.name as meeting_name, m.info as meeting_info,
+        m.schedule_type,
+        array(SELECT array[started_at, ended_at]
+              FROM meeting_schedule
+              WHERE meeting_id = m.id
+                AND ended_at > now()
+              LIMIT 8
+             ) as schedule_list,
+        ca.join_as, ca.status, ca.created_at, ca.updated_at, ca.expired_at
+      FROM meeting_member_candidate ca
+        JOIN meeting m ON ca.meeting_id = m.id
       WHERE ca.identity_id = $1
-      ORDER BY status, room_name, domain_name
+      ORDER BY status, meeting_name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
