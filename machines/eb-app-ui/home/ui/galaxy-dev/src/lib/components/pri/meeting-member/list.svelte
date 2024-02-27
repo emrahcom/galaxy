@@ -10,7 +10,7 @@
   export let members: MeetingMember[];
   export let candidates: MeetingMemberCandidate[];
 
-  const isEmpty = !(partners.length || candidates.length);
+  const isEmpty = !(members.length || candidates.length);
 </script>
 
 <!-- -------------------------------------------------------------------------->

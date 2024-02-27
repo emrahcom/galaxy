@@ -15,7 +15,7 @@
   export let meetings: Meeting222[];
   export let candidacies: MeetingMemberCandidacy[];
 
-  const isEmpty = !(meeting.length || candidacies.length);
+  const isEmpty = !(meetings.length || candidacies.length);
 </script>
 
 <!-- -------------------------------------------------------------------------->

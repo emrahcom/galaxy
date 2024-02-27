@@ -1,14 +1,14 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { actionById } from "$lib/api";
-  import type { MeetingMemeberCandidacy } from "$lib/types";
+  import type { MeetingMemberCandidacy } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: MeetingMemeberCandidacy;
+  export let p: MeetingMemberCandidacy;
 
   let warning = false;
 
