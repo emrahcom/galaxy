@@ -6,8 +6,8 @@ import {
   getContact,
   listContact,
   listContactByDomain,
-  listContactByRoom,
   listContactByMeeting,
+  listContactByRoom,
   updateContact,
 } from "../database/contact.ts";
 
