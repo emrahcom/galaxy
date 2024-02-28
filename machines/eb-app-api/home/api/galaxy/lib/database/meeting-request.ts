@@ -9,8 +9,8 @@ export async function getRequest(identityId: string, requestId: string) {
         m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
         req.updated_at, req.expired_at
       FROM meeting_request req
-        JOIN profile pr ON req.profile_id = pr.id
         JOIN meeting m ON req.meeting_id = m.id
+        LEFT JOIN profile pr ON req.profile_id = pr.id
       WHERE req.id = $2
         AND req.identity_id = $1`,
     args: [
@@ -34,8 +34,8 @@ export async function listRequest(
         m.id as meeting_id, m.name as meeting_name, req.status, req.created_at,
         req.updated_at, req.expired_at
       FROM meeting_request req
-        JOIN profile pr ON req.profile_id = pr.id
         JOIN meeting m ON req.meeting_id = m.id
+        LEFT JOIN profile pr ON req.profile_id = pr.id
       WHERE req.identity_id = $1
       ORDER BY req.status, meeting_name
       LIMIT $2 OFFSET $3`,
