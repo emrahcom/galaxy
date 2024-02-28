@@ -12,9 +12,9 @@ export async function getMeetingMember(
         pr.name as profile_name, pr.email as profile_email, mem.join_as,
         mem.enabled, mem.created_at, mem.updated_at
       FROM meeting_member mem
+        LEFT JOIN profile pr ON mem.profile_id = pr.id
         LEFT JOIN contact co ON co.identity_id = $1
                                 AND co.remote_id = mem.identity_id
-        JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
@@ -43,9 +43,9 @@ export async function listMeetingMemberByMeeting(
         pr.name as profile_name, pr.email as profile_email, mem.join_as,
         mem.enabled, mem.created_at, mem.updated_at
       FROM meeting_member mem
+        LEFT JOIN profile pr ON mem.profile_id = pr.id
         LEFT JOIN contact co ON co.identity_id = $1
                                 AND co.remote_id = mem.identity_id
-        JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.meeting_id = $2
         AND EXISTS (SELECT 1
                     FROM meeting

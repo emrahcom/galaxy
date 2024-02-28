@@ -14,7 +14,7 @@ export async function getMeetingMembership(
         mem.updated_at
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
-        JOIN profile pr ON mem.profile_id = pr.id
+        LEFT JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.id = $2
         AND mem.identity_id = $1`,
     args: [

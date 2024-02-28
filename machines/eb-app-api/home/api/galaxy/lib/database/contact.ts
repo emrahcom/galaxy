@@ -8,8 +8,8 @@ export async function getContact(identityId: string, contactId: string) {
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
         co.created_at, co.updated_at
       FROM contact co
-        JOIN profile pr ON co.remote_id = pr.identity_id
-                           AND pr.is_default
+        LEFT JOIN profile pr ON co.remote_id = pr.identity_id
+                                AND pr.is_default
       WHERE co.id = $2
         AND co.identity_id = $1`,
     args: [
@@ -32,8 +32,8 @@ export async function listContact(
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
         co.created_at, co.updated_at
       FROM contact co
-        JOIN profile pr ON co.remote_id = pr.identity_id
-                           AND pr.is_default
+        LEFT JOIN profile pr ON co.remote_id = pr.identity_id
+                                AND pr.is_default
       WHERE co.identity_id = $1
       ORDER BY name, profile_name, profile_email
       LIMIT $2 OFFSET $3`,
@@ -59,8 +59,8 @@ export async function listContactByDomain(
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
         co.created_at, co.updated_at
       FROM contact co
-        JOIN profile pr ON co.remote_id = pr.identity_id
-                           AND pr.is_default
+        LEFT JOIN profile pr ON co.remote_id = pr.identity_id
+                                AND pr.is_default
       WHERE co.identity_id = $1
         AND NOT EXISTS (SELECT 1
                         FROM domain_partner
@@ -97,8 +97,8 @@ export async function listContactByRoom(
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
         co.created_at, co.updated_at
       FROM contact co
-        JOIN profile pr ON co.remote_id = pr.identity_id
-                           AND pr.is_default
+        LEFT JOIN profile pr ON co.remote_id = pr.identity_id
+                                AND pr.is_default
       WHERE co.identity_id = $1
         AND NOT EXISTS (SELECT 1
                         FROM room_partner
@@ -135,8 +135,8 @@ export async function listContactByMeeting(
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
         co.created_at, co.updated_at
       FROM contact co
-        JOIN profile pr ON co.remote_id = pr.identity_id
-                           AND pr.is_default
+        LEFT JOIN profile pr ON co.remote_id = pr.identity_id
+                                AND pr.is_default
       WHERE co.identity_id = $1
         AND NOT EXISTS (SELECT 1
                         FROM meeting_member
