@@ -95,8 +95,47 @@ export async function delProfile(identityId: string, profileId: string) {
       profileId,
     ],
   };
+  const rows = await fetch(sql) as Id[];
 
-  return await fetch(sql) as Id[];
+  // select the default profile for the deleted one in meeting
+  const sql1 = {
+    text: `
+      UPDATE meeting
+      SET
+        profile_id = (SELECT id
+                      FROM profile
+                      WHERE identity_id = $1
+                        AND is_default
+                     ),
+        updated_at = now()
+      WHERE identity_id = $1
+        AND profile_id IS NULL`,
+    args: [
+      identityId,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql1);
+
+  // select the default profile for the deleted one in meeting_member
+  const sql2 = {
+    text: `
+      UPDATE meeting_member
+      SET
+        profile_id = (SELECT id
+                      FROM profile
+                      WHERE identity_id = $1
+                        AND is_default
+                     ),
+        updated_at = now()
+      WHERE identity_id = $1
+        AND profile_id IS NULL`,
+    args: [
+      identityId,
+    ],
+  };
+  if (rows[0] !== undefined) await query(sql2);
+
+  return rows;
 }
 
 // -----------------------------------------------------------------------------
