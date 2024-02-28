@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action, listById } from "$lib/api";
+  import { AFFILIATION_OPTIONS } from "$lib/pri/meeting-invite";
   import type { Contact, Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -24,6 +25,7 @@
   let p = {
     contact_id: "",
     meeting_id: meeting.id,
+    join_as: "guest",
   };
 
   // ---------------------------------------------------------------------------
@@ -61,6 +63,8 @@
           disabled={true}
           readonly={true}
         />
+        <p class="text-muted me-3 mt-3 mb-1">Allow to join as</p>
+        <Radio bind:value={p.join_as} options={AFFILIATION_OPTIONS} />
 
         {#if warning}
           <Warning>
