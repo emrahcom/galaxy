@@ -36,14 +36,14 @@
       <Text
         name="name"
         label="Name"
-        value={p.contact_name || p.profile_name}
+        value={p.contact_name || p.profile_name || ""}
         disabled={true}
         readonly={true}
       />
       <Text
         name="email"
         label="Email"
-        value={p.profile_email}
+        value={p.profile_email || ""}
         disabled={true}
         readonly={true}
       />

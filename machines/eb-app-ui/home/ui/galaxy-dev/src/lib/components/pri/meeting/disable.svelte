@@ -20,9 +20,9 @@
   let profile: string;
 
   if (p.profile_email) {
-    profile = `${p.profile_name} (${p.profile_email})`;
+    profile = `${p.profile_name || ""} (${p.profile_email})`;
   } else {
-    profile = p.profile_name;
+    profile = p.profile_name || "";
   }
 
   if (!p.domain_enabled) {

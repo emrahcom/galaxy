@@ -44,14 +44,14 @@
       <Text
         name="profile_name"
         label="Name"
-        value={p.profile_name}
+        value={p.profile_name || ""}
         disabled={true}
         readonly={true}
       />
       <Email
         name="profile_email"
         label="Email"
-        value={p.profile_email}
+        value={p.profile_email || ""}
         disabled={true}
         readonly={true}
       />
