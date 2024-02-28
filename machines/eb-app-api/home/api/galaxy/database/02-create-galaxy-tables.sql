@@ -343,7 +343,7 @@ CREATE TYPE meeting_request_status AS ENUM ('pending', 'rejected');
 CREATE TABLE meeting_request (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid NOT NULL REFERENCES profile(id) ON DELETE CASCADE,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "status" meeting_request_status NOT NULL DEFAULT 'pending',
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
