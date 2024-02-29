@@ -2,7 +2,7 @@
 -- 02-CREATE-GALAXY-TABLES.SQL
 -- -----------------------------------------------------------------------------
 -- This script creates the database tables.
--- Tested on Postgresql 13.
+-- Tested on Postgresql 15.
 --
 -- Usage:
 --     psql -l postgres -c \
