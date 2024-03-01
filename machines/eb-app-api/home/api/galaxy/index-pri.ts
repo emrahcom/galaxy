@@ -93,9 +93,9 @@ async function route(
 async function handler(req: Request): Promise<Response> {
   // check method
   if (req.method === "POST") {
-    // check credential
     const identityId = await getIdentityId(req);
-    if (identityId) {
+
+    if (identityId && typeof identityId === "string") {
       const url = new URL(req.url);
       const path = url.pathname;
 
