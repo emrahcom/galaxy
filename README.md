@@ -44,7 +44,8 @@ Try `Galaxy` using publicly available implementation on
 
 ### Prerequisites
 
-- `Debian 12 Bookworm` server
+- `Debian 12 Bookworm` server\
+  _Use a dedicated server, not shared one... It will be heavily customized._
 - At least 2 GB RAM and 8 GB disk space
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
@@ -66,9 +67,9 @@ names._
 _Update the value of `SMTP_CONNECTION_URI` and `SMTP_FROM_ADDRESS` according to
 your email system._
 
-_`username` and `password` in `SMTP_CONNECTION_URI` should be
-URL encoded if there is special character in it. For example if SMTP's username
-is `noreply@mydomain.corp` then you should set it as
+_`username` and `password` in `SMTP_CONNECTION_URI` should be URL encoded if
+there is special character in it. For example if SMTP's username is
+`noreply@mydomain.corp` then you should set it as
 `smtp://noreply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
 
 _For more details about `SMTP_CONNECTION_URI`, see SMTP configuration inside
