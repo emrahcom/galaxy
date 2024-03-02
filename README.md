@@ -45,7 +45,7 @@ Try `Galaxy` using publicly available implementation on
 ### Prerequisites
 
 - `Debian 12 Bookworm` server
-- At least 1 GB RAM
+- At least 2 GB RAM and 8 GB disk space
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
 - Both FQDNs must be subdomains of the same domain.
