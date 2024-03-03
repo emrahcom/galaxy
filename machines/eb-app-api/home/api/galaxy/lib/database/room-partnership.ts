@@ -30,6 +30,29 @@ export async function getRoomPartnership(
 }
 
 // -----------------------------------------------------------------------------
+export async function checkRoomPartnershipByCode(
+  identityId: string,
+  code: string,
+) {
+  const sql = {
+    text: `
+      SELECT id, created_at as at
+      FROM room_partner
+      WHERE identity_id = $1
+        AND room_id = (SELECT room_id
+                       FROM room_invite
+                       WHERE code = $2
+                      )`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function addRoomPartnershipByCode(
   identityId: string,
   code: string,
