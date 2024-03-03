@@ -27,6 +27,30 @@ export async function getMeetingMembership(
 }
 
 // -----------------------------------------------------------------------------
+export async function checkMeetingMembershipByCode(
+  identityId: string,
+  code: string,
+) {
+  const sql = {
+    text: `
+      SELECT id, created_at as at
+      FROM meeting_member mem
+      WHERE identity_id = $1
+        AND meeting_id = (SELECT meeting_id
+                          FROM meeting_invite
+                          WHERE code = $2
+                            AND join_as = mem.join_as
+                         )`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function addMeetingMembershipByCode(
   identityId: string,
   profileId: string,
