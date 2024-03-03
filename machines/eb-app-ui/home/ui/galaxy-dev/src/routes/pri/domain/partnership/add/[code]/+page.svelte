@@ -30,7 +30,7 @@
 {:catch}
   <Warning>
     Something went wrong.<br />
-    Are you sure this link is still valid?
+    Are you sure this link is valid and not expired?
   </Warning>
 
   <div class="d-flex gap-5 mt-5 justify-content-center">

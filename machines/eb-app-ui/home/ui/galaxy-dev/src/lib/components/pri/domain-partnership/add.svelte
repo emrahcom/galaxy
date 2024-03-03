@@ -57,10 +57,13 @@
       {/if}
 
       {#if isExist}
-        <Warning>This domain is already in your list. Nothing to do.</Warning>
+        <Warning>
+          This domain is already in your list.<br />
+          Nothing to do.
+        </Warning>
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel label="Skip" on:click={cancel} />
+          <Cancel label="Abort" on:click={cancel} />
         </div>
       {:else}
         <div class="d-flex gap-5 mt-5 justify-content-center">
