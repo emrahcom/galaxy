@@ -14,8 +14,13 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Add a partner domain" />
 
-{#await Promise.all([pr1, pr2]) then [invite, isPresent]}
-  <Add {invite} {isPresent} />
+{#await pr1 then invite}
+  <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+  {#await pr2 then _checked}
+    <Add {invite} isExist={true} />
+  {:catch}
+    <Add {invite} isExist={false} />
+  {/await}
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
