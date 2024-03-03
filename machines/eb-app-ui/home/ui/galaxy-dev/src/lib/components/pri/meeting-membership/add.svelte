@@ -11,6 +11,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invite: MeetingInvite111;
+  export let isExist: boolean;
 
   let schedules = "";
   for (const s of invite.schedule_list) {
@@ -114,11 +115,22 @@
           <Warning>The subscribe request is not accepted.</Warning>
         {/if}
 
-        <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
-          <SubmitBlocker />
-          <Submit label="Subscribe" />
-        </div>
+        {#if isExist}
+          <Warning>
+            This meeting is already in your list.<br />
+            Nothing to do.
+          </Warning>
+
+          <div class="d-flex gap-5 mt-5 justify-content-center">
+            <Cancel label="Abort" on:click={cancel} />
+          </div>
+        {:else}
+          <div class="d-flex gap-5 mt-5 justify-content-center">
+            <Cancel on:click={cancel} />
+            <SubmitBlocker />
+            <Submit label="Subscribe" />
+          </div>
+        {/if}
       </form>
     </div>
   {:catch}
