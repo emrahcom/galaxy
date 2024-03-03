@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import type { DomainInvite111 } from "$lib/types";
+  import type { DomainInvite111, Id } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
@@ -9,6 +9,8 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invite: DomainInvite111;
+  export let isPresent: Id[];
+  console.log(isPresent);
 
   let warning = false;
   let p = {
