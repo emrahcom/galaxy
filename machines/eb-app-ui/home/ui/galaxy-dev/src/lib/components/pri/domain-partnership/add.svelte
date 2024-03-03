@@ -57,16 +57,16 @@
       {/if}
 
       {#if isExist}
-        <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
-          <SubmitBlocker />
-          <Submit label="Add" />
-        </div>
-      {:else}
         <Warning>This domain is already in your list. Nothing to do.</Warning>
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
           <Cancel label="Skip" on:click={cancel} />
+        </div>
+      {:else}
+        <div class="d-flex gap-5 mt-5 justify-content-center">
+          <Cancel on:click={cancel} />
+          <SubmitBlocker />
+          <Submit label="Add" />
         </div>
       {/if}
     </form>
