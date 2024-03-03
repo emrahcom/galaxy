@@ -9,6 +9,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let invite: RoomInvite111;
+  export let isExist: boolean;
 
   let warning = false;
   let p = {
@@ -62,11 +63,22 @@
         <Warning>The add request is not accepted.</Warning>
       {/if}
 
-      <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
-        <SubmitBlocker />
-        <Submit label="Add" />
-      </div>
+      {#if isExist}
+        <Warning>
+          This room is already in your list.<br />
+          Nothing to do.
+        </Warning>
+
+        <div class="d-flex gap-5 mt-5 justify-content-center">
+          <Cancel label="Abort" on:click={cancel} />
+        </div>
+      {:else}
+        <div class="d-flex gap-5 mt-5 justify-content-center">
+          <Cancel on:click={cancel} />
+          <SubmitBlocker />
+          <Submit label="Add" />
+        </div>
+      {/if}
     </form>
   </div>
 </section>
