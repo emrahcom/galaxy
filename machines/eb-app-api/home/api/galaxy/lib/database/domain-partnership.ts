@@ -29,6 +29,29 @@ export async function getDomainPartnership(
 }
 
 // -----------------------------------------------------------------------------
+export async function checkDomainPartnershipByCode(
+  identityId: string,
+  code: string,
+) {
+  const sql = {
+    text: `
+      SELECT id, created_at as at
+      FROM domain_partner
+      WHERE identity_id = $1
+        AND domain_id = (SELECT domain_id
+                         FROM domain_invite
+                         WHERE code = $2
+                        )`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function addDomainPartnershipByCode(
   identityId: string,
   code: string,
