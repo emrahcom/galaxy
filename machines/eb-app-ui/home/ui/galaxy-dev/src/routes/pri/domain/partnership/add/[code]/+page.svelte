@@ -7,14 +7,15 @@
 
   const code = $page.params.code;
 
-  const pr = getByCode("/api/pri/domain/invite/get/bycode", code);
+  const pr1 = getByCode("/api/pri/domain/invite/get/bycode", code);
+  const pr2 = getByCode("/api/pri/domain/partnership/check/bycode", code);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="Add a partner domain" />
 
-{#await pr then invite}
-  <Add {invite} />
+{#await Promise.all([pr1, pr2]) then [invite, isPresent]}
+  <Add {invite} {isPresent} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
