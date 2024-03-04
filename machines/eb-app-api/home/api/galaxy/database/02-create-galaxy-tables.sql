@@ -117,7 +117,7 @@ CREATE TABLE domain_invite (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '3 days'
+        DEFAULT now() + interval '3 days'
 );
 CREATE UNIQUE INDEX ON domain_invite("code");
 CREATE INDEX ON domain_invite("identity_id", "domain_id", "expired_at");
@@ -163,7 +163,7 @@ CREATE TABLE domain_partner_candidate (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '7 days'
+        DEFAULT now() + interval '7 days'
 );
 CREATE UNIQUE INDEX ON domain_partner_candidate("identity_id", "domain_id");
 CREATE INDEX ON domain_partner_candidate("expired_at");
@@ -212,7 +212,7 @@ CREATE TABLE room_invite (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '3 days'
+        DEFAULT now() + interval '3 days'
 );
 CREATE UNIQUE INDEX ON room_invite("code");
 CREATE INDEX ON room_invite("identity_id", "room_id", "expired_at");
@@ -257,7 +257,7 @@ CREATE TABLE room_partner_candidate (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '7 days'
+        DEFAULT now() + interval '7 days'
 );
 CREATE UNIQUE INDEX ON room_partner_candidate("identity_id", "room_id");
 CREATE INDEX ON room_partner_candidate("expired_at");
@@ -321,7 +321,7 @@ CREATE TABLE meeting_invite (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '3 days'
+        DEFAULT now() + interval '3 days'
 );
 CREATE UNIQUE INDEX ON meeting_invite("code");
 CREATE INDEX ON meeting_invite("identity_id", "meeting_id", "expired_at");
@@ -349,7 +349,7 @@ CREATE TABLE meeting_request (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '7 days'
+        DEFAULT now() + interval '7 days'
 );
 CREATE UNIQUE INDEX ON meeting_request("identity_id", "meeting_id");
 CREATE INDEX ON meeting_request("meeting_id", "status");
@@ -398,7 +398,7 @@ CREATE TABLE meeting_member_candidate (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "expired_at" timestamp with time zone NOT NULL
-      DEFAULT now() + interval '7 days'
+        DEFAULT now() + interval '7 days'
 );
 CREATE UNIQUE INDEX ON meeting_member_candidate(
     "identity_id", "meeting_id", "join_as"
@@ -410,19 +410,33 @@ ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 -- MEETING_SCHEDULE
 -- -----------------------------------------------------------------------------
 -- - This table contains only scheduled meetings.
--- - ended_at = started_at + duration * interval '1 min'
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL DEFAULT '',
+    "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb
+);
+CREATE INDEX ON meeting_schedule(meeting_id);
+ALTER TABLE meeting_schedule OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
+-- MEETING_SESSION
+-- -----------------------------------------------------------------------------
+-- - This table contains only scheduled meetings's session.
+-- - ended_at = started_at + duration * interval '1 min'
+-- -----------------------------------------------------------------------------
+CREATE TABLE meeting_session (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "meeting_schedule_id" uuid NOT NULL
+        REFERENCES meeting_schedule(id) ON DELETE CASCADE,
     "started_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
     "ended_at" timestamp with time zone NOT NULL
 );
-CREATE INDEX ON meeting_schedule(meeting_id, started_at);
-CREATE INDEX ON meeting_schedule(meeting_id, ended_at);
-ALTER TABLE meeting_schedule OWNER TO galaxy;
+CREATE INDEX ON meeting_session(meeting_schedule_id, started_at);
+CREATE INDEX ON meeting_session(meeting_schedule_id, ended_at);
+ALTER TABLE meeting_session OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 COMMIT;
