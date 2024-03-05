@@ -58,36 +58,6 @@ export async function fetch(sql: QueryObject): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-export async function transaction(
-  sqls: QueryObject[],
-): Promise<unknown[]> {
-  const db = await dbPool.connect();
-  const trans = db.createTransaction("transaction");
-
-  try {
-    await trans.begin();
-
-    const rst = sqls.map(async (s) => {
-      const r = await trans.queryObject(s);
-      return r.rows;
-    });
-
-    await trans.commit();
-
-    return rst;
-  } catch (e) {
-    await trans.rollback();
-    throw e;
-  } finally {
-    try {
-      db.release();
-    } catch {
-      // do nothing
-    }
-  }
-}
-
-// -----------------------------------------------------------------------------
 export function getLimit(limit: number): number {
   if (!limit) {
     limit = DEFAULT_LIST_SIZE;
