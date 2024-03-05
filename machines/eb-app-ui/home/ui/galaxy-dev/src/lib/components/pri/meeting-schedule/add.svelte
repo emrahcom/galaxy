@@ -22,8 +22,13 @@
   let p = {
     name: "",
     meeting_id: meeting.id,
-    started_at: "",
-    duration: 30,
+    schedule_attr: {
+      type: 'once',
+      once: {
+        started_at: "",
+        duration: 30,
+      },
+    },
   };
 
   // ---------------------------------------------------------------------------
@@ -41,7 +46,7 @@
       warning = false;
 
       const started_at = new Date(time);
-      p.started_at = started_at.toISOString();
+      p.schedule_attr.once.started_at = started_at.toISOString();
 
       await action("/api/pri/meeting/schedule/add", p);
 
@@ -76,7 +81,7 @@
       <Range
         name="duration"
         label="Duration (minutes)"
-        bind:value={p.duration}
+        bind:value={p.schedule_attr.once.duration}
         min={5}
         max={120}
         step={5}
