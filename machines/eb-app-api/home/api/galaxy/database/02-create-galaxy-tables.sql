@@ -415,7 +415,10 @@ CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL DEFAULT '',
-    "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb
+    "schedule_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE INDEX ON meeting_schedule(meeting_id);
 ALTER TABLE meeting_schedule OWNER TO galaxy;
@@ -432,7 +435,9 @@ CREATE TABLE meeting_session (
         REFERENCES meeting_schedule(id) ON DELETE CASCADE,
     "started_at" timestamp with time zone NOT NULL,
     "duration" integer NOT NULL,
-    "ended_at" timestamp with time zone NOT NULL
+    "ended_at" timestamp with time zone NOT NULL,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE INDEX ON meeting_session(meeting_schedule_id, started_at);
 CREATE INDEX ON meeting_session(meeting_schedule_id, ended_at);
