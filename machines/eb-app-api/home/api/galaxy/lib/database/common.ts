@@ -40,7 +40,7 @@ export async function query(
     throw e;
   } finally {
     try {
-      db.release();
+      await db.release();
     } catch {
       // do nothing
     }
