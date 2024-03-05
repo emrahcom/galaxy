@@ -248,32 +248,25 @@ export async function addMeetingSchedule(
   identityId: string,
   meetingId: string,
   name: string,
-  started_at: string,
-  duration: number,
+  scheduleAttr: unknown,
 ) {
-  if (duration < 1) throw new Error("duration is out of range");
-  if (duration > 1440) throw new Error("duration is out of range");
-
   const sql = {
     text: `
-      INSERT INTO meeting_schedule (meeting_id, name, started_at, duration,
-        ended_at)
+      INSERT INTO meeting_schedule (meeting_id, name, schedule_attr)
       VALUES (
         (SELECT id
          FROM meeting
          WHERE id = $2
            AND identity_id = $1
         ),
-        $3, $4, $5,
-        $4::timestamptz + $5::integer * interval '1 min'
+        $3, $4::jsonb
       )
       RETURNING id, now() as at`,
     args: [
       identityId,
       meetingId,
       name,
-      started_at,
-      duration,
+      scheduleAttr,
     ],
   };
 

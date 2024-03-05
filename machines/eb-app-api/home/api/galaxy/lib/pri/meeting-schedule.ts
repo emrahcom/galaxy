@@ -66,15 +66,13 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.meeting_id;
   const name = pl.name;
-  const started_at = pl.started_at;
-  const duration = pl.duration;
+  const scheduleAttr = pl.schedule_attr;
 
   return await addMeetingSchedule(
     identityId,
     meetingId,
     name,
-    started_at,
-    duration,
+    scheduleAttr,
   );
 }
 
