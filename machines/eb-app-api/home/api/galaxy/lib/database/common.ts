@@ -40,7 +40,7 @@ export async function query(
     throw e;
   } finally {
     try {
-      await db.release();
+      db.release();
     } catch {
       // do nothing
     }
@@ -55,6 +55,36 @@ export async function fetch(sql: QueryObject): Promise<unknown> {
     });
 
   return rows;
+}
+
+// -----------------------------------------------------------------------------
+export async function transaction(
+  sqls: QueryObject[],
+): Promise<unknown[]> {
+  const db = await dbPool.connect();
+  const trans = db.createTransaction("transaction");
+
+  try {
+    await trans.begin();
+
+    const rst = sqls.map(async (s) => {
+      const r = await trans.queryObject(s);
+      return r.rows;
+    });
+
+    await trans.commit();
+
+    return rst;
+  } catch (e) {
+    await trans.rollback();
+    throw e;
+  } finally {
+    try {
+      db.release();
+    } catch {
+      // do nothing
+    }
+  }
 }
 
 // -----------------------------------------------------------------------------
