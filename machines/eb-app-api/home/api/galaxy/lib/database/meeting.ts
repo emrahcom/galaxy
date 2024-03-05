@@ -289,8 +289,12 @@ export async function listMeeting(
         r.name as room_name, m.schedule_type,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN array(SELECT started_at
-                                       FROM meeting_schedule
-                                       WHERE meeting_id = m.id
+                                       FROM meeting_session
+                                       WHERE meeting_schedule_id IN (
+                                           SELECT id
+                                           FROM meeting_schedule
+                                           WHERE meeting_id = m.id
+                                         )
                                          AND ended_at > now()
                                        ORDER BY started_at
                                       )
@@ -299,8 +303,12 @@ export async function listMeeting(
         ) as schedule_list,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN (SELECT min(started_at)
-                                  FROM meeting_schedule
-                                  WHERE meeting_id = m.id
+                                  FROM meeting_session
+                                  WHERE meeting_schedule_id IN (
+                                      SELECT id
+                                      FROM meeting_schedule
+                                      WHERE meeting_id = m.id
+                                    )
                                     AND ended_at > now()
                                  )
            WHEN 'ephemeral' THEN CURRENT_DATE
@@ -347,8 +355,12 @@ export async function listMeeting(
         '' as room_name, m.schedule_type,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN array(SELECT started_at
-                                       FROM meeting_schedule
-                                       WHERE meeting_id = m.id
+                                       FROM meeting_session
+                                       WHERE meeting_schedule_id IN (
+                                           SELECT id
+                                           FROM meeting_schedule
+                                           WHERE meeting_id = m.id
+                                         )
                                          AND ended_at > now()
                                        ORDER BY started_at
                                       )
@@ -357,8 +369,12 @@ export async function listMeeting(
         ) as schedule_list,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN (SELECT min(started_at)
-                                  FROM meeting_schedule
-                                  WHERE meeting_id = m.id
+                                  FROM meeting_session
+                                  WHERE meeting_schedule_id IN (
+                                      SELECT id
+                                      FROM meeting_schedule
+                                      WHERE meeting_id = m.id
+                                    )
                                     AND ended_at > now()
                                  )
            WHEN 'ephemeral' THEN CURRENT_DATE
