@@ -18,6 +18,7 @@
 ## database
 
 - index optimizations
+- delete expired or keep as inactive?
 
 ## test
 
