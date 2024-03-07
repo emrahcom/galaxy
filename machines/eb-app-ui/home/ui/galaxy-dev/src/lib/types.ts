@@ -252,9 +252,12 @@ export interface MeetingSchedule {
   id: string;
   meeting_id: string;
   name: string;
-  started_at: string;
-  ended_at: string;
-  duration: number;
+  schedule_attr: {
+    [key: string]: string;
+  };
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 // -----------------------------------------------------------------------------
