@@ -13,7 +13,8 @@ export async function getMeetingSchedule(
 ) {
   const sql = {
     text: `
-      SELECT id, meeting_id, name, started_at, ended_at, duration
+      SELECT id, meeting_id, name, schedule_attr, enabled, created_at,
+        updated_at
       FROM meeting_schedule
       WHERE id = $2
         AND EXISTS (SELECT 1
@@ -221,7 +222,8 @@ export async function listMeetingScheduleByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT id, meeting_id, name, started_at, ended_at, duration
+      SELECT id, meeting_id, name, schedule_attr, enabled, created_at,
+        updated_at
       FROM meeting_schedule
       WHERE meeting_id = $2
         AND EXISTS (SELECT 1
