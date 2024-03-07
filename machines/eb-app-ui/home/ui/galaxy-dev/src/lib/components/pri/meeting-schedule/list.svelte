@@ -19,10 +19,12 @@
         <div class="card h-100">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">
-              {toLocaleTime(p.started_at)}
+              {toLocaleTime(p.schedule_attr.once_started_at)}
             </h5>
 
-            <p class="card-text text-muted">{p.duration} mins</p>
+            <p class="card-text text-muted">
+              {p.schedule_attr.once_duration} mins
+            </p>
 
             {#if p.name}
               <p class="card-text text-muted">{p.name}</p>
