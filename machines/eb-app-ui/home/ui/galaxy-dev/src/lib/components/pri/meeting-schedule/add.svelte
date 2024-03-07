@@ -24,10 +24,8 @@
     meeting_id: meeting.id,
     schedule_attr: {
       type: "once",
-      once: {
-        started_at: "",
-        duration: 30,
-      },
+      once_started_at: "",
+      once_duration: 30,
     },
   };
 
