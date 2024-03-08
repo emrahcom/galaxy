@@ -4,6 +4,8 @@
   import type { MeetingSchedule } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
+  import Disable from "$lib/components/common/link-disable.svelte";
+  import Enable from "$lib/components/common/link-enable.svelte";
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -16,7 +18,7 @@
   <div class="row mx-auto mt-2 g-3">
     {#each schedules as p}
       <div class="col-md-6 col-xl-4">
-        <div class="card h-100">
+        <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">
               {toLocaleTime(p.schedule_attr.once_started_at)}
@@ -33,6 +35,13 @@
 
           <div class="card-footer bg-body border-0 text-center">
             <Del href="/pri/meeting/schedule/del/{p.id}" />
+
+            {#if p.enabled}
+              <Disable href="/pri/meeting/schedule/disable/{p.id}" />
+            {:else}
+              <Enable href="/pri/meeting/schedule/disable/{p.id}" />
+            {/if}
+
             <Update href="/pri/meeting/schedule/update/{p.id}" />
           </div>
         </div>
