@@ -1,11 +1,22 @@
 import { serve } from "https://deno.land/std/http/server.ts";
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
+import doit from "./lib/adm/cronjob.ts";
 import hello from "./lib/adm/hello.ts";
 import config from "./lib/adm/config.ts";
 import identity from "./lib/adm/identity.ts";
 
 const PRE = "/api/adm";
+
+// -----------------------------------------------------------------------------
+async function cronjob() {
+  try {
+    await doit();
+  } finally {
+    // rerun in 10 min
+    setTimeout(cronjob, 10 * 60 * 1000);
+  }
+}
 
 // -----------------------------------------------------------------------------
 async function route(req: Request, path: string): Promise<Response> {
