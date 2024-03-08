@@ -1,4 +1,4 @@
-import { fetch, query } from "./common.ts";
+import { fetch } from "./common.ts";
 import type { Id, RoomPartnerCandidate } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -38,13 +38,6 @@ export async function listRoomPartnerCandidateByRoom(
   limit: number,
   offset: number,
 ) {
-  const sql0 = {
-    text: `
-      DELETE FROM room_partner_candidate
-      WHERE expired_at < now()`,
-  };
-  await query(sql0);
-
   const sql = {
     text: `
       SELECT ca.id, ca.room_id, co.name as contact_name,

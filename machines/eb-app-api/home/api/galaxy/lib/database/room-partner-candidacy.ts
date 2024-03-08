@@ -35,13 +35,6 @@ export async function listRoomPartnerCandidacy(
   limit: number,
   offset: number,
 ) {
-  const sql0 = {
-    text: `
-      DELETE FROM domain_partner_candidate
-      WHERE expired_at < now()`,
-  };
-  await query(sql0);
-
   const sql = {
     text: `
       SELECT ca.id, r.name as room_name, d.name as domain_name,
