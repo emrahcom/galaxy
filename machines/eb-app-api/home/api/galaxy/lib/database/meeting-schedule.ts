@@ -6,7 +6,11 @@ import type {
   MeetingSchedule111,
   MeetingSchedule222,
 } from "./types.ts";
-import { addMeetingSessionOnce } from "./meeting-session.ts";
+import {
+  addMeetingSessionOnce,
+  checkScheduleAttr,
+  delMeetingSessionBySchedule,
+} from "./meeting-session.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeetingSchedule(
@@ -258,6 +262,9 @@ export async function addMeetingSchedule(
   name: string,
   scheduleAttr: Attr,
 ) {
+  // if not valid, it will throw an error
+  checkScheduleAttr(scheduleAttr);
+
   const sql = {
     text: `
       INSERT INTO meeting_schedule (meeting_id, name, schedule_attr)
@@ -282,6 +289,7 @@ export async function addMeetingSchedule(
   // dont continue if the schedule was not created
   if (rows[0] === undefined) return rows;
 
+  // add sessions
   if (scheduleAttr.type === "once") {
     await addMeetingSessionOnce(rows[0].id, scheduleAttr);
   }
@@ -318,20 +326,17 @@ export async function updateMeetingSchedule(
   identityId: string,
   scheduleId: string,
   name: string,
-  started_at: string,
-  duration: number,
+  scheduleAttr: Attr,
 ) {
-  if (duration < 1) throw new Error("duration is out of range");
-  if (duration > 1440) throw new Error("duration is out of range");
+  // if not valid, it will throw an error
+  checkScheduleAttr(scheduleAttr);
 
   const sql = {
     text: `
       UPDATE meeting_schedule
       SET
         name = $3,
-        started_at = $4,
-        duration = $5,
-        ended_at = $4::timestamptz + $5::integer * interval '1 min'
+        schedule_attr = $4
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
@@ -343,10 +348,21 @@ export async function updateMeetingSchedule(
       identityId,
       scheduleId,
       name,
-      started_at,
-      duration,
+      scheduleAttr,
     ],
   };
+  const rows = await fetch(sql) as Id[];
 
-  return await fetch(sql) as Id[];
+  // dont continue if the schedule was not updated
+  if (rows[0] === undefined) return rows;
+
+  // delete old sessions
+  await delMeetingSessionBySchedule(scheduleId);
+
+  // add new sessions
+  if (scheduleAttr.type === "once") {
+    await addMeetingSessionOnce(rows[0].id, scheduleAttr);
+  }
+
+  return rows;
 }
