@@ -3,7 +3,7 @@ import type { Attr, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function addMeetingSessionOnce(
-  meetingId: string,
+  meetingScheduleId: string,
   scheduleAttr: Attr,
 ) {
   const sql = {
@@ -14,7 +14,7 @@ export async function addMeetingSessionOnce(
         $2::timestamptz + $3::integer * interval '1 min')
       RETURNING id, created_at as at`,
     args: [
-      meetingId,
+      meetingScheduleId,
       scheduleAttr.once_started_at,
       scheduleAttr.once_duration,
     ],

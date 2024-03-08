@@ -283,7 +283,7 @@ export async function addMeetingSchedule(
   if (rows[0] === undefined) return rows;
 
   if (scheduleAttr.type === "once") {
-    await addMeetingSessionOnce(meetingId, scheduleAttr);
+    await addMeetingSessionOnce(rows[0].id, scheduleAttr);
   }
 
   return rows;
