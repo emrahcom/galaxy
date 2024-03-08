@@ -231,18 +231,15 @@ export async function listMeetingScheduleByMeeting(
       SELECT id, meeting_id, name, schedule_attr, enabled, created_at,
         updated_at
       FROM meeting_schedule s
+        JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE meeting_id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
                     WHERE id = $2
                       AND identity_id = $1
                    )
-        AND EXISTS (SELECT 1
-                    FROM meeting_session
-                    WHERE meeting_schedule_id = s.id
-                      AND ended_at + interval '20 mins' > now()
-                   )
-      ORDER BY name
+        AND ses.ended_at + interval '20 mins' > now()
+      ORDER BY ses.started_at
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
