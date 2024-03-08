@@ -39,13 +39,6 @@ export async function listMeetingMemberCandidacy(
   limit: number,
   offset: number,
 ) {
-  const sql0 = {
-    text: `
-      DELETE FROM meeting_member_candidate
-      WHERE expired_at < now()`,
-  };
-  await query(sql0);
-
   const sql = {
     text: `
       SELECT ca.id, m.name as meeting_name, m.info as meeting_info,
