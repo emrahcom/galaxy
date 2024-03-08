@@ -34,6 +34,7 @@ export async function getMeetingInviteByCode(code: string) {
               WHERE meeting_schedule_id IN (SELECT id
                                             FROM meeting_schedule
                                             WHERE meeting_id = m.id
+                                              AND enabled
                                            )
                 AND ended_at > now()
               ORDER BY started_at
