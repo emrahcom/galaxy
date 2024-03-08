@@ -301,11 +301,11 @@ export async function delMeetingSchedule(
 ) {
   const sql = {
     text: `
-      DELETE FROM meeting_schedule
+      DELETE FROM meeting_schedule s
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
-                    WHERE id = meeting_id
+                    WHERE id = s.meeting_id
                       AND identity_id = $1
                    )
       RETURNING id, now() as at`,
@@ -330,14 +330,14 @@ export async function updateMeetingSchedule(
 
   const sql = {
     text: `
-      UPDATE meeting_schedule
+      UPDATE meeting_schedule s
       SET
         name = $3,
         schedule_attr = $4
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
-                    WHERE id = meeting_id
+                    WHERE id = s.meeting_id
                       AND identity_id = $1
                    )
       RETURNING id, now() as at`,
@@ -372,12 +372,16 @@ export async function updateMeetingScheduleEnabled(
 ) {
   const sql = {
     text: `
-      UPDATE meeting_schedule
+      UPDATE meeting_schedule s
       SET
         enabled = $3,
         updated_at = now()
       WHERE id = $2
-        AND identity_id = $1
+        AND EXISTS (SELECT 1
+                    FROM meeting
+                    WHERE id = s.meeting_id
+                      AND identity_id = $1
+                   )
       RETURNING id, updated_at as at`,
     args: [
       identityId,
