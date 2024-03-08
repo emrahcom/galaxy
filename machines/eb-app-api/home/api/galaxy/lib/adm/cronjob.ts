@@ -39,6 +39,15 @@ async function delMeetingInvite() {
 }
 
 // -----------------------------------------------------------------------------
+async function delMeetingRequest() {
+  const sql = `
+    DELETE FROM meeting_request
+    WHERE expired_at < now()
+  `;
+  await execute(sql);
+}
+
+// -----------------------------------------------------------------------------
 async function delDomainPartnerCandidate() {
   const sql = `
     DELETE FROM domain_partner_candidate
@@ -70,6 +79,7 @@ export default async function () {
   await delDomainInvite();
   await delRoomInvite();
   await delMeetingInvite();
+  await delMeetingRequest();
   await delDomainPartnerCandidate();
   await delRoomPartnerCandidate();
   await delMeetingMemberCandidate();
