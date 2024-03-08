@@ -410,6 +410,8 @@ ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 -- MEETING_SCHEDULE
 -- -----------------------------------------------------------------------------
 -- - This table contains only scheduled meetings.
+-- - The schedule will be deleted if it doesn't have a session after
+--   updated_at + 10 min
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -427,6 +429,7 @@ ALTER TABLE meeting_schedule OWNER TO galaxy;
 -- MEETING_SESSION
 -- -----------------------------------------------------------------------------
 -- - This table contains only scheduled meetings's session.
+-- - The session will be deleted after ended_at + 20 min.
 -- - ended_at = started_at + duration * interval '1 min'
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_session (
