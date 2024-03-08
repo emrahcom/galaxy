@@ -294,6 +294,7 @@ export async function listMeeting(
                                            SELECT id
                                            FROM meeting_schedule
                                            WHERE meeting_id = m.id
+                                             AND enabled
                                          )
                                          AND ended_at > now()
                                        ORDER BY started_at
@@ -308,6 +309,7 @@ export async function listMeeting(
                                       SELECT id
                                       FROM meeting_schedule
                                       WHERE meeting_id = m.id
+                                        AND enabled
                                     )
                                     AND ended_at > now()
                                  )
@@ -360,6 +362,7 @@ export async function listMeeting(
                                            SELECT id
                                            FROM meeting_schedule
                                            WHERE meeting_id = m.id
+                                             AND enabled
                                          )
                                          AND ended_at > now()
                                        ORDER BY started_at
@@ -374,6 +377,7 @@ export async function listMeeting(
                                       SELECT id
                                       FROM meeting_schedule
                                       WHERE meeting_id = m.id
+                                        AND enabled
                                     )
                                     AND ended_at > now()
                                  )
