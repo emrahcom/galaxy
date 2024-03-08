@@ -423,6 +423,7 @@ CREATE TABLE meeting_schedule (
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 CREATE INDEX ON meeting_schedule(meeting_id);
+CREATE INDEX ON meeting_schedule(updated_at);
 ALTER TABLE meeting_schedule OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------

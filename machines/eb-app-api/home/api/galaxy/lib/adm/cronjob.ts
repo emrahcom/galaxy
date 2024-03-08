@@ -84,6 +84,19 @@ async function delMeetingSession() {
 }
 
 // -----------------------------------------------------------------------------
+async function delMeetingSchedule() {
+  const sql = `
+    DELETE FROM meeting_schedule s
+    WHERE updated_at + interval '10 mins' < now()
+      AND NOT EXISTS (SELECT 1
+                      FROM meeting_session
+                      WHERE meeting_schedule_id = s.id
+                     )
+  `;
+  await execute(sql);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   await delDomainInvite();
   await delRoomInvite();
@@ -93,4 +106,5 @@ export default async function () {
   await delRoomPartnerCandidate();
   await delMeetingMemberCandidate();
   await delMeetingSession();
+  await delMeetingSchedule();
 }
