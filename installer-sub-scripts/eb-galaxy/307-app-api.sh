@@ -188,6 +188,21 @@ chown api:api /home/api/upgrade-galaxy
 chown api:api /home/api/galaxy -R
 EOS
 
+lxc-attach -n $MACH -- zsh <<EOS
+set -e
+su -l api-adm <<EOSS
+    deno cache /home/api/galaxy/index-adm.ts
+EOSS
+
+su -l api-pri <<EOSS
+    deno cache /home/api/galaxy/index-pri.ts
+EOSS
+
+su -l api-pub <<EOSS
+    deno cache /home/api/galaxy/index-pub.ts
+EOSS
+EOS
+
 # galaxy-api systemd services
 cp etc/systemd/system/galaxy-api-adm.service $ROOTFS/etc/systemd/system/
 cp etc/systemd/system/galaxy-api-pri.service $ROOTFS/etc/systemd/system/
