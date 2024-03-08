@@ -1,10 +1,12 @@
 import { fetch } from "./common.ts";
 import type {
+  Attr,
   Id,
   MeetingSchedule,
   MeetingSchedule111,
   MeetingSchedule222,
 } from "./types.ts";
+import { addMeetingSessionOnce } from "./meeting-session.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeetingSchedule(
@@ -254,7 +256,7 @@ export async function addMeetingSchedule(
   identityId: string,
   meetingId: string,
   name: string,
-  scheduleAttr: unknown,
+  scheduleAttr: Attr,
 ) {
   const sql = {
     text: `
@@ -275,8 +277,16 @@ export async function addMeetingSchedule(
       scheduleAttr,
     ],
   };
+  const rows = await fetch(sql) as Id[];
 
-  return await fetch(sql) as Id[];
+  // dont continue if the schedule was not created
+  if (rows[0] === undefined) return rows;
+
+  if (scheduleAttr.type === "once") {
+    await addMeetingSessionOnce(meetingId, scheduleAttr);
+  }
+
+  return rows;
 }
 
 // -----------------------------------------------------------------------------
