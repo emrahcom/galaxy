@@ -198,7 +198,7 @@ ALTER TABLE room OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- ROOM_INVITE
 -- -----------------------------------------------------------------------------
--- - The room invite can only be used once, then it will be disabled.
+-- - The room invite can only be used once, then it will be deleted.
 -- - A unique invite is needed for each partner.
 -- -----------------------------------------------------------------------------
 CREATE TABLE room_invite (
