@@ -6,6 +6,7 @@ After=network-online.target
 User=api-pub
 Group=api-pub
 WorkingDirectory=/home/api/galaxy
+ExecStartPre=/bin/sleep 8
 ExecStart=deno run --allow-net --allow-env index-pub.ts
 Restart=always
 RestartSec=2s
