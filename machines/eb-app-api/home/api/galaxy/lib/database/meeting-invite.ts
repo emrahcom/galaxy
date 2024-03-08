@@ -30,9 +30,13 @@ export async function getMeetingInviteByCode(code: string) {
       SELECT m.name as meeting_name, m.info as meeting_info, iv.code,
         iv.invite_to, m.schedule_type,
         array(SELECT array[started_at, ended_at]
-              FROM meeting_schedule
-              WHERE meeting_id = m.id
+              FROM meeting_session
+              WHERE meeting_schedule_id IN (SELECT id
+                                            FROM meeting_schedule
+                                            WHERE meeting_id = m.id
+                                           )
                 AND ended_at > now()
+              ORDER BY started_at
               LIMIT 8
              ) as schedule_list
       FROM meeting_invite iv
