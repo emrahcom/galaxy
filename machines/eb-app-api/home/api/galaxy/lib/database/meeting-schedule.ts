@@ -228,8 +228,8 @@ export async function listMeetingScheduleByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT id, meeting_id, name, schedule_attr, enabled, created_at,
-        updated_at
+      SELECT s.id, s.meeting_id, s.name, s.schedule_attr, s.enabled,
+        s.created_at, s.updated_at
       FROM meeting_schedule s
         JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE meeting_id = $2
@@ -362,4 +362,29 @@ export async function updateMeetingSchedule(
   }
 
   return rows;
+}
+
+// -----------------------------------------------------------------------------
+export async function updateMeetingScheduleEnabled(
+  identityId: string,
+  scheduleId: string,
+  value: boolean,
+) {
+  const sql = {
+    text: `
+      UPDATE meeting_schedule
+      SET
+        enabled = $3,
+        updated_at = now()
+      WHERE id = $2
+        AND identity_id = $1
+      RETURNING id, updated_at as at`,
+    args: [
+      identityId,
+      scheduleId,
+      value,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
 }
