@@ -17,6 +17,7 @@ export async function getMeetingMemberCandidacy(
                                             WHERE meeting_id = m.id
                                            )
                 AND ended_at > now()
+              ORDER BY started_at
               LIMIT 8
              ) as schedule_list,
         ca.join_as, ca.status, ca.created_at, ca.updated_at, ca.expired_at
@@ -50,6 +51,7 @@ export async function listMeetingMemberCandidacy(
                                             WHERE meeting_id = m.id
                                            )
                 AND ended_at > now()
+              ORDER BY started_at
               LIMIT 8
              ) as schedule_list,
         ca.join_as, ca.status, ca.created_at, ca.updated_at, ca.expired_at
