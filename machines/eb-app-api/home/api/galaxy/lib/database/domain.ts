@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Domain, Domain333, Id } from "./types.ts";
+import type { Attr, Domain, Domain333, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getDomain(identityId: string, domainId: string) {
@@ -83,7 +83,7 @@ export async function addDomain(
   identityId: string,
   name: string,
   authType: string,
-  domainAttr: unknown,
+  domainAttr: Attr,
 ) {
   const sql = {
     text: `
@@ -124,7 +124,7 @@ export async function updateDomain(
   domainId: string,
   name: string,
   authType: string,
-  domainAttr: unknown,
+  domainAttr: Attr,
 ) {
   const sql = {
     text: `
