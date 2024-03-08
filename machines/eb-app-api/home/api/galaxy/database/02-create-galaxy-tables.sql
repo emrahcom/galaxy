@@ -103,7 +103,7 @@ INSERT INTO domain VALUES (
 -- -----------------------------------------------------------------------------
 -- DOMAIN_INVITE
 -- -----------------------------------------------------------------------------
--- - The domain invite can only be used once, then it will be disabled.
+-- - The domain invite can only be used once, then it will be deleted.
 -- - A unique invite is needed for each partner.
 -- -----------------------------------------------------------------------------
 CREATE TABLE domain_invite (
