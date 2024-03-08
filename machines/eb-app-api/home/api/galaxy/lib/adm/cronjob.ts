@@ -98,6 +98,8 @@ async function delMeetingSchedule() {
 
 // -----------------------------------------------------------------------------
 export default async function () {
+  console.log("housekeeping...");
+
   await delDomainInvite();
   await delRoomInvite();
   await delMeetingInvite();
