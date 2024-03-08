@@ -190,15 +190,15 @@ EOS
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
-su -l api-adm <<EOSS
+su -l api-adm -s /bin/sh <<EOSS
     deno cache /home/api/galaxy/index-adm.ts
 EOSS
 
-su -l api-pri <<EOSS
+su -l api-pri -s /bin/sh <<EOSS
     deno cache /home/api/galaxy/index-pri.ts
 EOSS
 
-su -l api-pub <<EOSS
+su -l api-pub -s /bin/sh <<EOSS
     deno cache /home/api/galaxy/index-pub.ts
 EOSS
 EOS
