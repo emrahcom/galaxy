@@ -39,7 +39,7 @@
             {#if p.enabled}
               <Disable href="/pri/meeting/schedule/disable/{p.id}" />
             {:else}
-              <Enable href="/pri/meeting/schedule/disable/{p.id}" />
+              <Enable href="/pri/meeting/schedule/enable/{p.id}" />
             {/if}
 
             <Update href="/pri/meeting/schedule/update/{p.id}" />
