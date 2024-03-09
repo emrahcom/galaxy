@@ -108,7 +108,7 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
         AND (m.schedule_type != 'scheduled'
              OR ses.ended_at > now()
             )
-      ORDER BY started_at
+      ORDER BY ses.started_at
       LIMIT 1
         `,
     args: [
@@ -136,17 +136,25 @@ export async function getMeetingLinksetByMembership(
     text: `
       SELECT m.id, m.name, r.name as room_name, s.name as schedule_name,
         r.has_suffix, r.suffix, d.auth_type, d.domain_attr, mem.join_as,
-        s.started_at, s.ended_at, s.duration,
-        extract('epoch' from age(ended_at, now()))::integer as remaining,
+        ses.started_at, ses.ended_at, ses.duration,
+        extract('epoch' from age(ses.ended_at, now()))::integer as remaining,
         pr.name as profile_name, pr.email as profile_email
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
+                          AND m.enabled
         JOIN room r ON m.room_id = r.id
+                       AND r.enabled
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i1 ON d.identity_id = i1.id
+                            AND i1.enabled
         JOIN identity i2 ON r.identity_id = i2.id
+                            AND i2.enabled
         JOIN identity i3 ON m.identity_id = i3.id
+                            AND i3.enabled
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
+                                        AND s.enabled
+        LEFT JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
         LEFT JOIN profile pr ON mem.profile_id = pr.id
       WHERE mem.id = $2
         AND mem.identity_id = $1
@@ -154,17 +162,11 @@ export async function getMeetingLinksetByMembership(
         AND CASE mem.join_as
               WHEN 'host' THEN true
               ELSE (m.schedule_type != 'scheduled'
-                    OR (s.started_at - interval '1 min' < now()
-                        AND s.ended_at > now()
+                    OR (ses.started_at - interval '1 min' < now()
+                        AND ses.ended_at > now()
                        )
                    )
             END
-        AND m.enabled
-        AND r.enabled
-        AND d.enabled
-        AND i1.enabled
-        AND i2.enabled
-        AND i3.enabled
         AND (r.identity_id = m.identity_id
              OR EXISTS (SELECT 1
                         FROM room_partner
@@ -183,9 +185,9 @@ export async function getMeetingLinksetByMembership(
                        )
             )
         AND (m.schedule_type != 'scheduled'
-             OR s.ended_at > now()
+             OR ses.ended_at > now()
             )
-      ORDER BY started_at
+      ORDER BY ses.started_at
       LIMIT 1
         `,
     args: [
