@@ -64,7 +64,7 @@ async function main() {
   if (!isMigrated) Deno.exit(1);
 
   // start the cronjob thread
-  cronjob;
+  cronjob();
 
   // start API
   serve(handler, {
