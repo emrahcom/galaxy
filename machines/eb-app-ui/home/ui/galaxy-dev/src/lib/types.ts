@@ -151,8 +151,8 @@ export interface Meeting222 {
   domain_url: boolean;
   room_name: string;
   schedule_type: string;
-  schedule_list: string[];
-  scheduled_at: string;
+  session_list: string[];
+  session_at: string;
   hidden: boolean;
   restricted: boolean;
   subscribable: boolean;
@@ -189,7 +189,7 @@ export interface MeetingInvite111 {
   code: string;
   invite_to: string;
   schedule_type: string;
-  schedule_list: [[string, string]];
+  session_list: [[string, string]];
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ export interface MeetingMemberCandidacy {
   meeting_name: string;
   meeting_info: string;
   schedule_type: string;
-  schedule_list: [[string, string]];
+  session_list: [[string, string]];
   join_as: string;
   status: string;
   created_at: string;

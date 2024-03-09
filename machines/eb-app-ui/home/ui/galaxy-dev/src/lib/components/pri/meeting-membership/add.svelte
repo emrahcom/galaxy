@@ -14,7 +14,7 @@
   export let isExist: boolean;
 
   let schedules = "";
-  for (const s of invite.schedule_list) {
+  for (const s of invite.session_list) {
     const startTime = new Date(s[0]);
     const localStartTime = startTime.toLocaleString();
     const endTime = new Date(s[1]);
@@ -87,7 +87,7 @@
           disabled={true}
           readonly={true}
         />
-        {#if invite.schedule_list.length > 1}
+        {#if invite.session_list.length > 1}
           <Textarea
             name="meeting_schedule"
             label="Schedules"
@@ -95,7 +95,7 @@
             disabled={true}
             readonly={true}
           />
-        {:else if invite.schedule_list.length === 1}
+        {:else if invite.session_list.length === 1}
           <Text
             name="meeting_schedule"
             label="Schedule"

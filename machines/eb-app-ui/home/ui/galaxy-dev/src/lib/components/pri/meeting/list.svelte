@@ -54,8 +54,8 @@
 
             <div class="card-text fw-bold">
               {#if p.schedule_type === "scheduled"}
-                {#if p.scheduled_at}
-                  {#each p.schedule_list.slice(0, 3) as at}
+                {#if p.session_at}
+                  {#each p.session_list.slice(0, 3) as at}
                     {#if isOnline(at)}
                       <p class="text-primary my-0">{toLocaleTime(at)}</p>
                     {:else if isToday(at)}
@@ -140,8 +140,8 @@
 
             <div class="card-text fw-bold">
               {#if c.schedule_type === "scheduled"}
-                {#if c.schedule_list.length}
-                  {#each c.schedule_list.slice(0, 3) as at}
+                {#if c.session_list.length}
+                  {#each c.session_list.slice(0, 3) as at}
                     {#if isOnline(at[0])}
                       <p class="text-primary my-0">{toLocaleTime(at[0])}</p>
                     {:else if isToday(at[0])}
