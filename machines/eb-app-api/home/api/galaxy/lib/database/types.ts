@@ -12,6 +12,11 @@ export interface Attr {
 }
 
 // -----------------------------------------------------------------------------
+export interface Meta {
+  mvalue: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Id {
   id: string;
   at: string;
