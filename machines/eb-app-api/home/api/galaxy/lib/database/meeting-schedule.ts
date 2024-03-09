@@ -107,8 +107,8 @@ export async function getMeetingScheduleByMembership(
   const sql = {
     text: `
       SELECT mem.id, m.name as meeting_name, m.info as meeting_info,
-        s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        extract('epoch' from age(started_at, now()))::integer
+        s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
+        extract('epoch' from age(ses.started_at, now()))::integer
           + CASE mem.join_as
               WHEN 'host' THEN 0
               WHEN 'guest' THEN 3 + floor(random()*27)
@@ -116,21 +116,23 @@ export async function getMeetingScheduleByMembership(
         mem.join_as
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
+                          AND m.enabled
         JOIN room r ON m.room_id = r.id
+                       AND r.enabled
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i1 ON d.identity_id = i1.id
+                            AND i1.enabled
         JOIN identity i2 ON r.identity_id = i2.id
+                            AND i2.enabled
         JOIN identity i3 ON m.identity_id = i3.id
+                            AND i3.enabled
         JOIN meeting_schedule s ON m.id = s.meeting_id
+                            AND s.enabled
+        JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE mem.id = $2
         AND mem.identity_id = $1
         AND mem.enabled
-        AND m.enabled
-        AND r.enabled
-        AND d.enabled
-        AND i1.enabled
-        AND i2.enabled
-        AND i3.enabled
         AND (r.identity_id = m.identity_id
              OR EXISTS (SELECT 1
                         FROM room_partner
@@ -148,8 +150,8 @@ export async function getMeetingScheduleByMembership(
                           AND enabled
                        )
             )
-        AND s.ended_at > now()
-      ORDER BY s.started_at
+        AND ses.ended_at > now()
+      ORDER BY ses.started_at
       LIMIT 1`,
     args: [
       identityId,
@@ -168,8 +170,8 @@ export async function getMeetingScheduleByCode(code: string) {
   const sql = {
     text: `
       SELECT iv.code, m.name as meeting_name, m.info as meeting_info,
-        s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        extract('epoch' from age(started_at, now()))::integer
+        s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
+        extract('epoch' from age(ses.started_at, now()))::integer
           + CASE iv.join_as
               WHEN 'host' THEN 0
               WHEN 'guest' THEN 3 + floor(random()*27)
@@ -177,22 +179,24 @@ export async function getMeetingScheduleByCode(code: string) {
         iv.join_as
       FROM meeting_invite iv
         JOIN meeting m ON iv.meeting_id = m.id
+                          AND m.enabled
         JOIN room r ON m.room_id = r.id
+                       AND r.enabled
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i1 ON d.identity_id = i1.id
+                            AND i1.enabled
         JOIN identity i2 ON r.identity_id = i2.id
+                            AND i2.enabled
         JOIN identity i3 ON m.identity_id = i3.id
+                            AND i3.enabled
         JOIN meeting_schedule s ON m.id = s.meeting_id
+                                   AND s.enabled
+        JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE iv.code = $1
         AND iv.enabled
         AND iv.invite_to = 'audience'
         AND iv.expired_at > now()
-        AND m.enabled
-        AND r.enabled
-        AND d.enabled
-        AND i1.enabled
-        AND i2.enabled
-        AND i3.enabled
         AND (r.identity_id = m.identity_id
              OR EXISTS (SELECT 1
                         FROM room_partner
@@ -210,8 +214,8 @@ export async function getMeetingScheduleByCode(code: string) {
                           AND enabled
                        )
             )
-        AND s.ended_at > now()
-      ORDER BY s.started_at
+        AND ses.ended_at > now()
+      ORDER BY ses.started_at
       LIMIT 1`,
     args: [
       code,
