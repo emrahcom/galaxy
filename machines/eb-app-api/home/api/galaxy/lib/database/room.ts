@@ -37,12 +37,12 @@ export async function getRoomLinkset(identityId: string, roomId: string) {
       SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.domain_attr
       FROM room r
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i ON d.identity_id = i.id
+                           AND i.enabled
       WHERE r.id = $2
         AND r.identity_id = $1
         AND NOT r.ephemeral
-        AND d.enabled
-        AND i.enabled
         AND (d.public
              OR d.identity_id = $1
              OR EXISTS (SELECT 1
@@ -58,17 +58,17 @@ export async function getRoomLinkset(identityId: string, roomId: string) {
       SELECT r.name, r.has_suffix, r.suffix, d.auth_type, d.domain_attr
       FROM room_partner pa
         JOIN room r ON pa.room_id = r.id
+                       AND r.enabled
+                       AND NOT r.ephemeral
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i1 ON d.identity_id = i1.id
+                            AND i1.enabled
         JOIN identity i2 ON r.identity_id = i2.id
+                            AND i2.enabled
       WHERE pa.identity_id = $1
         AND pa.room_id = $2
         AND pa.enabled
-        AND NOT r.ephemeral
-        AND r.enabled
-        AND d.enabled
-        AND i1.enabled
-        AND i2.enabled
         AND (d.public
              OR d.identity_id = r.identity_id
              OR EXISTS (SELECT 1
