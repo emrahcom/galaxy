@@ -453,17 +453,17 @@ export async function listPublicMeeting(
         m.subscribable
       FROM meeting m
         JOIN room r ON m.room_id = r.id
+                       AND r.enabled
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i1 ON d.identity_id = i1.id
+                            AND i1.enabled
         JOIN identity i2 ON r.identity_id = i2.id
+                            AND i2.enabled
         JOIN identity i3 ON m.identity_id = i3.id
+                            AND i3.enabled
       WHERE NOT m.hidden
         AND m.enabled
-        AND r.enabled
-        AND d.enabled
-        AND i1.enabled
-        AND i2.enabled
-        AND i3.enabled
       ORDER BY m.created_at DESC
       LIMIT $1 OFFSET $2`,
     args: [
