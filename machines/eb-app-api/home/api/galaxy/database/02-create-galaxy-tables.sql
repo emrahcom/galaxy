@@ -15,6 +15,18 @@
 BEGIN;
 
 -- -----------------------------------------------------------------------------
+-- METADATA
+-- -----------------------------------------------------------------------------
+CREATE TABLE metadata (
+    "mkey" varchar(250) NOT NULL PRIMARY KEY,
+    "mvalue" varchar(250) NOT NULL
+);
+ALTER TABLE metadata OWNER TO galaxy;
+
+-- database version
+INSERT INTO metadata VALUES ('database_version', '20240309.01');
+
+-- -----------------------------------------------------------------------------
 -- IDENTITY
 -- -----------------------------------------------------------------------------
 CREATE TABLE identity (
