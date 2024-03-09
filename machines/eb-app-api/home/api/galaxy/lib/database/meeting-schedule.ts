@@ -47,24 +47,26 @@ export async function getMeetingScheduleByMeeting(
   const sql = {
     text: `
       SELECT m.id, m.name as meeting_name, m.info as meeting_info,
-        s.name as schedule_name, s.started_at, s.ended_at, s.duration,
-        extract('epoch' from age(started_at, now()))::integer as waiting_time,
-        'host' as join_as
+        s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
+        extract('epoch' from age(ses.started_at, now()))::integer
+        as waiting_time, 'host' as join_as
       FROM meeting m
         JOIN room r ON m.room_id = r.id
+                       AND r.enabled
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i1 ON d.identity_id = i1.id
+                            AND i1.enabled
         JOIN identity i2 ON r.identity_id = i2.id
+                            AND i2.enabled
         JOIN identity i3 ON m.identity_id = i3.id
+                            AND i3.enabled
         JOIN meeting_schedule s ON m.id = s.meeting_id
+                                   AND s.enabled
+        JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE m.id = $2
         AND m.identity_id = $1
         AND m.enabled
-        AND r.enabled
-        AND d.enabled
-        AND i1.enabled
-        AND i2.enabled
-        AND i3.enabled
         AND (r.identity_id = $1
              OR EXISTS (SELECT 1
                         FROM room_partner
@@ -82,8 +84,8 @@ export async function getMeetingScheduleByMeeting(
                           AND enabled
                        )
             )
-        AND s.ended_at > now()
-      ORDER BY s.started_at
+        AND ses.ended_at > now()
+      ORDER BY ses.started_at
       LIMIT 1`,
     args: [
       identityId,
