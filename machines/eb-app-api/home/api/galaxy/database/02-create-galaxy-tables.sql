@@ -17,6 +17,13 @@ BEGIN;
 -- -----------------------------------------------------------------------------
 -- METADATA
 -- -----------------------------------------------------------------------------
+-- When the schema is updated:
+--   - Increment database_version in this table.
+--   - Update DB_VERSION in config.ts
+--   - Update lib/adm/migration.ts according to changes.
+--
+-- API services don't start if the database version doesn't match.
+-- -----------------------------------------------------------------------------
 CREATE TABLE metadata (
     "mkey" varchar(250) NOT NULL PRIMARY KEY,
     "mvalue" varchar(250) NOT NULL
