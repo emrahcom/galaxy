@@ -301,7 +301,7 @@ export async function listMeeting(
                                       )
            ELSE array[]::timestamp with time zone[]
          END
-        ) as schedule_list,
+        ) as session_list,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN (SELECT min(started_at)
                                   FROM meeting_session
@@ -316,7 +316,7 @@ export async function listMeeting(
            WHEN 'ephemeral' THEN CURRENT_DATE
            ELSE CURRENT_DATE + 1
          END
-        ) as scheduled_at,
+        ) as session_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
         (r.enabled AND i2.enabled
          AND d.enabled AND i1.enabled
@@ -369,7 +369,7 @@ export async function listMeeting(
                                       )
            ELSE array[]::timestamp with time zone[]
          END
-        ) as schedule_list,
+        ) as session_list,
         (CASE m.schedule_type
            WHEN 'scheduled' THEN (SELECT min(started_at)
                                   FROM meeting_session
@@ -384,7 +384,7 @@ export async function listMeeting(
            WHEN 'ephemeral' THEN CURRENT_DATE
            ELSE CURRENT_DATE + 1
          END
-        ) as scheduled_at,
+        ) as session_at,
         m.hidden, m.restricted, m.subscribable, m.enabled,
         (mem.enabled AND i3.enabled
          AND r.enabled AND i2.enabled
@@ -419,7 +419,7 @@ export async function listMeeting(
         JOIN identity i3 ON m.identity_id = i3.id
       WHERE mem.identity_id = $1
 
-      ORDER BY scheduled_at, name
+      ORDER BY session_at, name
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,

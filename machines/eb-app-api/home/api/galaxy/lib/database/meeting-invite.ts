@@ -39,7 +39,7 @@ export async function getMeetingInviteByCode(code: string) {
                 AND ended_at > now()
               ORDER BY started_at
               LIMIT 8
-             ) as schedule_list
+             ) as session_list
       FROM meeting_invite iv
         JOIN meeting m ON iv.meeting_id = m.id
       WHERE iv.code = $1
