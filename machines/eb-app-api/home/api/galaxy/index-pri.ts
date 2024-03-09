@@ -1,11 +1,12 @@
 import { serve } from "https://deno.land/std/http/server.ts";
-import { HOSTNAME, PORT_PRIVATE } from "./config.ts";
+import { DB_VERSION, HOSTNAME, PORT_PRIVATE } from "./config.ts";
 import {
   methodNotAllowed,
   notFound,
   unauthorized,
 } from "./lib/http/response.ts";
 import { getIdentityId } from "./lib/pri/kratos.ts";
+import { getVersion } from "./lib/database/common.ts";
 import contact from "./lib/pri/contact.ts";
 import domain from "./lib/pri/domain.ts";
 import domainInvite from "./lib/pri/domain-invite.ts";
@@ -109,7 +110,15 @@ async function handler(req: Request): Promise<Response> {
 }
 
 // -----------------------------------------------------------------------------
-function main() {
+async function main() {
+  const version = await getVersion();
+
+  // dont start if the database version doesn't match
+  if (DB_VERSION !== version) {
+    console.error("Unsuported database version");
+    Deno.exit(1);
+  }
+
   serve(handler, {
     hostname: HOSTNAME,
     port: PORT_PRIVATE,

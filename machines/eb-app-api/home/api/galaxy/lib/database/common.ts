@@ -58,6 +58,19 @@ export async function fetch(sql: QueryObject): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+export async function getVersion() {
+  const sql = {
+    text: `
+      SELECT mvalue
+      FROM metadata
+      WHERE mkey = 'database_version'`,
+  };
+  const rows = await fetch(sql) as string[];
+
+  return rows[0];
+}
+
+// -----------------------------------------------------------------------------
 export function getLimit(limit: number): number {
   if (!limit) {
     limit = DEFAULT_LIST_SIZE;
