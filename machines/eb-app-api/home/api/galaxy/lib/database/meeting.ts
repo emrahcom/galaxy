@@ -70,22 +70,24 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
     text: `
       SELECT m.id, m.name, r.name as room_name, s.name as schedule_name,
         r.has_suffix, r.suffix, d.auth_type, d.domain_attr, 'host' as join_as,
-        s.started_at, s.ended_at, s.duration,
-        extract('epoch' from age(ended_at, now()))::integer as remaining,
+        ses.started_at, ses.ended_at, ses.duration,
+        extract('epoch' from age(ses.ended_at, now()))::integer as remaining,
         pr.name as profile_name, pr.email as profile_email
       FROM meeting m
         JOIN room r ON m.room_id = r.id
+                       AND r.enabled
         JOIN domain d ON r.domain_id = d.id
+                         AND d.enabled
         JOIN identity i1 ON d.identity_id = i1.id
+                            AND i1.enabled
         JOIN identity i2 ON r.identity_id = i2.id
+                            AND i2.enabled
         LEFT JOIN meeting_schedule s ON m.id = s.meeting_id
+                                        AND s.enabled
+        LEFT JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
         LEFT JOIN profile pr ON m.profile_id = pr.id
       WHERE m.id = $2
         AND m.identity_id = $1
-        AND r.enabled
-        AND d.enabled
-        AND i1.enabled
-        AND i2.enabled
         AND (r.identity_id = $1
              OR EXISTS (SELECT 1
                         FROM room_partner
@@ -104,7 +106,7 @@ export async function getMeetingLinkset(identityId: string, meetingId: string) {
                        )
             )
         AND (m.schedule_type != 'scheduled'
-             OR s.ended_at > now()
+             OR ses.ended_at > now()
             )
       ORDER BY started_at
       LIMIT 1
