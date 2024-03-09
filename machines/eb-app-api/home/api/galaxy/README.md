@@ -1,4 +1,4 @@
-#### running
+### running
 
 ```bash
 (cd /home/api/galaxy && deno run --allow-net --allow-env --watch index-adm.ts)
@@ -6,7 +6,7 @@
 (cd /home/api/galaxy && deno run --allow-net --allow-env --watch index-pub.ts)
 ```
 
-#### checking
+### checking
 
 ```bash
 cd /home/api/galaxy
