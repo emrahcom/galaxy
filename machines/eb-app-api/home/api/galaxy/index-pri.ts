@@ -115,7 +115,7 @@ async function main() {
 
   // dont start if the database version doesn't match
   if (DB_VERSION !== version) {
-    console.error("Unsuported database version");
+    console.error("Unsupported database version");
     Deno.exit(1);
   }
 
