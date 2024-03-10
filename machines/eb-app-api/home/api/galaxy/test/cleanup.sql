@@ -73,3 +73,15 @@ WHERE identity_id IN (SELECT identity_id
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
+
+-- -----------------------------------------------------------------------------
+-- room
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by room scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM room
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
