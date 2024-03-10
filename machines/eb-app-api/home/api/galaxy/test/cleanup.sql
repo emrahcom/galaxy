@@ -122,3 +122,15 @@ WHERE identity_id IN (SELECT identity_id
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
+
+-- -----------------------------------------------------------------------------
+-- meeting
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by meeting scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM meeting
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
