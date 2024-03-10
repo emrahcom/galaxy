@@ -183,3 +183,18 @@ WHERE identity_id IN (SELECT identity_id
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
+
+-- -----------------------------------------------------------------------------
+-- meeting_schedule
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by meeting-schedule scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM meeting_schedule
+WHERE meeting_id IN (SELECT id
+                     FROM meeting
+                     WHERE identity_id IN (SELECT identity_id
+                                           FROM profile
+                                           WHERE name LIKE 'user.%'
+                                           AND email LIKE 'user.%@galaxy.corp'
+                                          )
+                     );
