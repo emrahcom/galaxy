@@ -17,15 +17,13 @@ TAG="invalid"
 
 # ------------------------------------------------------------------------------
 # try to update with invalid post
-# a nonexistent profile in the example
+# no profile_id in the example
 # ------------------------------------------------------------------------------
 request_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-request-add-new-id-$ID-$IDX-res)
-profile_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
     "id": "$request_id",
-    "profile_id": "$profile_fake"
 }
 EOF
 )
