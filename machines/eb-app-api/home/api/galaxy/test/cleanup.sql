@@ -97,3 +97,28 @@ WHERE identity_id IN (SELECT identity_id
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
+
+-- -----------------------------------------------------------------------------
+-- room_partner
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by room-partnerhip and room-partner scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM room_partner
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
+DELETE FROM contact
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
+UPDATE room_invite
+SET enabled = true
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
