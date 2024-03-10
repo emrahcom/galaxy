@@ -4,7 +4,7 @@ import type { Attr, Id } from "./types.ts";
 // -----------------------------------------------------------------------------
 function checkScheduleAttrOnce(scheduleAttr: Attr) {
   if (Number(scheduleAttr.once_duration) < 1) {
-    new Error("duration is out of range");
+    throw new Error("duration is out of range");
   }
 
   if (Number(scheduleAttr.once_duration) > 1440) {
