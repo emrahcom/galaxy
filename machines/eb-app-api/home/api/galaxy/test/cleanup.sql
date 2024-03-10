@@ -1,0 +1,50 @@
+-- -----------------------------------------------------------------------------
+-- identity
+-- -----------------------------------------------------------------------------
+-- Deletes all test data.
+-- -----------------------------------------------------------------------------
+DELETE FROM identity
+WHERE id IN (SELECT identity_id
+             FROM profile
+             WHERE name LIKE 'user.%'
+               AND email LIKE 'user.%@galaxy.corp'
+            );
+
+-- -----------------------------------------------------------------------------
+-- profile
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by profile scripts.
+-- Run these queries to rerun profile scripts without recreating identities.
+-- -----------------------------------------------------------------------------
+DELETE FROM profile
+WHERE name
+LIKE 'profile-%';
+
+UPDATE profile
+SET is_default = true
+WHERE name LIKE 'user.%'
+  AND email LIKE 'user.%@galaxy.corp';
+
+-- -----------------------------------------------------------------------------
+-- domain
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by domain scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM domain
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
+
+-- -----------------------------------------------------------------------------
+-- domain_invite
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by domain-invite scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM domain_invite
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
