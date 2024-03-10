@@ -60,14 +60,14 @@ WHERE identity_id IN (SELECT identity_id
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
-DELETE FROM contact
+UPDATE domain_invite
+SET enabled = true
 WHERE identity_id IN (SELECT identity_id
                       FROM profile
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
-UPDATE domain_invite
-SET enabled = true
+DELETE FROM contact
 WHERE identity_id IN (SELECT identity_id
                       FROM profile
                       WHERE name LIKE 'user.%'
@@ -109,14 +109,14 @@ WHERE identity_id IN (SELECT identity_id
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
-DELETE FROM contact
+UPDATE room_invite
+SET enabled = true
 WHERE identity_id IN (SELECT identity_id
                       FROM profile
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
-UPDATE room_invite
-SET enabled = true
+DELETE FROM contact
 WHERE identity_id IN (SELECT identity_id
                       FROM profile
                       WHERE name LIKE 'user.%'
@@ -141,6 +141,31 @@ WHERE identity_id IN (SELECT identity_id
 -- Deletes test data created by meeting-invite scripts.
 -- -----------------------------------------------------------------------------
 DELETE FROM meeting_invite
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
+
+-- -----------------------------------------------------------------------------
+-- meeting_member
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by meeting_memberhip and meeting_member scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM meeting_member
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
+UPDATE meeting_invite
+SET enabled = true
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
+DELETE FROM contact
 WHERE identity_id IN (SELECT identity_id
                       FROM profile
                       WHERE name LIKE 'user.%'
