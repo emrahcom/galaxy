@@ -201,6 +201,12 @@ EOSS
 su -l api-pub -s /bin/sh <<EOSS
     deno cache /home/api/galaxy/index-pub.ts
 EOSS
+
+su -l api -s /bin/sh <<EOSS
+    deno cache /home/api/galaxy/index-adm.ts
+    deno cache /home/api/galaxy/index-pri.ts
+    deno cache /home/api/galaxy/index-pub.ts
+EOSS
 EOS
 
 # galaxy-api systemd services
