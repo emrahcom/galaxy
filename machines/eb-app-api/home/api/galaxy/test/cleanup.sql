@@ -171,3 +171,15 @@ WHERE identity_id IN (SELECT identity_id
                       WHERE name LIKE 'user.%'
                         AND email LIKE 'user.%@galaxy.corp'
                      );
+
+-- -----------------------------------------------------------------------------
+-- meeting_reuqest
+-- -----------------------------------------------------------------------------
+-- Deletes test data created by meeting-request scripts.
+-- -----------------------------------------------------------------------------
+DELETE FROM meeting_request
+WHERE identity_id IN (SELECT identity_id
+                      FROM profile
+                      WHERE name LIKE 'user.%'
+                        AND email LIKE 'user.%@galaxy.corp'
+                     );
