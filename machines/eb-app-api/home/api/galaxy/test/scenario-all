@@ -8,11 +8,14 @@ BASEDIR=$(dirname $0)
 source $BASEDIR/config
 source $BASEDIR/scripts/common
 
+for i in $(seq 1 10); do
+    declare ID${i}=$i
+done
+
 # ------------------------------------------------------------------------------
 # kratos
 # ------------------------------------------------------------------------------
 for i in $(seq 1 10); do
-    declare ID${i}=$i
     bash $BASEDIR/scripts/kratos/registration $i
     bash $BASEDIR/scripts/kratos/login $i
 done
@@ -491,4 +494,4 @@ bash $BASEDIR/scripts/pub/meeting-schedule/get-bycode-none
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< "completed successfully"
+footer <<< completed successfully
