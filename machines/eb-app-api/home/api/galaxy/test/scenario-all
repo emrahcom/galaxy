@@ -491,4 +491,4 @@ bash $BASEDIR/scripts/pub/meeting-schedule/get-bycode-none
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
-footer <<< completed successfully
+footer <<< "completed successfully"
