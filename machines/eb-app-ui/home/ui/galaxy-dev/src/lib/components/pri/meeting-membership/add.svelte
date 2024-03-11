@@ -16,7 +16,13 @@
   let schedules = "";
   for (const s of invite.session_list) {
     const startTime = new Date(s[0]);
-    const localStartTime = startTime.toLocaleString();
+    const localStartTime = startTime.toLocaleString(undefined, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
     const endTime = new Date(s[1]);
     const diff = endTime.getTime() - startTime.getTime();
     const minutes = Math.round(diff / (1000 * 60));
