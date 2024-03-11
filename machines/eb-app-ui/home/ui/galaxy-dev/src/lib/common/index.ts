@@ -51,7 +51,13 @@ export function toInputTime(date = "") {
 export function toLocaleTime(date: string) {
   const _date = new Date(date);
 
-  return _date.toLocaleString();
+  return _date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 // -----------------------------------------------------------------------------
