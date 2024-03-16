@@ -3,12 +3,28 @@
 -- -----------------------------------------------------------------------------
 -- Deletes all test data.
 -- -----------------------------------------------------------------------------
+
+\c galaxy
+
 DELETE FROM identity
 WHERE id IN (SELECT identity_id
              FROM profile
              WHERE name LIKE 'user.%'
                AND email LIKE 'user.%@galaxy.corp'
             );
+
+\c kratos
+
+CREATE EXTENSION dblink;
+
+DELETE FROM identities
+WHERE id NOT IN (SELECT id::uuid
+                 FROM dblink(
+                   'dbname=galaxy',
+                   'SELECT id FROM identity'
+                 ) AS t1(id name));
+
+\c galaxy
 
 -- -----------------------------------------------------------------------------
 -- profile
