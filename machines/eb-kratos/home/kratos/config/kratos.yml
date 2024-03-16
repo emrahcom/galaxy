@@ -35,6 +35,7 @@ selfservice:
       enabled: true
     code:
       enabled: true
+      passwordless_enabled: true
 
   flows:
     error:
@@ -69,6 +70,8 @@ selfservice:
       after:
         password:
           default_browser_return_url: https://___APP_FQDN___/pri
+        code:
+          default_browser_return_url: https://___APP_FQDN___/pri
 
 
     registration:
@@ -92,6 +95,14 @@ selfservice:
                 body: file:///home/kratos/jsonnet/identity.jsonnet
             - hook: session
             - hook: show_verification_ui
+        code:
+          hooks:
+            - hook: web_hook
+              config:
+                url: http://eb-app-api:8000/api/adm/identity/add
+                method: POST
+                body: file:///home/kratos/jsonnet/identity.jsonnet
+            - hook: session
 
 log:
   level: warning
