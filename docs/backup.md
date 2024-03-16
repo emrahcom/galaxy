@@ -22,9 +22,11 @@ exit
 exit
 
 cd
-mkdir -p backup
-mv /var/lib/lxc/eb-postgres/rootfs/tmp/kratos_*.sql backup/
-mv /var/lib/lxc/eb-postgres/rootfs/tmp/galaxy_*.sql backup/
+DATE=$(date +'%Y%m%d')
+mkdir -p backup/$DATE
+mv /var/lib/lxc/eb-postgres/rootfs/tmp/kratos_*.sql backup/$DATE/
+mv /var/lib/lxc/eb-postgres/rootfs/tmp/galaxy_*.sql backup/$DATE/
+chown root: backup/$DATE -R
 ```
 
 Don't forget to copy backups on a remote system.
