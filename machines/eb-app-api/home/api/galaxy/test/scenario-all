@@ -145,6 +145,33 @@ bash $BASEDIR/scripts/pri/domain-partner/list-bydomain-invalid $ID1 1
 bash $BASEDIR/scripts/pri/domain-partner/del-exist $ID1 1 $ID2 1
 bash $BASEDIR/scripts/pri/domain-partner/del-none $ID1
 
+for i in $(seq 3 10); do
+    ID="$i"
+    (( j = 8 + i ))
+    bash $BASEDIR/scripts/pri/domain-invite/get-exist $ID1 $j
+    bash $BASEDIR/scripts/pri/domain-partnership/add-bycode-new $ID 1 $ID1 $j
+done
+
+# contact
+bash $BASEDIR/scripts/pri/contact/list-nolimit-nooffset $ID1
+bash $BASEDIR/scripts/pri/contact/list-limit $ID1
+bash $BASEDIR/scripts/pri/contact/list-limit-offset $ID1
+bash $BASEDIR/scripts/pri/contact/list-huge-offset $ID1
+bash $BASEDIR/scripts/pri/contact/list-invalid $ID1
+
+bash $BASEDIR/scripts/pri/contact/get-exist $ID1 1
+bash $BASEDIR/scripts/pri/contact/get-none $ID1
+
+bash $BASEDIR/scripts/pri/contact/list-bydomain-nolimit-nooffset $ID1
+bash $BASEDIR/scripts/pri/contact/list-bydomain-limit $ID1
+bash $BASEDIR/scripts/pri/contact/list-bydomain-limit-offset $ID1
+bash $BASEDIR/scripts/pri/contact/list-bydomain-huge-offset $ID1
+bash $BASEDIR/scripts/pri/contact/list-bydomain-invalid $ID1
+
+# domain-partner-candidate
+#bash $BASEDIR/scripts/pri/domain-partner-candidate/add-invalid $ID1
+exit
+
 # room
 bash $BASEDIR/scripts/pri/room/add-invalid $ID1
 bash $BASEDIR/scripts/pri/room/add-new $ID1 1 1
