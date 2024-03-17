@@ -7,7 +7,10 @@ source $BASEDIR/../../../config
 source $BASEDIR/../../common
 
 [[ -z "$1" ]] && ID=1 || ID=$1
-[[ -z "$2" ]] && IDX=1 || IDX=$2
+# convert contact ID to array index
+[[ -z "$2" ]] && IDX=0 || IDX=$(($2 - 1 ))
+# domain index
+[[ -z "$3" ]] && IDX2=1 || IDX2=$3
 
 SERVICE="pri"
 CLASS="domain/partner/candidate"
@@ -19,8 +22,8 @@ ACTION="add"
 TAG="invalid-domain"
 
 domain_fake=$(uuidgen)
-contact_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-contact-list-nolimit-nooffset-id-$ID-$IDX-res)
+contact_id=$(jq -r ".[$IDX].id" \
+    $TMP/api-pri-contact-list-nolimit-nooffset-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
     "domain_id": "$domain_fake",
@@ -37,7 +40,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 # ------------------------------------------------------------------------------
 TAG="invalid-contact"
 
-domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX2-res)
 contact_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
