@@ -163,11 +163,11 @@ bash $PRI/contact/list-limit-offset $ID1
 bash $PRI/contact/list-huge-offset $ID1
 bash $PRI/contact/list-invalid $ID1
 
-bash $PRI/contact/list-bydomain-nolimit-nooffset $ID1
-bash $PRI/contact/list-bydomain-limit $ID1
-bash $PRI/contact/list-bydomain-limit-offset $ID1
-bash $PRI/contact/list-bydomain-huge-offset $ID1
-bash $PRI/contact/list-bydomain-invalid $ID1
+bash $PRI/contact/list-bydomain-nolimit-nooffset $ID1 1
+bash $PRI/contact/list-bydomain-limit $ID1 1
+bash $PRI/contact/list-bydomain-limit-offset $ID1 1
+bash $PRI/contact/list-bydomain-huge-offset $ID1 1
+bash $PRI/contact/list-bydomain-invalid $ID1 1
 
 bash $PRI/contact/get-exist $ID1 1
 bash $PRI/contact/get-none $ID1
@@ -186,13 +186,14 @@ bash $PRI/domain-partner-candidate/add-invalid $ID1
 bash $PRI/domain-partner-candidate/add-exist $ID1 2 1
 bash $PRI/domain-partner-candidate/get-exist $ID1 2
 bash $PRI/domain-partner-candidate/get-none $ID1
-#bash $PRI/domain-partner-candidate/del-exist $ID1 2
-#bash $PRI/domain-partner-candidate/del-none $ID1
+bash $PRI/domain-partner-candidate/del-exist $ID1 2
+bash $PRI/domain-partner-candidate/del-none $ID1
 
-#bash $PRI/domain-partner-candidate/list-bydomain-nolimit-nooffset $ID1 1
-#bash $PRI/domain-partner-candidate/list-bydomain-limit $ID1 1
-#bash $PRI/domain-partner-candidate/list-bydomain-huge-offset $ID1 1
-#bash $PRI/domain-partner-candidate/list-bydomain-invalid $ID1 1
+bash $PRI/domain-partner-candidate/list-bydomain-nolimit-nooffset $ID1 1
+bash $PRI/domain-partner-candidate/list-bydomain-limit $ID1 1
+bash $PRI/domain-partner-candidate/list-bydomain-limit-offset $ID1 1
+bash $PRI/domain-partner-candidate/list-bydomain-huge-offset $ID1 1
+bash $PRI/domain-partner-candidate/list-bydomain-invalid $ID1 1
 
 # room
 bash $PRI/room/add-invalid $ID1
