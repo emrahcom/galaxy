@@ -14,18 +14,17 @@ CLASS="domain/partner/candidate"
 ACTION="add"
 
 # ------------------------------------------------------------------------------
-# try to add a new domain-partner-candidate with invalid auth_type
+# try to add a new domain-partner-candidate with an invalid domain
 # ------------------------------------------------------------------------------
-TAG="invalid-auth"
+TAG="invalid-domain"
 
-name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
+domain_fake=$(uuidgen)
+contact_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-contact-list-nolimit-nooffset-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
-    "name": "$name",
-    "auth_type": "UNKNOWN",
-    "domain_attr": {
-        "url": "https://meet.jit.si"
-    }
+    "domain_id": "$domain_fake",
+    "contact_id": "$contact_id"
 }
 EOF
 )
@@ -34,18 +33,16 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX
 
 # ------------------------------------------------------------------------------
-# try to add a new domain with invalid url
+# try to add a new domain-partner-candidate with an invalid contact
 # ------------------------------------------------------------------------------
-TAG="invalid-url"
+TAG="invalid-contact"
 
-name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
+domain_id=$(jq -r ".[0].id" $TMP/api-pri-domain-add-new-id-$ID-$IDX-res)
+contact_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
-    "name": "$name",
-    "auth_type": "none",
-    "domain_attr": {
-        "url": "ftp://meet.jit.si"
-    }
+    "domain_id": "$domain_id",
+    "contact_id": "$contact_fake"
 }
 EOF
 )
