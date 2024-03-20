@@ -12,14 +12,14 @@ PUB="$BASEDIR/scripts/pub"
 source $BASEDIR/config
 source $BASEDIR/scripts/common
 
-for i in $(seq 1 10); do
+for i in $(seq 1 12); do
   declare ID${i}=$i
 done
 
 # ------------------------------------------------------------------------------
 # kratos
 # ------------------------------------------------------------------------------
-for i in $(seq 1 10); do
+for i in $(seq 1 12); do
   bash $KRATOS/registration $i
   bash $KRATOS/login $i
 done
@@ -48,8 +48,17 @@ bash $PRI/profile/update-invalid $ID1 1
 bash $PRI/profile/del-exist $ID1 1
 bash $PRI/profile/del-none $ID1
 
+## add 10 profiles to ID1
 for i in $(seq 1 10); do
   bash $PRI/profile/add-new $ID1 $i
+  bash $PRI/profile/get-default $ID1 $i
+done
+
+## add 1 profile for every remaining identities
+for i in $(seq 2 12); do
+  ID=$i
+  bash $PRI/profile/add-new $ID 1
+  bash $PRI/profile/get-default $ID 1
 done
 
 bash $PRI/profile/set-default-exist $ID1 1
@@ -121,15 +130,23 @@ bash $PRI/domain-invite/get-exist $ID1 1
 bash $PRI/domain-partnership/add-bycode-new $ID2 1 $ID1 1
 bash $PRI/domain-partnership/get-exist $ID2 1
 bash $PRI/domain-partnership/get-none $ID2
-bash $PRI/domain-partnership/add-bycode-exist $ID2 1
+bash $PRI/domain-partnership/add-bycode-exist $ID2 1 $ID1 1
+bash $PRI/domain-invite/enable-exist $ID1 1
 
 bash $PRI/domain-partnership/del-exist $ID2 1
 bash $PRI/domain-partnership/del-none $ID2
 
-bash $PRI/domain-invite/enable-exist $ID1 1
+## share the first 10 domains with ID2
 for i in $(seq 1 10); do
   bash $PRI/domain-invite/get-exist $ID1 $i
   bash $PRI/domain-partnership/add-bycode-new $ID2 $i $ID1 $i
+done
+
+## share 1 domain with every remaining 10 identities
+for i in $(seq 11 20); do
+  (( ID = i - 8 ))
+  bash $PRI/domain-invite/get-exist $ID1 $i
+  bash $PRI/domain-partnership/add-bycode-new $ID 1 $ID1 $i
 done
 
 # domain-partner
@@ -148,13 +165,6 @@ bash $PRI/domain-partner/list-bydomain-invalid $ID1 1
 
 bash $PRI/domain-partner/del-exist $ID1 1 $ID2 1
 bash $PRI/domain-partner/del-none $ID1
-
-for i in $(seq 3 10); do
-  ID="$i"
-  (( j = 8 + i ))
-  bash $PRI/domain-invite/get-exist $ID1 $j
-  bash $PRI/domain-partnership/add-bycode-new $ID 1 $ID1 $j
-done
 
 # contact
 bash $PRI/contact/list-nolimit-nooffset $ID1
@@ -179,7 +189,7 @@ bash $PRI/contact/del-exist $ID1 1
 bash $PRI/contact/del-none $ID1
 
 # domain-partner-candidate
-for i in $(seq 2 8); do
+for i in $(seq 2 10); do
   bash $PRI/domain-partner-candidate/add-new $ID1 $i 1
 done
 bash $PRI/domain-partner-candidate/add-invalid $ID1
@@ -259,14 +269,22 @@ bash $PRI/room-partnership/add-bycode-new $ID2 1 $ID1 1
 bash $PRI/room-partnership/get-exist $ID2 1
 bash $PRI/room-partnership/get-none $ID2
 bash $PRI/room-partnership/add-bycode-exist $ID2 1 $ID1 1
+bash $PRI/room-invite/enable-exist $ID1 1
 
 bash $PRI/room-partnership/del-exist $ID2 1
 bash $PRI/room-partnership/del-none $ID2
 
-bash $PRI/room-invite/enable-exist $ID1 1
+## share the first 10 rooms with ID2
 for i in $(seq 1 10); do
   bash $PRI/room-invite/get-exist $ID1 $i
   bash $PRI/room-partnership/add-bycode-new $ID2 $i $ID1 $i
+done
+
+## share 1 room with every remaining 10 identities
+for i in $(seq 11 20); do
+  (( ID = i - 8 ))
+  bash $PRI/room-invite/get-exist $ID1 $i
+  bash $PRI/room-partnership/add-bycode-new $ID 1 $ID1 $i
 done
 
 # room-partner
@@ -371,14 +389,15 @@ bash $PRI/meeting-membership/add-bycode-new-host-member-of-permanent \
   $ID2 1 $ID1 1
 bash $PRI/meeting-membership/get-exist-host-member-of-permanent $ID2 1
 bash $PRI/meeting-membership/get-none $ID2
-bash $PRI/meeting-membership/add-bycode-exist $ID2 1
+bash $PRI/meeting-membership/add-bycode-exist $ID2 1 $ID1 1
+bash $PRI/meeting-invite/enable-exist $ID1 1
 
 bash $PRI/meeting-membership/update-exist $ID2 1
 bash $PRI/meeting-membership/update-none $ID2
 bash $PRI/meeting-membership/del-exist $ID2 1
 bash $PRI/meeting-membership/del-none $ID2
 
-bash $PRI/meeting-invite/enable-exist $ID1 1
+## share the first 10 meetings with ID2
 for i in $(seq 1 10); do
   bash $PRI/meeting-invite/get-exist-host-member-of-permanent $ID1 $i
   bash $PRI/meeting-membership/add-bycode-new-host-member-of-permanent \
@@ -386,6 +405,17 @@ for i in $(seq 1 10); do
   bash $PRI/meeting-invite/get-exist-host-member-of-scheduled $ID1 $i
   bash $PRI/meeting-membership/add-bycode-new-host-member-of-scheduled \
     $ID2 $i $ID1 $i
+done
+
+## share 1 meeting with every remaining 10 identities
+for i in $(seq 11 20); do
+  (( ID = i - 8 ))
+  bash $PRI/meeting-invite/get-exist-host-member-of-permanent $ID1 $i
+  bash $PRI/meeting-membership/add-bycode-new-host-member-of-permanent \
+    $ID 1 $ID1 $i
+  bash $PRI/meeting-invite/get-exist-host-member-of-scheduled $ID1 $i
+  bash $PRI/meeting-membership/add-bycode-new-host-member-of-scheduled \
+    $ID 1 $ID1 $i
 done
 
 # meeting-member
