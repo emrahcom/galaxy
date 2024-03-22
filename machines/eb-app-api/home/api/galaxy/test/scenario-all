@@ -9,6 +9,7 @@ KRATOS="$BASEDIR/scripts/kratos"
 ADM="$BASEDIR/scripts/adm"
 PRI="$BASEDIR/scripts/pri"
 PUB="$BASEDIR/scripts/pub"
+START_TIME=$(date +%s)
 source $BASEDIR/config
 source $BASEDIR/scripts/common
 
@@ -536,4 +537,8 @@ bash $PUB/meeting-schedule/get-bycode-none
 # ------------------------------------------------------------------------------
 # completed
 # ------------------------------------------------------------------------------
+END_TIME=$(date +%s)
+DURATION=$(date -u -d "0 $END_TIME seconds - $START_TIME seconds" +"%H:%M:%S")
+
+footer <<< "duration: $DURATION"
 footer <<< "completed successfully"
