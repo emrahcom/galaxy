@@ -49,13 +49,13 @@ bash $PRI/profile/update-invalid $ID1 1
 bash $PRI/profile/del-exist $ID1 1
 bash $PRI/profile/del-none $ID1
 
-## add 10 profiles to ID1
+## add 10 additional profiles to ID1
 for i in $(seq 1 10); do
   bash $PRI/profile/add-new $ID1 $i
   bash $PRI/profile/get-default $ID1 $i
 done
 
-## add 1 profile for every remaining identities
+## add 1 additional profile for every remaining identities
 for i in $(seq 2 12); do
   ID=$i
   bash $PRI/profile/add-new $ID 1
@@ -194,7 +194,7 @@ for i in $(seq 2 10); do
   bash $PRI/domain-partner-candidate/add-new $ID1 $i 1
 done
 bash $PRI/domain-partner-candidate/add-invalid $ID1
-bash $PRI/domain-partner-candidate/add-exist $ID1 2 1
+bash $PRI/domain-partner-candidate/add-exist $ID1 2
 bash $PRI/domain-partner-candidate/get-exist $ID1 2
 bash $PRI/domain-partner-candidate/get-none $ID1
 bash $PRI/domain-partner-candidate/del-exist $ID1 2
