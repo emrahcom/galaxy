@@ -122,9 +122,16 @@ bash $PRI/domain-invite/enable-none $ID1
 bash $PRI/domain-invite/del-exist $ID1 1
 bash $PRI/domain-invite/del-none $ID1
 
+## add 20 domain-invites for ID1
 for i in $(seq 1 20); do
   (( d = (i - 1) % 10 + 1 ))
   bash $PRI/domain-invite/add-new $ID1 $i $d
+done
+
+## add 1 domain-invite for every remianing identities
+for i in $(seq 1 12); do
+  ID=$i
+  bash $PRI/domain-invite/add-new $ID 1 1
 done
 
 bash $PRI/domain-invite/list-bydomain-nolimit-nooffset $ID1 1
