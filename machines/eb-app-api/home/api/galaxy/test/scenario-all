@@ -130,8 +130,8 @@ bash $PRI/domain-invite/del-none $ID1
 
 # add 20 domain-invites for ID1
 for i in $(seq 1 20); do
-  (( d = (i - 1) % 10 + 1 ))
-  bash $PRI/domain-invite/add-new $ID1 $i $d
+  (( DOMAIN = (i - 1) % 10 + 1 ))
+  bash $PRI/domain-invite/add-new $ID1 $i $DOMAIN
 done
 
 # add a domain-invite for every remaining identities
@@ -279,9 +279,9 @@ bash $PRI/room/del-exist $ID1 1
 bash $PRI/room/del-none $ID1
 
 for i in $(seq 1 20); do
-  (( d = (i - 1) % 10 + 1 ))
-  bash $PRI/room/add-new $ID1 $i $d
-  bash $PRI/room/add-ephemeral $ID1 $i $d
+  (( DOMAIN = (i - 1) % 10 + 1 ))
+  bash $PRI/room/add-new $ID1 $i $DOMAIN
+  bash $PRI/room/add-ephemeral $ID1 $i $DOMAIN
 done
 
 bash $PRI/room/list-nolimit-nooffset $ID1
@@ -311,8 +311,8 @@ bash $PRI/room-invite/del-exist $ID1 1
 bash $PRI/room-invite/del-none $ID1
 
 for i in $(seq 1 20); do
-  (( r = (i - 1) % 10 + 1 ))
-  bash $PRI/room-invite/add-new $ID1 $i $r
+  (( ROOM = (i - 1) % 10 + 1 ))
+  bash $PRI/room-invite/add-new $ID1 $i $ROOM
 done
 
 bash $PRI/room-invite/list-byroom-nolimit-nooffset $ID1 1
@@ -385,9 +385,9 @@ bash $PRI/meeting/del-exist $ID1 1
 bash $PRI/meeting/del-none $ID1
 
 for i in $(seq 1 20); do
-  (( r = (i - 1) % 10 + 1 ))
-  bash $PRI/meeting/add-new-permanent $ID1 $i $r
-  bash $PRI/meeting/add-new-scheduled $ID1 $i $r
+  (( ROOM = (i - 1) % 10 + 1 ))
+  bash $PRI/meeting/add-new-permanent $ID1 $i $ROOM
+  bash $PRI/meeting/add-new-scheduled $ID1 $i $ROOM
 done
 
 bash $PRI/meeting/list-nolimit-nooffset $ID1
