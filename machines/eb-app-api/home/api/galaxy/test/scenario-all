@@ -90,8 +90,15 @@ bash $PRI/domain/enable-none $ID1
 bash $PRI/domain/del-exist $ID1 1
 bash $PRI/domain/del-none $ID1
 
+## add 10 domains for ID1
 for i in $(seq 1 10); do
   bash $PRI/domain/add-new $ID1 $i
+done
+
+## add 1 domain for every remaining identities
+for i in $(seq 2 12); do
+  ID=$i
+  bash $PRI/domain/add-new $ID 1
 done
 
 bash $PRI/domain/list-nolimit-nooffset $ID1
@@ -205,6 +212,13 @@ bash $PRI/domain-partner-candidate/list-bydomain-limit $ID1 1
 bash $PRI/domain-partner-candidate/list-bydomain-limit-offset $ID1 1
 bash $PRI/domain-partner-candidate/list-bydomain-huge-offset $ID1 1
 bash $PRI/domain-partner-candidate/list-bydomain-invalid $ID1 1
+
+# domain-partner-candidacy
+#bash $PRI/domain-partner-candidacy/list-nolimit-nooffset $ID3
+#bash $PRI/domain-partner-candidacy/list-limit $ID3
+#bash $PRI/domain-partner-candidacy/list-limit-offset $ID3
+#bash $PRI/domain-partner-candidacy/list-huge-offset $ID3
+#bash $PRI/domain-partner-candidacy/list-invalid $ID3
 
 # room
 bash $PRI/room/add-invalid $ID1
