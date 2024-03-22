@@ -250,14 +250,14 @@ bash $PRI/domain-partner-candidate/list-bydomain-invalid $ID1 1
 # ------------------------------------------------------------------------------
 # pri / domain-partner-candidacy
 # ------------------------------------------------------------------------------
-bash $PRI/domain-partner-candidacy/list-nolimit-nooffset $ID1
-bash $PRI/domain-partner-candidacy/list-limit $ID1
-bash $PRI/domain-partner-candidacy/list-limit-offset $ID1
-bash $PRI/domain-partner-candidacy/list-huge-offset $ID1
-bash $PRI/domain-partner-candidacy/list-invalid $ID1
+#bash $PRI/domain-partner-candidacy/list-nolimit-nooffset $ID1
+#bash $PRI/domain-partner-candidacy/list-limit $ID1
+#bash $PRI/domain-partner-candidacy/list-limit-offset $ID1
+#bash $PRI/domain-partner-candidacy/list-huge-offset $ID1
+#bash $PRI/domain-partner-candidacy/list-invalid $ID1
 
-echo OK
-exit
+#echo OK
+#exit
 
 # ------------------------------------------------------------------------------
 # pri / room
