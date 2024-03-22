@@ -226,9 +226,14 @@ bash $PRI/contact/del-none $ID1
 # ------------------------------------------------------------------------------
 # pri / domain-partner-candidate
 # ------------------------------------------------------------------------------
-for i in $(seq 2 12); do
-  bash $PRI/domain-partner-candidate/add-new $ID1 $i 1
+# refresh the contact list. add-new uses this list.
+bash $PRI/contact/list-nolimit-nooffset $ID1
+
+for i in $(seq 1 10); do
+  CONTACT=$i
+  bash $PRI/domain-partner-candidate/add-new $ID1 $CONTACT 1
 done
+
 bash $PRI/domain-partner-candidate/add-invalid $ID1
 bash $PRI/domain-partner-candidate/add-exist $ID1 2
 bash $PRI/domain-partner-candidate/get-exist $ID1 2
@@ -245,11 +250,14 @@ bash $PRI/domain-partner-candidate/list-bydomain-invalid $ID1 1
 # ------------------------------------------------------------------------------
 # pri / domain-partner-candidacy
 # ------------------------------------------------------------------------------
-#bash $PRI/domain-partner-candidacy/list-nolimit-nooffset $ID3
-#bash $PRI/domain-partner-candidacy/list-limit $ID3
-#bash $PRI/domain-partner-candidacy/list-limit-offset $ID3
-#bash $PRI/domain-partner-candidacy/list-huge-offset $ID3
-#bash $PRI/domain-partner-candidacy/list-invalid $ID3
+bash $PRI/domain-partner-candidacy/list-nolimit-nooffset $ID1
+bash $PRI/domain-partner-candidacy/list-limit $ID1
+bash $PRI/domain-partner-candidacy/list-limit-offset $ID1
+bash $PRI/domain-partner-candidacy/list-huge-offset $ID1
+bash $PRI/domain-partner-candidacy/list-invalid $ID1
+
+echo OK
+exit
 
 # ------------------------------------------------------------------------------
 # pri / room
