@@ -57,7 +57,7 @@ for i in $(seq 1 10); do
   bash $PRI/profile/get-default $ID1 $i
 done
 
-# add 1 additional profile for every remaining identities
+# add an additional profile for every remaining identities
 for i in $(seq 2 12); do
   ID=$i
   bash $PRI/profile/add-new $ID 1
@@ -99,7 +99,7 @@ for i in $(seq 1 10); do
   bash $PRI/domain/add-new $ID1 $i
 done
 
-# add 1 domain for every remaining identities
+# add a domain for every remaining identities
 for i in $(seq 2 12); do
   ID=$i
   bash $PRI/domain/add-new $ID 1
@@ -134,7 +134,7 @@ for i in $(seq 1 20); do
   bash $PRI/domain-invite/add-new $ID1 $i $d
 done
 
-# add 1 domain-invite for every remianing identities
+# add a domain-invite for every remianing identities
 for i in $(seq 1 12); do
   ID=$i
   bash $PRI/domain-invite/add-new $ID 1 1
@@ -165,14 +165,14 @@ for i in $(seq 1 10); do
   bash $PRI/domain-partnership/add-bycode-new $ID2 $i $ID1 $i
 done
 
-# share 1 domain with every remaining 10 identities
+# share one domain with every remaining 10 identities
 for i in $(seq 11 20); do
   (( ID = i - 8 ))
   bash $PRI/domain-invite/get-exist $ID1 $i
   bash $PRI/domain-partnership/add-bycode-new $ID 1 $ID1 $i
 done
 
-# every identity shares 1 domain with ID1
+# every identity shares one domain with ID1
 for i in $(seq 2 12); do
   ID=$i
   (( j = i - 1 ))
@@ -332,7 +332,7 @@ for i in $(seq 1 10); do
   bash $PRI/room-partnership/add-bycode-new $ID2 $i $ID1 $i
 done
 
-# share 1 room with every remaining 10 identities
+# share a room with every remaining 10 identities
 for i in $(seq 11 20); do
   (( ID = i - 8 ))
   bash $PRI/room-invite/get-exist $ID1 $i
@@ -467,7 +467,7 @@ for i in $(seq 1 10); do
     $ID2 $i $ID1 $i
 done
 
-# share 1 meeting with every remaining 10 identities
+# share a meeting with every remaining 10 identities
 for i in $(seq 11 20); do
   (( ID = i - 8 ))
   bash $PRI/meeting-invite/get-exist-host-member-of-permanent $ID1 $i
