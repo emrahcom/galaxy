@@ -12,11 +12,11 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="meeting"
 ACTION="get/link"
-TAG="exist"
+TAG="exist-permanent"
 ATTR="url"
 
 # ------------------------------------------------------------------------------
-# get link for an existing meeting
+# get link for an existing permanent meeting
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-add-new-permanent-id-$ID-$IDX-res)
