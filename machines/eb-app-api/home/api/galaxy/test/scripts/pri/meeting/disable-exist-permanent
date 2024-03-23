@@ -12,11 +12,11 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="meeting"
 ACTION="disable"
-TAG="exist"
+TAG="exist-permanent"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
-# disable an existing meeting
+# disable an existing permanent meeting
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-add-new-permanent-id-$ID-$IDX-res)
