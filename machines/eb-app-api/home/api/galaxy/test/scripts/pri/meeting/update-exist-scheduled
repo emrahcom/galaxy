@@ -1,0 +1,43 @@
+#!/usr/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../../config
+source $BASEDIR/../../common
+
+[[ -z "$1" ]] && ID=1 || ID=$1
+[[ -z "$2" ]] && IDX=1 || IDX=$2
+
+SERVICE="pri"
+CLASS="meeting"
+ACTION="update"
+TAG="exist-scheduled"
+ATTR="id"
+
+# ------------------------------------------------------------------------------
+# update with valid post
+# ------------------------------------------------------------------------------
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-get-exist-scheduled-id-$ID-$IDX-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
+room_id=$(jq -r ".[0].room_id" \
+    $TMP/api-pri-meeting-get-exist-scheduled-id-$ID-$IDX-res)
+name="meeting-$(date +'%s')-$RANDOM"
+JSON=$(cat <<EOF
+{
+    "id": "$meeting_id",
+    "profile_id": "$profile_id",
+    "room_id": "$room_id",
+    "name": "$name",
+    "info": "some meeting info",
+    "schedule_type": "scheduled",
+    "hidden": true,
+    "restricted": false,
+    "subscribable": true
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
