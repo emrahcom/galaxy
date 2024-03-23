@@ -12,15 +12,17 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="meeting"
 ACTION="update"
-TAG="exist"
+TAG="exist-permanent"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
-meeting_id=$(jq -r ".[0].id" $TMP/api-pri-meeting-get-exist-id-$ID-$IDX-res)
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-get-exist-permanent-id-$ID-$IDX-res)
 profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-get-default-0-id-$ID-1-res)
-room_id=$(jq -r ".[0].room_id" $TMP/api-pri-meeting-get-exist-id-$ID-$IDX-res)
+room_id=$(jq -r ".[0].room_id" \
+    $TMP/api-pri-meeting-get-exist-permanent-id-$ID-$IDX-res)
 name="meeting-$(date +'%s')-$RANDOM"
 JSON=$(cat <<EOF
 {
