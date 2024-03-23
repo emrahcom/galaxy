@@ -39,7 +39,7 @@ out <<< "  $csrfToken"
 # kratos registration
 # ------------------------------------------------------------------------------
 cookieJar=$(cat $TMP/kratos-$ID-registration-cookie)
-email=user.$(date +%s).$RANDOM@galaxy.corp
+email=$(printf "user.%03d.$(date +%s)@galaxy.corp" $ID)
 passwd=$(openssl rand -base64 12)
 
 curl -ks -X POST "$actionUrl" \
