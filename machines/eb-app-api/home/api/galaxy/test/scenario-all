@@ -298,10 +298,19 @@ bash $PRI/room/enable-none $ID1
 bash $PRI/room/del-exist $ID1 1
 bash $PRI/room/del-none $ID1
 
+# Create 20 (permanent and ephimeral) rooms for ID1
 for i in $(seq 1 20); do
   (( DOMAIN = (i - 1) % 10 + 1 ))
   bash $PRI/room/add-new $ID1 $i $DOMAIN
   bash $PRI/room/add-ephemeral $ID1 $i $DOMAIN
+done
+
+# Create 2 rooms for every remaining identities.
+# One will be shared by code, the other one by candidacy...
+for i in $(seq 2 12); do
+  ID=$i
+  bash $PRI/room/add-new $ID 1 1
+  bash $PRI/room/add-new $ID 2 1
 done
 
 bash $PRI/room/list-nolimit-nooffset $ID1
@@ -330,9 +339,16 @@ bash $PRI/room-invite/enable-none $ID1
 bash $PRI/room-invite/del-exist $ID1 1
 bash $PRI/room-invite/del-none $ID1
 
+# Create 20 room-invites for ID1
 for i in $(seq 1 20); do
   (( ROOM = (i - 1) % 10 + 1 ))
   bash $PRI/room-invite/add-new $ID1 $i $ROOM
+done
+
+# Create a room-invite for every remaining identities
+for i in $(seq 1 12); do
+  ID=$i
+  bash $PRI/room-invite/add-new $ID 1 1
 done
 
 bash $PRI/room-invite/list-byroom-nolimit-nooffset $ID1 1
@@ -360,11 +376,19 @@ for i in $(seq 1 10); do
   bash $PRI/room-partnership/add-bycode-new $ID2 $i $ID1 $i
 done
 
-# Share a room with every remaining identities
+# Share one room with every remaining identities
 for i in $(seq 11 20); do
   (( ID = i - 8 ))
   bash $PRI/room-invite/get-exist $ID1 $i
   bash $PRI/room-partnership/add-bycode-new $ID 1 $ID1 $i
+done
+
+# Every identity shares their first room with ID1
+for i in $(seq 2 12); do
+  ID=$i
+  (( j = i - 1 ))
+  bash $PRI/room-invite/get-exist $ID 1
+  bash $PRI/room-partnership/add-bycode-new $ID1 $j $ID 1
 done
 
 # ------------------------------------------------------------------------------
@@ -385,6 +409,59 @@ bash $PRI/room-partner/list-byroom-invalid $ID1 1
 
 bash $PRI/room-partner/del-exist $ID1 1 $ID2 1
 bash $PRI/room-partner/del-none $ID1
+
+# ------------------------------------------------------------------------------
+# pri / room-partner-candidate
+# ------------------------------------------------------------------------------
+# Refresh the contact list. add-new will use this list.
+bash $PRI/contact/list-nolimit-nooffset $ID1
+
+# Add 10 candidates for ID1
+for i in $(seq 1 10); do
+  CONTACT=$i
+  bash $PRI/room-partner-candidate/add-new $ID1 $CONTACT 1
+done
+
+# Add ID1 as candidate for every remaining identities.
+# Use the second room because the first one is already shared by code.
+for i in $(seq 2 12); do
+  ID=$i
+  bash $PRI/contact/list-nolimit-nooffset $ID
+  bash $PRI/room-partner-candidate/add-new $ID $ID1 2
+done
+
+bash $PRI/room-partner-candidate/add-invalid $ID1
+bash $PRI/room-partner-candidate/add-exist $ID1 2
+bash $PRI/room-partner-candidate/get-exist $ID1 2
+bash $PRI/room-partner-candidate/get-none $ID1
+bash $PRI/room-partner-candidate/del-exist $ID1 2
+bash $PRI/room-partner-candidate/del-none $ID1
+
+bash $PRI/room-partner-candidate/list-byroom-nolimit-nooffset $ID1 1
+bash $PRI/room-partner-candidate/list-byroom-limit $ID1 1
+bash $PRI/room-partner-candidate/list-byroom-limit-offset $ID1 1
+bash $PRI/room-partner-candidate/list-byroom-huge-offset $ID1 1
+bash $PRI/room-partner-candidate/list-byroom-invalid $ID1 1
+
+# ------------------------------------------------------------------------------
+# pri / room-partner-candidacy
+# ------------------------------------------------------------------------------
+bash $PRI/room-partner-candidacy/list-nolimit-nooffset $ID1
+bash $PRI/room-partner-candidacy/list-limit $ID1
+bash $PRI/room-partner-candidacy/list-limit-offset $ID1
+bash $PRI/room-partner-candidacy/list-huge-offset $ID1
+bash $PRI/room-partner-candidacy/list-invalid $ID1
+bash $PRI/room-partner-candidacy/get-exist $ID1 1
+bash $PRI/room-partner-candidacy/get-none $ID1
+
+bash $PRI/room-partner-candidacy/reject-exist $ID1 1
+bash $PRI/room-partner-candidacy/reject-none $ID1
+bash $PRI/room-partner-candidacy/reject-invalid $ID1
+
+bash $PRI/room-partner-candidacy/accept-rejected $ID1 1
+bash $PRI/room-partner-candidacy/accept-exist $ID1 2
+bash $PRI/room-partner-candidacy/accept-none $ID1
+bash $PRI/room-partner-candidacy/accept-invalid $ID1
 
 # ------------------------------------------------------------------------------
 # pri / meeting
