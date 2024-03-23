@@ -137,7 +137,7 @@ for i in $(seq 1 20); do
 done
 
 # Create a domain-invite for every remaining identities
-for i in $(seq 1 12); do
+for i in $(seq 2 12); do
   ID=$i
   bash $PRI/domain-invite/add-new $ID 1 1
 done
@@ -346,7 +346,7 @@ for i in $(seq 1 20); do
 done
 
 # Create a room-invite for every remaining identities
-for i in $(seq 1 12); do
+for i in $(seq 2 12); do
   ID=$i
   bash $PRI/room-invite/add-new $ID 1 1
 done
@@ -468,17 +468,23 @@ bash $PRI/room-partner-candidacy/accept-invalid $ID1
 # ------------------------------------------------------------------------------
 bash $PRI/meeting/add-invalid $ID1
 bash $PRI/meeting/add-new-permanent $ID1 1 1
-bash $PRI/meeting/get-exist $ID1 1
+bash $PRI/meeting/add-new-scheduled $ID1 1 1
+bash $PRI/meeting/get-exist-permanent $ID1 1
+bash $PRI/meeting/get-exist-scheduled $ID1 1
 bash $PRI/meeting/get-none $ID1
 
-bash $PRI/meeting/update-exist $ID1 1
+bash $PRI/meeting/update-exist-permanent $ID1 1
+bash $PRI/meeting/update-exist-scheduled $ID1 1
 bash $PRI/meeting/update-none $ID1
 bash $PRI/meeting/update-invalid $ID1
-bash $PRI/meeting/disable-exist $ID1 1
+bash $PRI/meeting/disable-exist-permanent $ID1 1
+bash $PRI/meeting/disable-exist-scheduled $ID1 1
 bash $PRI/meeting/disable-none $ID1
-bash $PRI/meeting/enable-exist $ID1 1
+bash $PRI/meeting/enable-exist-permanent $ID1 1
+bash $PRI/meeting/enable-exist-scheduled $ID1 1
 bash $PRI/meeting/enable-none $ID1
-bash $PRI/meeting/del-exist $ID1 1
+bash $PRI/meeting/del-exist-permanent $ID1 1
+bash $PRI/meeting/del-exist-scheduled $ID1 1
 bash $PRI/meeting/del-none $ID1
 
 # Create 20 (permanent and scheduled) meetings for ID1
@@ -504,7 +510,9 @@ bash $PRI/meeting/list-limit-offset $ID1
 bash $PRI/meeting/list-huge-offset $ID1
 bash $PRI/meeting/list-invalid $ID1
 
-bash $PRI/meeting/get-link-exist $ID1 1
+bash $PRI/meeting/get-link-exist-permanent $ID1 1
+# no schedule, so no link
+#bash $PRI/meeting/get-link-exist-scheduled $ID1 1
 bash $PRI/meeting/get-link-none $ID1
 
 # ------------------------------------------------------------------------------
@@ -549,7 +557,7 @@ for i in $(seq 1 20); do
 done
 
 # Create a meeting-invite for every remaining identities
-for i in $(seq 1 12); do
+for i in $(seq 2 12); do
   ID=$i
   bash $PRI/meeting-invite/add-new-host-audience-of-permanent $ID 1 1
   bash $PRI/meeting-invite/add-new-guest-audience-of-permanent $ID 1 1
@@ -641,6 +649,59 @@ bash $PRI/meeting-member/set-host-exist $ID1 1 $ID2 1
 bash $PRI/meeting-member/set-host-none $ID1
 bash $PRI/meeting-member/del-exist $ID1 1 $ID2 1
 bash $PRI/meeting-member/del-none $ID1
+
+## ------------------------------------------------------------------------------
+## pri / meeting-member-candidate
+## ------------------------------------------------------------------------------
+## Refresh the contact list. add-new will use this list.
+#bash $PRI/contact/list-nolimit-nooffset $ID1
+#
+## Add 10 candidates for ID1
+#for i in $(seq 1 10); do
+#  CONTACT=$i
+#  bash $PRI/meeting-member-candidate/add-new $ID1 $CONTACT 1
+#done
+#
+## Add ID1 as candidate for every remaining identities.
+## Use the second meeting because the first one is already shared by code.
+#for i in $(seq 2 12); do
+#  ID=$i
+#  bash $PRI/contact/list-nolimit-nooffset $ID
+#  bash $PRI/meeting-member-candidate/add-new $ID $ID1 2
+#done
+#
+#bash $PRI/meeting-member-candidate/add-invalid $ID1
+#bash $PRI/meeting-member-candidate/add-exist $ID1 2
+#bash $PRI/meeting-member-candidate/get-exist $ID1 2
+#bash $PRI/meeting-member-candidate/get-none $ID1
+#bash $PRI/meeting-member-candidate/del-exist $ID1 2
+#bash $PRI/meeting-member-candidate/del-none $ID1
+#
+#bash $PRI/meeting-member-candidate/list-bymeeting-nolimit-nooffset $ID1 1
+#bash $PRI/meeting-member-candidate/list-bymeeting-limit $ID1 1
+#bash $PRI/meeting-member-candidate/list-bymeeting-limit-offset $ID1 1
+#bash $PRI/meeting-member-candidate/list-bymeeting-huge-offset $ID1 1
+#bash $PRI/meeting-member-candidate/list-bymeeting-invalid $ID1 1
+#
+## ------------------------------------------------------------------------------
+## pri / meeting-member-candidacy
+## ------------------------------------------------------------------------------
+#bash $PRI/meeting-member-candidacy/list-nolimit-nooffset $ID1
+#bash $PRI/meeting-member-candidacy/list-limit $ID1
+#bash $PRI/meeting-member-candidacy/list-limit-offset $ID1
+#bash $PRI/meeting-member-candidacy/list-huge-offset $ID1
+#bash $PRI/meeting-member-candidacy/list-invalid $ID1
+#bash $PRI/meeting-member-candidacy/get-exist $ID1 1
+#bash $PRI/meeting-member-candidacy/get-none $ID1
+#
+#bash $PRI/meeting-member-candidacy/reject-exist $ID1 1
+#bash $PRI/meeting-member-candidacy/reject-none $ID1
+#bash $PRI/meeting-member-candidacy/reject-invalid $ID1
+#
+#bash $PRI/meeting-member-candidacy/accept-rejected $ID1 1
+#bash $PRI/meeting-member-candidacy/accept-exist $ID1 2
+#bash $PRI/meeting-member-candidacy/accept-none $ID1
+#bash $PRI/meeting-member-candidacy/accept-invalid $ID1
 
 # ------------------------------------------------------------------------------
 # pri / meeting-request
