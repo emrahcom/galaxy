@@ -4,12 +4,12 @@ set -e
 # ------------------------------------------------------------------------------
 # environment
 # ------------------------------------------------------------------------------
+START_TIME=$(date +%s)
 BASEDIR=$(dirname $0)
 KRATOS="$BASEDIR/scripts/kratos"
 ADM="$BASEDIR/scripts/adm"
 PRI="$BASEDIR/scripts/pri"
 PUB="$BASEDIR/scripts/pub"
-START_TIME=$(date +%s)
 source $BASEDIR/config
 source $BASEDIR/scripts/common
 
@@ -51,13 +51,13 @@ bash $PRI/profile/update-invalid $ID1 1
 bash $PRI/profile/del-exist $ID1 1
 bash $PRI/profile/del-none $ID1
 
-# add 10 additional profiles to ID1
+# create 10 additional profiles to ID1
 for i in $(seq 1 10); do
   bash $PRI/profile/add-new $ID1 $i
   bash $PRI/profile/get-default $ID1 $i
 done
 
-# add an additional profile for every remaining identities
+# create an additional profile for every remaining identities
 for i in $(seq 2 12); do
   ID=$i
   bash $PRI/profile/add-new $ID 1
@@ -94,12 +94,12 @@ bash $PRI/domain/enable-none $ID1
 bash $PRI/domain/del-exist $ID1 1
 bash $PRI/domain/del-none $ID1
 
-# add 10 domains for ID1
+# create 10 domains for ID1
 for i in $(seq 1 10); do
   bash $PRI/domain/add-new $ID1 $i
 done
 
-# add a domain for every remaining identities
+# create a domain for every remaining identities
 for i in $(seq 2 12); do
   ID=$i
   bash $PRI/domain/add-new $ID 1
@@ -128,13 +128,13 @@ bash $PRI/domain-invite/enable-none $ID1
 bash $PRI/domain-invite/del-exist $ID1 1
 bash $PRI/domain-invite/del-none $ID1
 
-# add 20 domain-invites for ID1
+# create 20 domain-invites for ID1
 for i in $(seq 1 20); do
   (( DOMAIN = (i - 1) % 10 + 1 ))
   bash $PRI/domain-invite/add-new $ID1 $i $DOMAIN
 done
 
-# add a domain-invite for every remaining identities
+# create a domain-invite for every remaining identities
 for i in $(seq 1 12); do
   ID=$i
   bash $PRI/domain-invite/add-new $ID 1 1
@@ -226,7 +226,7 @@ bash $PRI/contact/del-none $ID1
 # ------------------------------------------------------------------------------
 # pri / domain-partner-candidate
 # ------------------------------------------------------------------------------
-# refresh the contact list. add-new uses this list.
+# refresh the contact list. add-new will use this list.
 bash $PRI/contact/list-nolimit-nooffset $ID1
 
 for i in $(seq 1 10); do
