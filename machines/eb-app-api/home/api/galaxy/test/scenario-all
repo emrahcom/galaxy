@@ -481,10 +481,21 @@ bash $PRI/meeting/enable-none $ID1
 bash $PRI/meeting/del-exist $ID1 1
 bash $PRI/meeting/del-none $ID1
 
+# Create 20 (permanent and scheduled) meetings for ID1
 for i in $(seq 1 20); do
   (( ROOM = (i - 1) % 10 + 1 ))
   bash $PRI/meeting/add-new-permanent $ID1 $i $ROOM
   bash $PRI/meeting/add-new-scheduled $ID1 $i $ROOM
+done
+
+# Create 2 (permanent and scheduled) meetings for every remaining identities.
+# One will be shared by code, the other one by candidacy...
+for i in $(seq 2 12); do
+  ID=$i
+  bash $PRI/meeting/add-new-permanent $ID 1 1
+  bash $PRI/meeting/add-new-scheduled $ID 1 1
+  bash $PRI/meeting/add-new-permanent $ID 2 1
+  bash $PRI/meeting/add-new-scheduled $ID 2 1
 done
 
 bash $PRI/meeting/list-nolimit-nooffset $ID1
@@ -524,6 +535,7 @@ bash $PRI/meeting-invite/enable-none $ID1
 bash $PRI/meeting-invite/del-exist $ID1 1
 bash $PRI/meeting-invite/del-none $ID1
 
+# Create 20 meeting-invites for ID1
 for i in $(seq 1 20); do
   (( m = (i - 1) % 10 + 1 ))
   bash $PRI/meeting-invite/add-new-host-audience-of-permanent $ID1 $i $m
@@ -534,6 +546,19 @@ for i in $(seq 1 20); do
   bash $PRI/meeting-invite/add-new-guest-audience-of-scheduled $ID1 $i $m
   bash $PRI/meeting-invite/add-new-host-member-of-scheduled $ID1 $i $m
   bash $PRI/meeting-invite/add-new-guest-member-of-scheduled $ID1 $i $m
+done
+
+# Create a meeting-invite for every remaining identities
+for i in $(seq 1 12); do
+  ID=$i
+  bash $PRI/meeting-invite/add-new-host-audience-of-permanent $ID 1 1
+  bash $PRI/meeting-invite/add-new-guest-audience-of-permanent $ID 1 1
+  bash $PRI/meeting-invite/add-new-host-member-of-permanent $ID 1 1
+  bash $PRI/meeting-invite/add-new-guest-member-of-permanent $ID 1 1
+  bash $PRI/meeting-invite/add-new-host-audience-of-scheduled $ID 1 1
+  bash $PRI/meeting-invite/add-new-guest-audience-of-scheduled $ID 1 1
+  bash $PRI/meeting-invite/add-new-host-member-of-scheduled $ID 1 1
+  bash $PRI/meeting-invite/add-new-guest-member-of-scheduled $ID 1 1
 done
 
 bash $PRI/meeting-invite/list-bymeeting-permanent-nolimit-nooffset $ID1 1
@@ -572,7 +597,7 @@ for i in $(seq 1 10); do
     $ID2 $i $ID1 $i
 done
 
-# Share a meeting with every remaining identities
+# Share one meeting with every remaining identities
 for i in $(seq 11 20); do
   (( ID = i - 8 ))
   bash $PRI/meeting-invite/get-exist-host-member-of-permanent $ID1 $i
@@ -581,6 +606,18 @@ for i in $(seq 11 20); do
   bash $PRI/meeting-invite/get-exist-host-member-of-scheduled $ID1 $i
   bash $PRI/meeting-membership/add-bycode-new-host-member-of-scheduled \
     $ID 1 $ID1 $i
+done
+
+# Every identity shares their first meeting with ID1
+for i in $(seq 2 12); do
+  ID=$i
+  (( j = i - 1 ))
+  bash $PRI/meeting-invite/get-exist-host-member-of-permanent $ID 1
+  bash $PRI/meeting-membership/add-bycode-new-host-member-of-permanent \
+    $ID1 $j $ID 1
+  bash $PRI/meeting-invite/get-exist-host-member-of-scheduled $ID 1
+  bash $PRI/meeting-membership/add-bycode-new-host-member-of-scheduled \
+    $ID1 $j $ID 1
 done
 
 # ------------------------------------------------------------------------------
