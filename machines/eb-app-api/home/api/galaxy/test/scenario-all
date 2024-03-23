@@ -99,10 +99,11 @@ for i in $(seq 1 10); do
   bash $PRI/domain/add-new $ID1 $i
 done
 
-# create a domain for every remaining identities
+# create 2 domains for every remaining identities
 for i in $(seq 2 12); do
   ID=$i
   bash $PRI/domain/add-new $ID 1
+  bash $PRI/domain/add-new $ID 2
 done
 
 bash $PRI/domain/list-nolimit-nooffset $ID1
@@ -237,10 +238,11 @@ done
 
 # add ID1 as candidate for every remaining identities
 # except ID2 because it is not in the contact list
+# use the second domain because the first one is already shared by code
 for i in $(seq 3 12); do
   ID=$i
   bash $PRI/contact/list-nolimit-nooffset $ID
-  bash $PRI/domain-partner-candidate/add-new $ID $ID1 1
+  bash $PRI/domain-partner-candidate/add-new $ID $ID1 2
 done
 
 bash $PRI/domain-partner-candidate/add-invalid $ID1
@@ -264,6 +266,17 @@ bash $PRI/domain-partner-candidacy/list-limit $ID1
 bash $PRI/domain-partner-candidacy/list-limit-offset $ID1
 bash $PRI/domain-partner-candidacy/list-huge-offset $ID1
 bash $PRI/domain-partner-candidacy/list-invalid $ID1
+bash $PRI/domain-partner-candidacy/get-exist $ID1 1
+bash $PRI/domain-partner-candidacy/get-none $ID1
+
+bash $PRI/domain-partner-candidacy/reject-exist $ID1 1
+bash $PRI/domain-partner-candidacy/reject-none $ID1
+bash $PRI/domain-partner-candidacy/reject-invalid $ID1
+
+bash $PRI/domain-partner-candidacy/accept-rejected $ID1 1
+bash $PRI/domain-partner-candidacy/accept-exist $ID1 2
+bash $PRI/domain-partner-candidacy/accept-none $ID1
+bash $PRI/domain-partner-candidacy/accept-invalid $ID1
 
 # ------------------------------------------------------------------------------
 # pri / room
