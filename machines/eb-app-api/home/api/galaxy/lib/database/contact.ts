@@ -1,4 +1,4 @@
-import { fetch, query } from "./common.ts";
+import { fetch, transaction } from "./common.ts";
 import type { Contact, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -163,6 +163,9 @@ export async function listContactByMeeting(
 
 // -----------------------------------------------------------------------------
 export async function delContact(identityId: string, contactId: string) {
+  const trans = await transaction();
+  await trans.begin();
+
   // before deleting the contact, delete the contact owner from the contact's
   // contact list.
   const sql0 = {
@@ -178,7 +181,7 @@ export async function delContact(identityId: string, contactId: string) {
       contactId,
     ],
   };
-  await query(sql0);
+  await trans.queryObject(sql0);
 
   const sql = {
     text: `
@@ -191,8 +194,11 @@ export async function delContact(identityId: string, contactId: string) {
       contactId,
     ],
   };
+  const { rows: rows } = await trans.queryObject(sql);
 
-  return await fetch(sql) as Id[];
+  await trans.commit();
+
+  return rows as Id[];
 }
 
 // -----------------------------------------------------------------------------
