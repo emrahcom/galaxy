@@ -94,7 +94,7 @@ export async function addDomainPartnershipByCode(
       code,
     ],
   };
-  await queryObject(sql1);
+  await trans.queryObject(sql1);
 
   // add partner to the contact list
   const sql2 = {
@@ -118,7 +118,7 @@ export async function addDomainPartnershipByCode(
       code,
     ],
   };
-  await queryObject(sql2);
+  await trans.queryObject(sql2);
 
   // add domain owner to the partner's contact list
   const sql3 = {
@@ -145,7 +145,7 @@ export async function addDomainPartnershipByCode(
       code,
     ],
   };
-  await queryObject(sql3);
+  await trans.queryObject(sql3);
 
   // remove the domain-partner candidancy if exists
   const sql4 = {
@@ -161,7 +161,7 @@ export async function addDomainPartnershipByCode(
       code,
     ],
   };
-  await queryObject(sql4);
+  await trans.queryObject(sql4);
 
   await trans.commit();
 
