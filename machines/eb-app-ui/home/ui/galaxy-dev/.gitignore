@@ -12,4 +12,3 @@ vite.config.ts.timestamp-*
 *.sw?
 *.log
 package-lock.json
-yarn.lock
