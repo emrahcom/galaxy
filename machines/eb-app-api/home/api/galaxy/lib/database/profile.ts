@@ -100,6 +100,8 @@ export async function delProfile(identityId: string, profileId: string) {
   };
   const { rows: rows } = await trans.queryObject(sql);
 
+  if (rows[0] === undefined) throw new Error("transaction failed");
+
   // select the default profile for the deleted one in meeting
   const sql1 = {
     text: `
@@ -117,7 +119,7 @@ export async function delProfile(identityId: string, profileId: string) {
       identityId,
     ],
   };
-  if (rows[0] !== undefined) await trans.queryObject(sql1);
+  await trans.queryObject(sql1);
 
   // select the default profile for the deleted one in meeting_member
   const sql2 = {
@@ -136,7 +138,7 @@ export async function delProfile(identityId: string, profileId: string) {
       identityId,
     ],
   };
-  if (rows[0] !== undefined) await trans.queryObject(sql2);
+  await trans.queryObject(sql2);
 
   // select the default profile for the deleted one in meeting_request
   const sql3 = {
@@ -155,7 +157,7 @@ export async function delProfile(identityId: string, profileId: string) {
       identityId,
     ],
   };
-  if (rows[0] !== undefined) await trans.queryObject(sql3);
+  await trans.queryObject(sql3);
 
   await trans.commit();
 
@@ -214,6 +216,8 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
   };
   const { rows: rows } = await trans.queryObject(sql);
 
+  if (rows[0] === undefined) throw new Error("transaction failed");
+
   // reset the old default if the set action is successful
   const sql1 = {
     text: `
@@ -229,7 +233,7 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
       profileId,
     ],
   };
-  if (rows[0] !== undefined) await trans.queryObject(sql1);
+  await trans.queryObject(sql1);
 
   await trans.commit();
 
