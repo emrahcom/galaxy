@@ -1,4 +1,4 @@
-import { Pool } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import { Pool, Transaction } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 import {
   QueryArguments,
   QueryObjectResult,
@@ -27,6 +27,12 @@ const dbPool = new Pool({
   hostname: DB_HOST,
   port: DB_PORT,
 }, DB_POOL_SIZE);
+
+// -----------------------------------------------------------------------------
+export async function transaction(): Promise<Transaction> {
+  const db = await dbPool.connect();
+  return db.createTransaction("transaction");
+}
 
 // -----------------------------------------------------------------------------
 export async function query(
