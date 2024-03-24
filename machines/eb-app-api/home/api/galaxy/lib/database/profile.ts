@@ -231,5 +231,7 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
   };
   if (rows[0] !== undefined) await trans.queryObject(sql1);
 
+  await trans.commit();
+
   return rows as Id[];
 }
