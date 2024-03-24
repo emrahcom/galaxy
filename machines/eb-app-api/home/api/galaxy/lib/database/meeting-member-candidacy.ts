@@ -1,4 +1,4 @@
-import { fetch, query } from "./common.ts";
+import { fetch, transaction } from "./common.ts";
 import type { Id, MeetingMemberCandidacy } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -78,6 +78,9 @@ export async function acceptMeetingMemberCandidacy(
   profileId: string,
   candidacyId: string,
 ) {
+  const trans = await transaction();
+  await trans.begin();
+
   const sql = {
     text: `
       INSERT INTO meeting_member (identity_id, profile_id, meeting_id, join_as)
@@ -106,7 +109,9 @@ export async function acceptMeetingMemberCandidacy(
       profileId,
     ],
   };
-  const rows = await fetch(sql) as Id[];
+  const { rows: rows } = await trans.queryObject(sql);
+
+  if (rows[0] === undefined) throw new Error("transaction failed");
 
   // add member to the contact list if not exists
   const sql1 = {
@@ -134,7 +139,7 @@ export async function acceptMeetingMemberCandidacy(
       candidacyId,
     ],
   };
-  if (rows[0] !== undefined) await query(sql1);
+  await trans.queryObject(sql1);
 
   // add meeting owner to the member's contact list if not exists
   const sql2 = {
@@ -169,7 +174,7 @@ export async function acceptMeetingMemberCandidacy(
       candidacyId,
     ],
   };
-  if (rows[0] !== undefined) await query(sql2);
+  await trans.queryObject(sql2);
 
   // remove the meeting-member candidancy if the add action is successful
   const sql3 = {
@@ -182,9 +187,11 @@ export async function acceptMeetingMemberCandidacy(
       candidacyId,
     ],
   };
-  if (rows[0] !== undefined) await query(sql3);
+  await trans.queryObject(sql3);
 
-  return rows;
+  await trans.commit();
+
+  return rows as Id[];
 }
 
 // -----------------------------------------------------------------------------
