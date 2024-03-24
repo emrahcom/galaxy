@@ -1,8 +1,8 @@
-import { Pool } from "https://deno.land/x/postgres/mod.ts";
+import { Pool } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 import {
   QueryArguments,
   QueryObjectResult,
-} from "https://deno.land/x/postgres/query/query.ts";
+} from "https://deno.land/x/postgres@v0.19.3/query/query.ts";
 import {
   DB_HOST,
   DB_NAME,

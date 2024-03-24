@@ -1,9 +1,9 @@
-import { Algorithm } from "https://deno.land/x/djwt/algorithm.ts";
+import { Algorithm } from "https://deno.land/x/djwt@v3.0.1/algorithm.ts";
 import {
   create,
   getNumericDate,
   Payload,
-} from "https://deno.land/x/djwt/mod.ts";
+} from "https://deno.land/x/djwt@v3.0.1/mod.ts";
 
 // -----------------------------------------------------------------------------
 async function generateCryptoKeyHS(
