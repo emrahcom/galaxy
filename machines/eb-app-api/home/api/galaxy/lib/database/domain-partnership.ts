@@ -1,4 +1,4 @@
-import { fetch, transaction } from "./common.ts";
+import { fetch, pool } from "./common.ts";
 import type { DomainPartnership, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,8 @@ export async function addDomainPartnershipByCode(
   identityId: string,
   code: string,
 ) {
-  const trans = await transaction();
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
   await trans.begin();
 
   const sql = {
@@ -79,8 +80,6 @@ export async function addDomainPartnershipByCode(
     ],
   };
   const { rows: rows } = await trans.queryObject(sql);
-
-  if (rows[0] === undefined) throw new Error("transaction failed");
 
   // disable the invite key if the add action is successful
   const sql1 = {
