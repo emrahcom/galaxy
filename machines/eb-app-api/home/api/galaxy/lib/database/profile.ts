@@ -1,4 +1,4 @@
-import { fetch, transaction } from "./common.ts";
+import { fetch, pool } from "./common.ts";
 import type { Id, Profile } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -83,7 +83,8 @@ export async function addProfile(
 
 // -----------------------------------------------------------------------------
 export async function delProfile(identityId: string, profileId: string) {
-  const trans = await transaction();
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
   await trans.begin();
 
   const sql = {
@@ -99,8 +100,6 @@ export async function delProfile(identityId: string, profileId: string) {
     ],
   };
   const { rows: rows } = await trans.queryObject(sql);
-
-  if (rows[0] === undefined) return [] as Id[];
 
   // select the default profile for the deleted one in meeting
   const sql1 = {
@@ -119,7 +118,7 @@ export async function delProfile(identityId: string, profileId: string) {
       identityId,
     ],
   };
-  await trans.queryObject(sql1);
+  if (rows[0] !== undefined) await trans.queryObject(sql1);
 
   // select the default profile for the deleted one in meeting_member
   const sql2 = {
@@ -138,7 +137,7 @@ export async function delProfile(identityId: string, profileId: string) {
       identityId,
     ],
   };
-  await trans.queryObject(sql2);
+  if (rows[0] !== undefined) await trans.queryObject(sql2);
 
   // select the default profile for the deleted one in meeting_request
   const sql3 = {
@@ -157,7 +156,7 @@ export async function delProfile(identityId: string, profileId: string) {
       identityId,
     ],
   };
-  await trans.queryObject(sql3);
+  if (rows[0] !== undefined) await trans.queryObject(sql3);
 
   await trans.commit();
 
@@ -194,7 +193,8 @@ export async function updateProfile(
 
 // -----------------------------------------------------------------------------
 export async function setDefaultProfile(identityId: string, profileId: string) {
-  const trans = await transaction();
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
   await trans.begin();
 
   // note: don't add an is_default checking into WHERE. user should set a
@@ -216,8 +216,6 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
   };
   const { rows: rows } = await trans.queryObject(sql);
 
-  if (rows[0] === undefined) return [] as Id[];
-
   // reset the old default if the set action is successful
   const sql1 = {
     text: `
@@ -233,7 +231,7 @@ export async function setDefaultProfile(identityId: string, profileId: string) {
       profileId,
     ],
   };
-  await trans.queryObject(sql1);
+  if (rows[0] !== undefined) await trans.queryObject(sql1);
 
   await trans.commit();
 
