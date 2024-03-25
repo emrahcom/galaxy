@@ -1,4 +1,4 @@
-import { fetch, transaction } from "./common.ts";
+import { fetch, pool } from "./common.ts";
 import type { Id, MeetingMemberCandidacy } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,8 @@ export async function acceptMeetingMemberCandidacy(
   profileId: string,
   candidacyId: string,
 ) {
-  const trans = await transaction();
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
   await trans.begin();
 
   const sql = {
@@ -110,8 +111,6 @@ export async function acceptMeetingMemberCandidacy(
     ],
   };
   const { rows: rows } = await trans.queryObject(sql);
-
-  if (rows[0] === undefined) throw new Error("transaction failed");
 
   // add member to the contact list if not exists
   const sql1 = {
