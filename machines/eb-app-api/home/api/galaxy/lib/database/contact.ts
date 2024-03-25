@@ -1,4 +1,4 @@
-import { fetch, transaction } from "./common.ts";
+import { fetch, pool } from "./common.ts";
 import type { Contact, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -163,7 +163,8 @@ export async function listContactByMeeting(
 
 // -----------------------------------------------------------------------------
 export async function delContact(identityId: string, contactId: string) {
-  const trans = await transaction();
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
   await trans.begin();
 
   // before deleting the contact, delete the contact owner from the contact's
