@@ -20,13 +20,17 @@ interface QueryObject {
   args?: QueryArguments;
 }
 
-const dbPool = new Pool({
-  user: DB_USER,
-  password: DB_PASSWD,
-  database: DB_NAME,
-  hostname: DB_HOST,
-  port: DB_PORT,
-}, DB_POOL_SIZE);
+const dbPool = new Pool(
+  {
+    user: DB_USER,
+    password: DB_PASSWD,
+    database: DB_NAME,
+    hostname: DB_HOST,
+    port: DB_PORT,
+  },
+  DB_POOL_SIZE,
+  true,
+);
 
 // -----------------------------------------------------------------------------
 export async function transaction(): Promise<Transaction> {
