@@ -1,4 +1,4 @@
-import { Pool, Transaction } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import { Pool } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 import {
   QueryArguments,
   QueryObjectResult,
@@ -20,7 +20,7 @@ interface QueryObject {
   args?: QueryArguments;
 }
 
-const dbPool = new Pool(
+export const pool = new Pool(
   {
     user: DB_USER,
     password: DB_PASSWD,
@@ -33,29 +33,13 @@ const dbPool = new Pool(
 );
 
 // -----------------------------------------------------------------------------
-export async function transaction(): Promise<Transaction> {
-  const db = await dbPool.connect();
-  return db.createTransaction("transaction");
-}
-
-// -----------------------------------------------------------------------------
 export async function query(
   sql: QueryObject,
 ): Promise<QueryObjectResult<unknown>> {
-  const db = await dbPool.connect();
+  using client = await pool.connect();
+  const rst = await client.queryObject(sql);
 
-  try {
-    const rst = await db.queryObject(sql);
-    return rst;
-  } catch (e) {
-    throw e;
-  } finally {
-    try {
-      db.release();
-    } catch {
-      // do nothing
-    }
-  }
+  return rst;
 }
 
 // -----------------------------------------------------------------------------
