@@ -1,4 +1,4 @@
-import { fetch, transaction } from "./common.ts";
+import { fetch, pool } from "./common.ts";
 import type { Id, MeetingMembership } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,8 @@ export async function addMeetingMembershipByCode(
   profileId: string,
   code: string,
 ) {
-  const trans = await transaction();
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
   await trans.begin();
 
   const sql = {
@@ -94,8 +95,6 @@ export async function addMeetingMembershipByCode(
     ],
   };
   const { rows: rows } = await trans.queryObject(sql);
-
-  if (rows[0] === undefined) throw new Error("transaction failed");
 
   // disable the invite key if the add action is successful
   // don't disable audience keys and undisposable keys
