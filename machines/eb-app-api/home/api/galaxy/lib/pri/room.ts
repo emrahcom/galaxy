@@ -68,8 +68,9 @@ async function addEphemeral(
 ): Promise<unknown> {
   const pl = await req.json();
   const domainId = pl.domain_id;
+  const hasSuffix = pl.has_suffix;
 
-  return await addEphemeralRoom(identityId, domainId);
+  return await addEphemeralRoom(identityId, domainId, hasSuffix);
 }
 
 // -----------------------------------------------------------------------------
