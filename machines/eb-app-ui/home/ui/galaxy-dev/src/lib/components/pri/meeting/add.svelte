@@ -96,14 +96,18 @@
     try {
       warning = false;
 
-      if (p.schedule_type === "ephemeral") {
+      // add an ephemeral room if needed
+      if (p.schedule_type === "ephemeral" || !p.room_static) {
         const r = {
           domain_id: domainId,
         };
 
         const room = await action("/api/pri/room/add-ephemeral", r);
-
         p.room_id = room.id;
+      }
+
+      // mandatory features for the ephemeral meeting
+      if (p.schedule_type === "ephemeral") {
         p.hidden = true;
         p.restricted = false;
         p.subscribable = false;
@@ -112,6 +116,7 @@
       const meeting = await action("/api/pri/meeting/add", p);
       await addMeetingInvite(meeting.id);
 
+      // redirect to the next page depending on the schedule type
       if (p.schedule_type === "scheduled") {
         window.location.href = `/pri/meeting/schedule/add/${meeting.id}#0`;
       } else {
