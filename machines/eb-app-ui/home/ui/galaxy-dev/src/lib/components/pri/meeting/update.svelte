@@ -5,7 +5,7 @@
     SCHEDULE_TYPE_OPTIONS,
     SCHEDULE_TYPE_OPTIONS_2,
   } from "$lib/pri/meeting";
-  import type { Domain, Meeting, Profile, Room333 } from "$lib/types";
+  import type { Domain333, Meeting, Profile, Room333 } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Radio from "$lib/components/common/form-radio.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -20,6 +20,7 @@
 
   let warning = false;
   let domainId = p.domain_id;
+  let roomId = p.room_id;
   let roomStatic = !p.room_ephemeral;
 
   const pr1 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
@@ -61,6 +62,49 @@
   async function onSubmit() {
     try {
       warning = false;
+
+      // if ephemeral, just update and go
+      if (p.schedule_type === "ephemeral") {
+        await action("/api/pri/meeting/update", p);
+        window.location.href = "/pri/meeting";
+        return;
+      }
+
+      const initialRoomStatic = !p.room_ephemeral;
+      if (initialRoomStatic) {
+        if (roomStatic) {
+          // still a static room, use the selected one
+          p.room_id = roomId;
+        } else {
+          // no more a static room, add an ephemeral room and use it
+          const r = {
+            domain_id: domainId,
+          };
+
+          const room = await action("/api/pri/room/add-ephemeral", r);
+          p.room_id = room.id;
+        }
+      } else {
+        if (roomStatic) {
+          // switched to a static room, use the selected room
+          p.room_id = roomId;
+        } else {
+          if (domainId !== p.domain_id) {
+            // still an ephemeral room on a different domain
+            // add a new ephemeral room on the selected domain and use it
+            const r = {
+              domain_id: domainId,
+            };
+
+            const room = await action("/api/pri/room/add-ephemeral", r);
+            p.room_id = room.id;
+          } else {
+            // still an ephemeral room on the same domain, use the old one
+            // so, no need to update the dataset for room_id
+          }
+        }
+      }
+
       await action("/api/pri/meeting/update", p);
       window.location.href = "/pri/meeting";
     } catch {
@@ -123,7 +167,7 @@
           <Select
             id="room_id"
             label="Room"
-            bind:value={p.room_id}
+            bind:value={roomId}
             options={rooms}
           />
         {/if}
