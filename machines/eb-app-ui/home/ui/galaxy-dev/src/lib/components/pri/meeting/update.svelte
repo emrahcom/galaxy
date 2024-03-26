@@ -19,6 +19,8 @@
   export let p: Meeting;
 
   let warning = false;
+  let domainId = p.domain_id;
+  let roomStatic = !p.room_ephemeral;
 
   const pr1 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
     return items.map((i) => {
@@ -34,13 +36,12 @@
     });
   });
 
-  const pr2 = getById("/api/pri/domain/get", p.domain_id)
-    .then((item: Domain) => {
-      if (!item.enabled) p.domain_name = `${p.domain_name} - DISABLED`;
-    })
-    .catch(() => {
-      // this case occurs if there is a network issue or the domain is public
-    });
+  const pr2 = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
+    return items.map((i) => [
+      i.id,
+      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+    ]);
+  });
 
   const pr3 = list("/api/pri/room/list", 100).then((items: Room333[]) => {
     return items.map((i) => [
@@ -71,7 +72,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="update">
   <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-  {#await Promise.all([pr1, pr2, pr3]) then [profiles, _domain, rooms]}
+  {#await Promise.all([pr1, pr2, pr3]) then [profiles, domains, rooms]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
@@ -82,7 +83,7 @@
           required={false}
         />
 
-        <p class="text-muted me-3 mb-1">Meeting Type</p>
+        <p class="text-muted me-3 mb-1">Meeting type</p>
         {#if p.schedule_type === "ephemeral"}
           <Radio
             value={p.schedule_type}
@@ -111,12 +112,28 @@
             disabled={true}
             readonly={true}
           />
+        {:else if roomStatic}
+          <Select
+            id="domain_id"
+            label="Jitsi Domain"
+            bind:value={domainId}
+            options={domains}
+          />
         {:else}
           <Select
             id="room_id"
             label="Room"
             bind:value={p.room_id}
             options={rooms}
+          />
+        {/if}
+
+        {#if p.schedule_type !== "ephemeral"}
+          <Switch
+            name="room_static"
+            label="Static room"
+            desc="(I want to select a specific room)"
+            bind:value={roomStatic}
           />
         {/if}
 
