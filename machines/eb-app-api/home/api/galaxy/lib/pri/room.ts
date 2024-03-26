@@ -56,8 +56,9 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const domainId = pl.domain_id;
   const name = pl.name;
+  const hasSuffix = pl.has_suffix;
 
-  return await addRoom(identityId, domainId, name);
+  return await addRoom(identityId, domainId, name, hasSuffix);
 }
 
 // -----------------------------------------------------------------------------
