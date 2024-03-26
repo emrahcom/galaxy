@@ -163,7 +163,7 @@
           />
         {/if}
 
-        {#if p.schedule_type === "ephemeral"}
+        {#if p.schedule_type !== "ephemeral"}
           <Switch
             name="room_static"
             label="Static room"
