@@ -193,7 +193,8 @@ ALTER TABLE domain_partner_candidate OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- - Update suffix if accessed_at is older than 4 hours.
 -- - Dont show the room to the owner if ephemeral is true.
--- - The ephemeral room name contains suffix in its name.
+-- - The ephemeral room has a random hash in its name and its has_suffix is
+--   enabled.
 -- -----------------------------------------------------------------------------
 CREATE TABLE room (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),

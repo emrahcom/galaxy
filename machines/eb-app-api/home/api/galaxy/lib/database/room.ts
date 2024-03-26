@@ -209,7 +209,6 @@ export async function addRoom(
 export async function addEphemeralRoom(
   identityId: string,
   domainId: string,
-  hasSuffix = false,
 ) {
   const sql = {
     text: `
@@ -229,12 +228,11 @@ export async function addEphemeralRoom(
                )
         ),
         'room-' || md5(gen_random_uuid()::text),
-        $3, true)
+        true, true)
       RETURNING id, created_at as at`,
     args: [
       identityId,
       domainId,
-      hasSuffix,
     ],
   };
 
