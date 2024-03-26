@@ -83,7 +83,7 @@
         readonly={true}
       />
 
-      {#if p.schedule_type === "ephemeral"}
+      {#if p.schedule_type === "ephemeral" || p.room_ephemeral}
         <Text
           name="domain"
           label="Jitsi Domain"
