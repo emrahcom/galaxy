@@ -68,7 +68,7 @@
         readonly={true}
       />
 
-      <p class="text-muted me-3 mb-1">Meeting Type</p>
+      <p class="text-muted me-3 mb-1">Meeting type</p>
       <Radio
         value={p.schedule_type}
         options={SCHEDULE_TYPE_OPTIONS}
