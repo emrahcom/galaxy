@@ -18,6 +18,7 @@
   let p = {
     profile_id: "",
     room_id: "",
+    room_static: false,
     name: "",
     info: "",
     schedule_type: SCHEDULE_TYPE_OPTIONS[0][0],
@@ -45,7 +46,19 @@
     });
   });
 
-  const pr3 = list("/api/pri/room/list", 100).then((items: Room333[]) => {
+  const pr3 = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
+    const enableds = items
+      .filter((i) => i.enabled)
+      .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
+    if (enableds[0]) domainId = enableds[0].id;
+
+    return items.map((i) => [
+      i.id,
+      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+    ]);
+  });
+
+  const pr4 = list("/api/pri/room/list", 100).then((items: Room333[]) => {
     const enableds = items
       .filter((i) => i.enabled && i.chain_enabled)
       .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
@@ -56,18 +69,6 @@
       `${i.name} on ${i.domain_name}${
         i.enabled && i.chain_enabled ? "" : " - DISABLED"
       }`,
-    ]);
-  });
-
-  const pr4 = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
-    const enableds = items
-      .filter((i) => i.enabled)
-      .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
-    if (enableds[0]) domainId = enableds[0].id;
-
-    return items.map((i) => [
-      i.id,
-      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
     ]);
   });
 
@@ -125,7 +126,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="add">
   <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-  {#await Promise.all([pr1, pr2, pr3, pr4]) then [_p, profiles, rooms, domains]}
+  {#await Promise.all([pr1, pr2, pr3, pr4]) then [_p, profiles, domains, rooms]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
@@ -136,7 +137,7 @@
           required={false}
         />
 
-        <p class="text-muted me-3 mb-1">Meeting Type</p>
+        <p class="text-muted me-3 mb-1">Meeting type</p>
         <Radio bind:value={p.schedule_type} options={SCHEDULE_TYPE_OPTIONS} />
 
         <Select
@@ -146,7 +147,7 @@
           options={profiles}
         />
 
-        {#if p.schedule_type === "ephemeral"}
+        {#if p.schedule_type === "ephemeral" || !p.room_static}
           <Select
             id="domain_id"
             label="Jitsi Domain"
@@ -159,6 +160,15 @@
             label="Room"
             bind:value={p.room_id}
             options={rooms}
+          />
+        {/if}
+
+        {#if p.schedule_type === "ephemeral"}
+          <Switch
+            name="room_static"
+            label="Static room"
+            desc="(I want to select a specific room)"
+            bind:value={p.room_static}
           />
         {/if}
 
