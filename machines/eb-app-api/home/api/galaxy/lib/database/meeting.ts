@@ -12,12 +12,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
   const sql = {
     text: `
       SELECT m.id, m.name, m.info, pr.id as profile_id, pr.name as profile_name,
-        pr.email as profile_email,
-        (CASE m.schedule_type
-           WHEN 'ephemeral' THEN d.id
-         END
-        ) as domain_id,
-        d.name as domain_name,
+        pr.email as profile_email, d.id as domain_id, d.name as domain_name,
         (CASE d.auth_type
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
