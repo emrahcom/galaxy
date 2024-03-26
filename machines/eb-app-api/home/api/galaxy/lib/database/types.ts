@@ -139,6 +139,7 @@ export interface Meeting {
   room_id: string;
   room_name: string;
   room_enabled: boolean;
+  room_ephemeral: boolean;
   schedule_type: string;
   hidden: boolean;
   restricted: boolean;
@@ -156,6 +157,7 @@ export interface Meeting222 {
   domain_name: string;
   domain_url: boolean;
   room_name: string;
+  room_ephemeral: boolean;
   schedule_type: string;
   session_list: string[];
   session_at: string;
