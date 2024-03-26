@@ -34,7 +34,15 @@
     });
   });
 
-  const pr2 = list("/api/pri/room/list", 100).then((items: Room333[]) => {
+  const pr2 = getById("/api/pri/domain/get", p.domain_id)
+    .then((item: Domain) => {
+      if (!item.enabled) p.domain_name = `${p.domain_name} - DISABLED`;
+    })
+    .catch(() => {
+      // this case occurs if there is a network issue or the domain is public
+    });
+
+  const pr3 = list("/api/pri/room/list", 100).then((items: Room333[]) => {
     return items.map((i) => [
       i.id,
       `${i.name} on ${i.domain_name}${
@@ -42,14 +50,6 @@
       }`,
     ]);
   });
-
-  const pr3 = getById("/api/pri/domain/get", p.domain_id)
-    .then((item: Domain) => {
-      if (!item.enabled) p.domain_name = `${p.domain_name} - DISABLED`;
-    })
-    .catch(() => {
-      // this case occurs if there is a network issue or the domain is public
-    });
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -71,7 +71,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="update">
   <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-  {#await Promise.all([pr1, pr2, pr3]) then [profiles, rooms, _domain]}
+  {#await Promise.all([pr1, pr2, pr3]) then [profiles, _domain, rooms]}
     <div class="d-flex mt-2 justify-content-center">
       <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
