@@ -112,7 +112,7 @@
             disabled={true}
             readonly={true}
           />
-        {:else if roomStatic}
+        {:else if !roomStatic}
           <Select
             id="domain_id"
             label="Jitsi Domain"
