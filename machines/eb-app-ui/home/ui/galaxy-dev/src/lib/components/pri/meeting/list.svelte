@@ -42,7 +42,7 @@
 
             <p class="card-text text-muted small">
               {#if p.ownership === "owner"}
-                {#if p.schedule_type === "ephemeral"}
+                {#if p.schedule_type === "ephemeral" || p.room_ephemeral}
                   {`${p.domain_name}`}
                 {:else}
                   {`${p.room_name} on ${p.domain_name}`}
