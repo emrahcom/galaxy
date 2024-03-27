@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action, getById, list } from "$lib/api";
+  import { action, list } from "$lib/api";
   import {
     SCHEDULE_TYPE_OPTIONS,
     SCHEDULE_TYPE_OPTIONS_2,
