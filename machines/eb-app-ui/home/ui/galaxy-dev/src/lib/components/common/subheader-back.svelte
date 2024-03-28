@@ -10,7 +10,7 @@
       {subheader}
 
       <a
-        class="btn btn-lg btn-outline-secondary border-0 ms-auto me-2 my-auto"
+        class="btn btn-outline-secondary ms-4 me-auto my-auto"
         role="button"
         href={hrefBack}
       >
