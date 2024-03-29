@@ -448,10 +448,25 @@ ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 --   updated_at + 10 min
 --
 -- schedule_attr {
---   type: once | daily | weekly | bi-weekly,
---   once_started_at: string, (UTC datetime)
---   once_duration: integer, (minutes)
+--   type: o | d | w | 2w,    // once, daily, weekly, bi-weekly
+--   ses_started_at: string,  // datetime
+--   ses_duration: integer,   // minutes
+--   rep_started_at: string,  // selected date + ses_started_at (only time part)
+--   rep_ended_at: string,    // selected date - ses_started_at (t) + duration
+--   rep_x: integer,          // ended after x times
+--   rep_type: d | x,         // ending date or ended after x times
+--   days: string,            // 0 for off, 1 for on
+--                            // Sunday is the first digit
 -- }
+--
+-- - Dates are UTC datetime as string
+-- - 
+-- - Duration keeps minutes
+-- - If duration is 1440, this means all day event
+-- - Sunday is always the first day
+--     e.g. 0100100 or 01000000010000
+-- - Days has 7 digits for daily and weekly
+-- - Days has 14 digits for bi-weekly
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
