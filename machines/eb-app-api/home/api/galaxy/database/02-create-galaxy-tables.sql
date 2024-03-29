@@ -446,6 +446,12 @@ ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 -- - This table contains only scheduled meetings.
 -- - The schedule will be deleted if it doesn't have a session after
 --   updated_at + 10 min
+--
+-- schedule_attr {
+--   type: once | daily | weekly | bi-weekly,
+--   once_started_at: string, (UTC datetime)
+--   once_duration: integer, (minutes)
+-- }
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
