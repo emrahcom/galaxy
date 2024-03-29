@@ -93,6 +93,20 @@ ALTER TABLE contact OWNER TO galaxy;
 -- - auth_type of public domains must be 'none' (to decrease complexity).
 -- - Only none, token and jaas are supported as auth_type.
 -- - URLs are in domain_attr depending on auth_type.
+--
+-- domain_attr {
+--   url: string,
+--   app_id: string,
+--   app_secret: string,
+--   app_alg: string = "HS256",
+--   jaas_url: string = "https://8x8.vc",
+--   jaas_app_id: string,
+--   jaas_kid: string,
+--   jaas_key: string,
+--   jaas_alg: string = "RS256",
+--   jaas_aud: string = "jitsi",
+--   jaas_iss: string = "chat",
+-- }
 -- -----------------------------------------------------------------------------
 CREATE TYPE domain_auth_type AS ENUM ('none', 'token', 'jaas');
 CREATE TABLE domain (
