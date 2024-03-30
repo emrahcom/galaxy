@@ -14,8 +14,8 @@
   export let p: MeetingSchedule;
 
   const min = toInputTime();
-  let once_started_at = toInputTime(p.schedule_attr.once_started_at);
-  let once_duration = Number(p.schedule_attr.once_duration);
+  let started_at = toInputTime(p.schedule_attr.started_at);
+  let duration = Number(p.schedule_attr.duration);
   let warning = false;
 
   // ---------------------------------------------------------------------------
@@ -28,9 +28,9 @@
     try {
       warning = false;
 
-      const started_at = new Date(once_started_at);
-      p.schedule_attr.once_started_at = started_at.toISOString();
-      p.schedule_attr.once_duration = String(once_duration);
+      const at = new Date(started_at);
+      p.schedule_attr.started_at = at.toISOString();
+      p.schedule_attr.duration = String(duration);
 
       await action("/api/pri/meeting/schedule/update", p);
       window.location.href = `/pri/meeting/schedule/${p.meeting_id}`;
@@ -51,16 +51,16 @@
         required={false}
       />
       <Datetime
-        name="once_started_at"
+        name="started_at"
         label="Time"
-        bind:value={once_started_at}
+        bind:value={started_at}
         {min}
         required={true}
       />
       <Range
-        name="once_duration"
+        name="duration"
         label="Duration (minutes)"
-        bind:value={once_duration}
+        bind:value={duration}
         min={5}
         max={120}
         step={5}
