@@ -3,19 +3,45 @@ import type { Attr, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 function checkScheduleAttrOnce(scheduleAttr: Attr) {
-  if (Number(scheduleAttr.once_duration) < 1) {
+  if (Number(scheduleAttr.duration) < 1) {
     throw new Error("duration is out of range");
   }
 
-  if (Number(scheduleAttr.once_duration) > 1440) {
+  if (Number(scheduleAttr.duration) > 1440) {
+    throw new Error("duration is out of range");
+  }
+}
+
+// -----------------------------------------------------------------------------
+function checkScheduleAttrDaily(scheduleAttr: Attr) {
+  if (Number(scheduleAttr.duration) < 1) {
+    throw new Error("duration is out of range");
+  }
+
+  if (Number(scheduleAttr.duration) > 1440) {
+    throw new Error("duration is out of range");
+  }
+}
+
+// -----------------------------------------------------------------------------
+function checkScheduleAttrWeekly(scheduleAttr: Attr) {
+  if (Number(scheduleAttr.duration) < 1) {
+    throw new Error("duration is out of range");
+  }
+
+  if (Number(scheduleAttr.duration) > 1440) {
     throw new Error("duration is out of range");
   }
 }
 
 // -----------------------------------------------------------------------------
 export function checkScheduleAttr(scheduleAttr: Attr) {
-  if (scheduleAttr.type === "once") {
+  if (scheduleAttr.type === "o") {
     checkScheduleAttrOnce(scheduleAttr);
+  } else if (scheduleAttr.type === "d") {
+    checkScheduleAttrDaily(scheduleAttr);
+  } else if (scheduleAttr.type === "w") {
+    checkScheduleAttrWeekly(scheduleAttr);
   } else {
     throw new Error("Unknow schedule type");
   }
