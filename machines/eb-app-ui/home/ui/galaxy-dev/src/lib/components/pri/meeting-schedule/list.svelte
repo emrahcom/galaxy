@@ -21,11 +21,11 @@
         <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">
-              {toLocaleTime(p.schedule_attr.once_started_at)}
+              {toLocaleTime(p.schedule_attr.started_at)}
             </h5>
 
             <p class="card-text text-muted">
-              {p.schedule_attr.once_duration} mins
+              {p.schedule_attr.duration} mins
             </p>
 
             {#if p.name}
