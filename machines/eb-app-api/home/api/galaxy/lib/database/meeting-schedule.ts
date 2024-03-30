@@ -296,6 +296,7 @@ export async function addMeetingSchedule(
       return rst.rows as Id[];
     });
 
+  // add sessions
   await addMeetingSession(trans, rows[0].id, scheduleAttr);
 
   await trans.commit();
@@ -334,7 +335,7 @@ export async function updateMeetingSchedule(
   name: string,
   scheduleAttr: Attr,
 ) {
-  // if not valid, it will throw an error
+  // it will throw an error if it is no valid
   checkScheduleAttr(scheduleAttr);
 
   using client = await pool.connect();
