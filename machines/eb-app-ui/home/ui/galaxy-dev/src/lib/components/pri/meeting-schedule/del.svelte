@@ -13,7 +13,7 @@
   export let p: MeetingSchedule;
 
   const min = toInputTime();
-  let once_started_at = toInputTime(p.schedule_attr.once_started_at);
+  let started_at = toInputTime(p.schedule_attr.started_at);
   let warning = false;
 
   // ---------------------------------------------------------------------------
@@ -45,17 +45,17 @@
         readonly={true}
       />
       <Datetime
-        name="once_started_at"
+        name="started_at"
         label="Time"
-        value={once_started_at}
+        value={started_at}
         {min}
         disabled={true}
         readonly={true}
       />
       <Text
-        name="once_duration"
+        name="duration"
         label="Duration (minutes)"
-        value={`${p.schedule_attr.once_duration}`}
+        value={`${p.schedule_attr.duration}`}
         disabled={true}
         readonly={true}
       />
