@@ -23,7 +23,7 @@
     name: "",
     meeting_id: meeting.id,
     schedule_attr: {
-      type: "once",
+      type: "o",
       started_at: "",
       duration: 30,
     },
