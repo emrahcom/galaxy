@@ -1,4 +1,4 @@
-import { fetch } from "./common.ts";
+import { fetch, pool } from "./common.ts";
 import type {
   Attr,
   Id,
@@ -7,7 +7,7 @@ import type {
   MeetingSchedule222,
 } from "./types.ts";
 import {
-  addMeetingSessionOnce,
+  addMeetingSession,
   checkScheduleAttr,
   delMeetingSessionBySchedule,
 } from "./meeting-session.ts";
@@ -265,8 +265,12 @@ export async function addMeetingSchedule(
   name: string,
   scheduleAttr: Attr,
 ) {
-  // if not valid, it will throw an error
+  // it will throw an error if it is no valid
   checkScheduleAttr(scheduleAttr);
+
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
+  await trans.begin();
 
   const sql = {
     text: `
@@ -287,17 +291,16 @@ export async function addMeetingSchedule(
       scheduleAttr,
     ],
   };
-  const rows = await fetch(sql) as Id[];
+  const rows = await trans.queryObject(sql)
+    .then((rst) => {
+      return rst.rows as Id[];
+    });
 
-  // dont continue if the schedule was not created
-  if (rows[0] === undefined) return rows;
+  await addMeetingSession(trans, rows[0].id, scheduleAttr);
 
-  // add sessions
-  if (scheduleAttr.type === "once") {
-    await addMeetingSessionOnce(rows[0].id, scheduleAttr);
-  }
+  await trans.commit();
 
-  return rows;
+  return rows as Id[];
 }
 
 // -----------------------------------------------------------------------------
@@ -334,6 +337,10 @@ export async function updateMeetingSchedule(
   // if not valid, it will throw an error
   checkScheduleAttr(scheduleAttr);
 
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
+  await trans.begin();
+
   const sql = {
     text: `
       UPDATE meeting_schedule s
@@ -354,20 +361,23 @@ export async function updateMeetingSchedule(
       scheduleAttr,
     ],
   };
-  const rows = await fetch(sql) as Id[];
+  const rows = await trans.queryObject(sql)
+    .then((rst) => {
+      return rst.rows as Id[];
+    });
 
   // dont continue if the schedule was not updated
-  if (rows[0] === undefined) return rows;
+  if (rows[0] === undefined) throw new Error("No updated schedule");
 
   // delete old sessions
-  await delMeetingSessionBySchedule(scheduleId);
+  await delMeetingSessionBySchedule(trans, scheduleId);
 
   // add new sessions
-  if (scheduleAttr.type === "once") {
-    await addMeetingSessionOnce(rows[0].id, scheduleAttr);
-  }
+  await addMeetingSession(trans, rows[0].id, scheduleAttr);
 
-  return rows;
+  await trans.commit();
+
+  return rows as Id[];
 }
 
 // -----------------------------------------------------------------------------

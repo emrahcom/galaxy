@@ -1,5 +1,5 @@
-import { fetch } from "./common.ts";
-import type { Attr, Id } from "./types.ts";
+import { Transaction } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import type { Attr } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 function checkScheduleAttrOnce(scheduleAttr: Attr) {
@@ -48,7 +48,8 @@ export function checkScheduleAttr(scheduleAttr: Attr) {
 }
 
 // -----------------------------------------------------------------------------
-export async function addMeetingSessionOnce(
+async function addMeetingSessionOnce(
+  trans: Transaction,
   meetingScheduleId: string,
   scheduleAttr: Attr,
 ) {
@@ -61,16 +62,58 @@ export async function addMeetingSessionOnce(
       RETURNING id, created_at as at`,
     args: [
       meetingScheduleId,
-      scheduleAttr.once_started_at,
-      scheduleAttr.once_duration,
+      scheduleAttr.started_at,
+      scheduleAttr.duration,
     ],
   };
 
-  return await fetch(sql) as Id[];
+  await trans.queryObject(sql);
+}
+
+// -----------------------------------------------------------------------------
+async function addMeetingSessionDaily(
+  trans: Transaction,
+  meetingScheduleId: string,
+  scheduleAttr: Attr,
+) {
+  // not implemented yet
+  await console.log(trans);
+  await console.log(meetingScheduleId);
+  await console.log(scheduleAttr);
+}
+
+// -----------------------------------------------------------------------------
+async function addMeetingSessionWeekly(
+  trans: Transaction,
+  meetingScheduleId: string,
+  scheduleAttr: Attr,
+) {
+  // not implemented yet
+  await console.log(trans);
+  await console.log(meetingScheduleId);
+  await console.log(scheduleAttr);
+}
+
+// -----------------------------------------------------------------------------
+export async function addMeetingSession(
+  trans: Transaction,
+  meetingScheduleId: string,
+  scheduleAttr: Attr,
+) {
+  if (scheduleAttr.type === "o") {
+    await addMeetingSessionOnce(trans, meetingScheduleId, scheduleAttr);
+  } else if (scheduleAttr.type === "d") {
+    await addMeetingSessionDaily(trans, meetingScheduleId, scheduleAttr);
+  } else if (scheduleAttr.type === "w") {
+    await addMeetingSessionWeekly(trans, meetingScheduleId, scheduleAttr);
+  } else {
+    throw new Error("Unknow schedule type");
+  }
 }
 
 // -----------------------------------------------------------------------------
 export async function delMeetingSessionBySchedule(
+  trans: Transaction,
   meetingScheduleId: string,
 ) {
   const sql = {
@@ -83,5 +126,5 @@ export async function delMeetingSessionBySchedule(
     ],
   };
 
-  return await fetch(sql) as Id[];
+  await trans.queryObject(sql);
 }
