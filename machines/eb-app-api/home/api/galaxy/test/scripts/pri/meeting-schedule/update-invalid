@@ -25,9 +25,9 @@ JSON=$(cat <<EOF
     "id": "$schedule_id",
     "name": "name-$RANDOM",
     "schedule_attr": {
-      "type": "once",
-      "once_started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
-      "once_duration": -30
+      "type": "o",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": -30
     }
 }
 EOF
