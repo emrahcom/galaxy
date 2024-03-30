@@ -448,25 +448,21 @@ ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 --   updated_at + 10 min
 --
 -- schedule_attr {
---   type: o | d | w | 2w,    // once, daily, weekly, bi-weekly
---   ses_started_at: string,  // datetime
---   ses_duration: integer,   // minutes
---   rep_started_at: string,  // selected date + ses_started_at (only time part)
---   rep_ended_at: string,    // selected date - ses_started_at (t) + duration
---   rep_x: integer,          // ended after x times
---   rep_type: d | x,         // ending date or ended after x times
---   days: string,            // 0 for off, 1 for on
---                            // Sunday is the first digit
+--   type: o | d | w             // once, daily, weekly
+--   started_at: string,         // datetime
+--   duration: string,           // minutes
+--   rep_end_type: at | x,
+--   rep_end_at: string,         // datetime, ended at 23:59:59 of the owner
+--   rep_end_x: string,          // ended after x sessions
+--   rep_every: string,          // default is 1
+--   rep_days: string,           // 0 for off, 1 for on
+--                               // Sunday is the first digit
+--                               // e.g. 0100100
 -- }
 --
--- - Dates are UTC datetime as string
--- - 
--- - Duration keeps minutes
--- - If duration is 1440, this means all day event
--- - Sunday is always the first day
---     e.g. 0100100 or 01000000010000
--- - Days has 7 digits for daily and weekly
--- - Days has 14 digits for bi-weekly
+-- - All attributes are recorded as string even its value is a date or a number
+-- - Dates are UTC
+-- - If duration is 1440 and started_at is 00:00, this means all day event on UI
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_schedule (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
