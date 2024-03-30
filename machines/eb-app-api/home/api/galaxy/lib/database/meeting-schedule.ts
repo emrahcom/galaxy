@@ -300,7 +300,7 @@ export async function addMeetingSchedule(
 
   await trans.commit();
 
-  return rows as Id[];
+  return rows;
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +377,7 @@ export async function updateMeetingSchedule(
 
   await trans.commit();
 
-  return rows as Id[];
+  return rows;
 }
 
 // -----------------------------------------------------------------------------
