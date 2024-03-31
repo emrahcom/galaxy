@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isOnline, isToday, toLocaleTime } from "$lib/common";
+  import { isOnline, isToday, toLocaleDatetime } from "$lib/common";
   import type { Meeting222, MeetingMemberCandidacy } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
@@ -57,11 +57,11 @@
                 {#if p.session_at}
                   {#each p.session_list.slice(0, 3) as at}
                     {#if isOnline(at)}
-                      <p class="text-primary my-0">{toLocaleTime(at)}</p>
+                      <p class="text-primary my-0">{toLocaleDatetime(at)}</p>
                     {:else if isToday(at)}
-                      <p class="text-warning my-0">{toLocaleTime(at)}</p>
+                      <p class="text-warning my-0">{toLocaleDatetime(at)}</p>
                     {:else}
-                      <p class="text-secondary my-0">{toLocaleTime(at)}</p>
+                      <p class="text-secondary my-0">{toLocaleDatetime(at)}</p>
                     {/if}
                   {/each}
                 {:else}
@@ -143,11 +143,11 @@
                 {#if c.session_list.length}
                   {#each c.session_list.slice(0, 3) as at}
                     {#if isOnline(at[0])}
-                      <p class="text-primary my-0">{toLocaleTime(at[0])}</p>
+                      <p class="text-primary my-0">{toLocaleDatetime(at[0])}</p>
                     {:else if isToday(at[0])}
-                      <p class="text-warning my-0">{toLocaleTime(at[0])}</p>
+                      <p class="text-warning my-0">{toLocaleDatetime(at[0])}</p>
                     {:else}
-                      <p class="text-secondary my-0">{toLocaleTime(at[0])}</p>
+                      <p class="text-secondary my-0">{toLocaleDatetime(at[0])}</p>
                     {/if}
                   {/each}
                 {:else}
