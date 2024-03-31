@@ -11,7 +11,7 @@
 <!-- -------------------------------------------------------------------------->
 <div class="form-floating my-3">
   <input
-    type="datetime-local"
+    type="date"
     id={name}
     class="form-control"
     {name}
