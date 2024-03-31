@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { epochToIntervalString, toLocaleTime } from "$lib/common";
+  import { epochToIntervalString, toLocaleDatetime } from "$lib/common";
   import { getById } from "$lib/api";
   import type { MeetingSchedule222 } from "$lib/types";
   import Back from "$lib/components/common/button-on-click.svelte";
@@ -77,7 +77,7 @@
         {/if}
 
         <p class="card-text text-muted small">
-          {toLocaleTime(p.started_at)}
+          {toLocaleDatetime(p.started_at)}
         </p>
 
         {#if p.meeting_info}
