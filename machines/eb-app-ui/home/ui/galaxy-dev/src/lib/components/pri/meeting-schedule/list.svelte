@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { toLocaleTime } from "$lib/common";
+  import { toLocaleDatetime } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
@@ -21,7 +21,7 @@
         <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
           <div class="card-body text-center">
             <h5 class="card-title text-muted">
-              {toLocaleTime(p.schedule_attr.started_at)}
+              {toLocaleDatetime(p.schedule_attr.started_at)}
             </h5>
 
             <p class="card-text text-muted">
