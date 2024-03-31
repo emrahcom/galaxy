@@ -2,21 +2,23 @@
   import { page } from "$app/stores";
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import { toInputTime } from "$lib/common";
+  import { today } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
-  import Datetime from "$lib/components/common/form-datetime.svelte";
+  import Day from "$lib/components/common/form-date.svelte";
   import Range from "$lib/components/common/form-range.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
+  import Time from "$lib/components/common/form-time.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let meeting: Meeting;
   const hash = $page.url.hash;
 
-  const min = toInputTime();
-  let started_at = min;
+  const min = today()
+  let date0 = today();
+  let time0 = "09:30 AM";
 
   let warning = false;
   let p = {
@@ -43,7 +45,7 @@
     try {
       warning = false;
 
-      const at = new Date(started_at);
+      const at = new Date(`${date0} ${time0}`);
       p.schedule_attr.started_at = at.toISOString();
 
       await action("/api/pri/meeting/schedule/add", p);
@@ -69,11 +71,17 @@
         bind:value={p.name}
         required={false}
       />
-      <Datetime
-        name="started_at"
-        label="Time"
-        bind:value={started_at}
+      <Day
+        name="date0"
+        label="Date"
+        bind:value={date0}
         {min}
+        required={true}
+      />
+      <Time
+        name="time0"
+        label="Time"
+        bind:value={time0}
         required={true}
       />
       <Range
