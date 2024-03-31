@@ -35,20 +35,40 @@ export function epochToIntervalString(time: number) {
 }
 
 // -----------------------------------------------------------------------------
-export function toInputTime(date = "") {
-  let _time1 = new Date();
+export function today() {
+  const _date = new Date();
 
-  if (date) _time1 = new Date(date);
+  return _date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
 
-  const _time2 = new Date(
-    _time1.getTime() - 60 * 1000 * _time1.getTimezoneOffset(),
-  );
+// -----------------------------------------------------------------------------
+export function toLocaleDate(date: string) {
+  const _date = new Date(date);
 
-  return _time2.toISOString().slice(0, 16);
+  return _date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
 }
 
 // -----------------------------------------------------------------------------
 export function toLocaleTime(date: string) {
+  const _date = new Date(date);
+
+  return _date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
+
+// -----------------------------------------------------------------------------
+export function toLocaleDatetime(date: string) {
   const _date = new Date(date);
 
   return _date.toLocaleString(undefined, {
