@@ -1,20 +1,21 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import { toInputTime } from "$lib/common";
+  import { toLocaleDate, today } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
-  import Datetime from "$lib/components/common/form-datetime.svelte";
+  import Day from "$lib/components/common/form-date.svelte";
   import Range from "$lib/components/common/form-range.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
+  import Time from "$lib/components/common/form-time.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let p: MeetingSchedule;
 
-  const min = toInputTime();
-  let started_at = toInputTime(p.schedule_attr.started_at);
+  const min = today();
+  let started_at = toLocaleDate(p.schedule_attr.started_at);
   let duration = Number(p.schedule_attr.duration);
   let warning = false;
 
@@ -50,11 +51,17 @@
         bind:value={p.name}
         required={false}
       />
-      <Datetime
-        name="started_at"
-        label="Time"
+      <Day
+        name="started_date"
+        label="Date"
         bind:value={started_at}
         {min}
+        required={true}
+      />
+      <Time
+        name="started_time"
+        label="Time"
+        bind:value={started_at}
         required={true}
       />
       <Range
