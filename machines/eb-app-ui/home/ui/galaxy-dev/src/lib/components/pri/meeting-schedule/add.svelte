@@ -16,7 +16,7 @@
   export let meeting: Meeting;
   const hash = $page.url.hash;
 
-  const min = today()
+  const min = today();
   let date0 = today();
   let time0 = "09:30 AM";
 
@@ -71,19 +71,8 @@
         bind:value={p.name}
         required={false}
       />
-      <Day
-        name="date0"
-        label="Date"
-        bind:value={date0}
-        {min}
-        required={true}
-      />
-      <Time
-        name="time0"
-        label="Time"
-        bind:value={time0}
-        required={true}
-      />
+      <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
+      <Time name="time0" label="Time" bind:value={time0} required={true} />
       <Range
         name="duration"
         label="Duration (minutes)"

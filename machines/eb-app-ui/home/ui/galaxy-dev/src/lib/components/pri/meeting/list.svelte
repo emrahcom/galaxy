@@ -147,7 +147,9 @@
                     {:else if isToday(at[0])}
                       <p class="text-warning my-0">{toLocaleDatetime(at[0])}</p>
                     {:else}
-                      <p class="text-secondary my-0">{toLocaleDatetime(at[0])}</p>
+                      <p class="text-secondary my-0">
+                        {toLocaleDatetime(at[0])}
+                      </p>
                     {/if}
                   {/each}
                 {:else}
