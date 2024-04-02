@@ -15,7 +15,8 @@
   export let p: MeetingSchedule;
 
   const min = today();
-  let started_at = toLocaleDate(p.schedule_attr.started_at);
+  let date0 = toLocaleDate(p.schedule_attr.started_at);
+  let time0 = toLocaleTime(p.schedule_attr.started_at);
   let duration = Number(p.schedule_attr.duration);
   let warning = false;
 
@@ -29,7 +30,7 @@
     try {
       warning = false;
 
-      const at = new Date(started_at);
+      const at = new Date(`${date0}T${time0}`);
       p.schedule_attr.started_at = at.toISOString();
       p.schedule_attr.duration = String(duration);
 
@@ -52,16 +53,16 @@
         required={false}
       />
       <Day
-        name="started_date"
+        name="date0"
         label="Date"
-        bind:value={started_at}
+        bind:value={date0}
         {min}
         required={true}
       />
       <Time
-        name="started_time"
+        name="time0"
         label="Time"
-        bind:value={started_at}
+        bind:value={time0}
         required={true}
       />
       <Range
