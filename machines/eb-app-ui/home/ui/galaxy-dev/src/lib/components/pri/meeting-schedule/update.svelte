@@ -52,19 +52,8 @@
         bind:value={p.name}
         required={false}
       />
-      <Day
-        name="date0"
-        label="Date"
-        bind:value={date0}
-        {min}
-        required={true}
-      />
-      <Time
-        name="time0"
-        label="Time"
-        bind:value={time0}
-        required={true}
-      />
+      <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
+      <Time name="time0" label="Time" bind:value={time0} required={true} />
       <Range
         name="duration"
         label="Duration (minutes)"
