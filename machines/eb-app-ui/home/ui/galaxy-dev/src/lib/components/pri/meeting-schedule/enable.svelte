@@ -46,14 +46,14 @@
         readonly={true}
       />
       <Day
-        name="started_date"
+        name="date0"
         label="Date"
         value={date0}
         disabled={true}
         readonly={true}
       />
       <Time
-        name="started_time"
+        name="time0"
         label="Time"
         value={time0}
         disabled={true}
