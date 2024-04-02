@@ -50,7 +50,7 @@ export function toLocaleDate(date: string) {
   return (
     _date.getFullYear() +
     "-" +
-    ("0" + _date.getMonth()).slice(-2) +
+    ("0" + (_date.getMonth() + 1)).slice(-2) +
     "-" +
     ("0" + _date.getDate()).slice(-2)
   );
