@@ -35,38 +35,42 @@ export function epochToIntervalString(time: number) {
 }
 
 // -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a date object.
+// -----------------------------------------------------------------------------
 export function today() {
-  const _date = new Date();
-
-  return _date.toLocaleString(undefined, {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  return new Date().toISOString().split("T")[0];
 }
 
+// -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a date object.
 // -----------------------------------------------------------------------------
 export function toLocaleDate(date: string) {
   const _date = new Date(date);
 
-  return _date.toLocaleString(undefined, {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  return (
+    _date.getFullYear() +
+    "-" +
+    ("0" + _date.getMonth()).slice(-2) +
+    "-" +
+    ("0" + _date.getDate()).slice(-2)
+  );
 }
 
+// -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a time object.
 // -----------------------------------------------------------------------------
 export function toLocaleTime(date: string) {
   const _date = new Date(date);
 
-  return _date.toLocaleString(undefined, {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+  return (
+    ("0" + _date.getHours()).slice(-2) +
+    ":" +
+    ("0" + _date.getMinutes()).slice(-2)
+  );
 }
 
+// -----------------------------------------------------------------------------
+// The generated value will be used in the frontend to show the user.
 // -----------------------------------------------------------------------------
 export function toLocaleDatetime(date: string) {
   const _date = new Date(date);
