@@ -18,7 +18,7 @@
 
   const min = today();
   let date0 = today();
-  let time0 = "09:30 AM";
+  let time0 = "08:30";
 
   let warning = false;
   let p = {
@@ -45,7 +45,7 @@
     try {
       warning = false;
 
-      const at = new Date(`${date0} ${time0}`);
+      const at = new Date(`${date0}T${time0}`);
       p.schedule_attr.started_at = at.toISOString();
 
       await action("/api/pri/meeting/schedule/add", p);
