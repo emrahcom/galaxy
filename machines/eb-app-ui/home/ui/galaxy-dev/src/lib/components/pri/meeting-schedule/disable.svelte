@@ -13,7 +13,8 @@
 
   export let p: MeetingSchedule;
 
-  let started_at = toLocaleDate(p.schedule_attr.started_at);
+  let date0 = toLocaleDate(p.schedule_attr.started_at);
+  let time0 = toLocaleTime(p.schedule_attr.started_at);
   let warning = false;
 
   // ---------------------------------------------------------------------------
@@ -47,14 +48,14 @@
       <Day
         name="started_date"
         label="Date"
-        value={started_at}
+        value={date0}
         disabled={true}
         readonly={true}
       />
       <Time
         name="started_time"
         label="Time"
-        value={started_at}
+        value={time0}
         disabled={true}
         readonly={true}
       />
