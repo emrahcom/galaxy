@@ -1,3 +1,6 @@
+// -----------------------------------------------------------------------------
+// from epoch to "x days hh:mm:ss"
+// -----------------------------------------------------------------------------
 export function epochToIntervalString(time: number) {
   try {
     let sign = "";
@@ -82,6 +85,24 @@ export function toLocaleDatetime(date: string) {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+// -----------------------------------------------------------------------------
+// to "08:30 AM - 10:00 PM"
+// -----------------------------------------------------------------------------
+export function toLocaleInterval(date: string, minutes: number) {
+  const date0 = new Date(date);
+  const date1 = new Date(date0.getTime() + minutes * 60 * 1000);
+  const time0 = date0.toLocaleString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const time1 = date1.toLocaleString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return `${time0} - ${time1}`;
 }
 
 // -----------------------------------------------------------------------------
