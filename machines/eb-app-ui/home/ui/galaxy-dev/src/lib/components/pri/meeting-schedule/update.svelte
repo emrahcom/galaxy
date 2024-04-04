@@ -21,6 +21,12 @@
   let warning = false;
 
   // ---------------------------------------------------------------------------
+  function rangeUpdated(e: Event) {
+    const target = e.target as HTMLInputElement;
+    console.error(target.value);
+  }
+
+  // ---------------------------------------------------------------------------
   function cancel() {
     window.location.href = `/pri/meeting/schedule/${p.meeting_id}`;
   }
@@ -62,6 +68,7 @@
         max={180}
         step={5}
         required={true}
+        on:input={rangeUpdated}
       />
 
       {#if warning}
