@@ -59,7 +59,7 @@
         label="Duration (minutes)"
         bind:value={duration}
         min={5}
-        max={120}
+        max={180}
         step={5}
         required={true}
       />
