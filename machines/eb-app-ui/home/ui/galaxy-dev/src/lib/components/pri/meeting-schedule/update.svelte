@@ -49,12 +49,14 @@
   // ---------------------------------------------------------------------------
   function durationUpdated() {
     try {
-      const _duration = Number(duration);
+      const _duration = Math.round(Number(duration));
 
       if (isNaN(_duration)) {
         throw new Error("no valid duration");
-      } else if (_duration < 1) {
-        duration = 5;
+      } else if (duration === 0) {
+        throw new Error("no duration");
+      } else if (_duration < 0) {
+        throw new Error("negative duration");
       } else if (_duration > 1440) {
         duration = 1440;
       }
