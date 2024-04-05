@@ -1,7 +1,13 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import { getEndTime, today, toLocaleDate, toLocaleTime } from "$lib/common";
+  import {
+    getDuration,
+    getEndTime,
+    today,
+    toLocaleDate,
+    toLocaleTime,
+  } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
@@ -33,7 +39,7 @@
   // ---------------------------------------------------------------------------
   function endTimeUpdated() {
     try {
-      //duration = getInterval(date0, time0, time1);
+      duration = getDuration(time0, time1);
     } catch {
       //do nothing
     }
@@ -43,7 +49,7 @@
   function durationUpdated(e: Event) {
     try {
       const target = e.target as HTMLInputElement;
-      console.error(target.value);
+      time1 = getEndTime(time0, Number(target.value));
     } catch {
       //do nothing
     }
