@@ -88,19 +88,6 @@ export function toLocaleDatetime(date: string) {
 }
 
 // -----------------------------------------------------------------------------
-// -----------------------------------------------------------------------------
-export function toLocaleEndTime(date: string, time: string, minutes: number) {
-  const date0 = new Date(`${date}T${time}`);
-  const date1 = new Date(date0.getTime() + minutes * 60 * 1000);
-
-  return (
-    ("0" + date1.getHours()).slice(-2) +
-    ":" +
-    ("0" + date1.getMinutes()).slice(-2)
-  );
-}
-
-// -----------------------------------------------------------------------------
 // to "08:30 AM - 10:00 PM"
 // -----------------------------------------------------------------------------
 export function toLocaleInterval(date: string, minutes: number) {
@@ -116,6 +103,21 @@ export function toLocaleInterval(date: string, minutes: number) {
   });
 
   return `${time0} - ${time1}`;
+}
+
+// -----------------------------------------------------------------------------
+// time after M min from T
+// -----------------------------------------------------------------------------
+export function getEndTime(time: string, minutes: number) {
+  const day = today();
+  const date0 = new Date(`${day}T${time}`);
+  const date1 = new Date(date0.getTime() + minutes * 60 * 1000);
+
+  return (
+    ("0" + date1.getHours()).slice(-2) +
+    ":" +
+    ("0" + date1.getMinutes()).slice(-2)
+  );
 }
 
 // -----------------------------------------------------------------------------

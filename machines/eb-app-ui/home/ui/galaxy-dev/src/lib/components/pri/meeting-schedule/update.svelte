@@ -1,12 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import {
-    today,
-    toLocaleDate,
-    toLocaleEndTime,
-    toLocaleTime,
-  } from "$lib/common";
+  import { getEndTime, today, toLocaleDate, toLocaleTime } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
@@ -23,13 +18,13 @@
   let date0 = toLocaleDate(p.schedule_attr.started_at);
   let time0 = toLocaleTime(p.schedule_attr.started_at);
   let duration = Number(p.schedule_attr.duration);
-  let time1 = toLocaleEndTime(date0, time0, duration);
+  let time1 = getEndTime(time0, duration);
   let warning = false;
 
   // ---------------------------------------------------------------------------
   function startTimeUpdated() {
     try {
-      time1 = toLocaleEndTime(date0, time0, duration);
+      time1 = getEndTime(time0, duration);
     } catch {
       //do nothing
     }
@@ -38,6 +33,7 @@
   // ---------------------------------------------------------------------------
   function endTimeUpdated() {
     try {
+      //duration = getInterval(date0, time0, time1);
     } catch {
       //do nothing
     }
