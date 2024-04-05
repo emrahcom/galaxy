@@ -1,7 +1,12 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import { today, toLocaleDate, toLocaleTime } from "$lib/common";
+  import {
+    today,
+    toLocaleDate,
+    toLocaleEndTime,
+    toLocaleTime,
+  } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
@@ -18,12 +23,36 @@
   let date0 = toLocaleDate(p.schedule_attr.started_at);
   let time0 = toLocaleTime(p.schedule_attr.started_at);
   let duration = Number(p.schedule_attr.duration);
+  let time1 = toLocaleEndTime(date0, time0, duration);
   let warning = false;
 
   // ---------------------------------------------------------------------------
-  function rangeUpdated(e: Event) {
-    const target = e.target as HTMLInputElement;
-    console.error(target.value);
+  function startTimeChanged() {
+    try {
+      time1 = toLocaleEndTime(date0, time0, duration);
+    } catch {
+      //do nothing
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  function endTimeChanged(e: Event) {
+    try {
+      const target = e.target as HTMLInputElement;
+      console.error(target.value);
+    } catch {
+      //do nothing
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  function durationUpdated(e: Event) {
+    try {
+      const target = e.target as HTMLInputElement;
+      console.error(target.value);
+    } catch {
+      //do nothing
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -59,7 +88,20 @@
         required={false}
       />
       <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
-      <Time name="time0" label="Time" bind:value={time0} required={true} />
+      <Time
+        name="time0"
+        label="Start time"
+        bind:value={time0}
+        required={true}
+        on:input={startTimeChanged}
+      />
+      <Time
+        name="time1"
+        label="End time"
+        bind:value={time1}
+        required={true}
+        on:input={endTimeChanged}
+      />
       <Range
         name="duration"
         label="Duration (minutes)"
@@ -68,7 +110,7 @@
         max={180}
         step={5}
         required={true}
-        on:input={rangeUpdated}
+        on:input={durationUpdated}
       />
 
       {#if warning}
