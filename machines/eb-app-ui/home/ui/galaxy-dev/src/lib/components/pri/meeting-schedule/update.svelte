@@ -27,7 +27,7 @@
   let warning = false;
 
   // ---------------------------------------------------------------------------
-  function startTimeChanged() {
+  function startTimeUpdated() {
     try {
       time1 = toLocaleEndTime(date0, time0, duration);
     } catch {
@@ -36,10 +36,8 @@
   }
 
   // ---------------------------------------------------------------------------
-  function endTimeChanged(e: Event) {
+  function endTimeUpdated() {
     try {
-      const target = e.target as HTMLInputElement;
-      console.error(target.value);
     } catch {
       //do nothing
     }
@@ -93,14 +91,14 @@
         label="Start time"
         bind:value={time0}
         required={true}
-        on:input={startTimeChanged}
+        on:change={startTimeUpdated}
       />
       <Time
         name="time1"
         label="End time"
         bind:value={time1}
         required={true}
-        on:input={endTimeChanged}
+        on:change={endTimeUpdated}
       />
       <Range
         name="duration"

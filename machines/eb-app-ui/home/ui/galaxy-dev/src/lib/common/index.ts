@@ -92,12 +92,12 @@ export function toLocaleDatetime(date: string) {
 export function toLocaleEndTime(date: string, time: string, minutes: number) {
   const date0 = new Date(`${date}T${time}`);
   const date1 = new Date(date0.getTime() + minutes * 60 * 1000);
-  const time1 = date1.toLocaleString(undefined, {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
 
-  return time1;
+  return (
+    ("0" + date1.getHours()).slice(-2) +
+    ":" +
+    ("0" + date1.getMinutes()).slice(-2)
+  );
 }
 
 // -----------------------------------------------------------------------------
