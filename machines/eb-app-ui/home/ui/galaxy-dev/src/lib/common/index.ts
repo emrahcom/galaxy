@@ -41,7 +41,15 @@ export function epochToIntervalString(time: number) {
 // The generated value will be used in the backend to set a date object.
 // -----------------------------------------------------------------------------
 export function today() {
-  return new Date().toISOString().split("T")[0];
+  const _date = new Date();
+
+  return (
+    _date.getFullYear() +
+    "-" +
+    ("0" + (_date.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + _date.getDate()).slice(-2)
+  );
 }
 
 // -----------------------------------------------------------------------------
