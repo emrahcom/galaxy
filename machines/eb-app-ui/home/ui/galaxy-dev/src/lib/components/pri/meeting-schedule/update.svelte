@@ -21,9 +21,10 @@
   export let p: MeetingSchedule;
 
   const min = today();
+  const defaultDuration = Number(p.schedule_attr.duration);
+  let duration = defaultDuration;
   let date0 = toLocaleDate(p.schedule_attr.started_at);
   let time0 = toLocaleTime(p.schedule_attr.started_at);
-  let duration = Number(p.schedule_attr.duration);
   let time1 = getEndTime(time0, duration);
   let warning = false;
 
@@ -46,7 +47,30 @@
   }
 
   // ---------------------------------------------------------------------------
-  function durationUpdated(e: Event) {
+  function durationUpdated() {
+    try {
+      const _duration = Number(duration);
+
+      if (isNaN(_duration)) {
+        throw new Error("no valid duration");
+      } else if (_duration < 1) {
+        duration = 5;
+      } else if (_duration > 1440) {
+        duration = 1440;
+      }
+    } catch {
+      duration = defaultDuration;
+    }
+
+    try {
+      time1 = getEndTime(time0, duration);
+    } catch {
+      //do nothing
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  function durationTyped(e: Event) {
     try {
       const target = e.target as HTMLInputElement;
       time1 = getEndTime(time0, Number(target.value));
@@ -110,7 +134,8 @@
         max={180}
         step={5}
         required={true}
-        on:input={durationUpdated}
+        on:change={durationUpdated}
+        on:input={durationTyped}
       />
 
       {#if warning}

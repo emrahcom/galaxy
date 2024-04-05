@@ -23,6 +23,7 @@
     {readonly}
     {required}
     tabindex={disabled || readonly ? -1 : undefined}
+    on:change
     on:input
   />
   <label for={name}>{label}</label>
