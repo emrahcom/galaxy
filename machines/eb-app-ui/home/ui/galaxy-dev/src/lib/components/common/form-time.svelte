@@ -20,6 +20,7 @@
     {readonly}
     {required}
     tabindex={disabled || readonly ? -1 : undefined}
+    on:change
   />
   <label for={name}>{label}</label>
 </div>
