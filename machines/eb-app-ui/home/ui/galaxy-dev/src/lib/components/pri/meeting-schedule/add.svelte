@@ -139,7 +139,7 @@
       <Time
         name="time1"
         label="End time"
-        bind:value={time0}
+        bind:value={time1}
         required={true}
         on:change={endTimeUpdated}
       />
