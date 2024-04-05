@@ -59,6 +59,8 @@
         throw new Error("negative duration");
       } else if (_duration > 1440) {
         duration = 1440;
+      } else {
+        duration = _duration;
       }
     } catch {
       duration = defaultDuration;
