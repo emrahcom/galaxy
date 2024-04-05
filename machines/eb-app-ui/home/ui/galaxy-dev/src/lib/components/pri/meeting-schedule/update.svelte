@@ -53,7 +53,7 @@
 
       if (isNaN(_duration)) {
         throw new Error("no valid duration");
-      } else if (duration === 0) {
+      } else if (_duration === 0) {
         throw new Error("no duration");
       } else if (_duration < 0) {
         throw new Error("negative duration");
