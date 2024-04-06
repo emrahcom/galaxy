@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { toLocaleDatetime } from "$lib/common";
+  import { isAllDay, toLocaleDate, toLocaleDatetime } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
@@ -20,13 +20,21 @@
       <div class="col-md-6 col-xl-4">
         <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
           <div class="card-body text-center">
-            <h5 class="card-title text-muted">
-              {toLocaleDatetime(p.schedule_attr.started_at)}
-            </h5>
+            {#if isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration)}
+              <h5 class="card-title text-muted">
+                {toLocaleDate(p.schedule_attr.started_at)}
+              </h5>
 
-            <p class="card-text text-muted">
-              {p.schedule_attr.duration} mins
-            </p>
+              <p class="card-text text-muted">All day</p>
+            {:else}
+              <h5 class="card-title text-muted">
+                {toLocaleDatetime(p.schedule_attr.started_at)}
+              </h5>
+
+              <p class="card-text text-muted">
+                {p.schedule_attr.duration} mins
+              </p>
+            {/if}
 
             {#if p.name}
               <p class="card-text text-muted">{p.name}</p>

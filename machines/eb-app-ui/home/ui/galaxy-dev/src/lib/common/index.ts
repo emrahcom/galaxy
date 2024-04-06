@@ -167,3 +167,14 @@ export function isToday(date: string) {
     _date.getDate() === today.getDate()
   );
 }
+
+// -----------------------------------------------------------------------------
+// It is an all day meeting if started at 00:00 and its duration is 1440 min
+// -----------------------------------------------------------------------------
+export function isAllDay(date: string, minutes: string) {
+  const _date = new Date(date);
+
+  return (
+    _date.getHours() === 0 && _date.getMinutes() === 0 && minutes === "1440"
+  );
+}
