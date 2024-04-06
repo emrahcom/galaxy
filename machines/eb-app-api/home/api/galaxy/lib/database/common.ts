@@ -13,7 +13,7 @@ import {
   DEFAULT_LIST_SIZE,
   MAX_LIST_SIZE,
 } from "../../config.ts";
-import type { Meta } from "./types.ts";
+import type { Attr, Meta } from "./types.ts";
 
 interface QueryObject {
   text: string;
@@ -81,4 +81,13 @@ export function getOffset(offset: number): number {
   if (!offset) offset = 0;
 
   return offset + 0;
+}
+
+// -----------------------------------------------------------------------------
+// Allow only string values in attributes
+// -----------------------------------------------------------------------------
+export function checkAttr(attr: Attr) {
+  for (const key in attr) {
+    if (typeof attr[key] !== "string") throw new Error("none string value");
+  }
 }
