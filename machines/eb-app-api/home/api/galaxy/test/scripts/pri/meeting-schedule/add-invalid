@@ -12,11 +12,12 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="meeting/schedule"
 ACTION="update"
-TAG="invalid"
 
 # ------------------------------------------------------------------------------
 # try to add a new schedule for a nonexistent meeting
 # ------------------------------------------------------------------------------
+TAG="invalid-none"
+
 meeting_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
@@ -26,6 +27,31 @@ JSON=$(cat <<EOF
       "type": "o",
       "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
       "duration": "30"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule with non-string json value.
+# duration should be string but number here.
+# ------------------------------------------------------------------------------
+TAG="invalid-json"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "o",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": 30
     }
 }
 EOF

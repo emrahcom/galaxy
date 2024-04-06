@@ -16,7 +16,7 @@ TAG="new"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
-# add many new schedules
+# add new schedule
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
