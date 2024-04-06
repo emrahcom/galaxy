@@ -93,6 +93,7 @@ ALTER TABLE contact OWNER TO galaxy;
 -- - auth_type of public domains must be 'none' (to decrease complexity).
 -- - Only none, token and jaas are supported as auth_type.
 -- - URLs are in domain_attr depending on auth_type.
+-- - Allow only string values in domain_attr
 --
 -- domain_attr {
 --   url: string,
@@ -446,6 +447,7 @@ ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 -- - This table contains only scheduled meetings.
 -- - The schedule will be deleted if it doesn't have a session after
 --   updated_at + 10 min
+-- - Allow only string values in schedule_attr
 --
 -- schedule_attr {
 --   type: o | d | w             // once, daily, weekly
