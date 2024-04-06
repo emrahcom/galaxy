@@ -4,6 +4,7 @@
   import {
     getDuration,
     getEndTime,
+    isAllDay,
     today,
     toLocaleDate,
     toLocaleTime,
@@ -14,6 +15,7 @@
   import Range from "$lib/components/common/form-range.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
+  import Switch from "$lib/components/common/form-switch.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Time from "$lib/components/common/form-time.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
@@ -26,6 +28,7 @@
   let date0 = toLocaleDate(p.schedule_attr.started_at);
   let time0 = toLocaleTime(p.schedule_attr.started_at);
   let time1 = getEndTime(time0, duration);
+  let allDay = isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration);
   let warning = false;
 
   // ---------------------------------------------------------------------------
@@ -93,6 +96,12 @@
     try {
       warning = false;
 
+      // if all day meeting, overwrite the start time and duration
+      if (allDay) {
+        time0 = "00:00";
+        duration = 1440;
+      }
+
       const at = new Date(`${date0}T${time0}`);
       p.schedule_attr.started_at = at.toISOString();
       p.schedule_attr.duration = String(duration);
@@ -116,31 +125,35 @@
         required={false}
       />
       <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
-      <Time
-        name="time0"
-        label="Start time"
-        bind:value={time0}
-        required={true}
-        on:change={startTimeUpdated}
-      />
-      <Time
-        name="time1"
-        label="End time"
-        bind:value={time1}
-        required={true}
-        on:change={endTimeUpdated}
-      />
-      <Range
-        name="duration"
-        label="Duration (minutes)"
-        bind:value={duration}
-        min={5}
-        max={180}
-        step={5}
-        required={true}
-        on:change={durationUpdated}
-        on:input={durationTyped}
-      />
+      <Switch name="all_day" label="All day meeting" bind:value={allDay} />
+
+      {#if !allDay}
+        <Time
+          name="time0"
+          label="Start time"
+          bind:value={time0}
+          required={true}
+          on:change={startTimeUpdated}
+        />
+        <Time
+          name="time1"
+          label="End time"
+          bind:value={time1}
+          required={true}
+          on:change={endTimeUpdated}
+        />
+        <Range
+          name="duration"
+          label="Duration (minutes)"
+          bind:value={duration}
+          min={5}
+          max={180}
+          step={5}
+          required={true}
+          on:change={durationUpdated}
+          on:input={durationTyped}
+        />
+      {/if}
 
       {#if warning}
         <Warning>
