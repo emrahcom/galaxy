@@ -83,6 +83,19 @@ export function toLocaleTime(date: string) {
 // -----------------------------------------------------------------------------
 // The generated value will be used in the frontend to show the user.
 // -----------------------------------------------------------------------------
+export function showLocaleDate(date: string) {
+  const _date = new Date(date);
+
+  return _date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+}
+
+// -----------------------------------------------------------------------------
+// The generated value will be used in the frontend to show the user.
+// -----------------------------------------------------------------------------
 export function showLocaleDatetime(date: string) {
   const _date = new Date(date);
 
