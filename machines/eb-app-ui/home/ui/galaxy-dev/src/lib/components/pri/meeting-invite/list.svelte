@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { toLocaleDatetime } from "$lib/common";
+  import { showLocaleDatetime } from "$lib/common";
   import type { MeetingInvite } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Copy from "$lib/components/common/button-copy.svelte";
@@ -42,7 +42,7 @@
           <div class="card-body text-center">
             <h5 class="card-title text-muted">{p.name}</h5>
             <p class="card-text text-muted small">
-              {toLocaleDatetime(p.expired_at)}
+              {showLocaleDatetime(p.expired_at)}
             </p>
 
             <p class="card-text text-muted small">
