@@ -11,6 +11,7 @@ import {
   updateMeetingSchedule,
   updateMeetingScheduleEnabled,
 } from "../database/meeting-schedule.ts";
+import type { Attr } from "../database/types.ts";
 
 const PRE = "/api/pri/meeting/schedule";
 
@@ -67,7 +68,7 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const meetingId = pl.meeting_id;
   const name = pl.name;
-  const scheduleAttr = pl.schedule_attr;
+  const scheduleAttr = pl.schedule_attr as Attr;
 
   return await addMeetingSchedule(
     identityId,
@@ -90,7 +91,7 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const scheduleId = pl.id;
   const name = pl.name;
-  const scheduleAttr = pl.schedule_attr;
+  const scheduleAttr = pl.schedule_attr as Attr;
 
   return await updateMeetingSchedule(
     identityId,
