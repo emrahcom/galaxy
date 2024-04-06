@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { actionById } from "$lib/api";
-  import { toLocaleDate, toLocaleInterval } from "$lib/common";
+  import { isAllDay, toLocaleDate, toLocaleInterval } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
@@ -54,20 +54,31 @@
         disabled={true}
         readonly={true}
       />
-      <Text
-        name="interval"
-        label="Time"
-        value={interval}
-        disabled={true}
-        readonly={true}
-      />
-      <Text
-        name="duration"
-        label="Duration (minutes)"
-        value={`${p.schedule_attr.duration}`}
-        disabled={true}
-        readonly={true}
-      />
+
+      {#if isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration)}
+        <Text
+          name="duration"
+          label="Duration"
+          value="All day"
+          disabled={true}
+          readonly={true}
+        />
+      {:else}
+        <Text
+          name="interval"
+          label="Time"
+          value={interval}
+          disabled={true}
+          readonly={true}
+        />
+        <Text
+          name="duration"
+          label="Duration (minutes)"
+          value={`${p.schedule_attr.duration}`}
+          disabled={true}
+          readonly={true}
+        />
+      {/if}
 
       {#if warning}
         <Warning>The delete request is not accepted.</Warning>
