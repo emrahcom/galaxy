@@ -10,6 +10,7 @@ import {
   updateDomain,
   updateDomainEnabled,
 } from "../database/domain.ts";
+import type { Attr } from "../database/types.ts";
 
 const PRE = "/api/pri/domain";
 
@@ -35,7 +36,7 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const name = pl.name;
   const authType = pl.auth_type;
-  const domainAttr = pl.domain_attr;
+  const domainAttr = pl.domain_attr as Attr;
 
   if (authType === "jaas") {
     if (!isValidUrl(domainAttr.jaas_url)) throw new Error("invalid input");
@@ -65,7 +66,7 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const domainId = pl.id;
   const name = pl.name;
   const authType = pl.auth_type;
-  const domainAttr = pl.domain_attr;
+  const domainAttr = pl.domain_attr as Attr;
 
   if (authType === "jaas") {
     if (!isValidUrl(domainAttr.jaas_url)) throw new Error("invalid input");
