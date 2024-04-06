@@ -83,7 +83,7 @@ export function toLocaleTime(date: string) {
 // -----------------------------------------------------------------------------
 // The generated value will be used in the frontend to show the user.
 // -----------------------------------------------------------------------------
-export function toLocaleDatetime(date: string) {
+export function showLocaleDatetime(date: string) {
   const _date = new Date(date);
 
   return _date.toLocaleString(undefined, {
