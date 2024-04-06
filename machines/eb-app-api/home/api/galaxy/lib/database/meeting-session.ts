@@ -48,6 +48,8 @@ export function checkScheduleAttr(scheduleAttr: Attr) {
 }
 
 // -----------------------------------------------------------------------------
+// the structure of scheduleAttr must be checked before calling this function
+// -----------------------------------------------------------------------------
 async function addMeetingSessionOnce(
   trans: Transaction,
   meetingScheduleId: string,
@@ -71,6 +73,8 @@ async function addMeetingSessionOnce(
 }
 
 // -----------------------------------------------------------------------------
+// the structure of scheduleAttr must be checked before calling this function
+// -----------------------------------------------------------------------------
 async function addMeetingSessionDaily(
   trans: Transaction,
   meetingScheduleId: string,
@@ -83,6 +87,8 @@ async function addMeetingSessionDaily(
 }
 
 // -----------------------------------------------------------------------------
+// the structure of scheduleAttr must be checked before calling this function
+// -----------------------------------------------------------------------------
 async function addMeetingSessionWeekly(
   trans: Transaction,
   meetingScheduleId: string,
@@ -94,6 +100,8 @@ async function addMeetingSessionWeekly(
   await console.log(scheduleAttr);
 }
 
+// -----------------------------------------------------------------------------
+// the structure of scheduleAttr must be checked before calling this function
 // -----------------------------------------------------------------------------
 export async function addMeetingSession(
   trans: Transaction,
