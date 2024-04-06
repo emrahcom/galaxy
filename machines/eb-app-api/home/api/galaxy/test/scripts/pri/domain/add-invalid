@@ -52,3 +52,24 @@ EOF
 
 bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new domain with non-string json value
+# ------------------------------------------------------------------------------
+TAG="invalid-json"
+
+name="sub-$(date +'%s')-$RANDOM.mydomain.corp"
+JSON=$(cat <<EOF
+{
+    "name": "$name",
+    "auth_type": "none",
+    "domain_attr": {
+        "url": "https://meet.jit.si",
+        "number": 100
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
