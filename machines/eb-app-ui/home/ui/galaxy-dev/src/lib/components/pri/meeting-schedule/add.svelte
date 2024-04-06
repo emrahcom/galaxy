@@ -137,6 +137,7 @@
         required={false}
       />
       <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
+      <Switch name="all_day" label="All day meeting" bind:value={allDay} />
 
       {#if !allDay}
         <Time
@@ -165,8 +166,6 @@
           on:input={durationTyped}
         />
       {/if}
-
-      <Switch name="all_day" label="All day meeting" bind:value={allDay} />
 
       {#if warning}
         <Warning>
