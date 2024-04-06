@@ -1,4 +1,4 @@
-import { fetch, pool } from "./common.ts";
+import { checkAttr, fetch, pool } from "./common.ts";
 import type {
   Attr,
   Id,
@@ -265,7 +265,8 @@ export async function addMeetingSchedule(
   name: string,
   scheduleAttr: Attr,
 ) {
-  // it will throw an error if it is no valid
+  // it will throw an error if it is not valid
+  checkAttr(scheduleAttr);
   checkScheduleAttr(scheduleAttr);
 
   using client = await pool.connect();
@@ -335,7 +336,8 @@ export async function updateMeetingSchedule(
   name: string,
   scheduleAttr: Attr,
 ) {
-  // it will throw an error if it is no valid
+  // it will throw an error if it is not valid
+  checkAttr(scheduleAttr);
   checkScheduleAttr(scheduleAttr);
 
   using client = await pool.connect();
