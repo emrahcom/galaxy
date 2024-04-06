@@ -19,6 +19,7 @@
 
   const min = today();
   const defaultDuration = 30;
+  let duration = defaultDuration;
   let date0 = today();
   let time0 = "08:30";
   let time1 = getEndTime(time0, defaultDuration);
@@ -31,14 +32,14 @@
     schedule_attr: {
       type: "o",
       started_at: "",
-      duration: defaultDuration,
+      duration: "",
     },
   };
 
   // ---------------------------------------------------------------------------
   function startTimeUpdated() {
     try {
-      time1 = getEndTime(time0, p.schedule_attr.duration);
+      time1 = getEndTime(time0, duration);
     } catch {
       //do nothing
     }
@@ -47,7 +48,7 @@
   // ---------------------------------------------------------------------------
   function endTimeUpdated() {
     try {
-      p.schedule_attr.duration = getDuration(time0, time1);
+      duration = getDuration(time0, time1);
     } catch {
       //do nothing
     }
@@ -56,7 +57,7 @@
   // ---------------------------------------------------------------------------
   function durationUpdated() {
     try {
-      const _duration = Math.round(Number(p.schedule_attr.duration));
+      const _duration = Math.round(Number(duration));
 
       if (isNaN(_duration)) {
         throw new Error("no valid duration");
@@ -65,16 +66,16 @@
       } else if (_duration < 0) {
         throw new Error("negative duration");
       } else if (_duration > 1440) {
-        p.schedule_attr.duration = 1440;
+        duration = 1440;
       } else {
-        p.schedule_attr.duration = _duration;
+        duration = _duration;
       }
     } catch {
-      p.schedule_attr.duration = defaultDuration;
+      duration = defaultDuration;
     }
 
     try {
-      time1 = getEndTime(time0, p.schedule_attr.duration);
+      time1 = getEndTime(time0, duration);
     } catch {
       //do nothing
     }
@@ -107,11 +108,12 @@
       // if all day meeting, overwrite the start time and duration
       if (allDay) {
         time0 = "00:00";
-        p.schedule_attr.duration = 1440;
+        duration = 1440;
       }
 
       const at = new Date(`${date0}T${time0}`);
       p.schedule_attr.started_at = at.toISOString();
+      p.schedule_attr.duration = String(duration);
 
       await action("/api/pri/meeting/schedule/add", p);
 
@@ -157,7 +159,7 @@
         <Range
           name="duration"
           label="Duration (minutes)"
-          bind:value={p.schedule_attr.duration}
+          bind:value={duration}
           min={5}
           max={180}
           step={5}
