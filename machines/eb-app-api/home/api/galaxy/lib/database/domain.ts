@@ -1,4 +1,4 @@
-import { fetch } from "./common.ts";
+import { checkAttr, fetch } from "./common.ts";
 import type { Attr, Domain, Domain333, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -85,6 +85,9 @@ export async function addDomain(
   authType: string,
   domainAttr: Attr,
 ) {
+  // check the structure of json. it will throw an error if it is not valid.
+  checkAttr(domainAttr);
+
   const sql = {
     text: `
       INSERT INTO domain (identity_id, name, auth_type, domain_attr)
@@ -126,6 +129,9 @@ export async function updateDomain(
   authType: string,
   domainAttr: Attr,
 ) {
+  // check the structure of json. it will throw an error if it is not valid.
+  checkAttr(domainAttr);
+
   const sql = {
     text: `
       UPDATE domain
