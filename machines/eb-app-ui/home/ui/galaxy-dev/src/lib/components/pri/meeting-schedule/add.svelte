@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
-  import { getDuration, getEndTime, today } from "$lib/common";
+  import { getDuration, getEndTime, isEnded, today } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
@@ -112,6 +112,8 @@
       }
 
       const at = new Date(`${date0}T${time0}`);
+      if (isEnded(at, duration)) throw new Error("it is already over");
+
       p.schedule_attr.started_at = at.toISOString();
       p.schedule_attr.duration = String(duration);
 
