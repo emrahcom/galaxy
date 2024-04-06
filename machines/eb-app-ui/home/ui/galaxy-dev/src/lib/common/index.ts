@@ -41,14 +41,14 @@ export function epochToIntervalString(time: number) {
 // The generated value will be used in the backend to set a date object.
 // -----------------------------------------------------------------------------
 export function today() {
-  const _date = new Date();
+  const now = new Date();
 
   return (
-    _date.getFullYear() +
+    now.getFullYear() +
     "-" +
-    ("0" + (_date.getMonth() + 1)).slice(-2) +
+    ("0" + (now.getMonth() + 1)).slice(-2) +
     "-" +
-    ("0" + _date.getDate()).slice(-2)
+    ("0" + now.getDate()).slice(-2)
   );
 }
 
@@ -162,8 +162,8 @@ export function getDuration(time0: string, time1: string) {
 // if the time difference is less than 15 min then accept it as online
 // -----------------------------------------------------------------------------
 export function isOnline(date: string) {
-  const _date = new Date(date);
   const now = new Date();
+  const _date = new Date(date);
   const diff = _date.getTime() - now.getTime();
 
   return diff < 15 * 60 * 1000;
@@ -171,13 +171,13 @@ export function isOnline(date: string) {
 
 // -----------------------------------------------------------------------------
 export function isToday(date: string) {
+  const now = new Date();
   const _date = new Date(date);
-  const today = new Date();
 
   return (
-    _date.getFullYear() === today.getFullYear() &&
-    _date.getMonth() === today.getMonth() &&
-    _date.getDate() === today.getDate()
+    _date.getFullYear() === now.getFullYear() &&
+    _date.getMonth() === now.getMonth() &&
+    _date.getDate() === now.getDate()
   );
 }
 
@@ -190,4 +190,14 @@ export function isAllDay(date: string, minutes: string) {
   return (
     _date.getHours() === 0 && _date.getMinutes() === 0 && minutes === "1440"
   );
+}
+
+// -----------------------------------------------------------------------------
+// Get the start time and duration and return if it is already ended
+// -----------------------------------------------------------------------------
+export function isEnded(date: Date, minutes: number) {
+  const now = new Date();
+  const endTime = date.getTime() + minutes * 60 * 1000;
+
+  return now.getTime() > endTime;
 }
