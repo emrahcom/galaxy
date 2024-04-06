@@ -28,7 +28,7 @@ JSON=$(cat <<EOF
     "schedule_attr": {
       "type": "o",
       "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
-      "duration": 30
+      "duration": "30"
     }
 }
 EOF
