@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { isAllDay, toLocaleDate, showLocaleDatetime } from "$lib/common";
+  import { isAllDay, showLocaleDate, showLocaleDatetime } from "$lib/common";
   import type { MeetingSchedule } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Del from "$lib/components/common/link-del.svelte";
@@ -22,7 +22,7 @@
           <div class="card-body text-center">
             {#if isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration)}
               <h5 class="card-title text-muted">
-                {toLocaleDate(p.schedule_attr.started_at)}
+                {showLocaleDate(p.schedule_attr.started_at)}
               </h5>
 
               <p class="card-text text-muted">All day</p>
