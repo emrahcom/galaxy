@@ -70,6 +70,7 @@
         return;
       }
 
+      // check if there is an update in static room usage
       const initialRoomStatic = !p.room_ephemeral;
       if (initialRoomStatic) {
         if (roomStatic) {
