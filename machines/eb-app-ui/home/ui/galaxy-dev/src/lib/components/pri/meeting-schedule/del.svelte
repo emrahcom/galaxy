@@ -40,16 +40,6 @@
 <section id="del">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      {#if p.name}
-        <Text
-          name="name"
-          label="Tag"
-          value={p.name}
-          disabled={true}
-          readonly={true}
-        />
-      {/if}
-
       <Day
         name="date0"
         label="Date"
@@ -78,6 +68,16 @@
           name="duration"
           label="Duration (minutes)"
           value={`${p.schedule_attr.duration}`}
+          disabled={true}
+          readonly={true}
+        />
+      {/if}
+
+      {#if p.name}
+        <Text
+          name="name"
+          label="Tag"
+          value={p.name}
           disabled={true}
           readonly={true}
         />
