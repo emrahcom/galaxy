@@ -76,7 +76,7 @@
       {#if p.name}
         <Text
           name="name"
-          label="Tag"
+          label="Label"
           value={p.name}
           disabled={true}
           readonly={true}
