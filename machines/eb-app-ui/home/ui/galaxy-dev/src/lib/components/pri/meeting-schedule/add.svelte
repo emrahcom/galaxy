@@ -20,7 +20,7 @@
   export let meeting: Meeting;
   const hash = $page.url.hash;
 
-  const min = today();
+  const notBefore = today();
   const defaultDuration = 30;
   let duration = defaultDuration;
   let date0 = today();
@@ -151,7 +151,7 @@
           name="date0"
           label="Date"
           bind:value={date0}
-          {min}
+          min={notBefore}
           required={true}
         />
       {:else if p.schedule_attr.type === "d"}
@@ -159,7 +159,7 @@
           name="date0"
           label="From"
           bind:value={date0}
-          {min}
+          min={notBefore}
           required={true}
         />
         <Numeric
