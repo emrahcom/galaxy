@@ -23,7 +23,7 @@
 
   export let p: MeetingSchedule;
 
-  const min = today();
+  const notBefore = today();
   const defaultDuration = Number(p.schedule_attr.duration);
   let duration = defaultDuration;
   let date0 = toLocaleDate(p.schedule_attr.started_at);
@@ -121,7 +121,13 @@
 <section id="update">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
+      <Day
+        name="date0"
+        label="Date"
+        bind:value={date0}
+        min={notBefore}
+        required={true}
+      />
       <Switch name="all_day" label="All day meeting" bind:value={allDay} />
 
       {#if !allDay}
