@@ -7,6 +7,7 @@
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
+  import Every from "$lib/components/common/form-select-every.svelte";
   import RadioInline from "$lib/components/common/form-radio-inline.svelte";
   import Range from "$lib/components/common/form-range.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
@@ -23,8 +24,10 @@
   const defaultDuration = 30;
   let duration = defaultDuration;
   let date0 = today();
+  let date1 = today();
   let time0 = "08:30";
   let time1 = getEndTime(time0, defaultDuration);
+  let every = 1;
   let allDay = false;
 
   let warning = false;
@@ -142,9 +145,34 @@
           options={SCHEDULE_ATTR_TYPE_OPTIONS}
         />
       </div>
-      <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
-      <Switch name="all_day" label="All day meeting" bind:value={allDay} />
 
+      {#if p.schedule_attr.type === "o"}
+        <Day
+          name="date0"
+          label="Date"
+          bind:value={date0}
+          {min}
+          required={true}
+        />
+      {:else if p.schedule_attr.type === "d"}
+        <Day
+          name="date0"
+          label="From"
+          bind:value={date0}
+          {min}
+          required={true}
+        />
+        <Day name="date1" label="To" bind:value={date1} {min} required={true} />
+        <Every
+          id="every"
+          label="Every"
+          bind:value={every}
+          unit="day"
+          max={30}
+        />
+      {/if}
+
+      <Switch name="all_day" label="All day meeting" bind:value={allDay} />
       {#if !allDay}
         <Time
           name="time0"
