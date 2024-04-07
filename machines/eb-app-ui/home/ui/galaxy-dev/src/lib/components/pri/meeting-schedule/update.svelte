@@ -121,12 +121,6 @@
 <section id="update">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text
-        name="name"
-        label="Tag (optional)"
-        bind:value={p.name}
-        required={false}
-      />
       <Day name="date0" label="Date" bind:value={date0} {min} required={true} />
       <Switch name="all_day" label="All day meeting" bind:value={allDay} />
 
@@ -157,6 +151,13 @@
           on:input={durationTyped}
         />
       {/if}
+
+      <Text
+        name="name"
+        label="Tag (optional)"
+        bind:value={p.name}
+        required={false}
+      />
 
       {#if warning}
         <Warning>
