@@ -160,7 +160,7 @@
 
       <Text
         name="name"
-        label="Tag (optional)"
+        label="Label (optional)"
         bind:value={p.name}
         required={false}
       />
