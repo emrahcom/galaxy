@@ -174,7 +174,7 @@
           label="Times"
           bind:value={times}
           unit="time"
-          max={100}
+          max={99}
         />
       {/if}
 
@@ -209,7 +209,7 @@
 
       <Text
         name="name"
-        label="Tag (optional)"
+        label="Label (optional)"
         bind:value={p.name}
         required={false}
       />
