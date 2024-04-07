@@ -106,22 +106,26 @@
   }
 
   // ---------------------------------------------------------------------------
+  function normalizeData() {
+    // if all day meeting, overwrite the start time and duration
+    if (allDay) {
+      time0 = "00:00";
+      duration = 1440;
+    }
+
+    const at = new Date(`${date0}T${time0}`);
+    if (isEnded(at, duration)) throw new Error("it is already over");
+
+    p.schedule_attr.started_at = at.toISOString();
+    p.schedule_attr.duration = String(duration);
+  }
+
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;
 
-      // if all day meeting, overwrite the start time and duration
-      if (allDay) {
-        time0 = "00:00";
-        duration = 1440;
-      }
-
-      const at = new Date(`${date0}T${time0}`);
-      if (isEnded(at, duration)) throw new Error("it is already over");
-
-      p.schedule_attr.started_at = at.toISOString();
-      p.schedule_attr.duration = String(duration);
-
+      normalizeData();
       await action("/api/pri/meeting/schedule/add", p);
 
       if (hash === "#0") {
