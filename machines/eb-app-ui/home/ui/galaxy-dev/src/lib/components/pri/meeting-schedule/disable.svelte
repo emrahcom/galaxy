@@ -40,13 +40,16 @@
 <section id="disable">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Text
-        name="name"
-        label="Tag (optional)"
-        value={p.name}
-        disabled={true}
-        readonly={true}
-      />
+      {#if p.name}
+        <Text
+          name="name"
+          label="Tag"
+          value={p.name}
+          disabled={true}
+          readonly={true}
+        />
+      {/if}
+
       <Day
         name="date0"
         label="Date"
