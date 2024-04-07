@@ -33,14 +33,19 @@
   }
 
   // ---------------------------------------------------------------------------
+  function normalizeData() {
+    if (meeting.schedule_type === "ephemeral") p.invite_to = "audience";
+    if (p.invite_to === "audience") p.disposable = false;
+  }
+
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;
 
-      if (meeting.schedule_type === "ephemeral") p.invite_to = "audience";
-      if (p.invite_to === "audience") p.disposable = false;
-
+      normalizeData();
       await action("/api/pri/meeting/invite/add", p);
+
       window.location.href = `/pri/meeting/invite/${meeting.id}`;
     } catch {
       warning = true;
