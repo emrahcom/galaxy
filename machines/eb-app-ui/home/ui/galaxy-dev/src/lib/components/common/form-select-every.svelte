@@ -25,7 +25,7 @@
     {required}
   >
     {#each options as opt}
-      <option value={opt}>{opt} {unit}{opt > 1 && "s"}</option>
+      <option value={opt}>{opt} {unit}{opt > 1 ? "s" : ""}</option>
     {/each}
   </select>
   <label for={id}>{label}</label>
