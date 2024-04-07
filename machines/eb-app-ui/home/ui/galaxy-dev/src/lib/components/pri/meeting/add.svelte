@@ -92,9 +92,21 @@
   }
 
   // ---------------------------------------------------------------------------
+  function normalizeData() {
+    // mandatory features for the ephemeral meeting
+    if (p.schedule_type === "ephemeral") {
+      p.hidden = true;
+      p.restricted = false;
+      p.subscribable = false;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       warning = false;
+
+      normalizeData();
 
       // add an ephemeral room if needed
       if (p.schedule_type === "ephemeral" || !p.room_static) {
@@ -104,13 +116,6 @@
 
         const room = await action("/api/pri/room/add-ephemeral", r);
         p.room_id = room.id;
-      }
-
-      // mandatory features for the ephemeral meeting
-      if (p.schedule_type === "ephemeral") {
-        p.hidden = true;
-        p.restricted = false;
-        p.subscribable = false;
       }
 
       const meeting = await action("/api/pri/meeting/add", p);
