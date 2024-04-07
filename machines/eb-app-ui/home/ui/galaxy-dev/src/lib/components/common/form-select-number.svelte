@@ -25,7 +25,11 @@
     {required}
   >
     {#each options as opt}
-      <option value={opt}>{opt} {unit}{opt > 1 ? "s" : ""}</option>
+      {#if unit}
+        <option value={opt}>{opt} {unit}{opt > 1 ? "s" : ""}</option>
+      {:else}
+        <option value={opt}>{opt}</option>
+      {/if}
     {/each}
   </select>
   <label for={id}>{label}</label>
