@@ -1,11 +1,13 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { FORM_WIDTH } from "$lib/config";
+  import { SCHEDULE_ATTR_TYPE_OPTIONS } from "$lib/pri/meeting-schedule";
   import { action } from "$lib/api";
   import { getDuration, getEndTime, isEnded, today } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
+  import RadioInline from "$lib/components/common/form-radio-inline.svelte";
   import Range from "$lib/components/common/form-range.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
@@ -134,6 +136,13 @@
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+      <div class="d-flex gap-3 my-5 justify-content-center">
+        <RadioInline
+          bind:value={p.schedule_attr.type}
+          options={SCHEDULE_ATTR_TYPE_OPTIONS}
+        />
+      </div>
+
       <Text
         name="name"
         label="Tag (optional)"
