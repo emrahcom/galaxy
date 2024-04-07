@@ -78,6 +78,16 @@
   }
 
   // ---------------------------------------------------------------------------
+  function normalizeData() {
+    // mandatory features for the ephemeral meeting
+    if (p.schedule_type === "ephemeral") {
+      p.hidden = true;
+      p.restricted = false;
+      p.subscribable = false;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   async function addMeetingInvite(meetingId: string) {
     const date = new Date();
     const i = {
@@ -89,16 +99,6 @@
     };
 
     await action("/api/pri/meeting/invite/add", i);
-  }
-
-  // ---------------------------------------------------------------------------
-  function normalizeData() {
-    // mandatory features for the ephemeral meeting
-    if (p.schedule_type === "ephemeral") {
-      p.hidden = true;
-      p.restricted = false;
-      p.subscribable = false;
-    }
   }
 
   // ---------------------------------------------------------------------------
