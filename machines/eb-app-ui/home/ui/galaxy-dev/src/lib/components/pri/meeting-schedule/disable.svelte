@@ -10,7 +10,7 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export const p: MeetingSchedule;
+  export let p: MeetingSchedule;
 
   const date0 = toLocaleDate(p.schedule_attr.started_at);
   const interval = toLocaleInterval(
@@ -22,16 +22,16 @@
   let warning = false;
 
   if (p.schedule_attr.type === "d") {
-    if (p.schedule_attr.rep_every > 1) {
-      every = `${p.schedule_attr.rep_every} days`;
+    if (p.schedule_attr.rep_every === "1") {
+      every = "1 day";
     } else {
-      every = '1 day';
+      every = `${p.schedule_attr.rep_every} days`;
     }
 
-    if (p.schedule_attr.rep_end_x > 1) {
-      every = `${p.schedule_attr.rep_end_x} times`;
+    if (p.schedule_attr.rep_end_x === "1") {
+      times = "1 time";
     } else {
-      every = '1 time';
+      times = `${p.schedule_attr.rep_end_x} times`;
     }
   }
 
@@ -73,14 +73,14 @@
           readonly={true}
         />
         <Text
-          id="every"
+          name="every"
           label="Every"
           value={every}
           disabled={true}
           readonly={true}
         />
         <Text
-          id="times"
+          name="times"
           label="Times"
           value={times}
           disabled={true}
