@@ -257,6 +257,8 @@ export interface MeetingSchedule {
   schedule_attr: {
     [key: string]: string;
   };
+  session_at: string;
+  session_remaining: number;
   enabled: boolean;
   created_at: string;
   updated_at: string;
