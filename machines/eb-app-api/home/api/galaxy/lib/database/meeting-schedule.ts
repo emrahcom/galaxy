@@ -25,10 +25,10 @@ export async function getMeetingSchedule(
         enabled, created_at, updated_at
       FROM meeting_schedule s
         JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
-      WHERE id = $2
+      WHERE s.id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
-                    WHERE id = meeting_id
+                    WHERE id = s.meeting_id
                       AND identity_id = $1
                    )
       ORDER BY ses.started_at
@@ -247,14 +247,13 @@ export async function listMeetingScheduleByMeeting(
          ORDER BY started_at
          LIMIT 1
         ) as session_at,
-        (SELECT COUNT(*)
+        (SELECT COUNT(*)::integer
          FROM meeting_session
          WHERE meeting_schedule_id = s.id
            AND ended_at + interval '20 mins' > now()
         ) as session_remaining,
         enabled, created_at, updated_at
       FROM meeting_schedule s
-        JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE meeting_id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
