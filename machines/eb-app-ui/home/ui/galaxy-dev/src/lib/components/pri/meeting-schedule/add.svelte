@@ -198,6 +198,7 @@
           label="Times"
           bind:value={times}
           unit="time"
+          min={2}
           max={99}
         />
       {/if}
