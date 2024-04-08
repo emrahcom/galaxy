@@ -197,7 +197,7 @@ export function isAllDay(date: string, minutes: string) {
 // -----------------------------------------------------------------------------
 // Get the start time and duration and return if it is already ended
 // -----------------------------------------------------------------------------
-export function isEnded(date: Date, minutes: number) {
+export function isOver(date: Date, minutes: number) {
   const now = new Date();
   const endTime = date.getTime() + minutes * 60 * 1000;
 
