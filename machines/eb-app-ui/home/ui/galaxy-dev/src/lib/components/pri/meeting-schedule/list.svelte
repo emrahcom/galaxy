@@ -22,13 +22,13 @@
           <div class="card-body text-center">
             {#if isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration)}
               <h5 class="card-title text-muted">
-                {showLocaleDate(p.schedule_attr.started_at)}
+                {showLocaleDate(p.session_at)}
               </h5>
 
               <p class="card-text text-muted">All day</p>
             {:else}
               <h5 class="card-title text-muted">
-                {showLocaleDatetime(p.schedule_attr.started_at)}
+                {showLocaleDatetime(p.session_at)}
               </h5>
 
               <p class="card-text text-muted">
