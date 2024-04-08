@@ -36,6 +36,10 @@
               </p>
             {/if}
 
+            {#if p.name}
+              <p class="card-text text-muted">{p.name}</p>
+            {/if}
+
             {#if p.schedule_attr.type === "d"}
               {#if p.session_remaining === 1}
                 <p class="card-text text-muted">last session of the series</p>
@@ -49,10 +53,6 @@
                   times
                 </p>
               {/if}
-            {/if}
-
-            {#if p.name}
-              <p class="card-text text-muted">{p.name}</p>
             {/if}
           </div>
 
