@@ -10,14 +10,30 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: MeetingSchedule;
+  export const p: MeetingSchedule;
 
-  let date0 = toLocaleDate(p.schedule_attr.started_at);
-  let interval = toLocaleInterval(
+  const date0 = toLocaleDate(p.schedule_attr.started_at);
+  const interval = toLocaleInterval(
     p.schedule_attr.started_at,
     Number(p.schedule_attr.duration),
   );
+  let every = "";
+  let times = "";
   let warning = false;
+
+  if (p.schedule_attr.type === "d") {
+    if (p.schedule_attr.rep_every > 1) {
+      every = `${p.schedule_attr.rep_every} days`;
+    } else {
+      every = '1 day';
+    }
+
+    if (p.schedule_attr.rep_end_x > 1) {
+      every = `${p.schedule_attr.rep_end_x} times`;
+    } else {
+      every = '1 time';
+    }
+  }
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -40,13 +56,37 @@
 <section id="del">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Day
-        name="date0"
-        label="Date"
-        value={date0}
-        disabled={true}
-        readonly={true}
-      />
+      {#if p.schedule_attr.type === "o"}
+        <Day
+          name="date0"
+          label="Date"
+          value={date0}
+          disabled={true}
+          readonly={true}
+        />
+      {:else if p.schedule_attr.type === "d"}
+        <Day
+          name="date0"
+          label="From"
+          value={date0}
+          disabled={true}
+          readonly={true}
+        />
+        <Text
+          id="every"
+          label="Every"
+          value={every}
+          disabled={true}
+          readonly={true}
+        />
+        <Text
+          id="times"
+          label="Times"
+          value={times}
+          disabled={true}
+          readonly={true}
+        />
+      {/if}
 
       {#if isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration)}
         <Text
