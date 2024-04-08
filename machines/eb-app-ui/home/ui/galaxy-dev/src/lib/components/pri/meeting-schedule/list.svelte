@@ -36,7 +36,7 @@
               </p>
             {/if}
 
-            {#if p.schedule_attr.type === "o"}
+            {#if p.schedule_attr.type === "d"}
               {#if p.session_remaining === 1}
                 <p class="card-text text-muted">last session of the series</p>
               {:else if p.schedule_attr.rep_every === "1"}
