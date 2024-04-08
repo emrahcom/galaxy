@@ -3,7 +3,7 @@
   import { FORM_WIDTH } from "$lib/config";
   import { SCHEDULE_ATTR_TYPE_OPTIONS } from "$lib/pri/meeting-schedule";
   import { action } from "$lib/api";
-  import { getDuration, getEndTime, isEnded, today } from "$lib/common";
+  import { getDuration, getEndTime, isOver, today } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
@@ -38,6 +38,11 @@
       type: "o",
       started_at: "",
       duration: "",
+      rep_end_type: "",
+      rep_end_at: "",
+      rep_end_x: "",
+      rep_every: "",
+      rep_days: "",
     },
   };
 
@@ -113,10 +118,25 @@
       duration = 1440;
     }
 
-    const at = new Date(`${date0}T${time0}`);
-    if (isEnded(at, duration)) throw new Error("it is already over");
+    const started_at = new Date(`${date0}T${time0}`);
 
-    p.schedule_attr.started_at = at.toISOString();
+    if (p.schedule_attr.type === "o") {
+      // if the end time of the only session is over, throw an error
+      if (isOver(started_at, duration)) throw new Error("it is already over");
+    } else if (p.schedule_attr.type === "d") {
+      // If the end time of the last session is over, throw an error.
+      // Dont care how many sessions are over if there is still time for the
+      // last one. Count the old sessions too.
+      if (isOver(started_at, (times - 1) * every * 1440 + duration)) {
+        throw new Error("it is already over");
+      }
+
+      p.schedule_attr.rep_end_type = "x";
+      p.schedule_attr.rep_end_x = String(times);
+      p.schedule_attr.rep_every = String(every);
+    }
+
+    p.schedule_attr.started_at = started_at.toISOString();
     p.schedule_attr.duration = String(duration);
   }
 
