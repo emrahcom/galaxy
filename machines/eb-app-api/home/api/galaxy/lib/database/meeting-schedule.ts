@@ -17,17 +17,22 @@ export async function getMeetingSchedule(
   identityId: string,
   scheduleId: string,
 ) {
+  // dont care session_remaining for getMeetingSchedule
   const sql = {
     text: `
-      SELECT id, meeting_id, name, schedule_attr, enabled, created_at,
-        updated_at
-      FROM meeting_schedule
+      SELECT s.id, s.meeting_id, s.name, s.schedule_attr,
+        ses.started_at as session_at, 0 as session_remaining,
+        enabled, created_at, updated_at
+      FROM meeting_schedule s
+        JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE id = $2
         AND EXISTS (SELECT 1
                     FROM meeting
                     WHERE id = meeting_id
                       AND identity_id = $1
-                   )`,
+                   )
+      ORDER BY ses.started_at
+      LIMIT 1`,
     args: [
       identityId,
       scheduleId,
@@ -234,8 +239,20 @@ export async function listMeetingScheduleByMeeting(
 ) {
   const sql = {
     text: `
-      SELECT s.id, s.meeting_id, s.name, s.schedule_attr, s.enabled,
-        s.created_at, s.updated_at
+      SELECT id, meeting_id, name, schedule_attr,
+        (SELECT started_at
+         FROM meeting_session
+         WHERE meeting_schedule_id = s.id
+           AND ended_at + interval '20 mins' > now()
+         ORDER BY started_at
+         LIMIT 1
+        ) as session_at,
+        (SELECT COUNT(*)
+         FROM meeting_session
+         WHERE meeting_schedule_id = s.id
+           AND ended_at + interval '20 mins' > now()
+        ) as session_remaining,
+        enabled, created_at, updated_at
       FROM meeting_schedule s
         JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE meeting_id = $2
@@ -244,8 +261,12 @@ export async function listMeetingScheduleByMeeting(
                     WHERE id = $2
                       AND identity_id = $1
                    )
-        AND ses.ended_at + interval '20 mins' > now()
-      ORDER BY ses.started_at
+        AND EXISTS (SELECT 1
+                    FROM meeting_session
+                    WHERE meeting_schedule_id = s.id
+                      AND ended_at + interval '20 mins' > now()
+                   )
+      ORDER BY session_at
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
