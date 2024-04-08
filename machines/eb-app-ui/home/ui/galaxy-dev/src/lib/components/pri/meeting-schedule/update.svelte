@@ -5,7 +5,7 @@
     getDuration,
     getEndTime,
     isAllDay,
-    isEnded,
+    isOver,
     today,
     toLocaleDate,
     toLocaleTime,
@@ -101,7 +101,7 @@
     }
 
     const at = new Date(`${date0}T${time0}`);
-    if (isEnded(at, duration)) throw new Error("it is already over");
+    if (isOver(at, duration)) throw new Error("it is already over");
 
     p.schedule_attr.started_at = at.toISOString();
     p.schedule_attr.duration = String(duration);
