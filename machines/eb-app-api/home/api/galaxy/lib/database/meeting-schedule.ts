@@ -22,7 +22,7 @@ export async function getMeetingSchedule(
     text: `
       SELECT s.id, s.meeting_id, s.name, s.schedule_attr,
         ses.started_at as session_at, 0 as session_remaining,
-        enabled, created_at, updated_at
+        s.enabled, s.created_at, s.updated_at
       FROM meeting_schedule s
         JOIN meeting_session ses ON s.id = ses.meeting_schedule_id
       WHERE s.id = $2
