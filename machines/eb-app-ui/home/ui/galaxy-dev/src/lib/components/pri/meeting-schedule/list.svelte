@@ -49,8 +49,8 @@
                 </p>
               {:else}
                 <p class="card-text text-muted">
-                  repeat every {p.schedule_attr.rep_every} days, {p.session_remaining}
-                  times
+                  repeat every {p.schedule_attr.rep_every} days,
+                  {p.session_remaining} times
                 </p>
               {/if}
             {/if}
