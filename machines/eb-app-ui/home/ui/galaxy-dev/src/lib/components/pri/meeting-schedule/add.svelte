@@ -204,6 +204,7 @@
       {/if}
 
       <Switch name="all_day" label="All day meeting" bind:value={allDay} />
+
       {#if !allDay}
         <Time
           name="time0"

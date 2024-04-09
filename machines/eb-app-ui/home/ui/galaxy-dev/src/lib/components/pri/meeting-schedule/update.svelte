@@ -13,6 +13,7 @@
   import type { MeetingSchedule } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Day from "$lib/components/common/form-date.svelte";
+  import Numeric from "$lib/components/common/form-select-number.svelte";
   import Range from "$lib/components/common/form-range.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
@@ -28,9 +29,11 @@
   let date0 = toLocaleDate(p.schedule_attr.started_at);
   let time0 = toLocaleTime(p.schedule_attr.started_at);
   let time1 = getEndTime(time0, duration);
+  let allDay = isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration);
+  let every = Number(p.schedule_attr.rep_every) || 1;
+  let times = Number(p.schedule_attr.rep_end_x) || 10;
   let notBefore = today();
   if (date0 < notBefore) notBefore = date0;
-  let allDay = isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration);
   let warning = false;
 
   // ---------------------------------------------------------------------------
@@ -101,10 +104,25 @@
       duration = 1440;
     }
 
-    const at = new Date(`${date0}T${time0}`);
-    if (isOver(at, duration)) throw new Error("it is already over");
+    const started_at = new Date(`${date0}T${time0}`);
 
-    p.schedule_attr.started_at = at.toISOString();
+    if (p.schedule_attr.type === "o") {
+      // if the end time of the only session is over, throw an error
+      if (isOver(started_at, duration)) throw new Error("it is already over");
+    } else if (p.schedule_attr.type === "d") {
+      // If the end time of the last session is over, throw an error.
+      // Dont care how many sessions are over if there is still time for the
+      // last one. Count the old sessions too.
+      if (isOver(started_at, (times - 1) * every * 1440 + duration)) {
+        throw new Error("it is already over");
+      }
+
+      p.schedule_attr.rep_end_type = "x";
+      p.schedule_attr.rep_end_x = String(times);
+      p.schedule_attr.rep_every = String(every);
+    }
+
+    p.schedule_attr.started_at = started_at.toISOString();
     p.schedule_attr.duration = String(duration);
   }
 
@@ -159,6 +177,7 @@
           max={99}
         />
       {/if}
+
       <Switch name="all_day" label="All day meeting" bind:value={allDay} />
 
       {#if !allDay}
