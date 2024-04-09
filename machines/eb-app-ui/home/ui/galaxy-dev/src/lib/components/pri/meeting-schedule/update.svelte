@@ -23,12 +23,13 @@
 
   export let p: MeetingSchedule;
 
-  const notBefore = today();
   const defaultDuration = Number(p.schedule_attr.duration);
   let duration = defaultDuration;
   let date0 = toLocaleDate(p.schedule_attr.started_at);
   let time0 = toLocaleTime(p.schedule_attr.started_at);
   let time1 = getEndTime(time0, duration);
+  let notBefore = today();
+  if (date0 < notBefore) notBefore = date0;
   let allDay = isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration);
   let warning = false;
 
@@ -126,13 +127,38 @@
 <section id="update">
   <div class="d-flex mt-2 justify-content-center">
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
-      <Day
-        name="date0"
-        label="Date"
-        bind:value={date0}
-        min={notBefore}
-        required={true}
-      />
+      {#if p.schedule_attr.type === "o"}
+        <Day
+          name="date0"
+          label="Date"
+          bind:value={date0}
+          min={notBefore}
+          required={true}
+        />
+      {:else if p.schedule_attr.type === "d"}
+        <Day
+          name="date0"
+          label="From"
+          bind:value={date0}
+          min={notBefore}
+          required={true}
+        />
+        <Numeric
+          id="every"
+          label="Every"
+          bind:value={every}
+          unit="day"
+          max={30}
+        />
+        <Numeric
+          id="times"
+          label="Times"
+          bind:value={times}
+          unit="time"
+          min={2}
+          max={99}
+        />
+      {/if}
       <Switch name="all_day" label="All day meeting" bind:value={allDay} />
 
       {#if !allDay}
