@@ -24,6 +24,7 @@
   const defaultDuration = 30;
   let duration = defaultDuration;
   let date0 = today();
+  let date1 = today();
   let time0 = "08:30";
   let time1 = getEndTime(time0, defaultDuration);
   let allDay = false;
@@ -200,6 +201,21 @@
           unit="time"
           min={2}
           max={99}
+        />
+      {:else if p.schedule_attr.type === "w"}
+        <Day
+          name="date0"
+          label="From"
+          bind:value={date0}
+          min={notBefore}
+          required={true}
+        />
+        <Day
+          name="date1"
+          label="To"
+          bind:value={date1}
+          min={notBefore}
+          required={true}
         />
       {/if}
 
