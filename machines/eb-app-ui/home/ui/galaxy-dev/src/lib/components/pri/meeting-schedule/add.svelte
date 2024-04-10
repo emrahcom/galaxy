@@ -225,7 +225,7 @@
           min={notBefore}
           required={true}
         />
-        <div class="d-flex gap-3 justify-content-center">
+        <div class="d-flex justify-content-center">
           <Checkbox name="d0" label="Sun" bind:value={d0} />
           <Checkbox name="d1" label="Mon" bind:value={d1} />
           <Checkbox name="d2" label="Tue" bind:value={d2} />

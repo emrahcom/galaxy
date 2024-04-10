@@ -6,7 +6,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="form-check">
+<div class="form-check mx-auto">
   <input
     class="form-check-input"
     type="checkbox"
