@@ -6,6 +6,7 @@
   import { getDuration, getEndTime, isOver, today } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Checkbox from "$lib/components/common/form-checkbox.svelte";
   import Day from "$lib/components/common/form-date.svelte";
   import Numeric from "$lib/components/common/form-select-number.svelte";
   import RadioInline from "$lib/components/common/form-radio-inline.svelte";
@@ -30,6 +31,13 @@
   let allDay = false;
   let every = 1;
   let times = 10;
+  let d0 = false;
+  let d1 = true;
+  let d2 = true;
+  let d3 = true;
+  let d4 = true;
+  let d5 = true;
+  let d6 = false;
 
   let warning = false;
   let p = {
@@ -217,9 +225,20 @@
           min={notBefore}
           required={true}
         />
+        <div class="d-flex gap-3 justify-content-center">
+          <Checkbox name="d0" label="Sun" bind:value={d0} />
+          <Checkbox name="d1" label="Mon" bind:value={d1} />
+          <Checkbox name="d2" label="Tue" bind:value={d2} />
+          <Checkbox name="d3" label="Wed" bind:value={d3} />
+          <Checkbox name="d4" label="Thu" bind:value={d4} />
+          <Checkbox name="d5" label="Fri" bind:value={d5} />
+          <Checkbox name="d6" label="Sat" bind:value={d6} />
+        </div>
       {/if}
 
-      <Switch name="all_day" label="All day meeting" bind:value={allDay} />
+      <div class="mt-4">
+        <Switch name="all_day" label="All day meeting" bind:value={allDay} />
+      </div>
 
       {#if !allDay}
         <Time
