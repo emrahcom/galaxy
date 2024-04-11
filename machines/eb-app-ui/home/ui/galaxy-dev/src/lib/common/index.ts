@@ -57,6 +57,42 @@ export function today() {
 // The generated value will be used in the backend to set a date string.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
+export function dateAfterXDays(days: number) {
+  const now = new Date();
+  const date = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+
+  return (
+    date.getFullYear() +
+    "-" +
+    ("0" + (date.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + date.getDate()).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a date string.
+// Saturday is assumed as the last day of the week.
+// YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function lastDayOfWeek(date: string) {
+  const _date = new Date(date);
+  const diff = 6 - _date.getDay();
+  const saturday = new Date(_date.getTime() + diff * 24 * 60 * 60 * 1000);
+
+  return (
+    saturday.getFullYear() +
+    "-" +
+    ("0" + (saturday.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + saturday.getDate()).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a date string.
+// YYYY-MM-DD
+// -----------------------------------------------------------------------------
 export function toLocaleDate(date: string) {
   const _date = new Date(date);
 
