@@ -137,6 +137,7 @@
     }
 
     const started_at = new Date(`${date0}T${time0}`);
+    const ended_at = new Date(`${date1}T23:59:59`);
 
     if (p.schedule_attr.type === "o") {
       // if the end time of the only session is over, throw an error
@@ -152,6 +153,26 @@
       p.schedule_attr.rep_end_type = "x";
       p.schedule_attr.rep_end_x = String(times);
       p.schedule_attr.rep_every = String(everyDay);
+    } else if (p.schedule_attr.type === "w") {
+      // If the end date is over, throw an error.
+      if (isOver(ended_at, 0)) throw new Error("it is already over");
+      // if the last date is earlier than the first date, throw an error.
+      if (date1 < date0) throw new Error("it is already over");
+      // if no selected day, throw an error.
+      if (!(d0 && d1 && d2 && d3 && d4 && d5 && d6)) throw new Error("no day");
+
+      p.schedule_attr.rep_end_type = "at";
+      p.schedule_attr.rep_end_at = ended_at.toISOString();
+      p.schedule_attr.rep_every = String(everyWeek);
+      p.schedule_attr.rep_days = (
+        (d0 ? "1" : "0") +
+        (d1 ? "1" : "0") +
+        (d2 ? "1" : "0") +
+        (d3 ? "1" : "0") +
+        (d4 ? "1" : "0") +
+        (d5 ? "1" : "0") +
+        (d6 ? "1" : "0")
+      );
     }
 
     p.schedule_attr.started_at = started_at.toISOString();
