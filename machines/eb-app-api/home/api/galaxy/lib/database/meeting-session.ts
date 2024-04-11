@@ -44,6 +44,25 @@ function checkScheduleAttrWeekly(scheduleAttr: Attr) {
   if (Number(scheduleAttr.duration) > 1440) {
     throw new Error("duration is out of range");
   }
+  if (scheduleAttr.rep_end_type !== "at") {
+    throw new Error("wrong rep_end_type");
+  }
+  if (Number(scheduleAttr.rep_end_x) < 1) {
+    throw new Error("times is out of range");
+  }
+  if (Number(scheduleAttr.rep_end_x) > 99) {
+    throw new Error("times is out of range");
+  }
+  if (!scheduleAttr.rep_days.match("^[01]{7}$")) {
+    throw new Error("wrong rep_days");
+  }
+}
+
+// -----------------------------------------------------------------------------
+// the first date (sunday) of the week to which the given date is belong
+// -----------------------------------------------------------------------------
+function getFirstDateOfInterval(date: Date) {
+  return new Date(date.getTime() - date.getDay() * 24 * 60 * 60 * 1000);
 }
 
 // -----------------------------------------------------------------------------
@@ -131,10 +150,44 @@ async function addMeetingSessionWeekly(
   meetingScheduleId: string,
   scheduleAttr: Attr,
 ) {
-  // not implemented yet
-  await console.log(trans);
-  await console.log(meetingScheduleId);
-  await console.log(scheduleAttr);
+  const now = new Date();
+  const started_at = new Date(scheduleAttr.started_at);
+  const ended_at = new Date(scheduleAttr.rep_end_at);
+  const firstDateOfInterval = getFirstDateOfInterval(started_at);
+
+  // loop in days of week (from Sunday (0) to Saturday (6))
+  for (let i = 0; i < 7; i++) {
+    // if this is not a selected day, skip it
+    if (scheduleAttr.rep_days[i] !== "1") continue;
+
+    let session_start = firstDateOfInterval.getTime() + i * 24 * 60 * 60 * 1000;
+    while (session_start < ended_at.getTime()) {
+      const at = new Date(session_start);
+      const sql = {
+        text: `
+          INSERT INTO meeting_session (meeting_schedule_id, started_at,
+            duration, ended_at)
+          VALUES ($1, $2, $3,
+            $2::timestamptz + $3::integer * interval '1 min')
+          RETURNING id, created_at as at`,
+        args: [
+          meetingScheduleId,
+          at.toISOString(),
+          scheduleAttr.duration,
+        ],
+      };
+
+      const session_end = session_start +
+        Number(scheduleAttr.duration) * 60 * 1000;
+      if (started_at.getTime() < session_start && now.getTime() < session_end) {
+        await trans.queryObject(sql);
+      }
+
+      // jump to the next week depending on the repeat interval (every)
+      session_start = session_start +
+        Number(scheduleAttr.rep_every) * 7 * 24 * 60 * 60 * 1000;
+    }
+  }
 }
 
 // -----------------------------------------------------------------------------
