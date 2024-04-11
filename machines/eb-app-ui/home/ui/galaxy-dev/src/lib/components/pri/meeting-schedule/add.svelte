@@ -164,15 +164,14 @@
       p.schedule_attr.rep_end_type = "at";
       p.schedule_attr.rep_end_at = ended_at.toISOString();
       p.schedule_attr.rep_every = String(everyWeek);
-      p.schedule_attr.rep_days = (
+      p.schedule_attr.rep_days =
         (d0 ? "1" : "0") +
         (d1 ? "1" : "0") +
         (d2 ? "1" : "0") +
         (d3 ? "1" : "0") +
         (d4 ? "1" : "0") +
         (d5 ? "1" : "0") +
-        (d6 ? "1" : "0")
-      );
+        (d6 ? "1" : "0");
     }
 
     p.schedule_attr.started_at = started_at.toISOString();
