@@ -29,7 +29,8 @@
   let time0 = "08:30";
   let time1 = getEndTime(time0, defaultDuration);
   let allDay = false;
-  let every = 1;
+  let everyDay = 1;
+  let everyWeek = 1;
   let times = 10;
   let d0 = false;
   let d1 = true;
@@ -136,13 +137,13 @@
       // If the end time of the last session is over, throw an error.
       // Dont care how many sessions are over if there is still time for the
       // last one. Count the old sessions too.
-      if (isOver(started_at, (times - 1) * every * 1440 + duration)) {
+      if (isOver(started_at, (times - 1) * everyDay * 1440 + duration)) {
         throw new Error("it is already over");
       }
 
       p.schedule_attr.rep_end_type = "x";
       p.schedule_attr.rep_end_x = String(times);
-      p.schedule_attr.rep_every = String(every);
+      p.schedule_attr.rep_every = String(everyDay);
     }
 
     p.schedule_attr.started_at = started_at.toISOString();
@@ -196,9 +197,9 @@
           required={true}
         />
         <Numeric
-          id="every"
+          id="everyDay"
           label="Every"
-          bind:value={every}
+          bind:value={everyDay}
           unit="day"
           max={30}
         />
@@ -224,6 +225,13 @@
           bind:value={date1}
           min={notBefore}
           required={true}
+        />
+        <Numeric
+          id="everyWeek"
+          label="Every"
+          bind:value={everyWeek}
+          unit="week"
+          max={13}
         />
         <div class="d-flex justify-content-center">
           <Checkbox name="d0" label="Sun" bind:value={d0} />
