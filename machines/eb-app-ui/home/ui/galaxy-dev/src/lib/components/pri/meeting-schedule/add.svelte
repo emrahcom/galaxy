@@ -3,7 +3,14 @@
   import { FORM_WIDTH } from "$lib/config";
   import { SCHEDULE_ATTR_TYPE_OPTIONS } from "$lib/pri/meeting-schedule";
   import { action } from "$lib/api";
-  import { getDuration, getEndTime, isOver, today } from "$lib/common";
+  import {
+    dateAfterXDays,
+    getDuration,
+    getEndTime,
+    isOver,
+    lastDayOfWeek,
+    today,
+  } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Checkbox from "$lib/components/common/form-checkbox.svelte";
@@ -25,7 +32,8 @@
   const defaultDuration = 30;
   let duration = defaultDuration;
   let date0 = today();
-  let date1 = today();
+  const dateAfter90Days = dateAfterXDays(90);
+  let date1 = lastDayOfWeek(`${dateAfter90Days}T00:00:00`);
   let time0 = "08:30";
   let time1 = getEndTime(time0, defaultDuration);
   let allDay = false;
