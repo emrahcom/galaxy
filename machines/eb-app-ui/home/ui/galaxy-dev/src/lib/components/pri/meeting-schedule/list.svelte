@@ -11,6 +11,45 @@
 
   export let schedules: MeetingSchedule[];
   const meeting_id = $page.params.meeting_uuid;
+
+  // ---------------------------------------------------------------------------
+  function getDays(repDays: string) {
+    if (!repDays.match("^[01]{7}$")) return "";
+
+    let day = "";
+    let days = "";
+    for (let i = 0; i < 7; i++) {
+      if (repDays[i] !== "1") continue;
+
+      if (i === 0) {
+        day = "Sunday";
+      } else if (i === 1) {
+        day = "Monday";
+      } else if (i === 2) {
+        day = "Tuesday";
+      } else if (i === 3) {
+        day = "Wednesday";
+      } else if (i === 4) {
+        day = "Thursday";
+      } else if (i === 5) {
+        day = "Friday";
+      } else if (i === 6) {
+        day = "Saturday";
+      }
+
+      if (days) {
+        if (repDays.slice(i + 1).match("1")) {
+          days = `${days},${day}`;
+        } else {
+          days = `${days} and ${day}`;
+        }
+      } else {
+        days = day;
+      }
+    }
+
+    return days;
+  }
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -42,15 +81,31 @@
 
             {#if p.schedule_attr.type === "d"}
               {#if p.session_remaining === 1}
-                <p class="card-text text-muted">last session of the series</p>
+                <p class="card-text text-muted">last session in the series</p>
               {:else if p.schedule_attr.rep_every === "1"}
                 <p class="card-text text-muted">
-                  repeat every day, {p.session_remaining} times
+                  repeat every day, {p.session_remaining} sessions remaining
                 </p>
               {:else}
                 <p class="card-text text-muted">
                   repeat every {p.schedule_attr.rep_every} days,
-                  {p.session_remaining} times
+                  {p.session_remaining} sessions remaining
+                </p>
+              {/if}
+            {:else if p.schedule_attr.type === "w"}
+              {#if p.session_remaining === 1}
+                <p class="card-text text-muted">last session in the series</p>
+              {:else if p.schedule_attr.rep_every === "1"}
+                <p class="card-text text-muted">
+                  repeat every week on
+                  {getDays(p.schedule_attr.rep_days)}<br />
+                  {p.session_remaining} sessions remaining
+                </p>
+              {:else}
+                <p class="card-text text-muted">
+                  repeat every {p.schedule_attr.rep_every} weeks on
+                  {getDays(p.schedule_attr.rep_days)}<br />
+                  {p.session_remaining} sessions remaining
                 </p>
               {/if}
             {/if}
