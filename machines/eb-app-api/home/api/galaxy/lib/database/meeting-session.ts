@@ -140,6 +140,7 @@ async function addMeetingSessionDaily(
 ) {
   const now = new Date();
   const started_at = new Date(scheduleAttr.started_at);
+  let counter = 0;
 
   for (let i = 0; i < Number(scheduleAttr.rep_end_x); i++) {
     const session_start = started_at.getTime() +
@@ -166,7 +167,10 @@ async function addMeetingSessionDaily(
     };
 
     await trans.queryObject(sql);
+    counter = counter + 1;
   }
+
+  if (counter === 0) throw new Error("no inserted session");
 }
 
 // -----------------------------------------------------------------------------
@@ -181,6 +185,7 @@ async function addMeetingSessionWeekly(
   const started_at = new Date(scheduleAttr.started_at);
   const ended_at = new Date(scheduleAttr.rep_end_at);
   const firstDateOfInterval = getFirstDateOfInterval(started_at);
+  let counter = 0;
 
   // loop in days of week (from Sunday (0) to Saturday (6))
   for (let i = 0; i < 7; i++) {
@@ -208,6 +213,7 @@ async function addMeetingSessionWeekly(
         Number(scheduleAttr.duration) * 60 * 1000;
       if (started_at.getTime() < session_start && now.getTime() < session_end) {
         await trans.queryObject(sql);
+        counter = counter + 1;
       }
 
       // jump to the next week depending on the repeat interval (every)
@@ -215,6 +221,8 @@ async function addMeetingSessionWeekly(
         Number(scheduleAttr.rep_every) * 7 * 24 * 60 * 60 * 1000;
     }
   }
+
+  if (counter === 0) throw new Error("no inserted session");
 }
 
 // -----------------------------------------------------------------------------
