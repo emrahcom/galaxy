@@ -47,14 +47,14 @@ function checkScheduleAttrWeekly(scheduleAttr: Attr) {
   if (scheduleAttr.rep_end_type !== "at") {
     throw new Error("wrong rep_end_type");
   }
-  if (Number(scheduleAttr.rep_end_x) < 1) {
-    throw new Error("times is out of range");
-  }
-  if (Number(scheduleAttr.rep_end_x) > 99) {
-    throw new Error("times is out of range");
-  }
   if (!scheduleAttr.rep_days.match("^[01]{7}$")) {
     throw new Error("wrong rep_days");
+  }
+  if (Number(scheduleAttr.rep_every) < 1) {
+    throw new Error("rep_every is out of range");
+  }
+  if (Number(scheduleAttr.rep_every) > 30) {
+    throw new Error("rep_every is out of range");
   }
 }
 
