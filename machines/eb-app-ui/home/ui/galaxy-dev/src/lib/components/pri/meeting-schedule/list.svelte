@@ -84,11 +84,12 @@
                 <p class="card-text text-muted">last session in the series</p>
               {:else if p.schedule_attr.rep_every === "1"}
                 <p class="card-text text-muted">
-                  repeat every day, {p.session_remaining} sessions remaining
+                  repeat every day<br />
+                  {p.session_remaining} sessions remaining
                 </p>
               {:else}
                 <p class="card-text text-muted">
-                  repeat every {p.schedule_attr.rep_every} days,
+                  repeat every {p.schedule_attr.rep_every} days<br />
                   {p.session_remaining} sessions remaining
                 </p>
               {/if}
