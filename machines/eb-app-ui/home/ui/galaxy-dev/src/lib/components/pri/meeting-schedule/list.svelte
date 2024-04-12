@@ -39,7 +39,7 @@
 
       if (days) {
         if (repDays.slice(i + 1).match("1")) {
-          days = `${days},${day}`;
+          days = `${days}, ${day}`;
         } else {
           days = `${days} and ${day}`;
         }
