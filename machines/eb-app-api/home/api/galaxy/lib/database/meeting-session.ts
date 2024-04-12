@@ -2,12 +2,24 @@ import { Transaction } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
 import type { Attr } from "./types.ts";
 
 // -----------------------------------------------------------------------------
+function isOver(date: string, minutes: number) {
+  const now = new Date();
+  const time = new Date(date);
+  const epoch = time.getTime() + minutes * 60 * 1000;
+
+  return now.getTime() > epoch;
+}
+
+// -----------------------------------------------------------------------------
 function checkScheduleAttrOnce(scheduleAttr: Attr) {
   if (Number(scheduleAttr.duration) < 1) {
     throw new Error("duration is out of range");
   }
   if (Number(scheduleAttr.duration) > 1440) {
     throw new Error("duration is out of range");
+  }
+  if (isOver(scheduleAttr.started_at, Number(scheduleAttr.duration))) {
+    throw new Error("it is already over");
   }
 }
 
@@ -34,6 +46,15 @@ function checkScheduleAttrDaily(scheduleAttr: Attr) {
   if (Number(scheduleAttr.rep_every) > 30) {
     throw new Error("rep_every is out of range");
   }
+  if (
+    isOver(
+      scheduleAttr.started_at,
+      (Number(scheduleAttr.rep_end_x) - 1) * Number(scheduleAttr.rep_every) *
+          24 * 60 + Number(scheduleAttr.duration),
+    )
+  ) {
+    throw new Error("it is already over");
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +76,12 @@ function checkScheduleAttrWeekly(scheduleAttr: Attr) {
   }
   if (Number(scheduleAttr.rep_every) > 30) {
     throw new Error("rep_every is out of range");
+  }
+  if (scheduleAttr.started_at > scheduleAttr.rep_end_at) {
+    throw new Error("invalid period");
+  }
+  if (isOver(scheduleAttr.rep_end_at, 0)) {
+    throw new Error("it is already over");
   }
 }
 
