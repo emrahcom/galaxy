@@ -14,20 +14,20 @@
   export let p: MeetingSchedule;
 
   const date0 = toLocaleDate(p.schedule_attr.started_at);
-  const date1 = toLocaleDate(p.schedule_attr.rep_end_at);
-  const d0 = p.schedule_attr.rep_days[0] === "1" ? true : false;
-  const d1 = p.schedule_attr.rep_days[1] === "1" ? true : false;
-  const d2 = p.schedule_attr.rep_days[2] === "1" ? true : false;
-  const d3 = p.schedule_attr.rep_days[3] === "1" ? true : false;
-  const d4 = p.schedule_attr.rep_days[4] === "1" ? true : false;
-  const d5 = p.schedule_attr.rep_days[5] === "1" ? true : false;
-  const d6 = p.schedule_attr.rep_days[6] === "1" ? true : false;
   const interval = toLocaleInterval(
     p.schedule_attr.started_at,
     Number(p.schedule_attr.duration),
   );
+  let date1 = "";
   let every = "";
-  let times = "";
+  let times = "1 time";
+  let d0 = false;
+  let d1 = false;
+  let d2 = false;
+  let d3 = false;
+  let d4 = false;
+  let d5 = false;
+  let d6 = false;
   let warning = false;
 
   if (p.schedule_attr.type === "d") {
@@ -37,17 +37,25 @@
       every = `${p.schedule_attr.rep_every} days`;
     }
 
-    if (p.schedule_attr.rep_end_x === "1") {
-      times = "1 time";
-    } else {
+    if (p.schedule_attr.rep_end_x !== "1") {
       times = `${p.schedule_attr.rep_end_x} times`;
     }
   } else if (p.schedule_attr.type === "w") {
+    date1 = toLocaleDate(p.schedule_attr.rep_end_at);
+
     if (p.schedule_attr.rep_every === "1") {
       every = "1 week";
     } else {
       every = `${p.schedule_attr.rep_every} weeks`;
     }
+
+    d0 = p.schedule_attr.rep_days[0] === "1";
+    d1 = p.schedule_attr.rep_days[1] === "1";
+    d2 = p.schedule_attr.rep_days[2] === "1";
+    d3 = p.schedule_attr.rep_days[3] === "1";
+    d4 = p.schedule_attr.rep_days[4] === "1";
+    d5 = p.schedule_attr.rep_days[5] === "1";
+    d6 = p.schedule_attr.rep_days[6] === "1";
   }
 
   // ---------------------------------------------------------------------------
