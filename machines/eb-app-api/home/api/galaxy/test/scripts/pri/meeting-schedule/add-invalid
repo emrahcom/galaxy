@@ -11,7 +11,7 @@ source $BASEDIR/../../common
 
 SERVICE="pri"
 CLASS="meeting/schedule"
-ACTION="update"
+ACTION="add"
 
 # ------------------------------------------------------------------------------
 # try to add a new schedule for a nonexistent meeting
@@ -21,7 +21,7 @@ TAG="invalid-none"
 meeting_fake=$(uuidgen)
 JSON=$(cat <<EOF
 {
-    "meeting_id": "$meeting_fake"
+    "meeting_id": "$meeting_fake",
     "name": "name-$RANDOM",
     "schedule_attr": {
       "type": "o",
@@ -125,7 +125,7 @@ JSON=$(cat <<EOF
     "name": "name-$RANDOM",
     "schedule_attr": {
       "type": "o",
-      "started_at": "$(date -d "-10 minutes" --iso-8601=minutes)",
+      "started_at": "$(date -d "-1 hours" --iso-8601=minutes)",
       "duration": "30"
     }
 }
@@ -206,7 +206,7 @@ JSON=$(cat <<EOF
     "name": "name-$RANDOM",
     "schedule_attr": {
       "type": "d",
-      "started_at": "$(date -d "-10 minutes" --iso-8601=minutes)",
+      "started_at": "$(date -d "-20 days" --iso-8601=minutes)",
       "duration": "30",
       "rep_end_type": "x",
       "rep_end_x": "10",
@@ -279,7 +279,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 # try to add a new schedule (daily) with invalid rep_every
 # rep_every should be less than 31
 # ------------------------------------------------------------------------------
-TAG="invalid-daily-rep-type"
+TAG="invalid-daily-rep-every"
 
 meeting_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
@@ -295,6 +295,300 @@ JSON=$(cat <<EOF
       "rep_end_type": "x",
       "rep_end_x": "10",
       "rep_every": "50"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid duration
+# duration should be more than 0
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-duration-0"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "0",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "1",
+      "rep_days": "0010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid duration
+# duration should be less than 1440
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-duration-1500"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "1500",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "1",
+      "rep_days": "0010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid date
+# it is already over
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-over"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "-8 days" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "-4 days" --iso-8601=minutes)",
+      "rep_every": "1",
+      "rep_days": "0010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid rep type
+# rep_end_type should be "at" for weekly
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-rep-type"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "FAKE",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "1",
+      "rep_days": "0010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid end_at
+# end_at should be later than started_at
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-end-at"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 days" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+2 days" --iso-8601=minutes)",
+      "rep_every": "1",
+      "rep_days": "0010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid rep_every
+# rep_every should be less than 31
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-rep-every"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "50",
+      "rep_days": "0010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid rep_days
+# rep_days should be '[01]{7}'
+# invalid character in this example
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-rep-days-1"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "2",
+      "rep_days": "0010102"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid rep_days
+# rep_days should be '[01]{7}'
+# longer string
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-rep-days-2"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "2",
+      "rep_days": "0010101010101"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid rep_days
+# rep_days should be '[01]{7}'
+# shorter string
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-rep-days-3"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "2",
+      "rep_days": "001"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (weekly) with invalid rep_days
+# rep_days should be '[01]{7}'
+# no selected day, all 0
+# ------------------------------------------------------------------------------
+TAG="invalid-weekly-rep-days-4"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "2",
+      "rep_days": "0000000"
     }
 }
 EOF
