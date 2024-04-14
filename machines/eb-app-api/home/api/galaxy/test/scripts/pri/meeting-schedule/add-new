@@ -15,7 +15,7 @@ ACTION="add"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
-# add new schedule
+# add new schedule (once)
 # ------------------------------------------------------------------------------
 TAG="new-once"
 
@@ -30,6 +30,33 @@ JSON=$(cat <<EOF
       "type": "o",
       "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
       "duration": "30"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# add new schedule (daily)
+# ------------------------------------------------------------------------------
+TAG="new-daily"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "30",
+      "rep_end_type": "x",
+      "rep_end_x": "10",
+      "rep_every": "2"
     }
 }
 EOF
