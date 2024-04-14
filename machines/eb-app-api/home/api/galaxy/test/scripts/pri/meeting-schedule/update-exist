@@ -12,12 +12,13 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="meeting/schedule"
 ACTION="update"
-TAG="exist"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
 # update with valid post
 # ------------------------------------------------------------------------------
+TAG="exist-once"
+
 schedule_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
@@ -28,6 +29,32 @@ JSON=$(cat <<EOF
       "type": "o",
       "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
       "duration": "30"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# update with valid post
+# ------------------------------------------------------------------------------
+TAG="exist-daily"
+
+schedule_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
+JSON=$(cat <<EOF
+{
+    "id": "$schedule_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+4 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "x",
+      "rep_end_x": "6",
+      "rep_every": "3"
     }
 }
 EOF
