@@ -12,12 +12,13 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="meeting/schedule"
 ACTION="add"
-TAG="new"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
 # add new schedule
 # ------------------------------------------------------------------------------
+TAG="new-once"
+
 meeting_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
 
