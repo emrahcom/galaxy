@@ -61,7 +61,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX
 
 # ------------------------------------------------------------------------------
-# try to add a new schedule with invalid duration
+# try to add a new schedule (once) with invalid duration
 # duration should be more than 0
 # ------------------------------------------------------------------------------
 TAG="invalid-once-duration-0"
@@ -86,7 +86,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX
 
 # ------------------------------------------------------------------------------
-# try to add a new schedule with invalid duration
+# try to add a new schedule (once) with invalid duration
 # duration should be less than 1440
 # ------------------------------------------------------------------------------
 TAG="invalid-once-duration-1500"
@@ -111,7 +111,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX
 
 # ------------------------------------------------------------------------------
-# try to add a new schedule with invalid date
+# try to add a new schedule (once) with invalid date
 # it is already over
 # ------------------------------------------------------------------------------
 TAG="invalid-once-over"
@@ -127,6 +127,174 @@ JSON=$(cat <<EOF
       "type": "o",
       "started_at": "$(date -d "-10 minutes" --iso-8601=minutes)",
       "duration": "30"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (daily) with invalid duration
+# duration should be more than 0
+# ------------------------------------------------------------------------------
+TAG="invalid-daily-duration-0"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "0",
+      "rep_end_type": "x",
+      "rep_end_x": "10",
+      "rep_every": "2"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (daily) with invalid duration
+# duration should be less than 1440
+# ------------------------------------------------------------------------------
+TAG="invalid-daily-duration-1500"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "1500",
+      "rep_end_type": "x",
+      "rep_end_x": "10",
+      "rep_every": "2"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (daily) with invalid date
+# it is already over
+# ------------------------------------------------------------------------------
+TAG="invalid-daily-over"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "-10 minutes" --iso-8601=minutes)",
+      "duration": "30",
+      "rep_end_type": "x",
+      "rep_end_x": "10",
+      "rep_every": "2"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (daily) with invalid rep type
+# rep_end_type should be "x" for daily
+# ------------------------------------------------------------------------------
+TAG="invalid-daily-rep-type"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "30",
+      "rep_end_type": "FAKE",
+      "rep_end_x": "10",
+      "rep_every": "2"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (daily) with invalid end_x
+# rep_end_x should be less than 100
+# ------------------------------------------------------------------------------
+TAG="invalid-daily-end-x"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "30",
+      "rep_end_type": "x",
+      "rep_end_x": "100",
+      "rep_every": "2"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule (daily) with invalid rep_every
+# rep_every should be less than 31
+# ------------------------------------------------------------------------------
+TAG="invalid-daily-rep-type"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "30",
+      "rep_end_type": "x",
+      "rep_end_x": "10",
+      "rep_every": "50"
     }
 }
 EOF
