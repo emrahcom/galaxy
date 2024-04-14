@@ -47,3 +47,20 @@ EOF
 
 bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
     "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# delete an existing schedule (weekly)
+# ------------------------------------------------------------------------------
+TAG="exist-weekly"
+
+schedule_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
+JSON=$(cat <<EOF
+{
+    "id": "$schedule_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
