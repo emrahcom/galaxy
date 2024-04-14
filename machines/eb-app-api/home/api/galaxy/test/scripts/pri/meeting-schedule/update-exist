@@ -62,3 +62,30 @@ EOF
 
 bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
     "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# update with valid post
+# ------------------------------------------------------------------------------
+TAG="exist-weekly"
+
+schedule_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
+JSON=$(cat <<EOF
+{
+    "id": "$schedule_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "w",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "25",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+60 days" --iso-8601=minutes)",
+      "rep_every": "2",
+      "rep_days": "010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
