@@ -20,7 +20,7 @@ ACTION="update"
 TAG="invalid-range"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$schedule_id",
