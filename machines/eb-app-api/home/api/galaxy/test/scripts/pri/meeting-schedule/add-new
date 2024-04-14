@@ -64,3 +64,31 @@ EOF
 
 bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
     "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# add new schedule (weekly)
+# ------------------------------------------------------------------------------
+TAG="new-weekly"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "d",
+      "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
+      "duration": "20",
+      "rep_end_type": "at",
+      "rep_end_at": "$(date -d "+90 days" --iso-8601=minutes)",
+      "rep_every": "1",
+      "rep_days": "0010100"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
