@@ -12,14 +12,32 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="meeting/schedule"
 ACTION="del"
-TAG="exist"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
-# delete an existing schedule
+# delete an existing schedule (once)
 # ------------------------------------------------------------------------------
+TAG="exist-once"
+
 schedule_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+JSON=$(cat <<EOF
+{
+    "id": "$schedule_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# delete an existing schedule (daily)
+# ------------------------------------------------------------------------------
+TAG="exist-daily"
+
+schedule_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
     "id": "$schedule_id"
