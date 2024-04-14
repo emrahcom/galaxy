@@ -78,7 +78,7 @@ JSON=$(cat <<EOF
     "meeting_id": "$meeting_id",
     "name": "name-$RANDOM",
     "schedule_attr": {
-      "type": "d",
+      "type": "w",
       "started_at": "$(date -d "+3 hours" --iso-8601=minutes)",
       "duration": "20",
       "rep_end_type": "at",
