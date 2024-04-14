@@ -109,3 +109,28 @@ EOF
 
 bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
     "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to add a new schedule with invalid date
+# it is already over
+# ------------------------------------------------------------------------------
+TAG="invalid-once-over"
+
+meeting_id=$(jq -r ".[0].id" \
+    $TMP/api-pri-meeting-add-new-scheduled-id-$ID-$IDX-res)
+
+JSON=$(cat <<EOF
+{
+    "meeting_id": "$meeting_id",
+    "name": "name-$RANDOM",
+    "schedule_attr": {
+      "type": "o",
+      "started_at": "$(date -d "-10 minutes" --iso-8601=minutes)",
+      "duration": "30"
+    }
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
