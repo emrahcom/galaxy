@@ -118,7 +118,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-daily-duration-0"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -146,7 +146,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-daily-duration-1500"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -174,7 +174,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-daily-over"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -202,7 +202,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-daily-rep-type"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -230,7 +230,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-daily-end-x"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -258,7 +258,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-daily-rep-every"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-daily-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -286,7 +286,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-duration-0"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -315,7 +315,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-duration-1500"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -344,7 +344,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-over"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -373,7 +373,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-rep-type"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -402,7 +402,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-end-at"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -431,7 +431,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-rep-every"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -461,7 +461,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-rep-days-1"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -491,7 +491,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-rep-days-2"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -521,7 +521,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-rep-days-3"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
@@ -551,7 +551,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 TAG="invalid-weekly-rep-days-4"
 
 schedule_id=$(jq -r ".[0].id" \
-    $TMP/api-pri-meeting-schedule-add-new-once-id-$ID-$IDX-res)
+    $TMP/api-pri-meeting-schedule-add-new-weekly-id-$ID-$IDX-res)
 
 JSON=$(cat <<EOF
 {
