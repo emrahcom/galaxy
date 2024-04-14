@@ -81,7 +81,7 @@ JSON=$(cat <<EOF
       "rep_end_type": "at",
       "rep_end_at": "$(date -d "+60 days" --iso-8601=minutes)",
       "rep_every": "2",
-      "rep_days": "010100"
+      "rep_days": "0101000"
     }
 }
 EOF
