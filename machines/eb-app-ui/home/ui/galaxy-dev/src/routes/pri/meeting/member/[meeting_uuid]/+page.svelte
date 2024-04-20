@@ -3,7 +3,7 @@
   import { getById, listById } from "$lib/api";
   import type { Meeting } from "$lib/types";
   import List from "$lib/components/pri/meeting-member/list.svelte";
-  import Subheader from "$lib/components/common/subheader-back-add.svelte";
+  import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const meetingId = $page.params.meeting_uuid;
@@ -29,8 +29,8 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader
   subheader="Members of {meetingName}"
-  hrefBack="/pri/meeting"
   hrefAdd="/pri/meeting/member/candidate/add/{meetingId}"
+  hrefBack="/pri/meeting"
 />
 
 <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
