@@ -37,7 +37,14 @@ export function notFound(): Response {
 }
 
 // -----------------------------------------------------------------------------
-export function ok(body: string): Response {
+export function ok(body: string, headers?: Headers): Response {
+  if (headers) {
+    return new Response(body, {
+      status: 200,
+      headers: headers,
+    });
+  }
+
   return new Response(body, {
     status: 200,
   });
