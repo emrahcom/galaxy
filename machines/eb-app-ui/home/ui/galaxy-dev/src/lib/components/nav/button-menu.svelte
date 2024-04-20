@@ -37,6 +37,11 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
+        <a class="nav-link" href="/pri/calendar" on:click={closeMenu}>
+          Calendar
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/pri/meeting" on:click={closeMenu}>
           Meetings
         </a>
