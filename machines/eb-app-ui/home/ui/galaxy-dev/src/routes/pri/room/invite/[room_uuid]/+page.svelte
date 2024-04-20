@@ -3,7 +3,7 @@
   import { getById, listById } from "$lib/api";
   import type { Room } from "$lib/types";
   import List from "$lib/components/pri/room-invite/list.svelte";
-  import Subheader from "$lib/components/common/subheader-back-add.svelte";
+  import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const roomId = $page.params.room_uuid;
@@ -18,8 +18,8 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader
   subheader="Partner keys of {roomName}"
-  hrefBack="/pri/room"
   hrefAdd="/pri/room/invite/add/{roomId}"
+  hrefBack="/pri/room"
 />
 
 <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
