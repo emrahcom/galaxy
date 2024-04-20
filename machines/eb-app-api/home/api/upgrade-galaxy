@@ -26,6 +26,17 @@ else
     echo "DB_PASSWD: $DB_PASSWD"
 fi
 
+# get KRATOS_FQDN
+[[ -z "$KRATOS_FQDN" ]] && \
+    KRATOS_FQDN=$(ack "^export const KRATOS_FQDN =" \
+        /home/api/galaxy/config.ts | cut -d'"' -f2)
+if [[ -z "$KRATOS_FQDN" ]]; then
+    echo "error: KRATOS_FQDN is not found"
+    exit 1
+else
+    echo "KRATOS_FQDN: $KRATOS_FQDN"
+fi
+
 # clone
 cat <<EOF
 
@@ -38,6 +49,7 @@ git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
 
 sed -i \
   -e "s/___DB_PASSWD___/$DB_PASSWD/" \
+  -e "s/___KRATOS_FQDN___/$KRATOS_FQDN/" \
   $APP/config.ts
 cat $APP/config.ts
 
