@@ -6,7 +6,7 @@ import {
 } from "https://deno.land/x/djwt@v3.0.1/mod.ts";
 
 // -----------------------------------------------------------------------------
-async function generateCryptoKeyHS(
+export async function generateCryptoKeyHS(
   secret: string,
   hash: string,
 ): Promise<CryptoKey> {
@@ -20,7 +20,7 @@ async function generateCryptoKeyHS(
       hash: hash,
     },
     true,
-    ["sign"],
+    ["sign", "verify"],
   );
 
   return cryptoKey;
