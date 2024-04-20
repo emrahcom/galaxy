@@ -3,7 +3,7 @@
   import { getById, listById } from "$lib/api";
   import type { Domain } from "$lib/types";
   import List from "$lib/components/pri/domain-invite/list.svelte";
-  import Subheader from "$lib/components/common/subheader-back-add.svelte";
+  import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const domainId = $page.params.domain_uuid;
@@ -18,8 +18,8 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader
   subheader="Partner keys of {domainName}"
-  hrefBack="/pri/domain"
   hrefAdd="/pri/domain/invite/add/{domainId}"
+  hrefBack="/pri/domain"
 />
 
 <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
