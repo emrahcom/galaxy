@@ -17,8 +17,8 @@ APP="$API/galaxy"
 
 # get DB_PASSWD
 [[ -z "$DB_PASSWD" ]] && \
-    DB_PASSWD=$(ack "^export const DB_PASSWD =" /home/api/galaxy/config.ts | \
-                cut -d'"' -f2)
+    DB_PASSWD=$(ack "^export const DB_PASSWD =" \
+        /home/api/galaxy/config.ts | cut -d'"' -f2)
 if [[ -z "$DB_PASSWD" ]]; then
     echo "error: DB_PASSWD is not found"
     exit 1
@@ -36,7 +36,9 @@ EOF
 rm -rf $LOCAL
 git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
 
-sed -i "s/___DB_PASSWD___/$DB_PASSWD/" $APP/config.ts
+sed -i \
+  -e "s/___DB_PASSWD___/$DB_PASSWD/" \
+  $APP/config.ts
 cat $APP/config.ts
 
 # upgrade app
