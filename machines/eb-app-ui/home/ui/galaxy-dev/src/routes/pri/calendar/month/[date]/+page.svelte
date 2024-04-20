@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import Subheader from "$lib/components/common/subheader.svelte";
 
-  console.error($page.params.month);
+  console.error($page.params.date);
 </script>
 
 <!-- -------------------------------------------------------------------------->
