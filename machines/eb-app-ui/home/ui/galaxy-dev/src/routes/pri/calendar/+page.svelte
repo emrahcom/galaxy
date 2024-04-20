@@ -1,8 +1,3 @@
 <script lang="ts">
-  import Subheader from "$lib/components/common/subheader.svelte";
+  window.location.href = "/pri/calendar/month";
 </script>
-
-<!-- -------------------------------------------------------------------------->
-<Subheader subheader="My calendar" />
-
-Hello
