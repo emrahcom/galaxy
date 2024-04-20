@@ -1,7 +1,7 @@
 <script lang="ts">
   import { list } from "$lib/api";
   import List from "$lib/components/pri/meeting/list.svelte";
-  import Subheader from "$lib/components/common/subheader-add.svelte";
+  import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const pr1 = list("/api/pri/meeting/list", 100);
