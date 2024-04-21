@@ -7,6 +7,7 @@ import {
 } from "./lib/http/response.ts";
 import { getIdentityId } from "./lib/pri/kratos.ts";
 import { getVersion } from "./lib/database/common.ts";
+import calendar from "./lib/pri/calendar.ts";
 import contact from "./lib/pri/contact.ts";
 import domain from "./lib/pri/domain.ts";
 import domainInvite from "./lib/pri/domain-invite.ts";
@@ -41,6 +42,8 @@ async function route(
 ): Promise<Response> {
   if (path === `${PRE}/hello`) {
     return hello(identityId);
+  } else if (path.match(`^${PRE}/calendar/`)) {
+    return await calendar(req, path, identityId);
   } else if (path.match(`^${PRE}/contact/`)) {
     return await contact(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/invite/`)) {
