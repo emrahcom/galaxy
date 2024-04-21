@@ -32,7 +32,7 @@
   console.error(firstOfWeek);
 
   // use any date inside the month
-  const pr = listByValue("/api/pri/calendar/listbymonth", date, 500);
+  const pr = listByValue("/api/pri/calendar/list/bymonth", date, 500);
 </script>
 
 <!-- -------------------------------------------------------------------------->
