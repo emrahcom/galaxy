@@ -82,3 +82,24 @@ export async function listById(
 
   return rows;
 }
+
+// -----------------------------------------------------------------------------
+export async function listByValue(
+  url: string,
+  value: string,
+  limit = 10,
+  offset = 0,
+) {
+  const payload = {
+    value: value,
+    limit: limit,
+    offset: offset,
+  };
+  const res = await post(url, payload);
+
+  if (res.status !== 200) throw new Error("post failed");
+
+  const rows = await res.json();
+
+  return rows;
+}
