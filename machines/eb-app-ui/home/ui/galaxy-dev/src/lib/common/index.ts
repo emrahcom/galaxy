@@ -74,6 +74,27 @@ export function dateAfterXDays(days: number) {
 
 // -----------------------------------------------------------------------------
 // The generated value will be used in the backend to set a date string.
+// Sunday is assumed as the first day of the week.
+// YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function firstDayOfWeek(date: string) {
+  const _date = new Date(date);
+  if (isNaN(_date.getTime())) throw new Error("invalid date");
+
+  const diff = _date.getDay();
+  const sunday = new Date(_date.getTime() - diff * 24 * 60 * 60 * 1000);
+
+  return (
+    sunday.getFullYear() +
+    "-" +
+    ("0" + (sunday.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + sunday.getDate()).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a date string.
 // Saturday is assumed as the last day of the week.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
