@@ -1,5 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
+  import { listByValue } from "$lib/api";
   import {
     firstDayOfMonth,
     firstDayOfWeek,
@@ -7,6 +8,7 @@
     toLocaleDate,
   } from "$lib/common";
   import Subheader from "$lib/components/common/subheader.svelte";
+  import Warning from "$lib/components/common/alert-warning.svelte";
 
   // validate date which comes from the path
   try {
@@ -28,9 +30,17 @@
   console.error(date);
   console.error(firstOfMonth);
   console.error(firstOfWeek);
+
+  // use any date inside the month
+  const pr = listByValue("/api/pri/calendar/listbymonth", date, 500);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <Subheader subheader="My calendar" />
 
-month
+{#await pr then calendar}
+  Month
+  {console.error(calendar)}
+{:catch}
+  <Warning>Something went wrong</Warning>
+{/await}
