@@ -1,4 +1,4 @@
-import { fetch } from "./common.ts";
+//import { fetch } from "./common.ts";
 
 // -----------------------------------------------------------------------------
 export async function listSessionByMonth(
@@ -7,11 +7,10 @@ export async function listSessionByMonth(
   limit: number,
   offset: number,
 ) {
-
-  console.log(identityId);
-  console.log(date);
-  console.log(limit);
-  console.log(offset);
+  await console.log(identityId);
+  await console.log(date);
+  await console.log(limit);
+  await console.log(offset);
 
   return [];
 }
