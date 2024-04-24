@@ -91,7 +91,10 @@ export async function generateRoomUrl(
   const displayName = encodeURIComponent(`"${profile.name}"`);
   const email = encodeURIComponent(`"${profile.email}"`);
 
-  url = `${url}#config.localSubject=${subject}`;
+  url = `${url}#galaxy=true`;
+  if (linkset.domain_attr.url !== "https://meet.jit.si") {
+    url = `${url}&config.localSubject=${subject}`;
+  }
   if (profile.name) url = `${url}&userInfo.displayName=${displayName}`;
   if (profile.email) url = `${url}&userInfo.email=${email}`;
 
@@ -238,7 +241,10 @@ export async function generateMeetingUrl(
   const displayName = encodeURIComponent(`"${linkset.profile_name}"`);
   const email = encodeURIComponent(`"${linkset.profile_email}"`);
 
-  url = `${url}#config.localSubject=${subject}`;
+  url = `${url}#galaxy=true`;
+  if (linkset.domain_attr.url !== "https://meet.jit.si") {
+    url = `${url}&config.localSubject=${subject}`;
+  }
   if (linkset.profile_name) url = `${url}&userInfo.displayName=${displayName}`;
   if (linkset.profile_email) url = `${url}&userInfo.email=${email}`;
 
