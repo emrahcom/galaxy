@@ -22,6 +22,8 @@
     window.location.href = `/pri/calendar/month/${date}`;
   }
 
+  const DAYS = [0, 1, 2, 3, 4, 5, 6];
+  const WEEKS = [0, 1, 2, 3, 4, 5];
   const date = $page.params.date;
   const firstOfMonth = firstDayOfMonth(date);
   const firstOfWeek = firstDayOfWeek(firstOfMonth);
@@ -39,8 +41,12 @@
 <Subheader subheader="My calendar" />
 
 {#await pr then calendar}
-  Month
-  {console.error(calendar)}
+  {#each WEEKS as week}
+    {#each DAYS as day}
+      .
+    {/each}
+    <br />
+  {/each}
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
