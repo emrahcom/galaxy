@@ -1,12 +1,8 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { listByValue } from "$lib/api";
-  import {
-    firstDayOfMonth,
-    firstDayOfWeek,
-    today,
-    toLocaleDate,
-  } from "$lib/common";
+  import { today, toLocaleDate } from "$lib/common";
+  import List from "$lib/components/pri/calendar/list.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -22,16 +18,7 @@
     window.location.href = `/pri/calendar/month/${date}`;
   }
 
-  const DAYS = [0, 1, 2, 3, 4, 5, 6];
-  const WEEKS = [0, 1, 2, 3, 4, 5];
   const date = $page.params.date;
-  const firstOfMonth = firstDayOfMonth(date);
-  const firstOfWeek = firstDayOfWeek(firstOfMonth);
-
-  console.error($page.params.date);
-  console.error(date);
-  console.error(firstOfMonth);
-  console.error(firstOfWeek);
 
   // use any date inside the month
   const pr = listByValue("/api/pri/calendar/list/bymonth", date, 500);
@@ -41,15 +28,7 @@
 <Subheader subheader="My calendar" />
 
 {#await pr then calendar}
-  {console.error(calendar)}
-
-  {#each WEEKS as week}
-    {week} -
-    {#each DAYS as day}
-      {day},
-    {/each}
-    <br />
-  {/each}
+  <List {date} {calendar} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
