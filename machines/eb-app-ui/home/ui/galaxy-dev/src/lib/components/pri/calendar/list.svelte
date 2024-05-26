@@ -18,30 +18,26 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="list">
-  <div class="row">
-    <div class="col-12">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">Sun</th>
-            <th scope="col">Mon</th>
-            <th scope="col">Tue</th>
-            <th scope="col">Wed</th>
-            <th scope="col">Thu</th>
-            <th scope="col">Fri</th>
-            <th scope="col">Sat</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each WEEKS as week}
-            <tr>
-              {#each DAYS as day}
-                <td>{week}-{day}</td>
-              {/each}
-            </tr>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Sun</th>
+        <th scope="col">Mon</th>
+        <th scope="col">Tue</th>
+        <th scope="col">Wed</th>
+        <th scope="col">Thu</th>
+        <th scope="col">Fri</th>
+        <th scope="col">Sat</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each WEEKS as week}
+        <tr>
+          {#each DAYS as day}
+            <td>{week}-{day}</td>
           {/each}
-        </tbody>
-      </table>
-    </div>
-  </div>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
 </section>
