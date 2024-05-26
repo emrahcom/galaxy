@@ -41,9 +41,12 @@
 <Subheader subheader="My calendar" />
 
 {#await pr then calendar}
+  {console.error(calendar)}
+
   {#each WEEKS as week}
+    {week} -
     {#each DAYS as day}
-      .
+      {day},
     {/each}
     <br />
   {/each}
