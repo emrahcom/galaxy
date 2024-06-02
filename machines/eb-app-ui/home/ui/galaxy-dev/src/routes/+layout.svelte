@@ -12,7 +12,7 @@
   <NavBarPub />
 {/if}
 
-<div class="container-fluid d-flex flex-column">
+<div class="container-fluid d-flex flex-column h-100">
   <section id="hidden-top-margin" class="d-flex">
     <br />
     <br />
