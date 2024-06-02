@@ -18,7 +18,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="list" class="h-100">
-  <div class="d-flex m-0 mt-2 h-100">
+  <div class="row mx-auto mt-2" style="height:98%">
     <table class="table table-bordered h-100">
       <thead>
         <tr>
