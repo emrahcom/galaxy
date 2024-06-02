@@ -17,9 +17,9 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="list">
-  <div class="d-flex m-0">
-    <table class="table table-bordered">
+<section id="list" class="h-100">
+  <div class="d-flex m-0 mt-2 h-100">
+    <table class="table table-bordered h-100">
       <thead>
         <tr>
           <th scope="col">Sun</th>
