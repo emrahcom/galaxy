@@ -17,7 +17,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <section id="list">
-  <div class="row mx-auto mt-2 g-3">
+  <div class="d-flex mx-auto mt-2 g-3">
     {#each domains as p}
       <div class="col-md-6 col-xl-4">
         <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
