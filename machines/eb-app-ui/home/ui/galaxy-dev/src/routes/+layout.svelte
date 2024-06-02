@@ -12,13 +12,13 @@
   <NavBarPub />
 {/if}
 
-<section id="hidden-top-margin">
-  <br />
-  <br />
-  <br />
-  <br />
-</section>
+<div class="container-fluid d-flex flex-column">
+  <section id="hidden-top-margin" class="d-flex">
+    <br />
+    <br />
+    <br />
+    <br />
+  </section>
 
-<div class="container-fluid">
   <slot />
 </div>
