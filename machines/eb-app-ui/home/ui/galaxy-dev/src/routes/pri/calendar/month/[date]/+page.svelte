@@ -18,6 +18,7 @@
     window.location.href = `/pri/calendar/month/${date}`;
   }
 
+  // FIX HERE: dont run if there is a waiting redirect
   const date = $page.params.date;
 
   // use any date inside the month
