@@ -6,19 +6,21 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  // validate date which comes from the path
+  // Validate the date which comes from the path. Throw an error if the date is
+  // not valid to stop execution of remaining codes and wait for redirection.
   try {
     const date = toLocaleDate($page.params.date);
 
     if (date != $page.params.date) {
       window.location.href = `/pri/calendar/month/${date}`;
+      throw new Error("invalid date format");
     }
   } catch {
     const date = today();
     window.location.href = `/pri/calendar/month/${date}`;
+    throw new Error("invalid date");
   }
 
-  // FIX HERE: dont run if there is a waiting redirect
   const date = $page.params.date;
 
   // use any date inside the month
