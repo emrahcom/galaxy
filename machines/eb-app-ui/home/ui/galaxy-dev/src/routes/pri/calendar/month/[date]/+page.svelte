@@ -23,7 +23,7 @@
 
   const date = $page.params.date;
 
-  // use any date inside the month
+  // use any date within the month
   const pr = listByValue("/api/pri/calendar/list/bymonth", date, 500);
 </script>
 
