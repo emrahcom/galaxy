@@ -252,3 +252,61 @@ export async function generateMeetingUrl(
 
   return url;
 }
+
+// -----------------------------------------------------------------------------
+// return YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function getFirstDayOfMonth(date: string) {
+  const _date = new Date(date);
+  if (isNaN(_date.getTime())) throw new Error("invalid date");
+
+  const diff = _date.getDate() - 1;
+  const first = new Date(_date.getTime() - diff * 24 * 60 * 60 * 1000);
+
+  return (
+    first.getFullYear() +
+    "-" +
+    ("0" + (first.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + first.getDate()).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Sunday is assumed as the first day of the week.
+// return YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function getFirstDayOfWeek(date: string) {
+  const _date = new Date(date);
+  if (isNaN(_date.getTime())) throw new Error("invalid date");
+
+  const diff = _date.getDay();
+  const sunday = new Date(_date.getTime() - diff * 24 * 60 * 60 * 1000);
+
+  return (
+    sunday.getFullYear() +
+    "-" +
+    ("0" + (sunday.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + sunday.getDate()).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
+// return YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function dateAfterXDays(date: string, days: number) {
+  const date0 = new Date(date);
+  if (isNaN(date0.getTime())) throw new Error("invalid date");
+
+  const date1 = new Date(date0.getTime() + days * 24 * 60 * 60 * 1000);
+  if (isNaN(date1.getTime())) throw new Error("invalid date");
+
+  return (
+    date1.getFullYear() +
+    "-" +
+    ("0" + (date1.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + date1.getDate()).slice(-2)
+  );
+}
