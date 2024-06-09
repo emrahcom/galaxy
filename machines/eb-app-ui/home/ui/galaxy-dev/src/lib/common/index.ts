@@ -135,6 +135,29 @@ export function getLastDayOfWeek(date: string) {
 }
 
 // -----------------------------------------------------------------------------
+// Get the future day after weeks and days from the first day.
+// YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function getCalendarDay(firstDay: string, week: number, day: number) {
+  const date0 = new Date(firstDay);
+  if (isNaN(date0.getTime())) throw new Error("invalid date");
+
+  const date1 = new Date(
+    date0.getTime() +
+      week * 7 * 24 * 60 * 60 * 1000 +
+      day * 24 * 60 * 60 * 1000,
+  );
+
+  return (
+    date1.getFullYear() +
+    "-" +
+    ("0" + (date1.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + date1.getDate()).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
 // The generated value will be used in the backend to set a date string.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
