@@ -7,9 +7,9 @@
     dateAfterXDays,
     getDuration,
     getEndTime,
+    getLastDayOfWeek,
     getToday,
     isOver,
-    lastDayOfWeek,
   } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
@@ -33,7 +33,7 @@
   let duration = defaultDuration;
   let date0 = getToday();
   const dateAfter90Days = dateAfterXDays(90);
-  let date1 = lastDayOfWeek(`${dateAfter90Days}T00:00:00`);
+  let date1 = getLastDayOfWeek(`${dateAfter90Days}T00:00:00`);
   let time0 = "08:30";
   let time1 = getEndTime(time0, defaultDuration);
   let allDay = false;

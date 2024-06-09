@@ -118,7 +118,7 @@ export function getFirstDayOfWeek(date: string) {
 // Saturday is assumed as the last day of the week.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
-export function lastDayOfWeek(date: string) {
+export function getLastDayOfWeek(date: string) {
   const _date = new Date(date);
   if (isNaN(_date.getTime())) throw new Error("invalid date");
 
