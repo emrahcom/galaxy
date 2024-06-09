@@ -84,7 +84,21 @@ export function getOffset(offset: number): number {
 }
 
 // -----------------------------------------------------------------------------
-// Allow only string values in attributes
+// The attribute type is used in JSON columns of tables. It is a list of
+// (key, value) pairs. Only string values are allowed otherwise codes become
+// more complicates.
+//
+// Use
+//
+//   a_b_c = "value"
+//
+// to simulate
+//
+//   a = {
+//     b = {
+//       c = "value"
+//     }
+//   }
 // -----------------------------------------------------------------------------
 export function checkAttr(attr: Attr) {
   for (const key in attr) {
