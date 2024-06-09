@@ -107,7 +107,7 @@ export async function listSessionByMonth(
         AND ses.started_at > $2
         AND ses.started_at < $3
 
-      ORDER BY ses.started_at
+      ORDER BY started_at
       LIMIT $4 OFFSET $5`,
     args: [
       identityId,
