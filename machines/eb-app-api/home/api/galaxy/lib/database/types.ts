@@ -294,7 +294,7 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
-// id is meeting_id for bymeeting request
+// id is meeting_id for bymeeting and calendar requests
 // id is membership_id for bymembership request
 // -----------------------------------------------------------------------------
 export interface MeetingSchedule222 {
