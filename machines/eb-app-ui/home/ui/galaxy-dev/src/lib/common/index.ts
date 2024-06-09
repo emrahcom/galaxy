@@ -190,6 +190,16 @@ export function toLocaleTime(date: string) {
 }
 
 // -----------------------------------------------------------------------------
+// e.g. "02" -> "Feb"
+// -----------------------------------------------------------------------------
+export function toLocaleMonthName(date: string) {
+  const _date = new Date(date);
+  if (isNaN(_date.getTime())) throw new Error("invalid date");
+
+  return _date.toLocaleString("default", { month: "short" });
+}
+
+// -----------------------------------------------------------------------------
 // The generated value will be used in the frontend as date in local format.
 // -----------------------------------------------------------------------------
 export function showLocaleDate(date: string) {

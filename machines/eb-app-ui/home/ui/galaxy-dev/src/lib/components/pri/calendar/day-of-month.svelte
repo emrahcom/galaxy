@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getCalendarDay } from "$lib/common";
+  import { getCalendarDay, toLocaleMonthName } from "$lib/common";
   export let today: string;
   export let firstDay: string;
   export let week: number;
@@ -14,11 +14,12 @@
   } else if (focusedDay < today) {
     bgColor = "bg-light";
   }
+
+  let month = "";
+  if (dayOfMonth === 1) month = toLocaleMonthName(focusedDay);
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <div class="col h-100 p-0 {bgColor}">
-  <div class="row mx-3">
-    {dayOfMonth}
-  </div>
+  <div class="row mx-1">{month} {dayOfMonth}</div>
 </div>
