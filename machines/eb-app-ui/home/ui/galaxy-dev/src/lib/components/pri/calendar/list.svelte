@@ -1,9 +1,10 @@
 <script lang="ts">
   import { getFirstDayOfMonth, getFirstDayOfWeek, getToday } from "$lib/common";
   import Day from "$lib/components/pri/calendar/day-of-month.svelte";
+  import type { MeetingSchedule222 } from "$lib/types";
 
   export let date: string;
-  export let calendar: string[];
+  export let calendar: MeetingSchedule222[];
 
   const DAYS = [0, 1, 2, 3, 4, 5, 6];
   const WEEKS = [0, 1, 2, 3, 4, 5];
@@ -11,8 +12,6 @@
   const firstOfMonth = getFirstDayOfMonth(date);
   const firstDay = getFirstDayOfWeek(firstOfMonth);
   const today = getToday();
-
-  console.error(calendar);
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -35,7 +34,7 @@
           <tr>
             {#each DAYS as day}
               <td class="p-0">
-                <Day {today} {firstDay} {week} {day} />
+                <Day {today} {firstDay} {week} {day} {calendar} />
               </td>
             {/each}
           </tr>
