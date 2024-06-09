@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { getCalendarDay, toLocaleDate, toLocaleMonthName } from "$lib/common";
+  import {
+    getCalendarDay,
+    toLocaleDate,
+    toLocaleTime,
+    toLocaleMonthName,
+  } from "$lib/common";
   import type { MeetingSchedule222 } from "$lib/types";
 
   export let today: string;
@@ -13,8 +18,6 @@
   const meetings = calendar.filter(
     (m) => focusedDay === toLocaleDate(m.started_at),
   );
-
-  console.error(meetings);
 
   let month = "";
   if (dayOfMonth === 1) month = toLocaleMonthName(focusedDay);
@@ -30,4 +33,9 @@
 <!-- -------------------------------------------------------------------------->
 <div class="col h-100 p-0 {bgColor}">
   <div class="row mx-1">{month} {dayOfMonth}</div>
+  {#each meetings as m}
+    <div class="row mx-1 bg-primary text-white">
+      {toLocaleTime(m.started_at)}
+    </div>
+  {/each}
 </div>
