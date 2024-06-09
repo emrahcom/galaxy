@@ -41,7 +41,7 @@ export function epochToIntervalString(time: number) {
 // The generated value will be used in the backend to set a date string.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
-export function today() {
+export function getToday() {
   const now = new Date();
 
   return (
@@ -76,7 +76,7 @@ export function dateAfterXDays(days: number) {
 // The generated value will be used in the backend to set a date string.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
-export function firstDayOfMonth(date: string) {
+export function getFirstDayOfMonth(date: string) {
   const _date = new Date(date);
   if (isNaN(_date.getTime())) throw new Error("invalid date");
 
@@ -97,7 +97,7 @@ export function firstDayOfMonth(date: string) {
 // Sunday is assumed as the first day of the week.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
-export function firstDayOfWeek(date: string) {
+export function getFirstDayOfWeek(date: string) {
   const _date = new Date(date);
   if (isNaN(_date.getTime())) throw new Error("invalid date");
 
@@ -223,9 +223,9 @@ export function toLocaleInterval(date: string, minutes: number) {
 // HH:MM
 // -----------------------------------------------------------------------------
 export function getEndTime(time: string, minutes: number) {
-  const day = today();
+  const today = getToday();
 
-  const date0 = new Date(`${day}T${time}`);
+  const date0 = new Date(`${today}T${time}`);
   if (isNaN(date0.getTime())) throw new Error("invalid date");
 
   const date1 = new Date(date0.getTime() + minutes * 60 * 1000);
@@ -242,12 +242,12 @@ export function getEndTime(time: string, minutes: number) {
 // get the duration as minutes (number)
 // -----------------------------------------------------------------------------
 export function getDuration(time0: string, time1: string) {
-  const day = today();
+  const today = getToday();
 
-  const date0 = new Date(`${day}T${time0}`);
+  const date0 = new Date(`${today}T${time0}`);
   if (isNaN(date0.getTime())) throw new Error("invalid date");
 
-  const date1 = new Date(`${day}T${time1}`);
+  const date1 = new Date(`${today}T${time1}`);
   if (isNaN(date1.getTime())) throw new Error("invalid date");
 
   const millis = date1.getTime() - date0.getTime();

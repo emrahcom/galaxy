@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { listByValue } from "$lib/api";
-  import { today, toLocaleDate } from "$lib/common";
+  import { getToday, toLocaleDate } from "$lib/common";
   import List from "$lib/components/pri/calendar/list.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
@@ -16,7 +16,7 @@
       throw new Error("invalid date format");
     }
   } catch {
-    const date = today();
+    const date = getToday();
     window.location.href = `/pri/calendar/month/${date}`;
     throw new Error("invalid date");
   }

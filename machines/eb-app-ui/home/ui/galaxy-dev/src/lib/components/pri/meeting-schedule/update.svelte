@@ -4,9 +4,9 @@
   import {
     getDuration,
     getEndTime,
+    getToday,
     isAllDay,
     isOver,
-    today,
     toLocaleDate,
     toLocaleTime,
   } from "$lib/common";
@@ -36,7 +36,7 @@
   let allDay = isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration);
   let every = Number(p.schedule_attr.rep_every) || 1;
   let times = Number(p.schedule_attr.rep_end_x) || 10;
-  let notBefore = today();
+  let notBefore = getToday();
   if (date0 < notBefore) notBefore = date0;
   let d0 = p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[0]))

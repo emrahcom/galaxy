@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { today } from "$lib/common";
+  import { getToday } from "$lib/common";
 
-  const date = today();
+  const date = getToday();
 
   window.location.href = `/pri/calendar/month/${date}`;
 </script>

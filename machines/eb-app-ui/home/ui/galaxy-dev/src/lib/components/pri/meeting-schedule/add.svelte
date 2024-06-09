@@ -7,9 +7,9 @@
     dateAfterXDays,
     getDuration,
     getEndTime,
+    getToday,
     isOver,
     lastDayOfWeek,
-    today,
   } from "$lib/common";
   import type { Meeting } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
@@ -28,10 +28,10 @@
   export let meeting: Meeting;
   const hash = $page.url.hash;
 
-  const notBefore = today();
+  const notBefore = getToday();
   const defaultDuration = 30;
   let duration = defaultDuration;
-  let date0 = today();
+  let date0 = getToday();
   const dateAfter90Days = dateAfterXDays(90);
   let date1 = lastDayOfWeek(`${dateAfter90Days}T00:00:00`);
   let time0 = "08:30";

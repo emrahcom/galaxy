@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { firstDayOfMonth, firstDayOfWeek } from "$lib/common";
+  import { getFirstDayOfMonth, getFirstDayOfWeek } from "$lib/common";
   import Day from "$lib/components/pri/calendar/day-of-month.svelte";
 
   export let date: string;
@@ -8,8 +8,8 @@
   const DAYS = [0, 1, 2, 3, 4, 5, 6];
   const WEEKS = [0, 1, 2, 3, 4, 5];
 
-  const firstOfMonth = firstDayOfMonth(date);
-  const firstDay = firstDayOfWeek(firstOfMonth);
+  const firstOfMonth = getFirstDayOfMonth(date);
+  const firstDay = getFirstDayOfWeek(firstOfMonth);
 
   console.error(calendar);
 </script>
