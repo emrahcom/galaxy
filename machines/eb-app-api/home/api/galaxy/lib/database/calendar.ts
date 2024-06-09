@@ -1,10 +1,10 @@
 import { fetch } from "./common.ts";
-import type { MeetingSchedule222 } from "./types.ts";
 import {
   dateAfterXDays,
   getFirstDayOfMonth,
   getFirstDayOfWeek,
 } from "../common/helper.ts";
+import type { MeetingSchedule222 } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function listSessionByMonth(

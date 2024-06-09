@@ -1,4 +1,9 @@
 import { checkAttr, fetch, pool } from "./common.ts";
+import {
+  addMeetingSession,
+  checkScheduleAttr,
+  delMeetingSessionBySchedule,
+} from "./meeting-session.ts";
 import type {
   Attr,
   Id,
@@ -6,11 +11,6 @@ import type {
   MeetingSchedule111,
   MeetingSchedule222,
 } from "./types.ts";
-import {
-  addMeetingSession,
-  checkScheduleAttr,
-  delMeetingSessionBySchedule,
-} from "./meeting-session.ts";
 
 // -----------------------------------------------------------------------------
 export async function getMeetingSchedule(
