@@ -10,7 +10,9 @@
 
   const focusedDay = getCalendarDay(firstDay, week, day);
   const dayOfMonth = Number(focusedDay.slice(-2));
-  const meetings = calendar.filter((m) => today === toLocaleDate(m.started_at));
+  const meetings = calendar.filter(
+    (m) => focusedDay === toLocaleDate(m.started_at),
+  );
 
   console.error(meetings);
 
