@@ -1,4 +1,5 @@
-//import { fetch } from "./common.ts";
+import { fetch } from "./common.ts";
+import type { MeetingSchedule222 } from "./types.ts";
 import {
   dateAfterXDays,
   getFirstDayOfMonth,
@@ -20,11 +21,31 @@ export async function listSessionByMonth(
   const firstOfMonth = getFirstDayOfMonth(date);
   const firstOfWeek = getFirstDayOfWeek(firstOfMonth);
   const firstDay = dateAfterXDays(firstOfWeek, -1);
+  const sql = {
+    text: `
+      SELECT pa.id, pa.domain_id, co.name as contact_name,
+        pr.name as profile_name, pr.email as profile_email, pa.enabled,
+        pa.created_at, pa.updated_at
+      FROM domain_partner pa
+        LEFT JOIN contact co ON co.identity_id = $1
+                                AND co.remote_id = pa.identity_id
+        LEFT JOIN profile pr ON pa.identity_id = pr.identity_id
+                                AND pr.is_default
+      WHERE pa.domain_id = $2
+        AND EXISTS (SELECT 1
+                    FROM domain
+                    WHERE id = pa.domain_id
+                      AND identity_id = $1
+                   )
+      ORDER BY profile_name, profile_email
+      LIMIT $3 OFFSET $4`,
+    args: [
+      identityId,
+      firstDay,
+      limit,
+      offset,
+    ],
+  };
 
-  await console.log(identityId);
-  await console.log(firstDay);
-  await console.log(limit);
-  await console.log(offset);
-
-  return [];
+  return await fetch(sql) as MeetingSchedule222[];
 }
