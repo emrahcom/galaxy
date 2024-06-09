@@ -31,10 +31,10 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="col h-100 p-0 {bgColor}">
+<div class="col h-100 p-0 overflow-y-auto {bgColor}">
   <div class="row mx-1">{month} {dayOfMonth}</div>
   {#each meetings as m}
-    <div class="row mx-1 bg-primary text-white">
+    <div class="row m-1 bg-primary text-white">
       {toLocaleTime(m.started_at)}
     </div>
   {/each}
