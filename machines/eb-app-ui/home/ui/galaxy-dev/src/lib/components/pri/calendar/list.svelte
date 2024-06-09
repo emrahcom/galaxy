@@ -9,10 +9,9 @@
   const WEEKS = [0, 1, 2, 3, 4, 5];
 
   const firstOfMonth = firstDayOfMonth(date);
-  const firstOfWeek = firstDayOfWeek(firstOfMonth);
+  const firstDay = firstDayOfWeek(firstOfMonth);
 
   console.error(calendar);
-  console.error(firstOfWeek);
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -35,7 +34,7 @@
           <tr>
             {#each DAYS as day}
               <td>
-                <Day {week} {day} />
+                <Day {firstDay} {week} {day} />
               </td>
             {/each}
           </tr>
