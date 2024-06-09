@@ -34,7 +34,7 @@
         {#each WEEKS as week}
           <tr>
             {#each DAYS as day}
-              <td>
+              <td class="p-0">
                 <Day {today} {firstDay} {week} {day} />
               </td>
             {/each}

@@ -11,13 +11,13 @@
   if (today === focusedDay) {
     bgColor = "bg-primary-subtle";
   } else if (focusedDay < today) {
-    bgColor = "bg-secondary-subtle";
+    bgColor = "bg-light";
   }
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div class="col h-100 mx-3 {bgColor}">
-  <div class="row">
+<div class="col h-100 p-0 {bgColor}">
+  <div class="row mx-3">
     {week}-{day}
   </div>
 </div>
