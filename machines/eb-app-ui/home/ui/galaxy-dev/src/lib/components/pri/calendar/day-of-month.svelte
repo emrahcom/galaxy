@@ -6,6 +6,7 @@
   export let day: number;
 
   const focusedDay = getCalendarDay(firstDay, week, day);
+  const dayOfMonth = Number(focusedDay.slice(-2));
 
   let bgColor = "";
   if (today === focusedDay) {
@@ -18,6 +19,6 @@
 <!-- -------------------------------------------------------------------------->
 <div class="col h-100 p-0 {bgColor}">
   <div class="row mx-3">
-    {week}-{day}
+    {dayOfMonth}
   </div>
 </div>
