@@ -17,7 +17,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list" class="h-100">
   <div class="row mx-auto mt-2" style="height:98%">
-    <table class="table table-bordered h-100">
+    <table class="table table-bordered h-100" style="table-layout: fixed">
       <thead>
         <tr>
           <th scope="col">Sun</th>
