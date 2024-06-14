@@ -35,7 +35,7 @@
   <div class="row mx-1">{month} {dayOfMonth}</div>
   {#each meetings as m}
     <div class="row m-1 bg-primary text-white">
-      {toLocaleTime(m.started_at)}
+      {toLocaleTime(m.started_at)} {m.meeting_name}
     </div>
   {/each}
 </div>
