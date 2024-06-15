@@ -13,7 +13,7 @@ SERVICE="pri"
 CLASS="meeting/schedule"
 ACTION="get/bymeeting"
 TAG="exist"
-ATTR="id"
+ATTR="meeting_id"
 
 # ------------------------------------------------------------------------------
 # get bymeeting for an existing schedule

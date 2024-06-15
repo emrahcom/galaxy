@@ -14,7 +14,7 @@ SERVICE="pri"
 CLASS="meeting/schedule"
 ACTION="get/bymembership"
 TAG="exist"
-ATTR="id"
+ATTR="membership_id"
 
 # ------------------------------------------------------------------------------
 # get bymembership for an existing schedule
