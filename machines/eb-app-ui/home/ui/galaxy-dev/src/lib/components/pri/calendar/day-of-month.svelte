@@ -32,9 +32,9 @@
   // ---------------------------------------------------------------------------
   function join(m: MeetingSchedule222) {
     if (m.membership_id) {
-      window.location.href = `/pri/member/waiting/${m.membership_id}`;
+      window.location.href = `/pri/member/waiting/${m.membership_id}#${today}`;
     } else {
-      window.location.href = `/pri/owner/waiting/${m.meeting_id}`;
+      window.location.href = `/pri/owner/waiting/${m.meeting_id}#${today}`;
     }
   }
 </script>
