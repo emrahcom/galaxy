@@ -1,38 +1,3 @@
 <script lang="ts">
-  import { FORM_WIDTH } from "$lib/config";
-  import { get } from "$lib/api";
-  import type { Profile } from "$lib/types";
-
-  let profileName = "";
-
-  get("/api/pri/profile/get/default")
-    .then((item: Profile) => {
-      profileName = item.name.charAt(0).toUpperCase() + item.name.slice(1);
-    })
-    .catch(() => {
-      // do nothing
-    });
+  window.location.replace("/pri/calendar");
 </script>
-
-<!-- -------------------------------------------------------------------------->
-<section id="dashboard">
-  <div class="row d-flex mt-5 justify-content-center">
-    <div class="col mx-auto text-center" style="max-width:{FORM_WIDTH};">
-      <h2 class="text-muted mb-5">Hello {profileName}</h2>
-
-      <h5 class="text-muted mb-5">
-        Click
-        <button
-          class="btn btn-sm btn-outline-primary mx-2"
-          type="button"
-          data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasMenu"
-          aria-controls="offcanvasMenu"
-        >
-          <span class="bi bi-list" />
-        </button>
-        to start.
-      </h5>
-    </div>
-  </div>
-</section>
