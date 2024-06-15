@@ -25,7 +25,7 @@ export async function listSessionByMonth(
 
   const sql = {
     text: `
-      SELECT DISTINCT ON (id, started_at, duration)
+      SELECT DISTINCT ON (id, started_at)
         id, meeting_name, meeting_info, schedule_name, started_at, ended_at,
         duration, waiting_time, join_as
       FROM (
