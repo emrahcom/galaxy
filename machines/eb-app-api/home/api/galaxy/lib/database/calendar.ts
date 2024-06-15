@@ -25,7 +25,7 @@ export async function listSessionByMonth(
 
   const sql = {
     text: `
-      SELECT DISTINCT ON (meeting_id, started_at)
+      SELECT DISTINCT ON (started_at, meeting_id)
         meeting_id, meeting_name, meeting_info, schedule_name, started_at,
         ended_at, duration, waiting_time, join_as, membership_id
       FROM (
@@ -113,7 +113,7 @@ export async function listSessionByMonth(
           AND ses.started_at > $2
           AND ses.started_at < $3
 
-        ORDER BY meeting_id, started_at, priority
+        ORDER BY started_at, meeting_id, priority
       ) AS combined
       ORDER BY started_at
       LIMIT $4 OFFSET $5`,
