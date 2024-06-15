@@ -32,7 +32,7 @@ export async function listSessionByMonth(
         SELECT m.id as meeting_id, m.id, m.name as meeting_name,
           m.info as meeting_info, s.name as schedule_name, ses.started_at,
           ses.ended_at, ses.duration, 0 as waiting_time, 'host' as join_as,
-          '' as membership_id, 0 as priority
+          null as membership_id, 0 as priority
         FROM meeting m
           JOIN room r ON m.room_id = r.id
                          AND r.enabled
