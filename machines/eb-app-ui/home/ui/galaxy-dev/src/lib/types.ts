@@ -278,6 +278,7 @@ export interface MeetingSchedule222 {
   duration: number;
   waiting_time: number;
   join_as: string;
+  is_owner: boolean;
 }
 
 // -----------------------------------------------------------------------------
