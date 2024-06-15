@@ -116,7 +116,7 @@ export async function getMeetingScheduleByMembership(
         extract('epoch' from age(ses.started_at, now()))::integer
           + CASE mem.join_as
               WHEN 'host' THEN 0
-              WHEN 'guest' THEN 3 + floor(random()*27)
+              WHEN 'guest' THEN 3 + floor(random()*17)
             END as waiting_time,
         mem.join_as, false as is_owner
       FROM meeting_member mem
@@ -179,7 +179,7 @@ export async function getMeetingScheduleByCode(code: string) {
         extract('epoch' from age(ses.started_at, now()))::integer
           + CASE iv.join_as
               WHEN 'host' THEN 0
-              WHEN 'guest' THEN 3 + floor(random()*27)
+              WHEN 'guest' THEN 3 + floor(random()*17)
             END as waiting_time,
         iv.join_as
       FROM meeting_invite iv
