@@ -28,7 +28,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My calendar" />
+<Subheader subheader="My calendar" hrefMeeting="/pri/meeting" />
 
 {#await pr then calendar}
   <List {date} {calendar} />

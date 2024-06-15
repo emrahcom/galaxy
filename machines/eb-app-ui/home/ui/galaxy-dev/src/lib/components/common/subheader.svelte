@@ -2,6 +2,7 @@
   export let hrefAdd = "";
   export let hrefBack = "";
   export let hrefCalendar = "";
+  export let hrefMeeting = "";
   export let subheader = "";
 </script>
 
@@ -21,6 +22,16 @@
     {/if}
 
     <div class="ms-5 me-auto my-auto">
+      {#if hrefMeeting}
+        <a
+          class="btn btn-outline-secondary ms-0 me-auto"
+          role="button"
+          href={hrefMeeting}
+        >
+          <span class="bi bi-pencil" />
+        </a>
+      {/if}
+
       {#if hrefCalendar}
         <a
           class="btn btn-outline-secondary ms-0 me-auto"
