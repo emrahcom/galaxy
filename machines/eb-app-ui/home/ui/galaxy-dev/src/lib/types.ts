@@ -265,11 +265,8 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
-// id is meeting_id for bymeeting request
-// id is membership_id for bymembership request
-// -----------------------------------------------------------------------------
 export interface MeetingSchedule222 {
-  id: string;
+  meeting_id: string;
   meeting_name: string;
   meeting_info: string;
   schedule_name: string;
@@ -278,7 +275,7 @@ export interface MeetingSchedule222 {
   duration: number;
   waiting_time: number;
   join_as: string;
-  is_owner: boolean;
+  membership_id: string;
 }
 
 // -----------------------------------------------------------------------------
