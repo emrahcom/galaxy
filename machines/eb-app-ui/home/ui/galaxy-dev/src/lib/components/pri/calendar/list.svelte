@@ -31,7 +31,7 @@
       </thead>
       <tbody>
         {#each WEEKS as week}
-          <tr style="height:80px">
+          <tr style="height:86px">
             {#each DAYS as day}
               <td class="p-0">
                 <Day {today} {firstDay} {week} {day} {calendar} />
