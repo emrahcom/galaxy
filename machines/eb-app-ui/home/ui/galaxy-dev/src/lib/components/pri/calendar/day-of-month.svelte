@@ -31,10 +31,10 @@
 
   // ---------------------------------------------------------------------------
   function join(m: MeetingSchedule222) {
-    if (m.is_owner) {
-      window.location.href = `/pri/owner/waiting/${m.id}`;
+    if (m.membership_id) {
+      window.location.href = `/pri/member/waiting/${m.membership_id}`;
     } else {
-      window.location.href = `/pri/member/waiting/${m.id}`;
+      window.location.href = `/pri/owner/waiting/${m.meeting_id}`;
     }
   }
 </script>
