@@ -294,13 +294,8 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
-// id is meeting_id for bymeeting request
-// id is membership_id for bymembership request
-// id is meeting_id or membership_id for calendar request, check is_owner
-// owner uses meeting_id and member uses membership_id while joining
-// -----------------------------------------------------------------------------
 export interface MeetingSchedule222 {
-  id: string;
+  meeting_id: string;
   meeting_name: string;
   meeting_info: string;
   schedule_name: string;
@@ -309,7 +304,7 @@ export interface MeetingSchedule222 {
   duration: number;
   waiting_time: number;
   join_as: string;
-  is_owner: boolean;
+  membership_id: string;
 }
 
 // -----------------------------------------------------------------------------
