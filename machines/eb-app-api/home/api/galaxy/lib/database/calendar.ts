@@ -70,7 +70,7 @@ export async function listSessionByMonth(
 
         UNION
 
-        SELECT m.id, m.name as meeting_name, m.info as meeting_info,
+        SELECT mem.id, m.name as meeting_name, m.info as meeting_info,
           s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
           0 as waiting_time, mem.join_as, false as is_owner, 1 as priority
         FROM meeting_member mem
