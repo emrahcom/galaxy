@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { FORM_WIDTH } from "$lib/config";
   import { epochToIntervalString, showLocaleDatetime } from "$lib/common";
   import { getById } from "$lib/api";
@@ -8,6 +9,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let p: MeetingSchedule222;
+  const hash = $page.url.hash;
   const REFRESH_SEC = 60;
 
   let warning = false;
@@ -47,7 +49,12 @@
 
   // ---------------------------------------------------------------------------
   function goBack() {
-    window.location.href = `/pri/meeting`;
+    if (hash.match("^#[0-9]{4}-[01][0-9]-[0123][0-9]$")) {
+      const day = hash.slice(1);
+      window.location.href = `/pri/calendar/month/${day}`;
+    } else {
+      window.location.href = `/pri/meeting`;
+    }
   }
 
   // ---------------------------------------------------------------------------
