@@ -25,13 +25,14 @@ export async function listSessionByMonth(
 
   const sql = {
     text: `
-      SELECT DISTINCT ON (id, started_at)
+      SELECT DISTINCT ON (meeting_id, started_at)
         id, meeting_name, meeting_info, schedule_name, started_at, ended_at,
         duration, waiting_time, join_as, is_owner
       FROM (
-        SELECT m.id, m.name as meeting_name, m.info as meeting_info,
-          s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
-          0 as waiting_time, 'host' as join_as, true as is_owner, 0 as priority
+        SELECT m.id as meeting_id, m.id, m.name as meeting_name,
+          m.info as meeting_info, s.name as schedule_name, ses.started_at,
+          ses.ended_at, ses.duration, 0 as waiting_time, 'host' as join_as,
+          true as is_owner, 0 as priority
         FROM meeting m
           JOIN room r ON m.room_id = r.id
                          AND r.enabled
@@ -70,9 +71,10 @@ export async function listSessionByMonth(
 
         UNION
 
-        SELECT mem.id, m.name as meeting_name, m.info as meeting_info,
-          s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
-          0 as waiting_time, mem.join_as, false as is_owner, 1 as priority
+        SELECT mem.meeting_id, mem.id, m.name as meeting_name,
+          m.info as meeting_info, s.name as schedule_name, ses.started_at,
+          ses.ended_at, ses.duration, 0 as waiting_time, mem.join_as,
+          false as is_owner, 1 as priority
         FROM meeting_member mem
           JOIN meeting m ON mem.meeting_id = m.id
                             AND m.enabled
