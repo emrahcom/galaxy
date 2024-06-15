@@ -28,15 +28,26 @@
   } else if (focusedDay < today) {
     bgColor = "bg-light";
   }
+
+  // ---------------------------------------------------------------------------
+  function join(m: MeetingSchedule222) {
+    console.error(m);
+  }
 </script>
 
 <!-- -------------------------------------------------------------------------->
 <div class="col h-100 p-0 overflow-y-auto {bgColor}">
   <div class="row mx-1">{month} {dayOfMonth}</div>
-  {#each meetings as m}
-    <div class="row m-1 bg-primary text-white text-truncate">
-      {toLocaleTime(m.started_at)}
-      {m.meeting_name}
-    </div>
-  {/each}
+  <div class="d-grid">
+    {#each meetings as m}
+      <button
+        type="button"
+        class="btn btn-sm btn-primary p-0 m-1 text-start text-nowrap overflow-x-hidden"
+        on:click={() => join(m)}
+      >
+        {toLocaleTime(m.started_at)}
+        {m.meeting_name}
+      </button>
+    {/each}
+  </div>
 </div>
