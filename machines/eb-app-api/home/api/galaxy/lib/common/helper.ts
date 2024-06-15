@@ -91,7 +91,6 @@ export async function generateRoomUrl(
   const displayName = encodeURIComponent(`"${profile.name}"`);
   const email = encodeURIComponent(`"${profile.email}"`);
 
-
   url = `${url}#galaxy=true`;
   if (linkset.domain_attr.url !== "https://meet.jit.si") {
     url = `${url}&config.localSubject=${subject}`;
