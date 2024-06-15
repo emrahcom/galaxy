@@ -54,7 +54,7 @@ export async function getMeetingScheduleByMeeting(
       SELECT m.id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
         extract('epoch' from age(ses.started_at, now()))::integer
-        as waiting_time, 'host' as join_as
+        as waiting_time, 'host' as join_as, true as is_owner
       FROM meeting m
         JOIN room r ON m.room_id = r.id
                        AND r.enabled
@@ -118,7 +118,7 @@ export async function getMeetingScheduleByMembership(
               WHEN 'host' THEN 0
               WHEN 'guest' THEN 3 + floor(random()*27)
             END as waiting_time,
-        mem.join_as
+        mem.join_as, false as is_owner
       FROM meeting_member mem
         JOIN meeting m ON mem.meeting_id = m.id
                           AND m.enabled
