@@ -87,14 +87,15 @@ export async function generateRoomUrl(
     url = `${url}/${roomName}`;
   }
 
+  // Exception for meet.jit.si, it doesn't support fragments correctly.
+  // So, use only the link without any fragment.
+  if (linkset.domain_attr.url === "https://meet.jit.si") return url;
+
   const subject = encodeURIComponent(`"${linkset.name}"`);
   const displayName = encodeURIComponent(`"${profile.name}"`);
   const email = encodeURIComponent(`"${profile.email}"`);
 
-  url = `${url}#galaxy=true`;
-  if (linkset.domain_attr.url !== "https://meet.jit.si") {
-    url = `${url}&config.localSubject=${subject}`;
-  }
+  url = `${url}#config.localSubject=${subject}`;
   if (profile.name) url = `${url}&userInfo.displayName=${displayName}`;
   if (profile.email) url = `${url}&userInfo.email=${email}`;
 
@@ -231,6 +232,10 @@ export async function generateMeetingUrl(
     url = `${url}/${roomName}`;
   }
 
+  // Exception for meet.jit.si, it doesn't support fragments correctly.
+  // So, use only the link without any fragment.
+  if (linkset.domain_attr.url === "https://meet.jit.si") return url;
+
   let subject: string;
   if (linkset.schedule_name) {
     subject = encodeURIComponent(`"${linkset.schedule_name}, ${linkset.name}"`);
@@ -241,10 +246,7 @@ export async function generateMeetingUrl(
   const displayName = encodeURIComponent(`"${linkset.profile_name}"`);
   const email = encodeURIComponent(`"${linkset.profile_email}"`);
 
-  url = `${url}#galaxy=true`;
-  if (linkset.domain_attr.url !== "https://meet.jit.si") {
-    url = `${url}&config.localSubject=${subject}`;
-  }
+  url = `${url}#config.localSubject=${subject}`;
   if (linkset.profile_name) url = `${url}&userInfo.displayName=${displayName}`;
   if (linkset.profile_email) url = `${url}&userInfo.email=${email}`;
 
