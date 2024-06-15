@@ -7,6 +7,7 @@
   } from "$lib/common";
   import type { MeetingSchedule222 } from "$lib/types";
 
+  export let calendarDay: string;
   export let today: string;
   export let firstDay: string;
   export let week: number;
@@ -32,9 +33,9 @@
   // ---------------------------------------------------------------------------
   function join(m: MeetingSchedule222) {
     if (m.membership_id) {
-      window.location.href = `/pri/member/waiting/${m.membership_id}#${today}`;
+      window.location.href = `/pri/member/waiting/${m.membership_id}#${calendarDay}`;
     } else {
-      window.location.href = `/pri/owner/waiting/${m.meeting_id}#${today}`;
+      window.location.href = `/pri/owner/waiting/${m.meeting_id}#${calendarDay}`;
     }
   }
 </script>
