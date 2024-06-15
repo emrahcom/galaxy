@@ -9,7 +9,11 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My meetings" hrefAdd="/pri/meeting/add" />
+<Subheader
+  subheader="My meetings"
+  hrefAdd="/pri/meeting/add"
+  hrefCalendar="/pri/calendar/month"
+/>
 
 {#await Promise.all([pr1, pr2]) then [meetings, candidacies]}
   <List {meetings} {candidacies} />

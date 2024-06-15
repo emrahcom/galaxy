@@ -1,6 +1,7 @@
 <script lang="ts">
   export let hrefAdd = "";
   export let hrefBack = "";
+  export let hrefCalendar = "";
   export let subheader = "";
 </script>
 
@@ -16,6 +17,16 @@
         href={hrefBack}
       >
         <span class="bi bi-arrow-return-left" />
+      </a>
+    {/if}
+
+    {#if hrefCalendar}
+      <a
+        class="btn btn-outline-secondary ms-4 me-auto my-auto"
+        role="button"
+        href={hrefCalendar}
+      >
+        <span class="bi bi-calendar3" />
       </a>
     {/if}
 
