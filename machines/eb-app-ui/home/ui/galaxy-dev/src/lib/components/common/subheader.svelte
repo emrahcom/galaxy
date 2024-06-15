@@ -20,15 +20,17 @@
       </a>
     {/if}
 
-    {#if hrefCalendar}
-      <a
-        class="btn btn-outline-secondary ms-4 me-auto my-auto"
-        role="button"
-        href={hrefCalendar}
-      >
-        <span class="bi bi-calendar3" />
-      </a>
-    {/if}
+    <div class="ms-5 me-auto my-auto">
+      {#if hrefCalendar}
+        <a
+          class="btn btn-outline-secondary ms-0 me-auto"
+          role="button"
+          href={hrefCalendar}
+        >
+          <span class="bi bi-calendar3" />
+        </a>
+      {/if}
+    </div>
 
     {#if hrefAdd}
       <a
