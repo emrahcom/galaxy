@@ -22,7 +22,7 @@
     const interval = (started_at.getTime() - Date.now()) / 1000;
 
     if (interval < 0) {
-      join(p.id);
+      join(p.membership_id);
       return;
     }
 
@@ -30,7 +30,10 @@
     if (counter > REFRESH_SEC) {
       counter = 0;
 
-      await getById("/api/pri/meeting/schedule/get/bymembership", p.id)
+      await getById(
+        "/api/pri/meeting/schedule/get/bymembership",
+        p.membership_id,
+      )
         .then((s) => {
           p = s;
           started_at = new Date(Date.now() + p.waiting_time * 1000);
@@ -99,7 +102,7 @@
             <Join
               label="Join Now"
               on:click={() => {
-                join(p.id);
+                join(p.membership_id);
               }}
             />
           {/if}
