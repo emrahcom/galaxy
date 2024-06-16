@@ -94,6 +94,80 @@ export function getFirstDayOfMonth(date: string) {
 
 // -----------------------------------------------------------------------------
 // The generated value will be used in the backend to set a date string.
+// YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function getDayOfPreviousMonth(date: string) {
+  const date0 = new Date(date);
+  if (isNaN(date0.getTime())) throw new Error("invalid date");
+
+  let day = date0.getDate();
+  const date1 = new Date(date0.getTime() - day * 24 * 60 * 60 * 1000);
+
+  // If day is less than 29 then it is valid for all months. So, use the same
+  // day.
+  // For February, use 28 if day is bigger than 28. getMonth() returns 2 for
+  // March.
+  // For all other months, use the same day if it is 29 or 30.
+  // Use 30 if the given day is 31.
+  if (day < 29) {
+    // do nothing, use the same day
+  } else if (day < 32 && date0.getMonth() === 2) {
+    day = 28;
+  } else if (day < 31) {
+    // do nothing, use the same day
+  } else {
+    day = 30;
+  }
+
+  return (
+    date1.getFullYear() +
+    "-" +
+    ("0" + (date1.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + String(day)).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a date string.
+// YYYY-MM-DD
+// -----------------------------------------------------------------------------
+export function getDayOfNextMonth(date: string) {
+  const date0 = new Date(date);
+  if (isNaN(date0.getTime())) throw new Error("invalid date");
+
+  let day = date0.getDate();
+  let diffAsDays = 12;
+  if (day < 20) diffAsDays = 32;
+  const date1 = new Date(date0.getTime() + diffAsDays * 24 * 60 * 60 * 1000);
+
+  // If day is less than 29 then it is valid for all months. So, use the same
+  // day.
+  // For February, use 28 if day is bigger than 28. getMonth() returns 0 for
+  // January.
+  // For all other months, use the same day if it is 29 or 30.
+  // Use 30 if the given day is 31.
+  if (day < 29) {
+    // do nothing, use the same day
+  } else if (day < 32 && date0.getMonth() === 0) {
+    day = 28;
+  } else if (day < 31) {
+    // do nothing, use the same day
+  } else {
+    day = 30;
+  }
+
+  return (
+    date1.getFullYear() +
+    "-" +
+    ("0" + (date1.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + String(day)).slice(-2)
+  );
+}
+
+// -----------------------------------------------------------------------------
+// The generated value will be used in the backend to set a date string.
 // Sunday is assumed as the first day of the week.
 // YYYY-MM-DD
 // -----------------------------------------------------------------------------
