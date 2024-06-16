@@ -54,7 +54,7 @@ export async function getMeetingScheduleByMeeting(
       SELECT m.id as meeting_id, m.name as meeting_name, m.info as meeting_info,
         s.name as schedule_name, ses.started_at, ses.ended_at, ses.duration,
         extract('epoch' from age(ses.started_at, now()))::integer
-        as waiting_time, 'host' as join_as, '' as membership_id
+        as waiting_time, 'host' as join_as, null as membership_id
       FROM meeting m
         JOIN room r ON m.room_id = r.id
                        AND r.enabled
