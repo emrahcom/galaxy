@@ -24,7 +24,7 @@
     const interval = (started_at.getTime() - Date.now()) / 1000;
 
     if (interval < 0) {
-      join(p.membership_id);
+      join(p.membership_id || "");
       return;
     }
 
@@ -34,7 +34,7 @@
 
       await getById(
         "/api/pri/meeting/schedule/get/bymembership",
-        p.membership_id,
+        p.membership_id || "",
       )
         .then((s) => {
           p = s;
@@ -109,7 +109,7 @@
             <Join
               label="Join Now"
               on:click={() => {
-                join(p.membership_id);
+                join(p.membership_id || "");
               }}
             />
           {/if}

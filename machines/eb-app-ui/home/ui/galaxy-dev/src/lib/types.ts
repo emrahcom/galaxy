@@ -275,7 +275,7 @@ export interface MeetingSchedule222 {
   duration: number;
   waiting_time: number;
   join_as: string;
-  membership_id: string;
+  membership_id: string | null;
 }
 
 // -----------------------------------------------------------------------------
