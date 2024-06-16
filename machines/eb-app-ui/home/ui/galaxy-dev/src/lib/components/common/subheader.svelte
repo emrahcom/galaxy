@@ -9,35 +9,23 @@
 <!-- -------------------------------------------------------------------------->
 <section id="subheader">
   <div class="d-flex">
-    <h3 class="text-muted my-auto">{subheader}</h3>
+    <h3 class="text-muted my-auto" style="min-width:180px">{subheader}</h3>
 
-    {#if hrefBack}
-      <a
-        class="btn btn-outline-secondary ms-4 me-auto my-auto"
-        role="button"
-        href={hrefBack}
-      >
-        <span class="bi bi-arrow-return-left" />
-      </a>
-    {/if}
+    <div class="ms-4 me-auto my-auto">
+      {#if hrefBack}
+        <a class="btn btn-outline-secondary" role="button" href={hrefBack}>
+          <span class="bi bi-arrow-return-left" />
+        </a>
+      {/if}
 
-    <div class="ms-5 me-auto my-auto">
       {#if hrefMeeting}
-        <a
-          class="btn btn-outline-secondary ms-0 me-auto"
-          role="button"
-          href={hrefMeeting}
-        >
+        <a class="btn btn-outline-secondary" role="button" href={hrefMeeting}>
           <span class="bi bi-pencil" />
         </a>
       {/if}
 
       {#if hrefCalendar}
-        <a
-          class="btn btn-outline-secondary ms-0 me-auto"
-          role="button"
-          href={hrefCalendar}
-        >
+        <a class="btn btn-outline-secondary" role="button" href={hrefCalendar}>
           <span class="bi bi-calendar3" />
         </a>
       {/if}
