@@ -274,6 +274,16 @@ export function toLocaleMonthName(date: string) {
 }
 
 // -----------------------------------------------------------------------------
+// e.g. "02" -> "February"
+// -----------------------------------------------------------------------------
+export function toLocaleMonthNameLong(date: string) {
+  const _date = new Date(date);
+  if (isNaN(_date.getTime())) throw new Error("invalid date");
+
+  return _date.toLocaleString("default", { month: "long" });
+}
+
+// -----------------------------------------------------------------------------
 // The generated value will be used in the frontend as date in local format.
 // -----------------------------------------------------------------------------
 export function showLocaleDate(date: string) {
