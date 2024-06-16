@@ -1,7 +1,12 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { listByValue } from "$lib/api";
-  import { getToday, toLocaleDate } from "$lib/common";
+  import {
+    getDayOfNextMonth,
+    getDayOfPreviousMonth,
+    getToday,
+    toLocaleDate,
+  } from "$lib/common";
   import List from "$lib/components/pri/calendar/list.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
@@ -22,13 +27,20 @@
   }
 
   const date = $page.params.date;
+  const dayOfNextMonth = getDayOfNextMonth(date);
+  const dayOfPreviousMonth = getDayOfPreviousMonth(date);
 
   // use any date within the month
   const pr = listByValue("/api/pri/calendar/list/bymonth", date, 500);
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My calendar" hrefMeeting="/pri/meeting" />
+<Subheader
+  subheader="My calendar"
+  hrefMeeting="/pri/meeting"
+  hrefNext="/pri/calendar/month/{dayOfNextMonth}"
+  hrefPrevious="/pri/calendar/month/{dayOfPreviousMonth}"
+/>
 
 {#await pr then calendar}
   <List {date} {calendar} />
