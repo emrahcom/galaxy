@@ -73,9 +73,9 @@
     {#if hrefAdd}
       <button
         class="btn btn-outline-secondary ms-auto me-2 my-auto"
-          on:click={() => {
-            window.location.href = hrefAdd;
-          }}
+        on:click={() => {
+          window.location.href = hrefAdd;
+        }}
       >
         <span class="bi bi-plus-lg" />
       </button>
