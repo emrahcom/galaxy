@@ -3,6 +3,8 @@
   export let hrefBack = "";
   export let hrefCalendar = "";
   export let hrefMeeting = "";
+  export let hrefNext = "";
+  export let hrefPrevious = "";
   export let subheader = "";
 </script>
 
@@ -27,6 +29,18 @@
       {#if hrefCalendar}
         <a class="btn btn-outline-secondary" role="button" href={hrefCalendar}>
           <span class="bi bi-calendar3" />
+        </a>
+      {/if}
+
+      {#if hrefPrevious}
+        <a class="btn btn-outline-secondary" role="button" href={hrefPrevious}>
+          <span class="bi bi-chevron-left" />
+        </a>
+      {/if}
+
+      {#if hrefNext}
+        <a class="btn btn-outline-secondary" role="button" href={hrefNext}>
+          <span class="bi bi-chevron-right" />
         </a>
       {/if}
     </div>
