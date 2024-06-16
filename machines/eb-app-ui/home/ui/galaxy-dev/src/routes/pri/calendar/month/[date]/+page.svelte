@@ -6,6 +6,7 @@
     getDayOfPreviousMonth,
     getToday,
     toLocaleDate,
+    toLocaleMonthNameLong,
   } from "$lib/common";
   import List from "$lib/components/pri/calendar/list.svelte";
   import Subheader from "$lib/components/common/subheader.svelte";
@@ -27,6 +28,7 @@
   }
 
   const date = $page.params.date;
+  const monthName = toLocaleMonthNameLong(date);
   const dayOfNextMonth = getDayOfNextMonth(date);
   const dayOfPreviousMonth = getDayOfPreviousMonth(date);
 
@@ -36,7 +38,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <Subheader
-  subheader="My calendar"
+  subheader={monthName}
   hrefMeeting="/pri/meeting"
   hrefNext="/pri/calendar/month/{dayOfNextMonth}"
   hrefPrevious="/pri/calendar/month/{dayOfPreviousMonth}"
