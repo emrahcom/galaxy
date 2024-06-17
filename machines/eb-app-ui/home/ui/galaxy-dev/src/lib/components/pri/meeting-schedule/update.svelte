@@ -25,6 +25,7 @@
 
   export let p: MeetingSchedule;
 
+  const timezoneOffset = new Date().getTimezoneOffset();
   const defaultDuration = Number(p.schedule_attr.duration);
   let duration = defaultDuration;
   let date0 = toLocaleDate(p.schedule_attr.started_at);
@@ -123,6 +124,12 @@
 
   // ---------------------------------------------------------------------------
   function normalizeData() {
+    // Get the timezone offset (difference as minutes) of the client side. There
+    // is an issue here if the creating and updating timezones are different and
+    // selected start time is in different days for these two timezones.
+    // Skip it, dont fix.
+    p.schedule_attr.timezone_offset = `${timezoneOffset}`;
+
     // if all day meeting, overwrite the start time and duration
     if (allDay) {
       time0 = "00:00";
