@@ -231,7 +231,6 @@ async function addMeetingSessionWeekly(
         Number(scheduleAttr.duration) * 60 * 1000;
       if (
         started_at.getTime() <= session_start &&
-        now.getTime() < session_start &&
         now.getTime() < session_end
       ) {
         await trans.queryObject(sql);
