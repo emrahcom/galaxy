@@ -28,6 +28,7 @@
   export let meeting: Meeting;
   const hash = $page.url.hash;
 
+  const timezoneOffset = new Date().getTimezoneOffset();
   const notBefore = getToday();
   const defaultDuration = 30;
   let duration = defaultDuration;
@@ -61,6 +62,7 @@
       rep_end_x: "",
       rep_every: "",
       rep_days: "",
+      timezone_offset: `${timezoneOffset}`,
     },
   };
 
