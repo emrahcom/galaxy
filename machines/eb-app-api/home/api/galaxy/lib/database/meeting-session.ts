@@ -86,10 +86,24 @@ function checkScheduleAttrWeekly(scheduleAttr: Attr) {
 }
 
 // -----------------------------------------------------------------------------
-// the first date (sunday) of the week to which the given date is belong
+// For the client perspective (timezone), the session start date in the first
+// day of the week (Sunday) to which the given date is belong. The value of
+// timezoneOffset is a negative number for UTC- zones.
+//
+// The date argument is a date in UTC zone. So, check the timezone offset to
+// correct it.
 // -----------------------------------------------------------------------------
-function getFirstDateOfInterval(date: Date) {
-  return new Date(date.getTime() - date.getDay() * 24 * 60 * 60 * 1000);
+function getFirstDateOfInterval(date: Date, timezoneOffset: number) {
+  const diffBefore = date.getHours() * 60 + date.getMinutes();
+  const diffAfter = (24 * 60) - diffBefore;
+
+  if ((diffAfter + timezoneOffset) <= 0) {
+    return new Date(date.getTime() - (date.getDay() + 1) * 24 * 60 * 60 * 1000);
+  } else if ((diffBefore - timezoneOffset) <= 0) {
+    return new Date(date.getTime() - (date.getDay() - 1) * 24 * 60 * 60 * 1000);
+  } else {
+    return new Date(date.getTime() - date.getDay() * 24 * 60 * 60 * 1000);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +120,7 @@ export function checkScheduleAttr(scheduleAttr: Attr) {
 }
 
 // -----------------------------------------------------------------------------
-// the structure of scheduleAttr must be checked before calling this function
+// The structure of scheduleAttr must be checked before calling this function.
 // -----------------------------------------------------------------------------
 async function addMeetingSessionOnce(
   trans: Transaction,
@@ -131,7 +145,7 @@ async function addMeetingSessionOnce(
 }
 
 // -----------------------------------------------------------------------------
-// the structure of scheduleAttr must be checked before calling this function
+// The structure of scheduleAttr must be checked before calling this function.
 // -----------------------------------------------------------------------------
 async function addMeetingSessionDaily(
   trans: Transaction,
@@ -174,7 +188,7 @@ async function addMeetingSessionDaily(
 }
 
 // -----------------------------------------------------------------------------
-// the structure of scheduleAttr must be checked before calling this function
+// The structure of scheduleAttr must be checked before calling this function.
 // -----------------------------------------------------------------------------
 async function addMeetingSessionWeekly(
   trans: Transaction,
@@ -184,7 +198,11 @@ async function addMeetingSessionWeekly(
   const now = new Date();
   const started_at = new Date(scheduleAttr.started_at);
   const ended_at = new Date(scheduleAttr.rep_end_at);
-  const firstDateOfInterval = getFirstDateOfInterval(started_at);
+  const timezoneOffset = Number(scheduleAttr.timezone_offset);
+  const firstDateOfInterval = getFirstDateOfInterval(
+    started_at,
+    timezoneOffset,
+  );
   let counter = 0;
 
   // loop in days of week (from Sunday (0) to Saturday (6))
@@ -230,7 +248,7 @@ async function addMeetingSessionWeekly(
 }
 
 // -----------------------------------------------------------------------------
-// the structure of scheduleAttr must be checked before calling this function
+// The structure of scheduleAttr must be checked before calling this function.
 // -----------------------------------------------------------------------------
 export async function addMeetingSession(
   trans: Transaction,
