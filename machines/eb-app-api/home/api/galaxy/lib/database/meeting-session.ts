@@ -99,7 +99,7 @@ function getFirstDateOfInterval(date: Date, timezoneOffset: number) {
 
   if ((diffAfter + timezoneOffset) <= 0) {
     return new Date(date.getTime() - (date.getDay() + 1) * 24 * 60 * 60 * 1000);
-  } else if ((diffBefore - timezoneOffset) <= 0) {
+  } else if ((diffBefore - timezoneOffset) < 0) {
     return new Date(date.getTime() - (date.getDay() - 1) * 24 * 60 * 60 * 1000);
   } else {
     return new Date(date.getTime() - date.getDay() * 24 * 60 * 60 * 1000);
