@@ -211,7 +211,11 @@ async function addMeetingSessionWeekly(
 
       const session_end = session_start +
         Number(scheduleAttr.duration) * 60 * 1000;
-      if (started_at.getTime() < session_start && now.getTime() < session_end) {
+      if (
+        started_at.getTime() <= session_start &&
+        now.getTime() < session_start &&
+        now.getTime() < session_end
+      ) {
         await trans.queryObject(sql);
         counter = counter + 1;
       }
