@@ -460,6 +460,8 @@ ALTER TABLE meeting_member_candidate OWNER TO galaxy;
 --   rep_days: string,           // 0 for off, 1 for on
 --                               // Sunday is the first digit
 --                               // e.g. 0100100
+--   timezone_offset,            // difference as minutes from GMT
+--                               // e,g -180 for GMT+0300
 -- }
 --
 -- - All attributes are recorded as string even its value is a date or a number
