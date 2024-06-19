@@ -13,7 +13,7 @@ SERVICE="pri"
 CLASS="calendar"
 ACTION="list/bymonth"
 TAG="nolimit-nooffset"
-ATTR="id"
+ATTR="meeting_id"
 
 # ------------------------------------------------------------------------------
 # get calendar events (no limit, no offset)

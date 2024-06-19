@@ -779,6 +779,14 @@ bash $PRI/meeting/get-link-bymembership-exist-host-member-of-scheduled $ID2 2
 bash $PRI/meeting/get-link-bymembership-none $ID2
 
 # ------------------------------------------------------------------------------
+# pri / calendar
+# ------------------------------------------------------------------------------
+bash $PRI/calendar/list-bymonth-nolimit-nooffset $ID1 1
+bash $PRI/calendar/list-bymonth-limit $ID1 1
+bash $PRI/calendar/list-bymonth-huge-offset $ID1 1
+bash $PRI/calendar/list-bymonth-invalid $ID1 1
+
+# ------------------------------------------------------------------------------
 # pub
 # ------------------------------------------------------------------------------
 bash $PUB/hello

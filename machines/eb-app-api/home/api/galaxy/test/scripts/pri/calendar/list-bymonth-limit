@@ -13,7 +13,7 @@ SERVICE="pri"
 CLASS="calendar"
 ACTION="list/bymonth"
 TAG="limit"
-ATTR="id"
+ATTR="meeting_id"
 
 # ------------------------------------------------------------------------------
 # get calendar events (limit 2, no offset)
