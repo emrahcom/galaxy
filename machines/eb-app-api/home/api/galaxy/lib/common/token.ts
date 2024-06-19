@@ -1,4 +1,4 @@
-import { Algorithm } from "https://deno.land/x/djwt@v3.0.1/algorithm.ts";
+import { Algorithm } from "https://deno.land/x/djwt@v3.0.2/algorithm.ts";
 import {
   create,
   getNumericDate,
