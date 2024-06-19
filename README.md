@@ -28,7 +28,8 @@ Try `Galaxy` using publicly available implementation on
 - Create access links for unregistered users
 - Create disposable or permanent access links
 - Create scheduled meetings
-- Waiting room for scheduled meeting
+- Calendar view for scheduled meetings
+- Waiting room for scheduled meetings
 - Manage your Jitsi profiles
 - Ability to attach a profile to a specific meeting
 - Unpredictable room name support. Create meeting links for anonymous Jitsi
