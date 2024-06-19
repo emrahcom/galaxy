@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std@0.220.1/http/server.ts";
+import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { DB_VERSION, HOSTNAME, PORT_PRIVATE } from "./config.ts";
 import {
   methodNotAllowed,
