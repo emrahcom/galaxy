@@ -3,7 +3,7 @@ import {
   create,
   getNumericDate,
   Payload,
-} from "https://deno.land/x/djwt@v3.0.1/mod.ts";
+} from "https://deno.land/x/djwt@v3.0.2/mod.ts";
 
 // -----------------------------------------------------------------------------
 export async function generateCryptoKeyHS(
