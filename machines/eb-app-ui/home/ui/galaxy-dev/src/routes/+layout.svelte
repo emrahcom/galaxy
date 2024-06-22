@@ -6,13 +6,11 @@
   const identity_id = window.localStorage.getItem("identity_id");
 
   onMount(() => {
-    const elementsWithTooltip = [].slice.call(
-      document.querySelectorAll('[data-bs-toggle="tooltip"]'),
+    const elementsWithTooltip = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]',
     );
 
-    elementsWithTooltip.map(function (el) {
-      return new window.bootstrap.Tooltip(el);
-    });
+    [...elementsWithTooltip].map((el) => new window.bootstrap.Tooltip(el));
   });
 </script>
 
