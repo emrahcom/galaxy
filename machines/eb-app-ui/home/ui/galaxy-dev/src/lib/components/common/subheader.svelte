@@ -39,6 +39,8 @@
       {#if hrefCalendar}
         <button
           class="btn btn-outline-secondary"
+          data-bs-toggle="tooltip"
+          data-bs-title="Calendar"
           on:click={() => {
             window.location.href = hrefCalendar;
           }}
