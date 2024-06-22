@@ -8,6 +8,10 @@ declare global {
     // interface PageState {}
     // interface Platform {}
   }
+
+  interface Window {
+    bootstrap: typeof import("bootstrap");
+  }
 }
 
 export {};
