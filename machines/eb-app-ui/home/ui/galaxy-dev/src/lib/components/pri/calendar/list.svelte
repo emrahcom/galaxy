@@ -25,7 +25,7 @@
   <div class="row mx-auto mt-2" style="height:98%">
     <table class="table table-bordered h-100" style="table-layout: fixed">
       <thead>
-        <tr>
+        <tr class="align-middle" style="height:18px">
           <th scope="col">Sun</th>
           <th scope="col">Mon</th>
           <th scope="col">Tue</th>
