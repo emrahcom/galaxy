@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { activateTooltips } from "$lib/common";
+
   export let hrefAdd = "";
   export let hrefBack = "";
   export let hrefCalendar = "";
@@ -6,6 +9,10 @@
   export let hrefNext = "";
   export let hrefPrevious = "";
   export let subheader = "";
+
+  onMount(() => {
+    activateTooltips();
+  });
 </script>
 
 <!-- -------------------------------------------------------------------------->
