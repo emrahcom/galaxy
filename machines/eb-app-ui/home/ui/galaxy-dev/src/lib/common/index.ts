@@ -1,3 +1,5 @@
+import { Tooltip } from "bootstrap";
+
 // -----------------------------------------------------------------------------
 // from epoch to "x days hh:mm:ss"
 // -----------------------------------------------------------------------------
@@ -429,4 +431,15 @@ export function isOver(date: Date, minutes: number) {
   const endTime = date.getTime() + minutes * 60 * 1000;
 
   return now.getTime() > endTime;
+}
+
+// -----------------------------------------------------------------------------
+// Activate tooltips
+// -----------------------------------------------------------------------------
+export function activateTooltips() {
+  const elementsWithTooltip = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]',
+  );
+
+  [...elementsWithTooltip].map((el) => new Tooltip(el));
 }
