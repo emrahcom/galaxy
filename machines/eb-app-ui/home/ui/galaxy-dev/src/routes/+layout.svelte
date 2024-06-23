@@ -1,5 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import "bootstrap-icons/font/bootstrap-icons.css";
+  import "bootstrap/dist/css/bootstrap.min.css";
+  import "bootstrap/dist/js/bootstrap.bundle.min.js";
+  import { Tooltip } from "bootstrap";
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
@@ -10,7 +14,7 @@
       '[data-bs-toggle="tooltip"]',
     );
 
-    [...elementsWithTooltip].map((el) => new window.bootstrap.Tooltip(el));
+    [...elementsWithTooltip].map((el) => new Tooltip(el));
   });
 </script>
 
