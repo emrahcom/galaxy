@@ -26,3 +26,13 @@ deno fmt --check src
 ```bash
 (cd /home/ui/galaxy-dev && yarn run dev --host --port 3000)
 ```
+
+#### Added modules
+
+```bash
+yarn add --dev @sveltejs/adapter-static
+yarn add --dev @types/bootstrap
+yarn add @popperjs/core
+yarn add bootstrap
+yarn add bootstrap-icons
+```
