@@ -10,13 +10,15 @@ export async function load() {
     window.localStorage.setItem("kratos_fqdn", config.kratos_fqdn);
   }
 
-  await getIdentity()
-    .then((_identity) => {
-      window.localStorage.setItem("identity_id", _identity.id);
-      window.localStorage.setItem("identity_email", _identity.traits.email);
-    })
-    .catch(() => {
-      window.localStorage.removeItem("identity_id");
-      window.localStorage.removeItem("identity_email");
-    });
+  if (!window.localStorage.getItem("identity_id")) {
+    await getIdentity()
+      .then((_identity) => {
+        window.localStorage.setItem("identity_id", _identity.id);
+        window.localStorage.setItem("identity_email", _identity.traits.email);
+      })
+      .catch(() => {
+        window.localStorage.removeItem("identity_id");
+        window.localStorage.removeItem("identity_email");
+      });
+  }
 }
