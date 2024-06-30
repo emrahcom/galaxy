@@ -3,6 +3,12 @@ import { getIdentity } from "$lib/kratos";
 
 // -----------------------------------------------------------------------------
 export async function load() {
+  const target = window.location.pathname;
+
+  // Dont continue if the target is the audience pages.
+  // The audience pages dont need authentication.
+  if (target.match("^/aud/")) return;
+
   // Get config
   if (!window.localStorage.getItem("kratos_fqdn")) {
     const config = await get("/api/adm/config");
@@ -10,15 +16,21 @@ export async function load() {
     window.localStorage.setItem("kratos_fqdn", config.kratos_fqdn);
   }
 
-  if (!window.localeStorage.getItem("identity_id")) {
+  // Am I authenticated
+  if (
+    !window.sessionStorage.getItem("kratos_authenticated") ||
+    !window.localStorage.getItem("identity_id")
+  ) {
     await getIdentity()
       .then((_identity) => {
-        window.localeStorage.setItem("identity_id", _identity.id);
-        window.localeStorage.setItem("identity_email", _identity.traits.email);
+        window.localStorage.setItem("identity_id", _identity.id);
+        window.localStorage.setItem("identity_email", _identity.traits.email);
+        window.sessionStorage.setItem("kratos_authenticated", "ok");
       })
       .catch(() => {
-        window.localeStorage.removeItem("identity_id");
-        window.localeStorage.removeItem("identity_email");
+        window.localStorage.removeItem("identity_id");
+        window.localStorage.removeItem("identity_email");
+        window.sessionStorage.removeItem("kratos_authenticated");
       });
   }
 }

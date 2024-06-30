@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
 
-  const identity_id = window.localeStorage.getItem("identity_id");
+  const identity_id = window.localStorage.getItem("identity_id");
 </script>
 
 <!-- -------------------------------------------------------------------------->

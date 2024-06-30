@@ -4,8 +4,9 @@
   async function load() {
     const dm = await getLogoutDataModels();
 
-    window.localeStorage.removeItem("identity_id");
-    window.localeStorage.removeItem("identity_email");
+    window.localStorage.removeItem("identity_id");
+    window.localStorage.removeItem("identity_email");
+    window.sessionStorage.removeItem("kratos_authenticated");
 
     if (dm.instanceOf === "KratosLogout") {
       window.location.replace(dm.logout_url);
