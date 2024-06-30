@@ -6,16 +6,6 @@ import type {
 } from "$lib/kratos/types";
 
 // -----------------------------------------------------------------------------
-export function getFlowId(urlSearch: string): string {
-  const qs = new URLSearchParams(urlSearch);
-  const flowId = qs.get("flow");
-
-  if (flowId) return flowId;
-
-  return "";
-}
-
-// -----------------------------------------------------------------------------
 export async function getIdentity(): Promise<KratosIdentity> {
   const KRATOS_FQDN = window.localStorage.getItem("kratos_fqdn");
   const url = `https://${KRATOS_FQDN}/sessions/whoami`;
