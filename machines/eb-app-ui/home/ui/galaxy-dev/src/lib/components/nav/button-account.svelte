@@ -3,7 +3,7 @@
 
   // ---------------------------------------------------------------------------
   function updateUsername() {
-    username = window.sessionStorage.getItem("identity_email") || "";
+    username = window.localeStorage.getItem("identity_email") || "";
   }
 
   // ---------------------------------------------------------------------------
