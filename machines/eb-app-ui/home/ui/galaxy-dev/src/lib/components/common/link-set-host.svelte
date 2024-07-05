@@ -1,5 +1,12 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { activateTooltips } from "$lib/common";
+
   export let href: string;
+
+  onMount(() => {
+    activateTooltips();
+  });
 </script>
 
 <!-- -------------------------------------------------------------------------->
