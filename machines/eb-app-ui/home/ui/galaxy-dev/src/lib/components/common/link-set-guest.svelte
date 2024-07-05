@@ -11,4 +11,12 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<a {href} class="btn btn-outline-dark btn-sm" role="button">G</a>
+<a
+  {href}
+  class="btn btn-outline-dark btn-sm"
+  role="button"
+  data-bs-toggle="tooltip"
+  data-bs-title={title}
+>
+  G
+</a>
