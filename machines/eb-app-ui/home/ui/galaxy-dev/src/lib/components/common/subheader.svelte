@@ -24,6 +24,8 @@
       {#if hrefBack}
         <button
           class="btn btn-outline-secondary"
+          data-bs-toggle="tooltip"
+          data-bs-title="Go back"
           on:click={() => {
             window.location.href = hrefBack;
           }}
