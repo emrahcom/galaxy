@@ -12,6 +12,7 @@
 <Subheader
   subheader="My meetings"
   hrefAdd="/pri/meeting/add"
+  hrefAddTitle="Add a new meeting"
   hrefCalendar="/pri/calendar/month"
 />
 
