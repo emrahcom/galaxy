@@ -3,17 +3,17 @@
   import { activateTooltips } from "$lib/common";
 
   export let hrefAdd = "";
-  export let hrefAddTitle = "";
+  export let hrefAddTitle = "Add";
   export let hrefBack = "";
-  export let hrefBackTitle = "";
+  export let hrefBackTitle = "Go back";
   export let hrefCalendar = "";
-  export let hrefCalendarTitle = "";
+  export let hrefCalendarTitle = "Calendar";
   export let hrefMeeting = "";
-  export let hrefMeetingTitle = "";
+  export let hrefMeetingTitle = "Edit meetings";
   export let hrefNext = "";
-  export let hrefNextTitle = "";
+  export let hrefNextTitle = "Next";
   export let hrefPrevious = "";
-  export let hrefPreviousTitle = "";
+  export let hrefPreviousTitle = "Previous";
   export let subheader = "";
 
   onMount(() => {
@@ -31,7 +31,7 @@
         <button
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
-          data-bs-title="{hrefBackTitle}"
+          data-bs-title={hrefBackTitle}
           on:click={() => {
             window.location.href = hrefBack;
           }}
@@ -44,7 +44,7 @@
         <button
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
-          data-bs-title="{hrefMeetingTitle}"
+          data-bs-title={hrefMeetingTitle}
           on:click={() => {
             window.location.href = hrefMeeting;
           }}
@@ -57,7 +57,7 @@
         <button
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
-          data-bs-title="{hrefCalendarTitle}"
+          data-bs-title={hrefCalendarTitle}
           on:click={() => {
             window.location.href = hrefCalendar;
           }}
@@ -70,7 +70,7 @@
         <button
           class="btn btn-outline-secondary ms-3 me-auto"
           data-bs-toggle="tooltip"
-          data-bs-title="{hrefPreviousTitle}"
+          data-bs-title={hrefPreviousTitle}
           on:click={() => {
             window.location.href = hrefPrevious;
           }}
@@ -83,7 +83,7 @@
         <button
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
-          data-bs-title="{hrefNextTitle}"
+          data-bs-title={hrefNextTitle}
           on:click={() => {
             window.location.href = hrefNext;
           }}
@@ -97,7 +97,7 @@
       <button
         class="btn btn-outline-secondary ms-auto me-2 my-auto"
         data-bs-toggle="tooltip"
-        data-bs-title="{hrefAddTitle}"
+        data-bs-title={hrefAddTitle}
         on:click={() => {
           window.location.href = hrefAdd;
         }}
