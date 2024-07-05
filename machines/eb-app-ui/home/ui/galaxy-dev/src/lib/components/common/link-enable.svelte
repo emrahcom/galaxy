@@ -3,6 +3,7 @@
   import { activateTooltips } from "$lib/common";
 
   export let href: string;
+  export let title = "Enable";
 
   onMount(() => {
     activateTooltips();
