@@ -8,7 +8,11 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My meeting profiles" hrefAdd="/pri/profile/add" />
+<Subheader
+  subheader="My meeting profiles"
+  hrefAdd="/pri/profile/add"
+  hrefAddTitle="Add a new meeting profile"
+/>
 
 {#await pr then profiles}
   <List {profiles} />
