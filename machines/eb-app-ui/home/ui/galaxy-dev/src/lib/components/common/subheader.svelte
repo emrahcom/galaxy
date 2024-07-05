@@ -37,6 +37,8 @@
       {#if hrefMeeting}
         <button
           class="btn btn-outline-secondary"
+          data-bs-toggle="tooltip"
+          data-bs-title="Edit meetings"
           on:click={() => {
             window.location.href = hrefMeeting;
           }}
