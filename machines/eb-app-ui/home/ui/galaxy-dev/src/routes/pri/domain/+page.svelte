@@ -9,7 +9,11 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My Jitsi domains" hrefAdd="/pri/domain/add" />
+<Subheader
+  subheader="My Jitsi domains"
+  hrefAdd="/pri/domain/add"
+  hrefAddTitle="Add a new Jitsi domain"
+/>
 
 {#await Promise.all([pr1, pr2]) then [domains, candidacies]}
   <List {domains} {candidacies} />
