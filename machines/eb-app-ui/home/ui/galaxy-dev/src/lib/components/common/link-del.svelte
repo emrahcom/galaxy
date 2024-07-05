@@ -1,6 +1,13 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { activateTooltips } from "$lib/common";
+
   export let href: string;
   export let title = "Delete";
+
+  onMount(() => {
+    activateTooltips();
+  });
 </script>
 
 <!-- -------------------------------------------------------------------------->
