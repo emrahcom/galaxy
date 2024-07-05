@@ -11,6 +11,12 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<a {href} class="btn btn-outline-dark btn-sm mx-2" role="button">
+<a
+  {href}
+  class="btn btn-outline-dark btn-sm"
+  role="button"
+  data-bs-toggle="tooltip"
+  data-bs-title={title}
+>
   <i class="bi bi-plus" />
 </a>
