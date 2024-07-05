@@ -24,6 +24,7 @@
 <Subheader
   subheader="Partners of {domainName}"
   hrefAdd="/pri/domain/partner/candidate/add/{domainId}"
+  hrefAddTitle="Add a new partner"
   hrefBack="/pri/domain"
 />
 
