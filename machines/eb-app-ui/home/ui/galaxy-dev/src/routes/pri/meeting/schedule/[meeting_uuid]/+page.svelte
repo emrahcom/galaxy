@@ -25,6 +25,7 @@
 <Subheader
   subheader="Schedules of {meetingName}"
   hrefAdd="/pri/meeting/schedule/add/{meetingId}"
+  hrefAddTitle="Add a new meeting schedule"
   hrefBack="/pri/meeting"
 />
 
