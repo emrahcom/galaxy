@@ -63,6 +63,8 @@
       {#if hrefPrevious}
         <button
           class="btn btn-outline-secondary ms-3 me-auto"
+          data-bs-toggle="tooltip"
+          data-bs-title="Previous"
           on:click={() => {
             window.location.href = hrefPrevious;
           }}
@@ -74,6 +76,8 @@
       {#if hrefNext}
         <button
           class="btn btn-outline-secondary"
+          data-bs-toggle="tooltip"
+          data-bs-title="Next"
           on:click={() => {
             window.location.href = hrefNext;
           }}
