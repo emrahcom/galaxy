@@ -24,6 +24,7 @@
 <Subheader
   subheader="Partners of {roomName}"
   hrefAdd="/pri/room/partner/candidate/add/{roomId}"
+  hrefAddTitle="Add a new partner"
   hrefBack="/pri/room"
 />
 
