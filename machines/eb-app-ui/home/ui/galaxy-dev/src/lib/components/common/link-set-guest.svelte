@@ -1,23 +1,11 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { activateTooltips } from "$lib/common";
+  import LinkButton from "$lib/components/common/link-button-template.svelte";
 
   export let href: string;
-  export let title = "Set as guest";
+  export let title = "Set member level to guest";
 
-  onMount(() => {
-    activateTooltips();
-  });
+  const icon = "bi-person-down";
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<button
-  class="btn btn-outline-dark btn-sm"
-  data-bs-toggle="tooltip"
-  data-bs-title={title}
-  on:click={() => {
-    window.location.href = href;
-  }}
->
-  G
-</button>
+<LinkButton {href} {icon} {title} />
