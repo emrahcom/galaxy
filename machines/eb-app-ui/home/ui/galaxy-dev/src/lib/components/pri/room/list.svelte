@@ -43,17 +43,29 @@
               {/if}
 
               <Update href="/pri/room/update/{p.id}" />
-              <Invite href="/pri/room/invite/{p.id}" />
-              <People href="/pri/room/partner/{p.id}" />
+              <Invite
+                href="/pri/room/invite/{p.id}"
+                title="Show keys (partnership links)"
+              />
+              <People
+                href="/pri/room/partner/{p.id}"
+                title="Show room partners"
+              />
 
               {#if p.chain_enabled}
-                <Join href="/pri/room/join/{p.id}" />
+                <Join
+                  href="/pri/room/join/{p.id}"
+                  title="Join meeting room"
+                />
               {/if}
             {:else if p.ownership === "partner"}
               <Del href="/pri/room/partnership/del/{p.partnership_id}" />
 
               {#if p.enabled && p.chain_enabled}
-                <Join href="/pri/room/join/{p.id}" />
+                <Join
+                  href="/pri/room/join/{p.id}"
+                  title="Join meeting room"
+                />
               {/if}
             {/if}
           </div>
@@ -78,10 +90,16 @@
 
           <div class="card-footer bg-body border-0 text-center">
             {#if c.status == "pending"}
-              <Disable href="/pri/room/partner/candidacy/reject/{c.id}" />
+              <Disable
+                href="/pri/room/partner/candidacy/reject/{c.id}"
+                title="Reject partnership"
+              />
             {/if}
 
-            <Enable href="/pri/room/partner/candidacy/accept/{c.id}" />
+            <Enable
+              href="/pri/room/partner/candidacy/accept/{c.id}"
+              title="Accept partnership"
+            />
           </div>
         </div>
       </div>
