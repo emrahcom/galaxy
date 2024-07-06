@@ -2,7 +2,7 @@
   import LinkButton from "$lib/components/common/link-button-template.svelte";
 
   export let href: string;
-  export let title = "Partners";
+  export let title = "Show partners";
 
   const icon = "bi-people";
 </script>
