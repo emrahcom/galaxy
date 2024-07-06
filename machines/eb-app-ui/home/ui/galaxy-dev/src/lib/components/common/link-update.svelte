@@ -11,12 +11,13 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<a
-  {href}
+<button
   class="btn btn-outline-dark btn-sm"
-  role="button"
   data-bs-toggle="tooltip"
   data-bs-title={title}
+  on:click={() => {
+    window.location.href = href;
+  }}
 >
   <i class="bi bi-pencil" />
-</a>
+</button>
