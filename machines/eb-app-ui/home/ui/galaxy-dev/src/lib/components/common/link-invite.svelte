@@ -1,23 +1,11 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { activateTooltips } from "$lib/common";
+  import LinkButton from "$lib/components/common/link-button-template.svelte";
 
   export let href: string;
   export let title = "Keys";
 
-  onMount(() => {
-    activateTooltips();
-  });
+  const icon = "bi-key";
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<button
-  class="btn btn-outline-dark btn-sm"
-  data-bs-toggle="tooltip"
-  data-bs-title={title}
-  on:click={() => {
-    window.location.href = href;
-  }}
->
-  <i class="bi bi-key" />
-</button>
+<LinkButton {href} {icon} {title} />
