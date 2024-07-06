@@ -38,8 +38,14 @@
               {/if}
 
               <Update href="/pri/domain/update/{p.id}" />
-              <Invite href="/pri/domain/invite/{p.id}" />
-              <People href="/pri/domain/partner/{p.id}" />
+              <Invite
+                href="/pri/domain/invite/{p.id}"
+                title="Show keys (partnership links)"
+              />
+              <People
+                href="/pri/domain/partner/{p.id}"
+                title="Show domain partners"
+              />
             {:else if p.ownership === "partner"}
               <Del href="/pri/domain/partnership/del/{p.partnership_id}" />
             {/if}
@@ -65,10 +71,16 @@
 
           <div class="card-footer bg-body border-0 text-center">
             {#if c.status == "pending"}
-              <Disable href="/pri/domain/partner/candidacy/reject/{c.id}" />
+              <Disable
+                href="/pri/domain/partner/candidacy/reject/{c.id}"
+                title="Reject partnership"
+              />
             {/if}
 
-            <Enable href="/pri/domain/partner/candidacy/accept/{c.id}" />
+            <Enable
+              href="/pri/domain/partner/candidacy/accept/{c.id}"
+              title="Accept partnership"
+            />
           </div>
         </div>
       </div>
