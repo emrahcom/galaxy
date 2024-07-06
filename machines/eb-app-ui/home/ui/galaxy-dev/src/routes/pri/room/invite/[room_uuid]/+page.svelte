@@ -19,7 +19,7 @@
 <Subheader
   subheader="Partner keys of {roomName}"
   hrefAdd="/pri/room/invite/add/{roomId}"
-  hrefAddTitle="Add a new partner key"
+  hrefAddTitle="Add a new partner key (partnership link)"
   hrefBack="/pri/room"
 />
 
