@@ -3,7 +3,7 @@
   import { activateTooltips } from "$lib/common";
 
   export let href: string;
-  export let icon = "bi-question"
+  export let icon = "bi-question";
   export let title = "?";
 
   onMount(() => {
