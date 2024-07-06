@@ -30,7 +30,7 @@
 <Subheader
   subheader="Members of {meetingName}"
   hrefAdd="/pri/meeting/member/candidate/add/{meetingId}"
-  hrefAddTitle="Add a new meeting member"
+  hrefAddTitle="Add a new member"
   hrefBack="/pri/meeting"
 />
 
