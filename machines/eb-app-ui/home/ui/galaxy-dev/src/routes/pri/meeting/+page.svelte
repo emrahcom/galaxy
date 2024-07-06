@@ -14,6 +14,7 @@
   hrefAdd="/pri/meeting/add"
   hrefAddTitle="Add a new meeting"
   hrefCalendar="/pri/calendar/month"
+  hrefCalendarTitle="Show calendar"
 />
 
 {#await Promise.all([pr1, pr2]) then [meetings, candidacies]}
