@@ -2,7 +2,7 @@
   import LinkButton from "$lib/components/common/link-button-template.svelte";
 
   export let href: string;
-  export let title = "Set default profile";
+  export let title = "Set as default profile";
 
   const icon = "bi-person-check";
 </script>
