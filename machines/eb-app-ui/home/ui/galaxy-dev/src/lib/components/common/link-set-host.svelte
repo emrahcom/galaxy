@@ -4,7 +4,7 @@
   export let href: string;
   export let title = "Set member level to host";
 
-  const icon = "bi-person-up";
+  const icon = "bi-arrow-bar-up";
 </script>
 
 <!-- -------------------------------------------------------------------------->
