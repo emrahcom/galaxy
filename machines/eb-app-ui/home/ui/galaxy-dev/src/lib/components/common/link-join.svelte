@@ -1,23 +1,11 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { activateTooltips } from "$lib/common";
+  import LinkButton from "$lib/components/common/link-button-template.svelte";
 
   export let href: string;
   export let title = "Join";
 
-  onMount(() => {
-    activateTooltips();
-  });
+  const icon = "bi-link-45deg";
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<button
-  class="btn btn-outline-dark btn-sm"
-  data-bs-toggle="tooltip"
-  data-bs-title={title}
-  on:click={() => {
-    window.location.href = href;
-  }}
->
-  <i class="bi bi-link-45deg" />
-</button>
+<LinkButton {href} {icon} {title} />
