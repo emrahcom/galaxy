@@ -25,7 +25,7 @@
 <Subheader
   subheader="Participant keys of {meetingName}"
   hrefAdd="/pri/meeting/invite/add/{meetingId}"
-  hrefAddTitle="Add a new participant key"
+  hrefAddTitle="Add a new participant key (invite link)"
   hrefBack="/pri/meeting"
 />
 
