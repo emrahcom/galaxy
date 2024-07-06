@@ -42,9 +42,9 @@
   hrefMeeting="/pri/meeting"
   hrefMeetingTitle="Edit meetings"
   hrefNext="/pri/calendar/month/{dayOfNextMonth}"
-  hrefNextTitle="Next month"
+  hrefNextTitle="Show next month"
   hrefPrevious="/pri/calendar/month/{dayOfPreviousMonth}"
-  hrefPreviousTitle="Previous month"
+  hrefPreviousTitle="Show previous month"
 />
 
 {#await pr then calendar}
