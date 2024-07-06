@@ -98,10 +98,16 @@
               {/if}
 
               <Update href="/pri/meeting/update/{p.id}" />
-              <Invite href="/pri/meeting/invite/{p.id}" />
+              <Invite
+                href="/pri/meeting/invite/{p.id}"
+                title="Show keys (membership links)"
+              />
 
               {#if p.schedule_type !== "ephemeral"}
-                <People href="/pri/meeting/member/{p.id}" />
+                <People
+                  href="/pri/meeting/member/{p.id}"
+                  title="Show members"
+                />
               {/if}
 
               {#if p.schedule_type === "scheduled"}
@@ -110,9 +116,15 @@
 
               {#if p.chain_enabled}
                 {#if p.schedule_type === "scheduled"}
-                  <Join href="/pri/owner/waiting/{p.id}" />
+                  <Join
+                    href="/pri/owner/waiting/{p.id}"
+                    title="Join the meeting"
+                  />
                 {:else}
-                  <Join href="/pri/owner/join/{p.id}" />
+                  <Join
+                    href="/pri/owner/join/{p.id}"
+                    title="Join the meeting"
+                  />
                 {/if}
               {/if}
             {:else if p.ownership === "member"}
@@ -121,9 +133,15 @@
 
               {#if p.enabled && p.chain_enabled}
                 {#if p.schedule_type === "scheduled"}
-                  <Join href="/pri/member/waiting/{p.membership_id}" />
+                  <Join
+                    href="/pri/member/waiting/{p.membership_id}"
+                    title="Join the meeting"
+                  />
                 {:else}
-                  <Join href="/pri/member/join/{p.membership_id}" />
+                  <Join
+                    href="/pri/member/join/{p.membership_id}"
+                    title="Join the meeting"
+                  />
                 {/if}
               {/if}
             {/if}
@@ -187,10 +205,16 @@
 
           <div class="card-footer bg-body border-0 text-center">
             {#if c.status == "pending"}
-              <Disable href="/pri/meeting/member/candidacy/reject/{c.id}" />
+              <Disable
+                href="/pri/meeting/member/candidacy/reject/{c.id}"
+                title="Reject membership"
+              />
             {/if}
 
-            <Enable href="/pri/meeting/member/candidacy/accept/{c.id}" />
+            <Enable
+              href="/pri/meeting/member/candidacy/accept/{c.id}"
+              title="Accept membership"
+            />
           </div>
         </div>
       </div>
