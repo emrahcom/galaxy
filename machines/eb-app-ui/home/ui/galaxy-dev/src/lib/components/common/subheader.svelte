@@ -17,7 +17,8 @@
   export let subheader = "";
 
   onMount(() => {
-    activateTooltips();
+    // unremovable tooltip's title issue if there is no delay
+    setTimeout(activateTooltips, 200);
   });
 </script>
 

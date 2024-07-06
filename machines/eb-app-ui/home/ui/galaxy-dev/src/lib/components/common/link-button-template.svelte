@@ -7,7 +7,7 @@
   export let title = "?";
 
   onMount(() => {
-    activateTooltips();
+    setTimeout(activateTooltips, 200);
   });
 </script>
 
