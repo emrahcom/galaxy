@@ -4,7 +4,7 @@
   export let href: string;
   export let title = "Set member level to guest";
 
-  const icon = "bi-person-down";
+  const icon = "bi-arrow-bar-down";
 </script>
 
 <!-- -------------------------------------------------------------------------->
