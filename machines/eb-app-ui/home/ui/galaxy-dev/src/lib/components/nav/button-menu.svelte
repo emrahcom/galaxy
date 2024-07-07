@@ -37,7 +37,14 @@
   <div class="offcanvas-body">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="/pri/calendar" on:click={closeMenu}>
+        <a
+          class="nav-link"
+          href="/pri/calendar"
+          on:click|preventDefault={() => {
+            closeMenu();
+            window.location.href = "/pri/calendar";
+          }}
+        >
           Calendar
         </a>
       </li>
