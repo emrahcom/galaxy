@@ -49,23 +49,62 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pri/meeting" on:click={closeMenu}>
+        <a
+          class="nav-link"
+          href="/pri/meeting"
+          on:click|preventDefault={() => {
+            closeMenu();
+            window.location.href = "/pri/meeting";
+          }}
+        >
           Meetings
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pri/room" on:click={closeMenu}>Rooms</a>
+        <a
+          class="nav-link"
+          href="/pri/room"
+          on:click|preventDefault={() => {
+            closeMenu();
+            window.location.href = "/pri/room";
+          }}
+        >
+          Rooms
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pri/domain" on:click={closeMenu}>Domains</a>
+        <a
+          class="nav-link"
+          href="/pri/domain"
+          on:click|preventDefault={() => {
+            closeMenu();
+            window.location.href = "/pri/domain";
+          }}
+        >
+          Domains
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pri/profile" on:click={closeMenu}>
+        <a
+          class="nav-link"
+          href="/pri/profile"
+          on:click|preventDefault={() => {
+            closeMenu();
+            window.location.href = "/pri/profile";
+          }}
+        >
           Profiles
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/pri/contact" on:click={closeMenu}>
+        <a
+          class="nav-link"
+          href="/pri/contact"
+          on:click|preventDefault={() => {
+            closeMenu();
+            window.location.href = "/pri/contact";
+          }}
+        >
           Contacts
         </a>
       </li>
