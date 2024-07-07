@@ -32,15 +32,7 @@
       {:else}
         <h4 class="text-muted small mb-5">
           If you don't have an account yet, please
-          <a
-            class="text-primary"
-            href="/id/registration"
-            on:click|preventDefault={() => {
-              window.location.href = "/id/registration";
-            }}
-          >
-            Sign Up
-          </a>
+          <a class="text-primary" href="/id/registration">Sign Up</a>
         </h4>
       {/if}
     </div>
