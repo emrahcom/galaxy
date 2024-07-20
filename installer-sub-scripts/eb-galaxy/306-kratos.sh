@@ -198,8 +198,8 @@ sed -i \
     -e "s~___BASE_DOMAIN___~$BASE_DOMAIN~" \
     -e "s~___DB_PASSWD___~$DB_KRATOS_PASSWD~" \
     -e "s~___KRATOS_TOTP_ISSUER___~$KRATOS_TOTP_ISSUER~" \
-    -e "s~___SMTP_CONNECTION_URI___~$SMTP_CONNECTION_URI~" \
-    -e "s~___SMTP_FROM_ADDRESS___~$SMTP_FROM_ADDRESS~" \
+    -e "s~___KRATOS_SMTP_CONNECTION_URI___~$KRATOS_SMTP_CONNECTION_URI~" \
+    -e "s~___KRATOS_SMTP_FROM_ADDRESS___~$KRATOS_SMTP_FROM_ADDRESS~" \
     $ROOTFS/home/kratos/config/*
 
 lxc-attach -n $MACH -- zsh <<EOS

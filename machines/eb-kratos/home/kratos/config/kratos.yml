@@ -144,5 +144,5 @@ identity:
 
 courier:
   smtp:
-    connection_uri: ___SMTP_CONNECTION_URI___
-    from_address: ___SMTP_FROM_ADDRESS___
+    connection_uri: ___KRATOS_SMTP_CONNECTION_URI___
+    from_address: ___KRATOS_SMTP_FROM_ADDRESS___

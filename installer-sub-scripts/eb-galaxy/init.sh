@@ -68,24 +68,24 @@ EOF
   fi
 fi
 
-if [[ -z "$SMTP_CONNECTION_URI" ]]; then
+if [[ -z "$KRATOS_SMTP_CONNECTION_URI" ]]; then
   cat <<EOF
-Error: SMTP_CONNECTION_URI not found
+Error: KRATOS_SMTP_CONNECTION_URI not found
 
-Please set SMTP_CONNECTION_URI before installation, e.g.
+Please set KRATOS_SMTP_CONNECTION_URI before installation, e.g.
 
-    export SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
+    export KRATOS_SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
 EOF
   false
 fi
 
-if [[ -z "$SMTP_FROM_ADDRESS" ]]; then
+if [[ -z "$KRATOS_SMTP_FROM_ADDRESS" ]]; then
   cat <<EOF
-Error: SMTP_FROM_ADDRESS not found
+Error: KRATOS_SMTP_FROM_ADDRESS not found
 
-Please set SMTP_FROM_ADDRESS before installation, e.g.
+Please set KRATOS_SMTP_FROM_ADDRESS before installation, e.g.
 
-    export SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
+    export KRATOS_SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
 EOF
   false
 fi

@@ -65,15 +65,16 @@ Run the following commands as `root`.
 _Update the value of `APP_FQDN` and `KRATOS_FQDN` according to your domain
 names._
 
-_Update the value of `SMTP_CONNECTION_URI` and `SMTP_FROM_ADDRESS` according to
-your email system._
+_Update the value of `KRATOS_SMTP_CONNECTION_URI` and `KRATOS_SMTP_FROM_ADDRESS`
+according to your email system._
 
-_`username` and `password` in `SMTP_CONNECTION_URI` should be URL encoded if
-there is special character in it. For example if SMTP's username is
+_`username` and `password` in `KRATOS_SMTP_CONNECTION_URI` should be URL encoded
+if there is special character in it. For example if SMTP's username is
 `noreply@mydomain.corp` then you should set it as
 `smtp://noreply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
 
-_For more details about `SMTP_CONNECTION_URI`, see SMTP configuration inside
+_For more details about `KRATOS_SMTP_CONNECTION_URI`, see SMTP configuration
+inside
 [Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration)._
 
 ```bash
@@ -82,8 +83,8 @@ wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.
 
 export APP_FQDN=app.galaxy.corp
 export KRATOS_FQDN=id.galaxy.corp
-export SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
-export SMTP_FROM_ADDRESS="noreply@mydomain.corp"
+export KRATOS_SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
+export KRATOS_SMTP_FROM_ADDRESS="noreply@mydomain.corp"
 bash eb eb-galaxy
 ```
 
