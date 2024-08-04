@@ -31,11 +31,11 @@
   }
 
   // ---------------------------------------------------------------------------
-  function join(m: MeetingSchedule222) {
+  function generateHref(m: MeetingSchedule222) {
     if (m.membership_id) {
-      window.location.href = `/pri/member/waiting/${m.membership_id}#${calendarDay}`;
+      return `/pri/member/waiting/${m.membership_id}#${calendarDay}`;
     } else {
-      window.location.href = `/pri/owner/waiting/${m.meeting_id}#${calendarDay}`;
+      return `/pri/owner/waiting/${m.meeting_id}#${calendarDay}`;
     }
   }
 </script>
@@ -45,14 +45,13 @@
   <div class="row mx-1">{month} {dayOfMonth}</div>
   <div class="d-grid">
     {#each meetings as m}
-      <button
-        type="button"
+      <a
         class="btn btn-sm btn-primary p-0 m-1 text-start text-nowrap overflow-x-hidden"
-        on:click={() => join(m)}
+        href={generateHref(m)}
       >
         {toLocaleTime(m.started_at)}
         {m.meeting_name}
-      </button>
+      </a>
     {/each}
   </div>
 </div>
