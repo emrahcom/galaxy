@@ -1,5 +1,5 @@
 <script lang="ts">
-  import LinkButton from "$lib/components/common/template-link-button.svelte";
+  import LinkButton from "$lib/components/common/template-link.svelte";
 
   export let href: string;
   export let title = "Join";
