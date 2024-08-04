@@ -12,6 +12,13 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
+<!--
+  There are href and window.location at the same time to prevent undeleted
+  tooltip issue. Otherwise the tooltip stays visible in the next page after the
+  click.
+
+  Href is required to allow the link to open in a new tab.
+-->
 <a
   class="btn btn-outline-dark btn-sm"
   data-bs-toggle="tooltip"
