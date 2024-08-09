@@ -1,4 +1,3 @@
-import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { DB_VERSION, HOSTNAME, PORT_PRIVATE } from "./config.ts";
 import {
   methodNotAllowed,
@@ -122,10 +121,10 @@ async function main() {
     Deno.exit(1);
   }
 
-  serve(handler, {
+  Deno.serve({
     hostname: HOSTNAME,
     port: PORT_PRIVATE,
-  });
+  }, handler);
 }
 
 // -----------------------------------------------------------------------------
