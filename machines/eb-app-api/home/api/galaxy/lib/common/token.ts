@@ -1,19 +1,6 @@
-import { create, getNumericDate, Payload } from "jsr:@zaubrik/djwt@3.0.2";
-
-// https://github.com/Zaubrik/djwt/blob/master/algorithm.ts
-type Algorithm =
-  | "HS256"
-  | "HS384"
-  | "HS512"
-  | "PS256"
-  | "PS384"
-  | "PS512"
-  | "RS256"
-  | "RS384"
-  | "RS512"
-  | "ES256"
-  | "ES384"
-  | "none";
+import { create, getNumericDate } from "jsr:@emrahcom/jwt";
+import type { Payload } from "jsr:@emrahcom/jwt";
+import type { Algorithm } from "jsr:@emrahcom/jwt/algorithm";
 
 // -----------------------------------------------------------------------------
 export async function generateCryptoKeyHS(
