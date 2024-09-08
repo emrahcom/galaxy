@@ -1,3 +1,4 @@
+import { decodeBase64Url } from "jsr:@std/encoding/base64url";
 import { create, getNumericDate } from "jsr:@emrahcom/jwt";
 import type { Payload } from "jsr:@emrahcom/jwt";
 import type { Algorithm } from "jsr:@emrahcom/jwt/algorithm";
@@ -126,16 +127,10 @@ async function generateCryptoKeyRS(
     pemHeader.length,
     privateKey.length - pemFooter.length,
   );
-  const binaryDerString = atob(pemContents);
-  const keyData = new ArrayBuffer(binaryDerString.length);
-  const bufView = new Uint8Array(keyData);
-  for (let i = 0; i < binaryDerString.length; i++) {
-    bufView[i] = binaryDerString.charCodeAt(i);
-  }
-
+  const binaryDer = decodeBase64Url(pemContents.trim());
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
-    keyData,
+    binaryDer,
     {
       name: "RSASSA-PKCS1-v1_5",
       hash: hash,
