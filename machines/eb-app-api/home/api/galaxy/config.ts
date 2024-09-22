@@ -9,7 +9,7 @@ export const KRATOS_FQDN = "___KRATOS_FQDN___";
 export const KRATOS_ORIGIN = "http://eb-kratos:4433";
 
 // postgres
-export const DB_VERSION = "20240309.01";
+export const DB_VERSION = "20240922.01";
 export const DB_NAME = "galaxy";
 export const DB_USER = "galaxy";
 export const DB_PASSWD = "___DB_PASSWD___";
