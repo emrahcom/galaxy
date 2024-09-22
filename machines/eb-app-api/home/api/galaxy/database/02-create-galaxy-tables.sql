@@ -31,7 +31,7 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20240309.01');
+INSERT INTO metadata VALUES ('database_version', '20240922.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
@@ -40,7 +40,8 @@ CREATE TABLE identity (
     "id" uuid NOT NULL PRIMARY KEY,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "seen_at" timestamp with time zone NOT NULL DEFAULT now()
 );
 ALTER TABLE identity OWNER TO galaxy;
 
