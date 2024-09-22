@@ -1,12 +1,12 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
-import { ping } from "../database/intercom.ts";
+import { updatePresence } from "../database/intercom.ts";
 
 const PRE = "/api/pri/intercom";
 
 // -----------------------------------------------------------------------------
 async function ping(_req: Request, identityId: string): Promise<unknown> {
-  return await ping(identityId);
+  return await updatePresence(identityId);
 }
 
 // -----------------------------------------------------------------------------

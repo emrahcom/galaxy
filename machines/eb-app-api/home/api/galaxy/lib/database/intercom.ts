@@ -2,7 +2,7 @@ import { fetch } from "./common.ts";
 import type { Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function ping(identityId: string) {
+export async function updatePresence(identityId: string) {
   const sql = {
     text: `
       UPDATE identity
