@@ -1,5 +1,4 @@
-import { getVersion } from "../database/common.ts";
-import { pool } from "../database/common.ts";
+import { getVersion, pool } from "../database/common.ts";
 
 // -----------------------------------------------------------------------------
 async function migrateTo2024092201(version: string) {
