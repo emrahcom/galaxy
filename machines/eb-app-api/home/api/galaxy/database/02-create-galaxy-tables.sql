@@ -504,4 +504,45 @@ CREATE INDEX ON meeting_session(meeting_schedule_id, ended_at);
 ALTER TABLE meeting_session OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- INTERCOM
+-- -----------------------------------------------------------------------------
+-- - This table is for internal communication between peers such as call,
+--   internal invitation, etc.
+--
+-- intercom_attr {
+--   url: string,           // meeting link for a random room or a specific room
+--                          // with a member token if needed
+--   code: string,          // invite code
+-- }
+-- -----------------------------------------------------------------------------
+CREATE TYPE intercom_message_type AS ENUM (
+    'call',
+    'invite_for_domain',
+    'invite_for_room',
+    'invite_for_meeting',
+    'request_for_meeting_membership'
+);
+CREATE TYPE intercom_status_type AS ENUM (
+    'none',
+    'seen',
+    'accepted',
+    'rejected'
+);
+CREATE TABLE intercom (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "remote_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "status" intercom_status_type NOT NULL DEFAULT 'none',
+    "message_type" intercom_message_type NOT NULL DEFAULT 'call',
+    "intercom_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+        DEFAULT now() + interval '10 seconds'
+);
+CREATE INDEX ON intercom("remote_id", "expired_at");
+CREATE INDEX ON intercom("expired_at");
+ALTER TABLE intercom OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 COMMIT;
