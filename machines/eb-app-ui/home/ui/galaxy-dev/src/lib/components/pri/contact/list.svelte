@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Contact } from "$lib/types";
+  import Call from "$lib/components/common/link-call.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Update from "$lib/components/common/link-update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
@@ -25,6 +26,7 @@
           <div class="card-footer bg-body border-0 text-center">
             <Del href="/pri/contact/del/{p.id}" />
             <Update href="/pri/contact/update/{p.id}" />
+            <Call href="/pri/contact/call/{p.id}" />
           </div>
         </div>
       </div>
