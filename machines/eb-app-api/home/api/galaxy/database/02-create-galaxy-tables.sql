@@ -515,18 +515,18 @@ ALTER TABLE meeting_session OWNER TO galaxy;
 --   code: string,          // invite code
 -- }
 -- -----------------------------------------------------------------------------
+CREATE TYPE intercom_status_type AS ENUM (
+    'none',
+    'seen',
+    'accepted',
+    'rejected'
+);
 CREATE TYPE intercom_message_type AS ENUM (
     'call',
     'invite_for_domain',
     'invite_for_room',
     'invite_for_meeting',
     'request_for_meeting_membership'
-);
-CREATE TYPE intercom_status_type AS ENUM (
-    'none',
-    'seen',
-    'accepted',
-    'rejected'
 );
 CREATE TABLE intercom (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
