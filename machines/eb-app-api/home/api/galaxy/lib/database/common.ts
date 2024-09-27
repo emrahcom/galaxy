@@ -33,9 +33,7 @@ export const pool = new Pool(
 );
 
 // -----------------------------------------------------------------------------
-export async function query(
-  sql: QueryObject,
-): Promise<QueryObjectResult> {
+export async function query(sql: QueryObject): Promise<QueryObjectResult> {
   using client = await pool.connect();
   const rst = await client.queryObject(sql);
 
