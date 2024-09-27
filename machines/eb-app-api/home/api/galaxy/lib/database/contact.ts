@@ -167,15 +167,13 @@ export async function callContact(
   contactId: string,
   domainId: string,
 ) {
-  using client = await pool.connect();
-  const trans = client.createTransaction("transaction");
-  await trans.begin();
-
+  // validate domain and its accessibility
   const sql0 = {
     text: `
-      SELECT id
+      SELECT id, auth_type, domain_attr
       FROM domain d
       WHERE id = $2
+        AND enabled = true
         AND (identity_id = $1
              OR public
              OR EXISTS (SELECT 1
@@ -189,15 +187,25 @@ export async function callContact(
       domainId,
     ],
   };
-  const { rows: domains } = await trans.queryObject(sql0);
+  const domains = await fetch(sql0);
   if (!domains[0]) throw new Error("domain is not available");
 
-  console.log(contactId);
+  // validate contact
+  const sql1 = {
+    text: `
+      SELECT remote_id
+      FROM contact d
+      WHERE id = $2
+        AND identity_id = $1`,
+    args: [
+      identityId,
+      contactId,
+    ],
+  };
+  const contacts = await fetch(sql1);
+  if (!contacts[0]) throw new Error("contact is not available");
 
-  await trans.commit();
-
-  //return rows as Id[];
-  return domains;
+  return contacts;
 }
 
 // -----------------------------------------------------------------------------
