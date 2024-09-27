@@ -21,7 +21,7 @@
       .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
     if (enableds[0]) domain_id = enableds[0].id;
 
-    return enableds.map((i) => [i.id, i.name]);
+    return items.filter((i) => i.enabled).map((i) => [i.id, i.name]);
   });
 
   // ---------------------------------------------------------------------------
