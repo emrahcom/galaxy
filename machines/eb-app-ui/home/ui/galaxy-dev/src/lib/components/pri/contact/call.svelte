@@ -13,13 +13,13 @@
   export let p: Contact;
 
   let warning = false;
-  let domain_id = "";
+  let domainId = "";
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
     const enableds = items
       .filter((i) => i.enabled)
       .sort((i, j) => (i.updated_at > j.updated_at ? -1 : 1));
-    if (enableds[0]) domain_id = enableds[0].id;
+    if (enableds[0]) domainId = enableds[0].id;
 
     return items.filter((i) => i.enabled).map((i) => [i.id, i.name]);
   });
@@ -35,7 +35,7 @@
       warning = false;
       const data = {
         contact_id: p.id,
-        domain_id: domain_id,
+        domain_id: domainId,
       };
       await action("/api/pri/contact/call", data);
     } catch {
@@ -73,7 +73,7 @@
         <Select
           id="domain_id"
           label="Jitsi Domain"
-          bind:value={domain_id}
+          bind:value={domainId}
           options={domains}
         />
 
