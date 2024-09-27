@@ -523,6 +523,7 @@ CREATE TYPE intercom_status_type AS ENUM (
 );
 CREATE TYPE intercom_message_type AS ENUM (
     'call',
+    'alarm_for_meeting',
     'invite_for_domain',
     'invite_for_room',
     'invite_for_meeting',
