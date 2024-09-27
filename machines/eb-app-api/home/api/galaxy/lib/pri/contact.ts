@@ -73,7 +73,7 @@ async function listByMeeting(
 // -----------------------------------------------------------------------------
 async function call(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
-  const contactId = pl.id;
+  const contactId = pl.contact_id;
   const domainId = pl.domain_id;
 
   return await callContact(identityId, contactId, domainId);
