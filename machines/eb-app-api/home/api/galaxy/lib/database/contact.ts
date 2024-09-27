@@ -165,19 +165,39 @@ export async function listContactByMeeting(
 export async function callContact(
   identityId: string,
   contactId: string,
-  domaintId: string,
+  domainId: string,
 ) {
-  //using client = await pool.connect();
-  //const trans = client.createTransaction("transaction");
-  //await trans.begin();
+  using client = await pool.connect();
+  const trans = client.createTransaction("transaction");
+  await trans.begin();
 
-  //await trans.commit();
+  const sql0 = {
+    text: `
+      SELECT id
+      FROM domain d
+      WHERE id = $2
+        AND (identity_id = $1
+             OR public
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = $1
+                          AND domain_id = d.id
+                       )
+            )`,
+    args: [
+      identityId,
+      domainId,
+    ],
+  };
+  const { rows: domains } = await trans.queryObject(sql0);
+  if (!domains[0]) throw new Error("domain is not available");
+
+  console.log(contactId);
+
+  await trans.commit();
 
   //return rows as Id[];
-  await console.log(identityId);
-  await console.log(contactId);
-  await console.log(domaintId);
-  return [];
+  return domains;
 }
 
 // -----------------------------------------------------------------------------
