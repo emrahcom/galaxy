@@ -2,6 +2,7 @@ import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
+  callContact,
   delContact,
   getContact,
   listContact,
@@ -70,6 +71,15 @@ async function listByMeeting(
 }
 
 // -----------------------------------------------------------------------------
+async function call(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const contactId = pl.id;
+  const domainId = pl.id;
+
+  return await callContact(identityId, contactId, domainId);
+}
+
+// -----------------------------------------------------------------------------
 async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const contactId = pl.id;
@@ -102,6 +112,8 @@ export default async function (
     return await wrapper(listByRoom, req, identityId);
   } else if (path === `${PRE}/list/bymeeting`) {
     return await wrapper(listByMeeting, req, identityId);
+  } else if (path === `${PRE}/call`) {
+    return await wrapper(call, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {

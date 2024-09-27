@@ -34,7 +34,7 @@
     try {
       warning = false;
       const data = {
-        remote_id: p.id,
+        contact_id: p.id,
         domain_id: domain_id,
       };
       await action("/api/pri/contact/call", data);

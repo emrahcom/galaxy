@@ -162,6 +162,25 @@ export async function listContactByMeeting(
 }
 
 // -----------------------------------------------------------------------------
+export async function callContact(
+  identityId: string,
+  contactId: string,
+  domaintId: string,
+) {
+  //using client = await pool.connect();
+  //const trans = client.createTransaction("transaction");
+  //await trans.begin();
+
+  //await trans.commit();
+
+  //return rows as Id[];
+  await console.log(identityId);
+  await console.log(contactId);
+  await console.log(domaintId);
+  return [];
+}
+
+// -----------------------------------------------------------------------------
 export async function delContact(identityId: string, contactId: string) {
   using client = await pool.connect();
   const trans = client.createTransaction("transaction");
