@@ -35,21 +35,21 @@ export const pool = new Pool(
 // -----------------------------------------------------------------------------
 export async function query(
   sql: QueryObject,
-): Promise<QueryObjectResult<unknown>> {
+): Promise<QueryObjectResult> {
   using client = await pool.connect();
   const rst = await client.queryObject(sql);
 
-  return rst;
+  return rst as QueryObjectResult;
 }
 
 // -----------------------------------------------------------------------------
-export async function fetch(sql: QueryObject): Promise<unknown> {
+export async function fetch(sql: QueryObject): Promise<object[]> {
   const rows = await query(sql)
     .then((rst) => {
       return rst.rows;
     });
 
-  return rows;
+  return rows as object[];
 }
 
 // -----------------------------------------------------------------------------
