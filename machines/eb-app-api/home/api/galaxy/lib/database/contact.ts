@@ -168,7 +168,7 @@ export async function callContact(
   contactId: string,
   domainId: string,
 ) {
-  // validate domain and its accessibility
+  // check the existence of the domain and its accessibility
   const sql0 = {
     text: `
       SELECT id, auth_type, domain_attr
@@ -189,9 +189,10 @@ export async function callContact(
     ],
   };
   const domains = await fetch(sql0) as Partial<Domain>[];
-  if (!domains[0]) throw new Error("domain is not available");
+  const domain = domains[0];
+  if (!domain) throw new Error("domain is not available");
 
-  // validate contact
+  // check the existence of the contact and its accessibility
   const sql1 = {
     text: `
       SELECT remote_id as id
@@ -208,22 +209,24 @@ export async function callContact(
   if (!contact) throw new Error("contact is not available");
   const remoteId = contact.id;
 
-  // generate hashes using postgres functions
+  // generate the hashes of the call room using postgres functions
   const sql2 = {
     text: `
-      SELECT 'call-' || md5(gen_random_uuid()::text) as name,
+      SELECT
+        'call-' || md5(gen_random_uuid()::text) as name,
         md5(gen_random_uuid()::text) as suffix`,
   };
   const rooms = await fetch(sql2) as Partial<RoomLinkset>[];
-  if (!rooms[0]) throw new Error("error generating hashes");
+  const room = rooms[0];
+  if (!room) throw new Error("error generating the room hashes");
 
   // the call room linkset
   const roomLinkset = {
-    name: rooms[0].name,
+    name: room.name,
     has_suffix: true,
-    suffix: rooms[0].suffix,
-    auth_type: domains[0].auth_type,
-    domain_attr: domains[0].domain_attr,
+    suffix: room.suffix,
+    auth_type: domain.auth_type,
+    domain_attr: domain.domain_attr,
   } as RoomLinkset;
 
   // get the meeting link for caller
