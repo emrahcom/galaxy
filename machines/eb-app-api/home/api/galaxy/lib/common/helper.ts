@@ -5,6 +5,7 @@ import {
   generateHostTokenJaas,
 } from "./token.ts";
 import type {
+  Affiliation,
   MeetingLinkset,
   Profile,
   RoomLinkset,
@@ -14,6 +15,7 @@ import type {
 async function generateRoomUrlJaas(
   linkset: RoomLinkset,
   profile: Profile,
+  affiliation = "host" as Affiliation,
   exp = 3600,
 ): Promise<string> {
   const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
@@ -23,7 +25,24 @@ async function generateRoomUrlJaas(
   if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
   url = `${url}/${sub}/${roomName}`;
 
-  const jwt = await generateHostTokenJaas(
+  if (affiliation === "host") {
+    const jwt = await generateHostTokenJaas(
+      linkset.domain_attr.jaas_app_id,
+      linkset.domain_attr.jaas_kid,
+      linkset.domain_attr.jaas_key,
+      linkset.domain_attr.jaas_alg,
+      linkset.domain_attr.jaas_aud,
+      linkset.domain_attr.jaas_iss,
+      roomName,
+      profile.name,
+      profile.email,
+      exp,
+    );
+
+    return `${url}?jwt=${jwt}`;
+  }
+
+  const jwt = await generateGuestTokenJaas(
     linkset.domain_attr.jaas_app_id,
     linkset.domain_attr.jaas_kid,
     linkset.domain_attr.jaas_key,
@@ -43,6 +62,7 @@ async function generateRoomUrlJaas(
 async function generateRoomUrlToken(
   linkset: RoomLinkset,
   profile: Profile,
+  affiliation = "host" as Affiliation,
   exp = 3600,
 ): Promise<string> {
   let url = encodeURI(linkset.domain_attr.url);
@@ -51,7 +71,21 @@ async function generateRoomUrlToken(
   if (linkset.has_suffix) roomName = `${roomName}-${linkset.suffix}`;
   url = `${url}/${roomName}`;
 
-  const jwt = await generateHostTokenHS(
+  if (affiliation === "host") {
+    const jwt = await generateHostTokenHS(
+      linkset.domain_attr.app_id,
+      linkset.domain_attr.app_secret,
+      linkset.domain_attr.app_alg,
+      roomName,
+      profile.name,
+      profile.email,
+      exp,
+    );
+
+    return `${url}?jwt=${jwt}`;
+  }
+
+  const jwt = await generateGuestTokenHS(
     linkset.domain_attr.app_id,
     linkset.domain_attr.app_secret,
     linkset.domain_attr.app_alg,
@@ -68,6 +102,7 @@ async function generateRoomUrlToken(
 export async function generateRoomUrl(
   linkset: RoomLinkset,
   profile: Profile,
+  affiliation = "host" as Affiliation,
   exp = 3600,
 ): Promise<string> {
   let url: string;
@@ -76,9 +111,9 @@ export async function generateRoomUrl(
   if (!profile.email) profile.email = "";
 
   if (linkset.auth_type === "jaas") {
-    url = await generateRoomUrlJaas(linkset, profile, exp);
+    url = await generateRoomUrlJaas(linkset, profile, affiliation, exp);
   } else if (linkset.auth_type === "token") {
-    url = await generateRoomUrlToken(linkset, profile, exp);
+    url = await generateRoomUrlToken(linkset, profile, affiliation, exp);
   } else {
     let roomName = encodeURIComponent(linkset.name);
 
