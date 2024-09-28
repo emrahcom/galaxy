@@ -1,5 +1,6 @@
 import { fetch, pool } from "./common.ts";
-import type { Contact, Id } from "./types.ts";
+import { getRoomUrl } from "./room.ts";
+import type { Contact, Domain, Id, RoomLinkset } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getContact(identityId: string, contactId: string) {
@@ -187,13 +188,13 @@ export async function callContact(
       domainId,
     ],
   };
-  const domains = await fetch(sql0);
+  const domains = await fetch(sql0) as Partial<Domain>[];
   if (!domains[0]) throw new Error("domain is not available");
 
   // validate contact
   const sql1 = {
     text: `
-      SELECT remote_id
+      SELECT remote_id as id
       FROM contact d
       WHERE id = $2
         AND identity_id = $1`,
@@ -202,8 +203,38 @@ export async function callContact(
       contactId,
     ],
   };
-  const contacts = await fetch(sql1);
-  if (!contacts[0]) throw new Error("contact is not available");
+  const contacts = await fetch(sql1) as Id[];
+  const contact = contacts[0];
+  if (!contact) throw new Error("contact is not available");
+  const remoteId = contact.id;
+
+  // generate hashes using postgres functions
+  const sql2 = {
+    text: `
+      SELECT 'call-' || md5(gen_random_uuid()::text) as name,
+        md5(gen_random_uuid()::text) as suffix`,
+  };
+  const rooms = await fetch(sql2) as Partial<RoomLinkset>[];
+  if (!rooms[0]) throw new Error("error generating hashes");
+
+  // the call room linkset
+  const roomLinkset = {
+    name: rooms[0].name,
+    has_suffix: true,
+    suffix: rooms[0].suffix,
+    auth_type: domains[0].auth_type,
+    domain_attr: domains[0].domain_attr,
+  } as RoomLinkset;
+
+  // get the meeting link for caller
+  const callerUrl = getRoomUrl(identityId, roomLinkset);
+  // get the meeting link for callee
+  const calleeUrl = getRoomUrl(remoteId, roomLinkset);
+
+  console.log(callerUrl);
+  console.log(calleeUrl);
+
+  // create the intercom message to start the call
 
   return contacts;
 }

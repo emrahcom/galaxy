@@ -1,5 +1,7 @@
 import { fetch } from "./common.ts";
-import type { Id, Room, Room333, RoomLinkset } from "./types.ts";
+import { generateRoomUrl } from "../common/helper.ts";
+import { getDefaultProfile } from "./profile.ts";
+import type { Id, Profile, Room, Room333, RoomLinkset } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getRoom(identityId: string, roomId: string) {
@@ -85,6 +87,15 @@ export async function getRoomLinkset(identityId: string, roomId: string) {
   };
 
   return await fetch(sql) as RoomLinkset[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getRoomUrl(identityId: string, roomLinkset: RoomLinkset) {
+  const profiles = await getDefaultProfile(identityId) as Profile[];
+  const profile = profiles[0];
+  if (!profile) throw new Error("profile is not available");
+
+  return await generateRoomUrl(roomLinkset, profile);
 }
 
 // -----------------------------------------------------------------------------
