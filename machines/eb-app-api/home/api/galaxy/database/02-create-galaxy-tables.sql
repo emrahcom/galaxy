@@ -31,7 +31,7 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20240922.01');
+INSERT INTO metadata VALUES ('database_version', '20240928.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
