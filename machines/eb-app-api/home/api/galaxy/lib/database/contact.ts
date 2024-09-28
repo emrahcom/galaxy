@@ -227,9 +227,9 @@ export async function callContact(
   } as RoomLinkset;
 
   // get the meeting link for caller
-  const callerUrl = await getRoomUrl(identityId, roomLinkset);
+  const callerUrl = await getRoomUrl(identityId, roomLinkset, "host");
   // get the meeting link for callee
-  const calleeUrl = await getRoomUrl(remoteId, roomLinkset);
+  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest");
 
   console.log(callerUrl);
   console.log(calleeUrl);
