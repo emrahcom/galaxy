@@ -5,6 +5,7 @@ import type {
   Affiliation,
   Id,
   Profile,
+  RandomRoomName,
   Room,
   Room333,
   RoomLinkset,
@@ -94,6 +95,18 @@ export async function getRoomLinkset(identityId: string, roomId: string) {
   };
 
   return await fetch(sql) as RoomLinkset[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getRandomRoomName(prefix: string) {
+  const sql = {
+    text: `
+      SELECT
+        '${prefix}' || md5(gen_random_uuid()::text) as name,
+        md5(gen_random_uuid()::text) as suffix`,
+  };
+
+  return await fetch(sql) as RandomRoomName[];
 }
 
 // -----------------------------------------------------------------------------

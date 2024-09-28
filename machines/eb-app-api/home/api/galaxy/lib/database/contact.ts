@@ -1,6 +1,6 @@
 import { fetch, pool } from "./common.ts";
 import { getDomainIfAllowed } from "./domain.ts";
-import { getRoomUrl } from "./room.ts";
+import { getRandomRoomName, getRoomUrl } from "./room.ts";
 import type { Contact, Id, RoomLinkset } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -180,22 +180,16 @@ export async function callContact(
   if (!contact) throw new Error("contact is not available");
   const remoteId = contact.id;
 
-  // generate the hashes of the call room using postgres functions
-  const sql2 = {
-    text: `
-      SELECT
-        'call-' || md5(gen_random_uuid()::text) as name,
-        md5(gen_random_uuid()::text) as suffix`,
-  };
-  const rooms = await fetch(sql2) as Partial<RoomLinkset>[];
-  const room = rooms[0];
-  if (!room) throw new Error("error generating the room hashes");
+  // get the room (with a random name and suffix) for the call
+  const randomRooms = await getRandomRoomName("call-");
+  const randomRoom = randomRooms[0];
+  if (!randomRoom) throw new Error("no room for the call");
 
   // the call room linkset
   const roomLinkset = {
-    name: room.name,
+    name: randomRoom.name,
     has_suffix: true,
-    suffix: room.suffix,
+    suffix: randomRoom.suffix,
     auth_type: domain.auth_type,
     domain_attr: domain.domain_attr,
   } as RoomLinkset;

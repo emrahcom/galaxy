@@ -365,6 +365,12 @@ export interface Profile {
 }
 
 // -----------------------------------------------------------------------------
+export interface RandomRoomName {
+  name: string;
+  suffix: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Room {
   id: string;
   name: string;
