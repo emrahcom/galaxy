@@ -174,19 +174,8 @@ export async function callContact(
   const domain = domains[0];
   if (!domain) throw new Error("domain is not available");
 
-  // check the existence of the contact and its accessibility
-  const sql1 = {
-    text: `
-      SELECT remote_id as id
-      FROM contact d
-      WHERE id = $2
-        AND identity_id = $1`,
-    args: [
-      identityId,
-      contactId,
-    ],
-  };
-  const contacts = await fetch(sql1) as Id[];
+  // get the contact details
+  const contacts = await getContact(identityId, contactId);
   const contact = contacts[0];
   if (!contact) throw new Error("contact is not available");
   const remoteId = contact.id;
