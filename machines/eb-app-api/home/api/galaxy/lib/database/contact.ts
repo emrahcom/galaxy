@@ -1,6 +1,7 @@
 import { fetch, pool } from "./common.ts";
+import { getDomainIfAllowed } from "./domain.ts";
 import { getRoomUrl } from "./room.ts";
-import type { Contact, Domain, Id, RoomLinkset } from "./types.ts";
+import type { Contact, Id, RoomLinkset } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getContact(identityId: string, contactId: string) {
@@ -168,27 +169,8 @@ export async function callContact(
   contactId: string,
   domainId: string,
 ) {
-  // check the existence of the domain and its accessibility
-  const sql0 = {
-    text: `
-      SELECT id, auth_type, domain_attr
-      FROM domain d
-      WHERE id = $2
-        AND enabled = true
-        AND (identity_id = $1
-             OR public
-             OR EXISTS (SELECT 1
-                        FROM domain_partner
-                        WHERE identity_id = $1
-                          AND domain_id = d.id
-                       )
-            )`,
-    args: [
-      identityId,
-      domainId,
-    ],
-  };
-  const domains = await fetch(sql0) as Partial<Domain>[];
+  // get the domain if allowed.
+  const domains = await getDomainIfAllowed(identityId, domainId);
   const domain = domains[0];
   if (!domain) throw new Error("domain is not available");
 

@@ -2,6 +2,8 @@ import { checkAttr, fetch } from "./common.ts";
 import type { Attr, Domain, Domain333, Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
+// This function returns the domain if it belongs to identity.
+// -----------------------------------------------------------------------------
 export async function getDomain(identityId: string, domainId: string) {
   const sql = {
     text: `
@@ -9,6 +11,34 @@ export async function getDomain(identityId: string, domainId: string) {
       FROM domain
       WHERE id = $2
         AND identity_id = $1`,
+    args: [
+      identityId,
+      domainId,
+    ],
+  };
+
+  return await fetch(sql) as Domain[];
+}
+
+// -----------------------------------------------------------------------------
+// This function returns the domain if it is accessible by identity, even it
+// doesn't belong to it.
+// -----------------------------------------------------------------------------
+export async function getDomainIfAllowed(identityId: string, domainId: string) {
+  const sql = {
+    text: `
+      SELECT id, name, auth_type, domain_attr, enabled, created_at, updated_at
+      FROM domain d
+      WHERE id = $2
+        AND enabled = true
+        AND (identity_id = $1
+             OR public
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = $1
+                          AND domain_id = d.id
+                       )
+            )`,
     args: [
       identityId,
       domainId,
