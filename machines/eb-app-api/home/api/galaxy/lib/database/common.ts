@@ -15,7 +15,7 @@ import {
 } from "../../config.ts";
 import type { Attr, Meta } from "./types.ts";
 
-interface QueryObject {
+export interface QueryObject {
   text: string;
   args?: QueryArguments;
 }
