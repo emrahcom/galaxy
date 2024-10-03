@@ -28,6 +28,26 @@ export async function getContact(identityId: string, contactId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function getContactIdentity(
+  identityId: string,
+  contactId: string,
+) {
+  const sql = {
+    text: `
+      SELECT remote_id as Id, created_at
+      FROM contact
+      WHERE id = $2
+        AND identity_id = $1`,
+    args: [
+      identityId,
+      contactId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function listContact(
   identityId: string,
   limit: number,
@@ -178,8 +198,8 @@ export async function callContact(
   const domain = domains[0];
   if (!domain) throw new Error("domain is not available");
 
-  // get the contact details
-  const contacts = await getContact(identityId, contactId);
+  // get the contact identity
+  const contacts = await getContactIdentity(identityId, contactId);
   const contact = contacts[0];
   if (!contact) throw new Error("contact is not available");
   const remoteId = contact.id;
