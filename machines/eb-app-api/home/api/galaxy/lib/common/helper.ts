@@ -15,8 +15,8 @@ import type {
 async function generateRoomUrlJaas(
   linkset: RoomLinkset,
   profile: Profile,
-  affiliation = "host" as Affiliation,
-  exp = 3600,
+  affiliation: Affiliation,
+  exp: number,
 ): Promise<string> {
   const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
   let url = encodeURI(linkset.domain_attr.jaas_url);
@@ -62,8 +62,8 @@ async function generateRoomUrlJaas(
 async function generateRoomUrlToken(
   linkset: RoomLinkset,
   profile: Profile,
-  affiliation = "host" as Affiliation,
-  exp = 3600,
+  affiliation: Affiliation,
+  exp: number,
 ): Promise<string> {
   let url = encodeURI(linkset.domain_attr.url);
   let roomName = encodeURIComponent(linkset.name);
@@ -140,7 +140,7 @@ export async function generateRoomUrl(
 // -----------------------------------------------------------------------------
 async function generateMeetingUrlJaasHost(
   linkset: MeetingLinkset,
-  exp = 3600,
+  exp: number,
 ): Promise<string> {
   const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
   let url = encodeURI(linkset.domain_attr.jaas_url);
@@ -168,7 +168,7 @@ async function generateMeetingUrlJaasHost(
 // -----------------------------------------------------------------------------
 async function generateMeetingUrlJaasGuest(
   linkset: MeetingLinkset,
-  exp = 3600,
+  exp: number,
 ): Promise<string> {
   const sub = encodeURIComponent(linkset.domain_attr.jaas_app_id);
   let url = encodeURI(linkset.domain_attr.jaas_url);
@@ -196,7 +196,7 @@ async function generateMeetingUrlJaasGuest(
 // -----------------------------------------------------------------------------
 async function generateMeetingUrlTokenHost(
   linkset: MeetingLinkset,
-  exp = 3600,
+  exp: number,
 ): Promise<string> {
   let url = encodeURI(linkset.domain_attr.url);
   let roomName = encodeURIComponent(linkset.room_name);
@@ -220,7 +220,7 @@ async function generateMeetingUrlTokenHost(
 // -----------------------------------------------------------------------------
 async function generateMeetingUrlTokenGuest(
   linkset: MeetingLinkset,
-  exp = 3600,
+  exp: number,
 ): Promise<string> {
   let url = encodeURI(linkset.domain_attr.url);
   let roomName = encodeURIComponent(linkset.room_name);

@@ -185,7 +185,7 @@ export async function callContact(
   const randomRoom = randomRooms[0];
   if (!randomRoom) throw new Error("no room for the call");
 
-  // the call room linkset
+  // the linkset for the call room
   const roomLinkset = {
     name: randomRoom.name,
     has_suffix: true,
