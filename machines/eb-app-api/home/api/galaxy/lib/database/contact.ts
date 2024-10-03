@@ -2,7 +2,7 @@ import { fetch, pool } from "./common.ts";
 import { addCall } from "./intercom.ts";
 import { getDomainIfAllowed } from "./domain.ts";
 import { getRandomRoomName, getRoomUrl } from "./room.ts";
-import type { Contact, Id, RoomLinkset } from "./types.ts";
+import type { Contact, Id, IntercomCall, RoomLinkset } from "./types.ts";
 
 // expire second for the direct call URL (if it is a domain with token auth)
 const EXP = 3600;
@@ -206,15 +206,15 @@ export async function callContact(
     url: calleeUrl,
   };
 
-  // create the intercom message to start the call
+  // create the intercom message to initialize the call
   const calls = await addCall(identityId, remoteId, intercomAttr);
   const call = calls[0];
   if (!call) throw new Error("call cannot be created");
 
-  return {
+  return [{
     id: call.id,
     url: callerUrl,
-  };
+  }] as IntercomCall[];
 }
 
 // -----------------------------------------------------------------------------

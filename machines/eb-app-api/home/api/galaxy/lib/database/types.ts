@@ -128,6 +128,12 @@ export interface DomainPartnership {
 }
 
 // -----------------------------------------------------------------------------
+export interface IntercomCall {
+  id: string;
+  url: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Meeting {
   id: string;
   name: string;
