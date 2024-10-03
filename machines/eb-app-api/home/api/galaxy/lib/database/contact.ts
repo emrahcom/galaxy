@@ -3,6 +3,9 @@ import { getDomainIfAllowed } from "./domain.ts";
 import { getRandomRoomName, getRoomUrl } from "./room.ts";
 import type { Contact, Id, RoomLinkset } from "./types.ts";
 
+// expire seconds for direct calls
+const EXP = 3600;
+
 // -----------------------------------------------------------------------------
 export async function getContact(identityId: string, contactId: string) {
   const sql = {
@@ -195,9 +198,9 @@ export async function callContact(
   } as RoomLinkset;
 
   // get the meeting link for caller
-  const callerUrl = await getRoomUrl(identityId, roomLinkset, "host");
+  const callerUrl = await getRoomUrl(identityId, roomLinkset, "host", EXP);
   // get the meeting link for callee
-  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest");
+  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP);
 
   console.log(callerUrl);
   console.log(calleeUrl);

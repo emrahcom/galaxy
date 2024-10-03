@@ -113,8 +113,8 @@ export async function getRandomRoomName(prefix: string) {
 export async function getRoomUrl(
   identityId: string,
   roomLinkset: RoomLinkset,
-  affiliation = "host" as Affiliation,
-  exp = 3600,
+  affiliation: Affiliation,
+  exp: number,
 ) {
   const profiles = await getDefaultProfile(identityId) as Profile[];
   const profile = profiles[0];
