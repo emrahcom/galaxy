@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { action, list } from "$lib/api";
-  import type { Contact, Domain333 } from "$lib/types";
+  import type { Contact, Domain333, IntercomCall } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Email from "$lib/components/common/form-email.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -37,7 +37,8 @@
         contact_id: p.id,
         domain_id: domainId,
       };
-      await action("/api/pri/contact/call", data);
+      const call: IntercomCall = await action("/api/pri/contact/call", data);
+      console.error(call);
     } catch {
       warning = true;
     }
