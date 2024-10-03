@@ -1,9 +1,10 @@
 import { fetch, pool } from "./common.ts";
+import { addCall } from "./intercom.ts";
 import { getDomainIfAllowed } from "./domain.ts";
 import { getRandomRoomName, getRoomUrl } from "./room.ts";
 import type { Contact, Id, RoomLinkset } from "./types.ts";
 
-// expire seconds for direct calls
+// expire second for the direct call URL (if it is a domain with token auth)
 const EXP = 3600;
 
 // -----------------------------------------------------------------------------
@@ -201,13 +202,19 @@ export async function callContact(
   const callerUrl = await getRoomUrl(identityId, roomLinkset, "host", EXP);
   // get the meeting link for callee
   const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP);
-
-  console.log(callerUrl);
-  console.log(calleeUrl);
+  const intercomAttr = {
+    url: calleeUrl,
+  };
 
   // create the intercom message to start the call
+  const calls = await addCall(identityId, remoteId, intercomAttr);
+  const call = calls[0];
+  if (!call) throw new Error("call cannot be created");
 
-  return contacts;
+  return {
+    id: call.id,
+    url: callerUrl,
+  };
 }
 
 // -----------------------------------------------------------------------------
