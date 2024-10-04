@@ -1,7 +1,12 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { action, list } from "$lib/api";
-  import type { Contact, Domain333, IntercomCall } from "$lib/types";
+  import { action, actionById, list } from "$lib/api";
+  import type {
+    Contact,
+    Domain333,
+    IntercomCall,
+    IntercomRing,
+  } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Email from "$lib/components/common/form-email.svelte";
   import Select from "$lib/components/common/form-select.svelte";
@@ -17,6 +22,8 @@
   let disabled = false;
   let inCall = false;
   let call: IntercomCall;
+  let ring: IntercomRing;
+  let ringCounter = 0;
   let domainId = "";
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
@@ -34,11 +41,45 @@
   }
 
   // ---------------------------------------------------------------------------
-  function ring() {
-    if (!inCall) return;
+  async function ringCall() {
+    ringCounter += 1;
 
-    console.error(call);
-    setTimeout(ring, 1000);
+    try {
+      // stop ringing if it is stopped from UI or if already a lot of attempts
+      if (!inCall || ringCounter > 10) {
+        inCall = false;
+        disabled = false;
+
+        // remove the call
+        await actionById("/api/pri/intercom/call/del", call.id);
+
+        return;
+      }
+
+      // refresh the call and check if there is a response from the peer
+      ring = await actionById("/api/pri/intercom/call/ring", call.id);
+
+      if (!ring) {
+        throw new Error("ring failed");
+      } else if (ring.status === "rejected") {
+        inCall = false;
+        disabled = false;
+
+        // remove the call
+        await actionById("/api/pri/intercom/call/del", call.id);
+      } else if (ring.status === "accepted") {
+        // go to the meeting room
+        window.location.href = call.url;
+      } else {
+        // ring again after a while since still no response from the peer
+        setTimeout(ringCall, 2000);
+      }
+    } catch {
+      // cancel the call if error
+      inCall = false;
+      warning = true;
+      disabled = false;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -58,9 +99,14 @@
       inCall = true;
       warning = false;
       disabled = true;
+      ringCounter = 0;
 
+      // initialize the call and get the call data
       call = await action("/api/pri/contact/call", data);
-      setTimeout(ring, 1000);
+      if (!call.url) throw new Error("no url for call");
+
+      // start ringing
+      setTimeout(ringCall, 1000);
     } catch {
       inCall = false;
       warning = true;
@@ -107,7 +153,7 @@
         {/if}
 
         {#if warning}
-          <Warning>The call request is not accepted.</Warning>
+          <Warning>An error occurred during the call.</Warning>
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
