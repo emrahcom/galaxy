@@ -19,6 +19,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   let warning = false;
+  let disabled = false;
   let p = {
     name: "",
     auth_type: AUTH_TYPE_OPTIONS[0][0],
@@ -46,10 +47,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await action("/api/pri/domain/add", p);
       window.location.href = "/pri/domain";
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -126,9 +130,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel bind:disabled on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Add" />
+        <Submit label="Add" bind:disabled />
       </div>
     </form>
   </div>
