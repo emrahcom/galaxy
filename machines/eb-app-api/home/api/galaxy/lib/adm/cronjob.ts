@@ -97,6 +97,15 @@ async function delMeetingSchedule() {
 }
 
 // -----------------------------------------------------------------------------
+async function delIntercom() {
+  const sql = `
+    DELETE FROM intercom
+    WHERE expired_at < now()
+  `;
+  await execute(sql);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   console.log("housekeeping...");
 
@@ -109,4 +118,5 @@ export default async function () {
   await delMeetingMemberCandidate();
   await delMeetingSession();
   await delMeetingSchedule();
+  await delIntercom();
 }
