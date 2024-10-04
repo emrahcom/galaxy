@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Attr, Id } from "./types.ts";
+import type { Attr, Id, IntercomRing } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function updatePresence(identityId: string) {
@@ -38,4 +38,23 @@ export async function addCall(
   };
 
   return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function ringCall(identityId: string, intercomId: string) {
+  const sql = {
+    text: `
+      UPDATE intercom
+      SET
+        expired_at = now() + interval '10 seconds'
+      WHERE id = $2
+        AND identity_id = $1
+      RETURNING id, status`,
+    args: [
+      identityId,
+      intercomId,
+    ],
+  };
+
+  return await fetch(sql) as IntercomRing[];
 }

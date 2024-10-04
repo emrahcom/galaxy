@@ -134,6 +134,12 @@ export interface IntercomCall {
 }
 
 // -----------------------------------------------------------------------------
+export interface IntercomRing {
+  id: string;
+  status: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Meeting {
   id: string;
   name: string;
