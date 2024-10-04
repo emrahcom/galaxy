@@ -7,6 +7,11 @@ import type { Contact, Id, IntercomCall, RoomLinkset } from "./types.ts";
 // expire second for the direct call URL (if it is a domain with token auth)
 const EXP = 3600;
 
+// the additional hashes for direct call URL
+let HASH = "";
+HASH += "&config.prejoinConfig.enabled=false";
+HASH += "&config.startWithVideoMuted=true";
+
 // -----------------------------------------------------------------------------
 export async function getContact(identityId: string, contactId: string) {
   const sql = {
@@ -219,9 +224,15 @@ export async function callContact(
   } as RoomLinkset;
 
   // get the meeting link for caller
-  const callerUrl = await getRoomUrl(identityId, roomLinkset, "host", EXP);
+  const callerUrl = await getRoomUrl(
+    identityId,
+    roomLinkset,
+    "host",
+    EXP,
+    HASH,
+  );
   // get the meeting link for callee
-  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP);
+  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP, HASH);
   const intercomAttr = { url: calleeUrl };
 
   // create the intercom message to initialize the call

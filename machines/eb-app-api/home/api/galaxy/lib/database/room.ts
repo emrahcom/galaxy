@@ -115,12 +115,19 @@ export async function getRoomUrl(
   roomLinkset: RoomLinkset,
   affiliation: Affiliation,
   exp: number,
+  additionalHash: string,
 ) {
   const profiles = await getDefaultProfile(identityId) as Profile[];
   const profile = profiles[0];
   if (!profile) throw new Error("profile is not available");
 
-  return await generateRoomUrl(roomLinkset, profile, affiliation, exp);
+  return await generateRoomUrl(
+    roomLinkset,
+    profile,
+    affiliation,
+    exp,
+    additionalHash,
+  );
 }
 
 // -----------------------------------------------------------------------------
