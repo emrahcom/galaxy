@@ -11,6 +11,7 @@
   export let p: MeetingMemberCandidacy;
 
   let warning = false;
+  let disabled = false;
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -21,10 +22,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await actionById("/api/pri/meeting/member/candidacy/reject", p.id);
       window.location.href = "/pri/meeting";
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -46,9 +50,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel bind:disabled on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Reject" />
+        <Submit label="Reject" bind:disabled />
       </div>
     </form>
   </div>
