@@ -23,6 +23,7 @@
   );
 
   let warning = false;
+  let disabled = false;
   let p = {
     contact_id: "",
     meeting_id: meeting.id,
@@ -38,10 +39,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await action("/api/pri/meeting/member/candidate/add", p);
       window.location.href = `/pri/meeting/member/${meeting.id}`;
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -74,9 +78,9 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
+          <Cancel bind:disabled on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Invite" />
+          <Submit label="Invite" bind:disabled />
         </div>
       </form>
     </div>
