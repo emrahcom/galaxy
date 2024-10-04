@@ -12,6 +12,7 @@
   export let p: MeetingMemberCandidacy;
 
   let warning = false;
+  let disabled = false;
   let profileId = "";
 
   const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
@@ -47,10 +48,13 @@
       };
 
       warning = false;
+      disabled = true;
+
       await action("/api/pri/meeting/member/candidacy/accept", data);
       window.location.href = "/pri/meeting";
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -80,9 +84,9 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
+          <Cancel bind:disabled on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Accept" />
+          <Submit label="Accept" bind:disabled />
         </div>
       </form>
     </div>
