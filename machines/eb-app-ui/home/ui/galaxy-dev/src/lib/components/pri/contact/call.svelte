@@ -13,6 +13,7 @@
   export let p: Contact;
 
   let warning = false;
+  let disabled = false;
   let domainId = "";
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
@@ -32,15 +33,20 @@
   // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
-      warning = false;
       const data = {
         contact_id: p.id,
         domain_id: domainId,
       };
+
+      warning = false;
+      disabled = true;
+
       const call: IntercomCall = await action("/api/pri/contact/call", data);
+
       console.error(call);
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -83,9 +89,9 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
+          <Cancel bind:disabled on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Call" />
+          <Submit label="Call" bind:disabled />
         </div>
       </form>
     </div>
