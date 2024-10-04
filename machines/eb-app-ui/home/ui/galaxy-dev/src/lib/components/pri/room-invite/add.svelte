@@ -13,6 +13,7 @@
   const date = new Date();
 
   let warning = false;
+  let disabled = false;
   let p = {
     name: `invite-${date.getTime() % 10000000000}`,
     room_id: room.id,
@@ -27,10 +28,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await action("/api/pri/room/invite/add", p);
       window.location.href = `/pri/room/invite/${room.id}`;
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -69,9 +73,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel bind:disabled on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Create" />
+        <Submit label="Create" bind:disabled />
       </div>
     </form>
   </div>
