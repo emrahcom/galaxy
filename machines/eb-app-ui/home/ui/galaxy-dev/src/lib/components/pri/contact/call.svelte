@@ -94,14 +94,17 @@
           options={domains}
         />
 
+        {#if ringing}
+          <Spinner effect="grow">ringing...</Spinner>
+        {/if}
+
         {#if warning}
           <Warning>The call request is not accepted.</Warning>
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
           {#if ringing}
-            <Spinner effect="grow">ringing...</Spinner>
-            <Cancel label="Abort" on:click={endCall} />
+            <Cancel on:click={endCall} />
           {:else}
             <Cancel bind:disabled on:click={cancel} />
             <SubmitBlocker />
