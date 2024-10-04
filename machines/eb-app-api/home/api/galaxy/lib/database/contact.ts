@@ -222,19 +222,14 @@ export async function callContact(
   const callerUrl = await getRoomUrl(identityId, roomLinkset, "host", EXP);
   // get the meeting link for callee
   const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP);
-  const intercomAttr = {
-    url: calleeUrl,
-  };
+  const intercomAttr = { url: calleeUrl };
 
   // create the intercom message to initialize the call
   const calls = await addCall(identityId, remoteId, intercomAttr);
   const call = calls[0];
   if (!call) throw new Error("call cannot be created");
 
-  return [{
-    id: call.id,
-    url: callerUrl,
-  }] as IntercomCall[];
+  return [{ id: call.id, url: callerUrl }] as IntercomCall[];
 }
 
 // -----------------------------------------------------------------------------
