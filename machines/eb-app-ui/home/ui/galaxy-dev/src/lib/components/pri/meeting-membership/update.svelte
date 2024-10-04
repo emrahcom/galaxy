@@ -13,6 +13,7 @@
   export let p: MeetingMembership;
 
   let warning = false;
+  let disabled = false;
 
   const pr = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
     return items.map((i) => {
@@ -37,10 +38,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await action("/api/pri/meeting/membership/update", p);
       window.location.href = `/pri/meeting`;
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -76,9 +80,9 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
+          <Cancel bind:disabled on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Update" />
+          <Submit label="Update" bind:disabled />
         </div>
       </form>
     </div>
