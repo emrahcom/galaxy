@@ -24,6 +24,7 @@
     try {
       warning = false;
       disabled = true;
+
       await action("/api/pri/contact/update", p);
       window.location.href = "/pri/contact";
     } catch {
