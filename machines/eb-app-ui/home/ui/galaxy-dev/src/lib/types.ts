@@ -127,7 +127,7 @@ export interface IntercomCall {
 // -----------------------------------------------------------------------------
 export interface IntercomRing {
   id: string;
-  status: string;
+  status: "none" | "seen" | "accepted" | "rejected";
 }
 
 // -----------------------------------------------------------------------------
