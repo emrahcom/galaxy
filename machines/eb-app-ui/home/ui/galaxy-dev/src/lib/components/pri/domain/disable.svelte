@@ -13,6 +13,7 @@
   export let p: Domain;
 
   let warning = false;
+  let disabled = false;
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -22,11 +23,14 @@
   // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
+      disabled = true;
       warning = false;
+
       await actionById("/api/pri/domain/disable", p.id);
       window.location.href = "/pri/domain";
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -69,9 +73,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel bind:disabled on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Disable" />
+        <Submit label="Disable" bind:disabled />
       </div>
     </form>
   </div>
