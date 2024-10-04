@@ -29,6 +29,7 @@
   let d5 = false;
   let d6 = false;
   let warning = false;
+  let disabled = false;
 
   if (p.schedule_attr.type === "d") {
     if (p.schedule_attr.rep_every === "1") {
@@ -67,10 +68,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await actionById("/api/pri/meeting/schedule/del", p.id);
       window.location.href = `/pri/meeting/schedule/${p.meeting_id}`;
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -176,9 +180,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel bind:disabled on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Delete" />
+        <Submit label="Delete" bind:disabled />
       </div>
     </form>
   </div>
