@@ -104,6 +104,7 @@ export async function generateRoomUrl(
   profile: Profile,
   affiliation = "host" as Affiliation,
   exp = 3600,
+  additionalHash = "",
 ): Promise<string> {
   let url: string;
 
@@ -133,6 +134,7 @@ export async function generateRoomUrl(
   url = `${url}#config.localSubject=${subject}`;
   if (profile.name) url = `${url}&userInfo.displayName=${displayName}`;
   if (profile.email) url = `${url}&userInfo.email=${email}`;
+  if (additionalHash) url = `${url}${additionalHash}`;
 
   return url;
 }
@@ -245,6 +247,7 @@ async function generateMeetingUrlTokenGuest(
 export async function generateMeetingUrl(
   linkset: MeetingLinkset,
   exp = 3600,
+  additionalHash = "",
 ): Promise<string> {
   let url: string;
 
@@ -284,6 +287,7 @@ export async function generateMeetingUrl(
   url = `${url}#config.localSubject=${subject}`;
   if (linkset.profile_name) url = `${url}&userInfo.displayName=${displayName}`;
   if (linkset.profile_email) url = `${url}&userInfo.email=${email}`;
+  if (additionalHash) url = `${url}${additionalHash}`;
 
   return url;
 }
