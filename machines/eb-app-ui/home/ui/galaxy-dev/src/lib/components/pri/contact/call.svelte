@@ -5,6 +5,7 @@
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Email from "$lib/components/common/form-email.svelte";
   import Select from "$lib/components/common/form-select.svelte";
+  import Spinner from "$lib/components/common/spinner.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
   import Text from "$lib/components/common/form-text.svelte";
@@ -14,6 +15,7 @@
 
   let warning = false;
   let disabled = false;
+  let ringing = false;
   let domainId = "";
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
@@ -31,6 +33,12 @@
   }
 
   // ---------------------------------------------------------------------------
+  function endCall() {
+    ringing = false;
+    disabled = false;
+  }
+
+  // ---------------------------------------------------------------------------
   async function onSubmit() {
     try {
       const data = {
@@ -38,6 +46,7 @@
         domain_id: domainId,
       };
 
+      ringing = true;
       warning = false;
       disabled = true;
 
@@ -45,6 +54,7 @@
 
       console.error(call);
     } catch {
+      ringing = false;
       warning = true;
       disabled = false;
     }
@@ -89,9 +99,14 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel bind:disabled on:click={cancel} />
-          <SubmitBlocker />
-          <Submit label="Call" bind:disabled />
+          {#if ringing}
+            <Spinner effect="grow">ringing...</Spinner>
+            <Cancel label="Abort" on:click={endCall} />
+          {:else}
+            <Cancel bind:disabled on:click={cancel} />
+            <SubmitBlocker />
+            <Submit label="Call" bind:disabled />
+          {/if}
         </div>
       </form>
     </div>
