@@ -32,6 +32,7 @@
   schedules = schedules.trim();
 
   let warning = false;
+  let disabled = false;
   let p = {
     code: invite.code,
     profile_id: "",
@@ -65,10 +66,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await action("/api/pri/meeting/membership/add/bycode", p);
       window.location.href = `/pri/meeting`;
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -132,9 +136,9 @@
           </div>
         {:else}
           <div class="d-flex gap-5 mt-5 justify-content-center">
-            <Cancel on:click={cancel} />
+            <Cancel bind:disabled on:click={cancel} />
             <SubmitBlocker />
-            <Submit label="Subscribe" />
+            <Submit label="Subscribe" bind:disabled />
           </div>
         {/if}
       </form>
