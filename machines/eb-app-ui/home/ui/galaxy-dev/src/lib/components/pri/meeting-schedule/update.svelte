@@ -61,6 +61,7 @@
     ? Boolean(Number(p.schedule_attr.rep_days[6]))
     : false;
   let warning = false;
+  let disabled = false;
 
   // ---------------------------------------------------------------------------
   function startTimeUpdated() {
@@ -182,6 +183,7 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
 
       normalizeData();
       await action("/api/pri/meeting/schedule/update", p);
@@ -189,6 +191,7 @@
       window.location.href = `/pri/meeting/schedule/${p.meeting_id}`;
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -307,9 +310,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel bind:disabled on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Update" />
+        <Submit label="Update" bind:disabled />
       </div>
     </form>
   </div>
