@@ -13,6 +13,7 @@
   export let p: Room;
 
   let warning = false;
+  let disabled = false;
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
     return items.map((i) => [
@@ -30,10 +31,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await action("/api/pri/room/update", p);
       window.location.href = "/pri/room";
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -63,9 +67,9 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
+          <Cancel bind:disabled on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Update" />
+          <Submit label="Update" bind:disabled />
         </div>
       </form>
     </div>
