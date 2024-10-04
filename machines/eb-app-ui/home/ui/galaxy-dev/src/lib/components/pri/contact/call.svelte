@@ -15,7 +15,8 @@
 
   let warning = false;
   let disabled = false;
-  let ringing = false;
+  let inCall = false;
+  let call: IntercomCall;
   let domainId = "";
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
@@ -33,8 +34,16 @@
   }
 
   // ---------------------------------------------------------------------------
+  function ring() {
+    if (!inCall) return;
+
+    console.error(call);
+    setTimeout(ring, 1000);
+  }
+
+  // ---------------------------------------------------------------------------
   function endCall() {
-    ringing = false;
+    inCall = false;
     disabled = false;
   }
 
@@ -46,15 +55,14 @@
         domain_id: domainId,
       };
 
-      ringing = true;
+      inCall = true;
       warning = false;
       disabled = true;
 
-      const call: IntercomCall = await action("/api/pri/contact/call", data);
-
-      console.error(call);
+      call = await action("/api/pri/contact/call", data);
+      setTimeout(ring, 1000);
     } catch {
-      ringing = false;
+      inCall = false;
       warning = true;
       disabled = false;
     }
@@ -94,7 +102,7 @@
           options={domains}
         />
 
-        {#if ringing}
+        {#if inCall}
           <Spinner effect="grow">ringing...</Spinner>
         {/if}
 
@@ -103,7 +111,7 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          {#if ringing}
+          {#if inCall}
             <Cancel on:click={endCall} />
           {:else}
             <Cancel bind:disabled on:click={cancel} />
