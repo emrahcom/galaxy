@@ -19,6 +19,7 @@
   export let p: Meeting;
 
   let warning = false;
+  let disabled = false;
   let domainId = p.domain_id;
   let roomId = p.room_id;
   let roomStatic = !p.room_ephemeral;
@@ -62,6 +63,7 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
 
       // if ephemeral, just update and go
       if (p.schedule_type === "ephemeral") {
@@ -110,6 +112,7 @@
       window.location.href = "/pri/meeting";
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -212,9 +215,9 @@
         {/if}
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
-          <Cancel on:click={cancel} />
+          <Cancel bind:disabled on:click={cancel} />
           <SubmitBlocker />
-          <Submit label="Update" />
+          <Submit label="Update" bind:disabled />
         </div>
       </form>
     </div>
