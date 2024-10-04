@@ -47,33 +47,31 @@
     try {
       // stop ringing if it is stopped from UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
-        inCall = false;
-        disabled = false;
-
-        // remove the call
         await actionById("/api/pri/intercom/call/del", call.id);
 
+        inCall = false;
+        disabled = false;
         return;
       }
 
       // refresh the call and check if there is a response from the peer
       ring = await actionById("/api/pri/intercom/call/ring", call.id);
 
-      if (!ring) {
-        throw new Error("ring failed");
-      } else if (ring.status === "rejected") {
-        inCall = false;
-        disabled = false;
-
-        // remove the call
-        await actionById("/api/pri/intercom/call/del", call.id);
-      } else if (ring.status === "accepted") {
-        // go to the meeting room
-        window.location.href = call.url;
-      } else {
-        // ring again after a while since still no response from the peer
+      // ring again after a while if still no response from the peer
+      if (ring.status === "none" || ring.status === "seen") {
         setTimeout(ringCall, 2000);
+        return;
       }
+
+      // since there are only two options (rejected or accepted) at this stage,
+      // end the call
+      await actionById("/api/pri/intercom/call/del", call.id);
+
+      inCall = false;
+      disabled = false;
+
+      // go to the meeting room if accepted
+      if (ring.status === "accepted") window.location.href = call.url;
     } catch {
       // cancel the call if error
       inCall = false;
