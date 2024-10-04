@@ -50,6 +50,7 @@
   let d6 = false;
 
   let warning = false;
+  let disabled = false;
   let p = {
     name: "",
     meeting_id: meeting.id,
@@ -184,6 +185,7 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
 
       normalizeData();
       await action("/api/pri/meeting/schedule/add", p);
@@ -195,6 +197,7 @@
       }
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -322,10 +325,11 @@
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel
           label={hash === "#0" ? "Not Now" : "Cancel"}
+          bind:disabled
           on:click={cancel}
         />
         <SubmitBlocker />
-        <Submit label="Create" />
+        <Submit label="Create" bind:disabled />
       </div>
     </form>
   </div>
