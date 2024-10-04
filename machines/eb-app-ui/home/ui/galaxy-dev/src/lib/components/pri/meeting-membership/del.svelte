@@ -12,6 +12,7 @@
   export let p: MeetingMembership;
 
   let warning = false;
+  let disabled = false;
   let profile: string;
 
   if (p.profile_email) {
@@ -29,10 +30,13 @@
   async function onSubmit() {
     try {
       warning = false;
+      disabled = true;
+
       await actionById("/api/pri/meeting/membership/del", p.id);
       window.location.replace(`/pri/meeting`);
     } catch {
       warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -68,9 +72,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel on:click={cancel} />
+        <Cancel bind:disabled on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Unsubscribe" />
+        <Submit label="Unsubscribe" bind:disabled />
       </div>
     </form>
   </div>
