@@ -1,6 +1,6 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
-import { ringCall, updatePresence } from "../database/intercom.ts";
+import { delCall, ringCall, updatePresence } from "../database/intercom.ts";
 
 const PRE = "/api/pri/intercom";
 
@@ -18,6 +18,14 @@ async function ring(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function del(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const intercomId = pl.id;
+
+  return await delCall(identityId, intercomId);
+}
+
+// -----------------------------------------------------------------------------
 export default async function (
   req: Request,
   path: string,
@@ -27,6 +35,8 @@ export default async function (
     return await wrapper(ping, req, identityId);
   } else if (path === `${PRE}/call/ring`) {
     return await wrapper(ring, req, identityId);
+  } else if (path === `${PRE}/call/del`) {
+    return await wrapper(del, req, identityId);
   } else {
     return notFound();
   }

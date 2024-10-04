@@ -19,6 +19,25 @@ export async function updatePresence(identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function ringCall(identityId: string, intercomId: string) {
+  const sql = {
+    text: `
+      UPDATE intercom
+      SET
+        expired_at = now() + interval '10 seconds'
+      WHERE id = $2
+        AND identity_id = $1
+      RETURNING id, status`,
+    args: [
+      identityId,
+      intercomId,
+    ],
+  };
+
+  return await fetch(sql) as IntercomRing[];
+}
+
+// -----------------------------------------------------------------------------
 export async function addCall(
   identityId: string,
   remoteId: string,
@@ -41,20 +60,18 @@ export async function addCall(
 }
 
 // -----------------------------------------------------------------------------
-export async function ringCall(identityId: string, intercomId: string) {
+export async function delCall(identityId: string, intercomId: string) {
   const sql = {
     text: `
-      UPDATE intercom
-      SET
-        expired_at = now() + interval '10 seconds'
+      DELETE FROM intercom
       WHERE id = $2
         AND identity_id = $1
-      RETURNING id, status`,
+      RETURNING id, now() as at`,
     args: [
       identityId,
       intercomId,
     ],
   };
 
-  return await fetch(sql) as IntercomRing[];
+  return await fetch(sql) as Id[];
 }
