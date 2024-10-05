@@ -1,5 +1,15 @@
-import { list } from "$lib/api";
+import { actionById, list } from "$lib/api";
 import type { IntercomMessage } from "$lib/types";
+
+// -----------------------------------------------------------------------------
+async function callHandler(msg: IntercomMessage) {
+  try {
+    // set as seen
+    await actionById("/api/pri/intercom/set/seen", msg.id);
+  } catch {
+    // do nothing
+  }
+}
 
 // -----------------------------------------------------------------------------
 export async function intercomHandler() {
@@ -13,11 +23,16 @@ export async function intercomHandler() {
 
     if (now - Number(checkedAt) > 3000) {
       window.localStorage.setItem("intercom_checked_at", String(now));
-      const messages: IntercomMessage = await list(
+
+      const messages: IntercomMessage[] = await list(
         "/api/pri/intercom/list",
         10,
       );
-      console.error(messages);
+      for (const msg of messages) {
+        if (msg.message_type === "call") {
+          callHandler(msg);
+        }
+      }
     }
   } finally {
     setTimeout(intercomHandler, 3000);
