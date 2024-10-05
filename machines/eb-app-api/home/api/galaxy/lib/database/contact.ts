@@ -1,5 +1,5 @@
 import { fetch, pool } from "./common.ts";
-import { addCall } from "./intercom.ts";
+import { addCall } from "./intercom-call.ts";
 import { getDomainIfAllowed } from "./domain.ts";
 import { getRandomRoomName, getRoomUrl } from "./room.ts";
 import type { Contact, Id, IntercomCall, RoomLinkset } from "./types.ts";
@@ -233,10 +233,10 @@ export async function callContact(
   );
   // get the meeting link for callee
   const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP, HASH);
-  const intercomAttr = { url: calleeUrl };
+  const callAttr = { url: calleeUrl };
 
   // create the intercom message to initialize the call
-  const calls = await addCall(identityId, remoteId, intercomAttr);
+  const calls = await addCall(identityId, remoteId, callAttr);
   const call = calls[0];
   if (!call) throw new Error("call cannot be created");
 

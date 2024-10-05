@@ -1,6 +1,7 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
-import { delCall, ringCall, updatePresence } from "../database/intercom.ts";
+import { updatePresence } from "../database/intercom.ts";
+import { delCall, ringCall } from "../database/intercom-call.ts";
 
 const PRE = "/api/pri/intercom";
 
