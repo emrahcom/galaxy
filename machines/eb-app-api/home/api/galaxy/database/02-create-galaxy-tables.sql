@@ -508,6 +508,7 @@ ALTER TABLE meeting_session OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- - This table is for internal communication between peers such as call,
 --   internal invitation, etc.
+-- - Only the remote peer can update the status.
 --
 -- intercom_attr {
 --   url: string,           // meeting link for a random room or a specific room

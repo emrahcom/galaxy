@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { IntercomMessage } from "./types.ts";
+import type { Id, IntercomMessage, IntercomStatus } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function listIntercom(
@@ -27,4 +27,27 @@ export async function listIntercom(
   };
 
   return await fetch(sql) as IntercomMessage[];
+}
+
+// -----------------------------------------------------------------------------
+export async function setStatusIntercom(
+  identityId: string,
+  intercomId: string,
+  status: IntercomStatus,
+) {
+  const sql = {
+    text: `
+      UPDATE intercom
+      SET status = $3
+      WHERE id = $2
+        AND remote_id = $1
+      RETURNING id, now() as at`,
+    args: [
+      identityId,
+      intercomId,
+      status,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
 }
