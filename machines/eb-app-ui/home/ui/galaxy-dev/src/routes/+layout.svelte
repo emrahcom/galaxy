@@ -22,7 +22,7 @@
   <!--
   The purpose of the following invisible section is to create free space equal
   to the navigation bar height. So, all contents will be located in the visible
-  part below the nagigation bar.
+  part below the navigation bar.
 
   One Bootstrap icon is also called here to make Bootstrap-icons CSS to be ready
   for the application.
