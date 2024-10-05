@@ -2,16 +2,22 @@ import { fetch } from "./common.ts";
 import type { Id } from "./types.ts";
 
 // -----------------------------------------------------------------------------
-export async function updatePresence(identityId: string) {
+export async function listIntercom(
+  identityId: string,
+  limit: number,
+  offset: number,
+) {
   const sql = {
     text: `
-      UPDATE identity
-      SET
-        seen_at = now()
+      SELECT id
+      FROM intercom
       WHERE id = $1
-      RETURNING id, seen_at as at`,
+        AND expired_at > now()
+      LIMIT $2 OFFSET $3`,
     args: [
       identityId,
+      limit,
+      offset,
     ],
   };
 
