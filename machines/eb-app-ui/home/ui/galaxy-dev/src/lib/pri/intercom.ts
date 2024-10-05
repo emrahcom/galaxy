@@ -1,4 +1,5 @@
 import { list } from "$lib/api";
+import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
 export async function intercomHandler() {
@@ -12,7 +13,10 @@ export async function intercomHandler() {
 
     if (now - Number(checkedAt) > 3000) {
       window.localStorage.setItem("intercom_checked_at", String(now));
-      const messages = await list("/api/pri/intercom/list", 10);
+      const messages: IntercomMessage = await list(
+        "/api/pri/intercom/list",
+        10,
+      );
       console.error(messages);
     }
   } finally {
