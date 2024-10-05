@@ -7,6 +7,14 @@
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
+export type Affiliation = "host" | "guest";
+export type CandidateStatus = "pending" | "rejected";
+export type DomainAuthType = "none" | "token" | "jaas";
+export type IntercomStatus = "none" | "seen" | "accepted" | "rejected";
+export type InviteTo = "audience" | "member";
+export type Schedule = "permanent" | "scheduled" | "ephemeral";
+
+// -----------------------------------------------------------------------------
 export interface Contact {
   id: string;
   name: string;
@@ -20,7 +28,7 @@ export interface Contact {
 export interface Domain {
   id: string;
   name: string;
-  auth_type: string;
+  auth_type: DomainAuthType;
   domain_attr: {
     url: string;
     app_id: string;
@@ -43,7 +51,7 @@ export interface Domain {
 export interface Domain333 {
   id: string;
   name: string;
-  auth_type: string;
+  auth_type: DomainAuthType;
   url: string;
   enabled: boolean;
   updated_at: string;
@@ -89,7 +97,7 @@ export interface DomainPartnerCandidacy {
   id: string;
   domain_name: string;
   domain_url: string;
-  status: string;
+  status: CandidateStatus;
   created_at: string;
   updated_at: string;
   expired_at: string;
@@ -102,7 +110,7 @@ export interface DomainPartnerCandidate {
   contact_name: string;
   profile_name: string;
   profile_email: string;
-  status: string;
+  status: CandidateStatus;
   created_at: string;
   updated_at: string;
   expired_at: string;
@@ -127,7 +135,7 @@ export interface IntercomCall {
 // -----------------------------------------------------------------------------
 export interface IntercomRing {
   id: string;
-  status: "none" | "seen" | "accepted" | "rejected";
+  status: IntercomStatus;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,7 +154,7 @@ export interface Meeting {
   room_name: string;
   room_enabled: boolean;
   room_ephemeral: boolean;
-  schedule_type: string;
+  schedule_type: Schedule;
   hidden: boolean;
   restricted: boolean;
   subscribable: boolean;
@@ -164,7 +172,7 @@ export interface Meeting222 {
   domain_url: boolean;
   room_name: string;
   room_ephemeral: boolean;
-  schedule_type: string;
+  schedule_type: Schedule;
   session_list: string[];
   session_at: string;
   hidden: boolean;
@@ -175,7 +183,7 @@ export interface Meeting222 {
   updated_at: string;
   ownership: string;
   membership_id: string;
-  join_as: string;
+  join_as: Affiliation;
 }
 
 // -----------------------------------------------------------------------------
@@ -185,10 +193,10 @@ export interface MeetingInvite {
   meeting_id: string;
   meeting_name: string;
   meeting_info: string;
-  meeting_schedule_type: string;
+  meeting_schedule_type: Schedule;
   code: string;
-  invite_to: string;
-  join_as: string;
+  invite_to: InviteTo;
+  join_as: Affiliation;
   disposable: boolean;
   enabled: boolean;
   created_at: string;
@@ -201,8 +209,8 @@ export interface MeetingInvite111 {
   meeting_name: string;
   meeting_info: string;
   code: string;
-  invite_to: string;
-  schedule_type: string;
+  invite_to: InviteTo;
+  schedule_type: Schedule;
   session_list: [[string, string]];
 }
 
@@ -213,7 +221,7 @@ export interface MeetingMember {
   contact_name: string;
   profile_name: string;
   profile_email: string;
-  join_as: string;
+  join_as: Affiliation;
   enabled: boolean;
   created_at: string;
   updated_at: string;
@@ -224,10 +232,10 @@ export interface MeetingMemberCandidacy {
   id: string;
   meeting_name: string;
   meeting_info: string;
-  schedule_type: string;
+  schedule_type: Schedule;
   session_list: [[string, string]];
-  join_as: string;
-  status: string;
+  join_as: Affiliation;
+  status: CandidateStatus;
   created_at: string;
   updated_at: string;
   expired_at: string;
@@ -240,8 +248,8 @@ export interface MeetingMemberCandidate {
   contact_name: string;
   profile_name: string;
   profile_email: string;
-  join_as: string;
-  status: string;
+  join_as: Affiliation;
+  status: CandidateStatus;
   created_at: string;
   updated_at: string;
   expired_at: string;
@@ -255,7 +263,7 @@ export interface MeetingMembership {
   profile_email: string;
   meeting_name: string;
   meeting_info: string;
-  join_as: string;
+  join_as: Affiliation;
   enabled: boolean;
   created_at: string;
   updated_at: string;
@@ -286,7 +294,7 @@ export interface MeetingSchedule222 {
   ended_at: string;
   duration: number;
   waiting_time: number;
-  join_as: string;
+  join_as: Affiliation;
   membership_id: string | null;
 }
 
@@ -300,7 +308,7 @@ export interface MeetingSchedule111 {
   ended_at: string;
   duration: number;
   waiting_time: number;
-  join_as: string;
+  join_as: Affiliation;
 }
 
 // -----------------------------------------------------------------------------
@@ -383,7 +391,7 @@ export interface RoomPartnerCandidacy {
   room_name: string;
   domain_name: string;
   domain_url: string;
-  status: string;
+  status: CandidateStatus;
   created_at: string;
   updated_at: string;
   expired_at: string;
@@ -396,7 +404,7 @@ export interface RoomPartnerCandidate {
   contact_name: string;
   profile_name: string;
   profile_email: string;
-  status: string;
+  status: CandidateStatus;
   created_at: string;
   updated_at: string;
   expired_at: string;

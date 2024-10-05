@@ -187,7 +187,7 @@
 
         <!-- these are temporary disabled on UI, not ready... -->
         <!-- {#if p.schedule_type !== "ephemeral"} -->
-        {#if p.schedule_type === "DONT MATCH"}
+        {#if false}
           <Switch
             name="hidden"
             label="Hidden"
