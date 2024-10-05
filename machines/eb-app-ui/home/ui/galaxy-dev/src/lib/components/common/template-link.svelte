@@ -24,7 +24,12 @@
   data-bs-toggle="tooltip"
   data-bs-title={title}
   {href}
-  on:click={() => {
+  on:click={(e) => {
+    if (e.button === 1 || e.ctrlKey || e.metaKey) {
+      return;
+    }
+
+    e.preventDefault();
     window.location.href = href;
   }}
 >
