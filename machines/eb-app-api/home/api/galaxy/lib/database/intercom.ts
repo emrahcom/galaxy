@@ -9,10 +9,14 @@ export async function listIntercom(
 ) {
   const sql = {
     text: `
-      SELECT id
-      FROM intercom
-      WHERE id = $1
+      SELECT id, co.name, message_type, intercom_attr
+      FROM intercom ic
+        JOIN contact co ON co.identity_id = $1
+                           AND co.remote_id = ic.identity_id
+
+      WHERE remote_id = $1
         AND expired_at > now()
+        AND status = 'none'
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
