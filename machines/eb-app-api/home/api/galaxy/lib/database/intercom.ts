@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id } from "./types.ts";
+import type { IntercomMessage } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function listIntercom(
@@ -9,7 +9,8 @@ export async function listIntercom(
 ) {
   const sql = {
     text: `
-      SELECT id, co.name, message_type, intercom_attr
+      SELECT id, co.id as contact_id, co.name as contact_name, message_type,
+        intercom_attr
       FROM intercom ic
         JOIN contact co ON co.identity_id = $1
                            AND co.remote_id = ic.identity_id
@@ -25,5 +26,5 @@ export async function listIntercom(
     ],
   };
 
-  return await fetch(sql) as Id[];
+  return await fetch(sql) as IntercomMessage[];
 }

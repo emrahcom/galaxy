@@ -10,15 +10,15 @@
 export type Affiliation = "host" | "guest";
 export type CandidateStatus = "pending" | "rejected";
 export type DomainAuthType = "none" | "token" | "jaas";
-export type IntercomMessage =
+export type IntercomStatus = "none" | "seen" | "accepted" | "rejected";
+export type InviteTo = "audience" | "member";
+export type Message =
   | "call"
   | "alarm_for_meeting"
   | "invite_for_domain"
   | "invite_for_room"
   | "invite_for_meeting"
   | "request_for_meeting_membership";
-export type IntercomStatus = "none" | "seen" | "accepted" | "rejected";
-export type InviteTo = "audience" | "member";
 export type RequestStatus = "pending" | "rejected";
 export type Schedule = "permanent" | "scheduled" | "ephemeral";
 
@@ -144,6 +144,17 @@ export interface DomainPartnership {
 export interface IntercomCall {
   id: string;
   url: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface IntercomMessage {
+  id: string;
+  contact_id: string;
+  contact_name: string;
+  message_type: Message;
+  intercom_attr: {
+    [key: string]: string;
+  };
 }
 
 // -----------------------------------------------------------------------------
