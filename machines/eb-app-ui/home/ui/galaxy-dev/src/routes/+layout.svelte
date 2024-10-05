@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { ping } from "$lib/pri/intercom";
+  import { ping } from "$lib/pri/identity";
   import "bootstrap-icons/font/bootstrap-icons.min.css";
   import "bootstrap/dist/css/bootstrap.min.css";
   import "bootstrap/dist/js/bootstrap.bundle.min.js";

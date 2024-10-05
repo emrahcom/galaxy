@@ -12,7 +12,7 @@ export async function ping() {
 
     if (now - Number(pingedAt) > 60000) {
       window.localStorage.setItem("pinged_at", String(now));
-      await get("/api/pri/intercom/ping");
+      await get("/api/pri/identity/ping");
     }
   } finally {
     setTimeout(ping, 60000);
