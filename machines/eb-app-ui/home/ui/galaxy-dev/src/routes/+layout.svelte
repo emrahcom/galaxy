@@ -1,5 +1,6 @@
 <script lang="ts">
   import { ping } from "$lib/pri/identity";
+  import { intercomHandler } from "$lib/pri/intercom";
   import "bootstrap-icons/font/bootstrap-icons.min.css";
   import "bootstrap/dist/css/bootstrap.min.css";
   import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -8,7 +9,10 @@
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
   const identity_id = window.localStorage.getItem("identity_id");
-  if (identity_id) ping();
+  if (identity_id) {
+    ping();
+    intercomHandler();
+  }
 </script>
 
 <!-- -------------------------------------------------------------------------->
