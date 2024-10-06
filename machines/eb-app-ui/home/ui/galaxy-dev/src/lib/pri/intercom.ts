@@ -4,10 +4,7 @@ import { isOver } from "$lib/common";
 import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
-function addNotificationCall(msg: IntercomMessage) {
-  const container = document.getElementById("notifications");
-  if (!container) return;
-
+function createToastCall(msg: IntercomMessage) {
   const oldToast = document.getElementById(`msg-${msg.id}`);
   if (oldToast) oldToast.remove();
 
@@ -26,6 +23,16 @@ function addNotificationCall(msg: IntercomMessage) {
       <audio id="ring-${msg.id}" src="/ringing.mp3" loop></audio>
     </div>
   `;
+
+  return toast;
+}
+
+// -----------------------------------------------------------------------------
+function addNotificationCall(msg: IntercomMessage) {
+  const container = document.getElementById("notifications");
+  if (!container) return;
+
+  const toast = createToastCall(msg);
   container.appendChild(toast);
   Toast.getOrCreateInstance(toast).show();
 
