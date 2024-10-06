@@ -4,7 +4,7 @@ import { isOver } from "$lib/common";
 import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
-function createToastCall(msg: IntercomMessage) {
+function createCallToast(msg: IntercomMessage) {
   const oldToast = document.getElementById(`msg-${msg.id}`);
   if (oldToast) oldToast.remove();
 
@@ -28,11 +28,11 @@ function createToastCall(msg: IntercomMessage) {
 }
 
 // -----------------------------------------------------------------------------
-function addNotificationCall(msg: IntercomMessage) {
+function addCallNotification(msg: IntercomMessage) {
   const container = document.getElementById("notifications");
   if (!container) return;
 
-  const toast = createToastCall(msg);
+  const toast = createCallToast(msg);
   container.appendChild(toast);
   Toast.getOrCreateInstance(toast).show();
 
@@ -41,7 +41,7 @@ function addNotificationCall(msg: IntercomMessage) {
 }
 
 // -----------------------------------------------------------------------------
-function delNotificationCall(msgId: string) {
+function delCallNotification(msgId: string) {
   try {
     const toast = document.getElementById(`msg-${msgId}`);
     if (toast) toast.remove();
@@ -63,7 +63,7 @@ async function watchCall(msgId: string) {
       watchCall(msgId);
     }, 2000);
   } catch {
-    delNotificationCall(msgId);
+    delCallNotification(msgId);
   }
 }
 
@@ -73,7 +73,7 @@ async function callHandler(msg: IntercomMessage) {
     // set as seen
     await actionById("/api/pri/intercom/set/seen", msg.id);
 
-    addNotificationCall(msg);
+    addCallNotification(msg);
     watchCall(msg.id);
   } catch {
     // do nothing
