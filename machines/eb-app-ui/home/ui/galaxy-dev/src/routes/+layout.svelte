@@ -41,6 +41,5 @@
 
 <!-- Notifications will be added inside this container -->
 <div aria-live="polite" aria-atomic="true" class="position-relative">
-  <div id="notifications" class="toast-container bottom-0 end-0 p-3">
-  </div>
+  <div id="notifications" class="toast-container bottom-0 end-0 p-3"></div>
 </div>

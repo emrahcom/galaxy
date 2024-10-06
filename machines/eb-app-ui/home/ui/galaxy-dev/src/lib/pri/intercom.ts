@@ -1,11 +1,38 @@
+import { Toast } from "bootstrap";
 import { actionById, list } from "$lib/api";
 import type { IntercomMessage } from "$lib/types";
+
+// -----------------------------------------------------------------------------
+function addNotificationCall(msgId: string) {
+  const container = document.getElementById("notifications");
+  if (!container) return;
+
+  const oldToast = document.getElementById(`msg-${msgId}`);
+  if (oldToast) oldToast.remove();
+
+  const toast = document.createElement("div");
+  toast.id = `msg-${msgId}`;
+  toast.setAttribute("class", "toast");
+  toast.setAttribute("role", "alert");
+  toast.setAttribute("aria-live", "assertive");
+  toast.setAttribute("aria-atomic", "true");
+  toast.setAttribute("data-bs-autohide", "false");
+  toast.innerHTML = `
+    <div class="toast-body">
+      ${msgId}
+    </div>
+  `;
+  container.appendChild(toast);
+  Toast.getOrCreateInstance(toast).show();
+}
 
 // -----------------------------------------------------------------------------
 async function callHandler(msg: IntercomMessage) {
   try {
     // set as seen
     await actionById("/api/pri/intercom/set/seen", msg.id);
+
+    addNotificationCall(msg.id);
   } catch {
     // do nothing
   }
