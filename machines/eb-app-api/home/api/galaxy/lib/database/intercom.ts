@@ -5,17 +5,20 @@ import type { Id, IntercomMessage, IntercomStatus } from "./types.ts";
 export async function getIntercom(identityId: string, intercomId: string) {
   const sql = {
     text: `
-      SELECT id, expired_at as at
-      FROM intercom
+      SELECT ic.id, co.id as contact_id, co.name as contact_name, status,
+        message_type, intercom_attr, expired_at
+      FROM intercom ic
+        JOIN contact co ON co.identity_id = $1
+                            AND co.remote_id = ic.identity_id
       WHERE id = $2
-        AND identity_id = $1`,
+        AND remote_id = $1`,
     args: [
       identityId,
       intercomId,
     ],
   };
 
-  return await fetch(sql) as Id[];
+  return await fetch(sql) as IntercomMessage[];
 }
 
 // -----------------------------------------------------------------------------
@@ -26,8 +29,8 @@ export async function listIntercom(
 ) {
   const sql = {
     text: `
-      SELECT ic.id, co.id as contact_id, co.name as contact_name, message_type,
-        intercom_attr
+      SELECT ic.id, co.id as contact_id, co.name as contact_name, status,
+        message_type, intercom_attr, expired_at
       FROM intercom ic
         JOIN contact co ON co.identity_id = $1
                            AND co.remote_id = ic.identity_id
