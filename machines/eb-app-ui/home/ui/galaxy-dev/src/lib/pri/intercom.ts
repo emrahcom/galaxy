@@ -23,14 +23,14 @@ function addNotificationCall(msg: IntercomMessage) {
       <i class="bi bi-telephone fs-5 text-primary m-2"></i>
       <span class="fs-6 fw-bold">${msg.contact_name}</span>
       <span class="fs-6">is calling...</span>
-      <audio id="ringtone" src="/ringing.mp3" loop></audio>
+      <audio id="ring-${msg.id}" src="/ringing.mp3" loop></audio>
     </div>
   `;
   container.appendChild(toast);
   Toast.getOrCreateInstance(toast).show();
 
-  const ringTone = document.getElementById("ringtone") as HTMLAudioElement;
-  if (ringTone) ringTone.play();
+  const ring = document.getElementById(`ring-${msg.id}`) as HTMLAudioElement;
+  if (ring) ring.play();
 }
 
 // -----------------------------------------------------------------------------
