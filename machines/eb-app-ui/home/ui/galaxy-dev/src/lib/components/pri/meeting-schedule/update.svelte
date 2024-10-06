@@ -156,7 +156,7 @@
       p.schedule_attr.rep_every = String(every);
     } else if (p.schedule_attr.type === "w") {
       // If the end date is over, throw an error.
-      if (isOver(ended_at, 0)) throw new Error("it is already over");
+      if (isOver(ended_at)) throw new Error("it is already over");
       // if the last date is earlier than the first date, throw an error.
       if (date1 < date0) throw new Error("invalid period");
       // if no selected day, throw an error.
