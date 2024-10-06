@@ -24,23 +24,6 @@ export async function addCall(
 }
 
 // -----------------------------------------------------------------------------
-export async function delCall(identityId: string, intercomId: string) {
-  const sql = {
-    text: `
-      DELETE FROM intercom
-      WHERE id = $2
-        AND identity_id = $1
-      RETURNING id, now() as at`,
-    args: [
-      identityId,
-      intercomId,
-    ],
-  };
-
-  return await fetch(sql) as Id[];
-}
-
-// -----------------------------------------------------------------------------
 export async function ringCall(identityId: string, intercomId: string) {
   const sql = {
     text: `

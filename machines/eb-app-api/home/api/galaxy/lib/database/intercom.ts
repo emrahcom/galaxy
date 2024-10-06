@@ -2,6 +2,23 @@ import { fetch } from "./common.ts";
 import type { Id, IntercomMessage, IntercomStatus } from "./types.ts";
 
 // -----------------------------------------------------------------------------
+export async function getIntercom(identityId: string, intercomId: string) {
+  const sql = {
+    text: `
+      SELECT id, expired_at as at
+      FROM intercom
+      WHERE id = $2
+        AND identity_id = $1`,
+    args: [
+      identityId,
+      intercomId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function listIntercom(
   identityId: string,
   limit: number,
@@ -14,7 +31,6 @@ export async function listIntercom(
       FROM intercom ic
         JOIN contact co ON co.identity_id = $1
                            AND co.remote_id = ic.identity_id
-
       WHERE ic.remote_id = $1
         AND expired_at > now()
         AND status = 'none'
@@ -27,6 +43,23 @@ export async function listIntercom(
   };
 
   return await fetch(sql) as IntercomMessage[];
+}
+
+// -----------------------------------------------------------------------------
+export async function delIntercom(identityId: string, intercomId: string) {
+  const sql = {
+    text: `
+      DELETE FROM intercom
+      WHERE id = $2
+        AND identity_id = $1
+      RETURNING id, now() as at`,
+    args: [
+      identityId,
+      intercomId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
 }
 
 // -----------------------------------------------------------------------------
