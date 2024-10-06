@@ -14,7 +14,7 @@
   data-bs-target="#offcanvasMenu"
   aria-controls="offcanvasMenu"
 >
-  <span class="bi bi-list" />
+  <i class="bi bi-list"></i>
 </button>
 
 <div

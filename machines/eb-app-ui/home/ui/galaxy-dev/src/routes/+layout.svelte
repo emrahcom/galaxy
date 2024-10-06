@@ -33,7 +33,7 @@
   -->
   <section id="hidden-top-margin" class="d-flex invisible my-4">
     <Brand />
-    <span class="bi bi-download" />
+    <i class="bi bi-download"></i>
   </section>
 
   <slot />

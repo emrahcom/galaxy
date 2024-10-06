@@ -37,7 +37,7 @@
             window.location.href = hrefBack;
           }}
         >
-          <span class="bi bi-arrow-return-left" />
+          <i class="bi bi-arrow-return-left"></i>
         </button>
       {/if}
 
@@ -50,7 +50,7 @@
             window.location.href = hrefMeeting;
           }}
         >
-          <span class="bi bi-pencil" />
+          <i class="bi bi-pencil"></i>
         </button>
       {/if}
 
@@ -63,7 +63,7 @@
             window.location.href = hrefCalendar;
           }}
         >
-          <span class="bi bi-calendar3" />
+          <i class="bi bi-calendar3"></i>
         </button>
       {/if}
 
@@ -76,7 +76,7 @@
             window.location.href = hrefPrevious;
           }}
         >
-          <span class="bi bi-chevron-left" />
+          <i class="bi bi-chevron-left"></i>
         </button>
       {/if}
 
@@ -89,7 +89,7 @@
             window.location.href = hrefNext;
           }}
         >
-          <span class="bi bi-chevron-right" />
+          <i class="bi bi-chevron-right"></i>
         </button>
       {/if}
     </div>
@@ -103,7 +103,7 @@
           window.location.href = hrefAdd;
         }}
       >
-        <span class="bi bi-plus-lg" />
+        <i class="bi bi-plus-lg"></i>
       </button>
     {/if}
   </div>

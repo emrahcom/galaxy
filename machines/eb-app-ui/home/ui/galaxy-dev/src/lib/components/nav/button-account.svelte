@@ -23,7 +23,7 @@
   aria-controls="offcanvasAccount"
   on:click={updateUsername}
 >
-  <span class="bi bi-person" />
+  <i class="bi bi-person"></i>
 </button>
 
 <div

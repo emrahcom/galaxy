@@ -20,7 +20,7 @@ function addNotificationCall(msg: IntercomMessage) {
   toast.setAttribute("data-bs-autohide", "false");
   toast.innerHTML = `
     <div class="toast-body">
-      <i class="bi bi-telephone text-primary" />
+      <i class="bi bi-telephone text-primary"></i>
       ${msg.contact_name} is calling...
     </div>
   `;
