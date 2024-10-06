@@ -37,10 +37,10 @@ function delNotificationCall(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
-function watchCall(msgId: string) {
+async function watchCall(msgId: string) {
   try {
     // this will fail if the call message is already deleted
-    const msg = getById("/api/pri/intercom/get", msgId);
+    const msg = await getById("/api/pri/intercom/get", msgId);
     console.error(msg);
 
     setTimeout(() => {
