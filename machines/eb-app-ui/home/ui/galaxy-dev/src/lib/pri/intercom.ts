@@ -20,8 +20,9 @@ function addNotificationCall(msg: IntercomMessage) {
   toast.setAttribute("data-bs-autohide", "false");
   toast.innerHTML = `
     <div class="toast-body">
-      <i class="bi bi-telephone text-primary"></i>
-      ${msg.contact_name} is calling...
+      <i class="bi bi-telephone fs-5 text-primary m-2"></i>
+      <span class="fs-6 fw-bold">${msg.contact_name}</span>
+      <span class="fs-6">is calling...</span>
     </div>
   `;
   container.appendChild(toast);
