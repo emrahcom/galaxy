@@ -17,10 +17,21 @@ function createCallToast(msg: IntercomMessage) {
   toast.setAttribute("data-bs-autohide", "false");
   toast.innerHTML = `
     <div class="toast-body">
-      <i class="bi bi-telephone fs-5 text-primary m-2"></i>
-      <span class="fs-6 fw-bold">${msg.contact_name}</span>
-      <span class="fs-6">is calling...</span>
-      <audio id="ring-${msg.id}" src="/ringing.mp3" loop></audio>
+      <div class="d-flex">
+        <i class="bi bi-telephone text-primary fs-5 me-3"></i>
+        <span class="fs-6 fw-bold me-2 mt-auto mb-1">${msg.contact_name}</span>
+        <span class="fs-6 me-auto mt-auto mb-1">is calling...</span>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="toast"
+          aria-label="Close"
+          onclick="document.getElementById('msg-${msg.id}')?.remove()"
+        ></button>
+      </div>
+      <div>
+        <audio id="ring-${msg.id}" src="/ringing.mp3" loop></audio>
+      </div>
     </div>
   `;
 
