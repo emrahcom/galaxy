@@ -1,5 +1,6 @@
 import { Toast } from "bootstrap";
 import { actionById, getById, list } from "$lib/api";
+import { isOver } from "$lib/common";
 import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
@@ -41,7 +42,7 @@ async function watchCall(msgId: string) {
   try {
     // this will fail if the call message is already deleted
     const msg = await getById("/api/pri/intercom/get", msgId);
-    console.error(msg);
+    if (isOver(msg.expired_at)) throw new Error("expired call");
 
     setTimeout(() => {
       watchCall(msgId);

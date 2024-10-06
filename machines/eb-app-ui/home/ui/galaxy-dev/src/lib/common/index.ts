@@ -424,7 +424,7 @@ export function isAllDay(date: string, minutes: string) {
 // -----------------------------------------------------------------------------
 // Get the start time and duration and return if it is already ended
 // -----------------------------------------------------------------------------
-export function isOver(date: Date, minutes: number) {
+export function isOver(date: Date, minutes = 0) {
   if (isNaN(date.getTime())) throw new Error("invalid date");
 
   const now = new Date();
