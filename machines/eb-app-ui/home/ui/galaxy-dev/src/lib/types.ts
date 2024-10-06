@@ -144,10 +144,12 @@ export interface IntercomMessage {
   id: string;
   contact_id: string;
   contact_name: string;
+  status: IntercomStatus;
   message_type: Message;
   intercom_attr: {
     [key: string]: string;
   };
+  expired_at: string;
 }
 
 // -----------------------------------------------------------------------------

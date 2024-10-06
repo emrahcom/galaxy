@@ -1,5 +1,5 @@
 import { Toast } from "bootstrap";
-import { actionById, list } from "$lib/api";
+import { actionById, getById, list } from "$lib/api";
 import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
@@ -27,12 +27,38 @@ function addNotificationCall(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
+function delNotificationCall(msgId: string) {
+  try {
+    const toast = document.getElementById(`msg-${msgId}`);
+    if (toast) toast.remove();
+  } catch {
+    // do nothing
+  }
+}
+
+// -----------------------------------------------------------------------------
+function watchCall(msgId: string) {
+  try {
+    // this will fail if the call message is already deleted
+    const msg = getById("/api/pri/intercom/get", msgId);
+    console.error(msg);
+
+    setTimeout(() => {
+      watchCall(msgId);
+    }, 2000);
+  } catch {
+    delNotificationCall(msgId);
+  }
+}
+
+// -----------------------------------------------------------------------------
 async function callHandler(msg: IntercomMessage) {
   try {
     // set as seen
     await actionById("/api/pri/intercom/set/seen", msg.id);
 
     addNotificationCall(msg.id);
+    watchCall(msg.id);
   } catch {
     // do nothing
   }

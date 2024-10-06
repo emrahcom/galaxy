@@ -47,7 +47,7 @@
     try {
       // stop ringing if it is stopped from UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
-        await actionById("/api/pri/intercom/call/del", call.id);
+        await actionById("/api/pri/intercom/del", call.id);
 
         inCall = false;
         disabled = false;
@@ -65,7 +65,7 @@
 
       // since there are only two options (rejected or accepted) at this stage,
       // end the call
-      await actionById("/api/pri/intercom/call/del", call.id);
+      await actionById("/api/pri/intercom/del", call.id);
 
       inCall = false;
       disabled = false;
