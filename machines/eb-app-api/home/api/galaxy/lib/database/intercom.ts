@@ -10,8 +10,8 @@ export async function getIntercom(identityId: string, intercomId: string) {
       FROM intercom ic
         JOIN contact co ON co.identity_id = $1
                             AND co.remote_id = ic.identity_id
-      WHERE id = $2
-        AND remote_id = $1`,
+      WHERE ic.id = $2
+        AND ic.remote_id = $1`,
     args: [
       identityId,
       intercomId,
