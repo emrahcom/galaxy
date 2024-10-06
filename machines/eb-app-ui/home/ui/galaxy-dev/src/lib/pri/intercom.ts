@@ -23,6 +23,7 @@ function addNotificationCall(msg: IntercomMessage) {
       <i class="bi bi-telephone fs-5 text-primary m-2"></i>
       <span class="fs-6 fw-bold">${msg.contact_name}</span>
       <span class="fs-6">is calling...</span>
+      <audio src="/ringing.mp3" loop></audio>
     </div>
   `;
   container.appendChild(toast);
