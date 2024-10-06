@@ -4,15 +4,15 @@ import { isOver } from "$lib/common";
 import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
-function addNotificationCall(msgId: string) {
+function addNotificationCall(msg: IntercomMessage) {
   const container = document.getElementById("notifications");
   if (!container) return;
 
-  const oldToast = document.getElementById(`msg-${msgId}`);
+  const oldToast = document.getElementById(`msg-${msg.id}`);
   if (oldToast) oldToast.remove();
 
   const toast = document.createElement("div");
-  toast.id = `msg-${msgId}`;
+  toast.id = `msg-${msg.id}`;
   toast.setAttribute("class", "toast");
   toast.setAttribute("role", "alert");
   toast.setAttribute("aria-live", "assertive");
@@ -20,7 +20,8 @@ function addNotificationCall(msgId: string) {
   toast.setAttribute("data-bs-autohide", "false");
   toast.innerHTML = `
     <div class="toast-body">
-      ${msgId}
+      <i class="bi bi-telephone text-primary" />
+      ${msg.contact_name} is calling...
     </div>
   `;
   container.appendChild(toast);
@@ -44,6 +45,7 @@ async function watchCall(msgId: string) {
     const msg = await getById("/api/pri/intercom/get", msgId);
     const expiredAt = new Date(msg.expired_at);
     if (isOver(expiredAt)) throw new Error("expired call");
+    if (msg.status !== "seen") throw new Error("invalid status");
 
     setTimeout(() => {
       watchCall(msgId);
@@ -59,7 +61,7 @@ async function callHandler(msg: IntercomMessage) {
     // set as seen
     await actionById("/api/pri/intercom/set/seen", msg.id);
 
-    addNotificationCall(msg.id);
+    addNotificationCall(msg);
     watchCall(msg.id);
   } catch {
     // do nothing
