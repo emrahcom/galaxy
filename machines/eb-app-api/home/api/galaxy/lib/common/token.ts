@@ -13,10 +13,7 @@ export async function generateCryptoKeyHS(
   const cryptoKey = await crypto.subtle.importKey(
     "raw",
     keyData,
-    {
-      name: "HMAC",
-      hash: hash,
-    },
+    { name: "HMAC", hash: hash },
     true,
     ["sign", "verify"],
   );
