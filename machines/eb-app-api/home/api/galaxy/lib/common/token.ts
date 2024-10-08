@@ -128,10 +128,7 @@ async function generateCryptoKeyRS(
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
     binaryDer,
-    {
-      name: "RSASSA-PKCS1-v1_5",
-      hash: hash,
-    },
+    { name: "RSASSA-PKCS1-v1_5", hash: hash },
     true,
     ["sign"],
   );
