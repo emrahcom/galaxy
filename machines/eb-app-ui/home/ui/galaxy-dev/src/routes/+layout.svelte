@@ -10,7 +10,7 @@
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
   import Notifications from "$lib/components/notification/list.svelte";
 
-  let notifications: IntercomMessage[];
+  let notifications: IntercomMessage[] = [];
 
   document.addEventListener("internalMessage", () => {
     notifications = updateNotificationList();
