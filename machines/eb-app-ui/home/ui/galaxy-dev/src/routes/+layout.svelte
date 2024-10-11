@@ -11,7 +11,7 @@
 
   let notifications: string[];
 
-  globalThis.addEventListener("internalMessage", (e) => {
+  document.addEventListener("internalMessage", (e) => {
     console.error("internal message");
     console.error(e);
   });
