@@ -8,7 +8,7 @@
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
-  const identity_id = window.localStorage.getItem("identity_id");
+  const identity_id = globalThis.localStorage.getItem("identity_id");
   if (identity_id) {
     ping();
     intercomHandler();

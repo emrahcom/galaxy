@@ -32,7 +32,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/meeting/member/${meeting.id}`;
+    globalThis.location.href = `/pri/meeting/member/${meeting.id}`;
   }
 
   // ---------------------------------------------------------------------------
@@ -42,7 +42,7 @@
       disabled = true;
 
       await action("/api/pri/meeting/member/candidate/add", p);
-      window.location.href = `/pri/meeting/member/${meeting.id}`;
+      globalThis.location.href = `/pri/meeting/member/${meeting.id}`;
     } catch {
       warning = true;
       disabled = false;

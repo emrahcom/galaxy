@@ -40,7 +40,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/domain";
+    globalThis.location.href = "/pri/domain";
   }
 
   // ---------------------------------------------------------------------------
@@ -50,7 +50,7 @@
       disabled = true;
 
       await action("/api/pri/domain/add", p);
-      window.location.href = "/pri/domain";
+      globalThis.location.href = "/pri/domain";
     } catch {
       warning = true;
       disabled = false;

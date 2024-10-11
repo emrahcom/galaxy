@@ -75,7 +75,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/meeting";
+    globalThis.location.href = "/pri/meeting";
   }
 
   // ---------------------------------------------------------------------------
@@ -125,9 +125,9 @@
 
       // redirect to the next page depending on the schedule type
       if (p.schedule_type === "scheduled") {
-        window.location.href = `/pri/meeting/schedule/add/${meeting.id}#0`;
+        globalThis.location.href = `/pri/meeting/schedule/add/${meeting.id}#0`;
       } else {
-        window.location.href = `/pri/meeting/invite/${meeting.id}`;
+        globalThis.location.href = `/pri/meeting/invite/${meeting.id}`;
       }
     } catch {
       warning = true;

@@ -4,14 +4,14 @@
   async function load() {
     const dm = await getLogoutDataModels();
 
-    window.localStorage.removeItem("identity_id");
-    window.localStorage.removeItem("identity_email");
-    window.sessionStorage.removeItem("kratos_authenticated");
+    globalThis.localStorage.removeItem("identity_id");
+    globalThis.localStorage.removeItem("identity_email");
+    globalThis.sessionStorage.removeItem("kratos_authenticated");
 
     if (dm.instanceOf === "KratosLogout") {
-      window.location.replace(dm.logout_url);
+      globalThis.location.replace(dm.logout_url);
     } else {
-      window.location.replace("/");
+      globalThis.location.replace("/");
     }
   }
 

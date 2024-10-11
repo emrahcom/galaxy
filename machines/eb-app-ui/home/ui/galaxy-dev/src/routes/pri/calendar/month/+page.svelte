@@ -3,5 +3,5 @@
 
   const date = getToday();
 
-  window.location.href = `/pri/calendar/month/${date}`;
+  globalThis.location.href = `/pri/calendar/month/${date}`;
 </script>

@@ -1,3 +1,3 @@
 <script lang="ts">
-  window.location.replace("/pri/calendar");
+  globalThis.location.replace("/pri/calendar");
 </script>

@@ -6,5 +6,5 @@ export async function join(code: string) {
 
   if (!link.url) throw new Error("URL not found");
 
-  window.location.replace(link.url);
+  globalThis.location.replace(link.url);
 }

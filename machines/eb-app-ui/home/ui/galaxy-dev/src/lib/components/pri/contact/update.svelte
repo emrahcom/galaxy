@@ -16,7 +16,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/contact";
+    globalThis.location.href = "/pri/contact";
   }
 
   // ---------------------------------------------------------------------------
@@ -26,7 +26,7 @@
       disabled = true;
 
       await action("/api/pri/contact/update", p);
-      window.location.href = "/pri/contact";
+      globalThis.location.href = "/pri/contact";
     } catch {
       warning = true;
       disabled = false;

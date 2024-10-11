@@ -34,7 +34,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefBackTitle}
           on:click={() => {
-            window.location.href = hrefBack;
+            globalThis.location.href = hrefBack;
           }}
         >
           <i class="bi bi-arrow-return-left"></i>
@@ -47,7 +47,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefMeetingTitle}
           on:click={() => {
-            window.location.href = hrefMeeting;
+            globalThis.location.href = hrefMeeting;
           }}
         >
           <i class="bi bi-pencil"></i>
@@ -60,7 +60,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefCalendarTitle}
           on:click={() => {
-            window.location.href = hrefCalendar;
+            globalThis.location.href = hrefCalendar;
           }}
         >
           <i class="bi bi-calendar3"></i>
@@ -73,7 +73,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefPreviousTitle}
           on:click={() => {
-            window.location.href = hrefPrevious;
+            globalThis.location.href = hrefPrevious;
           }}
         >
           <i class="bi bi-chevron-left"></i>
@@ -86,7 +86,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefNextTitle}
           on:click={() => {
-            window.location.href = hrefNext;
+            globalThis.location.href = hrefNext;
           }}
         >
           <i class="bi bi-chevron-right"></i>
@@ -100,7 +100,7 @@
         data-bs-toggle="tooltip"
         data-bs-title={hrefAddTitle}
         on:click={() => {
-          window.location.href = hrefAdd;
+          globalThis.location.href = hrefAdd;
         }}
       >
         <i class="bi bi-plus-lg"></i>

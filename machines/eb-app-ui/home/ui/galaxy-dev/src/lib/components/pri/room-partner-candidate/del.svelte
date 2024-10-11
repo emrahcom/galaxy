@@ -15,7 +15,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/room/partner/${p.room_id}`;
+    globalThis.location.href = `/pri/room/partner/${p.room_id}`;
   }
 
   // ---------------------------------------------------------------------------
@@ -25,7 +25,7 @@
       disabled = true;
 
       await actionById("/api/pri/room/partner/candidate/del", p.id);
-      window.location.replace(`/pri/room/partner/${p.room_id}`);
+      globalThis.location.replace(`/pri/room/partner/${p.room_id}`);
     } catch {
       warning = true;
       disabled = false;

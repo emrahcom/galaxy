@@ -13,7 +13,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/meeting`;
+    globalThis.location.href = `/pri/meeting`;
   }
 </script>
 

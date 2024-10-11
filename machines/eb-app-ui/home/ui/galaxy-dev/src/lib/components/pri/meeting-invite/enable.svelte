@@ -21,7 +21,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/meeting/invite/${p.meeting_id}`;
+    globalThis.location.href = `/pri/meeting/invite/${p.meeting_id}`;
   }
 
   // ---------------------------------------------------------------------------
@@ -31,7 +31,7 @@
       disabled = true;
 
       await actionById("/api/pri/meeting/invite/enable", p.id);
-      window.location.href = `/pri/meeting/invite/${p.meeting_id}`;
+      globalThis.location.href = `/pri/meeting/invite/${p.meeting_id}`;
     } catch {
       warning = true;
       disabled = false;

@@ -16,7 +16,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/profile";
+    globalThis.location.href = "/pri/profile";
   }
 
   // ---------------------------------------------------------------------------
@@ -26,7 +26,7 @@
       disabled = true;
 
       await action("/api/pri/profile/update", p);
-      window.location.href = "/pri/profile";
+      globalThis.location.href = "/pri/profile";
     } catch {
       warning = true;
       disabled = false;

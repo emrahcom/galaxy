@@ -18,12 +18,12 @@
     const date = toLocaleDate($page.params.date);
 
     if (date != $page.params.date) {
-      window.location.href = `/pri/calendar/month/${date}`;
+      globalThis.location.href = `/pri/calendar/month/${date}`;
       throw new Error("invalid date format");
     }
   } catch {
     const date = getToday();
-    window.location.href = `/pri/calendar/month/${date}`;
+    globalThis.location.href = `/pri/calendar/month/${date}`;
     throw new Error("invalid date");
   }
 

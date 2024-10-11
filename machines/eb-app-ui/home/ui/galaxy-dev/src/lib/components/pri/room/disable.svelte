@@ -20,7 +20,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/room";
+    globalThis.location.href = "/pri/room";
   }
 
   // ---------------------------------------------------------------------------
@@ -30,7 +30,7 @@
       disabled = true;
 
       await actionById("/api/pri/room/disable", p.id);
-      window.location.href = "/pri/room";
+      globalThis.location.href = "/pri/room";
     } catch {
       warning = true;
       disabled = false;

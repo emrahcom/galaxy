@@ -54,9 +54,9 @@
   function goBack() {
     if (hash.match("^#[0-9]{4}-[01][0-9]-[0123][0-9]$")) {
       const day = hash.slice(1);
-      window.location.href = `/pri/calendar/month/${day}`;
+      globalThis.location.href = `/pri/calendar/month/${day}`;
     } else {
-      window.location.href = `/pri/meeting`;
+      globalThis.location.href = `/pri/meeting`;
     }
   }
 
@@ -64,7 +64,7 @@
   async function join(membershipId: string) {
     try {
       warning = false;
-      window.location.href = `/pri/member/join/${membershipId}`;
+      globalThis.location.href = `/pri/member/join/${membershipId}`;
     } catch {
       warning = true;
     }

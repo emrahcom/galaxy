@@ -15,7 +15,7 @@
   data-bs-toggle="tooltip"
   data-bs-title={title}
   on:click={() => {
-    window.location.href = "/";
+    globalThis.location.href = "/";
   }}
 >
   <img src="/logo.svg" alt="logo" height="50rem" />

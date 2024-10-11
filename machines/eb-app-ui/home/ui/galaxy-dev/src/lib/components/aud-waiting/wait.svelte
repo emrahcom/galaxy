@@ -47,14 +47,14 @@
 
   // ---------------------------------------------------------------------------
   function goHome() {
-    window.location.href = `/`;
+    globalThis.location.href = `/`;
   }
 
   // ---------------------------------------------------------------------------
   async function join(code: string) {
     try {
       warning = false;
-      window.location.href = `/aud/join/${code}`;
+      globalThis.location.href = `/aud/join/${code}`;
     } catch {
       warning = true;
     }

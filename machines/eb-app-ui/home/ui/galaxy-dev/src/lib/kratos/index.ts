@@ -7,7 +7,7 @@ import type {
 
 // -----------------------------------------------------------------------------
 export async function getIdentity(): Promise<KratosIdentity> {
-  const KRATOS_FQDN = window.localStorage.getItem("kratos_fqdn");
+  const KRATOS_FQDN = globalThis.localStorage.getItem("kratos_fqdn");
   const url = `https://${KRATOS_FQDN}/sessions/whoami`;
   const res = await get(url);
 
@@ -23,7 +23,7 @@ export async function getIdentity(): Promise<KratosIdentity> {
 export async function getLogoutDataModels(): Promise<
   KratosLogout | KratosError
 > {
-  const KRATOS_FQDN = window.localStorage.getItem("kratos_fqdn");
+  const KRATOS_FQDN = globalThis.localStorage.getItem("kratos_fqdn");
   const url = `https://${KRATOS_FQDN}/self-service/logout/browser`;
   const res = await get(url);
   const dm = await res.json();

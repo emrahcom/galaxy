@@ -42,7 +42,7 @@
           href="/pri/calendar"
           on:click|preventDefault={() => {
             closeMenu();
-            window.location.href = "/pri/calendar";
+            globalThis.location.href = "/pri/calendar";
           }}
         >
           Calendar
@@ -54,7 +54,7 @@
           href="/pri/meeting"
           on:click|preventDefault={() => {
             closeMenu();
-            window.location.href = "/pri/meeting";
+            globalThis.location.href = "/pri/meeting";
           }}
         >
           Meetings
@@ -66,7 +66,7 @@
           href="/pri/room"
           on:click|preventDefault={() => {
             closeMenu();
-            window.location.href = "/pri/room";
+            globalThis.location.href = "/pri/room";
           }}
         >
           Rooms
@@ -78,7 +78,7 @@
           href="/pri/domain"
           on:click|preventDefault={() => {
             closeMenu();
-            window.location.href = "/pri/domain";
+            globalThis.location.href = "/pri/domain";
           }}
         >
           Domains
@@ -90,7 +90,7 @@
           href="/pri/profile"
           on:click|preventDefault={() => {
             closeMenu();
-            window.location.href = "/pri/profile";
+            globalThis.location.href = "/pri/profile";
           }}
         >
           Profiles
@@ -102,7 +102,7 @@
           href="/pri/contact"
           on:click|preventDefault={() => {
             closeMenu();
-            window.location.href = "/pri/contact";
+            globalThis.location.href = "/pri/contact";
           }}
         >
           Contacts

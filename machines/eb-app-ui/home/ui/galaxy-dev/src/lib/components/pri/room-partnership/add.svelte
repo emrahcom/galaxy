@@ -19,7 +19,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = `/pri/room`;
+    globalThis.location.href = `/pri/room`;
   }
 
   // ---------------------------------------------------------------------------
@@ -29,7 +29,7 @@
       disabled = true;
 
       await action("/api/pri/room/partnership/add/bycode", p);
-      window.location.href = `/pri/room`;
+      globalThis.location.href = `/pri/room`;
     } catch {
       warning = true;
       disabled = false;

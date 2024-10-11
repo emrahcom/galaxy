@@ -17,7 +17,7 @@
   data-bs-toggle="tooltip"
   data-bs-title={title}
   on:click={() => {
-    window.location.href = href;
+    globalThis.location.href = href;
   }}
 >
   <i class="bi {icon}"></i>

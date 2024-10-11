@@ -3,7 +3,7 @@
 
   // ---------------------------------------------------------------------------
   function updateUsername() {
-    username = window.localStorage.getItem("identity_email") || "";
+    username = globalThis.localStorage.getItem("identity_email") || "";
   }
 
   // ---------------------------------------------------------------------------

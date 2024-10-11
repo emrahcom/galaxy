@@ -13,7 +13,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <!--
-  There are href and window.location at the same time to prevent undeleted
+  There are href and globalThis.location at the same time to prevent undeleted
   tooltip issue. Otherwise the tooltip stays visible in the next page after the
   click.
 
@@ -28,7 +28,7 @@
     if (e.ctrlKey || e.metaKey) return;
 
     e.preventDefault();
-    window.location.href = href;
+    globalThis.location.href = href;
   }}
 >
   <i class="bi {icon}"></i>

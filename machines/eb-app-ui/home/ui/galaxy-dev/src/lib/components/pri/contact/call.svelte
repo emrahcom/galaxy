@@ -37,7 +37,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/contact";
+    globalThis.location.href = "/pri/contact";
   }
 
   // ---------------------------------------------------------------------------
@@ -71,7 +71,7 @@
       disabled = false;
 
       // go to the meeting room if accepted
-      if (ring.status === "accepted") window.location.href = call.url;
+      if (ring.status === "accepted") globalThis.location.href = call.url;
     } catch {
       // cancel the call if error
       inCall = false;

@@ -17,7 +17,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    window.location.href = "/pri/domain";
+    globalThis.location.href = "/pri/domain";
   }
 
   // ---------------------------------------------------------------------------
@@ -27,7 +27,7 @@
       disabled = true;
 
       await actionById("/api/pri/domain/enable", p.id);
-      window.location.href = "/pri/domain";
+      globalThis.location.href = "/pri/domain";
     } catch {
       warning = true;
       disabled = false;

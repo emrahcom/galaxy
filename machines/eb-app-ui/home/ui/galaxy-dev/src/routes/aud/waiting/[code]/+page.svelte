@@ -12,7 +12,7 @@
 
   // ---------------------------------------------------------------------------
   function goHome() {
-    window.location.href = `/`;
+    globalThis.location.href = `/`;
   }
 </script>
 

@@ -103,14 +103,15 @@ async function callHandler(msg: IntercomMessage) {
 export async function intercomHandler() {
   try {
     const now = new Date().getTime();
-    const checkedAt = window.localStorage.getItem("intercom_checked_at") || "0";
+    const checkedAt =
+      globalThis.localStorage.getItem("intercom_checked_at") || "0";
 
     if (isNaN(Number(checkedAt))) {
-      window.localStorage.setItem("intercom_checked_at", String(now));
+      globalThis.localStorage.setItem("intercom_checked_at", String(now));
     }
 
     if (now - Number(checkedAt) > 3000) {
-      window.localStorage.setItem("intercom_checked_at", String(now));
+      globalThis.localStorage.setItem("intercom_checked_at", String(now));
 
       const messages: IntercomMessage[] = await list(
         "/api/pri/intercom/list",
