@@ -1,6 +1,7 @@
 <script lang="ts">
   import { ping } from "$lib/pri/identity";
-  import { intercomHandler } from "$lib/pri/intercom";
+  import { intercomHandler, updateNotificationList } from "$lib/pri/intercom";
+  import type { IntercomMessage } from "$lib/types";
   import "bootstrap-icons/font/bootstrap-icons.min.css";
   import "bootstrap/dist/css/bootstrap.min.css";
   import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -9,17 +10,15 @@
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
   import Notifications from "$lib/components/notification/list.svelte";
 
-  let notifications: string[];
+  let notifications: IntercomMessage[];
 
-  document.addEventListener("internalMessage", (e) => {
-    console.error("internal message");
-    console.error(e);
+  document.addEventListener("internalMessage", () => {
+    notifications = updateNotificationList();
   });
 
   globalThis.addEventListener("storage", (e) => {
     if (e.key?.match("^msg-")) {
-      console.error("storage event");
-      console.error(e);
+      notifications = updateNotificationList();
     }
   });
 

@@ -4,6 +4,26 @@ import { isOver } from "$lib/common";
 import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
+export function updateNotificationList() {
+  const list: IntercomMessage[] = [];
+
+  try {
+    for (const key in globalThis.localStorage) {
+      if (!key.match("^msg-")) continue;
+
+      const value = globalThis.localStorage.getItem(key);
+      if (!value) continue;
+
+      list.push(JSON.parse(value) as IntercomMessage);
+    }
+  } catch {
+    // do nothing
+  }
+
+  return list;
+}
+
+// -----------------------------------------------------------------------------
 //function createCallToast(msg: IntercomMessage) {
 //  const oldToast = document.getElementById(`msg-${msg.id}`);
 //  if (oldToast) oldToast.remove();

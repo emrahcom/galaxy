@@ -1,5 +1,7 @@
 <script lang="ts">
-  export let notifications: string[];
+  import type { IntercomMessage } from "$lib/types";
+
+  export let notifications: IntercomMessage[];
 
   console.error(notifications);
 </script>
