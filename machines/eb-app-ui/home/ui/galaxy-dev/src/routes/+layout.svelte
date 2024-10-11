@@ -17,8 +17,10 @@
   });
 
   globalThis.addEventListener("storage", (e) => {
-    console.error("storage event");
-    console.error(e);
+    if (e.key?.match("^msg-")) {
+      console.error("storage event");
+      console.error(e);
+    }
   });
 
   const identity_id = globalThis.localStorage.getItem("identity_id");
