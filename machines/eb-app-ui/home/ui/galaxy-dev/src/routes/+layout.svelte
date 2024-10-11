@@ -7,26 +7,27 @@
   import Brand from "$lib/components/nav/brand.svelte";
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
+  import Notifications from "$lib/components/notification/list.svelte";
 
-  let notifications = [];
-  const event = new Event("notification");
+  let notifications: string[];
+
+  globalThis.addEventListener("notificationEvent", (e) => {
+    console.error("pinged from custom");
+    console.error(e);
+  });
+
+  globalThis.addEventListener("storage", (e) => {
+    if (e.key === "pinged") {
+      console.error("pinged from storage");
+      console.error(e);
+    }
+  });
 
   const identity_id = globalThis.localStorage.getItem("identity_id");
   if (identity_id) {
     ping();
     intercomHandler();
   }
-
-  globalThis.addListener("notifitication", (e) => {
-    console.error("notification triggered");
-    console.error(e);
-  });
-  globalThis.addListener("storage", (e) => {
-    if (e.key === "") {
-      console.error("notification triggered");
-      console.error(e);
-    }
-  });
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -55,5 +56,5 @@
 
 <!-- Notifications will be added inside this container -->
 <div aria-live="polite" aria-atomic="true" class="position-relative">
-  <div id="notifications" class="toast-container bottom-0 end-0 p-3"></div>
+  <Notifications bind:notifications />
 </div>
