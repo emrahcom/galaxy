@@ -11,16 +11,14 @@
 
   let notifications: string[];
 
-  globalThis.addEventListener("notificationEvent", (e) => {
-    console.error("pinged from custom");
+  globalThis.addEventListener("internalMessage", (e) => {
+    console.error("internal message");
     console.error(e);
   });
 
   globalThis.addEventListener("storage", (e) => {
-    if (e.key === "pinged") {
-      console.error("pinged from storage");
-      console.error(e);
-    }
+    console.error("storage event");
+    console.error(e);
   });
 
   const identity_id = globalThis.localStorage.getItem("identity_id");
