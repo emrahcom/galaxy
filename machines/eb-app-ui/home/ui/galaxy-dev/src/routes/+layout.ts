@@ -31,9 +31,11 @@ export async function load() {
         globalThis.sessionStorage.setItem("kratos_authenticated", "ok");
       })
       .catch(() => {
-        globalThis.localStorage.removeItem("identity_id");
-        globalThis.localStorage.removeItem("identity_email");
-        globalThis.sessionStorage.removeItem("kratos_authenticated");
+        const kratosFqdn = globalThis.localStorage.getItem("kratos_fqdn");
+
+        globalThis.localStorage.clear();
+        globalThis.sessionStorage.clear();
+        globalThis.localStorage.setItem("kratos_fqdn", kratosFqdn);
       });
   }
 }

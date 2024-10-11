@@ -8,11 +8,26 @@
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
 
+  let notifications = [];
+  const event = new Event("notification");
+
   const identity_id = globalThis.localStorage.getItem("identity_id");
   if (identity_id) {
     ping();
     intercomHandler();
   }
+
+  globalThis.addListener("notifitication", (e) => {
+    console.error("notification triggered");
+    console.error(e);
+  });
+  globalThis.addListener("storage", (e) => {
+    if (e.key === "") {
+      console.error("notification triggered");
+      console.error(e);
+    }
+  });
+
 </script>
 
 <!-- -------------------------------------------------------------------------->
