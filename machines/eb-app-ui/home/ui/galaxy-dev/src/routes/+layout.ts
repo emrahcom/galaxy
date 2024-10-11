@@ -31,7 +31,7 @@ export async function load() {
         globalThis.sessionStorage.setItem("kratos_authenticated", "ok");
       })
       .catch(() => {
-        const kratosFqdn = globalThis.localStorage.getItem("kratos_fqdn");
+        const kratosFqdn = globalThis.localStorage.getItem("kratos_fqdn") || "";
 
         globalThis.localStorage.clear();
         globalThis.sessionStorage.clear();
