@@ -4,7 +4,7 @@ import { isOver } from "$lib/common";
 import type { IntercomMessage } from "$lib/types";
 
 // -----------------------------------------------------------------------------
-export function updateNotificationList() {
+export function updateMessageList() {
   const list: IntercomMessage[] = [];
 
   try {
@@ -67,7 +67,7 @@ export function updateNotificationList() {
 //}
 
 // -----------------------------------------------------------------------------
-function addCallNotification(msg: IntercomMessage) {
+function addCallMessage(msg: IntercomMessage) {
   //const container = document.getElementById("notifications");
   //if (!container) return;
 
@@ -87,7 +87,7 @@ function addCallNotification(msg: IntercomMessage) {
 }
 
 // -----------------------------------------------------------------------------
-function delCallNotification(msgId: string) {
+function delCallMessage(msgId: string) {
   try {
     globalThis.localStorage.removeItem(`msg-${msgId}`);
     document.dispatchEvent(new CustomEvent("internalMessage"));
@@ -109,7 +109,7 @@ async function watchCall(msgId: string) {
       watchCall(msgId);
     }, 2000);
   } catch {
-    delCallNotification(msgId);
+    delCallMessage(msgId);
   }
 }
 
@@ -119,7 +119,7 @@ async function callHandler(msg: IntercomMessage) {
     // set as seen
     await actionById("/api/pri/intercom/set/seen", msg.id);
 
-    addCallNotification(msg);
+    addCallMessage(msg);
     watchCall(msg.id);
   } catch {
     // do nothing

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { ping } from "$lib/pri/identity";
-  import { intercomHandler, updateNotificationList } from "$lib/pri/intercom";
+  import { intercomHandler, updateMessageList } from "$lib/pri/intercom";
   import type { IntercomMessage } from "$lib/types";
   import "bootstrap-icons/font/bootstrap-icons.min.css";
   import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,19 +8,19 @@
   import Brand from "$lib/components/nav/brand.svelte";
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
-  import Notifications from "$lib/components/notification/list.svelte";
+  import Messages from "$lib/components/message/list.svelte";
 
-  let notifications: IntercomMessage[] = [];
+  let messages: IntercomMessage[] = [];
 
-  // this event is triggered if a notification action happens inside this tab
+  // this event is triggered if a message action happens inside this tab
   document.addEventListener("internalMessage", () => {
-    notifications = updateNotificationList();
+    messages = updateMessageList();
   });
 
-  // this event is triggered if a notification action happens inside other tabs
+  // this event is triggered if a message action happens inside other tabs
   globalThis.addEventListener("storage", (e) => {
     if (e.key?.match("^msg-")) {
-      notifications = updateNotificationList();
+      messages = updateMessageList();
     }
   });
 
@@ -55,7 +55,7 @@
   <slot />
 </div>
 
-<!-- Notifications will be added inside this container -->
+<!-- Messages will be added inside this container -->
 <div aria-live="polite" aria-atomic="true" class="position-relative">
-  <Notifications bind:notifications />
+  <Messages bind:messages />
 </div>
