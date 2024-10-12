@@ -19,12 +19,12 @@
 
     if (date != $page.params.date) {
       globalThis.location.href = `/pri/calendar/month/${date}`;
-      throw new Error("invalid date format");
+      throw "invalid date format";
     }
   } catch {
     const date = getToday();
     globalThis.location.href = `/pri/calendar/month/${date}`;
-    throw new Error("invalid date");
+    throw "invalid date";
   }
 
   const date = $page.params.date;

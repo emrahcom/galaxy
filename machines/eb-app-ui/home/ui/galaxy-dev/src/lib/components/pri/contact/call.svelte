@@ -101,7 +101,7 @@
 
       // initialize the call and get the call data
       call = await action("/api/pri/contact/call", data);
-      if (!call.url) throw new Error("no url for call");
+      if (!call.url) throw "no url for call";
 
       // start ringing
       setTimeout(ringCall, 1000);

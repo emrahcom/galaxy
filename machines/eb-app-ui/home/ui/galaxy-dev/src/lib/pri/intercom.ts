@@ -54,8 +54,8 @@ async function watchCall(msgId: string) {
     // this will fail if the call message is already deleted
     const msg = await getById("/api/pri/intercom/get", msgId);
     const expiredAt = new Date(msg.expired_at);
-    if (isOver(expiredAt)) throw new Error("expired call");
-    if (msg.status !== "seen") throw new Error("invalid status");
+    if (isOver(expiredAt)) throw "expired call";
+    if (msg.status !== "seen") throw "invalid status";
 
     setTimeout(() => {
       watchCall(msgId);

@@ -91,11 +91,11 @@
       const _duration = Math.round(Number(duration));
 
       if (isNaN(_duration)) {
-        throw new Error("no valid duration");
+        throw "no valid duration";
       } else if (_duration === 0) {
-        throw new Error("no duration");
+        throw "no duration";
       } else if (_duration < 0) {
-        throw new Error("negative duration");
+        throw "negative duration";
       } else if (_duration > 1440) {
         duration = 1440;
       } else {
@@ -144,13 +144,13 @@
 
     if (p.schedule_attr.type === "o") {
       // if the end time of the only session is over, throw an error
-      if (isOver(started_at, duration)) throw new Error("it is already over");
+      if (isOver(started_at, duration)) throw "it is already over";
     } else if (p.schedule_attr.type === "d") {
       // If the end time of the last session is over, throw an error.
       // Dont care how many sessions are over if there is still time for the
       // last one. Count the old sessions too.
       if (isOver(started_at, (times - 1) * everyDay * 1440 + duration)) {
-        throw new Error("it is already over");
+        throw "it is already over";
       }
 
       p.schedule_attr.rep_end_type = "x";
@@ -158,11 +158,11 @@
       p.schedule_attr.rep_every = String(everyDay);
     } else if (p.schedule_attr.type === "w") {
       // If the end date is over, throw an error.
-      if (isOver(ended_at)) throw new Error("it is already over");
+      if (isOver(ended_at)) throw "it is already over";
       // if the last date is earlier than the first date, throw an error.
-      if (date1 < date0) throw new Error("invalid period");
+      if (date1 < date0) throw "invalid period";
       // if no selected day, throw an error.
-      if (!(d0 || d1 || d2 || d3 || d4 || d5 || d6)) throw new Error("no day");
+      if (!(d0 || d1 || d2 || d3 || d4 || d5 || d6)) throw "no day";
 
       p.schedule_attr.rep_end_type = "at";
       p.schedule_attr.rep_end_at = ended_at.toISOString();

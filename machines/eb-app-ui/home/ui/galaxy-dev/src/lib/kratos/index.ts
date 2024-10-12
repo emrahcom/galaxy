@@ -12,7 +12,7 @@ export async function getIdentity(): Promise<KratosIdentity> {
   const res = await get(url);
 
   if (res.status !== 200) {
-    throw new Error("no identity");
+    throw "no identity";
   }
 
   const dm = await res.json();
@@ -33,7 +33,7 @@ export async function getLogoutDataModels(): Promise<
   } else if (dm.logout_url) {
     dm.instanceOf = "KratosLogout";
   } else {
-    throw new Error("unexpected Kratos object");
+    throw "unexpected Kratos object";
   }
 
   return dm;

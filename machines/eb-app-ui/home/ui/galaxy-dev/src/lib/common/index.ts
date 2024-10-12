@@ -63,7 +63,7 @@ export function dateAfterXDays(days: number) {
   const now = new Date();
 
   const date = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
-  if (isNaN(date.getTime())) throw new Error("invalid date");
+  if (isNaN(date.getTime())) throw "invalid date";
 
   return (
     date.getFullYear() +
@@ -80,7 +80,7 @@ export function dateAfterXDays(days: number) {
 // -----------------------------------------------------------------------------
 export function getFirstDayOfMonth(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   const diff = _date.getDate() - 1;
   const first = new Date(_date.getTime() - diff * 24 * 60 * 60 * 1000);
@@ -100,7 +100,7 @@ export function getFirstDayOfMonth(date: string) {
 // -----------------------------------------------------------------------------
 export function getDayOfPreviousMonth(date: string) {
   const date0 = new Date(date);
-  if (isNaN(date0.getTime())) throw new Error("invalid date");
+  if (isNaN(date0.getTime())) throw "invalid date";
 
   let day = date0.getDate();
   const date1 = new Date(date0.getTime() - day * 24 * 60 * 60 * 1000);
@@ -136,7 +136,7 @@ export function getDayOfPreviousMonth(date: string) {
 // -----------------------------------------------------------------------------
 export function getDayOfNextMonth(date: string) {
   const date0 = new Date(date);
-  if (isNaN(date0.getTime())) throw new Error("invalid date");
+  if (isNaN(date0.getTime())) throw "invalid date";
 
   let day = date0.getDate();
   let diffAsDays = 12;
@@ -175,7 +175,7 @@ export function getDayOfNextMonth(date: string) {
 // -----------------------------------------------------------------------------
 export function getFirstDayOfWeek(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   const diff = _date.getDay();
   const sunday = new Date(_date.getTime() - diff * 24 * 60 * 60 * 1000);
@@ -196,7 +196,7 @@ export function getFirstDayOfWeek(date: string) {
 // -----------------------------------------------------------------------------
 export function getLastDayOfWeek(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   const diff = 6 - _date.getDay();
   const saturday = new Date(_date.getTime() + diff * 24 * 60 * 60 * 1000);
@@ -216,7 +216,7 @@ export function getLastDayOfWeek(date: string) {
 // -----------------------------------------------------------------------------
 export function getCalendarDay(firstDay: string, week: number, day: number) {
   const date0 = new Date(firstDay);
-  if (isNaN(date0.getTime())) throw new Error("invalid date");
+  if (isNaN(date0.getTime())) throw "invalid date";
 
   const date1 = new Date(
     date0.getTime() +
@@ -239,7 +239,7 @@ export function getCalendarDay(firstDay: string, week: number, day: number) {
 // -----------------------------------------------------------------------------
 export function toLocaleDate(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return (
     _date.getFullYear() +
@@ -256,7 +256,7 @@ export function toLocaleDate(date: string) {
 // -----------------------------------------------------------------------------
 export function toLocaleTime(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return (
     ("0" + _date.getHours()).slice(-2) +
@@ -270,7 +270,7 @@ export function toLocaleTime(date: string) {
 // -----------------------------------------------------------------------------
 export function toLocaleMonthName(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return _date.toLocaleString("default", { month: "short" });
 }
@@ -280,7 +280,7 @@ export function toLocaleMonthName(date: string) {
 // -----------------------------------------------------------------------------
 export function toLocaleMonthNameLong(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return _date.toLocaleString("default", { month: "long" });
 }
@@ -290,7 +290,7 @@ export function toLocaleMonthNameLong(date: string) {
 // -----------------------------------------------------------------------------
 export function showLocaleDate(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return _date.toLocaleString(undefined, {
     year: "numeric",
@@ -304,7 +304,7 @@ export function showLocaleDate(date: string) {
 // -----------------------------------------------------------------------------
 export function showLocaleDatetime(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return _date.toLocaleString(undefined, {
     year: "numeric",
@@ -320,10 +320,10 @@ export function showLocaleDatetime(date: string) {
 // -----------------------------------------------------------------------------
 export function toLocaleInterval(date: string, minutes: number) {
   const date0 = new Date(date);
-  if (isNaN(date0.getTime())) throw new Error("invalid date");
+  if (isNaN(date0.getTime())) throw "invalid date";
 
   const date1 = new Date(date0.getTime() + minutes * 60 * 1000);
-  if (isNaN(date1.getTime())) throw new Error("invalid date");
+  if (isNaN(date1.getTime())) throw "invalid date";
 
   const time0 = date0.toLocaleString(undefined, {
     hour: "2-digit",
@@ -345,10 +345,10 @@ export function getEndTime(time: string, minutes: number) {
   const today = getToday();
 
   const date0 = new Date(`${today}T${time}`);
-  if (isNaN(date0.getTime())) throw new Error("invalid date");
+  if (isNaN(date0.getTime())) throw "invalid date";
 
   const date1 = new Date(date0.getTime() + minutes * 60 * 1000);
-  if (isNaN(date1.getTime())) throw new Error("invalid date");
+  if (isNaN(date1.getTime())) throw "invalid date";
 
   return (
     ("0" + date1.getHours()).slice(-2) +
@@ -364,10 +364,10 @@ export function getDuration(time0: string, time1: string) {
   const today = getToday();
 
   const date0 = new Date(`${today}T${time0}`);
-  if (isNaN(date0.getTime())) throw new Error("invalid date");
+  if (isNaN(date0.getTime())) throw "invalid date";
 
   const date1 = new Date(`${today}T${time1}`);
-  if (isNaN(date1.getTime())) throw new Error("invalid date");
+  if (isNaN(date1.getTime())) throw "invalid date";
 
   const millis = date1.getTime() - date0.getTime();
   const minutes = Math.round(millis / (1000 * 60));
@@ -386,7 +386,7 @@ export function isOnline(date: string) {
   const now = new Date();
 
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   const diff = _date.getTime() - now.getTime();
 
@@ -398,7 +398,7 @@ export function isToday(date: string) {
   const now = new Date();
 
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return (
     _date.getFullYear() === now.getFullYear() &&
@@ -414,7 +414,7 @@ export function isToday(date: string) {
 // -----------------------------------------------------------------------------
 export function isAllDay(date: string, minutes: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   return (
     _date.getHours() === 0 && _date.getMinutes() === 0 && minutes === "1440"
@@ -425,7 +425,7 @@ export function isAllDay(date: string, minutes: string) {
 // Get the start time and duration and return if it is already ended
 // -----------------------------------------------------------------------------
 export function isOver(date: Date, minutes = 0) {
-  if (isNaN(date.getTime())) throw new Error("invalid date");
+  if (isNaN(date.getTime())) throw "invalid date";
 
   const now = new Date();
   const endTime = date.getTime() + minutes * 60 * 1000;

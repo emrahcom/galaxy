@@ -4,11 +4,11 @@ import { post } from "$lib/http";
 export async function action(url: string, payload: unknown) {
   const res = await post(url, payload);
 
-  if (res.status !== 200) throw new Error("post failed");
+  if (res.status !== 200) throw "post failed";
 
   const rows = await res.json();
 
-  if (!rows[0]) throw new Error("no result");
+  if (!rows[0]) throw "no result";
 
   return rows[0];
 }
@@ -55,7 +55,7 @@ export async function list(url: string, limit = 10, offset = 0) {
   };
   const res = await post(url, payload);
 
-  if (res.status !== 200) throw new Error("post failed");
+  if (res.status !== 200) throw "post failed";
 
   const rows = await res.json();
 
@@ -76,7 +76,7 @@ export async function listById(
   };
   const res = await post(url, payload);
 
-  if (res.status !== 200) throw new Error("post failed");
+  if (res.status !== 200) throw "post failed";
 
   const rows = await res.json();
 
@@ -97,7 +97,7 @@ export async function listByValue(
   };
   const res = await post(url, payload);
 
-  if (res.status !== 200) throw new Error("post failed");
+  if (res.status !== 200) throw "post failed";
 
   const rows = await res.json();
 
