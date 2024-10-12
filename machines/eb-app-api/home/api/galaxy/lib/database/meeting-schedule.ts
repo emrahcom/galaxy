@@ -390,7 +390,7 @@ export async function updateMeetingSchedule(
     });
 
   // dont continue if the schedule was not updated
-  if (rows[0] === undefined) throw new Error("No updated schedule");
+  if (rows[0] === undefined) throw "No updated schedule";
 
   // delete old sessions
   await delMeetingSessionBySchedule(trans, scheduleId);

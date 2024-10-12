@@ -39,9 +39,9 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const domainAttr = pl.domain_attr as Attr;
 
   if (authType === "jaas") {
-    if (!isValidUrl(domainAttr.jaas_url)) throw new Error("invalid input");
+    if (!isValidUrl(domainAttr.jaas_url)) throw "invalid input";
   } else {
-    if (!isValidUrl(domainAttr.url)) throw new Error("invalid input");
+    if (!isValidUrl(domainAttr.url)) throw "invalid input";
   }
 
   return await addDomain(
@@ -69,9 +69,9 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const domainAttr = pl.domain_attr as Attr;
 
   if (authType === "jaas") {
-    if (!isValidUrl(domainAttr.jaas_url)) throw new Error("invalid input");
+    if (!isValidUrl(domainAttr.jaas_url)) throw "invalid input";
   } else {
-    if (!isValidUrl(domainAttr.url)) throw new Error("invalid input");
+    if (!isValidUrl(domainAttr.url)) throw "invalid input";
   }
 
   return await updateDomain(

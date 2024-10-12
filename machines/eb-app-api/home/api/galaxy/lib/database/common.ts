@@ -100,6 +100,6 @@ export function getOffset(offset: number): number {
 // -----------------------------------------------------------------------------
 export function checkAttr(attr: Attr) {
   for (const key in attr) {
-    if (typeof attr[key] !== "string") throw new Error("none string value");
+    if (typeof attr[key] !== "string") throw "none string value";
   }
 }

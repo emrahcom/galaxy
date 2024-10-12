@@ -297,7 +297,7 @@ export async function generateMeetingUrl(
 // -----------------------------------------------------------------------------
 export function getFirstDayOfMonth(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   const diff = _date.getDate() - 1;
   const first = new Date(_date.getTime() - diff * 24 * 60 * 60 * 1000);
@@ -317,7 +317,7 @@ export function getFirstDayOfMonth(date: string) {
 // -----------------------------------------------------------------------------
 export function getFirstDayOfWeek(date: string) {
   const _date = new Date(date);
-  if (isNaN(_date.getTime())) throw new Error("invalid date");
+  if (isNaN(_date.getTime())) throw "invalid date";
 
   const diff = _date.getDay();
   const sunday = new Date(_date.getTime() - diff * 24 * 60 * 60 * 1000);
@@ -336,10 +336,10 @@ export function getFirstDayOfWeek(date: string) {
 // -----------------------------------------------------------------------------
 export function dateAfterXDays(date: string, days: number) {
   const date0 = new Date(date);
-  if (isNaN(date0.getTime())) throw new Error("invalid date");
+  if (isNaN(date0.getTime())) throw "invalid date";
 
   const date1 = new Date(date0.getTime() + days * 24 * 60 * 60 * 1000);
-  if (isNaN(date1.getTime())) throw new Error("invalid date");
+  if (isNaN(date1.getTime())) throw "invalid date";
 
   return (
     date1.getFullYear() +

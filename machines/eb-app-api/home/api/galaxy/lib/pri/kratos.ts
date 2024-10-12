@@ -19,7 +19,7 @@ export async function getIdentityId(req: Request): Promise<string | undefined> {
     });
     const identityId = res.headers.get("x-kratos-authenticated-identity-id");
 
-    if (!identityId) throw new Error("no identity");
+    if (!identityId) throw "no identity";
 
     return identityId;
   } catch {

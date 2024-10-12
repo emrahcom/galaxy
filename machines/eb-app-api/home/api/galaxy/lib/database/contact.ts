@@ -201,18 +201,18 @@ export async function callContact(
   // get the domain if allowed.
   const domains = await getDomainIfAllowed(identityId, domainId);
   const domain = domains[0];
-  if (!domain) throw new Error("domain is not available");
+  if (!domain) throw "domain is not available";
 
   // get the contact identity
   const contacts = await getContactIdentity(identityId, contactId);
   const contact = contacts[0];
-  if (!contact) throw new Error("contact is not available");
+  if (!contact) throw "contact is not available";
   const remoteId = contact.id;
 
   // get the room (with a random name and suffix) for the call
   const randomRooms = await getRandomRoomName("call-");
   const randomRoom = randomRooms[0];
-  if (!randomRoom) throw new Error("no room for the call");
+  if (!randomRoom) throw "no room for the call";
 
   // the linkset for the call room
   const roomLinkset = {
@@ -238,7 +238,7 @@ export async function callContact(
   // create the intercom message to initialize the call
   const calls = await addCall(identityId, remoteId, callAttr);
   const call = calls[0];
-  if (!call) throw new Error("call cannot be created");
+  if (!call) throw "call cannot be created";
 
   return [{ id: call.id, url: callerUrl }] as IntercomCall[];
 }

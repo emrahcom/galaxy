@@ -13,38 +13,38 @@ function isOver(date: string, minutes: number) {
 // -----------------------------------------------------------------------------
 function checkScheduleAttrOnce(scheduleAttr: Attr) {
   if (Number(scheduleAttr.duration) < 1) {
-    throw new Error("duration is out of range");
+    throw "duration is out of range";
   }
   if (Number(scheduleAttr.duration) > 1440) {
-    throw new Error("duration is out of range");
+    throw "duration is out of range";
   }
   if (isOver(scheduleAttr.started_at, Number(scheduleAttr.duration))) {
-    throw new Error("it is already over");
+    throw "it is already over";
   }
 }
 
 // -----------------------------------------------------------------------------
 function checkScheduleAttrDaily(scheduleAttr: Attr) {
   if (Number(scheduleAttr.duration) < 1) {
-    throw new Error("duration is out of range");
+    throw "duration is out of range";
   }
   if (Number(scheduleAttr.duration) > 1440) {
-    throw new Error("duration is out of range");
+    throw "duration is out of range";
   }
   if (scheduleAttr.rep_end_type !== "x") {
-    throw new Error("wrong rep_end_type");
+    throw "wrong rep_end_type";
   }
   if (Number(scheduleAttr.rep_end_x) < 1) {
-    throw new Error("times is out of range");
+    throw "times is out of range";
   }
   if (Number(scheduleAttr.rep_end_x) > 99) {
-    throw new Error("times is out of range");
+    throw "times is out of range";
   }
   if (Number(scheduleAttr.rep_every) < 1) {
-    throw new Error("rep_every is out of range");
+    throw "rep_every is out of range";
   }
   if (Number(scheduleAttr.rep_every) > 30) {
-    throw new Error("rep_every is out of range");
+    throw "rep_every is out of range";
   }
   if (
     isOver(
@@ -53,7 +53,7 @@ function checkScheduleAttrDaily(scheduleAttr: Attr) {
           24 * 60 + Number(scheduleAttr.duration),
     )
   ) {
-    throw new Error("it is already over");
+    throw "it is already over";
   }
 }
 
