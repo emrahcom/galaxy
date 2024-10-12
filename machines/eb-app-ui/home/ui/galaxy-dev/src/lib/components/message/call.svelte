@@ -6,11 +6,17 @@
   export let msg: IntercomMessage;
 
   onMount(() => {
-    const toast = document.getElementById(`msg-${msg.id}`);
-    if (toast) Toast.getOrCreateInstance(toast).show();
+    try {
+      const toast = document.getElementById(`msg-${msg.id}`);
+      if (toast) Toast.getOrCreateInstance(toast).show();
 
-    const ring = document.getElementById(`ring-${msg.id}`) as HTMLAudioElement;
-    if (ring) ring.play();
+      const ring = document.getElementById(
+        `ring-${msg.id}`,
+      ) as HTMLAudioElement;
+      if (ring) ring.play();
+    } catch {
+      // do nothing
+    }
   });
 </script>
 

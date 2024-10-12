@@ -6,17 +6,23 @@ import type { IntercomMessage } from "$lib/types";
 export function updateMessageList() {
   const list: IntercomMessage[] = [];
 
-  try {
-    for (const key in globalThis.localStorage) {
+  for (const key in globalThis.localStorage) {
+    try {
       if (!key.match("^msg-")) continue;
 
       const value = globalThis.localStorage.getItem(key);
-      if (!value) continue;
+      if (!value) throw "empty message";
 
-      list.push(JSON.parse(value) as IntercomMessage);
+      const parsedValue = JSON.parse(value) as IntercomMessage;
+
+      // if expired, skip it
+      const expiredAt = new Date(parsedValue.expired_at);
+      if (isOver(expiredAt)) throw "expired message";
+
+      list.push(parsedValue);
+    } catch {
+      globalThis.localStorage.removeItem(key);
     }
-  } catch {
-    // do nothing
   }
 
   return list;
