@@ -1,7 +1,17 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { Toast } from "bootstrap";
   import type { IntercomMessage } from "$lib/types";
 
   export let msg: IntercomMessage;
+
+  onMount(() => {
+    const toast = document.getElementById(`msg-${msg.id}`);
+    if (toast) Toast.getOrCreateInstance(toast).show();
+
+    const ring = document.getElementById(`ring-${msg.id}`) as HTMLAudioElement;
+    if (ring) ring.play();
+  });
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -32,7 +42,7 @@
       <button class="btn btn-sm m-2 mb-0 btn-success" type="button"
         >Accept</button
       >
-      <audio id="ring-${msg.id}" src="/ringing.mp3" loop></audio>
+      <audio id="ring-{msg.id}" src="/ringing.mp3" loop></audio>
     </div>
   </div>
 </div>
