@@ -12,10 +12,12 @@
 
   let notifications: IntercomMessage[] = [];
 
+  // this event is triggered if a notification action happens inside this tab
   document.addEventListener("internalMessage", () => {
     notifications = updateNotificationList();
   });
 
+  // this event is triggered if a notification action happens inside other tabs
   globalThis.addEventListener("storage", (e) => {
     if (e.key?.match("^msg-")) {
       notifications = updateNotificationList();

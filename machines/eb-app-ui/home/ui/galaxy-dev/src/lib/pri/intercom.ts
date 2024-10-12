@@ -89,9 +89,6 @@ function addCallNotification(msg: IntercomMessage) {
 // -----------------------------------------------------------------------------
 function delCallNotification(msgId: string) {
   try {
-    //const toast = document.getElementById(`msg-${msgId}`);
-    //if (toast) toast.remove();
-
     globalThis.localStorage.removeItem(`msg-${msgId}`);
     document.dispatchEvent(new CustomEvent("internalMessage"));
   } catch {
