@@ -14,11 +14,6 @@ export function updateMessageList() {
       if (!value) throw "empty message";
 
       const parsedValue = JSON.parse(value) as IntercomMessage;
-
-      // if expired, skip it
-      const expiredAt = new Date(parsedValue.expired_at);
-      if (isOver(expiredAt)) throw "expired message";
-
       list.push(parsedValue);
     } catch {
       globalThis.localStorage.removeItem(key);
