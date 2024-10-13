@@ -7,17 +7,18 @@
 
   export let msg: IntercomMessage;
 
+  let toast: HTMLElement;
+  let ring: HTMLAudioElement;
+
   watchCall(msg.id);
 
   // ---------------------------------------------------------------------------
   onMount(() => {
     try {
-      const toast = document.getElementById(`msg-${msg.id}`);
+      toast = document.getElementById(`msg-${msg.id}`) as HTMLElement;
       if (toast) Toast.getOrCreateInstance(toast).show();
 
-      const ring = document.getElementById(
-        `ring-${msg.id}`,
-      ) as HTMLAudioElement;
+      ring = document.getElementById(`ring-${msg.id}`) as HTMLAudioElement;
       if (ring) ring.play();
     } catch {
       // do nothing
@@ -31,9 +32,6 @@
       actionById("/api/pri/intercom/set/seen", msg.id);
 
       // stop ringing without waiting for the status update
-      const ring = document.getElementById(
-        `ring-${msg.id}`,
-      ) as HTMLAudioElement;
       if (ring) ring.pause();
     } catch {
       // do nothing
@@ -42,12 +40,32 @@
 
   // ---------------------------------------------------------------------------
   function accept() {
-    console.error("accepted");
+    try {
+      console.error("accepted");
+
+      // stop ringing without waiting for the status update
+      if (ring) ring.pause();
+
+      // close toast
+      if (toast) Toast.getOrCreateInstance(toast).hide();
+    } catch {
+      // do nothing
+    }
   }
 
   // ---------------------------------------------------------------------------
   function reject() {
-    console.error("rejected");
+    try {
+      console.error("rejected");
+
+      // stop ringing without waiting for the status update
+      if (ring) ring.pause();
+
+      // close toast
+      if (toast) Toast.getOrCreateInstance(toast).hide();
+    } catch {
+      // do nothing
+    }
   }
 </script>
 
