@@ -27,9 +27,8 @@
   });
 
   // ---------------------------------------------------------------------------
-  function accept(e: MouseEvent) {
+  function accept() {
     try {
-      console.error(e);
       // stop ringing without waiting for the status update
       if (ring) ring.pause();
 
@@ -103,13 +102,7 @@
       >
         Reject
       </button>
-      <a
-        class="btn btn-sm m-2 mb-0 btn-success"
-        {href}
-        on:click={(e) => {
-          accept(e);
-        }}
-      >
+      <a class="btn btn-sm m-2 mb-0 btn-success" {href} on:click={accept}>
         Accept
       </a>
       <audio id="ring-{msg.id}" src="/ringing.mp3" loop></audio>
