@@ -29,6 +29,23 @@ export function updateMessageList() {
 }
 
 // -----------------------------------------------------------------------------
+export async function watchCall(msgId: string) {
+  try {
+    // this will fail if the call message is already deleted
+    const msg = await getById("/api/pri/intercom/get", msgId);
+    const expiredAt = new Date(msg.expired_at);
+    if (isOver(expiredAt)) throw "expired call";
+    if (msg.status !== "seen") throw "invalid status";
+
+    setTimeout(() => {
+      watchCall(msgId);
+    }, 2000);
+  } catch {
+    delCallMessage(msgId);
+  }
+}
+
+// -----------------------------------------------------------------------------
 function addCallMessage(msg: IntercomMessage) {
   try {
     globalThis.localStorage.setItem(`msg-${msg.id}`, JSON.stringify(msg));
@@ -49,30 +66,12 @@ function delCallMessage(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function watchCall(msgId: string) {
-  try {
-    // this will fail if the call message is already deleted
-    const msg = await getById("/api/pri/intercom/get", msgId);
-    const expiredAt = new Date(msg.expired_at);
-    if (isOver(expiredAt)) throw "expired call";
-    if (msg.status !== "seen") throw "invalid status";
-
-    setTimeout(() => {
-      watchCall(msgId);
-    }, 2000);
-  } catch {
-    delCallMessage(msgId);
-  }
-}
-
-// -----------------------------------------------------------------------------
 async function callHandler(msg: IntercomMessage) {
   try {
     // set as seen
     await actionById("/api/pri/intercom/set/seen", msg.id);
 
     addCallMessage(msg);
-    watchCall(msg.id);
   } catch {
     // do nothing
   }

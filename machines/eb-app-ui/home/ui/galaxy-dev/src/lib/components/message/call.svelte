@@ -1,9 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Toast } from "bootstrap";
+  import { watchCall } from "$lib/pri/intercom";
   import type { IntercomMessage } from "$lib/types";
 
   export let msg: IntercomMessage;
+
+  watchCall(msg.id);
 
   onMount(() => {
     try {
