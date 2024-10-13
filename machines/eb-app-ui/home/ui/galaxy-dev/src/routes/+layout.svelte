@@ -1,7 +1,6 @@
 <script lang="ts">
   import { ping } from "$lib/pri/identity";
   import { intercomHandler, updateMessageList } from "$lib/pri/intercom";
-  import type { IntercomMessage } from "$lib/types";
   import "bootstrap-icons/font/bootstrap-icons.min.css";
   import "bootstrap/dist/css/bootstrap.min.css";
   import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -10,7 +9,7 @@
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
   import Messages from "$lib/components/message/list.svelte";
 
-  let messages: IntercomMessage[] = [];
+  let messages = updateMessageList();
 
   // this event is triggered if a message action happens inside this tab
   document.addEventListener("internalMessage", () => {
