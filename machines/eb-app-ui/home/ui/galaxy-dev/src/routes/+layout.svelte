@@ -9,6 +9,7 @@
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
   import Messages from "$lib/components/message/list.svelte";
 
+  // get active messages while loading
   let messages = updateMessageList();
 
   // this event is triggered if a message action happens inside this tab

@@ -41,8 +41,11 @@ export async function watchCall(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
-function addCallMessage(msg: IntercomMessage) {
+async function addCallMessage(msg: IntercomMessage) {
   try {
+    // set as seen
+    await actionById("/api/pri/intercom/set/seen", msg.id);
+
     globalThis.localStorage.setItem(`msg-${msg.id}`, JSON.stringify(msg));
     document.dispatchEvent(new CustomEvent("internalMessage"));
   } catch {
@@ -55,18 +58,6 @@ function delCallMessage(msgId: string) {
   try {
     globalThis.localStorage.removeItem(`msg-${msgId}`);
     document.dispatchEvent(new CustomEvent("internalMessage"));
-  } catch {
-    // do nothing
-  }
-}
-
-// -----------------------------------------------------------------------------
-async function callHandler(msg: IntercomMessage) {
-  try {
-    // set as seen
-    await actionById("/api/pri/intercom/set/seen", msg.id);
-
-    addCallMessage(msg);
   } catch {
     // do nothing
   }
@@ -92,7 +83,7 @@ export async function intercomHandler() {
       );
       for (const msg of messages) {
         if (msg.message_type === "call") {
-          callHandler(msg);
+          addCallMessage(msg);
         }
       }
     }
