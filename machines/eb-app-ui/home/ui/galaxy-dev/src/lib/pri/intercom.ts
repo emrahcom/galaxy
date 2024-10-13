@@ -1,4 +1,4 @@
-import { actionById, getById, list } from "$lib/api";
+import { getById, list } from "$lib/api";
 import { isOver } from "$lib/common";
 import type { IntercomMessage } from "$lib/types";
 
@@ -28,9 +28,10 @@ export async function watchCall(msgId: string) {
   try {
     // this will fail if the call message is already deleted
     const msg = await getById("/api/pri/intercom/get", msgId);
+    if (msg.status !== "none") throw "invalid status";
+
     const expiredAt = new Date(msg.expired_at);
     if (isOver(expiredAt)) throw "expired call";
-    if (msg.status !== "seen") throw "invalid status";
 
     setTimeout(() => {
       watchCall(msgId);
@@ -41,10 +42,13 @@ export async function watchCall(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
-async function addCallMessage(msg: IntercomMessage) {
+function addCallMessage(msg: IntercomMessage) {
   try {
     // set as seen
-    await actionById("/api/pri/intercom/set/seen", msg.id);
+    //await actionById("/api/pri/intercom/set/seen", msg.id);
+
+    const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
+    if (isExist) return;
 
     globalThis.localStorage.setItem(`msg-${msg.id}`, JSON.stringify(msg));
     document.dispatchEvent(new CustomEvent("internalMessage"));
