@@ -7,7 +7,7 @@
 
   export let msg: IntercomMessage;
 
-  const href = msg?.intercom_attr?.url;
+  const href = `/pri/call/join/${msg.id}`;
   let toast: HTMLElement;
   let ring: HTMLAudioElement;
 
@@ -27,45 +27,48 @@
   });
 
   // ---------------------------------------------------------------------------
-  function close() {
+  function accept(e: MouseEvent) {
     try {
+      console.error(e);
+      // stop ringing without waiting for the status update
+      if (ring) ring.pause();
+
+      // close toast
+      if (toast) Toast.getOrCreateInstance(toast).hide();
+    } catch {
+      // do nothing
+      // localStorage will be deleted in join page
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  async function reject() {
+    try {
+      // stop ringing without waiting for the status update
+      if (ring) ring.pause();
+
+      // close toast
+      if (toast) Toast.getOrCreateInstance(toast).hide();
+
+      // set message status to rejected
+      await actionById("/api/pri/intercom/set/rejected", msg.id);
+    } finally {
+      // remove the message from the storage to inform other tabs
+      globalThis.localStorage.removeItem(`msg-${msg.id}`);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  async function close() {
+    try {
+      // stop ringing without waiting for the status update
+      if (ring) ring.pause();
+
       // set message status to seen
-      actionById("/api/pri/intercom/set/seen", msg.id);
-
-      // stop ringing without waiting for the status update
-      if (ring) ring.pause();
-    } catch {
-      // do nothing
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  function accept() {
-    try {
-      console.error("accepted");
-
-      // stop ringing without waiting for the status update
-      if (ring) ring.pause();
-
-      // close toast
-      if (toast) Toast.getOrCreateInstance(toast).hide();
-    } catch {
-      // do nothing
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  function reject() {
-    try {
-      console.error("rejected");
-
-      // stop ringing without waiting for the status update
-      if (ring) ring.pause();
-
-      // close toast
-      if (toast) Toast.getOrCreateInstance(toast).hide();
-    } catch {
-      // do nothing
+      await actionById("/api/pri/intercom/set/seen", msg.id);
+    } finally {
+      // remove the message from the storage to inform other tabs
+      globalThis.localStorage.removeItem(`msg-${msg.id}`);
     }
   }
 </script>
@@ -100,7 +103,11 @@
       >
         Reject
       </button>
-      <a class="btn btn-sm m-2 mb-0 btn-success" {href} on:click={accept}>
+      <a
+        class="btn btn-sm m-2 mb-0 btn-success"
+        {href}
+        on:click={(e) => {accept(e);}}
+      >
         Accept
       </a>
       <audio id="ring-{msg.id}" src="/ringing.mp3" loop></audio>
