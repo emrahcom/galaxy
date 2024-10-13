@@ -37,6 +37,22 @@ async function del(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function setAccepted(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const intercomId = pl.id;
+
+  return await setStatusIntercom(identityId, intercomId, "accepted");
+}
+
+// -----------------------------------------------------------------------------
+async function setRejected(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const intercomId = pl.id;
+
+  return await setStatusIntercom(identityId, intercomId, "rejected");
+}
+
+// -----------------------------------------------------------------------------
 async function setSeen(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const intercomId = pl.id;
@@ -64,6 +80,10 @@ export default async function (
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
+  } else if (path === `${PRE}/set/accepted`) {
+    return await wrapper(setAccepted, req, identityId);
+  } else if (path === `${PRE}/set/rejected`) {
+    return await wrapper(setRejected, req, identityId);
   } else if (path === `${PRE}/set/seen`) {
     return await wrapper(setSeen, req, identityId);
   } else if (path === `${PRE}/call/ring`) {
