@@ -7,6 +7,7 @@
 
   export let msg: IntercomMessage;
 
+  const href = msg?.intercom_attr?.url;
   let toast: HTMLElement;
   let ring: HTMLAudioElement;
 
@@ -99,13 +100,9 @@
       >
         Reject
       </button>
-      <button
-        class="btn btn-sm m-2 mb-0 btn-success"
-        type="button"
-        on:click={accept}
-      >
+      <a class="btn btn-sm m-2 mb-0 btn-success" {href} on:click={accept}>
         Accept
-      </button>
+      </a>
       <audio id="ring-{msg.id}" src="/ringing.mp3" loop></audio>
     </div>
   </div>
