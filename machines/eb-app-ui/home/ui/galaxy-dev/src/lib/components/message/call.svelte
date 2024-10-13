@@ -106,7 +106,9 @@
       <a
         class="btn btn-sm m-2 mb-0 btn-success"
         {href}
-        on:click={(e) => {accept(e);}}
+        on:click={(e) => {
+          accept(e);
+        }}
       >
         Accept
       </a>
