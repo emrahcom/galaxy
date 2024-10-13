@@ -44,9 +44,6 @@ export async function watchCall(msgId: string) {
 // -----------------------------------------------------------------------------
 function addCallMessage(msg: IntercomMessage) {
   try {
-    // set as seen
-    //await actionById("/api/pri/intercom/set/seen", msg.id);
-
     const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
     if (isExist) return;
 

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Toast } from "bootstrap";
+  import { actionById } from "$lib/api";
   import { watchCall } from "$lib/pri/intercom";
   import type { IntercomMessage } from "$lib/types";
 
@@ -8,6 +9,17 @@
 
   watchCall(msg.id);
 
+  // ---------------------------------------------------------------------------
+  function close() {
+    try {
+      // set message status to seen
+      actionById("/api/pri/intercom/set/seen", msg.id);
+    } catch {
+      // do nothing
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   onMount(() => {
     try {
       const toast = document.getElementById(`msg-${msg.id}`);
@@ -42,6 +54,7 @@
         class="btn-close"
         data-bs-dismiss="toast"
         aria-label="Close"
+        on:click={close}
       ></button>
     </div>
     <div class="d-flex justify-content-center">
