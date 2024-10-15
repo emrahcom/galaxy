@@ -31,7 +31,7 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20240928.01');
+INSERT INTO metadata VALUES ('database_version', '20241015.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
@@ -108,6 +108,7 @@ CREATE TABLE contact_invite (
 );
 CREATE UNIQUE INDEX ON contact_invite("code");
 CREATE INDEX ON contact_invite("identity_id", "expired_at");
+CREATE INDEX ON contact_invite("expired_at");
 ALTER TABLE contact_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -179,6 +180,7 @@ CREATE TABLE domain_invite (
 );
 CREATE UNIQUE INDEX ON domain_invite("code");
 CREATE INDEX ON domain_invite("identity_id", "domain_id", "expired_at");
+CREATE INDEX ON domain_invite("expired_at");
 ALTER TABLE domain_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -275,6 +277,7 @@ CREATE TABLE room_invite (
 );
 CREATE UNIQUE INDEX ON room_invite("code");
 CREATE INDEX ON room_invite("identity_id", "room_id", "expired_at");
+CREATE INDEX ON room_invite("expired_at");
 ALTER TABLE room_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -354,7 +357,7 @@ CREATE TABLE meeting (
     "accessed_at" timestamp with time zone NOT NULL DEFAULT now(),
     "attendance" integer NOT NULL DEFAULT 0
 );
-CREATE INDEX ON meeting(identity_id, schedule_type);
+CREATE INDEX ON meeting("identity_id", "schedule_type");
 ALTER TABLE meeting OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -384,6 +387,7 @@ CREATE TABLE meeting_invite (
 );
 CREATE UNIQUE INDEX ON meeting_invite("code");
 CREATE INDEX ON meeting_invite("identity_id", "meeting_id", "expired_at");
+CREATE INDEX ON meeting_invite("expired_at");
 ALTER TABLE meeting_invite OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -412,6 +416,7 @@ CREATE TABLE meeting_request (
 );
 CREATE UNIQUE INDEX ON meeting_request("identity_id", "meeting_id");
 CREATE INDEX ON meeting_request("meeting_id", "status");
+CREATE INDEX ON meeting_request("expired_at");
 ALTER TABLE meeting_request OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -501,8 +506,8 @@ CREATE TABLE meeting_schedule (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE INDEX ON meeting_schedule(meeting_id);
-CREATE INDEX ON meeting_schedule(updated_at);
+CREATE INDEX ON meeting_schedule("meeting_id");
+CREATE INDEX ON meeting_schedule("updated_at");
 ALTER TABLE meeting_schedule OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
@@ -522,8 +527,9 @@ CREATE TABLE meeting_session (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE INDEX ON meeting_session(meeting_schedule_id, started_at);
-CREATE INDEX ON meeting_session(meeting_schedule_id, ended_at);
+CREATE INDEX ON meeting_session("meeting_schedule_id", "started_at");
+CREATE INDEX ON meeting_session("meeting_schedule_id", "ended_at");
+CREATE INDEX ON meeting_session("ended_at");
 ALTER TABLE meeting_session OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------

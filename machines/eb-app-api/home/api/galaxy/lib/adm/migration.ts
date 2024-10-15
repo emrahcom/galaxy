@@ -89,6 +89,48 @@ async function migrateTo2024092801() {
 }
 
 // -----------------------------------------------------------------------------
+async function migrateTo2024101501() {
+  const upgradeTo = "20241015.01";
+  const sqls = [
+    `CREATE TABLE contact_invite (
+       "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+       "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+       "name" varchar(250) NOT NULL,
+       "code" varchar(250) NOT NULL
+           DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+       "disposable" boolean NOT NULL DEFAULT true,
+       "enabled" boolean NOT NULL DEFAULT true,
+       "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+       "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+       "expired_at" timestamp with time zone NOT NULL
+           DEFAULT now() + interval '3 days'
+     )`,
+
+    `CREATE UNIQUE INDEX ON contact_invite("code")`,
+
+    `CREATE INDEX ON contact_invite("identity_id", "expired_at")`,
+
+    `CREATE INDEX ON contact_invite("expired_at")`,
+
+    `CREATE INDEX ON domain_invite("expired_at")`,
+
+    `CREATE INDEX ON room_invite("expired_at")`,
+
+    `CREATE INDEX ON meeting_invite("expired_at")`,
+
+    `CREATE INDEX ON meeting_request("expired_at")`,
+
+    `CREATE INDEX ON meeting_session("ended_at")`,
+
+    `UPDATE metadata
+       SET mvalue='${upgradeTo}'
+       WHERE mkey = 'database_version'`,
+  ];
+
+  await migrateTo(upgradeTo, sqls);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   console.log("migration...");
 
@@ -97,4 +139,5 @@ export default async function () {
 
   await migrateTo2024092201();
   await migrateTo2024092801();
+  await migrateTo2024101501();
 }
