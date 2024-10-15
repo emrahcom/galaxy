@@ -88,6 +88,29 @@ CREATE INDEX ON contact("identity_id", "name");
 ALTER TABLE contact OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- CONTACT_INVITE
+-- -----------------------------------------------------------------------------
+-- - The contact invite can be shared with multiple candidates and can be used
+--   multiple times before the expire time if it is not disposable.
+-- -----------------------------------------------------------------------------
+CREATE TABLE contact_invite (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
+    "code" varchar(250) NOT NULL
+        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "disposable" boolean NOT NULL DEFAULT true,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "expired_at" timestamp with time zone NOT NULL
+        DEFAULT now() + interval '3 days'
+);
+CREATE UNIQUE INDEX ON contact_invite("code");
+CREATE INDEX ON contact_invite("identity_id", "expired_at");
+ALTER TABLE contact_invite OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- DOMAIN
 -- -----------------------------------------------------------------------------
 -- - Public domains can only be added by the system account.
