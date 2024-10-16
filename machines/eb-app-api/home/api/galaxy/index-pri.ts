@@ -8,6 +8,7 @@ import { getIdentityId } from "./lib/pri/kratos.ts";
 import { getVersion } from "./lib/database/common.ts";
 import calendar from "./lib/pri/calendar.ts";
 import contact from "./lib/pri/contact.ts";
+import contactInvite from "./lib/pri/contact-invite.ts";
 import domain from "./lib/pri/domain.ts";
 import domainInvite from "./lib/pri/domain-invite.ts";
 import domainPartner from "./lib/pri/domain-partner.ts";
@@ -45,6 +46,8 @@ async function route(
     return hello(identityId);
   } else if (path.match(`^${PRE}/calendar/`)) {
     return await calendar(req, path, identityId);
+  } else if (path.match(`^${PRE}/contact/invite/`)) {
+    return await contactInvite(req, path, identityId);
   } else if (path.match(`^${PRE}/contact/`)) {
     return await contact(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/invite/`)) {
