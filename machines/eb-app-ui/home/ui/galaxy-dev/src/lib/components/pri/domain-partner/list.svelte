@@ -69,7 +69,7 @@
     {/each}
 
     {#if isEmpty}
-      <Warning>This domain has no partner.</Warning>
+      <Warning>This domain does not have a partner.</Warning>
     {/if}
   </div>
 </section>

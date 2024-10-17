@@ -55,7 +55,7 @@
       </div>
     {:else}
       <Warning>
-        This room has no partner key. Click
+        This room does not have a partner key. Click
         <Add href="/pri/room/invite/add/{room_id}" /> to create a new partner key
         and share it with your partner.
       </Warning>

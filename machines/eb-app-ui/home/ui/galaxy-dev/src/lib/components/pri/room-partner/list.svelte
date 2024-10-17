@@ -69,7 +69,7 @@
     {/each}
 
     {#if isEmpty}
-      <Warning>This room has no partner.</Warning>
+      <Warning>This room does not have a partner.</Warning>
     {/if}
   </div>
 </section>

@@ -55,7 +55,7 @@
       </div>
     {:else}
       <Warning>
-        This domain has no partner key. Click
+        This domain does not have a partner key. Click
         <Add href="/pri/domain/invite/add/{domain_id}" /> to create a new partner
         key and share it with your partner.
       </Warning>

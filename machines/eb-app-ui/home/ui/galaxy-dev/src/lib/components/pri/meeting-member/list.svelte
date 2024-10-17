@@ -75,7 +75,7 @@
     {/each}
 
     {#if isEmpty}
-      <Warning>This meeting has no member.</Warning>
+      <Warning>This meeting does not have a member.</Warning>
     {/if}
   </div>
 </section>
