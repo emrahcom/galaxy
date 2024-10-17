@@ -32,6 +32,25 @@ export interface Contact {
 }
 
 // -----------------------------------------------------------------------------
+export interface ContactInvite {
+  id: string;
+  name: string;
+  code: string;
+  disposable: boolean;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface ContactInvite111 {
+  profile_name: string;
+  profile_email: string;
+  code: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Domain {
   id: string;
   name: string;
