@@ -8,7 +8,11 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="My contacts" />
+<Subheader
+  subheader="My contacts"
+  hrefKey="/pri/contact/invite"
+  hrefKeyTitle="Show keys (friendship links)"
+/>
 
 {#await pr then contacts}
   <List {contacts} />
