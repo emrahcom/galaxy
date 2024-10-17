@@ -8,6 +8,10 @@
   export let hrefBackTitle = "Go back";
   export let hrefCalendar = "";
   export let hrefCalendarTitle = "Calendar";
+  export let hrefContact = "";
+  export let hrefContactTitle = "Contacts";
+  export let hrefKey = "";
+  export let hrefKeyTitle = "Keys";
   export let hrefMeeting = "";
   export let hrefMeetingTitle = "Edit meetings";
   export let hrefNext = "";
@@ -38,6 +42,32 @@
           }}
         >
           <i class="bi bi-arrow-return-left"></i>
+        </button>
+      {/if}
+
+      {#if hrefContact}
+        <button
+          class="btn btn-outline-secondary"
+          data-bs-toggle="tooltip"
+          data-bs-title={hrefContactTitle}
+          on:click={() => {
+            globalThis.location.href = hrefContact;
+          }}
+        >
+          <i class="bi bi-people"></i>
+        </button>
+      {/if}
+
+      {#if hrefKey}
+        <button
+          class="btn btn-outline-secondary"
+          data-bs-toggle="tooltip"
+          data-bs-title={hrefKeyTitle}
+          on:click={() => {
+            globalThis.location.href = hrefKey;
+          }}
+        >
+          <i class="bi bi-key"></i>
         </button>
       {/if}
 
