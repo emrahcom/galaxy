@@ -5,18 +5,12 @@ import type { ContactInvite, ContactInvite111, Id } from "./types.ts";
 export async function getContactInvite(identityId: string, inviteId: string) {
   const sql = {
     text: `
-      SELECT iv.id, iv.name, d.id as domain_id, d.name as domain_name,
-        (CASE d.auth_type
-           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
-           ELSE d.domain_attr->>'url'
-         END
-        ) as domain_url,
-        iv.code, iv.enabled, iv.created_at, iv.updated_at, iv.expired_at
-      FROM domain_invite iv
-        JOIN domain d ON iv.domain_id = d.id
-      WHERE iv.id = $2
-        AND iv.identity_id = $1
-        AND iv.expired_at > now()`,
+      SELECT id, name, code, disposable, enabled, created_at, updated_at,
+        expired_at
+      FROM contact_invite
+      WHERE id = $2
+        AND identity_id = $1
+        AND expired_at > now()`,
     args: [
       identityId,
       inviteId,
@@ -30,15 +24,10 @@ export async function getContactInvite(identityId: string, inviteId: string) {
 export async function getContactInviteByCode(code: string) {
   const sql = {
     text: `
-      SELECT d.name as domain_name,
-        (CASE d.auth_type
-           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
-           ELSE d.domain_attr->>'url'
-         END
-        ) as domain_url,
-        iv.code
-      FROM domain_invite iv
-        JOIN domain d ON iv.domain_id = d.id
+      SELECT pr.name as profile_name, pr.email as profile_email, iv.code
+      FROM contact_invite iv
+        LEFT JOIN profile pr ON iv.identity_id = pr.identity_id
+                                AND pr.is_default
       WHERE iv.code = $1
         AND iv.enabled
         AND iv.expired_at > now()`,
@@ -58,19 +47,12 @@ export async function listContactInvite(
 ) {
   const sql = {
     text: `
-      SELECT iv.id, iv.name, d.id as domain_id, d.name as domain_name,
-        (CASE d.auth_type
-           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
-           ELSE d.domain_attr->>'url'
-         END
-        ) as domain_url,
-        iv.code, iv.enabled, iv.created_at, iv.updated_at, iv.expired_at
-      FROM domain_invite iv
-        JOIN domain d ON iv.domain_id = d.id
-      WHERE iv.identity_id = $1
-        AND iv.domain_id = $2
-        AND iv.expired_at > now()
-      ORDER BY iv.updated_at DESC
+      SELECT id, name, code, disposable, enabled, created_at, updated_at,
+        expired_at
+      FROM contact_invite
+      WHERE identity_id = $1
+        AND expired_at > now()
+      ORDER BY updated_at DESC
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
@@ -90,8 +72,8 @@ export async function addContactInvite(
 ) {
   const sql = {
     text: `
-      INSERT INTO contact_invite (identity_id, name)
-      VALUES ($1, $2)
+      INSERT INTO contact_invite (identity_id, name, disposable)
+      VALUES ($1, $2, $3)
       RETURNING id, created_at as at`,
     args: [
       identityId,
