@@ -55,8 +55,8 @@
     {:else}
       <Warning>
         You have not a contact key. Click
-        <Add href="/pri/contact/invite/add" /> to create a new contact key
-        and share it with your friend.
+        <Add href="/pri/contact/invite/add" /> to create a new contact key and share
+        it with your friend.
       </Warning>
     {/each}
   </div>
