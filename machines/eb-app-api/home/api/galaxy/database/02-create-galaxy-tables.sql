@@ -4,6 +4,8 @@
 -- This script creates the database tables.
 -- Tested on Postgresql 15.
 --
+-- Update "lib/adm/migration.ts" when schema changes.
+--
 -- Usage:
 --     psql -l postgres -c \
 --             "psql -d galaxy -e -f /tmp/02-create-galaxy-tables.sql"
