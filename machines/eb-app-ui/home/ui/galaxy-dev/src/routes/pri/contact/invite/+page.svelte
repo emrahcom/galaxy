@@ -9,7 +9,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <Subheader
-  subheader="Friendship keys"
+  subheader="My contact keys"
   hrefContact="/pri/contact"
   hrefContactTitle="Show contacts"
 />
