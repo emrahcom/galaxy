@@ -19,8 +19,9 @@ async function checkByCode(req: Request, identityId: string): Promise<unknown> {
 async function addByCode(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
+  const name = pl.name;
 
-  return await addContactFriendshipByCode(identityId, code);
+  return await addContactFriendshipByCode(identityId, code, name);
 }
 
 // -----------------------------------------------------------------------------
