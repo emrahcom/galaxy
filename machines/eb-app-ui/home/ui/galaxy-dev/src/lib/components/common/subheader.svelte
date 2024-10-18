@@ -31,10 +31,10 @@
   <div class="d-flex">
     <h3 class="text-muted my-auto" style="min-width:180px">{subheader}</h3>
 
-    <div class="ms-4 me-auto my-auto">
+    <div class="ms-3 me-auto my-auto">
       {#if hrefBack}
         <button
-          class="btn btn-outline-secondary"
+          class="btn btn-outline-secondary mx-1"
           data-bs-toggle="tooltip"
           data-bs-title={hrefBackTitle}
           on:click={() => {
@@ -99,7 +99,7 @@
 
       {#if hrefPrevious}
         <button
-          class="btn btn-outline-secondary ms-3 me-auto"
+          class="btn btn-outline-secondary ms-1 me-auto"
           data-bs-toggle="tooltip"
           data-bs-title={hrefPreviousTitle}
           on:click={() => {
@@ -126,7 +126,7 @@
 
     {#if hrefAdd}
       <button
-        class="btn btn-outline-secondary ms-auto me-2 my-auto"
+        class="btn btn-outline-secondary ms-auto me-0 my-auto"
         data-bs-toggle="tooltip"
         data-bs-title={hrefAddTitle}
         on:click={() => {
