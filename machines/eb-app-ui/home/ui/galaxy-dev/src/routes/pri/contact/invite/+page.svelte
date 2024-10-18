@@ -10,6 +10,8 @@
 <!-- -------------------------------------------------------------------------->
 <Subheader
   subheader="Contact keys"
+  hrefAdd="/pri/contact/invite/add"
+  hrefAddTitle="Add a new contact key (friendship link)"
   hrefContact="/pri/contact"
   hrefContactTitle="Show contacts"
 />
