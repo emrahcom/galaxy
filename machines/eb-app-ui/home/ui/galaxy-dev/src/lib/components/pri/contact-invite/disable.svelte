@@ -16,7 +16,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    globalThis.location.href = "/pri/contact/invite";
+    globalThis.location.href = `/pri/contact/invite`;
   }
 
   // ---------------------------------------------------------------------------
@@ -26,7 +26,7 @@
       disabled = true;
 
       await actionById("/api/pri/contact/invite/disable", p.id);
-      globalThis.location.replace("/pri/contact/invite");
+      globalThis.location.replace(`/pri/contact/invite`);
     } catch {
       warning = true;
       disabled = false;

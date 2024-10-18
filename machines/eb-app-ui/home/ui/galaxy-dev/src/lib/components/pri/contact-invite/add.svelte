@@ -19,7 +19,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    globalThis.location.href = "/pri/contact/invite";
+    globalThis.location.href = `/pri/contact/invite`;
   }
 
   // ---------------------------------------------------------------------------
@@ -29,7 +29,7 @@
       disabled = true;
 
       await action("/api/pri/contact/invite/add", p);
-      globalThis.location.href = "/pri/contact/invite";
+      globalThis.location.href = `/pri/contact/invite`;
     } catch {
       warning = true;
       disabled = false;
