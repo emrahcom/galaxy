@@ -113,32 +113,8 @@ export async function addMeetingMembershipByCode(
   };
   await trans.queryObject(sql1);
 
-  // add the invitee (partner) to the inviter (owner) contact list
-  const sql2 = {
-    text: `
-      INSERT INTO contact (identity_id, remote_id, name)
-      VALUES (
-        (SELECT identity_id
-         FROM meeting_invite
-         WHERE code = $2
-        ),
-        $1,
-        (SELECT name
-         FROM profile
-         WHERE identity_id = $1
-           AND is_default
-        )
-      )
-      ON CONFLICT DO NOTHING`,
-    args: [
-      identityId,
-      code,
-    ],
-  };
-  await trans.queryObject(sql2);
-
   // add the inviter (owner) to the invitee's (partner's) contact list
-  const sql3 = {
+  const sql2 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
@@ -153,6 +129,30 @@ export async function addMeetingMembershipByCode(
                               FROM meeting_invite
                               WHERE code = $2
                              )
+           AND is_default
+        )
+      )
+      ON CONFLICT DO NOTHING`,
+    args: [
+      identityId,
+      code,
+    ],
+  };
+  await trans.queryObject(sql2);
+
+  // add the invitee (partner) to the inviter (owner) contact list
+  const sql3 = {
+    text: `
+      INSERT INTO contact (identity_id, remote_id, name)
+      VALUES (
+        (SELECT identity_id
+         FROM meeting_invite
+         WHERE code = $2
+        ),
+        $1,
+        (SELECT name
+         FROM profile
+         WHERE identity_id = $1
            AND is_default
         )
       )

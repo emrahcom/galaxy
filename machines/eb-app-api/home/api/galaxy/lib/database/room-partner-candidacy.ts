@@ -88,36 +88,8 @@ export async function acceptRoomPartnerCandidacy(
   };
   const { rows: rows } = await trans.queryObject(sql);
 
-  // add the invitee (partner) to the inviter's (owner's) contact list
-  const sql1 = {
-    text: `
-      INSERT INTO contact (identity_id, remote_id, name)
-      VALUES (
-        (SELECT identity_id
-         FROM room
-         WHERE id = (SELECT room_id
-                     FROM room_partner_candidate
-                     WHERE id = $2
-                       AND identity_id = $1
-                    )
-        ),
-        $1,
-        (SELECT name
-         FROM profile
-         WHERE identity_id = $1
-           AND is_default
-        )
-      )
-      ON CONFLICT DO NOTHING`,
-    args: [
-      identityId,
-      candidacyId,
-    ],
-  };
-  await trans.queryObject(sql1);
-
   // add the inviter (owner) to the invitee's (partner's) contact list
-  const sql2 = {
+  const sql1 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
       VALUES (
@@ -140,6 +112,34 @@ export async function acceptRoomPartnerCandidacy(
                                             AND identity_id = $1
                                          )
                              )
+           AND is_default
+        )
+      )
+      ON CONFLICT DO NOTHING`,
+    args: [
+      identityId,
+      candidacyId,
+    ],
+  };
+  await trans.queryObject(sql1);
+
+  // add the invitee (partner) to the inviter's (owner's) contact list
+  const sql2 = {
+    text: `
+      INSERT INTO contact (identity_id, remote_id, name)
+      VALUES (
+        (SELECT identity_id
+         FROM room
+         WHERE id = (SELECT room_id
+                     FROM room_partner_candidate
+                     WHERE id = $2
+                       AND identity_id = $1
+                    )
+        ),
+        $1,
+        (SELECT name
+         FROM profile
+         WHERE identity_id = $1
            AND is_default
         )
       )
