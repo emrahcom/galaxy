@@ -53,7 +53,7 @@ export async function listContactInvite(
       WHERE identity_id = $1
         AND expired_at > now()
       ORDER BY updated_at DESC
-      LIMIT $3 OFFSET $4`,
+      LIMIT $2 OFFSET $3`,
     args: [
       identityId,
       limit,
