@@ -86,7 +86,7 @@ export async function acceptDomainPartnerCandidacy(
   };
   const { rows: rows } = await trans.queryObject(sql);
 
-  // add partner to the contact list if not exists
+  // add the invitee (partner) to the inviter's (owner's) contact list
   const sql1 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
@@ -114,7 +114,7 @@ export async function acceptDomainPartnerCandidacy(
   };
   await trans.queryObject(sql1);
 
-  // add domain owner to the partner's contact list if not exists
+  // add the inviter (owner) to the invitee's (partner's) contact list
   const sql2 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)

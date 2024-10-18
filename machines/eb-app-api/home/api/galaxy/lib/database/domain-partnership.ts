@@ -95,7 +95,7 @@ export async function addDomainPartnershipByCode(
   };
   await trans.queryObject(sql1);
 
-  // add partner to the contact list
+  // add the invitee (partner) to the inviter's (owner's) contact list
   const sql2 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
@@ -119,7 +119,7 @@ export async function addDomainPartnershipByCode(
   };
   await trans.queryObject(sql2);
 
-  // add domain owner to the partner's contact list
+  // add the inviter (owner) to the invitee's (partner's) contact list
   const sql3 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
