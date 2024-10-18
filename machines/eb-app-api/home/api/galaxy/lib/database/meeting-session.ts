@@ -60,28 +60,28 @@ function checkScheduleAttrDaily(scheduleAttr: Attr) {
 // -----------------------------------------------------------------------------
 function checkScheduleAttrWeekly(scheduleAttr: Attr) {
   if (Number(scheduleAttr.duration) < 1) {
-    throw new Error("duration is out of range");
+    throw "duration is out of range";
   }
   if (Number(scheduleAttr.duration) > 1440) {
-    throw new Error("duration is out of range");
+    throw "duration is out of range";
   }
   if (scheduleAttr.rep_end_type !== "at") {
-    throw new Error("wrong rep_end_type");
+    throw "wrong rep_end_type";
   }
   if (!scheduleAttr.rep_days.match("^[01]{7}$")) {
-    throw new Error("wrong rep_days");
+    throw "wrong rep_days";
   }
   if (Number(scheduleAttr.rep_every) < 1) {
-    throw new Error("rep_every is out of range");
+    throw "rep_every is out of range";
   }
   if (Number(scheduleAttr.rep_every) > 30) {
-    throw new Error("rep_every is out of range");
+    throw "rep_every is out of range";
   }
   if (scheduleAttr.started_at > scheduleAttr.rep_end_at) {
-    throw new Error("invalid period");
+    throw "invalid period";
   }
   if (isOver(scheduleAttr.rep_end_at, 0)) {
-    throw new Error("it is already over");
+    throw "it is already over";
   }
 }
 
@@ -115,7 +115,7 @@ export function checkScheduleAttr(scheduleAttr: Attr) {
   } else if (scheduleAttr.type === "w") {
     checkScheduleAttrWeekly(scheduleAttr);
   } else {
-    throw new Error("Unknow schedule type");
+    throw "Unknow schedule type";
   }
 }
 
@@ -184,7 +184,7 @@ async function addMeetingSessionDaily(
     counter = counter + 1;
   }
 
-  if (counter === 0) throw new Error("no inserted session");
+  if (counter === 0) throw "no inserted session";
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +243,7 @@ async function addMeetingSessionWeekly(
     }
   }
 
-  if (counter === 0) throw new Error("no inserted session");
+  if (counter === 0) throw "no inserted session";
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +261,7 @@ export async function addMeetingSession(
   } else if (scheduleAttr.type === "w") {
     await addMeetingSessionWeekly(trans, meetingScheduleId, scheduleAttr);
   } else {
-    throw new Error("Unknow schedule type");
+    throw "Unknow schedule type";
   }
 }
 
