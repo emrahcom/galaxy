@@ -112,7 +112,7 @@ export async function acceptMeetingMemberCandidacy(
   };
   const { rows: rows } = await trans.queryObject(sql);
 
-  // add member to the contact list if not exists
+  // add the invitee (member) to the inviter's (owner's) contact list
   const sql1 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
@@ -140,7 +140,7 @@ export async function acceptMeetingMemberCandidacy(
   };
   await trans.queryObject(sql1);
 
-  // add meeting owner to the member's contact list if not exists
+  // add the inviter (owner) to the invitee's (member's) contact list
   const sql2 = {
     text: `
       INSERT INTO contact (identity_id, remote_id, name)
