@@ -1,4 +1,4 @@
-version: v0.13.0
+version: v1.3.0
 
 dsn: "postgres://kratos:___DB_PASSWD___@eb-postgres:5432/kratos?\
       sslmode=disable&max_conns=20&max_idle_conns=4"
