@@ -73,7 +73,6 @@ selfservice:
         code:
           default_browser_return_url: https://___APP_FQDN___/pri
 
-
     registration:
       enabled: true
       lifespan: 10m
