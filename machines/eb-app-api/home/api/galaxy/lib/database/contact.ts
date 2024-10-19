@@ -251,14 +251,18 @@ export async function delContact(identityId: string, contactId: string) {
 
   // before deleting the contact, delete the contact owner from the contact's
   // contact list.
+  // if the owner added herself as a contact (identity_id = remote_id), dont
+  // delete this record here to allow the main SQL to get the deleted Id because
+  // there is only one record (not a pair) in this case.
   const sql0 = {
     text: `
       DELETE FROM contact
-      WHERE remote_id = $1
-        AND identity_id = (SELECT remote_id
+      WHERE identity_id = (SELECT remote_id
                            FROM contact
                            WHERE id = $2
-                          )`,
+                          )
+        AND identity_id != remote_id
+        AND remote_id = $1`,
     args: [
       identityId,
       contactId,
