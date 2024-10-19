@@ -1,5 +1,5 @@
 {
-  "$id": "https://schemas.galaxy.corp/identity.schema.json",
+  "$id": "https://schemas.ory.sh/presets/kratos/identity.email.schema.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Person",
   "type": "object",
@@ -11,25 +11,33 @@
           "type": "string",
           "format": "email",
           "title": "Email",
-          "minLength": 6,
-          "maxLength": 80,
           "ory.sh/kratos": {
             "credentials": {
               "password": {
                 "identifier": true
               },
+              "webauthn": {
+                "identifier": true
+              },
+              "totp": {
+                "account_name": true
+              },
               "code": {
                 "identifier": true,
                 "via": "email"
+              },
+              "passkey": {
+                "display_name": true
               }
-            },
-            "verification": {
-              "via": "email"
             },
             "recovery": {
               "via": "email"
+            },
+            "verification": {
+              "via": "email"
             }
-          }
+          },
+          "maxLength": 320
         }
       },
       "required": [
