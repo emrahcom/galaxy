@@ -9,5 +9,6 @@
 
 ## Config
 
+- Update `version` in `kratos.yaml` depending on Kratos's version
 - https://www.ory.sh/docs/kratos/reference/configuration
 - https://github.com/ory/kratos/blob/master/contrib/quickstart/kratos/email-password/kratos.yml
