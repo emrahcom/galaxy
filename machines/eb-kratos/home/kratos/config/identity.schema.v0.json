@@ -37,6 +37,7 @@
               "via": "email"
             }
           },
+          "minLength": 6,
           "maxLength": 320
         }
       },
