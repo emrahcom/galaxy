@@ -67,6 +67,7 @@ selfservice:
     login:
       ui_url: https://___APP_FQDN___/id/login
       lifespan: 10m
+      style: identifier_first
       after:
         password:
           default_browser_return_url: https://___APP_FQDN___/pri
