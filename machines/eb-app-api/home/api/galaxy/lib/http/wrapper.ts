@@ -31,6 +31,8 @@ export async function pub(f: functionPub, req: Request): Promise<Response> {
 }
 
 // -----------------------------------------------------------------------------
+// Keycloak setup has its own version of adm wrapper. See wrapper-kc.ts
+// -----------------------------------------------------------------------------
 type functionAdm = (req: Request) => Promise<unknown>;
 
 export async function adm(f: functionAdm, req: Request): Promise<Response> {
