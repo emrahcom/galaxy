@@ -13,11 +13,7 @@
 
 <!-- -------------------------------------------------------------------------->
 <div class="col-md-6 col-xl-4">
-  <div
-    class="card h-100 {p.enabled && p.chain_enabled
-      ? ''
-      : 'border-danger'}"
-  >
+  <div class="card h-100 {p.enabled && p.chain_enabled ? '' : 'border-danger'}">
     <div class="card-body text-center">
       <h5 class="card-title text-muted">{p.name}</h5>
       <p class="card-text text-muted">{p.domain_name}</p>
@@ -39,10 +35,7 @@
           href="/pri/room/invite/{p.id}"
           title="Show keys (partnership links)"
         />
-        <People
-          href="/pri/room/partner/{p.id}"
-          title="Show room partners"
-        />
+        <People href="/pri/room/partner/{p.id}" title="Show room partners" />
 
         {#if p.chain_enabled}
           <Join href="/pri/room/join/{p.id}" title="Join meeting room" />
