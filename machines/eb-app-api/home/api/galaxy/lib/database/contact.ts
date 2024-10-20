@@ -2,7 +2,13 @@ import { fetch, pool } from "./common.ts";
 import { addCall } from "./intercom-call.ts";
 import { getDomainIfAllowed } from "./domain.ts";
 import { getRandomRoomName, getRoomUrl } from "./room.ts";
-import type { Contact, Id, IntercomCall, RoomLinkset } from "./types.ts";
+import type {
+  Contact,
+  ContactStatus,
+  Id,
+  IntercomCall,
+  RoomLinkset,
+} from "./types.ts";
 
 // expire second for the direct call URL (if it is a domain with token auth)
 const EXP = 3600;
@@ -190,6 +196,31 @@ export async function listContactByMeeting(
   };
 
   return await fetch(sql) as Contact[];
+}
+
+// -----------------------------------------------------------------------------
+export async function listContactStatus(
+  identityId: string,
+  limit: number,
+  offset: number,
+) {
+  const sql = {
+    text: `
+      SELECT co.id,
+        floor(extract(epoch FROM now() - seen_at)) as seen_second_ago
+      FROM contact co
+        JOIN identity i ON co.remote_id = i.identity_id
+      WHERE co.identity_id = $1
+      ORDER BY i.seen_at DESC
+      LIMIT $2 OFFSET $3`,
+    args: [
+      identityId,
+      limit,
+      offset,
+    ],
+  };
+
+  return await fetch(sql) as ContactStatus[];
 }
 
 // -----------------------------------------------------------------------------
