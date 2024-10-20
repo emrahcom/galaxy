@@ -68,6 +68,12 @@ export interface ContactInvite111 {
 }
 
 // -----------------------------------------------------------------------------
+export interface ContactStatus {
+  id: string;
+  seen_second_ago: number;
+}
+
+// -----------------------------------------------------------------------------
 export interface Domain {
   id: string;
   name: string;
