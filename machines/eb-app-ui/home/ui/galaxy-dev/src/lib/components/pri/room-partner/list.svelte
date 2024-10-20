@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { RoomPartner, RoomPartnerCandidate } from "$lib/types";
-  import Item from "$lib/components/pri/room-partner/list-item.svelte";
   import Candidate from "$lib/components/pri/room-partner/list-item-candidate.svelte";
+  import Item from "$lib/components/pri/room-partner/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   export let partners: RoomPartner[];
