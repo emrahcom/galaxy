@@ -9,6 +9,7 @@ import {
   listContactByDomain,
   listContactByMeeting,
   listContactByRoom,
+  listContactStatus,
   updateContact,
 } from "../database/contact.ts";
 
@@ -71,6 +72,15 @@ async function listByMeeting(
 }
 
 // -----------------------------------------------------------------------------
+async function listStatus(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const limit = getLimit(pl.limit);
+  const offset = getOffset(pl.offset);
+
+  return await listContactStatus(identityId, limit, offset);
+}
+
+// -----------------------------------------------------------------------------
 async function call(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const contactId = pl.contact_id;
@@ -112,6 +122,8 @@ export default async function (
     return await wrapper(listByRoom, req, identityId);
   } else if (path === `${PRE}/list/bymeeting`) {
     return await wrapper(listByMeeting, req, identityId);
+  } else if (path === `${PRE}/list/status`) {
+    return await wrapper(listStatus, req, identityId);
   } else if (path === `${PRE}/call`) {
     return await wrapper(call, req, identityId);
   } else if (path === `${PRE}/del`) {
