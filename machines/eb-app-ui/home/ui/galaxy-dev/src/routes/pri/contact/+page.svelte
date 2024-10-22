@@ -5,7 +5,7 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = list("/api/pri/contact/list", 100);
+  const pr = list("/api/pri/contact/list", 1000);
 
   contactStatusHandler();
 </script>
