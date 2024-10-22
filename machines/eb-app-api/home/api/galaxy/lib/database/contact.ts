@@ -209,7 +209,7 @@ export async function listContactStatus(
       SELECT co.id,
         floor(extract(epoch FROM now() - seen_at)) as seen_second_ago
       FROM contact co
-        JOIN identity i ON co.remote_id = i.identity_id
+        JOIN identity i ON co.remote_id = i.id
       WHERE co.identity_id = $1
       ORDER BY i.seen_at DESC
       LIMIT $2 OFFSET $3`,
