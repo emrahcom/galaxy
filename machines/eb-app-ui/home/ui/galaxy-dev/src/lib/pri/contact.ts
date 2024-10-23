@@ -19,14 +19,7 @@ export async function contactStatusHandler() {
         "/api/pri/contact/list/status",
         1000,
       );
-      const newValue = JSON.stringify(status);
-      const oldValue = globalThis.localStorage.getItem("contact_status") || "";
-
-      // save the new value and inform listeners only when the value changes
-      if (newValue !== oldValue) {
-        console.error(newValue);
-        globalThis.localStorage.setItem("contact_status", newValue);
-      }
+      globalThis.localStorage.setItem("contact_status", JSON.stringify(status));
     }
   } finally {
     setTimeout(contactStatusHandler, 40000);
