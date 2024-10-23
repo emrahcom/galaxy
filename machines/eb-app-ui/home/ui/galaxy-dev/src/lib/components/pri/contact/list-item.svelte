@@ -1,10 +1,27 @@
 <script lang="ts">
-  import type { Contact } from "$lib/types";
+  import type { Contact, ContactStatus } from "$lib/types";
   import Call from "$lib/components/common/link-call.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
   export let p: Contact;
+  let status = 0;
+
+  function updateStatus() {
+    try {
+      const statusData = globalThis.localStorage.getItem("contact_status");
+      if (!statusData) return;
+
+      const contactStatusList = JSON.parse(statusData) as ContactStatus[];
+      const contactStatus = contactStatusList.find((item) => item.id === p.id);
+      if (contactStatus) status = contactStatus.seen_second_ago;
+      console.error(status);
+    } finally {
+      setTimeout(updateStatus, 20000);
+    }
+  }
+
+  updateStatus();
 </script>
 
 <!-- -------------------------------------------------------------------------->
