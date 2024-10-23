@@ -21,7 +21,9 @@
     }
   }
 
-  updateStatus();
+  // wait for a while to allow contactHandler to get the initital status before
+  // showing the status on UI
+  setTimeout(updateStatus, 8000);
 </script>
 
 <!-- -------------------------------------------------------------------------->
