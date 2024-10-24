@@ -41,7 +41,7 @@
         {:else if status === 2}
           <i class="bi bi-circle-fill text-warning ms-1"></i>
         {:else}
-          <i class="bi bi-circle-fill text-secondary ms-1"></i>
+          <i class="bi bi-dot text-secondary ms-1"></i>
         {/if}
       </div>
       <h5 class="card-title text-muted">{p.name}</h5>
