@@ -4,4 +4,4 @@
 -->
 
 <!-- -------------------------------------------------------------------------->
-<button type="submit" class="d-none" disabled aria-hidden="true" />
+<button type="submit" class="d-none" disabled aria-hidden="true"></button>
