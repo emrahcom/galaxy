@@ -43,7 +43,7 @@
     <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
 
-      <p class="text-muted me-3 mt-3 mb-1" />
+      <p class="text-muted me-3 mt-3 mb-1"></p>
       <Switch
         name="disposable"
         label="Disposable"
