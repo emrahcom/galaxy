@@ -37,6 +37,7 @@
           class="btn btn-outline-secondary mx-1"
           data-bs-toggle="tooltip"
           data-bs-title={hrefBackTitle}
+          aria-label={hrefBackTitle}
           on:click={() => {
             globalThis.location.href = hrefBack;
           }}
@@ -50,6 +51,7 @@
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
           data-bs-title={hrefContactTitle}
+          aria-label={hrefContactTitle}
           on:click={() => {
             globalThis.location.href = hrefContact;
           }}
@@ -63,6 +65,7 @@
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
           data-bs-title={hrefKeyTitle}
+          aria-label={hrefKeyTitle}
           on:click={() => {
             globalThis.location.href = hrefKey;
           }}
@@ -76,6 +79,7 @@
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
           data-bs-title={hrefMeetingTitle}
+          aria-label={hrefMeetingTitle}
           on:click={() => {
             globalThis.location.href = hrefMeeting;
           }}
@@ -89,6 +93,7 @@
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
           data-bs-title={hrefCalendarTitle}
+          aria-label={hrefCalendarTitle}
           on:click={() => {
             globalThis.location.href = hrefCalendar;
           }}
@@ -102,6 +107,7 @@
           class="btn btn-outline-secondary ms-1 me-auto"
           data-bs-toggle="tooltip"
           data-bs-title={hrefPreviousTitle}
+          aria-label={hrefPreviousTitle}
           on:click={() => {
             globalThis.location.href = hrefPrevious;
           }}
@@ -115,6 +121,7 @@
           class="btn btn-outline-secondary"
           data-bs-toggle="tooltip"
           data-bs-title={hrefNextTitle}
+          aria-label={hrefNextTitle}
           on:click={() => {
             globalThis.location.href = hrefNext;
           }}
@@ -129,6 +136,7 @@
         class="btn btn-outline-secondary ms-auto me-0 my-auto"
         data-bs-toggle="tooltip"
         data-bs-title={hrefAddTitle}
+        aria-label={hrefAddTitle}
         on:click={() => {
           globalThis.location.href = hrefAdd;
         }}
