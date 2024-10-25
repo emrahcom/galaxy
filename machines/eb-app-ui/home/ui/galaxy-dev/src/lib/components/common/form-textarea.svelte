@@ -20,6 +20,6 @@
     {readonly}
     {required}
     tabindex={disabled || readonly ? -1 : undefined}
-  />
+  ></textarea>
   <label for={name}>{label}</label>
 </div>
