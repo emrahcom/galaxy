@@ -23,6 +23,7 @@
   class="btn btn-outline-dark btn-sm"
   data-bs-toggle="tooltip"
   data-bs-title={title}
+  aria-label={title}
   {href}
   on:click={(e) => {
     if (e.ctrlKey || e.metaKey) return;

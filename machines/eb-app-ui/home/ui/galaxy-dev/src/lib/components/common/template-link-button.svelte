@@ -16,6 +16,7 @@
   class="btn btn-outline-dark btn-sm"
   data-bs-toggle="tooltip"
   data-bs-title={title}
+  aria-label={title}
   on:click={() => {
     globalThis.location.href = href;
   }}
