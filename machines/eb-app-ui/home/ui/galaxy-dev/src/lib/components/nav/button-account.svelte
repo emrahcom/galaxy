@@ -21,6 +21,7 @@
   data-bs-toggle="offcanvas"
   data-bs-target="#offcanvasAccount"
   aria-controls="offcanvasAccount"
+  aria-label="account"
   on:click={updateUsername}
 >
   <i class="bi bi-person"></i>
