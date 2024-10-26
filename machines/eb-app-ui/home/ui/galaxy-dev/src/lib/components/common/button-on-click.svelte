@@ -7,6 +7,6 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<button class="btn btn-outline-secondary" type="button" on:click>
+<button class="btn btn-outline-secondary" type="button" onclick>
   {label}
 </button>

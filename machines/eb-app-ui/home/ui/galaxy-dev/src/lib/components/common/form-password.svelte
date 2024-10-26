@@ -59,7 +59,7 @@
     class="input-group-text"
     role="button"
     tabindex="0"
-    on:click={toggleVisibility}
+    onclick={toggleVisibility}
   >
     {#if isHidden}
       <i class="bi bi-eye-fill"></i>

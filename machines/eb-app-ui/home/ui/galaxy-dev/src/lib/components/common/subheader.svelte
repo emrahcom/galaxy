@@ -60,7 +60,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefBackTitle}
           aria-label={hrefBackTitle}
-          on:click={() => {
+          onclick={() => {
             globalThis.location.href = hrefBack;
           }}
         >
@@ -74,7 +74,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefContactTitle}
           aria-label={hrefContactTitle}
-          on:click={() => {
+          onclick={() => {
             globalThis.location.href = hrefContact;
           }}
         >
@@ -88,7 +88,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefKeyTitle}
           aria-label={hrefKeyTitle}
-          on:click={() => {
+          onclick={() => {
             globalThis.location.href = hrefKey;
           }}
         >
@@ -102,7 +102,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefMeetingTitle}
           aria-label={hrefMeetingTitle}
-          on:click={() => {
+          onclick={() => {
             globalThis.location.href = hrefMeeting;
           }}
         >
@@ -116,7 +116,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefCalendarTitle}
           aria-label={hrefCalendarTitle}
-          on:click={() => {
+          onclick={() => {
             globalThis.location.href = hrefCalendar;
           }}
         >
@@ -130,7 +130,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefPreviousTitle}
           aria-label={hrefPreviousTitle}
-          on:click={() => {
+          onclick={() => {
             globalThis.location.href = hrefPrevious;
           }}
         >
@@ -144,7 +144,7 @@
           data-bs-toggle="tooltip"
           data-bs-title={hrefNextTitle}
           aria-label={hrefNextTitle}
-          on:click={() => {
+          onclick={() => {
             globalThis.location.href = hrefNext;
           }}
         >
@@ -159,7 +159,7 @@
         data-bs-toggle="tooltip"
         data-bs-title={hrefAddTitle}
         aria-label={hrefAddTitle}
-        on:click={() => {
+        onclick={() => {
           globalThis.location.href = hrefAdd;
         }}
       >

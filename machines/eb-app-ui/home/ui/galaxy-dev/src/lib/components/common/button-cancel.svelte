@@ -8,6 +8,6 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<button class="btn btn-outline-secondary" type="button" {disabled} on:click>
+<button class="btn btn-outline-secondary" type="button" {disabled} onclick>
   {label}
 </button>

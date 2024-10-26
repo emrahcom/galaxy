@@ -29,7 +29,7 @@
   data-bs-title={title}
   aria-label={title}
   {href}
-  on:click={(e) => {
+  onclick={(e) => {
     if (e.ctrlKey || e.metaKey) return;
 
     e.preventDefault();

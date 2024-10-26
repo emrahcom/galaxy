@@ -21,7 +21,7 @@
   data-bs-toggle="tooltip"
   data-bs-title={title}
   aria-label={title}
-  on:click={() => {
+  onclick={() => {
     globalThis.location.href = href;
   }}
 >
