@@ -31,18 +31,20 @@
 
   const timezoneOffset = new Date().getTimezoneOffset();
   const defaultDuration = Number(p.schedule_attr.duration);
+  const _date0 = toLocaleDate(p.schedule_attr.started_at);
+  const _time0 = toLocaleTime(p.schedule_attr.started_at);
+  const notBefore = _date0 < getToday() ? _date0 : getToday();
+
   let duration = $state(defaultDuration);
-  let date0 = $state(toLocaleDate(p.schedule_attr.started_at));
+  let date0 = $state(_date0);
   let date1 = $state(p.schedule_attr.rep_end_at
     ? toLocaleDate(p.schedule_attr.rep_end_at)
-    : date0);
-  let time0 = $state(toLocaleTime(p.schedule_attr.started_at));
-  let time1 = $state(getEndTime(time0, duration));
+    : _date0);
+  let time0 = $state(_time0);
+  let time1 = $state(getEndTime(_time0, defaultDuration));
   let allDay = $state(isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration));
   let every = $state(Number(p.schedule_attr.rep_every) || 1);
   let times = $state(Number(p.schedule_attr.rep_end_x) || 10);
-  let notBefore = $state(getToday());
-  if (date0 < notBefore) notBefore = date0;
   let d0 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[0]))
     : false);

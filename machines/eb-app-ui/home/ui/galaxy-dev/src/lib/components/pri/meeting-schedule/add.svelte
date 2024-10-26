@@ -41,7 +41,7 @@
   const dateAfter90Days = dateAfterXDays(90);
   let date1 = $state(getLastDayOfWeek(`${dateAfter90Days}T00:00:00`));
   let time0 = $state("08:30");
-  let time1 = $state(getEndTime(time0, defaultDuration));
+  let time1 = $state(getEndTime("08:30", defaultDuration));
   let allDay = $state(false);
   let everyDay = $state(1);
   let everyWeek = $state(1);
