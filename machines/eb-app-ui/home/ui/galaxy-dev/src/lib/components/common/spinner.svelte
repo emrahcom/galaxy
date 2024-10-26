@@ -3,7 +3,7 @@
     effect?: string;
   }
 
-  let { p = "border" }: Props = $props();
+  let { effect = "border" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->
