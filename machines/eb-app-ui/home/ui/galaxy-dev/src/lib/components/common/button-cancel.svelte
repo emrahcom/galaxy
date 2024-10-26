@@ -1,6 +1,6 @@
 <script lang="ts">
   interface Props {
-    disabled?: string;
+    disabled?: boolean;
     label?: string;
   }
 

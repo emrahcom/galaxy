@@ -162,9 +162,9 @@
           {#if inCall}
             <Cancel on:click={endCall} />
           {:else}
-            <Cancel bind:disabled on:click={cancel} />
+            <Cancel {disabled} on:click={cancel} />
             <SubmitBlocker />
-            <Submit label="Call" bind:disabled />
+            <Submit {disabled} label="Call" />
           {/if}
         </div>
       </form>

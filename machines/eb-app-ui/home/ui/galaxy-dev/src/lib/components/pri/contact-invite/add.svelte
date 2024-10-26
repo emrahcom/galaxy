@@ -58,9 +58,9 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel bind:disabled on:click={cancel} />
+        <Cancel {disabled} on:click={cancel} />
         <SubmitBlocker />
-        <Submit label="Create" bind:disabled />
+        <Submit {disabled} label="Create" />
       </div>
     </form>
   </div>

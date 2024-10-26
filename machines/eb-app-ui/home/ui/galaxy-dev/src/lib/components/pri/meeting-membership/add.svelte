@@ -140,9 +140,9 @@
           </div>
         {:else}
           <div class="d-flex gap-5 mt-5 justify-content-center">
-            <Cancel bind:disabled on:click={cancel} />
+            <Cancel {disabled} on:click={cancel} />
             <SubmitBlocker />
-            <Submit label="Subscribe" bind:disabled />
+            <Submit {disabled} label="Subscribe" />
           </div>
         {/if}
       </form>
