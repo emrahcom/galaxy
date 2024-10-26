@@ -6,7 +6,7 @@
     min: number;
     name: string;
     onchange: (e: Event) => void;
-    oninput: (e: InputEvent) => void;
+    oninput: (e: Event) => void;
     readonly?: boolean;
     required?: boolean;
     step: number;
