@@ -5,7 +5,7 @@
     value: string;
   }
 
-  let { disabled = false, options, value: $bindable() }: Props = $props();
+  let { disabled = false, options, value = $bindable() }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->
