@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let label = "Cancel";
-  export let disabled = false;
+  interface Props {
+    disabled?: string;
+    label?: string;
+  }
+
+  let { disabled = false, label = "Cancel" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

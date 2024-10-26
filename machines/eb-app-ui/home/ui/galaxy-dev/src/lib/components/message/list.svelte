@@ -2,7 +2,11 @@
   import type { IntercomMessage } from "$lib/types";
   import Call from "$lib/components/message/call.svelte";
 
-  export let messages: IntercomMessage[];
+  interface Props {
+    messages: IntercomMessage[];
+  }
+
+  let { messages }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

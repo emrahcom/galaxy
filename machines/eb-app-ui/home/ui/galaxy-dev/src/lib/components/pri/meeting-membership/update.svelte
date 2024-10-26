@@ -10,7 +10,11 @@
   import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: MeetingMembership;
+  interface Props {
+    p: MeetingMembership;
+  }
+
+  let { p }: Props = $props();
 
   let warning = $state(false);
   let disabled = $state(false);

@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let label = "Click";
+  interface Props {
+    label = "Click";
+  }
+
+  let { label }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

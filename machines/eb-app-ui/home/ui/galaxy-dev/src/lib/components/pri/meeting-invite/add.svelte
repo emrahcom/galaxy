@@ -14,7 +14,11 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let meeting: Meeting;
+  interface Props {
+    meeting: Meeting;
+  }
+
+  let { meeting }: Props = $props();
 
   const date = new Date();
 

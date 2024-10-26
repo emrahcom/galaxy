@@ -4,8 +4,12 @@
   import Item from "$lib/components/pri/room-partner/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let partners: RoomPartner[];
-  export let candidates: RoomPartnerCandidate[];
+  interface Props {
+    partners: RoomPartner[];
+    candidates: RoomPartnerCandidate[];
+  }
+
+  let { partners, candidates }: Props = $props();
 
   const isEmpty = !(partners.length || candidates.length);
 </script>

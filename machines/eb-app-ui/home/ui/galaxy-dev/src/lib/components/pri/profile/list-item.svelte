@@ -4,7 +4,11 @@
   import Set from "$lib/components/common/link-set-default-profile.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
-  export let p: Profile;
+  interface Props {
+    p: Profile;
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

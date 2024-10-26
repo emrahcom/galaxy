@@ -6,7 +6,11 @@
   import SetGuest from "$lib/components/common/link-set-guest.svelte";
   import SetHost from "$lib/components/common/link-set-host.svelte";
 
-  export let p: MeetingMember;
+  interface Props {
+    p: MeetingMember;
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

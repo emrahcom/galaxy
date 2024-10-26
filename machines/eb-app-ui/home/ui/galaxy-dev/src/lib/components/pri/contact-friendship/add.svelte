@@ -9,8 +9,12 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invite: ContactInvite111;
-  export let isExist: boolean;
+  interface Props {
+    invite: ContactInvite111;
+    isExist: boolean;
+  }
+
+  let { invite, isExist }: Props = $props();
 
   let warning = $state(false);
   let disabled = $state(false);

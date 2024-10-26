@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let effect = "border";
+  interface Props {
+    effect = "border";
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

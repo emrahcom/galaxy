@@ -6,7 +6,11 @@
   import Enable from "$lib/components/common/link-enable.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
-  export let p: MeetingSchedule;
+  interface Props {
+    p: MeetingSchedule;
+  }
+
+  let { p }: Props = $props();
 
   // ---------------------------------------------------------------------------
   function getDays(repDays: string) {

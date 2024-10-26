@@ -19,7 +19,11 @@
   import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: Domain;
+  interface Props {
+    p: Domain;
+  }
+
+  let { p }: Props = $props();
 
   // set default if there is no value
   if (!p.domain_attr.url) p.domain_attr.url = "";

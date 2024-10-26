@@ -9,7 +9,11 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let room: Room;
+  interface Props {
+    room: Room;
+  }
+
+  let { room }: Props = $props();
 
   const pr = listById("/api/pri/contact/list/byroom", room.id, 1000).then(
     (items: Contact[]) => {

@@ -5,7 +5,11 @@
   import { watchCall } from "$lib/pri/intercom";
   import type { IntercomMessage } from "$lib/types";
 
-  export let msg: IntercomMessage;
+  interface Props {
+    msg: IntercomMessage;
+  }
+
+  let { msg }: Props = $props();
 
   const href = `/pri/call/join/${msg.id}`;
   let toast: HTMLElement;

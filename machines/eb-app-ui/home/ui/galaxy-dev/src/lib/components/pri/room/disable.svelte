@@ -9,7 +9,11 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: Room;
+  interface Props {
+    p: Room;
+  }
+
+  let { p }: Props = $props();
 
   let warning = $state(false);
   let disabled = $state(false);

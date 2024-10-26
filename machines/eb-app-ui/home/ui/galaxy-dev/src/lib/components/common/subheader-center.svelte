@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let subheader: string;
+  interface Props {
+    subheader: string;
+  }
+
+  let { subheader }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

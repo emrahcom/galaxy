@@ -4,7 +4,11 @@
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
 
-  export let p: RoomPartner;
+  interface Props {
+    p: RoomPartner;
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

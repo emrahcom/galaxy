@@ -8,8 +8,12 @@
   import Day from "$lib/components/pri/calendar/day-of-month.svelte";
   import type { MeetingSchedule222 } from "$lib/types";
 
-  export let date: string;
-  export let calendar: MeetingSchedule222[];
+  interface Props {
+    date: string;
+    calendar: MeetingSchedule222[];
+  }
+
+  let { date, calendar }: Props = $props();
 
   const DAYS = [0, 1, 2, 3, 4, 5, 6];
   const WEEKS = [0, 1, 2, 3, 4, 5];

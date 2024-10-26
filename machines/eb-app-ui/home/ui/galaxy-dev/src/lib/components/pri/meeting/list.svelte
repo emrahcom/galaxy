@@ -5,8 +5,12 @@
   import Item from "$lib/components/pri/meeting/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let meetings: Meeting222[];
-  export let candidacies: MeetingMemberCandidacy[];
+  interface Props {
+    meetings: Meeting222[];
+    candidacies: MeetingMemberCandidacy[];
+  }
+
+  let { meetings, candidacies }: Props = $props();
 
   const isEmpty = !(meetings.length || candidacies.length);
 </script>

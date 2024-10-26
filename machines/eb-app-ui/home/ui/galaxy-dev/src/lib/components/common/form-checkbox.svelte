@@ -1,8 +1,12 @@
 <script lang="ts">
-  export let disabled = false;
-  export let label: string;
-  export let name: string;
-  export let value: boolean;
+  interface Props {
+    disabled?: boolean;
+    label: string;
+    name: string;
+    value: boolean;
+  }
+
+  let { disabled = false, label, name, value = $bindable() }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

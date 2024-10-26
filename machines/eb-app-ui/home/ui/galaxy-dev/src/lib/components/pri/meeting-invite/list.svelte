@@ -5,7 +5,12 @@
   import Item from "$lib/components/pri/meeting-invite/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invites: MeetingInvite[];
+  interface Props {
+    invites: MeetingInvite[];
+  }
+
+  let { invites }: Props = $props();
+
   const meeting_id = $page.params.meeting_uuid;
 </script>
 

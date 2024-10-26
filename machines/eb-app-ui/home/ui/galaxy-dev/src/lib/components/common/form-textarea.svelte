@@ -1,10 +1,21 @@
 <script lang="ts">
-  export let label: string;
-  export let name: string;
-  export let disabled = false;
-  export let readonly = false;
-  export let required = false;
-  export let value: string;
+  interface Props {
+    disabled?: boolean;
+    label: string;
+    name: string;
+    readonly?: boolean;
+    required?: boolean;
+    value: string;
+  }
+
+  let {
+    disabled = false,
+    label,
+    name,
+    readonly = false,
+    required = false,
+    value = $bindable(),
+  }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

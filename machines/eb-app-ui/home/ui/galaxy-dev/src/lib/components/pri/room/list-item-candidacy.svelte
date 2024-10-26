@@ -3,7 +3,11 @@
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
 
-  export let p: RoomPartnerCandidacy;
+  interface Props {
+    p: RoomPartnerCandidacy;
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

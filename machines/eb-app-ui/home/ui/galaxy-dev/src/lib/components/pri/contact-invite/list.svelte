@@ -4,7 +4,11 @@
   import Item from "$lib/components/pri/contact-invite/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invites: ContactInvite[];
+  interface Props {
+    invites: ContactInvite[];
+  }
+
+  let { invites }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

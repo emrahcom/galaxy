@@ -7,7 +7,11 @@
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
 
-  export let p: MeetingInvite;
+  interface Props {
+    p: MeetingInvite;
+  }
+
+  let { p }: Props = $props();
 
   // ---------------------------------------------------------------------------
   function copyForMember(code: string) {

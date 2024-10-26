@@ -1,7 +1,11 @@
 <script lang="ts">
-  export let disabled = false;
-  export let options: string[][];
-  export let value: string;
+  interface Props {
+    disabled?: boolean;
+    options: string[][];
+    value: string;
+  }
+
+  let { disabled = false, options, value: $bindable() }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

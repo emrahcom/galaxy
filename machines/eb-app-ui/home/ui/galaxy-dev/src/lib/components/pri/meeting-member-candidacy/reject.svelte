@@ -8,7 +8,11 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: MeetingMemberCandidacy;
+  interface Props {
+    p: MeetingMemberCandidacy;
+  }
+
+  let { p }: Props = $props();
 
   let warning = $state(false);
   let disabled = $state(false);

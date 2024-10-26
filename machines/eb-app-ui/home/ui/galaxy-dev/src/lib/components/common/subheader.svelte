@@ -2,23 +2,45 @@
   import { onMount } from "svelte";
   import { activateTooltips } from "$lib/common";
 
-  export let hrefAdd = "";
-  export let hrefAddTitle = "Add";
-  export let hrefBack = "";
-  export let hrefBackTitle = "Go back";
-  export let hrefCalendar = "";
-  export let hrefCalendarTitle = "Calendar";
-  export let hrefContact = "";
-  export let hrefContactTitle = "Contacts";
-  export let hrefKey = "";
-  export let hrefKeyTitle = "Keys";
-  export let hrefMeeting = "";
-  export let hrefMeetingTitle = "Edit meetings";
-  export let hrefNext = "";
-  export let hrefNextTitle = "Next";
-  export let hrefPrevious = "";
-  export let hrefPreviousTitle = "Previous";
-  export let subheader = "";
+  interface Props {
+    hrefAdd?: string;
+    hrefAddTitle?: string;
+    hrefBack?: string;
+    hrefBackTitle?: string;
+    hrefCalendar?: string;
+    hrefCalendarTitle?: string;
+    hrefContact?: string;
+    hrefContactTitle?: string;
+    hrefKey?: string;
+    hrefKeyTitle?: string;
+    hrefMeeting?: string;
+    hrefMeetingTitle?: string;
+    hrefNext?: string;
+    hrefNextTitle?: string;
+    hrefPrevious?: string;
+    hrefPreviousTitle?: string;
+    subheader?: string;
+  }
+
+  let {
+    hrefAdd = "",
+    hrefAddTitle = "Add",
+    hrefBack = "",
+    hrefBackTitle = "Go back",
+    hrefCalendar = "",
+    hrefCalendarTitle = "Calendar",
+    hrefContact = "",
+    hrefContactTitle = "Contacts",
+    hrefKey = "",
+    hrefKeyTitle = "Keys",
+    hrefMeeting = "",
+    hrefMeetingTitle = "Edit meetings",
+    hrefNext = "",
+    hrefNextTitle = "Next",
+    hrefPrevious = "",
+    hrefPreviousTitle = "Previous",
+    subheader = "",
+  }: Props = $props();
 
   onMount(() => {
     // unremovable tooltip's title issue if there is no delay

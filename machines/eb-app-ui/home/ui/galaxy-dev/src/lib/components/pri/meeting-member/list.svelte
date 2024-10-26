@@ -4,8 +4,12 @@
   import Item from "$lib/components/pri/meeting-member/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let members: MeetingMember[];
-  export let candidates: MeetingMemberCandidate[];
+  interface Props {
+    members: MeetingMember[];
+    candidates: MeetingMemberCandidate[];
+  }
+
+  let { members, candidates }: Props = $props();
 
   const isEmpty = !(members.length || candidates.length);
 </script>

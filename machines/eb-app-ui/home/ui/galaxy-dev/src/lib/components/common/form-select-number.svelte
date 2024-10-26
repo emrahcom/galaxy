@@ -1,12 +1,25 @@
 <script lang="ts">
-  export let disabled = false;
-  export let id: string;
-  export let label: string;
-  export let max = 100;
-  export let min = 1;
-  export let required = true;
-  export let unit: string;
-  export let value: number;
+  interface Props {
+    disabled?: boolean;
+    id: string;
+    label: string;
+    max?: number;
+    min?: number;
+    required?: boolean;
+    unit: string;
+    value: number;
+  }
+
+  let {
+    disabled = false;
+    id,
+    label,
+    max = 100,
+    min = 1,
+    required = true,
+    unit,
+    value = $bindable(),
+  }: Props = $props();
 
   const options = Array.from(
     { length: max - min + 1 },

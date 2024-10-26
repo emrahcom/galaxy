@@ -5,7 +5,12 @@
   import Item from "$lib/components/pri/room-invite/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invites: RoomInvite[];
+  interface Props {
+    invites: RoomInvite[];
+  }
+
+  let { invites }: Props = $props();
+
   const room_id = $page.params.room_uuid;
 </script>
 

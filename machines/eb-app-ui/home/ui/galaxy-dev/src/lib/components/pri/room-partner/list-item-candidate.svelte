@@ -2,7 +2,11 @@
   import type { RoomPartnerCandidate } from "$lib/types";
   import Del from "$lib/components/common/link-del.svelte";
 
-  export let p: RoomPartnerCandidate;
+  interface Props {
+    p: RoomPartnerCandidate;
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

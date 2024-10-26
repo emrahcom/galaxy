@@ -25,7 +25,12 @@
   import Time from "$lib/components/common/form-time.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let meeting: Meeting;
+  interface Props {
+    meeting: Meeting;
+  }
+
+  let { meeting }: Props = $props();
+
   const hash = $page.url.hash;
 
   const timezoneOffset = new Date().getTimezoneOffset();

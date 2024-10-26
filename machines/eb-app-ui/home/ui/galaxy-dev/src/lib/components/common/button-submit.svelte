@@ -1,6 +1,10 @@
 <script lang="ts">
-  export let label = "Submit";
-  export let disabled = false;
+  interface Props {
+    disabled?: boolean;
+    label?: string;
+  }
+
+  let { disabled = false, label = "Submit" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

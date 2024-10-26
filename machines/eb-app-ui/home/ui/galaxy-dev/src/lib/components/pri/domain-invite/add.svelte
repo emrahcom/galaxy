@@ -8,7 +8,11 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let domain: Domain;
+  interface Props {
+    domain: Domain;
+  }
+
+  let { domain }: Props = $props();
 
   const date = new Date();
 

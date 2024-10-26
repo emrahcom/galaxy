@@ -5,7 +5,12 @@
   import Item from "$lib/components/pri/domain-invite/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invites: DomainInvite[];
+  interface Props {
+    invites: DomainInvite[];
+  }
+
+  let { invites }: Props = $props();
+
   const domain_id = $page.params.domain_uuid;
 </script>
 

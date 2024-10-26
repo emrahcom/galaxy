@@ -23,7 +23,11 @@
   import Time from "$lib/components/common/form-time.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: MeetingSchedule;
+  interface Props {
+    p: MeetingSchedule;
+  }
+
+  let { p }: Props = $props();
 
   const timezoneOffset = new Date().getTimezoneOffset();
   const defaultDuration = Number(p.schedule_attr.duration);

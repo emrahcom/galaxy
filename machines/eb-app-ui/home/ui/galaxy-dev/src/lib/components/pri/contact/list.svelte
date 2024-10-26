@@ -3,7 +3,11 @@
   import Item from "$lib/components/pri/contact/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let contacts: Contact[];
+  interface Props {
+    contacts: Contact[];
+  }
+
+  let { contacts }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

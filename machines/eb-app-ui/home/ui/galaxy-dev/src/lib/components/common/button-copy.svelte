@@ -1,5 +1,9 @@
 <script lang="ts">
-  export let label = "copy";
+  interface Props {
+    label = "copy";
+  }
+
+  let { label }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

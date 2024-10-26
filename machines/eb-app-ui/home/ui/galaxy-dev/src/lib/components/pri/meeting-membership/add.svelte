@@ -10,8 +10,12 @@
   import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let invite: MeetingInvite111;
-  export let isExist: boolean;
+  interface Props {
+    invite: MeetingInvite111;
+    isExist: boolean;
+  }
+
+  let { invite, isExist }: Props = $props();
 
   let schedules = $state("");
   for (const s of invite.session_list) {

@@ -10,7 +10,11 @@
   import Schedule from "$lib/components/common/link-schedule.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
-  export let p: Meeting222;
+  interface Props {
+    p: Meeting222;
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

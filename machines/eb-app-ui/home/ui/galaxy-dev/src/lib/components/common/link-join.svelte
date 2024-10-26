@@ -1,8 +1,12 @@
 <script lang="ts">
   import LinkButton from "$lib/components/common/template-link.svelte";
 
-  export let href: string;
-  export let title = "Join";
+  interface Props {
+    href: string;
+    title?: string;
+  }
+
+  let { href, title = "Join" }: Props = $props();
 
   const icon = "bi-link-45deg";
 </script>

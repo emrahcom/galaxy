@@ -1,9 +1,19 @@
 <script lang="ts">
-  export let desc = "";
-  export let disabled = false;
-  export let label: string;
-  export let name: string;
-  export let value: boolean;
+  interface Props {
+    desc?: string;
+    disabled?: boolean;
+    label: string;
+    name: string;
+    value: boolean;
+  }
+
+  let {
+    desc = "",
+    disabled = false,
+    label,
+    name,
+    value = $bindable(),
+  }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

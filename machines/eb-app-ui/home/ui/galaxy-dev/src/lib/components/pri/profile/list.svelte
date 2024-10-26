@@ -4,7 +4,11 @@
   import Item from "$lib/components/pri/profile/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let profiles: Profile[];
+  interface Props {
+    profiles: Profile[];
+  }
+
+  let { profiles }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

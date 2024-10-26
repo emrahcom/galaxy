@@ -8,7 +8,11 @@
   import People from "$lib/components/common/link-people.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
-  export let p: Room333;
+  interface Props {
+    p: Room333;
+  }
+
+  let { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

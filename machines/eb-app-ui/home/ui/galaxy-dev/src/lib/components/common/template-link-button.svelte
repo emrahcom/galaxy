@@ -2,9 +2,13 @@
   import { onMount } from "svelte";
   import { activateTooltips } from "$lib/common";
 
-  export let href: string;
-  export let icon = "bi-question";
-  export let title = "?";
+  interface Props {
+    href: string;
+    icon?: string;
+    title?: string;
+  }
+
+  let { href, icon = "bi-question", title = "?" }: Props = $props();
 
   onMount(() => {
     setTimeout(activateTooltips, 200);

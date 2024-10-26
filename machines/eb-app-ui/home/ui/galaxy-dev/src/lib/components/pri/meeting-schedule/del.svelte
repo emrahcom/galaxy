@@ -11,7 +11,11 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: MeetingSchedule;
+  interface Props {
+    p: MeetingSchedule;
+  }
+
+  let { p }: Props = $props();
 
   const date0 = toLocaleDate(p.schedule_attr.started_at);
   const interval = toLocaleInterval(

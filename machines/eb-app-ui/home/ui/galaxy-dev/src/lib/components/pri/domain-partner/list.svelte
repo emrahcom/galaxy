@@ -4,8 +4,12 @@
   import Item from "$lib/components/pri/domain-partner/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let partners: DomainPartner[];
-  export let candidates: DomainPartnerCandidate[];
+  interface Props {
+    partners: DomainPartner[];
+    candidates: DomainPartnerCandidate[];
+  }
+
+  let { partners, candidates }: Props = $props();
 
   const isEmpty = !(partners.length || candidates.length);
 </script>

@@ -1,8 +1,12 @@
 <script lang="ts">
   import LinkButton from "$lib/components/common/template-link-button.svelte";
 
-  export let href: string;
-  export let title = "Add";
+  interface Props {
+    href: string;
+    title?: string;
+  }
+
+  let { href, title = "Add" }: Props = $props();
 
   const icon = "bi-plus";
 </script>

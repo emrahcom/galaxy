@@ -8,7 +8,12 @@
   import Join from "$lib/components/common/button-on-click.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  export let p: MeetingSchedule222;
+  interface Props {
+    p: MeetingSchedule222;
+  }
+
+  let { p }: Props = $props();
+
   const hash = $page.url.hash;
   const REFRESH_SEC = 60;
 
