@@ -11,7 +11,7 @@
   }
 
   let {
-    disabled = false;
+    disabled = false,
     id,
     label,
     max = 100,
