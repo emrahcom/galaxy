@@ -20,12 +20,12 @@
     },
   );
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     contact_id: "",
     domain_id: domain.id,
-  };
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

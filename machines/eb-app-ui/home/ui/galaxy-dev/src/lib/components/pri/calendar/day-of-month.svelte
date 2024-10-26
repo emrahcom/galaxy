@@ -20,10 +20,10 @@
     (m) => focusedDay === toLocaleDate(m.started_at),
   );
 
-  let month = "";
+  let month = $state("");
   if (dayOfMonth === 1) month = toLocaleMonthName(focusedDay);
 
-  let bgColor = "";
+  let bgColor = $state("");
   if (today === focusedDay) {
     bgColor = "bg-primary-subtle";
   } else if (focusedDay < today) {

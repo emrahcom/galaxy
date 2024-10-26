@@ -13,7 +13,7 @@
   export let invite: MeetingInvite111;
   export let isExist: boolean;
 
-  let schedules = "";
+  let schedules = $state("");
   for (const s of invite.session_list) {
     const startTime = new Date(s[0]);
     const localStartTime = startTime.toLocaleString(undefined, {
@@ -31,12 +31,12 @@
   }
   schedules = schedules.trim();
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     code: invite.code,
     profile_id: "",
-  };
+  });
 
   const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
     if (item) p.profile_id = item.id;

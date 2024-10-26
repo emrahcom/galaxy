@@ -11,9 +11,9 @@
 
   export let p: MeetingMembership;
 
-  let warning = false;
-  let disabled = false;
-  let profile: string;
+  let warning = $state(false);
+  let disabled = $state(false);
+  let profile = $state("");
 
   if (p.profile_email) {
     profile = `${p.profile_name || ""} (${p.profile_email})`;

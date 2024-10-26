@@ -18,9 +18,9 @@
   import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     name: "",
     auth_type: AUTH_TYPE_OPTIONS[0][0],
     domain_attr: {
@@ -36,7 +36,7 @@
       jaas_aud: JAAS_AUD,
       jaas_iss: JAAS_ISS,
     },
-  };
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

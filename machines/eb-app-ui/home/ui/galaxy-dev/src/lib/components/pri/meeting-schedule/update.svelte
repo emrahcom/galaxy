@@ -27,41 +27,41 @@
 
   const timezoneOffset = new Date().getTimezoneOffset();
   const defaultDuration = Number(p.schedule_attr.duration);
-  let duration = defaultDuration;
-  let date0 = toLocaleDate(p.schedule_attr.started_at);
-  let date1 = p.schedule_attr.rep_end_at
+  let duration = $state(defaultDuration);
+  let date0 = $state(toLocaleDate(p.schedule_attr.started_at));
+  let date1 = $state(p.schedule_attr.rep_end_at
     ? toLocaleDate(p.schedule_attr.rep_end_at)
-    : date0;
-  let time0 = toLocaleTime(p.schedule_attr.started_at);
-  let time1 = getEndTime(time0, duration);
-  let allDay = isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration);
-  let every = Number(p.schedule_attr.rep_every) || 1;
-  let times = Number(p.schedule_attr.rep_end_x) || 10;
-  let notBefore = getToday();
+    : date0);
+  let time0 = $state(toLocaleTime(p.schedule_attr.started_at));
+  let time1 = $state(getEndTime(time0, duration));
+  let allDay = $state(isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration));
+  let every = $state(Number(p.schedule_attr.rep_every) || 1);
+  let times = $state(Number(p.schedule_attr.rep_end_x) || 10);
+  let notBefore = $state(getToday());
   if (date0 < notBefore) notBefore = date0;
-  let d0 = p.schedule_attr.rep_days
+  let d0 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[0]))
-    : false;
-  let d1 = p.schedule_attr.rep_days
+    : false);
+  let d1 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[1]))
-    : false;
-  let d2 = p.schedule_attr.rep_days
+    : false);
+  let d2 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[2]))
-    : false;
-  let d3 = p.schedule_attr.rep_days
+    : false);
+  let d3 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[3]))
-    : false;
-  let d4 = p.schedule_attr.rep_days
+    : false);
+  let d4 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[4]))
-    : false;
-  let d5 = p.schedule_attr.rep_days
+    : false);
+  let d5 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[5]))
-    : false;
-  let d6 = p.schedule_attr.rep_days
+    : false);
+  let d6 = $state(p.schedule_attr.rep_days
     ? Boolean(Number(p.schedule_attr.rep_days[6]))
-    : false;
-  let warning = false;
-  let disabled = false;
+    : false);
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function startTimeUpdated() {

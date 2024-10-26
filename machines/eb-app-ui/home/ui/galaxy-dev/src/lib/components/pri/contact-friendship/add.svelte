@@ -12,12 +12,12 @@
   export let invite: ContactInvite111;
   export let isExist: boolean;
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     code: invite.code,
     name: invite.profile_name,
-  };
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

@@ -18,18 +18,18 @@
     p.schedule_attr.started_at,
     Number(p.schedule_attr.duration),
   );
-  let date1 = "";
-  let every = "";
-  let times = "1 time";
-  let d0 = false;
-  let d1 = false;
-  let d2 = false;
-  let d3 = false;
-  let d4 = false;
-  let d5 = false;
-  let d6 = false;
-  let warning = false;
-  let disabled = false;
+  let date1 = $state("");
+  let every = $state("");
+  let times = $state("1 time");
+  let d0 = $state(false);
+  let d1 = $state(false);
+  let d2 = $state(false);
+  let d3 = $state(false);
+  let d4 = $state(false);
+  let d5 = $state(false);
+  let d6 = $state(false);
+  let warning = $state(false);
+  let disabled = $state(false);
 
   if (p.schedule_attr.type === "d") {
     if (p.schedule_attr.rep_every === "1") {

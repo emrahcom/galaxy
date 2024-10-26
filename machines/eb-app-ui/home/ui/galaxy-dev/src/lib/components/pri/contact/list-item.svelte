@@ -5,7 +5,7 @@
   import Update from "$lib/components/common/link-update.svelte";
 
   export let p: Contact;
-  let status = 0;
+  let status = $state(0);
 
   function updateStatus() {
     try {

@@ -31,27 +31,27 @@
   const timezoneOffset = new Date().getTimezoneOffset();
   const notBefore = getToday();
   const defaultDuration = 30;
-  let duration = defaultDuration;
-  let date0 = getToday();
+  let duration = $state(defaultDuration);
+  let date0 = $state(getToday());
   const dateAfter90Days = dateAfterXDays(90);
-  let date1 = getLastDayOfWeek(`${dateAfter90Days}T00:00:00`);
-  let time0 = "08:30";
-  let time1 = getEndTime(time0, defaultDuration);
-  let allDay = false;
-  let everyDay = 1;
-  let everyWeek = 1;
-  let times = 10;
-  let d0 = false;
-  let d1 = true;
-  let d2 = true;
-  let d3 = true;
-  let d4 = true;
-  let d5 = true;
-  let d6 = false;
+  let date1 = $state(getLastDayOfWeek(`${dateAfter90Days}T00:00:00`));
+  let time0 = $state("08:30";
+  let time1 = $state(getEndTime(time0, defaultDuration));
+  let allDay = $state(false);
+  let everyDay = $state(1);
+  let everyWeek = $state(1);
+  let times = $state(10);
+  let d0 = $state(false);
+  let d1 = $state(true);
+  let d2 = $state(true);
+  let d3 = $state(true);
+  let d4 = $state(true);
+  let d5 = $state(true);
+  let d6 = $state(false);
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     name: "",
     meeting_id: meeting.id,
     schedule_attr: {
@@ -65,7 +65,7 @@
       rep_days: "",
       timezone_offset: `${timezoneOffset}`,
     },
-  };
+  });
 
   // ---------------------------------------------------------------------------
   function startTimeUpdated() {

@@ -10,13 +10,13 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     name: "",
     domain_id: "",
     has_suffix: false,
-  };
+  });
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
     const enableds = items

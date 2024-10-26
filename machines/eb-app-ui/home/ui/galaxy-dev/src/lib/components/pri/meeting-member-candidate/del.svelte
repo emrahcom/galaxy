@@ -10,8 +10,8 @@
 
   export let p: MeetingMemberCandidate;
 
-  let warning = false;
-  let disabled = false;
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function cancel() {

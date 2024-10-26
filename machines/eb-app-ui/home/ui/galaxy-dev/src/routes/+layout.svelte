@@ -10,7 +10,7 @@
   import Messages from "$lib/components/message/list.svelte";
 
   // get active messages while loading
-  let messages = updateMessageList();
+  let messages = $state(updateMessageList());
 
   // this event is triggered if a message action happens inside this tab
   document.addEventListener("internalMessage", () => {

@@ -18,13 +18,13 @@
 
   export let p: Contact;
 
-  let warning = false;
-  let disabled = false;
-  let inCall = false;
+  let warning = $state(false);
+  let disabled = $state(false);
+  let inCall = $state(false);
   let call: IntercomCall;
   let ring: IntercomRing;
   let ringCounter = 0;
-  let domainId = "";
+  let domainId = $state("");
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
     const enableds = items

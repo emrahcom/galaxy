@@ -10,12 +10,12 @@
 
   const date = new Date();
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     name: `invite-${date.getTime() % 10000000000}`,
     disposable: true,
-  };
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

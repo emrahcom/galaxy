@@ -10,9 +10,9 @@
   export let p: MeetingSchedule111;
   const REFRESH_SEC = 60;
 
-  let warning = false;
+  let warning = $state(false);
   let started_at = new Date(Date.now() + p.waiting_time * 1000);
-  let remainingTime = "";
+  let remainingTime = $state("");
   let counter = 0;
 
   getRemainingTime();

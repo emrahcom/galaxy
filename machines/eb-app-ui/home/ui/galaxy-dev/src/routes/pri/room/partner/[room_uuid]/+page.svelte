@@ -7,7 +7,7 @@
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const roomId = $page.params.room_uuid;
-  let roomName = "";
+  let roomName = $state("");
 
   const pr1 = getById("/api/pri/room/get", roomId).then((item: Room) => {
     roomName = item.name;

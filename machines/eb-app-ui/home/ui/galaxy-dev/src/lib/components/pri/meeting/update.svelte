@@ -18,11 +18,11 @@
 
   export let p: Meeting;
 
-  let warning = false;
-  let disabled = false;
-  let domainId = p.domain_id;
-  let roomId = p.room_id;
-  let roomStatic = !p.room_ephemeral;
+  let warning = $state(false);
+  let disabled = $state(false);
+  let domainId = $state(p.domain_id);
+  let roomId = $state(p.room_id);
+  let roomStatic = $state(!p.room_ephemeral);
 
   const pr1 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
     return items.map((i) => {

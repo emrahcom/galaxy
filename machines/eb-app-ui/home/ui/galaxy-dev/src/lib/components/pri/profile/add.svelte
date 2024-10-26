@@ -8,12 +8,12 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  let warning = false;
-  let disabled = false;
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let p = $state({
     name: "",
     email: "",
-  };
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

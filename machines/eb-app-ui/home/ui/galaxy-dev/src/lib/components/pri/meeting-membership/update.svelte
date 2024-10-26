@@ -12,8 +12,8 @@
 
   export let p: MeetingMembership;
 
-  let warning = false;
-  let disabled = false;
+  let warning = $state(false);
+  let disabled = $state(false);
 
   const pr = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
     return items.map((i) => {

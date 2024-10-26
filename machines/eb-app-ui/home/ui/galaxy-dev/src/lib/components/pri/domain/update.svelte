@@ -34,8 +34,8 @@
   if (!p.domain_attr.jaas_aud) p.domain_attr.jaas_aud = JAAS_AUD;
   if (!p.domain_attr.jaas_iss) p.domain_attr.jaas_iss = JAAS_ISS;
 
-  let warning = false;
-  let disabled = false;
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function cancel() {

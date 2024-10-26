@@ -13,10 +13,10 @@
   import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  let warning = false;
-  let disabled = false;
-  let domainId = "";
-  let p = {
+  let warning = $state(false);
+  let disabled = $state(false);
+  let domainId = $state("");
+  let p = $state({
     profile_id: "",
     room_id: "",
     room_static: false,
@@ -26,7 +26,7 @@
     hidden: true,
     restricted: false,
     subscribable: true,
-  };
+  });
 
   const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
     if (item) p.profile_id = item.id;

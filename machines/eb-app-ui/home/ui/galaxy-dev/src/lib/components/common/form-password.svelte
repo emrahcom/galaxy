@@ -6,7 +6,7 @@
   export let required = false;
   export let value: string;
 
-  let isHidden = true;
+  let isHidden = $state(true);
 
   // ---------------------------------------------------------------------------
   function toggleVisibility() {

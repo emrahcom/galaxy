@@ -14,11 +14,11 @@
 
   export let p: Meeting;
 
-  let warning = false;
-  let disabled = false;
-  let domainName = p.domain_name;
-  let roomName = `${p.room_name} on ${p.domain_name}`;
-  let profile: string;
+  let warning = $state(false);
+  let disabled = $state(false);
+  let domainName = $state(p.domain_name);
+  let roomName = $state(`${p.room_name} on ${p.domain_name}`);
+  let profile = $state("");
 
   if (p.profile_email) {
     profile = `${p.profile_name || ""} (${p.profile_email})`;

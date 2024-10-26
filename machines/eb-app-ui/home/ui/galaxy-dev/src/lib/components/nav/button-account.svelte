@@ -1,5 +1,5 @@
 <script lang="ts">
-  let username = "";
+  let username = $state("");
 
   // ---------------------------------------------------------------------------
   function updateUsername() {

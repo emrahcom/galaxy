@@ -11,8 +11,8 @@
 
   export let p: Room;
 
-  let warning = false;
-  let disabled = false;
+  let warning = $state(false);
+  let disabled = $state(false);
 
   if (!p.domain_enabled) {
     p.domain_name = `${p.domain_name} - DISABLED`;

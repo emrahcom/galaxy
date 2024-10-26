@@ -12,8 +12,8 @@
 
   export let p: Room;
 
-  let warning = false;
-  let disabled = false;
+  let warning = $state(false);
+  let disabled = $state(false);
 
   const pr = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
     return items.map((i) => [

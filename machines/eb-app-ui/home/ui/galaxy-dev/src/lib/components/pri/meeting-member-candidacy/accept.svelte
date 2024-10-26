@@ -11,9 +11,9 @@
 
   export let p: MeetingMemberCandidacy;
 
-  let warning = false;
-  let disabled = false;
-  let profileId = "";
+  let warning = $state(false);
+  let disabled = $state(false);
+  let profileId = $state("");
 
   const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
     if (item) profileId = item.id;
