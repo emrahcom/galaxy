@@ -13,7 +13,7 @@
 <div id="messages" class="toast-container bottom-0 end-0 p-3">
   {#each messages as msg}
     {#if msg.message_type === "call"}
-      <Call bind:msg />
+      <Call {msg} />
     {/if}
   {/each}
 </div>
