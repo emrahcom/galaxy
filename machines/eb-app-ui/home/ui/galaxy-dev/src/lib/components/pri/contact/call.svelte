@@ -91,7 +91,7 @@
   }
 
   // ---------------------------------------------------------------------------
-  async function onSubmit() {
+  async function onsubmit() {
     try {
       const data = {
         contact_id: p.id,
@@ -121,7 +121,7 @@
 <section id="call">
   {#await pr then domains}
     <div class="d-flex mt-2 justify-content-center">
-      <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+      <form {onsubmit} style="width:{FORM_WIDTH};">
         <Text
           name="name"
           label="Contact"

@@ -64,7 +64,7 @@
   }
 
   // ---------------------------------------------------------------------------
-  async function onSubmit() {
+  async function onsubmit() {
     try {
       warning = false;
       disabled = true;
@@ -126,7 +126,7 @@
   <!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
   {#await Promise.all([pr1, pr2, pr3]) then [profiles, domains, rooms]}
     <div class="d-flex mt-2 justify-content-center">
-      <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+      <form {onsubmit} style="width:{FORM_WIDTH};">
         <Text name="name" label="Name" bind:value={p.name} required={true} />
         <Textarea
           name="info"

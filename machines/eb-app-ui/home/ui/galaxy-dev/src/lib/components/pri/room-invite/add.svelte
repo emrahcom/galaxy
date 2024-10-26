@@ -29,7 +29,7 @@
   }
 
   // ---------------------------------------------------------------------------
-  async function onSubmit() {
+  async function onsubmit() {
     try {
       warning = false;
       disabled = true;
@@ -46,7 +46,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="add">
   <div class="d-flex mt-2 justify-content-center">
-    <form on:submit|preventDefault={onSubmit} style="width:{FORM_WIDTH};">
+    <form {onsubmit} style="width:{FORM_WIDTH};">
       <Text name="name" label="Name" bind:value={p.name} required={true} />
       <Text
         name="room_name"
