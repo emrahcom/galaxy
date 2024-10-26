@@ -3,6 +3,7 @@
     disabled?: boolean;
     label: string;
     name: string;
+    onchange: (e: Event) => void;
     readonly?: boolean;
     required?: boolean;
     value: string;
@@ -12,6 +13,7 @@
     disabled = false,
     label,
     name,
+    onchange,
     readonly = false,
     required = false,
     value = $bindable(),
@@ -31,7 +33,7 @@
     {readonly}
     {required}
     tabindex={disabled || readonly ? -1 : undefined}
-    on:change
+    {onchange}
   />
   <label for={name}>{label}</label>
 </div>

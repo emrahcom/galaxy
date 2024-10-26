@@ -5,6 +5,8 @@
     max: number;
     min: number;
     name: string;
+    onchange: (e: Event) => void;
+    oninput: (e: InputEvent) => void;
     readonly?: boolean;
     required?: boolean;
     step: number;
@@ -17,6 +19,8 @@
     max,
     min,
     name,
+    onchange,
+    oninput,
     readonly = false,
     required = false,
     step,
@@ -37,8 +41,8 @@
     {readonly}
     {required}
     tabindex={disabled || readonly ? -1 : undefined}
-    on:change
-    on:input
+    {onchange}
+    {oninput}
   />
   <label for={name}>{label}</label>
 </div>
@@ -54,5 +58,5 @@
   {max}
   {step}
   tabindex={readonly ? -1 : undefined}
-  on:input
+  {oninput}
 />

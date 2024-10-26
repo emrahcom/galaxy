@@ -292,14 +292,14 @@
           label="Start time"
           bind:value={time0}
           required={true}
-          on:change={startTimeUpdated}
+          onchange={startTimeUpdated}
         />
         <Time
           name="time1"
           label="End time"
           bind:value={time1}
           required={true}
-          on:change={endTimeUpdated}
+          onchange={endTimeUpdated}
         />
         <Range
           name="duration"
@@ -309,8 +309,8 @@
           max={180}
           step={5}
           required={true}
-          on:change={durationUpdated}
-          on:input={durationTyped}
+          onchange={durationUpdated}
+          oninput={durationTyped}
         />
       {/if}
 
