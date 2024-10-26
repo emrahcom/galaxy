@@ -1,9 +1,9 @@
 <script lang="ts">
   interface Props {
-    effect = "border";
+    effect?: string;
   }
 
-  let { p }: Props = $props();
+  let { p = "border" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->
