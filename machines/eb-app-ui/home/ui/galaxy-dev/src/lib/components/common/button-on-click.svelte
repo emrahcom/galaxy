@@ -1,9 +1,9 @@
 <script lang="ts">
   interface Props {
-    label = "Click";
+    label?: string;
   }
 
-  let { label }: Props = $props();
+  let { label = "Click" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->
