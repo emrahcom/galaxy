@@ -25,6 +25,6 @@
   <Warning>No scheduled meeting found</Warning>
 
   <center>
-    <Home label="Home Page" on:click={goHome} />
+    <Home label="Home Page" onclick={goHome} />
   </center>
 {/await}

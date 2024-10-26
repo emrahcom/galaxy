@@ -41,7 +41,7 @@
         <a
           class="nav-link"
           href="/pri/calendar"
-          on:click|preventDefault={() => {
+          onclick={() => {
             closeMenu();
             globalThis.location.href = "/pri/calendar";
           }}
@@ -53,7 +53,7 @@
         <a
           class="nav-link"
           href="/pri/meeting"
-          on:click|preventDefault={() => {
+          onclick={() => {
             closeMenu();
             globalThis.location.href = "/pri/meeting";
           }}
@@ -65,7 +65,7 @@
         <a
           class="nav-link"
           href="/pri/room"
-          on:click|preventDefault={() => {
+          onclick={() => {
             closeMenu();
             globalThis.location.href = "/pri/room";
           }}
@@ -77,7 +77,7 @@
         <a
           class="nav-link"
           href="/pri/domain"
-          on:click|preventDefault={() => {
+          onclick={() => {
             closeMenu();
             globalThis.location.href = "/pri/domain";
           }}
@@ -89,7 +89,7 @@
         <a
           class="nav-link"
           href="/pri/profile"
-          on:click|preventDefault={() => {
+          onclick={() => {
             closeMenu();
             globalThis.location.href = "/pri/profile";
           }}
@@ -101,7 +101,7 @@
         <a
           class="nav-link"
           href="/pri/contact"
-          on:click|preventDefault={() => {
+          onclick={() => {
             closeMenu();
             globalThis.location.href = "/pri/contact";
           }}

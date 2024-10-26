@@ -98,12 +98,12 @@
           class="card-footer d-flex justify-content-center bg-body border-0
           mt-3 gap-5"
         >
-          <Cancel label="Cancel" on:click={goHome} />
+          <Cancel label="Cancel" onclick={goHome} />
 
           {#if p.join_as === "host"}
             <Join
               label="Join Now"
-              on:click={() => {
+              onclick={() => {
                 join(p.code);
               }}
             />

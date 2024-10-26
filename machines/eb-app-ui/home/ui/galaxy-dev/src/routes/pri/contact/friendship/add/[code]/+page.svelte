@@ -34,6 +34,6 @@
   </Warning>
 
   <div class="d-flex gap-5 mt-5 justify-content-center">
-    <Cancel label="Abort" on:click={cancel} />
+    <Cancel label="Abort" onclick={cancel} />
   </div>
 {/await}

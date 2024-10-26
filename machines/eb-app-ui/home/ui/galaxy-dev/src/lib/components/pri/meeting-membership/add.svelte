@@ -136,11 +136,11 @@
           </Warning>
 
           <div class="d-flex gap-5 mt-5 justify-content-center">
-            <Cancel label="Abort" on:click={cancel} />
+            <Cancel label="Abort" onclick={cancel} />
           </div>
         {:else}
           <div class="d-flex gap-5 mt-5 justify-content-center">
-            <Cancel {disabled} on:click={cancel} />
+            <Cancel {disabled} onclick={cancel} />
             <SubmitBlocker />
             <Submit {disabled} label="Subscribe" />
           </div>

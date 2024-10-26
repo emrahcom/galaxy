@@ -14,7 +14,7 @@
   class="btn navbar-brand py-0"
   data-bs-toggle="tooltip"
   data-bs-title={title}
-  on:click={() => {
+  onclick={() => {
     globalThis.location.href = "/";
   }}
 >

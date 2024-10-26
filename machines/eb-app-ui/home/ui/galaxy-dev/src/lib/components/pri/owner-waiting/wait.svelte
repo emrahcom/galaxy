@@ -105,10 +105,10 @@
           class="card-footer d-flex justify-content-center bg-body border-0
           mt-3 gap-5"
         >
-          <Back label="Back" on:click={goBack} />
+          <Back label="Back" onclick={goBack} />
           <Join
             label="Join Now"
-            on:click={() => {
+            onclick={() => {
               join(p.meeting_id);
             }}
           />

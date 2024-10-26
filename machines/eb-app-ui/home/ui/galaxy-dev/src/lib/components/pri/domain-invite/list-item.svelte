@@ -36,7 +36,7 @@
       </p>
 
       {#if p.enabled}
-        <Copy label="copy" on:click={() => copy(p.code)} />
+        <Copy label="copy" onclick={() => copy(p.code)} />
       {/if}
     </div>
 

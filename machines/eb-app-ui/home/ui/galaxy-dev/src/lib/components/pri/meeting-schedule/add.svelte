@@ -331,7 +331,7 @@
         <Cancel
           {disabled}
           label={hash === "#0" ? "Not Now" : "Cancel"}
-          on:click={cancel}
+          onclick={cancel}
         />
         <SubmitBlocker />
         <Submit {disabled} label="Create" />

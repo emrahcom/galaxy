@@ -53,7 +53,7 @@
         </p>
 
         {#if p.enabled}
-          <Copy label="copy" on:click={() => copyForMember(p.code)} />
+          <Copy label="copy" onclick={() => copyForMember(p.code)} />
         {/if}
       {:else}
         <p class="card-text text-muted">
@@ -67,7 +67,7 @@
         {#if p.enabled}
           <Copy
             label="copy"
-            on:click={() => copyForAudience(p.code, p.meeting_schedule_type)}
+            onclick={() => copyForAudience(p.code, p.meeting_schedule_type)}
           />
         {/if}
       {/if}

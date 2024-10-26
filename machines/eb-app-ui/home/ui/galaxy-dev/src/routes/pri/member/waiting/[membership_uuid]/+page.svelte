@@ -28,6 +28,6 @@
   <Warning>No scheduled meeting found</Warning>
 
   <center>
-    <Back label="Back" on:click={goBack} />
+    <Back label="Back" onclick={goBack} />
   </center>
 {/await}

@@ -22,7 +22,7 @@
   data-bs-target="#offcanvasAccount"
   aria-controls="offcanvasAccount"
   aria-label="My account"
-  on:click={updateUsername}
+  onclick={updateUsername}
 >
   <i class="bi bi-person"></i>
 </button>
@@ -54,13 +54,13 @@
           href="/id/settings"
           target="_blank"
           rel="noopener noreferrer"
-          on:click={closeMenu}
+          onclick={closeMenu}
         >
           Settings
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/logout" on:click={closeMenu}> Log Out </a>
+        <a class="nav-link" href="/logout" onclick={closeMenu}> Log Out </a>
       </li>
     </ul>
   </div>

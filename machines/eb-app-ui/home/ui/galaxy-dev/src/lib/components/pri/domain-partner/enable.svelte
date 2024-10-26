@@ -61,7 +61,7 @@
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
-        <Cancel {disabled} on:click={cancel} />
+        <Cancel {disabled} onclick={cancel} />
         <SubmitBlocker />
         <Submit {disabled} label="Enable" />
       </div>

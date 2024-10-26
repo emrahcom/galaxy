@@ -160,9 +160,9 @@
 
         <div class="d-flex gap-5 mt-5 justify-content-center">
           {#if inCall}
-            <Cancel on:click={endCall} />
+            <Cancel onclick={endCall} />
           {:else}
-            <Cancel {disabled} on:click={cancel} />
+            <Cancel {disabled} onclick={cancel} />
             <SubmitBlocker />
             <Submit {disabled} label="Call" />
           {/if}
