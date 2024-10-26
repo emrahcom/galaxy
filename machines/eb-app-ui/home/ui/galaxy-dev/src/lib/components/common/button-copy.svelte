@@ -1,9 +1,9 @@
 <script lang="ts">
   interface Props {
-    label = "copy";
+    label?: string;
   }
 
-  let { label }: Props = $props();
+  let { label = "copy" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->
