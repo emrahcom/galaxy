@@ -57,5 +57,5 @@
 
 <!-- Messages will be added inside this container -->
 <div aria-live="polite" aria-atomic="true" class="position-relative">
-  <Messages messages />
+  <Messages {messages} />
 </div>
