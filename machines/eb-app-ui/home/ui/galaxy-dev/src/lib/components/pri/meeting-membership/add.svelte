@@ -17,7 +17,7 @@
 
   let { invite, isExist }: Props = $props();
 
-  let schedules = $state("");
+  let _schedules = "";
   for (const s of invite.session_list) {
     const startTime = new Date(s[0]);
     const localStartTime = startTime.toLocaleString(undefined, {
@@ -31,9 +31,9 @@
     const diff = endTime.getTime() - startTime.getTime();
     const minutes = Math.round(diff / (1000 * 60));
 
-    schedules = `${schedules}\n${localStartTime} (${minutes} min)`;
+    _schedules = `${_schedules}\n${localStartTime} (${minutes} min)`;
   }
-  schedules = schedules.trim();
+  const schedules = _schedules.trim();
 
   let warning = $state(false);
   let disabled = $state(false);
