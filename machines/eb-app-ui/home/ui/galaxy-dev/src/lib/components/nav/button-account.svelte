@@ -60,7 +60,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/logout" onclick={closeMenu}> Log Out </a>
+        <a class="nav-link" href="/logout" onclick={closeMenu}>Log Out</a>
       </li>
     </ul>
   </div>
