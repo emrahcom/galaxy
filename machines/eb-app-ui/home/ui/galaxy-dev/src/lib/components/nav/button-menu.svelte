@@ -1,16 +1,8 @@
 <script lang="ts">
-  function closeMenu() {
-    let closeButton = document.getElementById("closeMenuButton");
-
-    if (closeButton) closeButton.click();
-  }
-
-  // ---------------------------------------------------------------------------
   function onclick(href: string, e: MouseEvent) {
     if (e.ctrlKey || e.metaKey) return;
 
     e.preventDefault();
-    closeMenu();
 
     globalThis.location.href = href;
   }
