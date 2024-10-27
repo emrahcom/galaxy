@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { ping } from "$lib/pri/identity";
   import { intercomHandler, updateMessageList } from "$lib/pri/intercom";
   import "bootstrap-icons/font/bootstrap-icons.min.css";
@@ -8,6 +9,12 @@
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub.svelte";
   import Messages from "$lib/components/message/list.svelte";
+
+  interface Props {
+    children: Snippet;
+  }
+
+  let { children }: Props = $props();
 
   // get active messages while loading
   let messages = $state(updateMessageList());
@@ -52,7 +59,7 @@
     <i class="bi bi-download"></i>
   </section>
 
-  <slot />
+  {@render children()}
 </div>
 
 <!-- Messages will be added inside this container -->
