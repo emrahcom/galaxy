@@ -18,10 +18,12 @@
   let { p }: Props = $props();
 
   const date0 = $state(toLocaleDate(p.schedule_attr.started_at));
-  const interval = $state(toLocaleInterval(
-    p.schedule_attr.started_at,
-    Number(p.schedule_attr.duration),
-  ));
+  const interval = $state(
+    toLocaleInterval(
+      p.schedule_attr.started_at,
+      Number(p.schedule_attr.duration),
+    ),
+  );
   let date1 = $state("");
   let every = $state("");
   let times = $state("1 time");

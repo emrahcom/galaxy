@@ -16,14 +16,7 @@
     week: number;
   }
 
-  let {
-    calendar,
-    calendarDay,
-    day,
-    firstDay,
-    today,
-    week,
-  }: Props = $props();
+  let { calendar, calendarDay, day, firstDay, today, week }: Props = $props();
 
   const focusedDay = getCalendarDay(firstDay, week, day);
   const dayOfMonth = Number(focusedDay.slice(-2));

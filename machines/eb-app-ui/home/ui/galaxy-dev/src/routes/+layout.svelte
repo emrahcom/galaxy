@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  import type { Snippet } from "svelte";
   import { ping } from "$lib/pri/identity";
   import { intercomHandler, updateMessageList } from "$lib/pri/intercom";
   import "bootstrap-icons/font/bootstrap-icons.min.css";
