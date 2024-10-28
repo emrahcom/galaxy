@@ -221,7 +221,7 @@ export interface Meeting222 {
   name: string;
   info: string;
   domain_name: string;
-  domain_url: boolean;
+  domain_url: string;
   room_name: string;
   room_ephemeral: boolean;
   schedule_type: Schedule;
