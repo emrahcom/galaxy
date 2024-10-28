@@ -193,7 +193,7 @@ export interface Meeting {
   profile_email: string;
   domain_id: string;
   domain_name: string;
-  domain_url: boolean;
+  domain_url: string;
   domain_enabled: boolean;
   room_id: string;
   room_name: string;
@@ -214,7 +214,7 @@ export interface Meeting222 {
   name: string;
   info: string;
   domain_name: string;
-  domain_url: boolean;
+  domain_url: string;
   room_name: string;
   room_ephemeral: boolean;
   schedule_type: Schedule;
