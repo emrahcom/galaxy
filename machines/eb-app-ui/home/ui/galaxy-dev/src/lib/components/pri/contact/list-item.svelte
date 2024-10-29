@@ -26,6 +26,7 @@
 
       if (seen < 100) status = 1;
       else if (seen < 3600) status = 2;
+      else status = 0;
     } finally {
       setTimeout(updateStatus, 20000);
     }
@@ -33,7 +34,7 @@
 
   // wait for a while to allow contactHandler to get the initital status before
   // showing the status on UI
-  setTimeout(updateStatus, 8000);
+  setTimeout(updateStatus, 4000);
 </script>
 
 <!-- -------------------------------------------------------------------------->
