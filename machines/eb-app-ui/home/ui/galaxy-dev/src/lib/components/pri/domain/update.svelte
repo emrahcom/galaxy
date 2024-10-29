@@ -38,6 +38,7 @@
   if (!p.domain_attr.jaas_aud) p.domain_attr.jaas_aud = JAAS_AUD;
   if (!p.domain_attr.jaas_iss) p.domain_attr.jaas_iss = JAAS_ISS;
 
+  let authType = $state(p.auth_type);
   let warning = $state(false);
   let disabled = $state(false);
 
@@ -52,7 +53,9 @@
       warning = false;
       disabled = true;
 
+      p.auth_type = authType;
       await action("/api/pri/domain/update", p);
+
       globalThis.location.href = "/pri/domain";
     } catch {
       warning = true;
@@ -66,12 +69,12 @@
   <div class="d-flex mt-2 justify-content-center">
     <form {onsubmit} style="width:{FORM_WIDTH};">
       <div class="d-flex gap-3 my-5 justify-content-center">
-        <RadioInline bind:value={p.auth_type} options={AUTH_TYPE_OPTIONS} />
+        <RadioInline bind:value={authType} options={AUTH_TYPE_OPTIONS} />
       </div>
 
       <Text name="name" label="Name" bind:value={p.name} required={true} />
 
-      {#if p.auth_type === "jaas"}
+      {#if authType === "jaas"}
         <Text
           name="jaas_url"
           label="URL"
@@ -98,7 +101,7 @@
           bind:value={p.domain_attr.jaas_key}
           required={true}
         />
-      {:else if p.auth_type === "token"}
+      {:else if authType === "token"}
         <Text
           name="url"
           label="URL"
