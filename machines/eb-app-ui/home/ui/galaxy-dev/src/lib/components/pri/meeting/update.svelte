@@ -27,6 +27,7 @@
   let domainId = $state(p.domain_id);
   let roomId = $state(p.room_id);
   let roomStatic = $state(!p.room_ephemeral);
+  let scheduleType = $state(p.schedule_type);
 
   const pr1 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
     return items.map((i) => {
@@ -69,8 +70,10 @@
       warning = false;
       disabled = true;
 
+      p.schedule_type = scheduleType;
+
       // if ephemeral, just update and go
-      if (p.schedule_type === "ephemeral") {
+      if (scheduleType === "ephemeral") {
         await action("/api/pri/meeting/update", p);
         globalThis.location.href = "/pri/meeting";
         return;
@@ -136,17 +139,14 @@
         />
 
         <p class="text-muted me-3 mb-1">Meeting type</p>
-        {#if p.schedule_type === "ephemeral"}
+        {#if scheduleType === "ephemeral"}
           <Radio
-            value={p.schedule_type}
+            value={scheduleType}
             options={SCHEDULE_TYPE_OPTIONS}
             disabled={true}
           />
         {:else}
-          <Radio
-            bind:value={p.schedule_type}
-            options={SCHEDULE_TYPE_OPTIONS_2}
-          />
+          <Radio bind:value={scheduleType} options={SCHEDULE_TYPE_OPTIONS_2} />
         {/if}
 
         <Select
@@ -156,7 +156,7 @@
           options={profiles}
         />
 
-        {#if p.schedule_type === "ephemeral"}
+        {#if scheduleType === "ephemeral"}
           <Text
             name="domain_name"
             label="Jitsi Domain"
@@ -180,7 +180,7 @@
           />
         {/if}
 
-        {#if p.schedule_type !== "ephemeral"}
+        {#if scheduleType !== "ephemeral"}
           <Switch
             name="room_static"
             label="Static room"
@@ -190,7 +190,7 @@
         {/if}
 
         <!-- these are temporary disabled on UI, not ready... -->
-        <!-- {#if p.schedule_type !== "ephemeral"} -->
+        <!-- {#if scheduleType !== "ephemeral"} -->
         {#if false}
           <Switch
             name="hidden"
