@@ -31,7 +31,7 @@
 <!-- -------------------------------------------------------------------------->
 <div class="form-floating my-3">
   <input
-    type="text"
+    type="number"
     id={name}
     class="form-control"
     {name}
