@@ -14,6 +14,7 @@
   import RadioInline from "$lib/components/common/form-radio-inline.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
+  import Url from "$lib/components/common/form-url.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Textarea from "$lib/components/common/form-textarea.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
@@ -69,7 +70,7 @@
       <Text name="name" label="Name" bind:value={p.name} required={true} />
 
       {#if p.auth_type === "jaas"}
-        <Text
+        <Url
           name="jaas_url"
           label="URL"
           bind:value={p.domain_attr.jaas_url}
@@ -96,7 +97,7 @@
           required={true}
         />
       {:else if p.auth_type === "token"}
-        <Text
+        <Url
           name="url"
           label="URL"
           bind:value={p.domain_attr.url}
@@ -115,7 +116,7 @@
           required={true}
         />
       {:else}
-        <Text
+        <Url
           name="url"
           label="URL"
           bind:value={p.domain_attr.url}
