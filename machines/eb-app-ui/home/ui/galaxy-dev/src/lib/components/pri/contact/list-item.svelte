@@ -11,8 +11,14 @@
 
   let { p }: Props = $props();
 
+  const PERIOD_API_REQUEST = 30000;
+  const PERIOD_UI_REFRESH = 10000;
+
   let status = $state(0);
 
+  // ---------------------------------------------------------------------------
+  // even all items run this function periodically, only one of them sends an
+  // API request in each period because of the time checking
   // ---------------------------------------------------------------------------
   async function getContactStatus() {
     try {
@@ -24,7 +30,7 @@
         globalThis.localStorage.setItem("contact_checked_at", String(now));
       }
 
-      if (now - Number(checkedAt) > 30000) {
+      if (now - Number(checkedAt) > PERIOD_API_REQUEST) {
         globalThis.localStorage.setItem("contact_checked_at", String(now));
 
         const status: ContactStatus[] = await list(
@@ -42,7 +48,7 @@
   }
 
   // ---------------------------------------------------------------------------
-  async function showStatus() {
+  async function refreshStatus() {
     try {
       await getContactStatus();
 
@@ -60,12 +66,13 @@
       else if (seen < 3600) status = 2;
       else status = 0;
     } finally {
-      setTimeout(showStatus, 10000);
+      setTimeout(refreshStatus, PERIOD_UI_REFRESH);
     }
   }
 
-  // trigger the status get and show loop
-  showStatus();
+  // initialize the status and trigger the refresh status loop
+  getContactStatus();
+  setTimeout(refreshStatus, 2000);
 </script>
 
 <!-- -------------------------------------------------------------------------->
