@@ -10,7 +10,7 @@ _/home/kratos/config/kratos.yml_
 ```conf
 courier:
   smtp:
-    connection_uri: smtp://encoded_user:encoded_password@mail.mydomain.corp:587/
+    connection_uri: smtps://encoded_user:encoded_password@mail.mydomain.corp:465/
     from_address: myname@mydomain.corp
 ```
 
