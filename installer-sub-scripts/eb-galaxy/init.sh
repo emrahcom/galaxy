@@ -74,7 +74,7 @@ Error: KRATOS_SMTP_CONNECTION_URI not found
 
 Please set KRATOS_SMTP_CONNECTION_URI before installation, e.g.
 
-    export KRATOS_SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
+    export KRATOS_SMTP_CONNECTION_URI="smtps://username:password@mail.mydomain.corp:465"
 EOF
   false
 fi
@@ -86,6 +86,72 @@ Error: KRATOS_SMTP_FROM_ADDRESS not found
 Please set KRATOS_SMTP_FROM_ADDRESS before installation, e.g.
 
     export KRATOS_SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
+EOF
+  false
+fi
+
+if [[ -z "$MAILER_HOST" ]]; then
+  cat <<EOF
+Error: MAILER_HOST not found
+
+Please set MAILER_HOST before installation, e.g.
+
+    export MAILER_HOST="mail.mydomain.corp"
+EOF
+  false
+fi
+
+if [[ -z "$MAILER_PORT" ]]; then
+  cat <<EOF
+Error: MAILER_PORT not found
+
+Please set MAILER_PORT before installation, e.g.
+
+    export MAILER_PORT=465
+EOF
+  false
+fi
+
+if [[ -z "$MAILER_SECURE" ]]; then
+  cat <<EOF
+Error: MAILER_SECURE not found
+
+Please set MAILER_SECURE before installation, e.g.
+
+    export MAILER_SECURE=true
+EOF
+  false
+fi
+
+if [[ -z "$MAILER_USER" ]]; then
+  cat <<EOF
+Error: MAILER_USER not found
+
+Please set MAILER_USER before installation, e.g.
+
+    export MAILER_USER="username"
+EOF
+  false
+fi
+
+if [[ -z "$MAILER_PASS" ]]; then
+  cat <<EOF
+Error: MAILER_PASS not found
+
+Please set MAILER_PASS before installation, e.g.
+
+    export MAILER_PASS="password"
+EOF
+  false
+fi
+
+if [[ -z "$MAILER_FROM" ]]; then
+  cat <<EOF
+Error: MAILER_FROM not found
+
+Please set MAILER_FROM before installation, e.g.
+
+    export MAILER_FROM="no-reply@mydomain.corp"
 EOF
   false
 fi
