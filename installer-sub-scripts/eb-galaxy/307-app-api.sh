@@ -179,8 +179,26 @@ cp -arp home/api/upgrade-galaxy $ROOTFS/home/api/
 cp -arp home/api/galaxy $ROOTFS/home/api/
 rm -rf $ROOTFS/home/api/galaxy/database
 rm -rf $ROOTFS/home/api/galaxy/test
+
 sed -i "s/___DB_PASSWD___/$DB_GALAXY_PASSWD/" $ROOTFS/home/api/galaxy/config.ts
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/" $ROOTFS/home/api/galaxy/config.ts
+
+sed -i "s/___MAILER_HOST___/$MAILER_HOST/" \
+    $ROOTFS/home/api/galaxy/config.mailer.ts
+sed -i "s/___MAILER_USER___/$MAILER_USER/" \
+    $ROOTFS/home/api/galaxy/config.mailer.ts
+sed -i "s/___MAILER_PASS___/$MAILER_PASS/" \
+    $ROOTFS/home/api/galaxy/config.mailer.ts
+sed -i "s/___MAILER_FROM___/$MAILER_FROM/" \
+    $ROOTFS/home/api/galaxy/config.mailer.ts
+sed -i "s/port:.*/port: $MAILER_PORT,/" \
+    $ROOTFS/home/api/galaxy/config.mailer.ts
+
+if [[ "$MAILER_SECURE" = false ]]; then
+  sed -i "s/secure:.*/secure: false,/" $ROOTFS/home/api/galaxy/config.mailer.ts
+else
+  sed -i "s/secure:.*/secure: true,/" $ROOTFS/home/api/galaxy/config.mailer.ts
+fi
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
