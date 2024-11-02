@@ -7,8 +7,6 @@
 
 ## features
 
-- scheduler for repeated events
-- contact key, becoming a contact via an invite
 - Jitsi querystring configs for session, member etc
 
 ## guest
@@ -27,3 +25,5 @@
 - add tests for invite contact to domain partnership
 - add tests for invite contact to room partnership
 - add tests for invite contact to meeting membership
+- add tests for invite contact to friendship
+- add tests for direct call
