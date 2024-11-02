@@ -37,6 +37,9 @@ else
     echo "KRATOS_FQDN: $KRATOS_FQDN"
 fi
 
+# get the mailer config
+cp /home/api/galaxy/config.mailer.ts /tmp/
+
 # clone
 cat <<EOF
 
@@ -51,7 +54,9 @@ sed -i \
   -e "s/___DB_PASSWD___/$DB_PASSWD/" \
   -e "s/___KRATOS_FQDN___/$KRATOS_FQDN/" \
   $APP/config.ts
+cp /tmp/config.mailer.ts $APP/
 cat $APP/config.ts
+cat $APP/config.mailer.ts
 
 # upgrade app
 rm -rf /tmp/galaxy.old
