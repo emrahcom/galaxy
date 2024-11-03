@@ -69,6 +69,17 @@ async function ring(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function notifyAboutCall(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
+  const pl = await req.json();
+  const intercomId = pl.id;
+
+  return ["ok"];
+}
+
+// -----------------------------------------------------------------------------
 export default async function (
   req: Request,
   path: string,
@@ -88,6 +99,8 @@ export default async function (
     return await wrapper(setSeen, req, identityId);
   } else if (path === `${PRE}/call/ring`) {
     return await wrapper(ring, req, identityId);
+  } else if (path === `${PRE}/notify/aboutcall`) {
+    return await wrapper(notifyAboutCall, req, identityId);
   } else {
     return notFound();
   }
