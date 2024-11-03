@@ -33,13 +33,23 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20241015.01');
+INSERT INTO metadata VALUES ('database_version', '20241103.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
+--
+-- - Email comes from Kratos (after verification) or Keycloak depending on the
+--   selected identity provider. This is the valid email address for sending
+--   messages. Emails in profile is only for meeting sessions and are not
+--   trustable.
+--
+-- identity_attr {
+--   email: string,
+-- }
 -- -----------------------------------------------------------------------------
 CREATE TABLE identity (
     "id" uuid NOT NULL PRIMARY KEY,
+    "identity_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
