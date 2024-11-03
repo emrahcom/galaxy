@@ -129,6 +129,21 @@ async function migrateTo2024101501() {
 
   await migrateTo(upgradeTo, sqls);
 }
+// -----------------------------------------------------------------------------
+async function migrateTo2024110301() {
+  const upgradeTo = "20241103.01";
+  const sqls = [
+    `ALTER TABLE identity
+       ADD COLUMN IF NOT EXISTS
+         "identity_attr" jsonb NOT NULL DEFAULT '{}'::jsonb`,
+
+    `UPDATE metadata
+       SET mvalue='${upgradeTo}'
+       WHERE mkey = 'database_version'`,
+  ];
+
+  await migrateTo(upgradeTo, sqls);
+}
 
 // -----------------------------------------------------------------------------
 export default async function () {
@@ -140,4 +155,5 @@ export default async function () {
   await migrateTo2024092201();
   await migrateTo2024092801();
   await migrateTo2024101501();
+  await migrateTo2024110301();
 }
