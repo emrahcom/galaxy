@@ -26,7 +26,7 @@ export async function setIdentityEmail(identityId: string, email: string) {
     text: `
       UPDATE identity
       SET
-        identity_attr['email'] = to_jsonb($2::text)
+        identity_attr['email'] = to_jsonb($2::text),
         updated_at = now()
       WHERE id = $1
       RETURNING id, updated_at as at`,
