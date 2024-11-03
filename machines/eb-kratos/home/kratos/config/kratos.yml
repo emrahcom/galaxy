@@ -59,6 +59,12 @@ selfservice:
       use: code
       after:
         default_browser_return_url: https://___APP_FQDN___/pri
+        hooks:
+          - hook: web_hook
+            config:
+              url: http://eb-app-api:8000/api/adm/identity/set/email
+              method: POST
+              body: file:///home/kratos/jsonnet/identity.jsonnet
 
     logout:
       after:
@@ -73,6 +79,12 @@ selfservice:
           default_browser_return_url: https://___APP_FQDN___/pri
         code:
           default_browser_return_url: https://___APP_FQDN___/pri
+          hooks:
+            - hook: web_hook
+              config:
+                url: http://eb-app-api:8000/api/adm/identity/set/email
+                method: POST
+                body: file:///home/kratos/jsonnet/identity.jsonnet
 
     registration:
       enabled: true
@@ -100,6 +112,11 @@ selfservice:
             - hook: web_hook
               config:
                 url: http://eb-app-api:8000/api/adm/identity/add
+                method: POST
+                body: file:///home/kratos/jsonnet/identity.jsonnet
+            - hook: web_hook
+              config:
+                url: http://eb-app-api:8000/api/adm/identity/set/email
                 method: POST
                 body: file:///home/kratos/jsonnet/identity.jsonnet
             - hook: session
