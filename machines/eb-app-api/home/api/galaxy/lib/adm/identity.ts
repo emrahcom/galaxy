@@ -26,6 +26,12 @@ async function add(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+// Only verified email is saved. So this function is called:
+//   - after Kratos registration with code
+//   - after Kratos email verification (next step after registration via
+//     password)
+//   - after Kratos login with code
+// -----------------------------------------------------------------------------
 async function setEmail(req: Request): Promise<unknown> {
   const pl = await req.json();
   const identityId = pl.identity_id;
