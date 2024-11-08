@@ -3,10 +3,10 @@
   import { Toast } from "bootstrap";
   import { actionById } from "$lib/api";
   import { watchCall } from "$lib/pri/intercom";
-  import type { IntercomMessage } from "$lib/types";
+  import type { IntercomMessage222 } from "$lib/types";
 
   interface Props {
-    msg: IntercomMessage;
+    msg: IntercomMessage222;
   }
 
   let { msg }: Props = $props();

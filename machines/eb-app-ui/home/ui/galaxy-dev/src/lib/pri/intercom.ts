@@ -1,10 +1,10 @@
 import { getById, list } from "$lib/api";
 import { isOver } from "$lib/common";
-import type { IntercomMessage } from "$lib/types";
+import type { IntercomMessage222 } from "$lib/types";
 
 // -----------------------------------------------------------------------------
 export function updateMessageList() {
-  const list: IntercomMessage[] = [];
+  const list: IntercomMessage222[] = [];
 
   for (const key in globalThis.localStorage) {
     try {
@@ -13,7 +13,7 @@ export function updateMessageList() {
       const value = globalThis.localStorage.getItem(key);
       if (!value) throw "empty message";
 
-      const parsedValue = JSON.parse(value) as IntercomMessage;
+      const parsedValue = JSON.parse(value) as IntercomMessage222;
       list.push(parsedValue);
     } catch {
       globalThis.localStorage.removeItem(key);
@@ -42,7 +42,7 @@ export async function watchCall(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
-function addCallMessage(msg: IntercomMessage) {
+function addCallMessage(msg: IntercomMessage222) {
   try {
     const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
     if (isExist) return;
@@ -78,7 +78,7 @@ export async function intercomHandler() {
     if (now - Number(checkedAt) > 3000) {
       globalThis.localStorage.setItem("intercom_checked_at", String(now));
 
-      const messages: IntercomMessage[] = await list(
+      const messages: IntercomMessage222[] = await list(
         "/api/pri/intercom/list",
         10,
       );

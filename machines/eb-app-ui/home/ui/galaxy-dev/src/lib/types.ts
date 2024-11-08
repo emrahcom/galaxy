@@ -165,7 +165,7 @@ export interface IntercomCall {
 }
 
 // -----------------------------------------------------------------------------
-export interface IntercomMessage {
+export interface IntercomMessage222 {
   id: string;
   contact_id: string;
   contact_name: string;
