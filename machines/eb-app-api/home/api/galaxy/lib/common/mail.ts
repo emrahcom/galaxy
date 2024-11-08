@@ -29,7 +29,7 @@ export async function sendMail(
 }
 
 // -----------------------------------------------------------------------------
-export async function mailMissingCall(caller: string, callee: string) {
+export async function mailMissedCall(caller: string, callee: string) {
   try {
     const calleeIdentities = await getIdentity(callee);
     const calleeIdentity = calleeIdentities[0];
