@@ -42,7 +42,9 @@ export async function mailMissingCall(caller: string, callee: string) {
     const callerName = callerProfile.name;
 
     const mailSubject = `${callerName} called you`;
-    const mailText = `${callerName} called you`;
+    const mailText = `Missed call:
+      ${callerName} called you
+    `;
 
     const res = await sendMail(mailTo, mailSubject, mailText);
     if (!res) throw "sendMail failed";
