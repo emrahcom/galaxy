@@ -39,6 +39,17 @@ export interface Id {
 }
 
 // -----------------------------------------------------------------------------
+export interface Identity {
+  identity_attr: {
+    [key: string]: string;
+  };
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  seen_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Contact {
   id: string;
   name: string;
