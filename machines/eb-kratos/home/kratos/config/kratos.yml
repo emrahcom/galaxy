@@ -9,14 +9,14 @@ serve:
     cors:
       enabled: true
       allowed_origins:
-        - https://___APP_FQDN___
+        - https://___GALAXY_FQDN___
   admin:
     base_url: https://___KRATOS_FQDN___:4434/
 
 selfservice:
-  default_browser_return_url: https://___APP_FQDN___/
+  default_browser_return_url: https://___GALAXY_FQDN___/
   allowed_return_urls:
-    - https://___APP_FQDN___
+    - https://___GALAXY_FQDN___
 
   methods:
     password:
@@ -39,26 +39,26 @@ selfservice:
 
   flows:
     error:
-      ui_url: https://___APP_FQDN___/id/error
+      ui_url: https://___GALAXY_FQDN___/id/error
 
     settings:
-      ui_url: https://___APP_FQDN___/id/settings
+      ui_url: https://___GALAXY_FQDN___/id/settings
       privileged_session_max_age: 15m
       required_aal: highest_available
 
     recovery:
       enabled: true
-      ui_url: https://___APP_FQDN___/id/recovery
+      ui_url: https://___GALAXY_FQDN___/id/recovery
       use: code
       after:
-        default_browser_return_url: https://___APP_FQDN___/pri
+        default_browser_return_url: https://___GALAXY_FQDN___/pri
 
     verification:
       enabled: true
-      ui_url: https://___APP_FQDN___/id/verification
+      ui_url: https://___GALAXY_FQDN___/id/verification
       use: code
       after:
-        default_browser_return_url: https://___APP_FQDN___/pri
+        default_browser_return_url: https://___GALAXY_FQDN___/pri
         hooks:
           - hook: web_hook
             config:
@@ -68,17 +68,17 @@ selfservice:
 
     logout:
       after:
-        default_browser_return_url: https://___APP_FQDN___
+        default_browser_return_url: https://___GALAXY_FQDN___
 
     login:
-      ui_url: https://___APP_FQDN___/id/login
+      ui_url: https://___GALAXY_FQDN___/id/login
       lifespan: 10m
       style: identifier_first
       after:
         password:
-          default_browser_return_url: https://___APP_FQDN___/pri
+          default_browser_return_url: https://___GALAXY_FQDN___/pri
         code:
-          default_browser_return_url: https://___APP_FQDN___/pri
+          default_browser_return_url: https://___GALAXY_FQDN___/pri
           hooks:
             - hook: web_hook
               config:
@@ -89,7 +89,7 @@ selfservice:
     registration:
       enabled: true
       lifespan: 10m
-      ui_url: https://___APP_FQDN___/id/registration
+      ui_url: https://___GALAXY_FQDN___/id/registration
       before:
         hooks:
           - hook: web_hook
