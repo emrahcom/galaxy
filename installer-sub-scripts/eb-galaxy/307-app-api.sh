@@ -182,6 +182,7 @@ rm -rf $ROOTFS/home/api/galaxy/test
 
 sed -i "s/___DB_PASSWD___/$DB_GALAXY_PASSWD/" $ROOTFS/home/api/galaxy/config.ts
 sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/" $ROOTFS/home/api/galaxy/config.ts
+sed -i "s/___GALAXY_FQDN___/$GALAXY_FQDN/" $ROOTFS/home/api/galaxy/config.ts
 
 sed -i "s/___MAILER_HOST___/$MAILER_HOST/" \
     $ROOTFS/home/api/galaxy/config.mailer.ts
