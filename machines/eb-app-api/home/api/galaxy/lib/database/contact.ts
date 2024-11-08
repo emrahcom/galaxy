@@ -39,6 +39,29 @@ export async function getContact(identityId: string, contactId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function getContactByIdentity(
+  identityId: string,
+  remoteId: string,
+) {
+  const sql = {
+    text: `
+      SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
+        co.created_at, co.updated_at
+      FROM contact co
+        LEFT JOIN profile pr ON co.remote_id = pr.identity_id
+                                AND pr.is_default
+      WHERE co.identity_id = $1
+        AND co.remote_id = $2`,
+    args: [
+      identityId,
+      remoteId,
+    ],
+  };
+
+  return await fetch(sql) as Contact[];
+}
+
+// -----------------------------------------------------------------------------
 export async function getContactIdentity(
   identityId: string,
   contactId: string,
