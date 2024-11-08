@@ -17,6 +17,22 @@ export async function addIdentity(identityId: string) {
 
   return await fetch(sql) as Id[];
 }
+
+// -----------------------------------------------------------------------------
+export async function getIdentityEmail(identityId: string) {
+  const sql = {
+    text: `
+      SELECT identity_attr->>'email'
+      FROM identity
+      WHERE id = $1`,
+    args: [
+      identityId,
+    ],
+  };
+
+  return await fetch(sql) as string[];
+}
+
 // -----------------------------------------------------------------------------
 // This function is only run in Kratos setup. Keycloak uses addIdentity to set
 // the email.
