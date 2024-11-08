@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, IntercomMessage, IntercomStatus } from "./types.ts";
+import type { Id, IntercomMessage222, IntercomStatus } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getIntercom(identityId: string, intercomId: string) {
@@ -18,7 +18,7 @@ export async function getIntercom(identityId: string, intercomId: string) {
     ],
   };
 
-  return await fetch(sql) as IntercomMessage[];
+  return await fetch(sql) as IntercomMessage222[];
 }
 
 // -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ export async function listIntercom(
     ],
   };
 
-  return await fetch(sql) as IntercomMessage[];
+  return await fetch(sql) as IntercomMessage222[];
 }
 
 // -----------------------------------------------------------------------------
