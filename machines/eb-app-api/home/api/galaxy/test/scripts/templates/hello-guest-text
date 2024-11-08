@@ -17,7 +17,7 @@ SERVICE=$1
 header <<< "/api/$SERVICE/hello -> text"
 rm -f $TMP/api-$SERVICE-hello-text-$IDX
 
-curl -ks -X POST https://$APP_FQDN/api/$SERVICE/hello \
+curl -ks -X POST https://$GALAXY_FQDN/api/$SERVICE/hello \
     --output-dir $TMP --output api-$SERVICE-hello-text-$IDX \
     -H "Accept: application/json"
 res=$(jq . $TMP/api-$SERVICE-hello-text-$IDX)

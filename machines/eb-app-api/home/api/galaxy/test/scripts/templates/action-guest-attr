@@ -26,7 +26,7 @@ rm -f $TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-$ATTR-$IDX-*
 
 echo "$JSON" >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-$ATTR-$IDX-req
 
-curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
+curl -ks -X POST https://$GALAXY_FQDN/api/$SERVICE/$CLASS/$ACTION \
     --output-dir $TMP \
     --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-$ATTR-$IDX-res \
     -H "Accept: application/json" \

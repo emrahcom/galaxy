@@ -1,5 +1,5 @@
 KRATOS_FQDN=id.galaxy.corp
-APP_FQDN=app.galaxy.corp
+GALAXY_FQDN=app.galaxy.corp
 
 # ------------------------------------------------------------------------------
 # environment

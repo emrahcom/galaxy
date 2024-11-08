@@ -29,7 +29,7 @@ echo "$JSON" \
     >$TMP/api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-error-$ID-$IDX-req
 
 cookieJar=$(cat $TMP/kratos-$ID-login-cookie)
-curl -ks -X POST https://$APP_FQDN/api/$SERVICE/$CLASS/$ACTION \
+curl -ks -X POST https://$GALAXY_FQDN/api/$SERVICE/$CLASS/$ACTION \
     --output-dir $TMP \
     --output api-$SERVICE-$CLASS_DASHED-$ACTION_DASHED-$TAG-error-$ID-$IDX-res \
     --cookie $cookieJar --cookie-jar $cookieJar \
