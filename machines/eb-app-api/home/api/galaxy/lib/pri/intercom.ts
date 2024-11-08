@@ -1,9 +1,11 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
+import { mailMissingCall } from "../common/mail.ts";
 import { getLimit, getOffset } from "../database/common.ts";
 import {
   delIntercom,
   getIntercom,
+  getIntercomForOwner,
   listIntercom,
   setStatusIntercom,
 } from "../database/intercom.ts";
@@ -75,6 +77,9 @@ async function notifyAboutCall(
 ): Promise<unknown> {
   const pl = await req.json();
   const intercomId = pl.id;
+  const intercomMessages = await getIntercomForOwner(identityId, intercomId);
+
+  mailMissingCall(identityId, intercomMessages[0].remote_id);
 
   return ["ok"];
 }
