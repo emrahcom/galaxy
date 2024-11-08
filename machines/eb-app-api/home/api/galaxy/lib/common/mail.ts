@@ -49,11 +49,12 @@ export async function mailMissingCall(caller: string, callee: string) {
     const contactId = calleeContact.id;
 
     const mailSubject = `${callerName} called you`;
-    const mailText = `Missed call:
+    const mailText = `
+      Missed call:
       ${callerName} called you
 
       https://${GALAXY_FQDN}/pri/contact/call/${contactId}
-    `;
+    `.replace(/^ +/gm, "");
 
     const res = await sendMail(mailTo, mailSubject, mailText);
     if (!res) throw "sendMail failed";
