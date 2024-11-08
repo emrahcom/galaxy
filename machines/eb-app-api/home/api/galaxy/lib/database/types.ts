@@ -172,6 +172,18 @@ export interface IntercomCall {
 }
 
 // -----------------------------------------------------------------------------
+export interface IntercomMessage {
+  id: string;
+  remote_id: string;
+  status: IntercomStatus;
+  message_type: Message;
+  intercom_attr: {
+    [key: string]: string;
+  };
+  expired_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface IntercomMessage222 {
   id: string;
   contact_id: string;
