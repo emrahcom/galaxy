@@ -63,7 +63,7 @@ Try `Galaxy` using publicly available implementation on
 
 Run the following commands as `root`.
 
-_Update the value of `APP_FQDN` and `KRATOS_FQDN` according to your domain
+_Update the value of `GALAXY_FQDN` and `KRATOS_FQDN` according to your domain
 names._
 
 _Update the value of `KRATOS_SMTP_CONNECTION_URI` and `KRATOS_SMTP_FROM_ADDRESS`
@@ -82,7 +82,7 @@ inside
 wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
 wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.conf
 
-export APP_FQDN=app.galaxy.corp
+export GALAXY_FQDN=app.galaxy.corp
 export KRATOS_FQDN=id.galaxy.corp
 export KRATOS_SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
 export KRATOS_SMTP_FROM_ADDRESS="noreply@mydomain.corp"
