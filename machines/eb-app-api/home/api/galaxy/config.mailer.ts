@@ -2,7 +2,8 @@
 // Mailer config is not part of the main config.ts to make the system more
 // customizable. The structure of "transportOptions" depends on the mail system.
 //
-// This config must provide "transportOptions" and "from" (the sender address)
+// This config must provide "transportOptions" and "mailFrom" (the sender
+// address).
 // See https://nodemailer.com/smtp for details.
 // -----------------------------------------------------------------------------
 
@@ -18,4 +19,4 @@ export const transportOptions = {
 };
 
 // the sender address
-export const from = "___MAILER_FROM___";
+export const mailFrom = "___MAILER_FROM___";
