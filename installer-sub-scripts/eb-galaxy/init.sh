@@ -20,13 +20,13 @@ curl -sf "$LOGGER/?text=$APP_TEMPLATE-init" || true
 # ------------------------------------------------------------------------------
 echo
 
-if [[ -z "$APP_FQDN" ]]; then
+if [[ -z "$GALAXY_FQDN" ]]; then
   cat <<EOF
-Error: APP_FQDN not found
+Error: GALAXY_FQDN not found
 
-Please set APP_FQDN before installation, e.g.
+Please set GALAXY_FQDN before installation, e.g.
 
-    export APP_FQDN=app.mydomain.corp
+    export GALAXY_FQDN=app.mydomain.corp
 EOF
   false
 fi
@@ -43,11 +43,11 @@ EOF
 fi
 
 if [[ "$SKIP_DNS_CHECK" != true ]]; then
-  if [[ -z "$(dig +short $APP_FQDN)" ]]; then
+  if [[ -z "$(dig +short $GALAXY_FQDN)" ]]; then
     cat <<EOF
-Error: Unresolvable APP_FQDN: $APP_FQDN
+Error: Unresolvable GALAXY_FQDN: $GALAXY_FQDN
 
-If this is a test setup and you don't have a resolvable APP_FQDN,
+If this is a test setup and you don't have a resolvable GALAXY_FQDN,
 please set SKIP_DNS_CHECK before installation
 
     export SKIP_DNS_CHECK=true

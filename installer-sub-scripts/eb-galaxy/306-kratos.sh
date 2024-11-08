@@ -178,7 +178,7 @@ while true; do
     K=$(echo $KRATOS_FQDN | rev | cut -d. -f $i)
     [[ -z "$K" ]] && break
 
-    S=$(echo $APP_FQDN | rev | cut -d. -f $i)
+    S=$(echo $GALAXY_FQDN | rev | cut -d. -f $i)
     [[ -z "$S" ]] && break
 
     [[ "$K" = "$S" ]] && BASE_DOMAIN=$(echo $BASE_DOMAIN $S) || break
@@ -194,7 +194,7 @@ sed -i \
     -e "s~___COOKIE_SECRET___~$COOKIE_SECRET~" \
     -e "s~___CIPHER_SECRET___~$CIPHER_SECRET~" \
     -e "s~___KRATOS_FQDN___~$KRATOS_FQDN~" \
-    -e "s~___APP_FQDN___~$APP_FQDN~" \
+    -e "s~___GALAXY_FQDN___~$GALAXY_FQDN~" \
     -e "s~___BASE_DOMAIN___~$BASE_DOMAIN~" \
     -e "s~___DB_PASSWD___~$DB_KRATOS_PASSWD~" \
     -e "s~___KRATOS_TOTP_ISSUER___~$KRATOS_TOTP_ISSUER~" \
