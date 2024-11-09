@@ -23,8 +23,8 @@ export async function load() {
   // This decreases the network traffic (which is not every important) and the
   // load on Kratos (this may be critical in high load).
   //
-  // The session storage (kratos_authenticated) is removed if intercom fails in
-  // 3 consecutive requests.
+  // The stored identity is removed if intercom fails and te new auth flow is
+  // triggered in this case.
   if (
     !globalThis.sessionStorage.getItem("kratos_authenticated") ||
     !globalThis.localStorage.getItem("identity_id")
