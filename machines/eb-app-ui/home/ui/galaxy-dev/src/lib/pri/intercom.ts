@@ -2,6 +2,8 @@ import { getById, list } from "$lib/api";
 import { isOver } from "$lib/common";
 import type { IntercomMessage222 } from "$lib/types";
 
+let failedRequest = 0;
+
 // -----------------------------------------------------------------------------
 export function updateMessageList() {
   const list: IntercomMessage222[] = [];
@@ -81,7 +83,18 @@ export async function intercomHandler() {
       const messages: IntercomMessage222[] = await list(
         "/api/pri/intercom/list",
         10,
-      );
+      ).catch(() => {
+        failedRequest++;
+
+        if (failedRequest > 2) {
+          failedRequest = 0;
+          globalThis.sessionStorage.removeItem("kratos_authenticated");
+          throw "lost communication";
+        }
+      });
+
+      failedRequest = 0;
+
       for (const msg of messages) {
         if (msg.message_type === "call") {
           addCallMessage(msg);
