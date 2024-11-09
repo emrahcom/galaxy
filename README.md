@@ -63,31 +63,24 @@ Try `Galaxy` using publicly available implementation on
 
 Run the following commands as `root`:
 
-- Update the value of `GALAXY_FQDN` and `KRATOS_FQDN` according to your domain
-  names.
+- Update `GALAXY_FQDN` and `KRATOS_FQDN` according to your domain names.
 
-- Update the value of `KRATOS_SMTP_CONNECTION_URI` and
-  `KRATOS_SMTP_FROM_ADDRESS` according to your email system._
+- Update the mailer variables according to your email system.
+
+  _See [NodeMailer reference](https://nodemailer.com/smtp/) for more details_
+
+- Update `KRATOS_SMTP_CONNECTION_URI` and `KRATOS_SMTP_FROM_ADDRESS` according
+  to your email system. This step is actually repeating the previous step for
+  Kratos.
 
   _`username` and `password` in `KRATOS_SMTP_CONNECTION_URI` should be URL
   encoded if there is special character in it. For example if SMTP's username is
-  `noreply@mydomain.corp` then you should set it as
-  `smtp://noreply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
+  `noreply@galaxy.corp` then you should set it as
+  `smtp://noreply%40galaxy.corp:mypassword@mail.galaxy.corp:587`._
 
   _For more details about `KRATOS_SMTP_CONNECTION_URI`, see SMTP configuration
   inside
   [Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration)._
-
-```bash
-wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
-wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.conf
-
-export GALAXY_FQDN=app.galaxy.corp
-export KRATOS_FQDN=id.galaxy.corp
-export KRATOS_SMTP_CONNECTION_URI="smtp://username:password@mail.mydomain.corp:587"
-export KRATOS_SMTP_FROM_ADDRESS="noreply@mydomain.corp"
-bash eb eb-galaxy
-```
 
 - If this is a test setup and you don't have resolvable FQDNs, please set
   `SKIP_DNS_CHECK` before installation_
@@ -95,6 +88,23 @@ bash eb eb-galaxy
   ```bash
   export SKIP_DNS_CHECK=true
   ```
+
+```bash
+wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
+wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.conf
+
+export GALAXY_FQDN="app.galaxy.corp"
+export KRATOS_FQDN="id.galaxy.corp"
+export MAILER_HOST="mail.galaxy.corp"
+export MAILER_PORT=465
+export MAILER_SECURE=true
+export MAILER_USER="username"
+export MAILER_PASS="password"
+export MAILER_FROM="no-reply@galaxy.corp"
+export KRATOS_SMTP_CONNECTION_URI="smtp://username:password@mail.galaxy.corp:587"
+export KRATOS_SMTP_FROM_ADDRESS="noreply@galaxy.corp"
+bash eb eb-galaxy
+```
 
 ### Let's Encrypt certificate
 
