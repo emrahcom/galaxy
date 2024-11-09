@@ -76,16 +76,16 @@ Run the following commands as `root`:
 
   _`username` and `password` in `KRATOS_SMTP_CONNECTION_URI` should be URL
   encoded if there is special character in it. For example if SMTP's username is
-  `noreply@galaxy.corp` then you should set it as
+  `noreply@galaxy.corp` then you should set it as_
 
-  `smtp://noreply%40galaxy.corp:mypassword@mail.galaxy.corp:587`._
+  `smtp://noreply%40galaxy.corp:mypassword@mail.galaxy.corp:587`
 
   _For more details about `KRATOS_SMTP_CONNECTION_URI`, see SMTP configuration
   inside
   [Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration)._
 
 - If this is a test setup and you don't have resolvable FQDNs, please set
-  `SKIP_DNS_CHECK` before installation_
+  `SKIP_DNS_CHECK` before installation.
 
   ```bash
   export SKIP_DNS_CHECK=true
