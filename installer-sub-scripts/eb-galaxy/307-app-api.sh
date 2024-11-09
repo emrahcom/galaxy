@@ -186,13 +186,13 @@ sed -i "s/___GALAXY_FQDN___/$GALAXY_FQDN/" $ROOTFS/home/api/galaxy/config.ts
 
 sed -i "s/___MAILER_HOST___/$MAILER_HOST/" \
     $ROOTFS/home/api/galaxy/config.mailer.ts
+sed -i "s/port:.*/port: $MAILER_PORT,/" \
+    $ROOTFS/home/api/galaxy/config.mailer.ts
 sed -i "s/___MAILER_USER___/$MAILER_USER/" \
     $ROOTFS/home/api/galaxy/config.mailer.ts
 sed -i "s/___MAILER_PASS___/$MAILER_PASS/" \
     $ROOTFS/home/api/galaxy/config.mailer.ts
 sed -i "s/___MAILER_FROM___/$MAILER_FROM/" \
-    $ROOTFS/home/api/galaxy/config.mailer.ts
-sed -i "s/port:.*/port: $MAILER_PORT,/" \
     $ROOTFS/home/api/galaxy/config.mailer.ts
 
 if [[ "$MAILER_SECURE" = false ]]; then
