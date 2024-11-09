@@ -13,7 +13,7 @@
   const redirectTo = globalThis.location.href;
 
   if (!identity_id) {
-    globalThis.location.replace(`${loginUrl}?redirect_to=${redirectTo});
+    globalThis.location.replace(`${loginUrl}?redirect_to=${redirectTo}`);
   }
 </script>
 
