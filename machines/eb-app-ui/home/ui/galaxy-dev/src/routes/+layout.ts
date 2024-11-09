@@ -19,11 +19,11 @@ export async function load() {
   // Am I authenticated?
   //
   // Assumed that the user is authenticated if these two storages values
-  // exists instead of asking her authentication status to Kratos every time.
+  // exist instead of asking her authentication status to Kratos every time.
   // This decreases the network traffic (which is not every important) and the
   // load on Kratos (this may be critical in high load).
   //
-  // The stored identity is removed if intercom fails and te new auth flow is
+  // The stored identity is removed if intercom fails and the new auth flow is
   // triggered in this case.
   if (
     !globalThis.sessionStorage.getItem("kratos_authenticated") ||
