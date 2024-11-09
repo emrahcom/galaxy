@@ -61,22 +61,22 @@ Try `Galaxy` using publicly available implementation on
 
 ### Installation
 
-Run the following commands as `root`.
+Run the following commands as `root`:
 
-_Update the value of `GALAXY_FQDN` and `KRATOS_FQDN` according to your domain
-names._
+- Update the value of `GALAXY_FQDN` and `KRATOS_FQDN` according to your domain
+  names.
 
-_Update the value of `KRATOS_SMTP_CONNECTION_URI` and `KRATOS_SMTP_FROM_ADDRESS`
-according to your email system._
+- Update the value of `KRATOS_SMTP_CONNECTION_URI` and
+  `KRATOS_SMTP_FROM_ADDRESS` according to your email system._
 
-_`username` and `password` in `KRATOS_SMTP_CONNECTION_URI` should be URL encoded
-if there is special character in it. For example if SMTP's username is
-`noreply@mydomain.corp` then you should set it as
-`smtp://noreply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
+  _`username` and `password` in `KRATOS_SMTP_CONNECTION_URI` should be URL
+  encoded if there is special character in it. For example if SMTP's username is
+  `noreply@mydomain.corp` then you should set it as
+  `smtp://noreply%40mydomain.corp:mypassword@mail.mydomain.corp:587`._
 
-_For more details about `KRATOS_SMTP_CONNECTION_URI`, see SMTP configuration
-inside
-[Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration)._
+  _For more details about `KRATOS_SMTP_CONNECTION_URI`, see SMTP configuration
+  inside
+  [Ory Kratos reference](https://www.ory.sh/docs/kratos/reference/configuration)._
 
 ```bash
 wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
@@ -89,12 +89,12 @@ export KRATOS_SMTP_FROM_ADDRESS="noreply@mydomain.corp"
 bash eb eb-galaxy
 ```
 
-_If this is a test setup and you don't have resolvable FQDNs, please set
-`SKIP_DNS_CHECK` before installation_
+- If this is a test setup and you don't have resolvable FQDNs, please set
+  `SKIP_DNS_CHECK` before installation_
 
-```bash
-export SKIP_DNS_CHECK=true
-```
+  ```bash
+  export SKIP_DNS_CHECK=true
+  ```
 
 ### Let's Encrypt certificate
 
