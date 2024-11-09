@@ -66,7 +66,7 @@ Run the following commands as `root`:
 
 - Update `GALAXY_FQDN` and `KRATOS_FQDN` according to your domain names.
 
-- Update the mailer variables according to your email system.
+- Update `MAILER_*` parameters according to your email system.
 
   _See [NodeMailer reference](https://nodemailer.com/smtp/) for more details_
 
