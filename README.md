@@ -51,8 +51,8 @@ Try `Galaxy` using publicly available implementation on
 - At least 2 GB RAM and 8 GB disk space
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
-- Both FQDNs must be subdomains of the same domain. `galaxy.corp` in this
-  example.
+- Both FQDNs must be subdomains of the same domain. The parent domain is
+  `galaxy.corp` in this example.
 - A DNS `A record` for the web application pointing to the server.
 - A DNS `A record` for the identity service pointing to the server.
 - An email account for SMTP.
