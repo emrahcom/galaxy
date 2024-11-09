@@ -105,6 +105,7 @@ export MAILER_PASS="password"
 export MAILER_FROM="no-reply@galaxy.corp"
 export KRATOS_SMTP_CONNECTION_URI="smtp://username:password@mail.galaxy.corp:587"
 export KRATOS_SMTP_FROM_ADDRESS="noreply@galaxy.corp"
+
 bash eb eb-galaxy
 ```
 
