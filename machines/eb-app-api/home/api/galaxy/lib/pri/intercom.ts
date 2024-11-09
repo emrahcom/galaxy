@@ -79,8 +79,12 @@ async function notifyAboutCall(
   const intercomId = pl.id;
   const intercomMessages = await getIntercomForOwner(identityId, intercomId);
 
-  mailMissedCall(identityId, intercomMessages[0].remote_id);
+  if (intercomMessages[0]?.remote_id) {
+    // dont wait for the async function
+    mailMissedCall(identityId, intercomMessages[0].remote_id);
+  }
 
+  // UI has nothing to do if mailer fails. So, it is always "ok".
   return ["ok"];
 }
 
