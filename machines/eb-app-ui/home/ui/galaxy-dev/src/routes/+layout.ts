@@ -16,7 +16,15 @@ export async function load() {
     globalThis.localStorage.setItem("kratos_fqdn", config.kratos_fqdn);
   }
 
-  // Am I authenticated
+  // Am I authenticated?
+  //
+  // Assumed that the user is authenticated if these two storages values
+  // exists instead of asking her authentication status to Kratos every time.
+  // This decreases the network traffic (which is not every important) and the
+  // load on Kratos (this may be critical in high load).
+  //
+  // The session storage (kratos_authenticated) is removed if intercom fails in
+  // 3 consecutive requests.
   if (
     !globalThis.sessionStorage.getItem("kratos_authenticated") ||
     !globalThis.localStorage.getItem("identity_id")
