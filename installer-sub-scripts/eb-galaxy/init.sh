@@ -26,7 +26,7 @@ Error: GALAXY_FQDN not found
 
 Please set GALAXY_FQDN before installation, e.g.
 
-    export GALAXY_FQDN=app.mydomain.corp
+    export GALAXY_FQDN="app.mydomain.corp"
 EOF
   false
 fi
@@ -37,7 +37,7 @@ Error: KRATOS_FQDN not found
 
 Please set KRATOS_FQDN before installation, e.g.
 
-    export KRATOS_FQDN=id.mydomain.corp
+    export KRATOS_FQDN="id.mydomain.corp"
 EOF
   false
 fi
@@ -66,28 +66,6 @@ please set SKIP_DNS_CHECK before installation
 EOF
     false
   fi
-fi
-
-if [[ -z "$KRATOS_SMTP_CONNECTION_URI" ]]; then
-  cat <<EOF
-Error: KRATOS_SMTP_CONNECTION_URI not found
-
-Please set KRATOS_SMTP_CONNECTION_URI before installation, e.g.
-
-    export KRATOS_SMTP_CONNECTION_URI="smtps://username:password@mail.mydomain.corp:465"
-EOF
-  false
-fi
-
-if [[ -z "$KRATOS_SMTP_FROM_ADDRESS" ]]; then
-  cat <<EOF
-Error: KRATOS_SMTP_FROM_ADDRESS not found
-
-Please set KRATOS_SMTP_FROM_ADDRESS before installation, e.g.
-
-    export KRATOS_SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
-EOF
-  false
 fi
 
 if [[ -z "$MAILER_HOST" ]]; then
@@ -152,6 +130,28 @@ Error: MAILER_FROM not found
 Please set MAILER_FROM before installation, e.g.
 
     export MAILER_FROM="no-reply@mydomain.corp"
+EOF
+  false
+fi
+
+if [[ -z "$KRATOS_SMTP_CONNECTION_URI" ]]; then
+  cat <<EOF
+Error: KRATOS_SMTP_CONNECTION_URI not found
+
+Please set KRATOS_SMTP_CONNECTION_URI before installation, e.g.
+
+    export KRATOS_SMTP_CONNECTION_URI="smtps://username:password@mail.mydomain.corp:465"
+EOF
+  false
+fi
+
+if [[ -z "$KRATOS_SMTP_FROM_ADDRESS" ]]; then
+  cat <<EOF
+Error: KRATOS_SMTP_FROM_ADDRESS not found
+
+Please set KRATOS_SMTP_FROM_ADDRESS before installation, e.g.
+
+    export KRATOS_SMTP_FROM_ADDRESS="no-reply@mydomain.corp"
 EOF
   false
 fi
