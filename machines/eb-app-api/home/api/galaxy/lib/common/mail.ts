@@ -1,7 +1,6 @@
 import { GALAXY_FQDN } from "../../config.ts";
 import { mailFrom, transportOptions } from "../../config.mailer.ts";
 import { getIdentity } from "../database/identity.ts";
-import { getDefaultProfile } from "../database/profile.ts";
 import { getContactByIdentity } from "../database/contact.ts";
 import { createTransport } from "npm:nodemailer";
 
@@ -38,15 +37,12 @@ export async function mailMissedCall(caller: string, callee: string) {
     const mailTo = calleeIdentity.identity_attr.email;
     if (!mailTo) throw "email not found";
 
-    const callerProfiles = await getDefaultProfile(caller);
-    const callerProfile = callerProfiles[0];
-    if (!callerProfile) throw "caller not found";
-    const callerName = callerProfile.name;
-
     const calleeContacts = await getContactByIdentity(callee, caller);
     const calleeContact = calleeContacts[0];
     if (!calleeContact) throw "contact not found for callee";
+
     const contactId = calleeContact.id;
+    const callerName = calleeContact.name;
 
     const mailSubject = `${callerName} called you`;
     const mailText = `
