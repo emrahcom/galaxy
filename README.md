@@ -3,7 +3,7 @@
 `Galaxy` is a web application for `Jitsi` admins and users to organize their
 Jitsi meetings, meeting schedules and attendees.
 
-This version has a built-in identity managment system. Check
+This version has a built-in identity management system. Check
 [Galaxy-kc](https://github.com/emrahcom/galaxy-kc) for version that uses
 `Keycloak` as the identity management system.
 
@@ -51,7 +51,8 @@ Try `Galaxy` using publicly available implementation on
 - At least 2 GB RAM and 8 GB disk space
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
 - An `FQDN` for the identity service. e.g. `id.galaxy.corp`
-- Both FQDNs must be subdomains of the same domain.
+- Both FQDNs must be subdomains of the same domain. `galaxy.corp` in this
+  example.
 - A DNS `A record` for the web application pointing to the server.
 - A DNS `A record` for the identity service pointing to the server.
 - An email account for SMTP.
