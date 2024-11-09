@@ -77,6 +77,7 @@ Run the following commands as `root`:
   _`username` and `password` in `KRATOS_SMTP_CONNECTION_URI` should be URL
   encoded if there is special character in it. For example if SMTP's username is
   `noreply@galaxy.corp` then you should set it as
+
   `smtp://noreply%40galaxy.corp:mypassword@mail.galaxy.corp:587`._
 
   _For more details about `KRATOS_SMTP_CONNECTION_URI`, see SMTP configuration
