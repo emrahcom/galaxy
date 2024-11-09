@@ -1,5 +1,5 @@
 import { GALAXY_FQDN } from "../../config.ts";
-import { MAIL_FROM, TRANSPORT_OPTIONS } from "../../config.mailer.ts";
+import { MAILER_FROM, MAILER_TRANSPORT_OPTIONS } from "../../config.mailer.ts";
 import { getIdentity } from "../database/identity.ts";
 import { getContactByIdentity } from "../database/contact.ts";
 import { createTransport } from "npm:nodemailer";
@@ -11,9 +11,9 @@ export async function sendMail(
   mailText: string,
 ) {
   try {
-    const transporter = createTransport(TRANSPORT_OPTIONS);
+    const transporter = createTransport(MAILER_TRANSPORT_OPTIONS);
     const mailOptions = {
-      from: MAIL_FROM,
+      from: MAILER_FROM,
       to: mailTo,
       subject: mailSubject,
       text: mailText,

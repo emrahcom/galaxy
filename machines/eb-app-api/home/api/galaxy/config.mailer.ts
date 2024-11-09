@@ -1,16 +1,16 @@
 // -----------------------------------------------------------------------------
 // Mailer config is not part of the main config.ts to make the system more
-// customizable. The structure of "TRANSPORT_OPTIONS" depends on the mail
+// customizable. The structure of "MAILER_TRANSPORT_OPTIONS" depends on the mail
 // system.
 //
-// This config must provide "TRANSPORT_OPTIONS" and "MAIL_FROM" (the sender
-// address).
+// This config must provide "MAILER_TRANSPORT_OPTIONS" and "MAILER_FROM" (the
+// sender address).
 //
 // See https://nodemailer.com/smtp for details.
 // -----------------------------------------------------------------------------
 
 // transporter settings
-export const TRANSPORT_OPTIONS = {
+export const MAILER_TRANSPORT_OPTIONS = {
   host: "___MAILER_HOST___",
   port: 465,
   secure: true,
@@ -21,4 +21,4 @@ export const TRANSPORT_OPTIONS = {
 };
 
 // the sender address
-export const MAIL_FROM = "___MAILER_FROM___";
+export const MAILER_FROM = "___MAILER_FROM___";
