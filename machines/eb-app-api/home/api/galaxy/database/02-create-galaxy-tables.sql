@@ -59,7 +59,7 @@ ALTER TABLE identity OWNER TO galaxy;
 
 -- system account
 INSERT INTO identity VALUES (
-    '00000000-0000-0000-0000-000000000000', true, default, default
+    '00000000-0000-0000-0000-000000000000', '{}'::jsonb, true, default, default
 );
 
 -- -----------------------------------------------------------------------------
