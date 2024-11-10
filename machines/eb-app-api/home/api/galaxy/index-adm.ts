@@ -3,8 +3,8 @@ import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import migrate from "./lib/adm/migration.ts";
 import doit from "./lib/adm/cronjob.ts";
 import hello from "./lib/adm/hello.ts";
-import config from "./lib/adm/config.ts";
-import identity from "./lib/adm/identity.ts";
+import config from "./lib/adm/config-kratos.ts";
+import identity from "./lib/adm/identity-kratos.ts";
 
 const PRE = "/api/adm";
 
