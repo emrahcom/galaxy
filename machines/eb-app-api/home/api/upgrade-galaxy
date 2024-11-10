@@ -26,6 +26,17 @@ else
     echo "DB_PASSWD: $DB_PASSWD"
 fi
 
+# get GALAXY_FQDN
+[[ -z "$GALAXY_FQDN" ]] && \
+    GALAXY_FQDN=$(ack "^export const GALAXY_FQDN =" \
+        /home/api/galaxy/config.ts | cut -d'"' -f2)
+if [[ -z "$GALAXY_FQDN" ]]; then
+    echo "error: GALAXY_FQDN is not found"
+    exit 1
+else
+    echo "GALAXY_FQDN: $GALAXY_FQDN"
+fi
+
 # get KRATOS_FQDN
 [[ -z "$KRATOS_FQDN" ]] && \
     KRATOS_FQDN=$(ack "^export const KRATOS_FQDN =" \
@@ -51,8 +62,9 @@ rm -rf $LOCAL
 git clone --depth=1 --branch $BRANCH $REMOTE $LOCAL
 
 sed -i \
-  -e "s/___DB_PASSWD___/$DB_PASSWD/" \
-  -e "s/___KRATOS_FQDN___/$KRATOS_FQDN/" \
+  -e "s~___DB_PASSWD___~$DB_PASSWD~" \
+  -e "s~___GALAXY_FQDN___~$GALAXY_FQDN~" \
+  -e "s~___KRATOS_FQDN___~$KRATOS_FQDN~" \
   $APP/config.ts
 cp /tmp/config.mailer.ts $APP/
 cat $APP/config.ts
