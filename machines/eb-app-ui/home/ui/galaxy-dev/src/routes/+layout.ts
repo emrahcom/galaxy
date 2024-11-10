@@ -17,6 +17,8 @@ export async function load() {
   }
 
   // Am I authenticated?
+  // If yes, refresh the identity.
+  // If no, remove storage items except kratos_fqdn.
   await getIdentity()
     .then((_identity) => {
       globalThis.localStorage.setItem("identity_id", _identity.id);
