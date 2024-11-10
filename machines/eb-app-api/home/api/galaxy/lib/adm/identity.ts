@@ -1,6 +1,7 @@
 import { notFound } from "../http/response.ts";
 import { adm as wrapper } from "../http/wrapper.ts";
-import { addIdentity, setIdentityEmail } from "../database/identity-kratos.ts";
+import { addIdentity } from "../database/identity-kratos.ts";
+import { setIdentityEmail } from "../database/identity.ts";
 import { addProfile } from "../database/profile.ts";
 
 const PRE = "/api/adm/identity";
