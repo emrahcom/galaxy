@@ -81,12 +81,7 @@ export async function intercomHandler() {
       const messages: IntercomMessage222[] = await list(
         "/api/pri/intercom/list",
         10,
-      ).catch(() => {
-        // if intercom fails, remove the stored identity to inform other
-        // sessions and to trigger the authentication flow again.
-        globalThis.localStorage.removeItem("identity_id");
-        throw "lost communication";
-      });
+      );
 
       for (const msg of messages) {
         if (msg.message_type === "call") {

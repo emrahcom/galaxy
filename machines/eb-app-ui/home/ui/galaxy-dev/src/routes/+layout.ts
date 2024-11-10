@@ -17,33 +17,16 @@ export async function load() {
   }
 
   // Am I authenticated?
-  //
-  // Assumed that the user is authenticated if these two storages values
-  // exist instead of asking her authentication status to Kratos every time.
-  // This decreases the network traffic (which is not every important) and the
-  // load on Kratos (this may be critical in high load).
-  //
-  // The stored identity is removed if intercom fails and the new auth flow is
-  // triggered in this case.
-  if (
-    !globalThis.sessionStorage.getItem("kratos_authenticated") ||
-    !globalThis.localStorage.getItem("identity_id")
-  ) {
-    await getIdentity()
-      .then((_identity) => {
-        globalThis.localStorage.setItem("identity_id", _identity.id);
-        globalThis.localStorage.setItem(
-          "identity_email",
-          _identity.traits.email,
-        );
-        globalThis.sessionStorage.setItem("kratos_authenticated", "ok");
-      })
-      .catch(() => {
-        const kratosFqdn = globalThis.localStorage.getItem("kratos_fqdn") || "";
+  await getIdentity()
+    .then((_identity) => {
+      globalThis.localStorage.setItem("identity_id", _identity.id);
+      globalThis.localStorage.setItem("identity_email", _identity.traits.email);
+    })
+    .catch(() => {
+      const kratosFqdn = globalThis.localStorage.getItem("kratos_fqdn") || "";
 
-        globalThis.localStorage.clear();
-        globalThis.sessionStorage.clear();
-        globalThis.localStorage.setItem("kratos_fqdn", kratosFqdn);
-      });
-  }
+      globalThis.localStorage.clear();
+      globalThis.sessionStorage.clear();
+      globalThis.localStorage.setItem("kratos_fqdn", kratosFqdn);
+    });
 }
