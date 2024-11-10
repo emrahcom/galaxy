@@ -7,7 +7,7 @@
   import "bootstrap/dist/js/bootstrap.bundle.min.js";
   import Brand from "$lib/components/nav/brand.svelte";
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
-  import NavBarPub from "$lib/components/nav/bar-pub.svelte";
+  import NavBarPub from "$lib/components/nav/bar-pub-kratos.svelte";
   import Messages from "$lib/components/message/list.svelte";
 
   interface Props {
