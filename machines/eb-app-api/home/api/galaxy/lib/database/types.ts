@@ -6,7 +6,6 @@
 // none - interfaces shared with owners
 // -----------------------------------------------------------------------------
 
-// -----------------------------------------------------------------------------
 export type Affiliation = "host" | "guest";
 export type CandidateStatus = "pending" | "rejected";
 export type DomainAuthType = "none" | "token" | "jaas";
@@ -25,28 +24,6 @@ export type Schedule = "permanent" | "scheduled" | "ephemeral";
 // -----------------------------------------------------------------------------
 export interface Attr {
   [key: string]: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface Meta {
-  mvalue: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface Id {
-  id: string;
-  at: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface Identity {
-  identity_attr: {
-    [key: string]: string;
-  };
-  enabled: boolean;
-  created_at: string;
-  updated_at: string;
-  seen_at: string;
 }
 
 // -----------------------------------------------------------------------------
@@ -177,6 +154,23 @@ export interface DomainPartnership {
 }
 
 // -----------------------------------------------------------------------------
+export interface Id {
+  id: string;
+  at: string;
+}
+
+// -----------------------------------------------------------------------------
+export interface Identity {
+  identity_attr: {
+    [key: string]: string;
+  };
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  seen_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface IntercomCall {
   id: string;
   url: string;
@@ -239,6 +233,16 @@ export interface Meeting {
 }
 
 // -----------------------------------------------------------------------------
+export interface Meeting000 {
+  id: string;
+  name: string;
+  info: string;
+  schedule_type: Schedule;
+  restricted: boolean;
+  subscribable: boolean;
+}
+
+// -----------------------------------------------------------------------------
 export interface Meeting222 {
   id: string;
   name: string;
@@ -259,16 +263,6 @@ export interface Meeting222 {
   ownership: string;
   membership_id: string;
   join_as: Affiliation;
-}
-
-// -----------------------------------------------------------------------------
-export interface Meeting000 {
-  id: string;
-  name: string;
-  info: string;
-  schedule_type: Schedule;
-  restricted: boolean;
-  subscribable: boolean;
 }
 
 // -----------------------------------------------------------------------------
@@ -297,6 +291,37 @@ export interface MeetingInvite111 {
   invite_to: InviteTo;
   schedule_type: Schedule;
   session_list: [[string, string]];
+}
+
+// -----------------------------------------------------------------------------
+export interface MeetingLinkset {
+  id: string;
+  name: string;
+  room_name: string;
+  schedule_name: string;
+  has_suffix: boolean;
+  suffix: string;
+  auth_type: DomainAuthType;
+  domain_attr: {
+    url: string;
+    app_id: string;
+    app_secret: string;
+    app_alg: string;
+    jaas_url: string;
+    jaas_app_id: string;
+    jaas_kid: string;
+    jaas_key: string;
+    jaas_alg: string;
+    jaas_aud: string;
+    jaas_iss: string;
+  };
+  join_as: Affiliation;
+  started_at: string;
+  ended_at: string;
+  duration: number;
+  remaining: number;
+  profile_name: string;
+  profile_email: string;
 }
 
 // -----------------------------------------------------------------------------
@@ -383,6 +408,19 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingSchedule111 {
+  code: string;
+  meeting_name: string;
+  meeting_info: string;
+  schedule_name: string;
+  started_at: string;
+  ended_at: string;
+  duration: number;
+  waiting_time: number;
+  join_as: Affiliation;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingSchedule222 {
   meeting_id: string;
   meeting_name: string;
@@ -397,47 +435,13 @@ export interface MeetingSchedule222 {
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingSchedule111 {
-  code: string;
-  meeting_name: string;
-  meeting_info: string;
-  schedule_name: string;
-  started_at: string;
-  ended_at: string;
-  duration: number;
-  waiting_time: number;
-  join_as: Affiliation;
+export interface MeetingSessionForReminder {
+  id: string;
 }
 
 // -----------------------------------------------------------------------------
-export interface MeetingLinkset {
-  id: string;
-  name: string;
-  room_name: string;
-  schedule_name: string;
-  has_suffix: boolean;
-  suffix: string;
-  auth_type: DomainAuthType;
-  domain_attr: {
-    url: string;
-    app_id: string;
-    app_secret: string;
-    app_alg: string;
-    jaas_url: string;
-    jaas_app_id: string;
-    jaas_kid: string;
-    jaas_key: string;
-    jaas_alg: string;
-    jaas_aud: string;
-    jaas_iss: string;
-  };
-  join_as: Affiliation;
-  started_at: string;
-  ended_at: string;
-  duration: number;
-  remaining: number;
-  profile_name: string;
-  profile_email: string;
+export interface Meta {
+  mvalue: string;
 }
 
 // -----------------------------------------------------------------------------
@@ -509,6 +513,27 @@ export interface RoomInvite111 {
 }
 
 // -----------------------------------------------------------------------------
+export interface RoomLinkset {
+  name: string;
+  has_suffix: boolean;
+  suffix: string;
+  auth_type: DomainAuthType;
+  domain_attr: {
+    url: string;
+    app_id: string;
+    app_secret: string;
+    app_alg: string;
+    jaas_url: string;
+    jaas_app_id: string;
+    jaas_kid: string;
+    jaas_key: string;
+    jaas_alg: string;
+    jaas_aud: string;
+    jaas_iss: string;
+  };
+}
+
+// -----------------------------------------------------------------------------
 export interface RoomPartner {
   id: string;
   room_id: string;
@@ -554,25 +579,4 @@ export interface RoomPartnership {
   enabled: boolean;
   created_at: string;
   updated_at: string;
-}
-
-// -----------------------------------------------------------------------------
-export interface RoomLinkset {
-  name: string;
-  has_suffix: boolean;
-  suffix: string;
-  auth_type: DomainAuthType;
-  domain_attr: {
-    url: string;
-    app_id: string;
-    app_secret: string;
-    app_alg: string;
-    jaas_url: string;
-    jaas_app_id: string;
-    jaas_kid: string;
-    jaas_key: string;
-    jaas_alg: string;
-    jaas_aud: string;
-    jaas_iss: string;
-  };
 }
