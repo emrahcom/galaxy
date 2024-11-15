@@ -1,5 +1,6 @@
 import { Transaction } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
-import type { Attr } from "./types.ts";
+import { fetch } from "./common.ts";
+import type { Attr, MeetingSessionForReminder } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 function isOver(date: string, minutes: number) {
@@ -281,4 +282,22 @@ export async function delMeetingSessionBySchedule(
   };
 
   await trans.queryObject(sql);
+}
+
+// -----------------------------------------------------------------------------
+export async function listMeetingSessionForReminder(lastCheckTime: string) {
+  const sql = {
+    text: `
+      SELECT id
+      FROM meeting_session
+      WHERE started_at > $1
+        AND started_at > now() + interval '25 minutes'
+        AND started_at < now() + interval '30 minutes'
+      LIMIT 0 OFFSET 100`,
+    args: [
+      lastCheckTime,
+    ],
+  };
+
+  return await fetch(sql) as MeetingSessionForReminder[];
 }

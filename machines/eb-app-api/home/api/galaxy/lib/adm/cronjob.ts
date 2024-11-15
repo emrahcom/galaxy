@@ -1,10 +1,21 @@
-async function dummy() {
+import { listMeetingSessionForReminder } from "../database/meeting-session.ts";
+
+// -----------------------------------------------------------------------------
+// Run every 10 seconds
+// -----------------------------------------------------------------------------
+async function remindMeetingSession() {
   try {
-    await console.log("dummy");
+    let lastCheckTime = "20202020";
+
+    const rows = await listMeetingSessionForReminder(lastCheckTime);
+    for (const row of rows) {
+      console.log(row.id);
+      lastCheckTime = "20202020";
+    }
   } catch (e) {
     console.log(e);
   } finally {
-    setTimeout(dummy, 1 * 60 * 1000);
+    setTimeout(remindMeetingSession, 10 * 1000);
   }
 }
 
@@ -14,5 +25,5 @@ export default function () {
 
   // dont wait for async functions
   // each function has its own cycle
-  dummy();
+  remindMeetingSession();
 }
