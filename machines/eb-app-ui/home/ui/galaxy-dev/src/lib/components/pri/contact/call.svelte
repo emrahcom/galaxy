@@ -50,10 +50,9 @@
 
     try {
       // stop ringing if it is stopped from UI or if already a lot of attempts
-      // send a notification to the callee about the call
+      // send also a notification to the callee about the call
       if (!inCall || ringCounter > 10) {
-        await actionById("/api/pri/intercom/notify/aboutcall", call.id);
-        await actionById("/api/pri/intercom/del", call.id);
+        await actionById("/api/pri/intercom/del-with-notification", call.id);
 
         inCall = false;
         disabled = false;
