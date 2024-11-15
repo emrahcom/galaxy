@@ -1,7 +1,7 @@
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import migrate from "./lib/adm/migration.ts";
-import doit from "./lib/adm/cronjob.ts";
+import doit from "./lib/adm/housekeeping.ts";
 import hello from "./lib/adm/hello.ts";
 import config from "./lib/adm/config-kratos.ts";
 import identity from "./lib/adm/identity-kratos.ts";
@@ -21,12 +21,12 @@ async function migration() {
 }
 
 // -----------------------------------------------------------------------------
-async function cronjob() {
+async function housekeeping() {
   try {
     await doit();
   } finally {
     // rerun in 10 min
-    setTimeout(cronjob, 10 * 60 * 1000);
+    setTimeout(housekeeping, 10 * 60 * 1000);
   }
 }
 
@@ -62,8 +62,8 @@ async function main() {
   const isMigrated = await migration();
   if (!isMigrated) Deno.exit(1);
 
-  // start the cronjob thread
-  cronjob();
+  // start the housekeeping cycle
+  housekeeping();
 
   // start API
   Deno.serve({
