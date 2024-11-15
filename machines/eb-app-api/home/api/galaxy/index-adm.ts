@@ -2,6 +2,7 @@ import { HOSTNAME, PORT_ADMIN } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
 import migrate from "./lib/adm/migration.ts";
 import doit from "./lib/adm/housekeeping.ts";
+import cronjob from "./lib/adm/cronjob.ts";
 import hello from "./lib/adm/hello.ts";
 import config from "./lib/adm/config-kratos.ts";
 import identity from "./lib/adm/identity-kratos.ts";
@@ -64,6 +65,9 @@ async function main() {
 
   // start the housekeeping cycle
   housekeeping();
+
+  // start the cronjob cycle
+  cronjob();
 
   // start API
   Deno.serve({
