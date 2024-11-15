@@ -6,7 +6,6 @@
 // none - interfaces shared with owners
 // -----------------------------------------------------------------------------
 
-// -----------------------------------------------------------------------------
 export type Affiliation = "host" | "guest";
 export type CandidateStatus = "pending" | "rejected";
 export type DomainAuthType = "none" | "token" | "jaas";
@@ -330,6 +329,19 @@ export interface MeetingSchedule {
 }
 
 // -----------------------------------------------------------------------------
+export interface MeetingSchedule111 {
+  code: string;
+  meeting_name: string;
+  meeting_info: string;
+  schedule_name: string;
+  started_at: string;
+  ended_at: string;
+  duration: number;
+  waiting_time: number;
+  join_as: Affiliation;
+}
+
+// -----------------------------------------------------------------------------
 export interface MeetingSchedule222 {
   meeting_id: string;
   meeting_name: string;
@@ -341,19 +353,6 @@ export interface MeetingSchedule222 {
   waiting_time: number;
   join_as: Affiliation;
   membership_id: string | null;
-}
-
-// -----------------------------------------------------------------------------
-export interface MeetingSchedule111 {
-  code: string;
-  meeting_name: string;
-  meeting_info: string;
-  schedule_name: string;
-  started_at: string;
-  ended_at: string;
-  duration: number;
-  waiting_time: number;
-  join_as: Affiliation;
 }
 
 // -----------------------------------------------------------------------------
