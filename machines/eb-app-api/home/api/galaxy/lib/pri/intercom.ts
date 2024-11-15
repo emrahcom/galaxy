@@ -39,6 +39,23 @@ async function del(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function delWithNotification(
+  req: Request,
+  identityId: string,
+): Promise<unknown> {
+  const pl = await req.json();
+  const intercomId = pl.id;
+  const intercomMessages = await getIntercomForOwner(identityId, intercomId);
+
+  if (intercomMessages[0]?.remote_id) {
+    // dont wait for the async function
+    mailMissedCall(identityId, intercomMessages[0].remote_id);
+  }
+
+  return await delIntercom(identityId, intercomId);
+}
+
+// -----------------------------------------------------------------------------
 async function setAccepted(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const intercomId = pl.id;
@@ -71,24 +88,6 @@ async function ring(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function notifyAboutCall(
-  req: Request,
-  identityId: string,
-): Promise<unknown> {
-  const pl = await req.json();
-  const intercomId = pl.id;
-  const intercomMessages = await getIntercomForOwner(identityId, intercomId);
-
-  if (intercomMessages[0]?.remote_id) {
-    // dont wait for the async function
-    mailMissedCall(identityId, intercomMessages[0].remote_id);
-  }
-
-  // UI has nothing to do if mailer fails. So, it is always "ok".
-  return ["ok"];
-}
-
-// -----------------------------------------------------------------------------
 export default async function (
   req: Request,
   path: string,
@@ -100,6 +99,8 @@ export default async function (
     return await wrapper(list, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
+  } else if (path === `${PRE}/del-with-notification`) {
+    return await wrapper(delWithNotification, req, identityId);
   } else if (path === `${PRE}/set/accepted`) {
     return await wrapper(setAccepted, req, identityId);
   } else if (path === `${PRE}/set/rejected`) {
@@ -108,8 +109,6 @@ export default async function (
     return await wrapper(setSeen, req, identityId);
   } else if (path === `${PRE}/call/ring`) {
     return await wrapper(ring, req, identityId);
-  } else if (path === `${PRE}/notify/aboutcall`) {
-    return await wrapper(notifyAboutCall, req, identityId);
   } else {
     return notFound();
   }
