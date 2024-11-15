@@ -33,7 +33,7 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20241103.01');
+INSERT INTO metadata VALUES ('database_version', '20241116.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
@@ -541,6 +541,7 @@ CREATE TABLE meeting_session (
 );
 CREATE INDEX ON meeting_session("meeting_schedule_id", "started_at");
 CREATE INDEX ON meeting_session("meeting_schedule_id", "ended_at");
+CREATE INDEX ON meeting_session("started_at");
 CREATE INDEX ON meeting_session("ended_at");
 ALTER TABLE meeting_session OWNER TO galaxy;
 
