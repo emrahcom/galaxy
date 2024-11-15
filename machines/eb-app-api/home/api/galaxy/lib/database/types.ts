@@ -437,6 +437,7 @@ export interface MeetingSchedule222 {
 // -----------------------------------------------------------------------------
 export interface MeetingSessionForReminder {
   id: string;
+  started_at: string;
 }
 
 // -----------------------------------------------------------------------------

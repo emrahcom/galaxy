@@ -3,19 +3,17 @@ import { listMeetingSessionForReminder } from "../database/meeting-session.ts";
 // -----------------------------------------------------------------------------
 // Run every 10 seconds
 // -----------------------------------------------------------------------------
-async function remindMeetingSession() {
+async function remindMeetingSession(lastCheckTime = "20240101") {
   try {
-    let lastCheckTime = "20240101";
-
     const rows = await listMeetingSessionForReminder(lastCheckTime);
     for (const row of rows) {
       console.log(row.id);
-      lastCheckTime = "20240101";
+      lastCheckTime = row.started_at;
     }
   } catch (e) {
     console.log(e);
   } finally {
-    setTimeout(remindMeetingSession, 10 * 1000);
+    setTimeout(() => remindMeetingSession(lastCheckTime), 10 * 1000);
   }
 }
 

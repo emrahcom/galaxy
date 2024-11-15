@@ -288,7 +288,7 @@ export async function delMeetingSessionBySchedule(
 export async function listMeetingSessionForReminder(lastCheckTime: string) {
   const sql = {
     text: `
-      SELECT id
+      SELECT id, started_at
       FROM meeting_session
       WHERE started_at > $1
         AND started_at > now() + interval '25 minutes'
