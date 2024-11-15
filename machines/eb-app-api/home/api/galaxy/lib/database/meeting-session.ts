@@ -292,7 +292,7 @@ export async function listMeetingSessionForReminder(lastCheckTime: string) {
       FROM meeting_session
       WHERE started_at > $1
         AND started_at > now() + interval '25 minutes'
-        AND started_at < now() + interval '30 minutes'
+        AND started_at < now() + interval '31 minutes'
       LIMIT 100`,
     args: [
       lastCheckTime,
