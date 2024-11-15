@@ -18,10 +18,6 @@
 - index optimizations
 - delete expired or keep as inactive?
 
-## decide later
-
-- checking if it is already informed before sending an email?
-
 ## test
 
 - add tests for accept/reject/drop request
