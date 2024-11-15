@@ -5,12 +5,12 @@ import { listMeetingSessionForReminder } from "../database/meeting-session.ts";
 // -----------------------------------------------------------------------------
 async function remindMeetingSession() {
   try {
-    let lastCheckTime = "20202020";
+    let lastCheckTime = "20240101";
 
     const rows = await listMeetingSessionForReminder(lastCheckTime);
     for (const row of rows) {
       console.log(row.id);
-      lastCheckTime = "20202020";
+      lastCheckTime = "20240101";
     }
   } catch (e) {
     console.log(e);
