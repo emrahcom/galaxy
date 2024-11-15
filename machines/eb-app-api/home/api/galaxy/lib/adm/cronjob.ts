@@ -3,7 +3,9 @@ import { listMeetingSessionForReminder } from "../database/meeting-session.ts";
 // -----------------------------------------------------------------------------
 // Run every 10 seconds
 // -----------------------------------------------------------------------------
-async function remindMeetingSession(lastCheckTime = "20240101") {
+async function remindMeetingSession(
+  lastCheckTime = "2024-10-01T00:00:00.000Z",
+) {
   try {
     const rows = await listMeetingSessionForReminder(lastCheckTime);
     for (const row of rows) {
