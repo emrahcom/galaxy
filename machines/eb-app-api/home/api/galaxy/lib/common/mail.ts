@@ -3,6 +3,7 @@ import { MAILER_FROM, MAILER_TRANSPORT_OPTIONS } from "../../config.mailer.ts";
 import { getIdentity } from "../database/identity.ts";
 import { getContactByIdentity } from "../database/contact.ts";
 import { createTransport } from "npm:nodemailer";
+import type { MeetingSessionForReminder } from "../database/types.ts";
 
 // -----------------------------------------------------------------------------
 export async function sendMail(
@@ -54,6 +55,17 @@ export async function mailMissedCall(caller: string, callee: string) {
 
     const res = await sendMail(mailTo, mailSubject, mailText);
     if (!res) throw "sendMail failed";
+  } catch {
+    // do nothing
+  }
+}
+
+// -----------------------------------------------------------------------------
+export async function mailMeetingSession(
+  meetingSession: MeetingSessionForReminder,
+) {
+  try {
+    await console.log(meetingSession);
   } catch {
     // do nothing
   }
