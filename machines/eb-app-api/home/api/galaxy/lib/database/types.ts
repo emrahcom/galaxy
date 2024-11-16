@@ -441,6 +441,7 @@ export interface MeetingSessionForReminder {
   email: string;
   meeting_name: string;
   meeting_schedule_name: string;
+  started_at: string;
 }
 
 // -----------------------------------------------------------------------------

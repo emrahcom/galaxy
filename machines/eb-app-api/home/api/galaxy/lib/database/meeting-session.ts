@@ -294,7 +294,7 @@ export async function listMeetingSessionForReminder(lastCheckTime: string) {
   const sql = {
     text: `
       SELECT mem.id, 'member' as role, i.identity_attr->>'email' as email,
-        m.name as meeting_name, s.name as meeting_schedule_name
+        m.name as meeting_name, s.name as meeting_schedule_name, ses.started_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
                        AND r.enabled
@@ -321,7 +321,7 @@ export async function listMeetingSessionForReminder(lastCheckTime: string) {
       UNION
 
       SELECT m.id, 'owner' as role, i3.identity_attr->>'email' as email,
-        m.name as meeting_name, s.name as meeting_schedule_name
+        m.name as meeting_name, s.name as meeting_schedule_name, ses.started_at
       FROM meeting m
         JOIN room r ON m.room_id = r.id
                        AND r.enabled
