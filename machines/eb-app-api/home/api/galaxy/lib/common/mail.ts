@@ -55,8 +55,10 @@ export async function mailMissedCall(caller: string, callee: string) {
 
     const res = await sendMail(mailTo, mailSubject, mailText);
     if (!res) throw "sendMail failed";
+
+    return true;
   } catch {
-    // do nothing
+    return false;
   }
 }
 
@@ -65,8 +67,30 @@ export async function mailMeetingSession(
   meetingSession: MeetingSessionForReminder,
 ) {
   try {
-    await console.log(meetingSession);
+    const mailTo = meetingSession.email;
+    if (!mailTo) throw "email not found";
+
+    let meetingName = meetingSession.meeting_name;
+    if (meetingSession.meeting_schedule_name) {
+      meetingName = `${meetingName} (${meetingSession.meeting_schedule_name})`;
+    }
+
+    const baseLinkForRole = `https://${GALAXY_FQDN}/pri/${meetingSession.role}`;
+    const meetingLink = `${baseLinkForRole}/waiting/${meetingSession.id}`;
+
+    const mailSubject = `You have a meeting in 30 minutes, ${meetingName}`;
+    const mailText = `
+      You have a meeting in 30 minutes:
+      ${meetingName}
+
+      ${meetingLink}
+    `.replace(/^ +/gm, "");
+
+    const res = await sendMail(mailTo, mailSubject, mailText);
+    if (!res) throw "sendMail failed";
+
+    return true;
   } catch {
-    // do nothing
+    return false;
   }
 }
