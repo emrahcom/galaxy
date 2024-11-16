@@ -4,6 +4,8 @@
 
 - categories and tags for (public) meetings
 - P2P meeting with guest queue (like helpdesk)
+- Allow guest to call a member directly if she has a key (QR code)
+- Hold button for direct call?
 
 ## features
 
