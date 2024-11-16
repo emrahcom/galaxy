@@ -129,6 +129,7 @@ async function migrateTo2024101501() {
 
   await migrateTo(upgradeTo, sqls);
 }
+
 // -----------------------------------------------------------------------------
 async function migrateTo2024110301() {
   const upgradeTo = "20241103.01";
@@ -146,6 +147,16 @@ async function migrateTo2024110301() {
 }
 
 // -----------------------------------------------------------------------------
+async function migrateTo2024111601() {
+  const upgradeTo = "20241116.01";
+  const sqls = [
+    `CREATE INDEX ON meeting_session("started_at")`,
+  ];
+
+  await migrateTo(upgradeTo, sqls);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   console.log("migration...");
 
@@ -156,4 +167,5 @@ export default async function () {
   await migrateTo2024092801();
   await migrateTo2024101501();
   await migrateTo2024110301();
+  await migrateTo2024111601();
 }
