@@ -98,6 +98,34 @@ export async function mailMeetingSession(
     return false;
   }
 }
+// -----------------------------------------------------------------------------
+export async function getMailAttributesForCandidate(
+  identityId: string,
+  contactId: string,
+) {
+  // use contactId to get the identity id of the contact
+  const ownerContacts = await getContactIdentity(identityId, contactId);
+  const ownerContact = ownerContacts[0];
+  if (!ownerContact) throw "contact not found for owner";
+  const callee = ownerContact.id;
+
+  const calleeIdentities = await getIdentity(callee);
+  const calleeIdentity = calleeIdentities[0];
+  if (!calleeIdentity) throw "callee not found";
+
+  const mailTo = calleeIdentity.identity_attr.email;
+  if (!mailTo) throw "email not found";
+
+  const calleeContacts = await getContactByIdentity(callee, identityId);
+  const calleeContact = calleeContacts[0];
+  if (!calleeContact) throw "contact not found for callee";
+  const ownerName = calleeContact.name;
+
+  return {
+    mailTo: mailTo,
+    ownerName: ownerName,
+  };
+}
 
 // -----------------------------------------------------------------------------
 export async function mailToDomainPartnerCandidate(
@@ -106,36 +134,20 @@ export async function mailToDomainPartnerCandidate(
   candidacyId: string,
 ) {
   try {
-    // use contactId to get the identity id of the contact
-    const ownerContacts = await getContactIdentity(identityId, contactId);
-    const ownerContact = ownerContacts[0];
-    if (!ownerContact) throw "contact not found for owner";
-    const callee = ownerContact.id;
-
-    const calleeIdentities = await getIdentity(callee);
-    const calleeIdentity = calleeIdentities[0];
-    if (!calleeIdentity) throw "callee not found";
-
-    const mailTo = calleeIdentity.identity_attr.email;
-    if (!mailTo) throw "email not found";
-
-    const calleeContacts = await getContactByIdentity(callee, identityId);
-    const calleeContact = calleeContacts[0];
-    if (!calleeContact) throw "contact not found for callee";
-    const ownerName = calleeContact.name;
+    const attr = await getMailAttributesForCandidate(identityId, contactId);
 
     const baseLink = `https://${GALAXY_FQDN}/pri/domain/partner/candidacy`;
     const acceptCandidacyLink = `${baseLink}/accept/${candidacyId}`;
 
     const mailSubject =
-      `${ownerName} invites you to be a meeting domain partner`;
+      `${attr.ownerName} invites you to be a meeting domain partner`;
     const mailText = `
-      ${ownerName} invites you to be a meeting domain partner:
+      ${attr.ownerName} invites you to be a meeting domain partner:
 
       ${acceptCandidacyLink}
     `.replace(/^ +/gm, "");
 
-    const res = await sendMail(mailTo, mailSubject, mailText);
+    const res = await sendMail(attr.mailTo, mailSubject, mailText);
     if (!res) throw "sendMail failed";
 
     return true;
