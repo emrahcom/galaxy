@@ -552,6 +552,8 @@ CREATE TABLE phone (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
+    "code" varchar(250) NOT NULL
+        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
     "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "enabled" boolean NOT NULL DEFAULT true,
@@ -560,7 +562,8 @@ CREATE TABLE phone (
     "called_at" timestamp with time zone NOT NULL DEFAULT now(),
     "calls" integer NOT NULL DEFAULT 0
 );
-CREATE UNIQUE INDEX ON phone("identity_id", "name");
+CREATE UNIQUE INDEX ON phone("code");
+CREATE INDEX ON phone("identity_id", "name");
 ALTER TABLE phone OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
