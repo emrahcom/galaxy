@@ -1,6 +1,7 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
+import { mailToDomainPartnerCandidate } from "../common/mail.ts";
 import {
   addDomainPartnerCandidate,
   delDomainPartnerCandidate,
@@ -42,7 +43,15 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const domainId = pl.domain_id;
   const contactId = pl.contact_id;
 
-  return await addDomainPartnerCandidate(identityId, domainId, contactId);
+  const rows = await addDomainPartnerCandidate(identityId, domainId, contactId);
+
+  const candidacyId = rows[0]?.id;
+  if (candidacyId) {
+    // dont wait for the mailer
+    mailToDomainPartnerCandidate(identityId, contactId, candidacyId);
+  }
+
+  return rows;
 }
 
 // -----------------------------------------------------------------------------
