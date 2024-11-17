@@ -184,3 +184,31 @@ export async function mailToRoomPartnerCandidate(
     return false;
   }
 }
+
+// -----------------------------------------------------------------------------
+export async function mailToMeetingMemberCandidate(
+  identityId: string,
+  contactId: string,
+  candidacyId: string,
+) {
+  try {
+    const attr = await getMailAttributesForCandidate(identityId, contactId);
+
+    const baseLink = `https://${GALAXY_FQDN}/pri/meeting/member/candidacy`;
+    const acceptCandidacyLink = `${baseLink}/accept/${candidacyId}`;
+
+    const mailSubject = `${attr.ownerName} invites you to the meeting`;
+    const mailText = `
+      ${attr.ownerName} invites you to the meeting as a member:
+
+      ${acceptCandidacyLink}
+    `.replace(/^ +/gm, "");
+
+    const res = await sendMail(attr.mailTo, mailSubject, mailText);
+    if (!res) throw "sendMail failed";
+
+    return true;
+  } catch {
+    return false;
+  }
+}
