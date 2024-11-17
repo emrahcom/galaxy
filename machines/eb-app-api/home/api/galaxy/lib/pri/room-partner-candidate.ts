@@ -1,6 +1,7 @@
 import { notFound } from "../http/response.ts";
 import { pri as wrapper } from "../http/wrapper.ts";
 import { getLimit, getOffset } from "../database/common.ts";
+import { mailToRoomPartnerCandidate } from "../common/mail.ts";
 import {
   addRoomPartnerCandidate,
   delRoomPartnerCandidate,
@@ -42,7 +43,15 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const roomId = pl.room_id;
   const contactId = pl.contact_id;
 
-  return await addRoomPartnerCandidate(identityId, roomId, contactId);
+  const rows = await addRoomPartnerCandidate(identityId, roomId, contactId);
+
+  const candidacyId = rows[0]?.id;
+  if (candidacyId) {
+    // dont wait for the mailer
+    mailToRoomPartnerCandidate(identityId, contactId, candidacyId);
+  }
+
+  return rows;
 }
 
 // -----------------------------------------------------------------------------

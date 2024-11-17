@@ -155,3 +155,32 @@ export async function mailToDomainPartnerCandidate(
     return false;
   }
 }
+
+// -----------------------------------------------------------------------------
+export async function mailToRoomPartnerCandidate(
+  identityId: string,
+  contactId: string,
+  candidacyId: string,
+) {
+  try {
+    const attr = await getMailAttributesForCandidate(identityId, contactId);
+
+    const baseLink = `https://${GALAXY_FQDN}/pri/room/partner/candidacy`;
+    const acceptCandidacyLink = `${baseLink}/accept/${candidacyId}`;
+
+    const mailSubject =
+      `${attr.ownerName} invites you to be a meeting room partner`;
+    const mailText = `
+      ${attr.ownerName} invites you to be a meeting room partner:
+
+      ${acceptCandidacyLink}
+    `.replace(/^ +/gm, "");
+
+    const res = await sendMail(attr.mailTo, mailSubject, mailText);
+    if (!res) throw "sendMail failed";
+
+    return true;
+  } catch {
+    return false;
+  }
+}
