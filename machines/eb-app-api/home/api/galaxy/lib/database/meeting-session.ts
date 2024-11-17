@@ -286,11 +286,13 @@ export async function delMeetingSessionBySchedule(
 
 // -----------------------------------------------------------------------------
 export async function listMeetingSessionForReminder(lastCheckTime: string) {
-  // limit should be higher than the number of expected participants in a
+  // The limit should be higher than the number of expected participants in a
   // minute, otherwise lastCheckTime will be skipped before fetching all records
   // for this period.
   const limit = 1000;
 
+  // id should be the membership id for members.
+  // id should be the meeting id for the owner.
   const sql = {
     text: `
       SELECT mem.id, 'member' as role, i.identity_attr->>'email' as email,
