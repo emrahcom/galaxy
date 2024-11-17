@@ -33,7 +33,7 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20241116.01');
+INSERT INTO metadata VALUES ('database_version', '20241117.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
@@ -546,16 +546,34 @@ CREATE INDEX ON meeting_session("ended_at");
 ALTER TABLE meeting_session OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- PHONE
+-- -----------------------------------------------------------------------------
+CREATE TABLE phone (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+    "called_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "calls" integer NOT NULL DEFAULT 0
+);
+CREATE UNIQUE INDEX ON phone("identity_id", "name");
+ALTER TABLE phone OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- INTERCOM
 -- -----------------------------------------------------------------------------
--- - This table is for internal communication between peers such as call,
---   internal invitation, etc.
+-- - This table is for internal communication such as calls.
+-- - If inserted by an external user (such as in external calls) then
+--   identity_id is the system user ('00000000-0000-0000-0000-000000000000')
 -- - Only the remote peer can update the status.
 --
 -- intercom_attr {
 --   url: string,           // meeting link for a random room or a specific room
 --                          // with a member token if needed
---   code: string,          // invite code
 -- }
 -- -----------------------------------------------------------------------------
 CREATE TYPE intercom_status_type AS ENUM (
@@ -565,12 +583,7 @@ CREATE TYPE intercom_status_type AS ENUM (
     'rejected'
 );
 CREATE TYPE intercom_message_type AS ENUM (
-    'call',
-    'alarm_for_meeting',
-    'invite_for_domain',
-    'invite_for_room',
-    'invite_for_meeting',
-    'request_for_meeting_membership'
+    'call'
 );
 CREATE TABLE intercom (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
