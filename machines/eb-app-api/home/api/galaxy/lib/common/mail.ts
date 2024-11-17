@@ -197,9 +197,9 @@ export async function mailToMeetingMemberCandidate(
     const baseLink = `https://${GALAXY_FQDN}/pri/meeting/member/candidacy`;
     const acceptCandidacyLink = `${baseLink}/accept/${candidacyId}`;
 
-    const mailSubject = `${attr.ownerName} invites you to the meeting`;
+    const mailSubject = `${attr.ownerName} invites you to be a meeting member`;
     const mailText = `
-      ${attr.ownerName} invites you to the meeting as a member:
+      ${attr.ownerName} invites you to be a meeting member:
 
       ${acceptCandidacyLink}
     `.replace(/^ +/gm, "");
