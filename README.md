@@ -31,6 +31,7 @@ Try `Galaxy` using publicly available implementation on
 - Calendar view for scheduled meetings
 - Waiting room for scheduled meetings
 - Direct call (_like a phone_)
+- Email notification for missed calls, upcoming meetings, etc.
 - Manage your Jitsi profiles
 - Ability to attach a profile to a specific meeting
 - Unpredictable room name support. Create meeting links for anonymous Jitsi
