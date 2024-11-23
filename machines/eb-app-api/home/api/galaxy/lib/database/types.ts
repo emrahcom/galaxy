@@ -444,6 +444,24 @@ export interface Meta {
 }
 
 // -----------------------------------------------------------------------------
+export interface Phone {
+  id: string;
+  name: string;
+  code: string;
+  domain_id: string;
+  domain_name: string;
+  domain_url: string;
+  domain_enabled: boolean;
+  profile_id: string;
+  profile_name: string;
+  profile_email: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+  called_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Profile {
   id: string;
   name: string;
