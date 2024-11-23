@@ -551,11 +551,11 @@ ALTER TABLE meeting_session OWNER TO galaxy;
 CREATE TABLE phone (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
-    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
