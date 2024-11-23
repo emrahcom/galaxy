@@ -558,7 +558,7 @@ CREATE TABLE phone (
     "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
     "called_at" timestamp with time zone NOT NULL DEFAULT now(),
     "calls" integer NOT NULL DEFAULT 0
 );
