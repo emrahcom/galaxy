@@ -131,6 +131,29 @@ export async function updatePhone(
 ) {
   const sql = {
     text: `
+      UPDATE phone
+      SET
+        profile_id = (SELECT id
+                      FROM profile
+                      WHERE id = $3
+                        AND identity_id = $1
+                     ),
+        domain_id = (SELECT id
+                     FROM domain d
+                     WHERE id = $4
+                       AND (identity_id = $1
+                            OR public
+                            OR EXISTS (SELECT 1
+                                       FROM domain_partner
+                                       WHERE identity_id = $1
+                                         AND domain_id = d.id
+                                      )
+                           )
+                    ),
+        name = $5,
+        updated_at = now()
+      WHERE id = $2
+        AND identity_id = $1
       RETURNING id, updated_at as at`,
     args: [
       identityId,
@@ -155,7 +178,7 @@ export async function updatePhoneEnabled(
       UPDATE phone
       SET
         enabled = $3,
-        updated_at = now(),
+        updated_at = now()
       WHERE id = $2
         AND identity_id = $1
       RETURNING id, updated_at as at`,
