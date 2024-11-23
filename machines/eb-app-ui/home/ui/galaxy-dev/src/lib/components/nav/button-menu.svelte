@@ -93,6 +93,15 @@
           Contacts
         </a>
       </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="/pri/phone"
+          onclick={(e) => onclick("/pri/phone", e)}
+        >
+          Phones
+        </a>
+      </li>
     </ul>
   </div>
 </div>
