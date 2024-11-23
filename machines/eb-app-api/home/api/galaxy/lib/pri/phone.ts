@@ -32,9 +32,11 @@ async function list(req: Request, identityId: string): Promise<unknown> {
 // -----------------------------------------------------------------------------
 async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
+  const profileId = pl.profile_id;
+  const domainId = pl.domain_id;
   const name = pl.name;
 
-  return await addPhone(identityId, name);
+  return await addPhone(identityId, profileId, domainId, name);
 }
 
 // -----------------------------------------------------------------------------
@@ -65,9 +67,11 @@ async function disable(req: Request, identityId: string): Promise<unknown> {
 async function update(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const phoneId = pl.id;
+  const profileId = pl.profile_id;
+  const domainId = pl.domain_id;
   const name = pl.name;
 
-  return await updatePhone(identityId, phoneId, name);
+  return await updatePhone(identityId, phoneId, profileId, domainId, name);
 }
 
 // -----------------------------------------------------------------------------
