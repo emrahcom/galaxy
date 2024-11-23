@@ -14,6 +14,8 @@
 ## guest
 
 - a guest can only create meetings on public domains
+- is id needed in public types such as Meeting000? Check again in the context of
+  security
 
 ## database
 

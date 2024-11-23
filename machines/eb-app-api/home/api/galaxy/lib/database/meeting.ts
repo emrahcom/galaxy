@@ -42,6 +42,7 @@ export async function getMeeting(identityId: string, meetingId: string) {
 // -----------------------------------------------------------------------------
 
 // WARNING: add status checks
+// WARNING: is id needed? Check in the context of secrity
 
 export async function getPublicMeeting(meetingId: string) {
   const sql = {
@@ -438,6 +439,7 @@ export async function listMeeting(
 // -----------------------------------------------------------------------------
 
 // WARNING: add partnership status too
+// WARNING: is id needed? Check in the context of secrity
 
 export async function listPublicMeeting(
   limit: number,
