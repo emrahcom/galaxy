@@ -33,7 +33,7 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20241117.01');
+INSERT INTO metadata VALUES ('database_version', '20241123.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
@@ -586,7 +586,8 @@ CREATE TYPE intercom_status_type AS ENUM (
     'rejected'
 );
 CREATE TYPE intercom_message_type AS ENUM (
-    'call'
+    'call',
+    'phone'
 );
 CREATE TABLE intercom (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
