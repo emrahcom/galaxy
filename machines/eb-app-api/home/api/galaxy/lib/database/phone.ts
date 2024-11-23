@@ -70,7 +70,7 @@ export async function addPhone(
 ) {
   const sql = {
     text: `
-      INSERT INTO room (identity_id, profile_id, domain_id, name)
+      INSERT INTO phone (identity_id, profile_id, domain_id, name)
       VALUES (
         $1,
         (SELECT id
