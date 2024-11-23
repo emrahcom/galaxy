@@ -9,7 +9,7 @@ async function getByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  return await getPhoneByCode(meetingId);
+  return await getPhoneByCode(code);
 }
 
 // -----------------------------------------------------------------------------
