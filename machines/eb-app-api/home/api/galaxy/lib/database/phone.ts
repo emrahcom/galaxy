@@ -16,7 +16,7 @@ export async function getPhone(identityId: string, phoneId: string) {
         ph.enabled, ph.created_at, ph.updated_at, ph.called_at
       FROM phone ph
         JOIN domain d ON ph.domain_id = d.id
-        JOIN profile pr ON ph.profile_id = profile.id
+        JOIN profile pr ON ph.profile_id = pr.id
       WHERE ph.id = $2
         AND ph.identity_id = $1`,
     args: [
@@ -47,7 +47,7 @@ export async function listPhone(
         ph.enabled, ph.created_at, ph.updated_at, ph.called_at
       FROM phone ph
         JOIN domain d ON ph.domain_id = d.id
-        JOIN profile pr ON ph.profile_id = profile.id
+        JOIN profile pr ON ph.profile_id = pr.id
       WHERE ph.identity_id = $1
       ORDER BY name
       LIMIT $2 OFFSET $3`,
