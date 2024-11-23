@@ -64,13 +64,39 @@ export async function listPhone(
 // -----------------------------------------------------------------------------
 export async function addPhone(
   identityId: string,
+  profileId: string,
+  domainId: string,
   name: string,
 ) {
   const sql = {
     text: `
+      INSERT INTO room (identity_id, profile_id, domain_id, name)
+      VALUES (
+        $1,
+        (SELECT id
+         FROM profile
+         WHERE id = $2
+           AND identity_id = $1
+        ),
+        (SELECT id
+         FROM domain d
+         WHERE id = $3
+           AND (identity_id = $1
+                OR public
+                OR EXISTS (SELECT 1
+                           FROM domain_partner
+                           WHERE identity_id = $1
+                             AND domain_id = d.id
+                          )
+               )
+        ),
+        $4
+      )
       RETURNING id, created_at as at`,
     args: [
       identityId,
+      profileId,
+      domainId,
       name,
     ],
   };
@@ -99,6 +125,8 @@ export async function delPhone(identityId: string, phoneId: string) {
 export async function updatePhone(
   identityId: string,
   phoneId: string,
+  profileId: string,
+  domainId: string,
   name: string,
 ) {
   const sql = {
@@ -107,6 +135,8 @@ export async function updatePhone(
     args: [
       identityId,
       phoneId,
+      profileId,
+      domainId,
       name,
     ],
   };
