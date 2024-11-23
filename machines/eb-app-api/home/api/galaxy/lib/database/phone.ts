@@ -1,4 +1,4 @@
-import { fetch, pool } from "./common.ts";
+import { fetch } from "./common.ts";
 import type { Id, Phone } from "./types.ts";
 
 // -----------------------------------------------------------------------------
