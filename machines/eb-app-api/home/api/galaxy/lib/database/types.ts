@@ -462,6 +462,13 @@ export interface Phone {
 }
 
 // -----------------------------------------------------------------------------
+export interface Phone111 {
+  profile_name: string;
+  profile_email: string;
+  code: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Profile {
   id: string;
   name: string;
