@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, Phone } from "./types.ts";
+import type { Id, Phone, Phone111 } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getPhone(identityId: string, phoneId: string) {
@@ -26,6 +26,22 @@ export async function getPhone(identityId: string, phoneId: string) {
   };
 
   return await fetch(sql) as Phone[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getPhoneByCode(code: string) {
+  const sql = {
+    text: `
+      SELECT pr.name as profile_name, pr.email as profile_email, ph.code
+      FROM phone ph
+        JOIN profile pr ON ph.profile_id = pr.id
+      WHERE ph.code = $1`,
+    args: [
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Phone111[];
 }
 
 // -----------------------------------------------------------------------------
