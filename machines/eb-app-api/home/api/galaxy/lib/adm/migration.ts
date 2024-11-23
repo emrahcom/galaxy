@@ -149,6 +149,59 @@ async function migrateTo2024111601() {
 }
 
 // -----------------------------------------------------------------------------
+async function migrateTo2024112301() {
+  const upgradeTo = "20241123.01";
+  const sqls = [
+    `DROP TABLE intercom`,
+
+    `DROP TYPE intercom_message_type`,
+
+    `CREATE TYPE intercom_message_type AS ENUM (
+       'call',
+       'phone'
+     )`,
+
+    `CREATE TABLE intercom (
+       "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+       "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+       "remote_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+       "status" intercom_status_type NOT NULL DEFAULT 'none',
+       "message_type" intercom_message_type NOT NULL DEFAULT 'call',
+       "intercom_attr" jsonb NOT NULL DEFAULT '{}'::jsonb,
+       "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+       "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
+       "expired_at" timestamp with time zone NOT NULL
+           DEFAULT now() + interval '10 seconds'
+     )`,
+
+    `CREATE INDEX ON intercom("remote_id", "expired_at")`,
+
+    `CREATE INDEX ON intercom("expired_at")`,
+
+    `CREATE TABLE phone (
+       "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+       "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+       "name" varchar(250) NOT NULL,
+       "code" varchar(250) NOT NULL
+           DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+       "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+       "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+       "enabled" boolean NOT NULL DEFAULT true,
+       "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+       "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+       "called_at" timestamp with time zone NOT NULL DEFAULT now(),
+       "calls" integer NOT NULL DEFAULT 0
+     )`,
+
+    `CREATE UNIQUE INDEX ON phone("code")`,
+
+    `CREATE INDEX ON phone("identity_id", "name")`,
+  ];
+
+  await migrateTo(upgradeTo, sqls);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   console.log("migration...");
 
@@ -160,4 +213,5 @@ export default async function () {
   await migrateTo2024101501();
   await migrateTo2024110301();
   await migrateTo2024111601();
+  await migrateTo2024112301();
 }
