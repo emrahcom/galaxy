@@ -29,3 +29,4 @@
 - add tests for invite contact to meeting membership
 - add tests for invite contact to friendship
 - add tests for direct call
+- add tests for phone
