@@ -77,7 +77,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="waiting">
+<section id="wait">
   <div class="d-flex mt-2 justify-content-center">
     <div class="card border-0 mx-auto" style="max-width:{FORM_WIDTH};">
       <div class="card-body text-center">

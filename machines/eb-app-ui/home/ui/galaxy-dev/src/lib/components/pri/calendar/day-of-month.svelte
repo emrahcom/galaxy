@@ -37,9 +37,9 @@
   // ---------------------------------------------------------------------------
   function generateHref(m: MeetingSchedule222) {
     if (m.membership_id) {
-      return `/pri/member/waiting/${m.membership_id}#${calendarDay}`;
+      return `/pri/member/wait/${m.membership_id}#${calendarDay}`;
     } else {
-      return `/pri/owner/waiting/${m.meeting_id}#${calendarDay}`;
+      return `/pri/owner/wait/${m.meeting_id}#${calendarDay}`;
     }
   }
 </script>

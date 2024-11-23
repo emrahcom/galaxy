@@ -105,7 +105,7 @@
 
         {#if p.chain_enabled}
           {#if p.schedule_type === "scheduled"}
-            <Join href="/pri/owner/waiting/{p.id}" title="Join the meeting" />
+            <Join href="/pri/owner/wait/{p.id}" title="Join the meeting" />
           {:else}
             <Join href="/pri/owner/join/{p.id}" title="Join the meeting" />
           {/if}
@@ -117,7 +117,7 @@
         {#if p.enabled && p.chain_enabled}
           {#if p.schedule_type === "scheduled"}
             <Join
-              href="/pri/member/waiting/{p.membership_id}"
+              href="/pri/member/wait/{p.membership_id}"
               title="Join the meeting"
             />
           {:else}

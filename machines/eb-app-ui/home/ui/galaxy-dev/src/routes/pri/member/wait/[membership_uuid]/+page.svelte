@@ -3,7 +3,7 @@
   import { getById } from "$lib/api";
   import Back from "$lib/components/common/button-on-click.svelte";
   import Subheader from "$lib/components/common/subheader-center.svelte";
-  import Wait from "$lib/components/pri/member-waiting/wait.svelte";
+  import Wait from "$lib/components/pri/member/wait.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   const membershipId = $page.params.membership_uuid;

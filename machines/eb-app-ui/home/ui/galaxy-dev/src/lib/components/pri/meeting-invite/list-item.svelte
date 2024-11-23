@@ -25,7 +25,7 @@
     let text: string;
 
     if (schedule_type === "scheduled") {
-      text = `${$page.url.origin}/aud/waiting/${code}`;
+      text = `${$page.url.origin}/aud/wait/${code}`;
     } else {
       text = `${$page.url.origin}/aud/join/${code}`;
     }
@@ -58,7 +58,7 @@
       {:else}
         <p class="card-text text-muted">
           {#if p.meeting_schedule_type === "scheduled"}
-            {$page.url.origin}/aud/waiting/{p.code}
+            {$page.url.origin}/aud/wait/{p.code}
           {:else}
             {$page.url.origin}/aud/join/{p.code}
           {/if}
