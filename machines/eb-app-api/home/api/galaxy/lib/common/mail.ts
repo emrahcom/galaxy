@@ -80,7 +80,7 @@ export async function mailMeetingSession(
     }
 
     const baseLinkForRole = `https://${GALAXY_FQDN}/pri/${meetingSession.role}`;
-    const meetingLink = `${baseLinkForRole}/waiting/${meetingSession.id}`;
+    const meetingLink = `${baseLinkForRole}/wait/${meetingSession.id}`;
 
     const mailSubject = `You have a meeting in 30 minutes, ${meetingName}`;
     const mailText = `
