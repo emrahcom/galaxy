@@ -210,7 +210,7 @@ export async function updatePhoneEnabled(
 }
 
 // -----------------------------------------------------------------------------
-export async function callPhoneByCode (code: string) {
+export async function callPhoneByCode(code: string) {
   const ownerUrl = "owner";
   const publicUrl = "public";
 
