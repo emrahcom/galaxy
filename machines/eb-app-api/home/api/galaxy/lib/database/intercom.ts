@@ -30,8 +30,8 @@ export async function getIntercomForOwner(
 export async function getIntercom(identityId: string, intercomId: string) {
   const sql = {
     text: `
-      SELECT ic.id, co.id as contact_id, co.name as contact_name, status,
-        message_type, intercom_attr, expired_at
+      SELECT ic.id, co.name as contact_name, status, message_type,
+        intercom_attr, expired_at
       FROM intercom ic
         JOIN contact co ON co.identity_id = $1
                             AND co.remote_id = ic.identity_id
@@ -54,8 +54,8 @@ export async function listIntercom(
 ) {
   const sql = {
     text: `
-      SELECT ic.id, co.id as contact_id, co.name as contact_name, status,
-        message_type, intercom_attr, expired_at
+      SELECT ic.id, co.name as contact_name, status, message_type,
+        intercom_attr, expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = $1
                                 AND co.remote_id = ic.identity_id
