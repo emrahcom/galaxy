@@ -37,13 +37,13 @@
   // ---------------------------------------------------------------------------
   async function ringCall() {
     ringCounter += 1;
+    console.error(call);
+    console.error(ring);
 
     try {
       // stop ringing if it is stopped from UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
         //await actionById("/api/pub/intercom/del/bycode", call.id);
-        console.error(call);
-        console.error(ring);
 
         inCall = false;
         disabled = false;
