@@ -28,9 +28,6 @@ export async function addCall(
 // -----------------------------------------------------------------------------
 export async function addPhoneCall(code: string, callAttr: Attr) {
   const systemAccount = "00000000-0000-0000-0000-000000000000";
-
-  // Dont return the actual Id to the public user.
-  // Return code as Id which is already known by her.
   const sql = {
     text: `
       INSERT INTO intercom (identity_id, remote_id, status, message_type,
@@ -42,7 +39,7 @@ export async function addPhoneCall(code: string, callAttr: Attr) {
          WHERE code = $2
         ),
         'none', 'phone', $3::jsonb)
-      RETURNING $2 as id, created_at as at`,
+      RETURNING id, created_at as at`,
     args: [
       systemAccount,
       code,
