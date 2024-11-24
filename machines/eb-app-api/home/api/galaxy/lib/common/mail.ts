@@ -84,7 +84,7 @@ export async function mailPhoneCall(code: string) {
     const recommendedLink = `https://${GALAXY_FQDN}/pri/phone`;
     const mailSubject = `Your virtual phone is ringing, ${virtualPhone}`;
     const mailText = `
-      Your virtual phone is ringing
+      Your virtual phone is ringing:
       ${virtualPhone}
 
       ${recommendedLink}
