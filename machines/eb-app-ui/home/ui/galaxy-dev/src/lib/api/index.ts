@@ -23,6 +23,15 @@ export async function actionById(url: string, id: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function actionByCode(url: string, code: string) {
+  const payload = {
+    code: code,
+  };
+
+  return await action(url, payload);
+}
+
+// -----------------------------------------------------------------------------
 export async function get(url: string) {
   const payload = {};
 
