@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
   import { actionByCode } from "$lib/api";
-  import type { Phone111 } from "$lib/types";
+  import type { IntercomCall, IntercomRing, Phone111 } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Email from "$lib/components/common/form-email.svelte";
   import Spinner from "$lib/components/common/spinner.svelte";
@@ -19,6 +19,8 @@
   let warning = $state(false);
   let disabled = $state(false);
   let inCall = $state(false);
+  let call: IntercomCall;
+  let ring: IntercomRing;
   let ringCounter = 0;
 
   // ---------------------------------------------------------------------------
@@ -37,8 +39,19 @@
     ringCounter += 1;
 
     try {
-      console.log("ringing");
-      console.log(ringCounter);
+      // stop ringing if it is stopped from UI or if already a lot of attempts
+      if (!inCall || ringCounter > 10) {
+        //await actionById("/api/pub/intercom/del/bycode", call.id);
+        console.error(call);
+        console.error(ring);
+
+        inCall = false;
+        disabled = false;
+        return;
+      }
+
+      // refresh the call and check if there is a response from the peer
+      //ring = await actionById("/api/pub/intercom/call/ring", call.id);
     } catch {
       // cancel the call if error
       inCall = false;
@@ -56,7 +69,7 @@
       ringCounter = 0;
 
       // initialize the call
-      await actionByCode("/api/pub/phone/call/bycode", p.code);
+      call = await actionByCode("/api/pub/phone/call/bycode", p.code);
 
       // start ringing
       setTimeout(ringCall, 1000);
