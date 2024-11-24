@@ -1,7 +1,6 @@
 import { notFound } from "../http/response.ts";
 import { pub as wrapper } from "../http/wrapper.ts";
-import { getPhoneByCode } from "../database/phone.ts";
-import { addPhoneCall } from "../database/intercom-call.ts";
+import { callPhoneByCode, getPhoneByCode } from "../database/phone.ts";
 
 const PRE = "/api/pub/phone";
 
@@ -18,7 +17,7 @@ async function callByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
 
-  return await addPhoneCall(code);
+  return await callPhoneByCode(code);
 }
 
 // -----------------------------------------------------------------------------

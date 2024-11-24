@@ -1,4 +1,5 @@
 import { fetch } from "./common.ts";
+import { addPhoneCall } from "../database/intercom-call.ts";
 import type { Id, Phone, Phone111 } from "./types.ts";
 
 // -----------------------------------------------------------------------------
@@ -206,4 +207,10 @@ export async function updatePhoneEnabled(
   };
 
   return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function callPhoneByCode (code: string) {
+
+  return await addPhoneCall(code);
 }
