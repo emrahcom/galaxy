@@ -35,7 +35,7 @@ export async function addPhoneCall(code: string, callAttr: Attr) {
         intercom_attr)
       VALUES (
         $2,
-        (SELECT identity_id
+        (SELECT ph.identity_id
          FROM phone ph
            JOIN domain d ON ph.domain_id = d.id
                             AND d.enabled
@@ -82,7 +82,7 @@ export async function ringPhone(code: string, intercomId: string) {
         expired_at = now() + interval '10 seconds'
       WHERE id = $2
         AND identity_id = $3
-        AND remote_id = (SELECT identity_id
+        AND remote_id = (SELECT ph.identity_id
                          FROM phone ph
                            JOIN domain d ON ph.domain_id = d.id
                                             AND d.enabled

@@ -78,7 +78,7 @@ export async function mailPhoneCall(code: string) {
     if (!mailTo) throw "email not found";
 
     const virtualPhones = await getPhonePrivatesByCode(code);
-    const virtualPhone = virtualPhones[0];
+    const virtualPhone = virtualPhones[0]?.name;
     if (!virtualPhone) throw "phone not found";
 
     const recommendedLink = `https://${GALAXY_FQDN}/pri/phone`;
