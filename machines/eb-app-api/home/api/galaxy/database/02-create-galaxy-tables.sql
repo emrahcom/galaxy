@@ -570,7 +570,7 @@ ALTER TABLE phone OWNER TO galaxy;
 -- INTERCOM
 -- -----------------------------------------------------------------------------
 -- - This table is for internal communication such as calls.
--- - If inserted by an external user (such as in external calls) then
+-- - If inserted by an external user (such as in external phone calls) then
 --   identity_id is the system user ('00000000-0000-0000-0000-000000000000')
 -- - Only the remote peer can update the status.
 --

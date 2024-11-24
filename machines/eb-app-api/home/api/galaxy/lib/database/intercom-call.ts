@@ -24,6 +24,29 @@ export async function addCall(
 }
 
 // -----------------------------------------------------------------------------
+export async function addPhoneCall(code: string) {
+  const systemAccount = "00000000-0000-0000-0000-000000000000";
+  const sql = {
+    text: `
+      INSERT INTO intercom (identity_id, remote_id, status, message_type)
+      VALUES (
+        $1,
+        (SELECT identity_id
+         FROM phone
+         WHERE code = $2
+        ),
+        'none', 'phone')
+      RETURNING id, created_at as at`,
+    args: [
+      systemAccount,
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function ringCall(identityId: string, intercomId: string) {
   const sql = {
     text: `
