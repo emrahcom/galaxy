@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
-  import { actionByCode } from "$lib/api";
+  import { action, actionByCode } from "$lib/api";
   import type { IntercomCall, IntercomRing, Phone111 } from "$lib/types";
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Email from "$lib/components/common/form-email.svelte";
@@ -37,13 +37,17 @@
   // ---------------------------------------------------------------------------
   async function ringCall() {
     ringCounter += 1;
-    console.error(call);
-    console.error(ring);
 
     try {
+      const payload = {
+        code: p.code,
+        intercom_id: call.id,
+      };
+
       // stop ringing if it is stopped from UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
-        //await actionById("/api/pub/intercom/del/bycode", call.id);
+        // use both code and id
+        //await actionById("/api/pub/intercom/del", call.id);
 
         inCall = false;
         disabled = false;
@@ -51,7 +55,25 @@
       }
 
       // refresh the call and check if there is a response from the peer
-      //ring = await actionById("/api/pub/intercom/call/ring", call.id);
+      // use both code and id
+      ring = await action("/api/pub/intercom/call/ring", payload);
+
+      // ring again after a while if still no response from the peer
+      if (ring.status === "none" || ring.status === "seen") {
+        setTimeout(ringCall, 2000);
+        return;
+      }
+
+      // since there are only two options (rejected or accepted) at this stage,
+      // end the call
+      // await actionById("/api/pri/intercom/del", call.id);
+
+      inCall = false;
+      disabled = false;
+
+      // go to the meeting room if accepted
+      // get publicUrl
+      //if (ring.status === "accepted") globalThis.location.href = call.Url;
     } catch {
       // cancel the call if error
       inCall = false;
@@ -68,7 +90,8 @@
       disabled = true;
       ringCounter = 0;
 
-      // initialize the call
+      // initialize the call and get the call data
+      // this will also send a notification to the owner about the call
       call = await actionByCode("/api/pub/phone/call/bycode", p.code);
 
       // start ringing
