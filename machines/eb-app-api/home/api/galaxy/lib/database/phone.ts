@@ -211,6 +211,15 @@ export async function updatePhoneEnabled(
 
 // -----------------------------------------------------------------------------
 export async function callPhoneByCode (code: string) {
+  const ownerUrl = "owner";
+  const publicUrl = "public";
 
-  return await addPhoneCall(code);
+  // Public URL will be visible to the public user when the call is accepted by
+  // the owner.
+  const callAttr = {
+    url: ownerUrl,
+    publicUrl: publicUrl,
+  };
+
+  return await addPhoneCall(code, callAttr);
 }
