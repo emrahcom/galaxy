@@ -17,6 +17,22 @@ export async function getIdentity(identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function getIdentityByPhoneCode(code: string) {
+  const sql = {
+    text: `
+      SELECT identity_attr, i.enabled, i.created_at, i.updated_at, seen_at
+      FROM identity i
+        JOIN phone ph ON ph.identity_id = i.id
+                         AND ph.code = $1`,
+    args: [
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Identity[];
+}
+
+// -----------------------------------------------------------------------------
 export async function setIdentityEmail(identityId: string, email: string) {
   const sql = {
     text: `
