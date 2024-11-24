@@ -56,7 +56,7 @@
 
       // refresh the call and check if there is a response from the peer
       // use both code and id
-      ring = await action("/api/pub/intercom/call/ring", payload);
+      ring = await action("/api/pub/intercom/phone/ring", payload);
 
       // ring again after a while if still no response from the peer
       if (ring.status === "none" || ring.status === "seen") {
