@@ -36,8 +36,11 @@ export async function addPhoneCall(code: string, callAttr: Attr) {
       VALUES (
         $2,
         (SELECT identity_id
-         FROM phone
+         FROM phone ph
+           JOIN domain d ON ph.domain_id = d.id
+                            AND d.enabled
          WHERE code = $1
+           AND ph.enabled
         ),
         'none', 'phone', $3::jsonb)
       RETURNING id, created_at as at`,
@@ -80,8 +83,11 @@ export async function ringPhone(code: string, intercomId: string) {
       WHERE id = $2
         AND identity_id = $3
         AND remote_id = (SELECT identity_id
-                         FROM phone
+                         FROM phone ph
+                           JOIN domain d ON ph.domain_id = d.id
+                                            AND d.enabled
                          WHERE code = $1
+                           AND ph.enabled
                         )
       RETURNING id, status`,
     args: [

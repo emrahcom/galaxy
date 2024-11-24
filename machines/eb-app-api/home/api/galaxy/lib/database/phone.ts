@@ -1,6 +1,6 @@
 import { fetch } from "./common.ts";
 import { addPhoneCall } from "../database/intercom-call.ts";
-import type { Id, Phone, Phone111 } from "./types.ts";
+import type { Id, Phone, Phone111, Phone333 } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getPhone(identityId: string, phoneId: string) {
@@ -35,14 +35,35 @@ export async function getPhoneByCode(code: string) {
     text: `
       SELECT pr.name as profile_name, pr.email as profile_email, ph.code
       FROM phone ph
+        JOIN domain d ON ph.domain_id = d.id
+                         AND d.enabled
         JOIN profile pr ON ph.profile_id = pr.id
-      WHERE ph.code = $1`,
+      WHERE ph.code = $1
+        AND ph.enabled`,
     args: [
       code,
     ],
   };
 
   return await fetch(sql) as Phone111[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getPhonePrivatesByCode(code: string) {
+  const sql = {
+    text: `
+      SELECT ph.name
+      FROM phone ph
+        JOIN domain d ON ph.domain_id = d.id
+                         AND d.enabled
+      WHERE ph.code = $1
+        AND ph.enabled`,
+    args: [
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Phone333[];
 }
 
 // -----------------------------------------------------------------------------

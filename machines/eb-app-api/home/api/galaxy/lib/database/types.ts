@@ -468,6 +468,11 @@ export interface Phone111 {
 }
 
 // -----------------------------------------------------------------------------
+export interface Phone333 {
+  name: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface Profile {
   id: string;
   name: string;

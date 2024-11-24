@@ -1,6 +1,7 @@
 import { GALAXY_FQDN } from "../../config.ts";
 import { MAILER_FROM, MAILER_TRANSPORT_OPTIONS } from "../../config.mailer.ts";
-import { getIdentity } from "../database/identity.ts";
+import { getIdentity, getIdentityByPhoneCode } from "../database/identity.ts";
+import { getPhonePrivatesByCode } from "../database/phone.ts";
 import {
   getContactByIdentity,
   getContactIdentity,
@@ -55,6 +56,38 @@ export async function mailMissedCall(caller: string, callee: string) {
       ${callerName} called you
 
       ${callbackLink}
+    `.replace(/^ +/gm, "");
+
+    const res = await sendMail(mailTo, mailSubject, mailText);
+    if (!res) throw "sendMail failed";
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// -----------------------------------------------------------------------------
+export async function mailPhoneCall(code: string) {
+  try {
+    const ownerIdentities = await getIdentityByPhoneCode(code);
+    const ownerIdentity = ownerIdentities[0];
+    if (!ownerIdentity) throw "owner not found";
+
+    const mailTo = ownerIdentity.identity_attr.email;
+    if (!mailTo) throw "email not found";
+
+    const virtualPhones = await getPhonePrivatesByCode(code);
+    const virtualPhone = virtualPhones[0];
+    if (!virtualPhone) throw "phone not found";
+
+    const recommendedLink = `https://${GALAXY_FQDN}/pri/phone`;
+    const mailSubject = `Your virtual phone is ringing, ${virtualPhone}`;
+    const mailText = `
+      Your virtual phone is ringing
+      ${virtualPhone}
+
+      ${recommendedLink}
     `.replace(/^ +/gm, "");
 
     const res = await sendMail(mailTo, mailSubject, mailText);
