@@ -41,7 +41,7 @@
     try {
       const payload = {
         code: p.code,
-        intercom_id: call.id,
+        id: call.id,
       };
 
       // stop ringing if it is stopped from UI or if already a lot of attempts
@@ -66,6 +66,7 @@
 
       // since there are only two options (rejected or accepted) at this stage,
       // end the call
+      // first get the url
       // await actionById("/api/pri/intercom/del", call.id);
 
       inCall = false;
