@@ -1,8 +1,13 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
+  import { actionByCode } from "$lib/api";
   import type { Phone111 } from "$lib/types";
-  import Call from "$lib/components/common/button-on-click.svelte";
   import Cancel from "$lib/components/common/button-cancel.svelte";
+  import Email from "$lib/components/common/form-email.svelte";
+  import Spinner from "$lib/components/common/spinner.svelte";
+  import Submit from "$lib/components/common/button-submit.svelte";
+  import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
+  import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   interface Props {
@@ -12,19 +17,53 @@
   let { p }: Props = $props();
 
   let warning = $state(false);
+  let disabled = $state(false);
+  let inCall = $state(false);
+  let ringCounter = 0;
 
   // ---------------------------------------------------------------------------
-  function goHome() {
-    globalThis.location.href = `/`;
+  function cancel() {
+    globalThis.location.href = "/";
   }
 
   // ---------------------------------------------------------------------------
-  async function call(code: string) {
+  function endCall() {
+    inCall = false;
+    disabled = false;
+  }
+
+  // ---------------------------------------------------------------------------
+  async function ringCall() {
+    ringCounter += 1;
+
     try {
-      warning = false;
-      console.error(code);
+      console.log("ringing");
+      console.log(ringCounter);
     } catch {
+      // cancel the call if error
+      inCall = false;
       warning = true;
+      disabled = false;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  async function onsubmit() {
+    try {
+      inCall = true;
+      warning = false;
+      disabled = true;
+      ringCounter = 0;
+
+      // initialize the call
+      await actionByCode("/api/pub/phone/call/bycode", p.code);
+
+      // start ringing
+      setTimeout(ringCall, 1000);
+    } catch {
+      inCall = false;
+      warning = true;
+      disabled = false;
     }
   }
 </script>
@@ -32,28 +71,39 @@
 <!-- -------------------------------------------------------------------------->
 <section id="call">
   <div class="d-flex mt-2 justify-content-center">
-    <div class="card border-0 mx-auto" style="max-width:{FORM_WIDTH};">
-      <div class="card-body text-center">
-        <h2 class="card-title text-muted bg-light mt-2 mb-3 py-3">call</h2>
+    <form {onsubmit} style="width:{FORM_WIDTH};">
+      <Text
+        name="profile_name"
+        label="Name"
+        value={p.profile_name || ""}
+        disabled={true}
+        readonly={true}
+      />
+      <Email
+        name="profile_email"
+        label="Email"
+        value={p.profile_email || ""}
+        disabled={true}
+        readonly={true}
+      />
 
-        <div
-          class="card-footer d-flex justify-content-center bg-body border-0
-          mt-3 gap-5"
-        >
-          <Cancel label="Cancel" onclick={goHome} />
+      {#if inCall}
+        <Spinner effect="grow">ringing...</Spinner>
+      {/if}
 
-          <Call
-            label="Call"
-            onclick={() => {
-              call(p.code);
-            }}
-          />
-        </div>
+      {#if warning}
+        <Warning>An error occurred during the call.</Warning>
+      {/if}
+
+      <div class="d-flex gap-5 mt-5 justify-content-center">
+        {#if inCall}
+          <Cancel onclick={endCall} />
+        {:else}
+          <Cancel {disabled} onclick={cancel} />
+          <SubmitBlocker />
+          <Submit {disabled} label="Call" />
+        {/if}
       </div>
-    </div>
-
-    {#if warning}
-      <Warning>The call request is not accepted.</Warning>
-    {/if}
+    </form>
   </div>
 </section>

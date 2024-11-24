@@ -17,7 +17,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Welcome to the waiting room" />
+<Subheader subheader="Make a call" />
 
 {#await pr then phone}
   <Call p={phone} />
