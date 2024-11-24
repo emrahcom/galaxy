@@ -556,6 +556,7 @@ CREATE TABLE phone (
     "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "email_enabled" boolean NOT NULL DEFAULT true,
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now(),
