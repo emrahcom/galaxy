@@ -94,7 +94,7 @@
   // ---------------------------------------------------------------------------
   async function onsubmit() {
     try {
-      const data = {
+      const payload = {
         contact_id: p.id,
         domain_id: domainId,
       };
@@ -104,8 +104,8 @@
       disabled = true;
       ringCounter = 0;
 
-      // initialize the call and get the call data
-      call = await action("/api/pri/contact/call", data);
+      // initialize the call and get the call payload
+      call = await action("/api/pri/contact/call", payload);
       if (!call.url) throw "no url for call";
 
       // start ringing

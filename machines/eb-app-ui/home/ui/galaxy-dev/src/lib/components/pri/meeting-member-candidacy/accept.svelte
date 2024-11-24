@@ -46,7 +46,7 @@
   // ---------------------------------------------------------------------------
   async function onsubmit() {
     try {
-      const data = {
+      const payload = {
         id: p.id,
         profile_id: profileId,
       };
@@ -54,7 +54,7 @@
       warning = false;
       disabled = true;
 
-      await action("/api/pri/meeting/member/candidacy/accept", data);
+      await action("/api/pri/meeting/member/candidacy/accept", payload);
       globalThis.location.href = "/pri/meeting";
     } catch {
       warning = true;
