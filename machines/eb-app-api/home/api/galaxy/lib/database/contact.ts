@@ -247,57 +247,6 @@ export async function listContactStatus(
 }
 
 // -----------------------------------------------------------------------------
-export async function callContact(
-  identityId: string,
-  contactId: string,
-  domainId: string,
-) {
-  // get the domain if allowed.
-  const domains = await getDomainIfAllowed(identityId, domainId);
-  const domain = domains[0];
-  if (!domain) throw "domain is not available";
-
-  // get the contact identity
-  const contacts = await getContactIdentity(identityId, contactId);
-  const contact = contacts[0];
-  if (!contact) throw "contact is not available";
-  const remoteId = contact.id;
-
-  // get the room (with a random name and suffix) for the call
-  const randomRooms = await getRandomRoomName("call-");
-  const randomRoom = randomRooms[0];
-  if (!randomRoom) throw "no room for the call";
-
-  // the linkset for the call room
-  const roomLinkset = {
-    name: randomRoom.name,
-    has_suffix: true,
-    suffix: randomRoom.suffix,
-    auth_type: domain.auth_type,
-    domain_attr: domain.domain_attr,
-  } as RoomLinkset;
-
-  // get the meeting link for caller
-  const callerUrl = await getRoomUrl(
-    identityId,
-    roomLinkset,
-    "host",
-    EXP,
-    HASH,
-  );
-  // get the meeting link for callee
-  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP, HASH);
-  const callAttr = { url: calleeUrl };
-
-  // create the intercom message to initialize the call
-  const calls = await addCall(identityId, remoteId, callAttr);
-  const call = calls[0];
-  if (!call) throw "call cannot be created";
-
-  return [{ id: call.id, url: callerUrl }] as IntercomCall[];
-}
-
-// -----------------------------------------------------------------------------
 export async function delContact(identityId: string, contactId: string) {
   using client = await pool.connect();
   const trans = client.createTransaction("transaction");
@@ -365,4 +314,55 @@ export async function updateContact(
   };
 
   return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function callContact(
+  identityId: string,
+  contactId: string,
+  domainId: string,
+) {
+  // get the domain if allowed.
+  const domains = await getDomainIfAllowed(identityId, domainId);
+  const domain = domains[0];
+  if (!domain) throw "domain is not available";
+
+  // get the contact identity
+  const contacts = await getContactIdentity(identityId, contactId);
+  const contact = contacts[0];
+  if (!contact) throw "contact is not available";
+  const remoteId = contact.id;
+
+  // get the room (with a random name and suffix) for the call
+  const randomRooms = await getRandomRoomName("call-");
+  const randomRoom = randomRooms[0];
+  if (!randomRoom) throw "no room for the call";
+
+  // the linkset for the call room
+  const roomLinkset = {
+    name: randomRoom.name,
+    has_suffix: true,
+    suffix: randomRoom.suffix,
+    auth_type: domain.auth_type,
+    domain_attr: domain.domain_attr,
+  } as RoomLinkset;
+
+  // get the meeting link for caller
+  const callerUrl = await getRoomUrl(
+    identityId,
+    roomLinkset,
+    "host",
+    EXP,
+    HASH,
+  );
+  // get the meeting link for callee
+  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP, HASH);
+  const callAttr = { url: calleeUrl };
+
+  // create the intercom message to initialize the call
+  const calls = await addCall(identityId, remoteId, callAttr);
+  const call = calls[0];
+  if (!call) throw "call cannot be created";
+
+  return [{ id: call.id, url: callerUrl }] as IntercomCall[];
 }
