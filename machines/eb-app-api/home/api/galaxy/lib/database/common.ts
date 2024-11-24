@@ -34,10 +34,15 @@ export const pool = new Pool(
 
 // -----------------------------------------------------------------------------
 export async function query(sql: QueryObject): Promise<QueryObjectResult> {
-  using client = await pool.connect();
-  const rst = await client.queryObject(sql);
+  try {
+    using client = await pool.connect();
+    const rst = await client.queryObject(sql);
 
-  return rst as QueryObjectResult;
+    return rst as QueryObjectResult;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 }
 
 // -----------------------------------------------------------------------------
