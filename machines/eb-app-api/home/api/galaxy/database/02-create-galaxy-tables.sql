@@ -575,8 +575,14 @@ ALTER TABLE phone OWNER TO galaxy;
 -- - Only the remote peer can update the status.
 --
 -- intercom_attr {
---   url: string,           // meeting link for a random room or a specific room
---                          // with a member token if needed
+--   url: string,           // Meeting link for the callee of the direct call.
+--                          // It is a random room with a member token if needed
+--
+--   publicUrl: string,     // Meeting link for the caller of the public phone
+--                          // who is an anonymous user.
+--                          // It is a random room with a member token if needed
+--                          // It must be visible to the caller if the call is
+--                             accepted by the owner of the virtual phone.
 -- }
 -- -----------------------------------------------------------------------------
 CREATE TYPE intercom_status_type AS ENUM (
