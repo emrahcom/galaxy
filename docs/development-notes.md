@@ -10,10 +10,12 @@
 ## features
 
 - Jitsi querystring configs for session, member etc
-
-## guest
-
 - a guest can only create meetings on public domains
+
+## bugs
+
+- Is the checking of enabled of identity needed?\
+  How to disable the user? In identity provider..?
 - is id needed in public types such as Meeting000? Check again in the context of
   security
 
