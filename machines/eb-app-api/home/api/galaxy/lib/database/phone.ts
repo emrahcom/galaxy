@@ -56,6 +56,8 @@ export async function getPhonePrivatesByCode(code: string) {
     text: `
       SELECT ph.name
       FROM phone ph
+        JOIN identity i ON ph.identity_id = i.id
+                           AND i.enabled
         JOIN domain d ON ph.domain_id = d.id
                          AND d.enabled
       WHERE ph.code = $1
