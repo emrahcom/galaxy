@@ -14,7 +14,7 @@ export async function getPhone(identityId: string, phoneId: string) {
         ) as domain_url,
         d.enabled as domain_enabled,
         pr.id as profile_id, pr.name as profile_name, pr.email as profile_email,
-        ph.enabled, ph.created_at, ph.updated_at, ph.called_at
+        ph.email_enabled, ph.enabled, ph.created_at, ph.updated_at, ph.called_at
       FROM phone ph
         JOIN domain d ON ph.domain_id = d.id
         JOIN profile pr ON ph.profile_id = pr.id
@@ -86,7 +86,7 @@ export async function listPhone(
         ) as domain_url,
         d.enabled as domain_enabled,
         pr.id as profile_id, pr.name as profile_name, pr.email as profile_email,
-        ph.enabled, ph.created_at, ph.updated_at, ph.called_at
+        ph.email_enabled, ph.enabled, ph.created_at, ph.updated_at, ph.called_at
       FROM phone ph
         JOIN domain d ON ph.domain_id = d.id
         JOIN profile pr ON ph.profile_id = pr.id
