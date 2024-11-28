@@ -70,6 +70,7 @@ export async function mailMissedCall(caller: string, callee: string) {
 // -----------------------------------------------------------------------------
 export async function mailPhoneCall(code: string) {
   try {
+    // This will not return an identity if email is disabled for this phone.
     const ownerIdentities = await getIdentityByPhoneCode(code);
     const ownerIdentity = ownerIdentities[0];
     if (!ownerIdentity) throw "owner not found";

@@ -35,6 +35,8 @@ export async function getPhoneByCode(code: string) {
     text: `
       SELECT pr.name as profile_name, pr.email as profile_email, ph.code
       FROM phone ph
+        JOIN identity i ON ph.identity_id = i.id
+                           AND i.enabled
         JOIN domain d ON ph.domain_id = d.id
                          AND d.enabled
         JOIN profile pr ON ph.profile_id = pr.id
