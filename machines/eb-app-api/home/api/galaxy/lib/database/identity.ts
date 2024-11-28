@@ -27,7 +27,8 @@ export async function getIdentityByPhoneCode(code: string) {
       FROM identity i
         JOIN phone ph ON ph.identity_id = i.id
                          AND ph.code = $1
-                         AND ph.email_enabled`,
+                         AND ph.email_enabled
+      WHERE i.enabled`,
     args: [
       code,
     ],
