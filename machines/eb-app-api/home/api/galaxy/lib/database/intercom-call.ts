@@ -37,6 +37,8 @@ export async function addPhoneCall(code: string, callAttr: Attr) {
         $2,
         (SELECT ph.identity_id
          FROM phone ph
+           JOIN identity i ON ph.identity_id = i.id
+                              AND i.enabled
            JOIN domain d ON ph.domain_id = d.id
                             AND d.enabled
          WHERE code = $1
@@ -84,6 +86,8 @@ export async function ringPhone(code: string, intercomId: string) {
         AND identity_id = $3
         AND remote_id = (SELECT ph.identity_id
                          FROM phone ph
+                           JOIN identity i ON ph.identity_id = i.id
+                                              AND i.enabled
                            JOIN domain d ON ph.domain_id = d.id
                                             AND d.enabled
                          WHERE code = $1
