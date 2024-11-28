@@ -65,6 +65,8 @@ function delCallMessage(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
+// Trigger a read-only action on the server side, /api/pri/intercom/list
+// -----------------------------------------------------------------------------
 export async function intercomHandler() {
   try {
     const now = new Date().getTime();
