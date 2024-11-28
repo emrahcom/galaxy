@@ -82,6 +82,8 @@ export async function mailPhoneCall(code: string) {
     const virtualPhone = virtualPhones[0]?.name;
     if (!virtualPhone) throw "phone not found";
 
+    // The recommended link can be anywhere in the application since the ring
+    // popup is visible everywhere in the application.
     const recommendedLink = `https://${GALAXY_FQDN}/pri/phone`;
     const mailSubject = `Your virtual phone is ringing, ${virtualPhone}`;
     const mailText = `
