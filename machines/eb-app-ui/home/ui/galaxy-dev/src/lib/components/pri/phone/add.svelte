@@ -15,6 +15,7 @@
     name: "",
     domain_id: "",
     profile_id: "",
+    email_enabled: true,
   });
 
   const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {

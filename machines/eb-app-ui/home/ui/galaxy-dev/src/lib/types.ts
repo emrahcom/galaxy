@@ -360,6 +360,7 @@ export interface Phone {
   profile_id: string;
   profile_name: string;
   profile_email: string;
+  email_enabled: boolean;
   enabled: boolean;
   created_at: string;
   updated_at: string;
