@@ -1,7 +1,7 @@
 import { get } from "$lib/api";
 
 // -----------------------------------------------------------------------------
-// Trigger a write action on the server side, /api/pri/identity/ping
+// Trigger an update query on the server side (postgres), /api/pri/identity/ping
 // -----------------------------------------------------------------------------
 export async function ping() {
   try {

@@ -65,7 +65,7 @@ function delCallMessage(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
-// Trigger a read-only action on the server side, /api/pri/intercom/list
+// Trigger a select query on the server side (postgres), /api/pri/intercom/list
 // -----------------------------------------------------------------------------
 export async function intercomHandler() {
   try {
