@@ -35,8 +35,9 @@ async function add(req: Request, identityId: string): Promise<unknown> {
   const profileId = pl.profile_id;
   const domainId = pl.domain_id;
   const name = pl.name;
+  const emailEnabled = pl.email_enabled;
 
-  return await addPhone(identityId, profileId, domainId, name);
+  return await addPhone(identityId, profileId, domainId, name, emailEnabled);
 }
 
 // -----------------------------------------------------------------------------
@@ -70,8 +71,16 @@ async function update(req: Request, identityId: string): Promise<unknown> {
   const profileId = pl.profile_id;
   const domainId = pl.domain_id;
   const name = pl.name;
+  const emailEnabled = pl.email_enabled;
 
-  return await updatePhone(identityId, phoneId, profileId, domainId, name);
+  return await updatePhone(
+    identityId,
+    phoneId,
+    profileId,
+    domainId,
+    name,
+    emailEnabled,
+  );
 }
 
 // -----------------------------------------------------------------------------

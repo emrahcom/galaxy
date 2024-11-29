@@ -109,10 +109,12 @@ export async function addPhone(
   profileId: string,
   domainId: string,
   name: string,
+  emailEnabled: boolean,
 ) {
   const sql = {
     text: `
-      INSERT INTO phone (identity_id, profile_id, domain_id, name)
+      INSERT INTO phone (identity_id, profile_id, domain_id, name,
+        email_enabled)
       VALUES (
         $1,
         (SELECT id
@@ -132,7 +134,7 @@ export async function addPhone(
                           )
                )
         ),
-        $4
+        $4, $5
       )
       RETURNING id, created_at as at`,
     args: [
@@ -140,6 +142,7 @@ export async function addPhone(
       profileId,
       domainId,
       name,
+      emailEnabled,
     ],
   };
 
@@ -170,6 +173,7 @@ export async function updatePhone(
   profileId: string,
   domainId: string,
   name: string,
+  emailEnabled: boolean,
 ) {
   const sql = {
     text: `
@@ -193,6 +197,7 @@ export async function updatePhone(
                            )
                     ),
         name = $5,
+        email_enabled = $6,
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
@@ -203,6 +208,7 @@ export async function updatePhone(
       profileId,
       domainId,
       name,
+      emailEnabled,
     ],
   };
 
