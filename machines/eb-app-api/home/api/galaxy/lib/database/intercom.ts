@@ -6,6 +6,8 @@ import type {
   IntercomStatus,
 } from "./types.ts";
 
+const SYSTEM_ACCOUNT = "00000000-0000-0000-0000-000000000000";
+
 // -----------------------------------------------------------------------------
 export async function getIntercomForOwner(
   identityId: string,
@@ -86,6 +88,28 @@ export async function delIntercom(identityId: string, intercomId: string) {
     args: [
       identityId,
       intercomId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function delIntercomByCode(code: string, intercomId: string) {
+  const sql = {
+    text: `
+      DELETE FROM intercom
+      WHERE id = $2
+        AND identity_id = $3
+        AND remote_id = (SELECT identity_id
+                         FROM phone
+                         WHERE code = $1
+                        )
+      RETURNING id, now() as at`,
+    args: [
+      code,
+      intercomId,
+      SYSTEM_ACCOUNT,
     ],
   };
 
