@@ -6,6 +6,7 @@
   import Select from "$lib/components/common/form-select.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
+  import Switch from "$lib/components/common/form-switch.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -77,6 +78,12 @@
           label="Profile"
           bind:value={p.profile_id}
           options={profiles}
+        />
+
+        <Switch
+          name="email_enabled"
+          label="Send me email notifications for calls"
+          bind:value={p.email_enabled}
         />
 
         {#if warning}
