@@ -28,13 +28,14 @@ export async function getIntercomForOwner(
 
 // -----------------------------------------------------------------------------
 export async function getIntercom(identityId: string, intercomId: string) {
+  // There will be no contact if this is a public phone call.
   const sql = {
     text: `
       SELECT ic.id, co.name as contact_name, status, message_type,
         intercom_attr, expired_at
       FROM intercom ic
-        JOIN contact co ON co.identity_id = $1
-                            AND co.remote_id = ic.identity_id
+        LEFT JOIN contact co ON co.identity_id = $1
+                                AND co.remote_id = ic.identity_id
       WHERE ic.id = $2
         AND ic.remote_id = $1`,
     args: [
@@ -52,6 +53,7 @@ export async function listIntercom(
   limit: number,
   offset: number,
 ) {
+  // There will be no contact if the record is for a public phone call.
   const sql = {
     text: `
       SELECT ic.id, co.name as contact_name, status, message_type,
