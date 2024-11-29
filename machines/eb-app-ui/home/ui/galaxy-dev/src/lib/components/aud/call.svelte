@@ -29,16 +29,11 @@
   }
 
   // ---------------------------------------------------------------------------
-  function endCall() {
-    inCall = false;
-    disabled = false;
-  }
-
-  // ---------------------------------------------------------------------------
   async function ringCall() {
     ringCounter += 1;
 
     try {
+      // use both code and id for actions
       const payload = {
         code: p.code,
         id: call.id,
@@ -46,8 +41,7 @@
 
       // stop ringing if it is stopped from UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
-        // use both code and id
-        //await actionById("/api/pub/intercom/del", call.id);
+        await actionById("/api/pub/intercom/del", call.id);
 
         inCall = false;
         disabled = false;
@@ -55,7 +49,6 @@
       }
 
       // refresh the call and check if there is a response from the peer
-      // use both code and id
       ring = await action("/api/pub/intercom/phone/ring", payload);
 
       // ring again after a while if still no response from the peer
@@ -64,10 +57,13 @@
         return;
       }
 
+      if (ring.status === "accept") {
+        // get URL
+      }
+
       // since there are only two options (rejected or accepted) at this stage,
       // end the call
-      // first get the url
-      // await actionById("/api/pri/intercom/del", call.id);
+      await actionById("/api/pub/intercom/del", payload);
 
       inCall = false;
       disabled = false;
@@ -81,6 +77,12 @@
       warning = true;
       disabled = false;
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  function endCall() {
+    inCall = false;
+    disabled = false;
   }
 
   // ---------------------------------------------------------------------------
