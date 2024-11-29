@@ -64,7 +64,7 @@
         />
         <Switch
           name="has_suffix"
-          label="Enable unpredictable room name generator"
+          label="Use a randomly generated room identifier for added security"
           bind:value={p.has_suffix}
         />
 
