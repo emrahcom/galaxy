@@ -41,7 +41,7 @@
 
       // stop ringing if it is stopped from UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
-        await actionById("/api/pub/intercom/del", call.id);
+        await action("/api/pub/intercom/del", payload);
 
         inCall = false;
         disabled = false;
@@ -57,13 +57,13 @@
         return;
       }
 
-      if (ring.status === "accept") {
+      if (ring.status === "accepted") {
         // get URL
       }
 
       // since there are only two options (rejected or accepted) at this stage,
       // end the call
-      await actionById("/api/pub/intercom/del", payload);
+      await action("/api/pub/intercom/del", payload);
 
       inCall = false;
       disabled = false;
