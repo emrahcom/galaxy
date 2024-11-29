@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { IntercomMessage222 } from "$lib/types";
   import Call from "$lib/components/message/call.svelte";
+  import Phone from "$lib/components/message/phone.svelte";
 
   interface Props {
     messages: IntercomMessage222[];
@@ -14,6 +15,8 @@
   {#each messages as msg}
     {#if msg.message_type === "call"}
       <Call {msg} />
+    {:else if msg.message_type === "phone"}
+      <Phone {msg} />
     {/if}
   {/each}
 </div>

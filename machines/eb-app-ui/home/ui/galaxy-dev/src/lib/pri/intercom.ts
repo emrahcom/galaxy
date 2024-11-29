@@ -42,6 +42,12 @@ export async function watchCall(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
+// watchPhone is an alias for watchCall.
+// Their logics are completely the same.
+// -----------------------------------------------------------------------------
+export const watchPhone = watchCall;
+
+// -----------------------------------------------------------------------------
 function addCallMessage(msg: IntercomMessage222) {
   try {
     const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
@@ -53,6 +59,12 @@ function addCallMessage(msg: IntercomMessage222) {
     // do nothing
   }
 }
+
+// -----------------------------------------------------------------------------
+// addPhoneMessage is an alias for addCallMessage.
+// Their logics are completely the same.
+// -----------------------------------------------------------------------------
+const addPhoneMessage = addCallMessage;
 
 // -----------------------------------------------------------------------------
 function delCallMessage(msgId: string) {
@@ -88,6 +100,8 @@ export async function intercomHandler() {
       for (const msg of messages) {
         if (msg.message_type === "call") {
           addCallMessage(msg);
+        } else if (msg.message_type === "phone") {
+          addPhoneMessage(msg);
         }
       }
     }
