@@ -5,6 +5,7 @@
   import Cancel from "$lib/components/common/button-cancel.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
+  import Switch from "$lib/components/common/form-switch.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -72,6 +73,12 @@
         value={p.domain_url}
         disabled={true}
         readonly={true}
+      />
+      <Switch
+        name="email_enabled"
+        label="Send me email notifications for calls"
+        value={p.email_enabled}
+        disabled={true}
       />
 
       {#if warning}
