@@ -9,6 +9,7 @@
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub-kratos.svelte";
   import Messages from "$lib/components/message/list.svelte";
+  import type { IntercomMessage222 } from "$lib/types";
 
   interface Props {
     children: Snippet;
@@ -16,23 +17,24 @@
 
   let { children }: Props = $props();
 
-  // get active messages while loading
-  let messages = $state(updateMessageList());
-
-  // this event is triggered if a message action happens inside this tab
-  document.addEventListener("internalMessage", () => {
-    messages = updateMessageList();
-  });
-
-  // this event is triggered if a message action happens inside other tabs
-  globalThis.addEventListener("storage", (e) => {
-    if (e.key?.match("^msg-")) {
-      messages = updateMessageList();
-    }
-  });
+  let messages = $state([] as IntercomMessage222[]);
 
   const identity_id = globalThis.localStorage.getItem("identity_id");
+
   if (identity_id) {
+    // get active messages while loading if this is an authenticated session
+    messages = updateMessageList();
+
+    // this listener will be triggered if a message event happens in this tab
+    document.addEventListener("internalMessage", () => {
+      messages = updateMessageList();
+    });
+
+    // this listener will be triggered if a message event happens in other tabs
+    globalThis.addEventListener("storage", (e) => {
+      if (e.key?.match("^msg-")) messages = updateMessageList();
+    });
+
     ping();
     intercomHandler();
   }
@@ -62,7 +64,9 @@
   {@render children()}
 </div>
 
-<!-- Messages will be added inside this container -->
-<div aria-live="polite" aria-atomic="true" class="position-relative">
-  <Messages {messages} />
-</div>
+{#if identity_id}
+  <!-- Messages will be added inside this container -->
+  <div aria-live="polite" aria-atomic="true" class="position-relative">
+    <Messages {messages} />
+  </div>
+{/if}
