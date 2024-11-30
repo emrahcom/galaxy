@@ -22,6 +22,11 @@
   let call: IntercomCall;
   let ring: IntercomRing;
   let ringCounter = 0;
+  let publicUrl = "";
+  let payload = {
+    code: p.code,
+    id: "",
+  };
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -33,22 +38,16 @@
     ringCounter += 1;
 
     try {
-      // use both code and id for actions
-      const payload = {
-        code: p.code,
-        id: call.id,
-      };
-
-      // stop ringing if it is stopped from UI or if already a lot of attempts
+      // stop ringing if it is stopped on UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
         await action("/api/pub/intercom/del", payload);
-
         inCall = false;
         disabled = false;
+
         return;
       }
 
-      // refresh the call and check if there is a response from the peer
+      // ring and check if there is a response from the other peer
       ring = await action("/api/pub/intercom/phone/ring", payload);
 
       // ring again after a while if still no response from the peer
@@ -57,20 +56,20 @@
         return;
       }
 
+      // get the public URL if accepted
       if (ring.status === "accepted") {
-        // get URL
+        const attr = await action("/api/pub/intercom/get/attr", payload);
+        publicUrl = attr.public_url;
       }
 
-      // since there are only two options (rejected or accepted) at this stage,
-      // end the call
+      // end the call (it is accepted or rejected at this stage)
       await action("/api/pub/intercom/del", payload);
-
       inCall = false;
       disabled = false;
 
       // go to the meeting room if accepted
-      // get publicUrl
-      //if (ring.status === "accepted") globalThis.location.href = call.Url;
+      if (ring.status === "accepted" && !publicUrl) throw "no public url";
+      if (ring.status === "accepted") globalThis.location.href = publicUrl;
     } catch {
       // cancel the call if error
       inCall = false;
@@ -96,6 +95,8 @@
       // initialize the call and get the call data
       // this will also send a notification to the owner about the call
       call = await actionByCode("/api/pub/phone/call/bycode", p.code);
+      if (!call.id) throw "no call id";
+      payload.id = call.id;
 
       // start ringing
       setTimeout(ringCall, 1000);
