@@ -1,7 +1,24 @@
 import { fetch } from "./common.ts";
 import { mailPhoneCall } from "../common/mail.ts";
+import { generateRoomUrl } from "../common/helper.ts";
+import { getRandomRoomName } from "./room.ts";
 import { addPhoneCall } from "../database/intercom-call.ts";
-import type { Id, Phone, Phone111, Phone333 } from "./types.ts";
+import type {
+  Id,
+  Phone,
+  Phone111,
+  Phone333,
+  Profile,
+  RoomLinkset,
+} from "./types.ts";
+
+// Expire second for the phone call URL (if it is a domain with token auth).
+const EXP = 3600;
+
+// The additional hashes for the phone call URL.
+let HASH = "";
+HASH += "&config.prejoinConfig.enabled=false";
+HASH += "&config.startWithVideoMuted=true";
 
 // -----------------------------------------------------------------------------
 export async function getPhone(identityId: string, phoneId: string) {
@@ -276,11 +293,50 @@ export async function callPhoneByCode(code: string) {
   // Increase the call counter.
   await increasePhoneCallCounter(phone.id);
 
-  // Dont wait for this async function.
+  // Dont wait for this async function (mailer).
   mailPhoneCall(code, phone.name);
 
-  const ownerUrl = "owner";
-  const publicUrl = "public";
+  const ownerProfile = {
+    name: phone.profile_name,
+    email: phone.profile_email,
+  } as Profile;
+
+  const calleeProfile = {
+    name: "Guest",
+    email: "",
+  } as Profile;
+
+  // Get the room (with a random name and suffix) for the phone call.
+  const randomRooms = await getRandomRoomName("phone-");
+  const randomRoom = randomRooms[0];
+  if (!randomRoom) throw "no room for the phone call";
+
+  // The linkset for the phone call.
+  const roomLinkset = {
+    name: randomRoom.name,
+    has_suffix: true,
+    suffix: randomRoom.suffix,
+    auth_type: phone.auth_type,
+    domain_attr: phone.domain_attr,
+  } as RoomLinkset;
+
+  // Get the meeting link for the owner.
+  const ownerUrl = await generateRoomUrl(
+    roomLinkset,
+    ownerProfile,
+    "host",
+    EXP,
+    HASH,
+  );
+
+  // Get the meeting link for the callee.
+  const publicUrl = await generateRoomUrl(
+    roomLinkset,
+    calleeProfile,
+    "guest",
+    EXP,
+    HASH,
+  );
 
   // Public URL will be visible to the public user when the call is accepted by
   // the owner.

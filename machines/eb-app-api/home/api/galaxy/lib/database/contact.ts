@@ -10,10 +10,10 @@ import type {
   RoomLinkset,
 } from "./types.ts";
 
-// expire second for the direct call URL (if it is a domain with token auth)
+// Expire second for the direct call URL (if it is a domain with token auth).
 const EXP = 3600;
 
-// the additional hashes for direct call URL
+// The additional hashes for the direct call URL.
 let HASH = "";
 HASH += "&config.prejoinConfig.enabled=false";
 HASH += "&config.startWithVideoMuted=true";
@@ -252,9 +252,9 @@ export async function delContact(identityId: string, contactId: string) {
   const trans = client.createTransaction("transaction");
   await trans.begin();
 
-  // before deleting the contact, delete the contact owner from the contact's
+  // Before deleting the contact, delete the contact owner from the contact's
   // contact list.
-  // if the owner added herself as a contact (identity_id = remote_id), dont
+  // If the owner added herself as a contact (identity_id = remote_id), dont
   // delete this record here to allow the main SQL to get the deleted Id because
   // there is only one record (not a pair) in this case.
   const sql0 = {
@@ -322,23 +322,23 @@ export async function callContact(
   contactId: string,
   domainId: string,
 ) {
-  // get the domain if allowed.
+  // Get the domain if allowed.
   const domains = await getDomainIfAllowed(identityId, domainId);
   const domain = domains[0];
   if (!domain) throw "domain is not available";
 
-  // get the contact identity
+  // Get the contact identity.
   const contacts = await getContactIdentity(identityId, contactId);
   const contact = contacts[0];
   if (!contact) throw "contact is not available";
   const remoteId = contact.id;
 
-  // get the room (with a random name and suffix) for the call
+  // Get the room (with a random name and suffix) for the direct call.
   const randomRooms = await getRandomRoomName("call-");
   const randomRoom = randomRooms[0];
   if (!randomRoom) throw "no room for the call";
 
-  // the linkset for the call room
+  // The linkset for the call.
   const roomLinkset = {
     name: randomRoom.name,
     has_suffix: true,
@@ -347,7 +347,7 @@ export async function callContact(
     domain_attr: domain.domain_attr,
   } as RoomLinkset;
 
-  // get the meeting link for caller
+  // Get the meeting link for caller.
   const callerUrl = await getRoomUrl(
     identityId,
     roomLinkset,
@@ -355,11 +355,11 @@ export async function callContact(
     EXP,
     HASH,
   );
-  // get the meeting link for callee
+  // Get the meeting link for the callee.
   const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP, HASH);
   const callAttr = { url: calleeUrl };
 
-  // create the intercom message to initialize the call
+  // Create the intercom message to initialize the direct call.
   const calls = await addCall(identityId, remoteId, callAttr);
   const call = calls[0];
   if (!call) throw "call cannot be created";
