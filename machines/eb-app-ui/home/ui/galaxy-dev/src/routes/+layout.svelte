@@ -8,7 +8,7 @@
   import Brand from "$lib/components/nav/brand.svelte";
   import NavBarPri from "$lib/components/nav/bar-pri.svelte";
   import NavBarPub from "$lib/components/nav/bar-pub-kratos.svelte";
-  import Messages from "$lib/components/message/list.svelte";
+  import Messages from "$lib/components/pri/message/list.svelte";
   import type { IntercomMessage222 } from "$lib/types";
 
   interface Props {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { IntercomMessage222 } from "$lib/types";
-  import Call from "$lib/components/message/call.svelte";
-  import Phone from "$lib/components/message/phone.svelte";
+  import Call from "$lib/components/pri/message/call.svelte";
+  import Phone from "$lib/components/pri/message/phone.svelte";
 
   interface Props {
     messages: IntercomMessage222[];
