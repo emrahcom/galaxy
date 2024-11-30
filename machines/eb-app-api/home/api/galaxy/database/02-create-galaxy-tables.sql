@@ -579,11 +579,12 @@ ALTER TABLE phone OWNER TO galaxy;
 --   url: string,           // Meeting link for the callee of the direct call.
 --                          // It is a random room with a member token if needed
 --
+--   owner_url: string,     // Meeting link for the owner of the public phone
+--
 --   public_url: string,    // Meeting link for the caller of the public phone
 --                          // who is an anonymous user.
---                          // It is a random room with a member token if needed
---                          // It must be visible to the caller if the call is
---                             accepted by the owner of the virtual phone.
+--
+--   phone_name: string,    // Phone name
 -- }
 -- -----------------------------------------------------------------------------
 CREATE TYPE intercom_status_type AS ENUM (
