@@ -11,7 +11,7 @@
 
   let { msg }: Props = $props();
 
-  const href = `/pri/call/join/${msg.id}`;
+  const href = `/pri/phone/join/${msg.id}`;
   let toast: HTMLElement;
   let ring: HTMLAudioElement;
 
@@ -89,9 +89,9 @@
     <div class="d-flex">
       <i class="bi bi-telephone text-primary fs-5 me-3"></i>
       <span class="fs-6 fw-bold me-2 mt-auto mb-1">
-        {msg.contact_name || "unknown"}
+        {msg.intercom_attr.phone_name || "unknown"}
       </span>
-      <span class="fs-6 me-auto mt-auto mb-1">is calling...</span>
+      <span class="fs-6 me-auto mt-auto mb-1">is ringing...</span>
       <button
         type="button"
         class="btn-close"
