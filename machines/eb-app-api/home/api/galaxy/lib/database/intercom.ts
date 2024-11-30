@@ -64,8 +64,7 @@ export async function getIntercomAttrByCode(code: string, intercomId: string) {
         AND remote_id = (SELECT identity_id
                          FROM phone
                          WHERE code = $1
-                        )
-      RETURNING id, now() as at`,
+                        )`,
     args: [
       code,
       intercomId,
