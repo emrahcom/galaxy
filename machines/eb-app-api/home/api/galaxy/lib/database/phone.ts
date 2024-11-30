@@ -245,12 +245,34 @@ export async function updatePhoneEnabled(
 }
 
 // -----------------------------------------------------------------------------
+export async function increasePhoneCallCounter(phoneId: string) {
+  const sql = {
+    text: `
+      UPDATE phone
+      SET
+        calls = calls + 1,
+        called_at = now()
+      WHERE id = $1
+        AND enabled
+      RETURNING id, called_at as at`,
+    args: [
+      phoneId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 export async function callPhoneByCode(code: string) {
   // It will not return a phone if there is a disabled component such as domain,
   // identity, etc.
   const phones = await getPhonePrivatesByCode(code);
   const phone = phones[0];
   if (!phone) throw "phone not found";
+
+  // increase the call counter
+  await increasePhoneCallCounter(phone.id);
 
   // dont wait for this async function
   mailPhoneCall(code, phone.name);
