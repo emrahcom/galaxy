@@ -54,12 +54,15 @@ export async function getPhoneByCode(code: string) {
 export async function getPhonePrivatesByCode(code: string) {
   const sql = {
     text: `
-      SELECT ph.name
+      SELECT ph.id, ph.name, ph.identity_id as owner_id,
+        pr.name as profile_name, pr.email as profile_email,
+        d.auth_type, d.domain_attr
       FROM phone ph
         JOIN identity i ON ph.identity_id = i.id
                            AND i.enabled
         JOIN domain d ON ph.domain_id = d.id
                          AND d.enabled
+        JOIN profile pr ON ph.profile_id = pr.id
       WHERE ph.code = $1
         AND ph.enabled`,
     args: [
@@ -242,6 +245,8 @@ export async function updatePhoneEnabled(
 
 // -----------------------------------------------------------------------------
 export async function callPhoneByCode(code: string) {
+  // It will not return a phone if there is a disabled component such as domain,
+  // identity, etc.
   const phones = await getPhonePrivatesByCode(code);
   const phone = phones[0];
   if (!phone) throw "phone not found";
