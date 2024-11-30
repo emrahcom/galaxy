@@ -242,16 +242,19 @@ export async function updatePhoneEnabled(
 
 // -----------------------------------------------------------------------------
 export async function callPhoneByCode(code: string) {
+  const phones = await getPhonePrivatesByCode(code);
+  const phone = phones[0];
+  if (!phone) throw "phone not found";
+
   const ownerUrl = "owner";
   const publicUrl = "public";
-  const phoneName = "phone name";
 
   // Public URL will be visible to the public user when the call is accepted by
   // the owner.
   const callAttr = {
     owner_url: ownerUrl,
     public_url: publicUrl,
-    phone_name: phoneName,
+    phone_name: phone.name,
   };
 
   return await addPhoneCall(code, callAttr);
