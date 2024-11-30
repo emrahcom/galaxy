@@ -1,4 +1,5 @@
 import { fetch } from "./common.ts";
+import { mailPhoneCall } from "../common/mail.ts";
 import { addPhoneCall } from "../database/intercom-call.ts";
 import type { Id, Phone, Phone111, Phone333 } from "./types.ts";
 
@@ -250,6 +251,9 @@ export async function callPhoneByCode(code: string) {
   const phones = await getPhonePrivatesByCode(code);
   const phone = phones[0];
   if (!phone) throw "phone not found";
+
+  // dont wait for this async function
+  mailPhoneCall(code, phone.name);
 
   const ownerUrl = "owner";
   const publicUrl = "public";

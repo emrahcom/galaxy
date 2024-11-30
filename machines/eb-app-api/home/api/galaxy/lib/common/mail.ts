@@ -1,7 +1,6 @@
 import { GALAXY_FQDN } from "../../config.ts";
 import { MAILER_FROM, MAILER_TRANSPORT_OPTIONS } from "../../config.mailer.ts";
 import { getIdentity, getIdentityByPhoneCode } from "../database/identity.ts";
-import { getPhonePrivatesByCode } from "../database/phone.ts";
 import {
   getContactByIdentity,
   getContactIdentity,
@@ -68,7 +67,7 @@ export async function mailMissedCall(caller: string, callee: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function mailPhoneCall(code: string) {
+export async function mailPhoneCall(code: string, phoneName: string) {
   try {
     // This will not return an identity if email is disabled for this phone.
     const ownerIdentities = await getIdentityByPhoneCode(code);
@@ -78,17 +77,13 @@ export async function mailPhoneCall(code: string) {
     const mailTo = ownerIdentity.identity_attr.email;
     if (!mailTo) throw "email not found";
 
-    const phones = await getPhonePrivatesByCode(code);
-    const phone = phones[0];
-    if (!phone) throw "phone not found";
-
     // The recommended link can be anywhere in the application since the ring
     // popup is visible everywhere in the application.
     const recommendedLink = `https://${GALAXY_FQDN}/pri/phone`;
-    const mailSubject = `Your virtual phone is ringing, ${phone.name}`;
+    const mailSubject = `Your virtual phone is ringing, ${phoneName}`;
     const mailText = `
       Your virtual phone is ringing:
-      ${phone.name}
+      ${phoneName}
 
       ${recommendedLink}
     `.replace(/^ +/gm, "");

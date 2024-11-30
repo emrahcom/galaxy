@@ -1,7 +1,6 @@
 import { notFound } from "../http/response.ts";
 import { pub as wrapper } from "../http/wrapper.ts";
 import { callPhoneByCode, getPhoneByCode } from "../database/phone.ts";
-import { mailPhoneCall } from "../common/mail.ts";
 
 const PRE = "/api/pub/phone";
 
@@ -17,9 +16,6 @@ async function getByCode(req: Request): Promise<unknown> {
 async function callByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
-
-  // dont wait for the async function
-  mailPhoneCall(code);
 
   return await callPhoneByCode(code);
 }

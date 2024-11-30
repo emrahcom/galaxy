@@ -45,11 +45,13 @@ async function delWithNotification(
 ): Promise<unknown> {
   const pl = await req.json();
   const intercomId = pl.id;
-  const intercomMessages = await getIntercomForOwner(identityId, intercomId);
 
-  if (intercomMessages[0]?.remote_id) {
+  const intercomMessages = await getIntercomForOwner(identityId, intercomId);
+  const intercomMessage = intercomMessages[0];
+
+  if (intercomMessage?.remote_id) {
     // dont wait for the async function
-    mailMissedCall(identityId, intercomMessages[0].remote_id);
+    mailMissedCall(identityId, intercomMessage.remote_id);
   }
 
   return await delIntercom(identityId, intercomId);
