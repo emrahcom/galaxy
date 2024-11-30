@@ -1,5 +1,6 @@
 import { fetch } from "./common.ts";
 import type {
+  Attr,
   Id,
   IntercomMessage,
   IntercomMessage222,
@@ -47,6 +48,32 @@ export async function getIntercom(identityId: string, intercomId: string) {
   };
 
   return await fetch(sql) as IntercomMessage222[];
+}
+
+// -----------------------------------------------------------------------------
+// consumer is public
+// -----------------------------------------------------------------------------
+export async function getIntercomAttrByCode(code: string, intercomId: string) {
+  const sql = {
+    text: `
+      SELECT intercom_attr->>public_url as url
+      FROM intercom
+      WHERE id = $2
+        AND identity_id = $3
+        AND status = 'accepted'
+        AND remote_id = (SELECT identity_id
+                         FROM phone
+                         WHERE code = $1
+                        )
+      RETURNING id, now() as at`,
+    args: [
+      code,
+      intercomId,
+      SYSTEM_ACCOUNT,
+    ],
+  };
+
+  return await fetch(sql) as Attr[];
 }
 
 // -----------------------------------------------------------------------------
