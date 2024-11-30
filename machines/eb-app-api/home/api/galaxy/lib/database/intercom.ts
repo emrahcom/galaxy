@@ -56,7 +56,7 @@ export async function getIntercom(identityId: string, intercomId: string) {
 export async function getIntercomAttrByCode(code: string, intercomId: string) {
   const sql = {
     text: `
-      SELECT intercom_attr->>public_url as public_url
+      SELECT intercom_attr->>'public_url' as public_url
       FROM intercom
       WHERE id = $2
         AND identity_id = $3
