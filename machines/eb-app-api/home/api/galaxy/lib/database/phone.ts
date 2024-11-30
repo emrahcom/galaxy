@@ -245,7 +245,9 @@ export async function updatePhoneEnabled(
 }
 
 // -----------------------------------------------------------------------------
-export async function increasePhoneCallCounter(phoneId: string) {
+// Consumer is internal and phoneId is found by using the phone code before.
+// -----------------------------------------------------------------------------
+async function increasePhoneCallCounter(phoneId: string) {
   const sql = {
     text: `
       UPDATE phone
@@ -271,10 +273,10 @@ export async function callPhoneByCode(code: string) {
   const phone = phones[0];
   if (!phone) throw "phone not found";
 
-  // increase the call counter
+  // Increase the call counter.
   await increasePhoneCallCounter(phone.id);
 
-  // dont wait for this async function
+  // Dont wait for this async function.
   mailPhoneCall(code, phone.name);
 
   const ownerUrl = "owner";
