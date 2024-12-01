@@ -5,6 +5,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import QRCode from "$lib/components/common/qrcode.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
   interface Props {
@@ -32,6 +33,8 @@
       <p class="card-text text-muted">
         {$page.url.origin}/aud/phone/{p.code}
       </p>
+
+      <QRCode data="${$page.url.origin}/aud/phone/${p.code}" />
 
       {#if p.enabled}
         <Copy label="copy" onclick={() => copy(p.code)} />
