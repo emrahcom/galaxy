@@ -32,6 +32,7 @@ cd /home/ui/galaxy-dev
 yarn install
 
 # linter
+export NODE_ENV="production"
 yarn run check
 yarn run lint
 
