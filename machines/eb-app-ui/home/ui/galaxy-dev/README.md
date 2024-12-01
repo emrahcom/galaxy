@@ -38,3 +38,9 @@ yarn add @popperjs/core
 yarn add bootstrap
 yarn add bootstrap-icons
 ```
+
+#### References
+
+- https://getbootstrap.com
+- https://icons.getbootstrap.com
+- https://github.com/soldair/node-qrcode
