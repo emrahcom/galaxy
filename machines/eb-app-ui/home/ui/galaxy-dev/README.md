@@ -32,6 +32,8 @@ deno fmt --check src
 ```bash
 yarn add --dev @sveltejs/adapter-static
 yarn add --dev @types/bootstrap
+yarn add --dev @types/qrcode
+yarn add --dev qrcode
 yarn add @popperjs/core
 yarn add bootstrap
 yarn add bootstrap-icons
