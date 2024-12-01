@@ -13,7 +13,7 @@
   let warning = $state(false);
   let disabled = $state(false);
   let p = $state({
-    name: "",
+    name: `phone-${date.getTime() % 10000000000}`,
     domain_id: "",
     profile_id: "",
     email_enabled: true,
