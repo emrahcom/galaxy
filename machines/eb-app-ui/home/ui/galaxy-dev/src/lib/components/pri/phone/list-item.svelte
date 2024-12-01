@@ -30,11 +30,11 @@
     <div class="card-body text-center">
       <h5 class="card-title text-muted">{p.name}</h5>
 
+      <QRCode data="${$page.url.origin}/aud/phone/${p.code}" />
+
       <p class="card-text text-muted">
         {$page.url.origin}/aud/phone/{p.code}
       </p>
-
-      <QRCode data="${$page.url.origin}/aud/phone/${p.code}" />
 
       {#if p.enabled}
         <Copy label="copy" onclick={() => copy(p.code)} />
