@@ -6,6 +6,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import QRCode from "$lib/components/common/qrcode.svelte";
 
   interface Props {
     p: MeetingInvite;
@@ -48,6 +49,10 @@
       </p>
 
       {#if p.invite_to === "member"}
+        <QRCode
+          data="{$page.url.origin}/pri/meeting/partnership/add/{p.code}"
+        />
+
         <p class="card-text text-muted">
           {$page.url.origin}/pri/meeting/partnership/add/{p.code}
         </p>
@@ -56,6 +61,12 @@
           <Copy label="copy" onclick={() => copyForMember(p.code)} />
         {/if}
       {:else}
+        {#if p.meeting_schedule_type === "scheduled"}
+          <QRCode data="{$page.url.origin}/aud/wait/{p.code}" />
+        {:else}
+          <QRCode data="{$page.url.origin}/aud/join/{p.code}" />
+        {/if}
+
         <p class="card-text text-muted">
           {#if p.meeting_schedule_type === "scheduled"}
             {$page.url.origin}/aud/wait/{p.code}
