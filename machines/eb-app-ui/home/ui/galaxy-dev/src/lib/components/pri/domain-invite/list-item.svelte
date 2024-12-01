@@ -6,6 +6,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import QRCode from "$lib/components/common/qrcode.svelte";
 
   interface Props {
     p: DomainInvite;
@@ -30,6 +31,8 @@
       <p class="card-text text-muted small">
         {showLocaleDatetime(p.expired_at)}
       </p>
+
+      <QRCode data="{$page.url.origin}/pri/domain/partnership/add/{p.code}" />
 
       <p class="card-text text-muted">
         {$page.url.origin}/pri/domain/partnership/add/{p.code}
