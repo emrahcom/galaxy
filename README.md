@@ -30,7 +30,8 @@ Try `Galaxy` using publicly available implementation on
 - Create scheduled meetings
 - Calendar view for scheduled meetings
 - Waiting room for scheduled meetings
-- Direct call (_like a phone_)
+- Direct call (_call other users just like a phone call_)
+- Virtual phone (_receive calls from anyone, even those without an account_)
 - Email notification for missed calls, upcoming meetings, etc.
 - Manage your Jitsi profiles
 - Ability to attach a profile to a specific meeting
