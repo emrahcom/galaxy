@@ -12,7 +12,7 @@ source $BASEDIR/../../common
 SERVICE="pri"
 CLASS="contact"
 ACTION="list/bymeeting"
-TAG="limit"
+TAG="limit-offset"
 ATTR="id"
 
 # ------------------------------------------------------------------------------
