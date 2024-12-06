@@ -1,37 +1,38 @@
-## research
+## Research
 
-## design
+## Design
 
-- categories and tags for (public) meetings
-- P2P meeting with guest queue (like helpdesk)
-- Allow guest to call a member directly if she has a key (QR code)
+- Categories and tags for (public) meetings
+- Direct call with guest queue (like helpdesk)
 - Hold button for direct call?
-- Meeting visible for public and visible for autheticated users
+- Public meeting that is visible for all or only for autheticated users.
 
-## features
+## Features
 
-- Jitsi querystring configs for session, member etc
-- a guest can only create meetings on public domains
+- Jitsi querystring configs for session, member etc.
+- A guest can only create meetings on public domains.
+- Public domains for authenticated users (maybe with JWT)
 
-## bugs
+## Bugs
 
 - Is the checking of enabled of identity needed?\
   How to disable the user? In identity provider..?
-- is id needed in public types such as Meeting000? Check again in the context of
-  security
 
-## database
+## Database
 
-- index optimizations
-- delete expired or keep as inactive?
+- Index optimizations
+- Delete expired or keep as inactive?\
+  From a technical point of view, periodic deleting at short intervals is more
+  effective.\
+  From a non-technical perspective, it makes more sense to keep a history.
 
-## test
+## Testing
 
-- add tests for accept/reject/drop request
-- add tests for contact
-- add tests for invite contact to domain partnership
-- add tests for invite contact to room partnership
-- add tests for invite contact to meeting membership
-- add tests for invite contact to friendship
-- add tests for direct call
-- add tests for phone
+- Add tests for accept/reject/drop request
+- Add tests for contact
+- Add tests for invite contact to domain partnership
+- Add tests for invite contact to room partnership
+- Add tests for invite contact to meeting membership
+- Add tests for invite contact to friendship
+- Add tests for direct call
+- Add tests for phone
