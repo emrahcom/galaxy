@@ -20,7 +20,7 @@ WHERE id IN (SELECT identity_id
 
 \c kratos
 
-CREATE EXTENSION dblink;
+CREATE EXTENSION IF NOT EXISTS dblink;
 
 DELETE FROM identities
 WHERE id NOT IN (SELECT id::uuid
