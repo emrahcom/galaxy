@@ -660,6 +660,15 @@ bash $PRI/meeting-member/del-exist $ID1 1 $ID2 1
 bash $PRI/meeting-member/del-none $ID1
 
 # ------------------------------------------------------------------------------
+# pri / contact (meeting)
+# ------------------------------------------------------------------------------
+bash $PRI/contact/list-bymeeting-nolimit-nooffset $ID1 1
+bash $PRI/contact/list-bymeeting-limit $ID1 1
+bash $PRI/contact/list-bymeeting-limit-offset $ID1 1
+bash $PRI/contact/list-bymeeting-huge-offset $ID1 1
+bash $PRI/contact/list-bymeeting-invalid $ID1 1
+
+# ------------------------------------------------------------------------------
 # pri / meeting-member-candidate
 # ------------------------------------------------------------------------------
 # Refresh the contact list. add-new will use this list.
