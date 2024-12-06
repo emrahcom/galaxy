@@ -29,7 +29,6 @@
 ## Testing
 
 - Add tests for accept/reject/drop request
-- Add tests for contact
 - Add tests for invite contact to domain partnership
 - Add tests for invite contact to room partnership
 - Add tests for invite contact to meeting membership
