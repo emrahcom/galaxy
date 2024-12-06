@@ -202,7 +202,7 @@ bash $PRI/domain-partner/del-exist $ID1 1 $ID2 1
 bash $PRI/domain-partner/del-none $ID1
 
 # ------------------------------------------------------------------------------
-# pri / contact
+# pri / contact (domain)
 # ------------------------------------------------------------------------------
 bash $PRI/contact/list-nolimit-nooffset $ID1
 bash $PRI/contact/list-limit $ID1
@@ -409,6 +409,15 @@ bash $PRI/room-partner/list-byroom-invalid $ID1 1
 
 bash $PRI/room-partner/del-exist $ID1 1 $ID2 1
 bash $PRI/room-partner/del-none $ID1
+
+# ------------------------------------------------------------------------------
+# pri / contact (room)
+# ------------------------------------------------------------------------------
+bash $PRI/contact/list-byroom-nolimit-nooffset $ID1 1
+bash $PRI/contact/list-byroom-limit $ID1 1
+bash $PRI/contact/list-byroom-limit-offset $ID1 1
+bash $PRI/contact/list-byroom-huge-offset $ID1 1
+bash $PRI/contact/list-byroom-invalid $ID1 1
 
 # ------------------------------------------------------------------------------
 # pri / room-partner-candidate
