@@ -202,19 +202,13 @@ bash $PRI/domain-partner/del-exist $ID1 1 $ID2 1
 bash $PRI/domain-partner/del-none $ID1
 
 # ------------------------------------------------------------------------------
-# pri / contact (domain)
+# pri / contact
 # ------------------------------------------------------------------------------
 bash $PRI/contact/list-nolimit-nooffset $ID1
 bash $PRI/contact/list-limit $ID1
 bash $PRI/contact/list-limit-offset $ID1
 bash $PRI/contact/list-huge-offset $ID1
 bash $PRI/contact/list-invalid $ID1
-
-bash $PRI/contact/list-bydomain-nolimit-nooffset $ID1 1
-bash $PRI/contact/list-bydomain-limit $ID1 1
-bash $PRI/contact/list-bydomain-limit-offset $ID1 1
-bash $PRI/contact/list-bydomain-huge-offset $ID1 1
-bash $PRI/contact/list-bydomain-invalid $ID1 1
 
 bash $PRI/contact/get-exist $ID1 1
 bash $PRI/contact/get-none $ID1
@@ -225,12 +219,13 @@ bash $PRI/contact/update-invalid $ID1
 bash $PRI/contact/del-exist $ID1 1
 bash $PRI/contact/del-none $ID1
 
+# Refresh the contact list.
+# candidate/add-new actions will use this list.
+bash $PRI/contact/list-nolimit-nooffset $ID1
+
 # ------------------------------------------------------------------------------
 # pri / domain-partner-candidate
 # ------------------------------------------------------------------------------
-# Refresh the contact list. add-new will use this list.
-bash $PRI/contact/list-nolimit-nooffset $ID1
-
 # Add 10 candidates for ID1
 for i in $(seq 1 10); do
   CONTACT=$i
@@ -411,20 +406,8 @@ bash $PRI/room-partner/del-exist $ID1 1 $ID2 1
 bash $PRI/room-partner/del-none $ID1
 
 # ------------------------------------------------------------------------------
-# pri / contact (room)
-# ------------------------------------------------------------------------------
-bash $PRI/contact/list-byroom-nolimit-nooffset $ID1 1
-bash $PRI/contact/list-byroom-limit $ID1 1
-bash $PRI/contact/list-byroom-limit-offset $ID1 1
-bash $PRI/contact/list-byroom-huge-offset $ID1 1
-bash $PRI/contact/list-byroom-invalid $ID1 1
-
-# ------------------------------------------------------------------------------
 # pri / room-partner-candidate
 # ------------------------------------------------------------------------------
-# Refresh the contact list. add-new will use this list.
-bash $PRI/contact/list-nolimit-nooffset $ID1
-
 # Add 10 candidates for ID1
 for i in $(seq 1 10); do
   CONTACT=$i
@@ -660,20 +643,8 @@ bash $PRI/meeting-member/del-exist $ID1 1 $ID2 1
 bash $PRI/meeting-member/del-none $ID1
 
 # ------------------------------------------------------------------------------
-# pri / contact (meeting)
-# ------------------------------------------------------------------------------
-bash $PRI/contact/list-bymeeting-nolimit-nooffset $ID1 1
-bash $PRI/contact/list-bymeeting-limit $ID1 1
-bash $PRI/contact/list-bymeeting-limit-offset $ID1 1
-bash $PRI/contact/list-bymeeting-huge-offset $ID1 1
-bash $PRI/contact/list-bymeeting-invalid $ID1 1
-
-# ------------------------------------------------------------------------------
 # pri / meeting-member-candidate
 # ------------------------------------------------------------------------------
-# Refresh the contact list. add-new will use this list.
-bash $PRI/contact/list-nolimit-nooffset $ID1
-
 # Add 10 candidates for ID1
 for i in $(seq 1 10); do
   CONTACT=$i
@@ -803,6 +774,33 @@ bash $PRI/calendar/list-bymonth-nolimit-nooffset $ID1 1
 bash $PRI/calendar/list-bymonth-limit $ID1 1
 bash $PRI/calendar/list-bymonth-huge-offset $ID1 1
 bash $PRI/calendar/list-bymonth-invalid $ID1 1
+
+# ------------------------------------------------------------------------------
+# pri / contact (list-bydomain)
+# ------------------------------------------------------------------------------
+bash $PRI/contact/list-bydomain-nolimit-nooffset $ID1 2
+bash $PRI/contact/list-bydomain-limit $ID1 2
+bash $PRI/contact/list-bydomain-limit-offset $ID1 2
+bash $PRI/contact/list-bydomain-huge-offset $ID1 2
+bash $PRI/contact/list-bydomain-invalid $ID1 2
+
+# ------------------------------------------------------------------------------
+# pri / contact (list-byroom)
+# ------------------------------------------------------------------------------
+bash $PRI/contact/list-byroom-nolimit-nooffset $ID1 2
+bash $PRI/contact/list-byroom-limit $ID1 2
+bash $PRI/contact/list-byroom-limit-offset $ID1 2
+bash $PRI/contact/list-byroom-huge-offset $ID1 2
+bash $PRI/contact/list-byroom-invalid $ID1 2
+
+# ------------------------------------------------------------------------------
+# pri / contact (list-bymeeting)
+# ------------------------------------------------------------------------------
+bash $PRI/contact/list-bymeeting-nolimit-nooffset $ID1 2
+bash $PRI/contact/list-bymeeting-limit $ID1 2
+bash $PRI/contact/list-bymeeting-limit-offset $ID1 2
+bash $PRI/contact/list-bymeeting-huge-offset $ID1 2
+bash $PRI/contact/list-bymeeting-invalid $ID1 2
 
 # ------------------------------------------------------------------------------
 # pub
