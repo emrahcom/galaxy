@@ -20,7 +20,6 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 meeting_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-add-new-permanent-id-$ID-$IDX-res)
-echo $meeting_id
 JSON=$(cat <<EOF
 {
     "id": "$meeting_id",
