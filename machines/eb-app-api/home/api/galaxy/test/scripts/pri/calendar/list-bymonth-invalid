@@ -36,7 +36,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 today=$(date +'%Y%m%d')
 JSON=$(cat <<EOF
 {
-    "value": "$today",
+    "value": "$today"
 }
 EOF
 )
@@ -49,7 +49,7 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 # ------------------------------------------------------------------------------
 JSON=$(cat <<EOF
 {
-    "novalue": "2024-01-01",
+    "novalue": "2024-01-01"
 }
 EOF
 )
