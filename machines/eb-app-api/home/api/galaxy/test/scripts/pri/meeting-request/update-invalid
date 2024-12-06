@@ -23,7 +23,7 @@ request_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-request-add-new-id-$ID-$IDX-res)
 JSON=$(cat <<EOF
 {
-    "id": "$request_id",
+    "id": "$request_id"
 }
 EOF
 )
