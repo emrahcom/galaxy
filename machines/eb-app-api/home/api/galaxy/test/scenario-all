@@ -803,6 +803,39 @@ bash $PRI/contact/list-bymeeting-huge-offset $ID1 2
 bash $PRI/contact/list-bymeeting-invalid $ID1 2
 
 # ------------------------------------------------------------------------------
+# pri / contact-invite
+# ------------------------------------------------------------------------------
+bash $PRI/contact-invite/add-invalid $ID1
+bash $PRI/contact-invite/add-new $ID1 1
+bash $PRI/contact-invite/get-exist $ID1 1
+bash $PRI/contact-invite/get-none $ID1
+bash $PRI/contact-invite/get-bycode-exist $ID1 1
+bash $PRI/contact-invite/get-bycode-none $ID1
+
+bash $PRI/contact-invite/disable-exist $ID1 1
+bash $PRI/contact-invite/disable-none $ID1
+bash $PRI/contact-invite/enable-exist $ID1 1
+bash $PRI/contact-invite/enable-none $ID1
+bash $PRI/contact-invite/del-exist $ID1 1
+bash $PRI/contact-invite/del-none $ID1
+
+# Create 20 contact-invites for ID1
+for i in $(seq 1 20); do
+  bash $PRI/contact-invite/add-new $ID1 $i
+done
+
+# Create a contact-invite for every remaining identities
+for i in $(seq 2 12); do
+  ID=$i
+  bash $PRI/contact-invite/add-new $ID 1 1
+done
+
+bash $PRI/contact-invite/list-nolimit-nooffset $ID1 1
+bash $PRI/contact-invite/list-limit $ID1 1
+bash $PRI/contact-invite/list-huge-offset $ID1 1
+bash $PRI/contact-invite/list-invalid $ID1 1
+
+# ------------------------------------------------------------------------------
 # pub
 # ------------------------------------------------------------------------------
 bash $PUB/hello
