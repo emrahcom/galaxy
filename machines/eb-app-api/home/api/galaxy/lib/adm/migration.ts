@@ -207,6 +207,9 @@ async function migrateTo2024120701() {
   const upgradeTo = "20241207.01";
   const sqls = [
     `ALTER TABLE meeting
+       ALTER COLUMN profile_id SET NOT NULL`,
+
+    `ALTER TABLE meeting
        DROP CONSTRAINT "meeting_profile_id_fkey"`,
 
     `ALTER TABLE meeting
@@ -216,6 +219,9 @@ async function migrateTo2024120701() {
 
     `ALTER TABLE meeting
        VALIDATE CONSTRAINT "meeting_profile_id_fkey"`,
+
+    `ALTER TABLE meeting_request
+       ALTER COLUMN profile_id SET NOT NULL`,
 
     `ALTER TABLE meeting_request
        DROP CONSTRAINT "meeting_request_profile_id_fkey"`,
@@ -229,6 +235,9 @@ async function migrateTo2024120701() {
        VALIDATE CONSTRAINT "meeting_request_profile_id_fkey"`,
 
     `ALTER TABLE meeting_member
+       ALTER COLUMN profile_id SET NOT NULL`,
+
+    `ALTER TABLE meeting_member
        DROP CONSTRAINT "meeting_member_profile_id_fkey"`,
 
     `ALTER TABLE meeting_member
@@ -238,6 +247,9 @@ async function migrateTo2024120701() {
 
     `ALTER TABLE meeting_member
        VALIDATE CONSTRAINT "meeting_member_profile_id_fkey"`,
+
+    `ALTER TABLE phone
+       ALTER COLUMN profile_id SET NOT NULL`,
 
     `ALTER TABLE phone
        DROP CONSTRAINT "phone_profile_id_fkey"`,
