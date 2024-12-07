@@ -349,13 +349,15 @@ ALTER TABLE room_partner_candidate OWNER TO galaxy;
 --   participate it if it is restricted.
 -- - Anybody can participate a restricted meeting if she has the audience key.
 -- - A non-restricted meeting may be hidden.
+-- - Profile will be the default one programatically if the selected one is
+--   deleted.
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_schedule_type AS ENUM
     ('permanent', 'scheduled', 'ephemeral');
 CREATE TABLE meeting (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
+    "profile_id" uuid NOT NULL REFERENCES profile(id) ON DELETE NO ACTION,
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
@@ -413,12 +415,14 @@ ALTER TABLE meeting_invite OWNER TO galaxy;
 -- - The request owner can delete the request only if its status is pending.
 -- - The meeting owner can delete the request anytimes.
 -- - Delete all records which have expired_at older than now().
+-- - Profile will be the default one programatically if the selected one is
+--   deleted.
 -- -----------------------------------------------------------------------------
 CREATE TYPE meeting_request_status AS ENUM ('pending', 'rejected');
 CREATE TABLE meeting_request (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
+    "profile_id" uuid NOT NULL REFERENCES profile(id) ON DELETE NO ACTION,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "status" meeting_request_status NOT NULL DEFAULT 'pending',
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -438,12 +442,14 @@ ALTER TABLE meeting_request OWNER TO galaxy;
 -- - The member cannot update join_as.
 -- - The meeting owner can update enabled or delete the membership.
 -- - The meeting owner can update join_as.
+-- - Profile will be the default one programatically if the selected one is
+--   deleted.
 -- -----------------------------------------------------------------------------
 CREATE TABLE meeting_member (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
+    "profile_id" uuid NOT NULL REFERENCES profile(id) ON DELETE NO ACTION,
     "join_as" meeting_affiliation_type NOT NULL DEFAULT 'guest',
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -548,10 +554,13 @@ ALTER TABLE meeting_session OWNER TO galaxy;
 -- -----------------------------------------------------------------------------
 -- PHONE
 -- -----------------------------------------------------------------------------
+-- - Profile will be the default one programatically if the selected one is
+--   deleted.
+-- -----------------------------------------------------------------------------
 CREATE TABLE phone (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
+    "profile_id" uuid NOT NULL REFERENCES profile(id) ON DELETE NO ACTION,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
