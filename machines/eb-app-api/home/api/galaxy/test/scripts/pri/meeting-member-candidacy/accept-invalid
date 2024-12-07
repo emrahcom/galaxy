@@ -18,9 +18,11 @@ ACTION="accept"
 # ------------------------------------------------------------------------------
 TAG="invalid-string"
 
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-9-res)
 JSON=$(cat <<EOF
 {
-    "id": "string"
+    "id": "string",
+    "profile_id": "$profile_id"
 }
 EOF
 )
@@ -33,9 +35,30 @@ bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
 # ------------------------------------------------------------------------------
 TAG="invalid-number"
 
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-9-res)
 JSON=$(cat <<EOF
 {
-    "id": 987
+    "id": 987,
+    "profile_id": "$profile_id"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-error $ID $SERVICE $CLASS $ACTION $TAG \
+    "$JSON" $IDX
+
+# ------------------------------------------------------------------------------
+# try to reject with an invalid post (fake profile)
+# ------------------------------------------------------------------------------
+TAG="invalid-profile"
+
+candidacy_id=$(jq -r ".[2].id" \
+    $TMP/api-pri-meeting-member-candidacy-list-nolimit-nooffset-id-$ID-1-res)
+profile_fake=$(uuidgen)
+JSON=$(cat <<EOF
+{
+    "id": "$candidacy_id",
+    "profile_id": "$profile_fake"
 }
 EOF
 )

@@ -20,9 +20,11 @@ ATTR="id"
 # ------------------------------------------------------------------------------
 candidacy_id=$(jq -r ".[0].id" \
     $TMP/api-pri-meeting-member-candidacy-reject-exist-id-$ID-$IDX-res)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-9-res)
 JSON=$(cat <<EOF
 {
-    "id": "$candidacy_id"
+    "id": "$candidacy_id",
+    "profile_id": "$profile_id"
 }
 EOF
 )

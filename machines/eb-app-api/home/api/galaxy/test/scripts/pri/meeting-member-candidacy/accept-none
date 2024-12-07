@@ -18,9 +18,11 @@ TAG="none"
 # accept with a nonexistent candidacy
 # ------------------------------------------------------------------------------
 candidacy_fake=$(uuidgen)
+profile_id=$(jq -r ".[0].id" $TMP/api-pri-profile-add-new-id-$ID-9-res)
 JSON=$(cat <<EOF
 {
-    "id": "$candidacy_fake"
+    "id": "$candidacy_fake",
+    "profile_id": "$profile_id"
 }
 EOF
 )
