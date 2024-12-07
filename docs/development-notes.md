@@ -15,7 +15,6 @@
 
 ## Bugs
 
-- Dont access invalid profile, e.g. meeting-request/update
 - Is the checking of enabled of identity needed?\
   How to disable the user? In identity provider..?
 
