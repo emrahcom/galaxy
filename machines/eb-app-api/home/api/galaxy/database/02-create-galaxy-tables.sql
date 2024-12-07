@@ -33,14 +33,14 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20241123.01');
+INSERT INTO metadata VALUES ('database_version', '20241207.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
 --
 -- - Email comes from Kratos (after verification) or Keycloak depending on the
 --   selected identity provider. This is the valid email address for sending
---   messages. Emails in profile is only for meeting sessions and are not
+--   messages. Email in profile is only for meeting sessions and is not
 --   trustable.
 --
 -- identity_attr {
@@ -355,7 +355,7 @@ CREATE TYPE meeting_schedule_type AS ENUM
 CREATE TABLE meeting (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
     "room_id" uuid NOT NULL REFERENCES room(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "info" varchar(2000) NOT NULL DEFAULT '',
@@ -418,7 +418,7 @@ CREATE TYPE meeting_request_status AS ENUM ('pending', 'rejected');
 CREATE TABLE meeting_request (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
     "status" meeting_request_status NOT NULL DEFAULT 'pending',
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -443,7 +443,7 @@ CREATE TABLE meeting_member (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "meeting_id" uuid NOT NULL REFERENCES meeting(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
     "join_as" meeting_affiliation_type NOT NULL DEFAULT 'guest',
     "enabled" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
@@ -551,7 +551,7 @@ ALTER TABLE meeting_session OWNER TO galaxy;
 CREATE TABLE phone (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "profile_id" uuid REFERENCES profile(id) ON DELETE SET NULL,
+    "profile_id" uuid REFERENCES profile(id) ON DELETE NO ACTION,
     "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL
