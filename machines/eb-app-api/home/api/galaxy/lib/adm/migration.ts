@@ -203,6 +203,58 @@ async function migrateTo2024112301() {
 }
 
 // -----------------------------------------------------------------------------
+async function migrateTo2024120701() {
+  const upgradeTo = "20241207.01";
+  const sqls = [
+    `ALTER TABLE meeting
+       DROP CONSTRAINT "meeting_profile_id_fkey"`,
+
+    `ALTER TABLE meeting
+       ADD CONSTRAINT "meeting_profile_id_fkey"
+       FOREIGN KEY (profile_id) REFERENCES profile(id) ON DELETE NO ACTION
+       NOT VALID`,
+
+    `ALTER TABLE meeting
+       VALIDATE CONSTRAINT "meeting_profile_id_fkey"`,
+
+    `ALTER TABLE meeting_request
+       DROP CONSTRAINT "meeting_request_profile_id_fkey"`,
+
+    `ALTER TABLE meeting_request
+       ADD CONSTRAINT "meeting_request_profile_id_fkey"
+       FOREIGN KEY (profile_id) REFERENCES profile(id) ON DELETE NO ACTION
+       NOT VALID`,
+
+    `ALTER TABLE meeting_request
+       VALIDATE CONSTRAINT "meeting_request_profile_id_fkey"`,
+
+    `ALTER TABLE meeting_member
+       DROP CONSTRAINT "meeting_member_profile_id_fkey"`,
+
+    `ALTER TABLE meeting_member
+       ADD CONSTRAINT "meeting_member_profile_id_fkey"
+       FOREIGN KEY (profile_id) REFERENCES profile(id) ON DELETE NO ACTION
+       NOT VALID`,
+
+    `ALTER TABLE meeting_member
+       VALIDATE CONSTRAINT "meeting_member_profile_id_fkey"`,
+
+    `ALTER TABLE phone
+       DROP CONSTRAINT "phone_profile_id_fkey"`,
+
+    `ALTER TABLE phone
+       ADD CONSTRAINT "phone_profile_id_fkey"
+       FOREIGN KEY (profile_id) REFERENCES profile(id) ON DELETE NO ACTION
+       NOT VALID`,
+
+    `ALTER TABLE phone
+       VALIDATE CONSTRAINT "phone_profile_id_fkey"`,
+  ];
+
+  await migrateTo(upgradeTo, sqls);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   console.log("migration...");
 
@@ -215,4 +267,5 @@ export default async function () {
   await migrateTo2024110301();
   await migrateTo2024111601();
   await migrateTo2024112301();
+  await migrateTo2024120701();
 }

@@ -5,7 +5,7 @@ export const PORT_PRIVATE = 8001;
 export const PORT_PUBLIC = 8002;
 
 // postgres
-export const DB_VERSION = "20241123.01";
+export const DB_VERSION = "20241207.01";
 export const DB_NAME = "galaxy";
 export const DB_USER = "galaxy";
 export const DB_PASSWD = "___DB_PASSWD___";
