@@ -28,10 +28,6 @@
 
 ## Testing
 
-- Add tests for accept/reject/drop request
-- Add tests for invite contact to domain partnership
-- Add tests for invite contact to room partnership
-- Add tests for invite contact to meeting membership
-- Add tests for invite contact to friendship
+- Add tests for accept/reject friendship (contact) request
 - Add tests for direct call
 - Add tests for phone
