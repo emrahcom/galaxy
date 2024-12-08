@@ -28,6 +28,5 @@
 
 ## Testing
 
-- Add tests for accept/reject friendship (contact) request
 - Add tests for direct call
 - Add tests for phone
