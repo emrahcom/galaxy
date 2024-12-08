@@ -221,15 +221,12 @@ fi
 
 # kratos systemd service
 cp etc/systemd/system/kratos.service $ROOTFS/etc/systemd/system/
-cp etc/systemd/system/kratos-courier.service $ROOTFS/etc/systemd/system/
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
 systemctl daemon-reload
 systemctl enable kratos.service
 systemctl start kratos.service
-systemctl enable kratos-courier.service
-systemctl start kratos-courier.service
 EOS
 
 # ------------------------------------------------------------------------------
