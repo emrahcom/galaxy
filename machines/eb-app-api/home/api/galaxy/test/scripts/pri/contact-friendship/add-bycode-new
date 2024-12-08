@@ -1,0 +1,36 @@
+#!/usr/bin/bash
+set -e
+
+BASEDIR=$(dirname $0)
+TEMPLATES=$BASEDIR/../../templates
+source $BASEDIR/../../../config
+source $BASEDIR/../../common
+
+# the friend
+[[ -z "$1" ]] && ID1=2 || ID1=$1
+[[ -z "$2" ]] && IDX1=1 || IDX1=$2
+# the invite owner
+[[ -z "$3" ]] && ID2=1 || ID2=$3
+[[ -z "$4" ]] && IDX2=1 || IDX2=$4
+
+SERVICE="pri"
+CLASS="contact/friendship"
+ACTION="add/bycode"
+TAG="new"
+ATTR="id"
+
+# ------------------------------------------------------------------------------
+# add new friend
+# ------------------------------------------------------------------------------
+invite_code=$(jq -r ".[$IDX2].code" \
+    $TMP/api-pri-contact-invite-list-nolimit-nooffset-id-$ID2-1-res)
+JSON=$(cat <<EOF
+{
+    "code": "$invite_code",
+    "name": "friend-$RANDOM"
+}
+EOF
+)
+
+bash $TEMPLATES/action-member-attr $ID1 $SERVICE $CLASS $ACTION $TAG $ATTR \
+    "$JSON" $IDX1
