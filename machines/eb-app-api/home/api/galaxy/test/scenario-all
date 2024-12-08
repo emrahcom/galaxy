@@ -836,6 +836,29 @@ bash $PRI/contact-invite/list-huge-offset $ID1 1
 bash $PRI/contact-invite/list-invalid $ID1 1
 
 # ------------------------------------------------------------------------------
+# pri / contact-friendship
+# ------------------------------------------------------------------------------
+# Create 2 more users
+for i in $(seq 21 22); do
+  declare ID${i}=$i
+done
+
+for i in $(seq 21 22); do
+  bash $KRATOS/registration $i
+  bash $KRATOS/login $i
+done
+
+bash $PRI/contact-friendship/check-bycode-new $ID21 1 $ID1 1
+bash $PRI/contact-friendship/check-bycode-none $ID21
+
+bash $PRI/contact-friendship/add-bycode-invalid $ID21 1 $ID1 1
+bash $PRI/contact-friendship/add-bycode-new $ID21 1 $ID1 1
+bash $PRI/contact-friendship/add-bycode-exist $ID21 1 $ID1 2
+
+bash $PRI/contact-friendship/add-bycode-new $ID22 1 $ID1 2
+bash $PRI/contact-friendship/check-bycode-exist $ID22 1 $ID1 3
+
+# ------------------------------------------------------------------------------
 # pub
 # ------------------------------------------------------------------------------
 bash $PUB/hello
