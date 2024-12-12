@@ -12,6 +12,7 @@
 - Jitsi querystring configs for session, member etc.
 - A guest can only create meetings on public domains.
 - Public domains for authenticated users (maybe with JWT)
+- Contact info
 
 ## Bugs
 
