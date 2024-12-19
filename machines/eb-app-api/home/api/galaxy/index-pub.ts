@@ -15,7 +15,7 @@ async function route(req: Request, path: string): Promise<Response> {
     return hello();
   } else if (path.match(`^${PRE}/intercom/`)) {
     return await intercom(req, path);
-  } else if (path.match(`^${PRE}/meeting/schedule`)) {
+  } else if (path.match(`^${PRE}/meeting/schedule/`)) {
     return await meetingSchedule(req, path);
   } else if (path.match(`^${PRE}/meeting/`)) {
     return await meeting(req, path);
