@@ -29,10 +29,13 @@ export async function load() {
       globalThis.localStorage.setItem("identity_email", _identity.traits.email);
     })
     .catch(() => {
+      const contactEmail =
+        globalThis.localStorage.getItem("contact_email") || "";
       const kratosFqdn = globalThis.localStorage.getItem("kratos_fqdn") || "";
 
       globalThis.localStorage.clear();
       globalThis.sessionStorage.clear();
+      globalThis.localStorage.setItem("contact_email", contactEmail);
       globalThis.localStorage.setItem("kratos_fqdn", kratosFqdn);
     });
 }
