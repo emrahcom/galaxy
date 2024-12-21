@@ -2,7 +2,7 @@
   import { FORM_WIDTH } from "$lib/config";
 
   const identity_id = globalThis.localStorage.getItem("identity_id");
-  const contact_mail = globalThis.localStorage.getItem("contact_mail");
+  const contact_email = globalThis.localStorage.getItem("contact_email");
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -40,7 +40,7 @@
 
       <h4 class="text-muted small mb-5">
         If you have any questions or feedback, please feel free to email
-        {contact_mail}
+        {contact_email}
       </h4>
     </div>
   </div>
