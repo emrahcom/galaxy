@@ -1,8 +1,8 @@
 <script lang="ts">
   import { FORM_WIDTH } from "$lib/config";
 
-  const identity_id = globalThis.localStorage.getItem("identity_id");
   const contact_email = globalThis.localStorage.getItem("contact_email");
+  const identity_id = globalThis.localStorage.getItem("identity_id");
 </script>
 
 <!-- -------------------------------------------------------------------------->
