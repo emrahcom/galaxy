@@ -2,6 +2,7 @@
   import { FORM_WIDTH } from "$lib/config";
 
   const identity_id = globalThis.localStorage.getItem("identity_id");
+  const contact_mail = globalThis.localStorage.getItem("contact_mail");
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -36,6 +37,11 @@
           <a class="text-primary" href="/id/registration">Sign Up</a>
         </h4>
       {/if}
+
+      <h4 class="text-muted small mb-5">
+        If you have any questions or feedback, please feel free to email
+        {contact_mail}
+      </h4>
     </div>
   </div>
 </section>

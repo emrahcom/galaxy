@@ -10,9 +10,13 @@ export async function load() {
   if (target.match("^/aud/")) return;
 
   // Get config
-  if (!globalThis.localStorage.getItem("kratos_fqdn")) {
+  if (
+    !globalThis.localStorage.getItem("contact_email") ||
+    !globalThis.localStorage.getItem("kratos_fqdn")
+  ) {
     const config = await get("/api/adm/config");
 
+    globalThis.localStorage.setItem("contact_email", config.contact_email);
     globalThis.localStorage.setItem("kratos_fqdn", config.kratos_fqdn);
   }
 
