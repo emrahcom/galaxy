@@ -35,6 +35,9 @@
         <h4 class="text-muted small mb-5">
           If you don't have an account yet, please
           <a class="text-primary" href="/id/registration">Sign Up</a>
+          <br />
+          If you have an account, please
+          <a class="text-primary" href="/id/login">Sign In</a>
         </h4>
       {/if}
 
