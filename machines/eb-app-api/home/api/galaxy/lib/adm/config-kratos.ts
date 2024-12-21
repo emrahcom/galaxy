@@ -1,6 +1,6 @@
 import { ok } from "../http/response.ts";
-import { KRATOS_FQDN } from "../../config.ts";
 import { CONTACT_EMAIL } from "../../config.ts";
+import { KRATOS_FQDN } from "../../config.ts";
 
 // -----------------------------------------------------------------------------
 export default function (): Response {
