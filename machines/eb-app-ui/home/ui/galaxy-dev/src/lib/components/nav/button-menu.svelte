@@ -63,7 +63,7 @@
           href="/pri/room"
           onclick={(e) => onclick("/pri/room", e)}
         >
-          Rooms
+          Meeting Rooms
         </a>
       </li>
       <li class="nav-item">
@@ -72,7 +72,7 @@
           href="/pri/domain"
           onclick={(e) => onclick("/pri/domain", e)}
         >
-          Domains
+          Meeting Domains
         </a>
       </li>
       <li class="nav-item">
@@ -81,9 +81,12 @@
           href="/pri/profile"
           onclick={(e) => onclick("/pri/profile", e)}
         >
-          Profiles
+          Meeting Profiles
         </a>
       </li>
+
+      <hr />
+
       <li class="nav-item">
         <a
           class="nav-link"
