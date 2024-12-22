@@ -7,10 +7,12 @@
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
+  const date = new Date();
+
   let warning = $state(false);
   let disabled = $state(false);
   let p = $state({
-    name: "",
+    name: `key-${date.getTime() % 10000000000}`,
   });
 
   // ---------------------------------------------------------------------------
