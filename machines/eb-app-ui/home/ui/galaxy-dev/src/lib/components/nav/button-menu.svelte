@@ -99,7 +99,7 @@
           href="/pri/phone"
           onclick={(e) => onclick("/pri/phone", e)}
         >
-          Phones
+          Virtual Phones
         </a>
       </li>
       <li class="nav-item">
