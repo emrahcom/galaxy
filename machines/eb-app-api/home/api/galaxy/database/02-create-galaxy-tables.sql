@@ -33,7 +33,7 @@ CREATE TABLE metadata (
 ALTER TABLE metadata OWNER TO galaxy;
 
 -- database version
-INSERT INTO metadata VALUES ('database_version', '20241207.01');
+INSERT INTO metadata VALUES ('database_version', '20241222.01');
 
 -- -----------------------------------------------------------------------------
 -- IDENTITY
@@ -65,7 +65,7 @@ INSERT INTO identity VALUES (
 -- -----------------------------------------------------------------------------
 -- IDENTITY_KEY
 -- -----------------------------------------------------------------------------
--- - Identity key allows clients to access private data without login.
+-- - Identity key allows clients to access private data without logging in.
 -- -----------------------------------------------------------------------------
 CREATE TABLE identity_key (
     "id" uuid NOT NULL PRIMARY KEY,
