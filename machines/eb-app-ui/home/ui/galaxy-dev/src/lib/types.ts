@@ -152,6 +152,16 @@ export interface DomainPartnership {
 }
 
 // -----------------------------------------------------------------------------
+export interface IdentityKey {
+  id: string;
+  name: string;
+  code: string;
+  enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+// -----------------------------------------------------------------------------
 export interface IntercomCall {
   id: string;
   url: string;
