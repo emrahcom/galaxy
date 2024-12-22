@@ -23,9 +23,9 @@
 <div class="col-md-6 col-xl-4">
   <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
     <div class="card-body text-center">
-      <h5 class="card-title text-muted">{shadowedCode}</h5>
+      <h5 class="card-title text-muted">{p.name}</h5>
 
-      <p class="card-text text-muted">{p.code}</p>
+      <p class="card-text text-muted">{shadowedCode}</p>
 
       {#if p.enabled}
         <Copy label="copy" onclick={() => copy(p.code)} />
