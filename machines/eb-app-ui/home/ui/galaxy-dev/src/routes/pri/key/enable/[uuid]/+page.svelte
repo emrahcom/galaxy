@@ -12,7 +12,7 @@
 <Subheader subheader="Enable this private key" />
 
 {#await pr then key}
-  <Disable p={key} />
+  <Enable p={key} />
 {:catch}
   <Warning>Something went wrong</Warning>
 {/await}
