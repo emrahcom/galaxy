@@ -18,6 +18,7 @@ import domainPartnerCandidate from "./lib/pri/domain-partner-candidate.ts";
 import domainPartnership from "./lib/pri/domain-partnership.ts";
 import hello from "./lib/pri/hello.ts";
 import identity from "./lib/pri/identity.ts";
+import identityKey from "./lib/pri/identity-key.ts";
 import intercom from "./lib/pri/intercom.ts";
 import meeting from "./lib/pri/meeting.ts";
 import meetingInvite from "./lib/pri/meeting-invite.ts";
@@ -66,6 +67,8 @@ async function route(
     return await domainPartnership(req, path, identityId);
   } else if (path.match(`^${PRE}/domain/`)) {
     return await domain(req, path, identityId);
+  } else if (path.match(`^${PRE}/identity/key/`)) {
+    return await identityKey(req, path, identityId);
   } else if (path.match(`^${PRE}/identity/`)) {
     return await identity(req, path, identityId);
   } else if (path.match(`^${PRE}/intercom/`)) {
