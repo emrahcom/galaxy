@@ -267,6 +267,29 @@ async function migrateTo2024120701() {
 }
 
 // -----------------------------------------------------------------------------
+async function migrateTo2024122201() {
+  const upgradeTo = "20241222.01";
+  const sqls = [
+    `CREATE TABLE identity_key (
+       "id" uuid NOT NULL PRIMARY KEY,
+       "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+       "name" varchar(250) NOT NULL,
+       "code" varchar(250) NOT NULL
+         DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+       "enabled" boolean NOT NULL DEFAULT true,
+       "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+       "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+     )`,
+
+    `CREATE UNIQUE INDEX ON identity_key("code")`,
+
+    `CREATE INDEX ON identity_key("identity_id", "name")`,
+  ];
+
+  await migrateTo(upgradeTo, sqls);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   console.log("migration...");
 
@@ -280,4 +303,5 @@ export default async function () {
   await migrateTo2024111601();
   await migrateTo2024112301();
   await migrateTo2024120701();
+  await migrateTo2024122201();
 }
