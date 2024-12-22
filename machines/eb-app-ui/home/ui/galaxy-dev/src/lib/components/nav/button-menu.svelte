@@ -102,6 +102,15 @@
           Phones
         </a>
       </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          href="/pri/identity/key"
+          onclick={(e) => onclick("/pri/identity/key", e)}
+        >
+          Private keys
+        </a>
+      </li>
     </ul>
   </div>
 </div>
