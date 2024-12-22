@@ -68,7 +68,7 @@ INSERT INTO identity VALUES (
 -- - Identity key allows clients to access private data without logging in.
 -- -----------------------------------------------------------------------------
 CREATE TABLE identity_key (
-    "id" uuid NOT NULL PRIMARY KEY,
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
     "code" varchar(250) NOT NULL

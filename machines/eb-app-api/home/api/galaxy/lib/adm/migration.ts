@@ -271,7 +271,7 @@ async function migrateTo2024122201() {
   const upgradeTo = "20241222.01";
   const sqls = [
     `CREATE TABLE identity_key (
-       "id" uuid NOT NULL PRIMARY KEY,
+       "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
        "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
        "name" varchar(250) NOT NULL,
        "code" varchar(250) NOT NULL
