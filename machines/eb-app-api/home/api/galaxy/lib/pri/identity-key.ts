@@ -9,7 +9,7 @@ import {
   updateIdentityKeyEnabled,
 } from "../database/identity-key.ts";
 
-const PRE = "/api/pri/key";
+const PRE = "/api/pri/identity/key";
 
 // -----------------------------------------------------------------------------
 async function get(req: Request, identityId: string): Promise<unknown> {
