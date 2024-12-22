@@ -19,7 +19,7 @@
 
   // ---------------------------------------------------------------------------
   function cancel() {
-    globalThis.location.href = "/pri/key";
+    globalThis.location.href = "/pri/identity/key";
   }
 
   // ---------------------------------------------------------------------------
@@ -28,8 +28,8 @@
       warning = false;
       disabled = true;
 
-      await actionById("/api/pri/key/enable", p.id);
-      globalThis.location.replace("/pri/key");
+      await actionById("/api/pri/identity/key/del", p.id);
+      globalThis.location.replace("/pri/identity/key");
     } catch {
       warning = true;
       disabled = false;
@@ -38,7 +38,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<section id="enable">
+<section id="del">
   <div class="d-flex mt-2 justify-content-center">
     <form {onsubmit} style="width:{FORM_WIDTH};">
       <Text
@@ -50,13 +50,13 @@
       />
 
       {#if warning}
-        <Warning>The enable request is not accepted.</Warning>
+        <Warning>The delete request is not accepted.</Warning>
       {/if}
 
       <div class="d-flex gap-5 mt-5 justify-content-center">
         <Cancel {disabled} onclick={cancel} />
         <SubmitBlocker />
-        <Submit {disabled} label="Enable" />
+        <Submit {disabled} label="Delete" />
       </div>
     </form>
   </div>

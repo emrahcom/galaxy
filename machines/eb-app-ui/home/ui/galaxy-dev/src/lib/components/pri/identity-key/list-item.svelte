@@ -31,12 +31,12 @@
     </div>
 
     <div class="card-footer bg-body border-0 text-center">
-      <Del href="/pri/key/del/{p.id}" />
+      <Del href="/pri/identity/key/del/{p.id}" />
 
       {#if p.enabled}
-        <Disable href="/pri/key/disable/{p.id}" />
+        <Disable href="/pri/identity/key/disable/{p.id}" />
       {:else}
-        <Enable href="/pri/key/enable/{p.id}" />
+        <Enable href="/pri/identity/key/enable/{p.id}" />
       {/if}
     </div>
   </div>
