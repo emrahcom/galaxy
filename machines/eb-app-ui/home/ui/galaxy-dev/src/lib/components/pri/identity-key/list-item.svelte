@@ -11,7 +11,7 @@
 
   let { p }: Props = $props();
 
-  const shadowedCode = p.code.slice(0, 2) + "..." + p.code.slice(-2);
+  const shadowedCode = p.code.slice(0, 2) + "*****" + p.code.slice(-2);
 
   // ---------------------------------------------------------------------------
   function copy(code: string) {
