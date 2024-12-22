@@ -11,6 +11,8 @@
 
   let { p }: Props = $props();
 
+  const shadowedCode = p.code.slice(0, 2) + "..." + p.code.slice(-2);
+
   // ---------------------------------------------------------------------------
   function copy(code: string) {
     navigator.clipboard.writeText(code);
@@ -21,7 +23,7 @@
 <div class="col-md-6 col-xl-4">
   <div class="card h-100 {p.enabled ? '' : 'border-danger'}">
     <div class="card-body text-center">
-      <h5 class="card-title text-muted">{p.name}</h5>
+      <h5 class="card-title text-muted">{shadowedCode}</h5>
 
       <p class="card-text text-muted">{p.code}</p>
 
