@@ -26,7 +26,7 @@ export async function addCall(
 }
 
 // -----------------------------------------------------------------------------
-// consumer is public
+// Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
 export async function addPhoneCall(code: string, callAttr: Attr) {
   const sql = {
@@ -75,6 +75,8 @@ export async function ringCall(identityId: string, intercomId: string) {
   return await fetch(sql) as IntercomRing[];
 }
 
+// -----------------------------------------------------------------------------
+// Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
 export async function ringPhone(code: string, intercomId: string) {
   const sql = {
