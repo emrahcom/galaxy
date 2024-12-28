@@ -56,7 +56,7 @@ export async function getIntercom(identityId: string, intercomId: string) {
 }
 
 // -----------------------------------------------------------------------------
-// Consumer is public by using a public phone code.
+// Consumer is a public user by using a public phone code.
 // -----------------------------------------------------------------------------
 export async function getIntercomAttrByCode(code: string, intercomId: string) {
   const sql = {
@@ -165,7 +165,7 @@ export async function delIntercom(identityId: string, intercomId: string) {
 }
 
 // -----------------------------------------------------------------------------
-// Consumer is the public user with a public phone code.
+// Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
 export async function delIntercomByCode(code: string, intercomId: string) {
   const sql = {

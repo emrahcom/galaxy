@@ -48,6 +48,8 @@ export async function getPhone(identityId: string, phoneId: string) {
 }
 
 // -----------------------------------------------------------------------------
+// Consumer is a public user with a public phone code.
+// -----------------------------------------------------------------------------
 export async function getPhoneByCode(code: string) {
   const sql = {
     text: `
@@ -68,6 +70,8 @@ export async function getPhoneByCode(code: string) {
   return await fetch(sql) as Phone111[];
 }
 
+// -----------------------------------------------------------------------------
+// Consumer is internal.
 // -----------------------------------------------------------------------------
 export async function getPhonePrivatesByCode(code: string) {
   const sql = {
@@ -282,6 +286,8 @@ async function increasePhoneCallCounter(phoneId: string) {
   return await fetch(sql) as Id[];
 }
 
+// -----------------------------------------------------------------------------
+// Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
 export async function callPhoneByCode(code: string) {
   // It will not return a phone if there is a disabled component such as domain,
