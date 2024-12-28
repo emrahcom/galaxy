@@ -104,6 +104,37 @@ export async function listIntercom(
 }
 
 // -----------------------------------------------------------------------------
+export async function listIntercomByCode(
+  code: string,
+  limit: number,
+  offset: number,
+) {
+  // There will be no contact if the record is for a public phone call.
+  const sql = {
+    text: `
+      SELECT ic.id, co.name as contact_name, status, message_type,
+        intercom_attr, expired_at
+      FROM intercom ic
+        LEFT JOIN contact co ON co.identity_id = $1
+                                AND co.remote_id = ic.identity_id
+      WHERE ic.remote_id = (SELECT identity_id
+                            FROM identity_key
+                            WHERE code = $1
+                              AND enabled)
+        AND expired_at > now()
+        AND status = 'none'
+      LIMIT $2 OFFSET $3`,
+    args: [
+      code,
+      limit,
+      offset,
+    ],
+  };
+
+  return await fetch(sql) as IntercomMessage222[];
+}
+
+// -----------------------------------------------------------------------------
 export async function delIntercom(identityId: string, intercomId: string) {
   const sql = {
     text: `
