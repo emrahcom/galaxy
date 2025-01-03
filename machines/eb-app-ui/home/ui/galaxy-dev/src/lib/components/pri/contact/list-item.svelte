@@ -16,6 +16,10 @@
 
   let status = $state(0);
 
+  if (p.seen_second_ago < 100) status = 1;
+  else if (p.seen_second_ago < 3600) status = 2;
+  else status = 0;
+
   // ---------------------------------------------------------------------------
   // even all items run this function periodically, only one of them sends an
   // API request in each period because of the time checking
