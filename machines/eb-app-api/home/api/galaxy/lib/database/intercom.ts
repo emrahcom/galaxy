@@ -212,3 +212,31 @@ export async function setStatusIntercom(
 
   return await fetch(sql) as Id[];
 }
+
+// -----------------------------------------------------------------------------
+// Consumer is the callee with an identity key.
+// -----------------------------------------------------------------------------
+export async function setStatusIntercomByCode(
+  code: string,
+  intercomId: string,
+  status: IntercomStatus,
+) {
+  const sql = {
+    text: `
+      UPDATE intercom
+      SET status = $3
+      WHERE id = $2
+        AND remote_id = (SELECT identity_id
+                         FROM identity_key
+                         WHERE code = $1
+                           AND enabled)
+      RETURNING id, now() as at`,
+    args: [
+      code,
+      intercomId,
+      status,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
