@@ -23,8 +23,10 @@ export async function getContact(identityId: string, contactId: string) {
   const sql = {
     text: `
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
-        co.created_at, co.updated_at
+        co.created_at, co.updated_at,
+        floor(extract(epoch FROM now() - i.seen_at)) as seen_second_ago
       FROM contact co
+        JOIN identity i ON co.remote_id = i.id
         LEFT JOIN profile pr ON co.remote_id = pr.identity_id
                                 AND pr.is_default
       WHERE co.id = $2
@@ -46,8 +48,10 @@ export async function getContactByIdentity(
   const sql = {
     text: `
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
-        co.created_at, co.updated_at
+        co.created_at, co.updated_at,
+        floor(extract(epoch FROM now() - i.seen_at)) as seen_second_ago
       FROM contact co
+        JOIN identity i ON co.remote_id = i.id
         LEFT JOIN profile pr ON co.remote_id = pr.identity_id
                                 AND pr.is_default
       WHERE co.identity_id = $1
@@ -90,8 +94,10 @@ export async function listContact(
   const sql = {
     text: `
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
-        co.created_at, co.updated_at
+        co.created_at, co.updated_at,
+        floor(extract(epoch FROM now() - i.seen_at)) as seen_second_ago
       FROM contact co
+        JOIN identity i ON co.remote_id = i.id
         LEFT JOIN profile pr ON co.remote_id = pr.identity_id
                                 AND pr.is_default
       WHERE co.identity_id = $1
@@ -99,6 +105,39 @@ export async function listContact(
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
+      limit,
+      offset,
+    ],
+  };
+
+  return await fetch(sql) as Contact[];
+}
+
+// -----------------------------------------------------------------------------
+// Consumer is the user with an identity key.
+// -----------------------------------------------------------------------------
+export async function listContactByCode(
+  code: string,
+  limit: number,
+  offset: number,
+) {
+  const sql = {
+    text: `
+      SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
+        co.created_at, co.updated_at,
+        floor(extract(epoch FROM now() - i.seen_at)) as seen_second_ago
+      FROM contact co
+        JOIN identity i ON co.remote_id = i.id
+        LEFT JOIN profile pr ON co.remote_id = pr.identity_id
+                                AND pr.is_default
+      WHERE co.identity_id = (SELECT identity_id
+                              FROM identity_key
+                              WHERE code = $1
+                                AND enabled)
+      ORDER BY name, profile_name, profile_email
+      LIMIT $2 OFFSET $3`,
+    args: [
+      code,
       limit,
       offset,
     ],
@@ -117,8 +156,10 @@ export async function listContactByDomain(
   const sql = {
     text: `
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
-        co.created_at, co.updated_at
+        co.created_at, co.updated_at,
+        floor(extract(epoch FROM now() - i.seen_at)) as seen_second_ago
       FROM contact co
+        JOIN identity i ON co.remote_id = i.id
         LEFT JOIN profile pr ON co.remote_id = pr.identity_id
                                 AND pr.is_default
       WHERE co.identity_id = $1
@@ -155,8 +196,10 @@ export async function listContactByRoom(
   const sql = {
     text: `
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
-        co.created_at, co.updated_at
+        co.created_at, co.updated_at,
+        floor(extract(epoch FROM now() - i.seen_at)) as seen_second_ago
       FROM contact co
+        JOIN identity i ON co.remote_id = i.id
         LEFT JOIN profile pr ON co.remote_id = pr.identity_id
                                 AND pr.is_default
       WHERE co.identity_id = $1
@@ -193,8 +236,10 @@ export async function listContactByMeeting(
   const sql = {
     text: `
       SELECT co.id, co.name, pr.name as profile_name, pr.email as profile_email,
-        co.created_at, co.updated_at
+        co.created_at, co.updated_at,
+        floor(extract(epoch FROM now() - i.seen_at)) as seen_second_ago
       FROM contact co
+        JOIN identity i ON co.remote_id = i.id
         LEFT JOIN profile pr ON co.remote_id = pr.identity_id
                                 AND pr.is_default
       WHERE co.identity_id = $1
