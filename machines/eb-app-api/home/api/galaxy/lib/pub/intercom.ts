@@ -5,6 +5,7 @@ import {
   delIntercomByCode,
   getIntercomAttrByCode,
   listIntercomByCode,
+  setStatusIntercomByCode,
 } from "../database/intercom.ts";
 import { ringPhone } from "../database/intercom-call.ts";
 
@@ -27,6 +28,24 @@ async function list(req: Request): Promise<unknown> {
   const offset = getOffset(pl.offset);
 
   return await listIntercomByCode(code, limit, offset);
+}
+
+// -----------------------------------------------------------------------------
+async function setAccepted(req: Request): Promise<unknown> {
+  const pl = await req.json();
+  const code = pl.code;
+  const intercomId = pl.id;
+
+  return await setStatusIntercomByCode(code, intercomId, "accepted");
+}
+
+// -----------------------------------------------------------------------------
+async function setRejected(req: Request): Promise<unknown> {
+  const pl = await req.json();
+  const code = pl.code;
+  const intercomId = pl.id;
+
+  return await setStatusIntercomByCode(code, intercomId, "rejected");
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +74,10 @@ export default async function (req: Request, path: string): Promise<Response> {
     return await wrapper(list, req);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req);
+  } else if (path === `${PRE}/set/accepted`) {
+    return await wrapper(setAccepted, req);
+  } else if (path === `${PRE}/set/rejected`) {
+    return await wrapper(setRejected, req);
   } else if (path === `${PRE}/phone/ring`) {
     return await wrapper(ring, req);
   } else {
