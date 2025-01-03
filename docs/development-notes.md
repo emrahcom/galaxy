@@ -31,3 +31,4 @@
 
 - Add tests for direct call
 - Add tests for phone
+- Add tests for extension related endpoints
