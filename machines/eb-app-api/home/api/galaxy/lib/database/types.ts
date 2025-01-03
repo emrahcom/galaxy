@@ -28,6 +28,7 @@ export interface Contact {
   profile_email: string;
   created_at: string;
   updated_at: string;
+  seen_second_ago: number;
 }
 
 // -----------------------------------------------------------------------------
