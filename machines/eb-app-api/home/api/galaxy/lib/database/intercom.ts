@@ -131,7 +131,8 @@ export async function listIntercomByCode(
       WHERE ic.remote_id = (SELECT identity_id
                             FROM identity_key
                             WHERE code = $1
-                              AND enabled)
+                              AND enabled
+                           )
         AND expired_at > now()
         AND status = 'none'
       LIMIT $2 OFFSET $3`,
@@ -229,7 +230,8 @@ export async function setStatusIntercomByCode(
         AND remote_id = (SELECT identity_id
                          FROM identity_key
                          WHERE code = $1
-                           AND enabled)
+                           AND enabled
+                        )
       RETURNING id, now() as at`,
     args: [
       code,

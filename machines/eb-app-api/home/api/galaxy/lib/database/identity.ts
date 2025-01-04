@@ -86,7 +86,8 @@ export async function updatePresenceByCode(code: string) {
       WHERE id = (SELECT identity_id
                   FROM identity_key
                   WHERE code = $1
-                    AND enabled)
+                    AND enabled
+                 )
       RETURNING id, seen_at as at`,
     args: [
       code,

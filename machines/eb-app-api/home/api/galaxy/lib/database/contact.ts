@@ -133,7 +133,8 @@ export async function listContactByCode(
       WHERE co.identity_id = (SELECT identity_id
                               FROM identity_key
                               WHERE code = $1
-                                AND enabled)
+                                AND enabled
+                             )
       ORDER BY name, profile_name, profile_email
       LIMIT $2 OFFSET $3`,
     args: [
