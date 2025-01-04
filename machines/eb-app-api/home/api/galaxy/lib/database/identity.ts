@@ -75,3 +75,23 @@ export async function updatePresence(identityId: string) {
 
   return await fetch(sql) as Id[];
 }
+
+// -----------------------------------------------------------------------------
+export async function updatePresenceByCode(code: string) {
+  const sql = {
+    text: `
+      UPDATE identity
+      SET
+        seen_at = now()
+      WHERE id = (SELECT identity_id
+                  FROM identity_key
+                  WHERE code = $1
+                    AND enabled)
+      RETURNING id, seen_at as at`,
+    args: [
+      code,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
