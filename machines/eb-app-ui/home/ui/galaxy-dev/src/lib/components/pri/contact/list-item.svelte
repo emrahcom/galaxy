@@ -46,16 +46,14 @@
           JSON.stringify(status),
         );
       }
-    } catch {
-      // do nothing
+    } finally {
+      setTimeout(getContactStatus, PERIOD_UI_REFRESH);
     }
   }
 
   // ---------------------------------------------------------------------------
   async function refreshStatus() {
     try {
-      await getContactStatus();
-
       const statusData = globalThis.localStorage.getItem("contact_status");
       if (!statusData) return;
 
@@ -76,7 +74,7 @@
 
   // initialize the status and trigger the refresh status loop
   getContactStatus();
-  setTimeout(refreshStatus, 2000);
+  setTimeout(refreshStatus, PERIOD_API_REQUEST + 2000);
 </script>
 
 <!-- -------------------------------------------------------------------------->
