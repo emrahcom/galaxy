@@ -22,7 +22,7 @@ export async function getDomain(identityId: string, domainId: string) {
 
 // -----------------------------------------------------------------------------
 // This function returns the domain if it is accessible by identity, even it
-// doesn't belong to it.
+// doesn't belong to her.
 // -----------------------------------------------------------------------------
 export async function getDomainIfAllowed(identityId: string, domainId: string) {
   const sql = {
@@ -30,7 +30,7 @@ export async function getDomainIfAllowed(identityId: string, domainId: string) {
       SELECT id, name, auth_type, domain_attr, enabled, created_at, updated_at
       FROM domain d
       WHERE id = $2
-        AND enabled = true
+        AND enabled
         AND (identity_id = $1
              OR public
              OR EXISTS (SELECT 1
@@ -42,6 +42,43 @@ export async function getDomainIfAllowed(identityId: string, domainId: string) {
     args: [
       identityId,
       domainId,
+    ],
+  };
+
+  return await fetch(sql) as Domain[];
+}
+
+// -----------------------------------------------------------------------------
+// This function returns the domain for the code (identity key).
+// -----------------------------------------------------------------------------
+export async function getDomainByCodeIfAllowed(code: string) {
+  const sql = {
+    text: `
+      SELECT d.id, d.name, auth_type, domain_attr, d.enabled, d.created_at,
+        d.updated_at
+      FROM identity_key ik
+        JOIN domain d ON d.id = ik.domain_id
+      WHERE code = $1
+        AND ik.enabled
+        AND d.enabled
+        AND (d.identity_id = (SELECT identity_id
+                              FROM identity_key
+                              WHERE code = $1
+                                AND enabled
+                             )
+             OR public
+             OR EXISTS (SELECT 1
+                        FROM domain_partner
+                        WHERE identity_id = (SELECT identity_id
+                                             FROM identity_key
+                                             WHERE code = $1
+                                               AND enabled
+                                            )
+                          AND domain_id = d.id
+                       )
+            )`,
+    args: [
+      code,
     ],
   };
 
