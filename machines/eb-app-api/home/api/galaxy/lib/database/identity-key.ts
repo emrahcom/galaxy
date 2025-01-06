@@ -9,6 +9,7 @@ export async function getIdentityKey(identityId: string, keyId: string) {
         (CASE d.auth_type
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
+         END
         ) as domain_url,
         d.enabled as domain_enabled, ik.enabled, ik.created_at, ik.updated_at
       FROM identity_key ik
