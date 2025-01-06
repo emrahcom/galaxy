@@ -49,22 +49,6 @@ async function del(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function enable(req: Request, identityId: string): Promise<unknown> {
-  const pl = await req.json();
-  const phoneId = pl.id;
-
-  return await updatePhoneEnabled(identityId, phoneId, true);
-}
-
-// -----------------------------------------------------------------------------
-async function disable(req: Request, identityId: string): Promise<unknown> {
-  const pl = await req.json();
-  const phoneId = pl.id;
-
-  return await updatePhoneEnabled(identityId, phoneId, false);
-}
-
-// -----------------------------------------------------------------------------
 async function update(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const phoneId = pl.id;
@@ -84,6 +68,22 @@ async function update(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function enable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const phoneId = pl.id;
+
+  return await updatePhoneEnabled(identityId, phoneId, true);
+}
+
+// -----------------------------------------------------------------------------
+async function disable(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const phoneId = pl.id;
+
+  return await updatePhoneEnabled(identityId, phoneId, false);
+}
+
+// -----------------------------------------------------------------------------
 export default async function (
   req: Request,
   path: string,
@@ -97,12 +97,12 @@ export default async function (
     return await wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
+  } else if (path === `${PRE}/update`) {
+    return await wrapper(update, req, identityId);
   } else if (path === `${PRE}/enable`) {
     return await wrapper(enable, req, identityId);
   } else if (path === `${PRE}/disable`) {
     return await wrapper(disable, req, identityId);
-  } else if (path === `${PRE}/update`) {
-    return await wrapper(update, req, identityId);
   } else {
     return notFound();
   }
