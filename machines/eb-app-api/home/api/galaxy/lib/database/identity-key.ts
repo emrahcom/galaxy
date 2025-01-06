@@ -5,10 +5,16 @@ import type { Id, IdentityKey } from "./types.ts";
 export async function getIdentityKey(identityId: string, keyId: string) {
   const sql = {
     text: `
-      SELECT id, name, code, enabled, created_at, updated_at
-      FROM identity_key
-      WHERE id = $2
-        AND identity_id = $1`,
+      SELECT ik.id, ik.name, ik.code, d.id as domain_id, d.name as domain_name,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+        ) as domain_url,
+        d.enabled as domain_enabled, ik.enabled, ik.created_at, ik.updated_at
+      FROM identity_key ik
+        JOIN domain d ON ik.domain_id = d.id
+      WHERE ik.id = $2
+        AND ik.identity_id = $1`,
     args: [
       identityId,
       keyId,
@@ -26,9 +32,15 @@ export async function listIdentityKey(
 ) {
   const sql = {
     text: `
-      SELECT id, name, code, enabled, created_at, updated_at
-      FROM identity_key
-      WHERE identity_id = $1
+      SELECT ik.id, ik.name, ik.code, d.id as domain_id, d.name as domain_name,
+        (CASE d.auth_type
+           WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
+           ELSE d.domain_attr->>'url'
+        ) as domain_url,
+        d.enabled as domain_enabled, ik.enabled, ik.created_at, ik.updated_at
+      FROM identity_key ik
+        JOIN domain d ON ik.domain_id = d.id
+      WHERE ik.identity_id = $1
       ORDER BY name
       LIMIT $2 OFFSET $3`,
     args: [
@@ -44,15 +56,32 @@ export async function listIdentityKey(
 // -----------------------------------------------------------------------------
 export async function addIdentityKey(
   identityId: string,
+  domainId: string,
   name: string,
 ) {
   const sql = {
     text: `
-      INSERT INTO identity_key (identity_id, name)
-      VALUES ($1, $2)
+      INSERT INTO identity_key (identity_id, domain_id, name)
+      VALUES (
+        $1,
+        (SELECT id
+         FROM domain d
+         WHERE id = $2
+           AND (identity_id = $1
+                OR public
+                OR EXISTS (SELECT 1
+                           FROM domain_partner
+                           WHERE identity_id = $1
+                             AND domain_id = d.id
+                          )
+               )
+        ),
+        $3
+      )
       RETURNING id, created_at as at`,
     args: [
       identityId,
+      domainId,
       name,
     ],
   };
@@ -71,6 +100,45 @@ export async function delIdentityKey(identityId: string, keyId: string) {
     args: [
       identityId,
       keyId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function updateIdentityKey(
+  identityId: string,
+  keyId: string,
+  domainId: string,
+  name: string,
+) {
+  const sql = {
+    text: `
+      UPDATE identity_key
+      SET
+        domain_id = (SELECT id
+                     FROM domain d
+                     WHERE id = $3
+                       AND (identity_id = $1
+                            OR public
+                            OR EXISTS (SELECT 1
+                                       FROM domain_partner
+                                       WHERE identity_id = $1
+                                         AND domain_id = d.id
+                                      )
+                           )
+                    ),
+        name = $4,
+        updated_at = now()
+      WHERE id = $2
+        AND identity_id = $1
+      RETURNING id, updated_at as at`,
+    args: [
+      identityId,
+      keyId,
+      domainId,
+      name,
     ],
   };
 
