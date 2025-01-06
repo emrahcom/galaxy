@@ -10,9 +10,24 @@ export async function getIdentityKey(identityId: string, keyId: string) {
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
         ) as domain_url,
-        d.enabled as domain_enabled, ik.enabled, ik.created_at, ik.updated_at
+        ik.enabled,
+        (d.enabled AND i.enabled
+         AND CASE d.identity_id
+               WHEN $1 THEN true
+               ELSE CASE d.public
+                      WHEN true THEN true
+                      ELSE (SELECT enabled
+                            FROM domain_partner
+                            WHERE identity_id = $1
+                              AND domain_id = d.id
+                           )
+                    END
+             END
+        ) as chain_enabled,
+        ik.created_at, ik.updated_at
       FROM identity_key ik
         JOIN domain d ON ik.domain_id = d.id
+        JOIN identity i ON d.identity_id = i.id
       WHERE ik.id = $2
         AND ik.identity_id = $1`,
     args: [
@@ -37,7 +52,21 @@ export async function listIdentityKey(
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
         ) as domain_url,
-        d.enabled as domain_enabled, ik.enabled, ik.created_at, ik.updated_at
+        ik.enabled,
+        (d.enabled AND i.enabled
+         AND CASE d.identity_id
+               WHEN $1 THEN true
+               ELSE CASE d.public
+                      WHEN true THEN true
+                      ELSE (SELECT enabled
+                            FROM domain_partner
+                            WHERE identity_id = $1
+                              AND domain_id = d.id
+                           )
+                    END
+             END
+        ) as chain_enabled,
+        ik.created_at, ik.updated_at
       FROM identity_key ik
         JOIN domain d ON ik.domain_id = d.id
       WHERE ik.identity_id = $1
