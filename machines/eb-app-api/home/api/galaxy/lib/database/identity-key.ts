@@ -1,5 +1,5 @@
 import { fetch } from "./common.ts";
-import type { Id, IdentityKey } from "./types.ts";
+import type { Id, IdentityKey, IdentityKey333 } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 export async function getIdentityKey(identityId: string, keyId: string) {
@@ -10,21 +10,7 @@ export async function getIdentityKey(identityId: string, keyId: string) {
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
         ) as domain_url,
-        ik.enabled,
-        (d.enabled AND i.enabled
-         AND CASE d.identity_id
-               WHEN $1 THEN true
-               ELSE CASE d.public
-                      WHEN true THEN true
-                      ELSE (SELECT enabled
-                            FROM domain_partner
-                            WHERE identity_id = $1
-                              AND domain_id = d.id
-                           )
-                    END
-             END
-        ) as chain_enabled,
-        ik.created_at, ik.updated_at
+        d.enabled as domain_enabled, ik.enabled, ik.created_at, ik.updated_at
       FROM identity_key ik
         JOIN domain d ON ik.domain_id = d.id
         JOIN identity i ON d.identity_id = i.id
@@ -47,7 +33,7 @@ export async function listIdentityKey(
 ) {
   const sql = {
     text: `
-      SELECT ik.id, ik.name, ik.code, d.id as domain_id, d.name as domain_name,
+      SELECT ik.id, ik.name, ik.code, d.name as domain_name,
         (CASE d.auth_type
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
@@ -66,7 +52,7 @@ export async function listIdentityKey(
                     END
              END
         ) as chain_enabled,
-        ik.created_at, ik.updated_at
+        ik.updated_at
       FROM identity_key ik
         JOIN domain d ON ik.domain_id = d.id
       WHERE ik.identity_id = $1
@@ -79,7 +65,7 @@ export async function listIdentityKey(
     ],
   };
 
-  return await fetch(sql) as IdentityKey[];
+  return await fetch(sql) as IdentityKey333[];
 }
 
 // -----------------------------------------------------------------------------
