@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { IdentityKey } from "$lib/types";
+  import type { IdentityKey333 } from "$lib/types";
   import Add from "$lib/components/common/link-add.svelte";
   import Item from "$lib/components/pri/identity-key/list-item.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
   interface Props {
-    keys: IdentityKey[];
+    keys: IdentityKey333[];
   }
 
   let { keys }: Props = $props();

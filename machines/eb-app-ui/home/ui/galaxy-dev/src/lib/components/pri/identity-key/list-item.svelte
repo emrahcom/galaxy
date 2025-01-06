@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { IdentityKey } from "$lib/types";
+  import type { IdentityKey333 } from "$lib/types";
   import Copy from "$lib/components/common/button-copy.svelte";
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
 
   interface Props {
-    p: IdentityKey;
+    p: IdentityKey333;
   }
 
   let { p }: Props = $props();
