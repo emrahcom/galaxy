@@ -1,7 +1,7 @@
 import { fetch, pool } from "./common.ts";
 import { addCall, addCallByCode } from "./intercom-call.ts";
 import { getDomainByCodeIfAllowed, getDomainIfAllowed } from "./domain.ts";
-import { getRandomRoomName, getRoomUrl } from "./room.ts";
+import { getRandomRoomName, getRoomUrl, getRoomUrlByCode } from "./room.ts";
 import type {
   Contact,
   ContactStatus,
@@ -445,7 +445,7 @@ export async function callContactByCode(code: string, contactId: string) {
   if (!domain) throw "domain is not available";
 
   // Get the contact identity by code.
-  const contacts = await getContactIdentityByCode(contactId);
+  const contacts = await getContactIdentityByCode(code, contactId);
   const contact = contacts[0];
   if (!contact) throw "contact is not available";
   const remoteId = contact.id;
@@ -465,8 +465,8 @@ export async function callContactByCode(code: string, contactId: string) {
   } as RoomLinkset;
 
   // Get the meeting link for caller.
-  const callerUrl = await getRoomUrl(
-    identityId,
+  const callerUrl = await getRoomUrlByCode(
+    code,
     roomLinkset,
     "host",
     EXP,
