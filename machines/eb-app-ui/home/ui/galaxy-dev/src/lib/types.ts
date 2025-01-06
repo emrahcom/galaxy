@@ -160,8 +160,8 @@ export interface IdentityKey {
   domain_id: string;
   domain_name: string;
   domain_url: string;
-  domain_enabled: boolean;
   enabled: boolean;
+  chain_enabled: boolean;
   created_at: string;
   updated_at: string;
 }
