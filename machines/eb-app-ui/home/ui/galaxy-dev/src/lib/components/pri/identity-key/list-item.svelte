@@ -4,6 +4,7 @@
   import Del from "$lib/components/common/link-del.svelte";
   import Disable from "$lib/components/common/link-disable.svelte";
   import Enable from "$lib/components/common/link-enable.svelte";
+  import Update from "$lib/components/common/link-update.svelte";
 
   interface Props {
     p: IdentityKey333;
@@ -40,6 +41,8 @@
       {:else}
         <Enable href="/pri/identity/key/enable/{p.id}" />
       {/if}
+
+      <Update href="/pri/identity/key/update/{p.id}" />
     </div>
   </div>
 </div>
