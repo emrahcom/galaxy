@@ -61,19 +61,11 @@ export async function getDomainByCodeIfAllowed(code: string) {
       WHERE code = $1
         AND ik.enabled
         AND d.enabled
-        AND (d.identity_id = (SELECT identity_id
-                              FROM identity_key
-                              WHERE code = $1
-                                AND enabled
-                             )
+        AND (d.identity_id = ik.identity_id
              OR public
              OR EXISTS (SELECT 1
                         FROM domain_partner
-                        WHERE identity_id = (SELECT identity_id
-                                             FROM identity_key
-                                             WHERE code = $1
-                                               AND enabled
-                                            )
+                        WHERE identity_id = ik.identity_id
                           AND domain_id = d.id
                        )
             )`,
