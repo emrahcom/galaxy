@@ -1,6 +1,6 @@
 import { fetch, pool } from "./common.ts";
-import { addCall } from "./intercom-call.ts";
-import { getDomainIfAllowed } from "./domain.ts";
+import { addCall, addCallByCode } from "./intercom-call.ts";
+import { getDomainByCodeIfAllowed, getDomainIfAllowed } from "./domain.ts";
 import { getRandomRoomName, getRoomUrl } from "./room.ts";
 import type {
   Contact,
@@ -78,6 +78,30 @@ export async function getContactIdentity(
         AND identity_id = $1`,
     args: [
       identityId,
+      contactId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
+export async function getContactIdentityByCode(
+  code: string,
+  contactId: string,
+) {
+  const sql = {
+    text: `
+      SELECT remote_id as Id, created_at
+      FROM contact
+      WHERE id = $2
+        AND identity_id = (SELECT identity_id
+                           FROM identity_key
+                           WHERE code = $1
+                             AND enabled
+                          )`,
+    args: [
+      code,
       contactId,
     ],
   };
@@ -407,6 +431,53 @@ export async function callContact(
 
   // Create the intercom message to initialize the direct call.
   const calls = await addCall(identityId, remoteId, callAttr);
+  const call = calls[0];
+  if (!call) throw "call cannot be created";
+
+  return [{ id: call.id, url: callerUrl }] as IntercomCall[];
+}
+
+// -----------------------------------------------------------------------------
+export async function callContactByCode(code: string, contactId: string) {
+  // Get the domain by code if allowed.
+  const domains = await getDomainByCodeIfAllowed(code);
+  const domain = domains[0];
+  if (!domain) throw "domain is not available";
+
+  // Get the contact identity by code.
+  const contacts = await getContactIdentityByCode(contactId);
+  const contact = contacts[0];
+  if (!contact) throw "contact is not available";
+  const remoteId = contact.id;
+
+  // Get the room (with a random name and suffix) for the direct call.
+  const randomRooms = await getRandomRoomName("call-");
+  const randomRoom = randomRooms[0];
+  if (!randomRoom) throw "no room for the call";
+
+  // The linkset for the call.
+  const roomLinkset = {
+    name: randomRoom.name,
+    has_suffix: true,
+    suffix: randomRoom.suffix,
+    auth_type: domain.auth_type,
+    domain_attr: domain.domain_attr,
+  } as RoomLinkset;
+
+  // Get the meeting link for caller.
+  const callerUrl = await getRoomUrl(
+    identityId,
+    roomLinkset,
+    "host",
+    EXP,
+    HASH,
+  );
+  // Get the meeting link for the callee.
+  const calleeUrl = await getRoomUrl(remoteId, roomLinkset, "guest", EXP, HASH);
+  const callAttr = { url: calleeUrl };
+
+  // Create the intercom message to initialize the direct call.
+  const calls = await addCallByCode(code, remoteId, callAttr);
   const call = calls[0];
   if (!call) throw "call cannot be created";
 
