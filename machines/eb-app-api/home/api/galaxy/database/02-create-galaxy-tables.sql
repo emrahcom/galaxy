@@ -552,6 +552,29 @@ CREATE INDEX ON meeting_session("ended_at");
 ALTER TABLE meeting_session OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
+-- IDENTITY_KEY
+-- -----------------------------------------------------------------------------
+-- - Identity key allows users to access private data or to perform some
+--   actions without logging in.
+-- - Domain id points to the default domain for user actions performed with a
+--   private key that require a domain.
+-- -----------------------------------------------------------------------------
+CREATE TABLE identity_key (
+    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
+    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
+    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
+    "name" varchar(250) NOT NULL,
+    "code" varchar(250) NOT NULL
+        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
+    "enabled" boolean NOT NULL DEFAULT true,
+    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
+    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
+);
+CREATE UNIQUE INDEX ON identity_key("code");
+CREATE INDEX ON identity_key("identity_id", "name");
+ALTER TABLE identity_key OWNER TO galaxy;
+
+-- -----------------------------------------------------------------------------
 -- PHONE
 -- -----------------------------------------------------------------------------
 -- - Profile will be the default one programatically if the selected one is
@@ -621,29 +644,6 @@ CREATE TABLE intercom (
 CREATE INDEX ON intercom("remote_id", "expired_at");
 CREATE INDEX ON intercom("expired_at");
 ALTER TABLE intercom OWNER TO galaxy;
-
--- -----------------------------------------------------------------------------
--- IDENTITY_KEY
--- -----------------------------------------------------------------------------
--- - Identity key allows users to access private data or to perform some
---   actions without logging in.
--- - Domain id points to the default domain for user actions performed with a
---   private key that require a domain.
--- -----------------------------------------------------------------------------
-CREATE TABLE identity_key (
-    "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
-    "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
-    "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
-    "name" varchar(250) NOT NULL,
-    "code" varchar(250) NOT NULL
-        DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
-    "enabled" boolean NOT NULL DEFAULT true,
-    "created_at" timestamp with time zone NOT NULL DEFAULT now(),
-    "updated_at" timestamp with time zone NOT NULL DEFAULT now()
-);
-CREATE UNIQUE INDEX ON identity_key("code");
-CREATE INDEX ON identity_key("identity_id", "name");
-ALTER TABLE identity_key OWNER TO galaxy;
 
 -- -----------------------------------------------------------------------------
 COMMIT;
