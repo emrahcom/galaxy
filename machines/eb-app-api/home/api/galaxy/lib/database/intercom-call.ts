@@ -26,6 +26,34 @@ export async function addCall(
 }
 
 // -----------------------------------------------------------------------------
+export async function addCallByCode(
+  code: string,
+  remoteId: string,
+  callAttr: Attr,
+) {
+  const sql = {
+    text: `
+      INSERT INTO intercom (identity_id, remote_id, status, message_type,
+        intercom_attr)
+      VALUES (
+        (SELECT identity_id
+         FROM identity_key
+         WHERE code = $1
+           AND enabled
+        ),
+        $2, 'none', 'call', $3::jsonb)
+      RETURNING id, created_at as at`,
+    args: [
+      code,
+      remoteId,
+      callAttr,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 // Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
 export async function addPhoneCall(code: string, callAttr: Attr) {
