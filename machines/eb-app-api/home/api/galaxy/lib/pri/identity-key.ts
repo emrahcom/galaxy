@@ -6,6 +6,7 @@ import {
   delIdentityKey,
   getIdentityKey,
   listIdentityKey,
+  updateIdentityKey,
   updateIdentityKeyEnabled,
 } from "../database/identity-key.ts";
 
@@ -31,9 +32,10 @@ async function list(req: Request, identityId: string): Promise<unknown> {
 // -----------------------------------------------------------------------------
 async function add(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
+  const domainId = pl.domain_id;
   const name = pl.name;
 
-  return await addIdentityKey(identityId, name);
+  return await addIdentityKey(identityId, domainId, name);
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +44,16 @@ async function del(req: Request, identityId: string): Promise<unknown> {
   const keyId = pl.id;
 
   return await delIdentityKey(identityId, keyId);
+}
+
+// -----------------------------------------------------------------------------
+async function update(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const keyId = pl.id;
+  const domainId = pl.domain_id;
+  const name = pl.name;
+
+  return await updateIdentityKey(identityId, keyId, domainId, name);
 }
 
 // -----------------------------------------------------------------------------
@@ -74,6 +86,8 @@ export default async function (
     return await wrapper(add, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
+  } else if (path === `${PRE}/update`) {
+    return await wrapper(update, req, identityId);
   } else if (path === `${PRE}/enable`) {
     return await wrapper(enable, req, identityId);
   } else if (path === `${PRE}/disable`) {
