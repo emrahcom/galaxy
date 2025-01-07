@@ -7,7 +7,7 @@ import {
   listIntercomByCode,
   setStatusIntercomByCode,
 } from "../database/intercom.ts";
-import { ringPhone } from "../database/intercom-call.ts";
+import { ringCallByCode, ringPhoneByCode } from "../database/intercom-call.ts";
 
 const PRE = "/api/pub/intercom";
 
@@ -58,12 +58,21 @@ async function del(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function ring(req: Request): Promise<unknown> {
+async function ringCall(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
   const intercomId = pl.id;
 
-  return await ringPhone(code, intercomId);
+  return await ringCallByCode(code, intercomId);
+}
+
+// -----------------------------------------------------------------------------
+async function ringPhone(req: Request): Promise<unknown> {
+  const pl = await req.json();
+  const code = pl.code;
+  const intercomId = pl.id;
+
+  return await ringPhoneByCode(code, intercomId);
 }
 
 // -----------------------------------------------------------------------------
@@ -78,8 +87,10 @@ export default async function (req: Request, path: string): Promise<Response> {
     return await wrapper(setAccepted, req);
   } else if (path === `${PRE}/set/rejected`) {
     return await wrapper(setRejected, req);
+  } else if (path === `${PRE}/call/ring`) {
+    return await wrapper(ringCall, req);
   } else if (path === `${PRE}/phone/ring`) {
-    return await wrapper(ring, req);
+    return await wrapper(ringPhone, req);
   } else {
     return notFound();
   }
