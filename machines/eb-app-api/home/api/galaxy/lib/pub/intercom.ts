@@ -7,7 +7,7 @@ import {
   listIntercomByKey,
   setStatusIntercomByKey,
 } from "../database/intercom.ts";
-import { ringCallByCode, ringPhoneByCode } from "../database/intercom-call.ts";
+import { ringCallByKey, ringPhoneByCode } from "../database/intercom-call.ts";
 
 const PRE = "/api/pub/intercom";
 
@@ -60,10 +60,10 @@ async function del(req: Request): Promise<unknown> {
 // -----------------------------------------------------------------------------
 async function ringCall(req: Request): Promise<unknown> {
   const pl = await req.json();
-  const code = pl.code;
+  const keyValue = pl.key_value;
   const intercomId = pl.id;
 
-  return await ringCallByCode(code, intercomId);
+  return await ringCallByKey(keyValue, intercomId);
 }
 
 // -----------------------------------------------------------------------------
