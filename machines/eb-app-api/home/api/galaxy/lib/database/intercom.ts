@@ -114,8 +114,8 @@ export async function listIntercom(
 // -----------------------------------------------------------------------------
 // Consumer is the callee with an identity key.
 // -----------------------------------------------------------------------------
-export async function listIntercomByCode(
-  code: string,
+export async function listIntercomByKey(
+  keyValue: string,
   limit: number,
   offset: number,
 ) {
@@ -130,14 +130,14 @@ export async function listIntercomByCode(
                                 AND co.remote_id = ic.identity_id
       WHERE ic.remote_id = (SELECT identity_id
                             FROM identity_key
-                            WHERE code = $1
+                            WHERE value = $1
                               AND enabled
                            )
         AND expired_at > now()
         AND status = 'none'
       LIMIT $2 OFFSET $3`,
     args: [
-      code,
+      keyValue,
       limit,
       offset,
     ],
@@ -217,8 +217,8 @@ export async function setStatusIntercom(
 // -----------------------------------------------------------------------------
 // Consumer is the callee with an identity key.
 // -----------------------------------------------------------------------------
-export async function setStatusIntercomByCode(
-  code: string,
+export async function setStatusIntercomByKey(
+  keyValue: string,
   intercomId: string,
   status: IntercomStatus,
 ) {
@@ -229,12 +229,12 @@ export async function setStatusIntercomByCode(
       WHERE id = $2
         AND remote_id = (SELECT identity_id
                          FROM identity_key
-                         WHERE code = $1
+                         WHERE value = $1
                            AND enabled
                         )
       RETURNING id, now() as at`,
     args: [
-      code,
+      keyValue,
       intercomId,
       status,
     ],
