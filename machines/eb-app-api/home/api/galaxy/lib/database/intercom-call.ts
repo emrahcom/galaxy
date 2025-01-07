@@ -104,9 +104,32 @@ export async function ringCall(identityId: string, intercomId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function ringCallByCode(code: string, intercomId: string) {
+  const sql = {
+    text: `
+      UPDATE intercom
+      SET
+        expired_at = now() + interval '10 seconds'
+      WHERE id = $2
+        AND identity_id = (SELECT identity_id
+                           FROM identity_key
+                           WHERE code = $1
+                             AND enabled
+                          )
+      RETURNING id, status`,
+    args: [
+      code,
+      intercomId,
+    ],
+  };
+
+  return await fetch(sql) as IntercomRing[];
+}
+
+// -----------------------------------------------------------------------------
 // Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
-export async function ringPhone(code: string, intercomId: string) {
+export async function ringPhoneByCode(code: string, intercomId: string) {
   const sql = {
     text: `
       UPDATE intercom
