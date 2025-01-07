@@ -12,11 +12,11 @@
 
   let { p }: Props = $props();
 
-  const shadowedCode = p.code.slice(0, 2) + "*****" + p.code.slice(-2);
+  const shadowedKey = p.value.slice(0, 2) + "*****" + p.value.slice(-2);
 
   // ---------------------------------------------------------------------------
-  function copy(code: string) {
-    navigator.clipboard.writeText(code);
+  function copy(keyValue: string) {
+    navigator.clipboard.writeText(keyValue);
   }
 </script>
 
@@ -26,10 +26,10 @@
     <div class="card-body text-center">
       <h5 class="card-title text-muted">{p.name}</h5>
 
-      <p class="card-text text-muted">{shadowedCode}</p>
+      <p class="card-text text-muted">{shadowedKey}</p>
 
       {#if p.enabled && p.chain_enabled}
-        <Copy label="copy" onclick={() => copy(p.code)} />
+        <Copy label="copy" onclick={() => copy(p.value)} />
       {/if}
     </div>
 
