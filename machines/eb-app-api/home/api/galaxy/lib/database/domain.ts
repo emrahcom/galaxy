@@ -49,16 +49,16 @@ export async function getDomainIfAllowed(identityId: string, domainId: string) {
 }
 
 // -----------------------------------------------------------------------------
-// This function returns the domain for the code (identity key).
+// This function returns the domain for the identity key.
 // -----------------------------------------------------------------------------
-export async function getDomainByCodeIfAllowed(code: string) {
+export async function getDomainByKeyIfAllowed(keyValue: string) {
   const sql = {
     text: `
       SELECT d.id, d.name, auth_type, domain_attr, d.enabled, d.created_at,
         d.updated_at
       FROM identity_key ik
         JOIN domain d ON d.id = ik.domain_id
-      WHERE code = $1
+      WHERE value = $1
         AND ik.enabled
         AND d.enabled
         AND (d.identity_id = ik.identity_id
@@ -70,7 +70,7 @@ export async function getDomainByCodeIfAllowed(code: string) {
                        )
             )`,
     args: [
-      code,
+      keyValue,
     ],
   };
 
