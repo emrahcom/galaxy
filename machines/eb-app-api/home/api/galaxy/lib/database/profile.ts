@@ -36,20 +36,20 @@ export async function getDefaultProfile(identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function getDefaultProfileByCode(code: string) {
+export async function getDefaultProfileByKey(keyValue: string) {
   const sql = {
     text: `
       SELECT id, name, email, is_default, created_at, updated_at
       FROM profile
       WHERE identity_id = (SELECT identity_id
                            FROM identity_key
-                           WHERE code = $1
+                           WHERE value = $1
                              AND enabled
                           )
         AND is_default
       LIMIT 1`,
     args: [
-      code,
+      keyValue,
     ],
   };
 
