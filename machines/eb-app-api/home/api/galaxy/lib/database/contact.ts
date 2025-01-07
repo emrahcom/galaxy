@@ -1,7 +1,7 @@
 import { fetch, pool } from "./common.ts";
-import { addCall, addCallByCode } from "./intercom-call.ts";
-import { getDomainByCodeIfAllowed, getDomainIfAllowed } from "./domain.ts";
-import { getRandomRoomName, getRoomUrl, getRoomUrlByCode } from "./room.ts";
+import { addCall, addCallByKey } from "./intercom-call.ts";
+import { getDomainByKeyIfAllowed, getDomainIfAllowed } from "./domain.ts";
+import { getRandomRoomName, getRoomUrl, getRoomUrlByKey } from "./room.ts";
 import type {
   Contact,
   ContactStatus,
@@ -86,8 +86,8 @@ export async function getContactIdentity(
 }
 
 // -----------------------------------------------------------------------------
-export async function getContactIdentityByCode(
-  code: string,
+export async function getContactIdentityByKey(
+  keyValue: string,
   contactId: string,
 ) {
   const sql = {
@@ -97,11 +97,11 @@ export async function getContactIdentityByCode(
       WHERE id = $2
         AND identity_id = (SELECT identity_id
                            FROM identity_key
-                           WHERE code = $1
+                           WHERE value = $1
                              AND enabled
                           )`,
     args: [
-      code,
+      keyValue,
       contactId,
     ],
   };
@@ -140,8 +140,8 @@ export async function listContact(
 // -----------------------------------------------------------------------------
 // Consumer is the user with an identity key.
 // -----------------------------------------------------------------------------
-export async function listContactByCode(
-  code: string,
+export async function listContactByKey(
+  keyValue: string,
   limit: number,
   offset: number,
 ) {
@@ -156,13 +156,13 @@ export async function listContactByCode(
                                 AND pr.is_default
       WHERE co.identity_id = (SELECT identity_id
                               FROM identity_key
-                              WHERE code = $1
+                              WHERE value = $1
                                 AND enabled
                              )
       ORDER BY name, profile_name, profile_email
       LIMIT $2 OFFSET $3`,
     args: [
-      code,
+      keyValue,
       limit,
       offset,
     ],
@@ -438,14 +438,14 @@ export async function callContact(
 }
 
 // -----------------------------------------------------------------------------
-export async function callContactByCode(code: string, contactId: string) {
-  // Get the domain by code if allowed.
-  const domains = await getDomainByCodeIfAllowed(code);
+export async function callContactByKey(keyValue: string, contactId: string) {
+  // Get the domain by identity key if allowed.
+  const domains = await getDomainByKeyIfAllowed(keyValue);
   const domain = domains[0];
   if (!domain) throw "domain is not available";
 
-  // Get the contact identity by code.
-  const contacts = await getContactIdentityByCode(code, contactId);
+  // Get the contact identity by identity key.
+  const contacts = await getContactIdentityByKey(keyValue, contactId);
   const contact = contacts[0];
   if (!contact) throw "contact is not available";
   const remoteId = contact.id;
@@ -465,8 +465,8 @@ export async function callContactByCode(code: string, contactId: string) {
   } as RoomLinkset;
 
   // Get the meeting link for caller.
-  const callerUrl = await getRoomUrlByCode(
-    code,
+  const callerUrl = await getRoomUrlByKey(
+    keyValue,
     roomLinkset,
     "host",
     EXP,
@@ -477,7 +477,7 @@ export async function callContactByCode(code: string, contactId: string) {
   const callAttr = { url: calleeUrl };
 
   // Create the intercom message to initialize the direct call.
-  const calls = await addCallByCode(code, remoteId, callAttr);
+  const calls = await addCallByKey(keyValue, remoteId, callAttr);
   const call = calls[0];
   if (!call) throw "call cannot be created";
 
