@@ -275,14 +275,14 @@ async function migrateTo2024122201() {
        "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
        "domain_id" uuid NOT NULL REFERENCES domain(id) ON DELETE CASCADE,
        "name" varchar(250) NOT NULL,
-       "code" varchar(250) NOT NULL
+       "value" varchar(250) NOT NULL
          DEFAULT md5(random()::text) || md5(gen_random_uuid()::text),
        "enabled" boolean NOT NULL DEFAULT true,
        "created_at" timestamp with time zone NOT NULL DEFAULT now(),
        "updated_at" timestamp with time zone NOT NULL DEFAULT now()
      )`,
 
-    `CREATE UNIQUE INDEX ON identity_key("code")`,
+    `CREATE UNIQUE INDEX ON identity_key("value")`,
 
     `CREATE INDEX ON identity_key("identity_id", "name")`,
   ];

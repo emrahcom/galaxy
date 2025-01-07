@@ -570,7 +570,7 @@ CREATE TABLE identity_key (
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
-CREATE UNIQUE INDEX ON identity_key("code");
+CREATE UNIQUE INDEX ON identity_key("value");
 CREATE INDEX ON identity_key("identity_id", "name");
 ALTER TABLE identity_key OWNER TO galaxy;
 
