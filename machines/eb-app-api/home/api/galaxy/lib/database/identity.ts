@@ -77,7 +77,7 @@ export async function updatePresence(identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function updatePresenceByCode(code: string) {
+export async function updatePresenceByKey(keyValue: string) {
   const sql = {
     text: `
       UPDATE identity
@@ -85,12 +85,12 @@ export async function updatePresenceByCode(code: string) {
         seen_at = now()
       WHERE id = (SELECT identity_id
                   FROM identity_key
-                  WHERE code = $1
+                  WHERE value = $1
                     AND enabled
                  )
       RETURNING id, seen_at as at`,
     args: [
-      code,
+      keyValue,
     ],
   };
 
