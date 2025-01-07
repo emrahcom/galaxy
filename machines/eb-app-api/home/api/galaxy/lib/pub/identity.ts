@@ -1,15 +1,15 @@
 import { notFound } from "../http/response.ts";
 import { pub as wrapper } from "../http/wrapper.ts";
-import { updatePresenceByCode } from "../database/identity.ts";
+import { updatePresenceByKey } from "../database/identity.ts";
 
 const PRE = "/api/pub/identity";
 
 // -----------------------------------------------------------------------------
 async function ping(req: Request): Promise<unknown> {
   const pl = await req.json();
-  const code = pl.code;
+  const keyValue = pl.key_value;
 
-  return await updatePresenceByCode(code);
+  return await updatePresenceByKey(keyValue);
 }
 
 // -----------------------------------------------------------------------------
