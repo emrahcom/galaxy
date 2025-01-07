@@ -4,8 +4,8 @@ import { pub as wrapper } from "../http/wrapper.ts";
 import {
   delIntercomByCode,
   getIntercomAttrByCode,
-  listIntercomByCode,
-  setStatusIntercomByCode,
+  listIntercomByKey,
+  setStatusIntercomByKey,
 } from "../database/intercom.ts";
 import { ringCallByCode, ringPhoneByCode } from "../database/intercom-call.ts";
 
@@ -23,29 +23,29 @@ async function getAttr(req: Request): Promise<unknown> {
 // -----------------------------------------------------------------------------
 async function list(req: Request): Promise<unknown> {
   const pl = await req.json();
-  const code = pl.code;
+  const keyValue = pl.key_value;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listIntercomByCode(code, limit, offset);
+  return await listIntercomByKey(keyValue, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
 async function setAccepted(req: Request): Promise<unknown> {
   const pl = await req.json();
-  const code = pl.code;
+  const keyValue = pl.key_value;
   const intercomId = pl.id;
 
-  return await setStatusIntercomByCode(code, intercomId, "accepted");
+  return await setStatusIntercomByKey(keyValue, intercomId, "accepted");
 }
 
 // -----------------------------------------------------------------------------
 async function setRejected(req: Request): Promise<unknown> {
   const pl = await req.json();
-  const code = pl.code;
+  const keyValue = pl.key_value;
   const intercomId = pl.id;
 
-  return await setStatusIntercomByCode(code, intercomId, "rejected");
+  return await setStatusIntercomByKey(keyValue, intercomId, "rejected");
 }
 
 // -----------------------------------------------------------------------------
