@@ -26,8 +26,10 @@ export async function addCall(
 }
 
 // -----------------------------------------------------------------------------
-export async function addCallByCode(
-  code: string,
+// Consumer is the owner with an identity key.
+// -----------------------------------------------------------------------------
+export async function addCallByKey(
+  keyValue: string,
   remoteId: string,
   callAttr: Attr,
 ) {
@@ -38,13 +40,13 @@ export async function addCallByCode(
       VALUES (
         (SELECT identity_id
          FROM identity_key
-         WHERE code = $1
+         WHERE value = $1
            AND enabled
         ),
         $2, 'none', 'call', $3::jsonb)
       RETURNING id, created_at as at`,
     args: [
-      code,
+      keyValue,
       remoteId,
       callAttr,
     ],
@@ -104,7 +106,9 @@ export async function ringCall(identityId: string, intercomId: string) {
 }
 
 // -----------------------------------------------------------------------------
-export async function ringCallByCode(code: string, intercomId: string) {
+// Consumer is the owner with an identity key.
+// -----------------------------------------------------------------------------
+export async function ringCallByKey(keyValue: string, intercomId: string) {
   const sql = {
     text: `
       UPDATE intercom
@@ -113,12 +117,12 @@ export async function ringCallByCode(code: string, intercomId: string) {
       WHERE id = $2
         AND identity_id = (SELECT identity_id
                            FROM identity_key
-                           WHERE code = $1
+                           WHERE value = $1
                              AND enabled
                           )
       RETURNING id, status`,
     args: [
-      code,
+      keyValue,
       intercomId,
     ],
   };
