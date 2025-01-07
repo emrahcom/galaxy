@@ -5,7 +5,7 @@ import type { Id, IdentityKey, IdentityKey333 } from "./types.ts";
 export async function getIdentityKey(identityId: string, keyId: string) {
   const sql = {
     text: `
-      SELECT ik.id, ik.name, ik.code, d.id as domain_id, d.name as domain_name,
+      SELECT ik.id, ik.name, ik.value, d.id as domain_id, d.name as domain_name,
         (CASE d.auth_type
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
@@ -33,7 +33,7 @@ export async function listIdentityKey(
 ) {
   const sql = {
     text: `
-      SELECT ik.id, ik.name, ik.code, d.name as domain_name,
+      SELECT ik.id, ik.name, ik.value, d.name as domain_name,
         (CASE d.auth_type
            WHEN 'jaas' THEN d.domain_attr->>'jaas_url'
            ELSE d.domain_attr->>'url'
