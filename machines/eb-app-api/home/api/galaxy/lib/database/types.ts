@@ -169,7 +169,7 @@ export interface Identity {
 export interface IdentityKey {
   id: string;
   name: string;
-  code: string;
+  value: string;
   domain_id: string;
   domain_name: string;
   domain_url: string;
@@ -183,7 +183,7 @@ export interface IdentityKey {
 export interface IdentityKey333 {
   id: string;
   name: string;
-  code: string;
+  value: string;
   domain_name: string;
   domain_url: string;
   enabled: boolean;
