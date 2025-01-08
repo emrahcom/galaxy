@@ -5,7 +5,7 @@ import { updatePresenceByKey } from "../database/identity.ts";
 const PRE = "/api/pub/identity";
 
 // -----------------------------------------------------------------------------
-async function ping(req: Request): Promise<unknown> {
+async function pingByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
 
@@ -14,8 +14,8 @@ async function ping(req: Request): Promise<unknown> {
 
 // -----------------------------------------------------------------------------
 export default async function (req: Request, path: string): Promise<Response> {
-  if (path === `${PRE}/ping`) {
-    return await wrapper(ping, req);
+  if (path === `${PRE}/ping/bykey`) {
+    return await wrapper(pingByKey, req);
   } else {
     return notFound();
   }
