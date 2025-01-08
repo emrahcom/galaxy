@@ -41,6 +41,28 @@ export async function getIdentityByCode(code: string) {
 }
 
 // -----------------------------------------------------------------------------
+// The consumer is internal while processing requests from a user accessing by
+// using an identity key.
+// -----------------------------------------------------------------------------
+export async function getIdentityByKey(keyValue: string) {
+  const sql = {
+    text: `
+      SELECT id, identity_attr, enabled, created_at, updated_at, seen_at
+      FROM identity
+      WHERE id = (SELECT identity_id
+                  FROM identity_key
+                  WHERE value = $1
+                    AND enabled
+                 )`,
+    args: [
+      keyValue,
+    ],
+  };
+
+  return await fetch(sql) as Identity[];
+}
+
+// -----------------------------------------------------------------------------
 export async function setIdentityEmail(identityId: string, email: string) {
   const sql = {
     text: `
