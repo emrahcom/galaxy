@@ -5,7 +5,7 @@ import type { Id, Identity } from "./types.ts";
 export async function getIdentity(identityId: string) {
   const sql = {
     text: `
-      SELECT identity_attr, enabled, created_at, updated_at, seen_at
+      SELECT id, identity_attr, enabled, created_at, updated_at, seen_at
       FROM identity
       WHERE id = $1`,
     args: [
@@ -20,10 +20,10 @@ export async function getIdentity(identityId: string) {
 // The consumer is the mailer. So, dont return the identity if the email for
 // this phone is disabled.
 // -----------------------------------------------------------------------------
-export async function getIdentityByPhoneCode(code: string) {
+export async function getIdentityByCode(code: string) {
   const sql = {
     text: `
-      SELECT identity_attr, i.enabled, i.created_at, i.updated_at, seen_at
+      SELECT i.id, identity_attr, i.enabled, i.created_at, i.updated_at, seen_at
       FROM identity i
         JOIN phone ph ON ph.identity_id = i.id
                          AND ph.code = $1
