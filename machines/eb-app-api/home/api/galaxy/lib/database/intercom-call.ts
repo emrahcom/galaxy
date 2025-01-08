@@ -58,7 +58,7 @@ export async function addCallByKey(
 // -----------------------------------------------------------------------------
 // Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
-export async function addPhoneCall(code: string, callAttr: Attr) {
+export async function addPhoneCallByCode(code: string, callAttr: Attr) {
   const sql = {
     text: `
       INSERT INTO intercom (identity_id, remote_id, status, message_type,
