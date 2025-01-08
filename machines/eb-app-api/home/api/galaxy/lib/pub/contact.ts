@@ -6,7 +6,7 @@ import { callContactByKey, listContactByKey } from "../database/contact.ts";
 const PRE = "/api/pub/contact";
 
 // -----------------------------------------------------------------------------
-async function list(req: Request): Promise<unknown> {
+async function listByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
   const limit = getLimit(pl.limit);
@@ -16,7 +16,7 @@ async function list(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function call(req: Request): Promise<unknown> {
+async function callByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
   const contactId = pl.contact_id;
@@ -26,10 +26,10 @@ async function call(req: Request): Promise<unknown> {
 
 // -----------------------------------------------------------------------------
 export default async function (req: Request, path: string): Promise<Response> {
-  if (path === `${PRE}/list`) {
-    return await wrapper(list, req);
-  } else if (path === `${PRE}/call`) {
-    return await wrapper(call, req);
+  if (path === `${PRE}/list/bykey`) {
+    return await wrapper(listByKey, req);
+  } else if (path === `${PRE}/call/bykey`) {
+    return await wrapper(callByKey, req);
   } else {
     return notFound();
   }
