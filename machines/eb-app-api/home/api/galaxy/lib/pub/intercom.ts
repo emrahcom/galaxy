@@ -12,7 +12,7 @@ import { ringCallByKey, ringPhoneByCode } from "../database/intercom-call.ts";
 const PRE = "/api/pub/intercom";
 
 // -----------------------------------------------------------------------------
-async function getAttr(req: Request): Promise<unknown> {
+async function getAttrByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
   const intercomId = pl.id;
@@ -21,7 +21,7 @@ async function getAttr(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function list(req: Request): Promise<unknown> {
+async function listByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
   const limit = getLimit(pl.limit);
@@ -31,7 +31,7 @@ async function list(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function setAccepted(req: Request): Promise<unknown> {
+async function setAcceptedByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
   const intercomId = pl.id;
@@ -40,7 +40,7 @@ async function setAccepted(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function setRejected(req: Request): Promise<unknown> {
+async function setRejectedByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
   const intercomId = pl.id;
@@ -49,7 +49,7 @@ async function setRejected(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function del(req: Request): Promise<unknown> {
+async function delByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
   const intercomId = pl.id;
@@ -58,7 +58,7 @@ async function del(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function ringCall(req: Request): Promise<unknown> {
+async function ringByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
   const intercomId = pl.id;
@@ -67,7 +67,7 @@ async function ringCall(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
-async function ringPhone(req: Request): Promise<unknown> {
+async function ringByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
   const intercomId = pl.id;
@@ -77,20 +77,20 @@ async function ringPhone(req: Request): Promise<unknown> {
 
 // -----------------------------------------------------------------------------
 export default async function (req: Request, path: string): Promise<Response> {
-  if (path === `${PRE}/get/attr`) {
-    return await wrapper(getAttr, req);
-  } else if (path === `${PRE}/list`) {
-    return await wrapper(list, req);
-  } else if (path === `${PRE}/del`) {
-    return await wrapper(del, req);
-  } else if (path === `${PRE}/set/accepted`) {
-    return await wrapper(setAccepted, req);
-  } else if (path === `${PRE}/set/rejected`) {
-    return await wrapper(setRejected, req);
-  } else if (path === `${PRE}/call/ring`) {
-    return await wrapper(ringCall, req);
-  } else if (path === `${PRE}/phone/ring`) {
-    return await wrapper(ringPhone, req);
+  if (path === `${PRE}/get/attr/bycode`) {
+    return await wrapper(getAttrByCode, req);
+  } else if (path === `${PRE}/list/bykey`) {
+    return await wrapper(listByKey, req);
+  } else if (path === `${PRE}/del/bycode`) {
+    return await wrapper(delByCode, req);
+  } else if (path === `${PRE}/set/accepted/bykey`) {
+    return await wrapper(setAcceptedByKey, req);
+  } else if (path === `${PRE}/set/rejected/bykey`) {
+    return await wrapper(setRejectedByKey, req);
+  } else if (path === `${PRE}/call/ring/bykey`) {
+    return await wrapper(ringByKey, req);
+  } else if (path === `${PRE}/phone/ring/bycode`) {
+    return await wrapper(ringByCode, req);
   } else {
     return notFound();
   }
