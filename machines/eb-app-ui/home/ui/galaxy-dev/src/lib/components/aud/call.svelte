@@ -40,7 +40,7 @@
     try {
       // stop ringing if it is stopped on UI or if already a lot of attempts
       if (!inCall || ringCounter > 10) {
-        await action("/api/pub/intercom/del", payload);
+        await action("/api/pub/intercom/del/bycode", payload);
         inCall = false;
         disabled = false;
 
@@ -48,7 +48,7 @@
       }
 
       // ring and check if there is a response from the other peer
-      ring = await action("/api/pub/intercom/phone/ring", payload);
+      ring = await action("/api/pub/intercom/phone/ring/bycode", payload);
 
       // ring again after a while if still no response from the peer
       if (ring.status === "none" || ring.status === "seen") {
@@ -58,12 +58,12 @@
 
       // get the public URL if accepted
       if (ring.status === "accepted") {
-        const attr = await action("/api/pub/intercom/get/attr", payload);
+        const attr = await action("/api/pub/intercom/get/attr/bycode", payload);
         publicUrl = attr.public_url;
       }
 
       // end the call (it is accepted or rejected at this stage)
-      await action("/api/pub/intercom/del", payload);
+      await action("/api/pub/intercom/del/bycode", payload);
       inCall = false;
       disabled = false;
 
