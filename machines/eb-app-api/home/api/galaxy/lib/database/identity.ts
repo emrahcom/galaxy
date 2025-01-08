@@ -17,6 +17,28 @@ export async function getIdentity(identityId: string) {
 }
 
 // -----------------------------------------------------------------------------
+// The consumer is internal while processing requests from a user accessing by
+// using an identity key.
+// -----------------------------------------------------------------------------
+export async function getIdentityByKey(keyValue: string) {
+  const sql = {
+    text: `
+      SELECT id, identity_attr, enabled, created_at, updated_at, seen_at
+      FROM identity
+      WHERE id = (SELECT identity_id
+                  FROM identity_key
+                  WHERE value = $1
+                    AND enabled
+                 )`,
+    args: [
+      keyValue,
+    ],
+  };
+
+  return await fetch(sql) as Identity[];
+}
+
+// -----------------------------------------------------------------------------
 // The consumer is the mailer. So, dont return the identity if the email for
 // this phone is disabled.
 // -----------------------------------------------------------------------------
@@ -34,28 +56,6 @@ export async function getIdentityByCode(code: string) {
       WHERE i.enabled`,
     args: [
       code,
-    ],
-  };
-
-  return await fetch(sql) as Identity[];
-}
-
-// -----------------------------------------------------------------------------
-// The consumer is internal while processing requests from a user accessing by
-// using an identity key.
-// -----------------------------------------------------------------------------
-export async function getIdentityByKey(keyValue: string) {
-  const sql = {
-    text: `
-      SELECT id, identity_attr, enabled, created_at, updated_at, seen_at
-      FROM identity
-      WHERE id = (SELECT identity_id
-                  FROM identity_key
-                  WHERE value = $1
-                    AND enabled
-                 )`,
-    args: [
-      keyValue,
     ],
   };
 
