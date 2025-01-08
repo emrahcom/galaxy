@@ -2,7 +2,7 @@ import { fetch } from "./common.ts";
 import { mailPhoneCall } from "../common/mail.ts";
 import { generateRoomUrl } from "../common/helper.ts";
 import { getRandomRoomName } from "./room.ts";
-import { addPhoneCall } from "../database/intercom-call.ts";
+import { addPhoneCallByCode } from "../database/intercom-call.ts";
 import type {
   Id,
   Phone,
@@ -352,5 +352,5 @@ export async function callPhoneByCode(code: string) {
     phone_name: phone.name,
   };
 
-  return await addPhoneCall(code, callAttr);
+  return await addPhoneCallByCode(code, callAttr);
 }
