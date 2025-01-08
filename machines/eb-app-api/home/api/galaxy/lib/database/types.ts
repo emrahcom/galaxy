@@ -156,6 +156,7 @@ export interface Id {
 
 // -----------------------------------------------------------------------------
 export interface Identity {
+  id: string;
   identity_attr: {
     [key: string]: string;
   };
