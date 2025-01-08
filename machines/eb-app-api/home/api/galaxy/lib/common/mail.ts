@@ -1,6 +1,6 @@
 import { GALAXY_FQDN } from "../../config.ts";
 import { MAILER_FROM, MAILER_TRANSPORT_OPTIONS } from "../../config.mailer.ts";
-import { getIdentity, getIdentityByPhoneCode } from "../database/identity.ts";
+import { getIdentity, getIdentityByCode } from "../database/identity.ts";
 import {
   getContactByIdentity,
   getContactIdentity,
@@ -70,7 +70,7 @@ export async function mailMissedCall(caller: string, callee: string) {
 export async function mailPhoneCall(code: string, phoneName: string) {
   try {
     // This will not return an identity if email is disabled for this phone.
-    const ownerIdentities = await getIdentityByPhoneCode(code);
+    const ownerIdentities = await getIdentityByCode(code);
     const ownerIdentity = ownerIdentities[0];
     if (!ownerIdentity) throw "owner not found";
 
