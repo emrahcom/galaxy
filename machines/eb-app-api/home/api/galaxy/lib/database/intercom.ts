@@ -166,6 +166,29 @@ export async function delIntercom(identityId: string, intercomId: string) {
 }
 
 // -----------------------------------------------------------------------------
+// Consumer is the caller with an identity key.
+// -----------------------------------------------------------------------------
+export async function delIntercomByKey(keyValue: string, intercomId: string) {
+  const sql = {
+    text: `
+      DELETE FROM intercom
+      WHERE id = $2
+        AND identity_id = (SELECT identity_id
+                           FROM identity_key
+                           WHERE value = $1
+                             AND enabled
+                          )
+      RETURNING id, now() as at`,
+    args: [
+      keyValue,
+      intercomId,
+    ],
+  };
+
+  return await fetch(sql) as Id[];
+}
+
+// -----------------------------------------------------------------------------
 // Consumer is a public user with a public phone code.
 // -----------------------------------------------------------------------------
 export async function delIntercomByCode(code: string, intercomId: string) {
