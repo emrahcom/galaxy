@@ -1,8 +1,10 @@
 import { getLimit, getOffset } from "../database/common.ts";
 import { notFound } from "../http/response.ts";
 import { pub as wrapper } from "../http/wrapper.ts";
+import { getIdentityByKey } from "../database/intercom.ts";
 import {
   delIntercomByCode,
+  delIntercomByKey,
   getIntercomAttrByCode,
   listIntercomByKey,
   setStatusIntercomByKey,
@@ -58,6 +60,36 @@ async function delByCode(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function delByKey(req: Request): Promise<unknown> {
+  const pl = await req.json();
+  const keyValue = pl.key_value;
+  const intercomId = pl.id;
+
+  return await delIntercomByKey(keyValue, intercomId);
+}
+
+// -----------------------------------------------------------------------------
+async function delWithNotificationByKey(req: Request): Promise<unknown> {
+  const pl = await req.json();
+  const keyValue = pl.key_value;
+  const intercomId = pl.id;
+
+  const identities = await getIdentityByKey(keyValue);
+  const identity = identities[0];
+  const identityId = identity.id;
+
+  const intercomMessages = await getIntercomForOwner(identityId, intercomId);
+  const intercomMessage = intercomMessages[0];
+
+  if (intercomMessage?.remote_id) {
+    // dont wait for the async function
+    mailMissedCall(identityId, intercomMessage.remote_id);
+  }
+
+  return await delIntercomByKey(keyValue, intercomId);
+}
+
+// -----------------------------------------------------------------------------
 async function ringByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
@@ -83,6 +115,10 @@ export default async function (req: Request, path: string): Promise<Response> {
     return await wrapper(listByKey, req);
   } else if (path === `${PRE}/del/bycode`) {
     return await wrapper(delByCode, req);
+  } else if (path === `${PRE}/del/bykey`) {
+    return await wrapper(delByKey, req);
+  } else if (path === `${PRE}/del-with-notification/bykey`) {
+    return await wrapper(delWithNotificationByKey, req);
   } else if (path === `${PRE}/set/accepted/bykey`) {
     return await wrapper(setAcceptedByKey, req);
   } else if (path === `${PRE}/set/rejected/bykey`) {
