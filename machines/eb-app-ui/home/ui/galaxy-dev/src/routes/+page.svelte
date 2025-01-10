@@ -42,7 +42,7 @@
       {/if}
 
       <h4 class="text-muted small mb-5">
-        If you have any questions or feedback, please feel free to email
+        If you have any questions or feedback, please feel free to email<br />
         <span class="fw-semibold fst-italic">{contact_email}</span>
       </h4>
     </div>
