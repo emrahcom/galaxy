@@ -4,5 +4,5 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Add a virtual phone" />
+<Subheader subheader="Add a public phone" />
 <Add />

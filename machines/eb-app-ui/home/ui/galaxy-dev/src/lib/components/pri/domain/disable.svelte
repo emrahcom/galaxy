@@ -72,8 +72,8 @@
         <Warning>The disable request is not accepted.</Warning>
       {:else}
         <Warning>
-          All rooms and meetings on this domain and the virtual phones using
-          this domain will be disabled.
+          All rooms and meetings on this domain and the public phones using this
+          domain will be disabled.
         </Warning>
       {/if}
 

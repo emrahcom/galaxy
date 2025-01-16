@@ -19,7 +19,7 @@
     {:else}
       <Warning>
         There is no phone in the list. Click <Add href="/pri/phone/add" />
-        to add a new virtual phone and share its link with your friends.
+        to add a new public phone and share its link with your friends.
       </Warning>
     {/each}
   </div>

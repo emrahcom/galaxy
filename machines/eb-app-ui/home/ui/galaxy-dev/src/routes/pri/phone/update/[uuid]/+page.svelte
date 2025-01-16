@@ -9,7 +9,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Update this virtual phone" />
+<Subheader subheader="Update this public phone" />
 
 {#await pr then phone}
   <Update p={phone} />

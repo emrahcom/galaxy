@@ -9,7 +9,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Enable this virtual phone" />
+<Subheader subheader="Enable this public phone" />
 
 {#await pr then phone}
   <Enable p={phone} />

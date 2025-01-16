@@ -9,9 +9,9 @@
 
 <!-- -------------------------------------------------------------------------->
 <Subheader
-  subheader="My virtual phones"
+  subheader="My public phones"
   hrefAdd="/pri/phone/add"
-  hrefAddTitle="Add a new virtual phone"
+  hrefAddTitle="Add a new public phone"
 />
 
 {#await pr then phones}

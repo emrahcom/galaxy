@@ -9,7 +9,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<Subheader subheader="Delete this virtual phone" />
+<Subheader subheader="Delete this public phone" />
 
 {#await pr then phone}
   <Del p={phone} />

@@ -102,7 +102,7 @@
           href="/pri/phone"
           onclick={(e) => onclick("/pri/phone", e)}
         >
-          Virtual Phones
+          Public Phones
         </a>
       </li>
       <li class="nav-item">
@@ -111,7 +111,7 @@
           href="/pri/identity/key"
           onclick={(e) => onclick("/pri/identity/key", e)}
         >
-          Private keys
+          Private keys (for extension)
         </a>
       </li>
     </ul>
