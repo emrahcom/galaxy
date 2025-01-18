@@ -12,6 +12,11 @@ This version has a built-in identity management system. Check
 Try `Galaxy` using publicly available implementation on
 [https://eparto.net](https://eparto.net)
 
+Also check out
+[Eparto Virtual Phone](https://github.com/emrahcom/eparto-virtual-phone) if you
+want to use your browser as a virtual phone and make calls directly, without
+needing to open any websites.
+
 ### Features
 
 - Built-in highly secure identity management system. No need for external
