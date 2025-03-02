@@ -1,16 +1,16 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@emrahcom/jwt@*": "0.4.0",
+    "jsr:@emrahcom/jwt@*": "0.4.1",
     "jsr:@std/encoding@*": "1.0.7",
-    "jsr:@std/encoding@^1.0.5": "1.0.7",
-    "npm:nodemailer@*": "6.9.16"
+    "jsr:@std/encoding@^1.0.7": "1.0.7",
+    "npm:nodemailer@*": "6.10.0"
   },
   "jsr": {
-    "@emrahcom/jwt@0.4.0": {
-      "integrity": "efcffdaa5096531c36fc54be9e61e14dfc971b129dbefba857e7b05c6730c6fa",
+    "@emrahcom/jwt@0.4.1": {
+      "integrity": "c5da5c11b6f710768cce907bba3308ddd3c9d7cdc265f1b652a03f35c70fc738",
       "dependencies": [
-        "jsr:@std/encoding@^1.0.5"
+        "jsr:@std/encoding@^1.0.7"
       ]
     },
     "@std/encoding@1.0.7": {
@@ -18,8 +18,8 @@
     }
   },
   "npm": {
-    "nodemailer@6.9.16": {
-      "integrity": "sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ=="
+    "nodemailer@6.10.0": {
+      "integrity": "sha512-SQ3wZCExjeSatLE/HBaXS5vqUOQk6GtBdIIKxiFdmm01mOQZX/POJkO3SUX1wDiYcwUOJwT23scFSC9fY2H8IA=="
     }
   },
   "remote": {
