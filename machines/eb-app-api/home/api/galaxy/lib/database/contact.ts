@@ -159,6 +159,7 @@ export async function listContactByKey(
                               WHERE value = $1
                                 AND enabled
                              )
+        AND co.visible
       ORDER BY name, profile_name, profile_email
       LIMIT $2 OFFSET $3`,
     args: [
