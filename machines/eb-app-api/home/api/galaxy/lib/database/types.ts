@@ -26,6 +26,7 @@ export interface Contact {
   name: string;
   profile_name: string;
   profile_email: string;
+  visible: boolean;
   created_at: string;
   updated_at: string;
   seen_second_ago: number;
