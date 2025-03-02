@@ -210,6 +210,14 @@ EOS
 
 lxc-attach -n $MACH -- zsh <<EOS
 set -e
+
+su -l api -s /bin/sh <<EOSS
+    (cd  /home/api/galaxy; deno install)
+    deno cache /home/api/galaxy/index-adm.ts
+    deno cache /home/api/galaxy/index-pri.ts
+    deno cache /home/api/galaxy/index-pub.ts
+EOSS
+
 su -l api-adm -s /bin/sh <<EOSS
     deno cache /home/api/galaxy/index-adm.ts
 EOSS
@@ -219,12 +227,6 @@ su -l api-pri -s /bin/sh <<EOSS
 EOSS
 
 su -l api-pub -s /bin/sh <<EOSS
-    deno cache /home/api/galaxy/index-pub.ts
-EOSS
-
-su -l api -s /bin/sh <<EOSS
-    deno cache /home/api/galaxy/index-adm.ts
-    deno cache /home/api/galaxy/index-pri.ts
     deno cache /home/api/galaxy/index-pub.ts
 EOSS
 EOS
