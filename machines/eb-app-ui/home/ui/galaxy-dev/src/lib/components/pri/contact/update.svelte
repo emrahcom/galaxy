@@ -6,6 +6,7 @@
   import Email from "$lib/components/common/form-email.svelte";
   import Submit from "$lib/components/common/button-submit.svelte";
   import SubmitBlocker from "$lib/components/common/button-submit-blocker.svelte";
+  import Switch from "$lib/components/common/form-switch.svelte";
   import Text from "$lib/components/common/form-text.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
@@ -56,6 +57,11 @@
         value={p.profile_email || ""}
         disabled={true}
         readonly={true}
+      />
+      <Switch
+        name="visible"
+        label="Show in the contact list of the browser extension"
+        bind:value={p.visible}
       />
 
       {#if warning}
