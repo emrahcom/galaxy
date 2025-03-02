@@ -367,12 +367,14 @@ export async function updateContact(
   identityId: string,
   contactId: string,
   name: string,
+  visible: boolean,
 ) {
   const sql = {
     text: `
       UPDATE contact
       SET
         name = $3,
+        visible = $4,
         updated_at = now()
       WHERE id = $2
         AND identity_id = $1
@@ -381,6 +383,7 @@ export async function updateContact(
       identityId,
       contactId,
       name,
+      visible,
     ],
   };
 
