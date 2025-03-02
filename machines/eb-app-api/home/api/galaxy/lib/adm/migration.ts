@@ -291,6 +291,18 @@ async function migrateTo2024122201() {
 }
 
 // -----------------------------------------------------------------------------
+async function migrateTo2025030201() {
+  const upgradeTo = "20250302.01";
+  const sqls = [
+    `ALTER TABLE contact
+       ADD COLUMN IF NOT EXISTS
+         "visible" boolean NOT NULL DEFAULT true`,
+  ];
+
+  await migrateTo(upgradeTo, sqls);
+}
+
+// -----------------------------------------------------------------------------
 export default async function () {
   console.log("migration...");
 
@@ -305,4 +317,5 @@ export default async function () {
   await migrateTo2024112301();
   await migrateTo2024120701();
   await migrateTo2024122201();
+  await migrateTo2025030201();
 }
