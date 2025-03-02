@@ -86,12 +86,14 @@ ALTER TABLE profile OWNER TO galaxy;
 --   the contact, delete the other party's contact too.
 -- - Deleting contact works like blocking. A user cannot offer partnership to a
 --   registered user or call her if she is not in their contact list.
+-- - Browser extension lists only visible contacts.
 -- -----------------------------------------------------------------------------
 CREATE TABLE contact (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
     "identity_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "remote_id" uuid NOT NULL REFERENCES identity(id) ON DELETE CASCADE,
     "name" varchar(250) NOT NULL,
+    "visible" boolean NOT NULL DEFAULT true,
     "created_at" timestamp with time zone NOT NULL DEFAULT now(),
     "updated_at" timestamp with time zone NOT NULL DEFAULT now()
 );
