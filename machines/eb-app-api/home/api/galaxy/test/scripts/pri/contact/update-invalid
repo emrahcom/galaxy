@@ -22,7 +22,8 @@ contact_id=$(jq -r ".[$((IDX - 1))].id" \
     $TMP/api-pri-contact-list-nolimit-nooffset-id-$ID-1-res)
 JSON=$(cat <<EOF
 {
-    "id": "$contact_id"
+    "id": "$contact_id",
+    "visible": true
 }
 EOF
 )
