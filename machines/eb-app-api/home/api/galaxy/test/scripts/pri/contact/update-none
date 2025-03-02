@@ -22,7 +22,8 @@ name="name-$RANDOM"
 JSON=$(cat <<EOF
 {
     "id": "$contact_fake",
-    "name": "$name"
+    "name": "$name",
+    "visible": true
 }
 EOF
 )
