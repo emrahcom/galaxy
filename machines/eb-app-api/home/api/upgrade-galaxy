@@ -14,6 +14,7 @@ REMOTE="https://github.com/emrahcom/galaxy.git"
 LOCAL="/tmp/galaxy"
 API="$LOCAL/machines/eb-app-api/home/api"
 APP="$API/galaxy"
+DIR=$(pwd)
 
 # get DB_PASSWD
 [[ -z "$DB_PASSWD" ]] && \
@@ -79,10 +80,9 @@ cp -arp $APP /home/api/
 rm -rf /home/api/.cache/deno
 
 # install deno packages
-pushd
 cd /home/api/galaxy
 deno install
-popd
+cd $DIR
 
 # upgrade this script
 cp $API/upgrade-galaxy /home/api/
