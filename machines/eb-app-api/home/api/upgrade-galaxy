@@ -78,6 +78,12 @@ cp -arp $APP /home/api/
 # clear cache
 rm -rf /home/api/.cache/deno
 
+# install deno packages
+pushd
+cd /home/api/galaxy
+deno install
+popd
+
 # upgrade this script
 cp $API/upgrade-galaxy /home/api/
 
