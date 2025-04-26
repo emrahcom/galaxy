@@ -5,6 +5,8 @@
 Before backup, stop all services which use the database.
 
 ```bash
+df -h
+
 lxc-stop eb-reverse-proxy
 lxc-stop eb-app-ui
 lxc-stop eb-app-api
@@ -27,6 +29,8 @@ mkdir -p backup/$DATE
 mv /var/lib/lxc/eb-postgres/rootfs/tmp/kratos_*.sql backup/$DATE/
 mv /var/lib/lxc/eb-postgres/rootfs/tmp/galaxy_*.sql backup/$DATE/
 chown root: backup/$DATE -R
+
+df -h
 
 tar czf backup/$DATE.tar.gz backup/$DATE
 ```
