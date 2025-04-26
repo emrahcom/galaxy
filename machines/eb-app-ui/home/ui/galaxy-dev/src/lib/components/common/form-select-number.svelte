@@ -37,7 +37,7 @@
     {disabled}
     {required}
   >
-    {#each options as opt}
+    {#each options as opt (opt)}
       {#if unit}
         <option value={opt}>{opt} {unit}{opt > 1 ? "s" : ""}</option>
       {:else}
