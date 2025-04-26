@@ -13,7 +13,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#each contacts as p}
+    {#each contacts as p (p.id)}
       <Item {p} />
     {:else}
       <Warning>There is no contact in the list.</Warning>
