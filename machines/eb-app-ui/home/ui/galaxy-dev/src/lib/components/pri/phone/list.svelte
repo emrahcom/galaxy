@@ -14,7 +14,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#each phones as p}
+    {#each phones as p (p.id)}
       <Item {p} />
     {:else}
       <Warning>
