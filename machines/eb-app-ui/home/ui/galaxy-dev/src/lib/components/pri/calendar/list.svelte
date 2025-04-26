@@ -40,9 +40,9 @@
         </tr>
       </thead>
       <tbody>
-        {#each WEEKS as week}
+        {#each WEEKS as week (week)}
           <tr style="height:86px">
-            {#each DAYS as day}
+            {#each DAYS as day (day)}
               <td class="p-0">
                 <Day {calendarDay} {today} {firstDay} {week} {day} {calendar} />
               </td>
