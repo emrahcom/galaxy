@@ -14,7 +14,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#each invites as p}
+    {#each invites as p (p.id)}
       <Item {p} />
     {:else}
       <Warning>
