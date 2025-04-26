@@ -18,11 +18,11 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#each domains as p}
+    {#each domains as p (p.id)}
       <Item {p} />
     {/each}
 
-    {#each candidacies as p}
+    {#each candidacies as p (p.id)}
       <Candidacy {p} />
     {/each}
 
