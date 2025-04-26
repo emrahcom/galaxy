@@ -9,7 +9,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-{#each options as opt}
+{#each options as opt (opt[0])}
   <div class="form-check">
     <input
       class="form-check-input"
