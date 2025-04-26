@@ -17,7 +17,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#each schedules as p}
+    {#each schedules as p (p.id)}
       <Item {p} />
     {:else}
       <Warning>
