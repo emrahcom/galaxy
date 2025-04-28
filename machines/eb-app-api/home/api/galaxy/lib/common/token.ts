@@ -124,7 +124,8 @@ async function generateCryptoKeyRS(
     pemHeader.length,
     privateKey.length - pemFooter.length,
   );
-  const binaryDer = decodeBase64(pemContents);
+  const pemStr = pemContents.replace(/\n/g, "");
+  const binaryDer = decodeBase64(pemStr);
   const cryptoKey = await crypto.subtle.importKey(
     "pkcs8",
     binaryDer,
