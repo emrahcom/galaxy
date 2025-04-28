@@ -1,16 +1,16 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@emrahcom/jwt@*": "0.4.1",
+    "jsr:@emrahcom/jwt@*": "0.4.2",
     "jsr:@std/encoding@*": "1.0.10",
-    "jsr:@std/encoding@^1.0.7": "1.0.10",
+    "jsr:@std/encoding@^1.0.10": "1.0.10",
     "npm:nodemailer@*": "6.10.1"
   },
   "jsr": {
-    "@emrahcom/jwt@0.4.1": {
-      "integrity": "c5da5c11b6f710768cce907bba3308ddd3c9d7cdc265f1b652a03f35c70fc738",
+    "@emrahcom/jwt@0.4.2": {
+      "integrity": "f26e26d88f8acbcb6d19d71b403acd3c5bd09829057e12cd66438f0b5dd13b34",
       "dependencies": [
-        "jsr:@std/encoding@^1.0.7"
+        "jsr:@std/encoding@^1.0.10"
       ]
     },
     "@std/encoding@1.0.10": {
