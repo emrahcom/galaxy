@@ -1,4 +1,4 @@
-import { Transaction } from "https://deno.land/x/postgres@v0.19.3/mod.ts";
+import { Transaction } from "jsr:@db/postgres";
 import { fetch } from "./common.ts";
 import type { Attr, MeetingSessionForReminder } from "./types.ts";
 
