@@ -175,8 +175,8 @@ cp etc/nginx/sites-available/$TAG-app-wss.conf \
     $ROOTFS/etc/nginx/sites-available/
 ln -s ../sites-available/$TAG-app-wss.conf $ROOTFS/etc/nginx/sites-enabled/
 
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
-sed -i "s/___GALAXY_FQDN___/$GALAXY_FQDN/g" $ROOTFS/etc/nginx/sites-available/*
+sed -i "s~___KRATOS_FQDN___~$KRATOS_FQDN~g" $ROOTFS/etc/nginx/sites-available/*
+sed -i "s~___GALAXY_FQDN___~$GALAXY_FQDN~g" $ROOTFS/etc/nginx/sites-available/*
 
 lxc-attach -n $MACH -- systemctl stop nginx.service
 lxc-attach -n $MACH -- systemctl start nginx.service
