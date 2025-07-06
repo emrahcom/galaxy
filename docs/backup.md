@@ -11,6 +11,8 @@ lxc-stop eb-reverse-proxy
 lxc-stop eb-app-ui
 lxc-stop eb-app-api
 lxc-stop eb-kratos
+
+lxc-ls -f
 ```
 
 ```bash
@@ -25,14 +27,17 @@ exit
 
 cd
 DATE=$(date +'%Y%m%d')
-mkdir -p backup/$DATE
-mv /var/lib/lxc/eb-postgres/rootfs/tmp/kratos_*.sql backup/$DATE/
-mv /var/lib/lxc/eb-postgres/rootfs/tmp/galaxy_*.sql backup/$DATE/
-chown root: backup/$DATE -R
+mkdir -p ~/backup/$DATE
+mv /var/lib/lxc/eb-postgres/rootfs/tmp/kratos_*.sql ~/backup/$DATE/
+mv /var/lib/lxc/eb-postgres/rootfs/tmp/galaxy_*.sql ~/backup/$DATE/
+chown root: ~/backup/$DATE -R
 
 df -h
 
-tar czf backup/$DATE.tar.gz backup/$DATE
+tar czf ~/backup/$DATE.tar.gz ~/backup/$DATE
+
+# Remove folder is everything is OK
+rm -rf ~/backup/$DATE
 ```
 
 Don't forget to copy backups on a remote system.
