@@ -241,7 +241,7 @@ EOS
 
 # kratos-ui systemd service
 cp etc/systemd/system/kratos-ui.service $ROOTFS/etc/systemd/system/
-sed -i "s/___KRATOS_FQDN___/$KRATOS_FQDN/g" \
+sed -i "s~___KRATOS_FQDN___~$KRATOS_FQDN~g" \
     $ROOTFS/etc/systemd/system/kratos-ui.service
 
 COOKIE_SECRET=$(openssl rand -hex 16)
