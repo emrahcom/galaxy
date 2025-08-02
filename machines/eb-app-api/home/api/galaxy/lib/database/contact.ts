@@ -506,10 +506,11 @@ export async function textContact(
   const sql = {
     text: `
       INSERT INTO intercom (identity_id, remote_id, status, message_type,
-        intercom_attr)
+        intercom_attr, expired_at)
       VALUES (
         $1, $2, 'none', 'text',
-        jsonb_build_object('message', encode($3::bytea, 'base64'))
+        jsonb_build_object('message', encode($3::bytea, 'base64')),
+        now() + interval '6 hours'
       )
       RETURNING id, created_at as at`,
     args: [
@@ -540,7 +541,7 @@ export async function textContactByKey(
   const sql = {
     text: `
       INSERT INTO intercom (identity_id, remote_id, status, message_type,
-        intercom_attr)
+        intercom_attr, expired_at)
       VALUES (
         (SELECT identity_id
          FROM identity_key
@@ -548,7 +549,8 @@ export async function textContactByKey(
            AND enabled
         ),
         $2, 'none', 'text',
-        jsonb_build_object('message', encode($3::bytea, 'base64'))
+        jsonb_build_object('message', encode($3::bytea, 'base64')),
+        now() + interval '6 hours'
       )
       RETURNING id, created_at as at`,
     args: [
