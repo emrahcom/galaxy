@@ -620,6 +620,12 @@ ALTER TABLE phone OWNER TO galaxy;
 --
 --   phone_name: string,    // Phone name
 -- }
+--
+-- intercom_message_type:
+--   - call
+--     direct call from one user to another
+--   - phone
+--     call via a public phone
 -- -----------------------------------------------------------------------------
 CREATE TYPE intercom_status_type AS ENUM (
     'none',
