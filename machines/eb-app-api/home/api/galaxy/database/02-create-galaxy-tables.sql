@@ -623,9 +623,13 @@ ALTER TABLE phone OWNER TO galaxy;
 --
 -- intercom_message_type:
 --   - call
---     direct call from one user to another
+--     Direct call from one user to another
+--
 --   - phone
---     call via a public phone
+--     Call via a public phone from anonymous person
+--
+--   - text
+--     Text message from one user to another
 -- -----------------------------------------------------------------------------
 CREATE TYPE intercom_status_type AS ENUM (
     'none',
@@ -635,7 +639,8 @@ CREATE TYPE intercom_status_type AS ENUM (
 );
 CREATE TYPE intercom_message_type AS ENUM (
     'call',
-    'phone'
+    'phone',
+    'text'
 );
 CREATE TABLE intercom (
     "id" uuid NOT NULL PRIMARY KEY DEFAULT gen_random_uuid(),
