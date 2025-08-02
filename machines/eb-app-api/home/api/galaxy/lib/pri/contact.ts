@@ -10,6 +10,7 @@ import {
   listContactByMeeting,
   listContactByRoom,
   listContactStatus,
+  textContact,
   updateContact,
 } from "../database/contact.ts";
 
@@ -90,6 +91,15 @@ async function call(req: Request, identityId: string): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function text(req: Request, identityId: string): Promise<unknown> {
+  const pl = await req.json();
+  const contactId = pl.contact_id;
+  const message = pl.message;
+
+  return await textContact(identityId, contactId, message);
+}
+
+// -----------------------------------------------------------------------------
 async function del(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const contactId = pl.id;
@@ -127,6 +137,8 @@ export default async function (
     return await wrapper(listStatus, req, identityId);
   } else if (path === `${PRE}/call`) {
     return await wrapper(call, req, identityId);
+  } else if (path === `${PRE}/text`) {
+    return await wrapper(text, req, identityId);
   } else if (path === `${PRE}/del`) {
     return await wrapper(del, req, identityId);
   } else if (path === `${PRE}/update`) {
