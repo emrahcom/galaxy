@@ -100,6 +100,14 @@ export async function listIntercom(
       WHERE ic.remote_id = $1
         AND expired_at > now()
         AND status = 'none'
+      ORDER BY
+        CASE message_type
+          WHEN 'call' THEN 1
+          WHEN 'phone' THEN 1
+          WHEN 'text' THEN 2
+          ELSE 3
+        END,
+        ic.created_at
       LIMIT $2 OFFSET $3`,
     args: [
       identityId,
@@ -135,6 +143,14 @@ export async function listIntercomByKey(
                            )
         AND expired_at > now()
         AND status = 'none'
+      ORDER BY
+        CASE message_type
+          WHEN 'call' THEN 1
+          WHEN 'phone' THEN 1
+          WHEN 'text' THEN 2
+          ELSE 3
+        END,
+        ic.created_at
       LIMIT $2 OFFSET $3`,
     args: [
       keyValue,
