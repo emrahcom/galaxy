@@ -3,6 +3,7 @@
   import type { Contact, ContactStatus } from "$lib/types";
   import Call from "$lib/components/common/link-call.svelte";
   import Del from "$lib/components/common/link-del.svelte";
+  import Text from "$lib/components/common/link-text.svelte";
   import Update from "$lib/components/common/link-update.svelte";
 
   interface Props {
@@ -102,6 +103,7 @@
       <Del href="/pri/contact/del/{p.id}" />
       <Update href="/pri/contact/update/{p.id}" />
       <Call href="/pri/contact/call/{p.id}" />
+      <Text href="/pri/contact/text/{p.id}" />
     </div>
   </div>
 </div>
