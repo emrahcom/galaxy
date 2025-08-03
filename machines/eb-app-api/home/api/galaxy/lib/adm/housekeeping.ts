@@ -98,18 +98,18 @@ async function delMeetingSchedule() {
 
 // -----------------------------------------------------------------------------
 async function delIntercom() {
-  const sql = `
+  const sql1 = `
     DELETE FROM intercom
     WHERE expired_at < now()
   `;
-  await execute(sql);
+  await execute(sql1);
 
-  const sql = `
+  const sql2 = `
     DELETE FROM intercom
     WHERE message_type = 'text'
       AND status = 'seen'
   `;
-  await execute(sql);
+  await execute(sql2);
 }
 
 // -----------------------------------------------------------------------------
