@@ -63,7 +63,14 @@
       ></button>
     </div>
     <div class="d-flex justify-content-left">
-      Hello
+      <p
+        class="d-inline-block card-text text-muted text-start
+        text-truncate bg-light w-auto mt-3"
+        style="max-width: 90%; white-space: pre"
+      >
+        {msg.intercom_attr.message || ""}
+      </p>
+
       <audio id="sound-{msg.id}" src="/notification.mp3"></audio>
     </div>
   </div>
