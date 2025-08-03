@@ -2,6 +2,7 @@
   import type { IntercomMessage222 } from "$lib/types";
   import Call from "$lib/components/pri/message/call.svelte";
   import Phone from "$lib/components/pri/message/phone.svelte";
+  import Text from "$lib/components/pri/message/text.svelte";
 
   interface Props {
     messages: IntercomMessage222[];
@@ -17,6 +18,8 @@
       <Call {msg} />
     {:else if msg.message_type === "phone"}
       <Phone {msg} />
+    {:else if msg.message_type === "text"}
+      <Text {msg} />
     {/if}
   {/each}
 </div>
