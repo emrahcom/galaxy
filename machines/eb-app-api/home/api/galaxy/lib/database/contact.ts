@@ -501,6 +501,7 @@ export async function textContact(
   const remoteId = contact.id;
 
   // Check the text message.
+  if (!message) throw "empty message";
   if (message.length > 8000) throw "message is too long";
 
   const sql = {
@@ -536,6 +537,7 @@ export async function textContactByKey(
   const remoteId = contact.id;
 
   // Check the text message.
+  if (!message) throw "empty message";
   if (message.length > 8000) throw "message is too long";
 
   const sql = {
