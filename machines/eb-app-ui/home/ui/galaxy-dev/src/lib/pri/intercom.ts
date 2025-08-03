@@ -20,7 +20,16 @@ export function updateMessageList() {
     }
   }
 
-  return list;
+  const sortedList = [...list].sort((a, b) => {
+    const dateA = a.intercom_attr.sent_at || "";
+    const dateB = b.intercom_attr.sent_at || "";
+
+    if (dateA > dateB) return -1;
+    else if (dateA < dateB) return 1;
+    else return 0;
+  });
+
+  return sortedList;
 }
 
 // -----------------------------------------------------------------------------
