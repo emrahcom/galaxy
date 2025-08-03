@@ -103,6 +103,13 @@ async function delIntercom() {
     WHERE expired_at < now()
   `;
   await execute(sql);
+
+  const sql = `
+    DELETE FROM intercom
+    WHERE message_type = 'text'
+      AND status = 'seen'
+  `;
+  await execute(sql);
 }
 
 // -----------------------------------------------------------------------------
