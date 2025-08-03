@@ -12,7 +12,7 @@
 </script>
 
 <!-- -------------------------------------------------------------------------->
-<div id="messages" class="toast-container bottom-0 end-0 p-3">
+<div id="messages" class="toast-container bottom-0 end-0 p-3 bg-white">
   {#each messages as msg (msg.id)}
     {#if msg.message_type === "call"}
       <Call {msg} />
