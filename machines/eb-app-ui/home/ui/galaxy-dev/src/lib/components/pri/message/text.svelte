@@ -53,7 +53,7 @@
       <span class="fs-6 fw-bold me-2 mt-auto mb-1">
         {msg.contact_name || "unknown"}
       </span>
-      <span class="fs-6 me-auto mt-auto mb-1">...</span>
+      <span class="fs-6 me-auto mt-auto mb-1"></span>
       <button
         type="button"
         class="btn-close"
@@ -62,7 +62,7 @@
         onclick={close}
       ></button>
     </div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-left">
       Hello
       <audio id="sound-{msg.id}" src="/notification.mp3"></audio>
     </div>
