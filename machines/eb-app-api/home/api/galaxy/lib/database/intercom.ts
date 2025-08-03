@@ -93,7 +93,18 @@ export async function listIntercom(
   const sql = {
     text: `
       SELECT ic.id, co.name as contact_name, status, message_type,
-        intercom_attr, expired_at
+        CASE
+          WHEN message_type = 'text' THEN
+            jsonb_build_object(
+              'message', convert_from(
+                           decode(intercom_attr->>'message', 'base64'),
+                           'UTF8'
+                         ),
+              'sent_at', created_at,
+            )
+          ELSE intercom_attr
+        END AS intercom_attr,
+        expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
@@ -132,7 +143,18 @@ export async function listIntercomByKey(
   const sql = {
     text: `
       SELECT ic.id, co.name as contact_name, status, message_type,
-        intercom_attr, expired_at
+        CASE
+          WHEN message_type = 'text' THEN
+            jsonb_build_object(
+              'message', convert_from(
+                           decode(intercom_attr->>'message', 'base64'),
+                           'UTF8'
+                         ),
+              'sent_at', created_at,
+            )
+          ELSE intercom_attr
+        END AS intercom_attr,
+        expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
