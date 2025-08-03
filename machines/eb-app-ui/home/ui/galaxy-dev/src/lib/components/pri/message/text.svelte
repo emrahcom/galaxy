@@ -11,7 +11,7 @@
   let { msg }: Props = $props();
 
   let toast: HTMLElement;
-  let ring: HTMLAudioElement;
+  let sound: HTMLAudioElement;
 
   // ---------------------------------------------------------------------------
   onMount(() => {
@@ -19,8 +19,8 @@
       toast = document.getElementById(`msg-${msg.id}`) as HTMLElement;
       if (toast) Toast.getOrCreateInstance(toast).show();
 
-      ring = document.getElementById(`ring-${msg.id}`) as HTMLAudioElement;
-      if (ring) ring.play();
+      sound = document.getElementById(`sound-${msg.id}`) as HTMLAudioElement;
+      if (sound) sound.play();
     } catch {
       // do nothing
     }
@@ -53,7 +53,6 @@
       <span class="fs-6 fw-bold me-2 mt-auto mb-1">
         {msg.contact_name || "unknown"}
       </span>
-      <span class="fs-6 me-auto mt-auto mb-1">sent a message</span>
       <button
         type="button"
         class="btn-close"
@@ -64,7 +63,7 @@
     </div>
     <div class="d-flex justify-content-center">
       Hello
-      <audio id="ring-{msg.id}" src="/ringing.mp3" loop></audio>
+      <audio id="sound-{msg.id}" src="/notification.mp3"></audio>
     </div>
   </div>
 </div>
