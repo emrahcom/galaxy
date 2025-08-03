@@ -116,7 +116,7 @@ export async function intercomHandler() {
         } else if (msg.message_type === "phone") {
           addPhoneMessage(msg);
         } else if (msg.message_type === "text") {
-          addTestMessage(msg);
+          addTextMessage(msg);
         }
       }
     }
