@@ -53,6 +53,7 @@
       <span class="fs-6 fw-bold me-2 mt-auto mb-1">
         {msg.contact_name || "unknown"}
       </span>
+      <span class="fs-6 me-auto mt-auto mb-1">...</span>
       <button
         type="button"
         class="btn-close"
