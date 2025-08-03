@@ -77,6 +77,19 @@ function delCallMessage(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
+function addTextMessage(msg: IntercomMessage222) {
+  try {
+    const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
+    if (isExist) return;
+
+    globalThis.localStorage.setItem(`msg-${msg.id}`, JSON.stringify(msg));
+    document.dispatchEvent(new CustomEvent("internalMessage"));
+  } catch {
+    // do nothing
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Trigger a select query on the server side (postgres), /api/pri/intercom/list
 // -----------------------------------------------------------------------------
 export async function intercomHandler() {
@@ -102,6 +115,8 @@ export async function intercomHandler() {
           addCallMessage(msg);
         } else if (msg.message_type === "phone") {
           addPhoneMessage(msg);
+        } else if (msg.message_type === "text") {
+          addTestMessage(msg);
         }
       }
     }
