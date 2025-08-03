@@ -66,7 +66,7 @@
       <p
         class="d-inline-block card-text text-muted text-start
         bg-transparent w-auto mt-3"
-        style="max-width: 90%; white-space: pre"
+        style="max-height: 200px; max-width: 90%; white-space: pre"
       >
         {msg.intercom_attr.message || ""}
       </p>
