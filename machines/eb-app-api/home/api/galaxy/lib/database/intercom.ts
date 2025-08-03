@@ -100,7 +100,7 @@ export async function listIntercom(
                            decode(intercom_attr->>'message', 'base64'),
                            'UTF8'
                          ),
-              'sent_at', created_at,
+              'sent_at', ic.created_at
             )
           ELSE intercom_attr
         END AS intercom_attr,
@@ -150,7 +150,7 @@ export async function listIntercomByKey(
                            decode(intercom_attr->>'message', 'base64'),
                            'UTF8'
                          ),
-              'sent_at', created_at,
+              'sent_at', ic.created_at
             )
           ELSE intercom_attr
         END AS intercom_attr,
