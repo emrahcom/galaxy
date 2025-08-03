@@ -65,7 +65,7 @@
     <div class="d-flex justify-content-left">
       <p
         class="d-inline-block card-text text-muted text-start
-        text-truncate bg-light w-auto mt-3"
+        text-truncate bg-transparent w-auto mt-3"
         style="max-width: 90%; white-space: pre"
       >
         {msg.intercom_attr.message || ""}
