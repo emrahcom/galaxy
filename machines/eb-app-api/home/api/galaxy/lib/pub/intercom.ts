@@ -1,4 +1,3 @@
-import { getLimit, getOffset } from "../database/common.ts";
 import { notFound } from "../http/response.ts";
 import { pub as wrapper } from "../http/wrapper.ts";
 import { mailMissedCall } from "../common/mail.ts";
@@ -29,8 +28,8 @@ async function listByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
   const epoch = Number(pl.value) || 0;
-  const limit = getLimit(pl.limit);
-  const offset = getOffset(pl.offset);
+  const limit = 10;
+  const offset = 0;
 
   return await listIntercomByKey(keyValue, epoch, limit, offset);
 }
