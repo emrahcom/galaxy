@@ -24,10 +24,11 @@ async function get(req: Request, identityId: string): Promise<unknown> {
 // -----------------------------------------------------------------------------
 async function list(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
+  const epoch = Number(pl.value) || 0;
   const limit = getLimit(pl.limit);
   const offset = getOffset(pl.offset);
 
-  return await listIntercom(identityId, limit, offset);
+  return await listIntercom(identityId, epoch, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
