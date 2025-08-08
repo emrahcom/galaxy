@@ -85,6 +85,7 @@ export async function getIntercomAttrByCode(code: string, intercomId: string) {
 // -----------------------------------------------------------------------------
 export async function listIntercom(
   identityId: string,
+  epoch: number,
   limit: number,
   offset: number,
 ) {
@@ -110,6 +111,10 @@ export async function listIntercom(
       WHERE ic.remote_id = $1
         AND expired_at > now()
         AND status = 'none'
+        AND (
+          message_type != 'text' OR
+          created_at > to_timestamp($2)
+        )
       ORDER BY
         CASE message_type
           WHEN 'call' THEN 1
@@ -118,9 +123,10 @@ export async function listIntercom(
           ELSE 3
         END,
         ic.created_at
-      LIMIT $2 OFFSET $3`,
+      LIMIT $3 OFFSET $4`,
     args: [
       identityId,
+      epoch,
       limit,
       offset,
     ],
@@ -134,6 +140,7 @@ export async function listIntercom(
 // -----------------------------------------------------------------------------
 export async function listIntercomByKey(
   keyValue: string,
+  epoch: number,
   limit: number,
   offset: number,
 ) {
@@ -163,6 +170,10 @@ export async function listIntercomByKey(
                            )
         AND expired_at > now()
         AND status = 'none'
+        AND (
+          message_type != 'text' OR
+          created_at > to_timestamp($2)
+        )
       ORDER BY
         CASE message_type
           WHEN 'call' THEN 1
@@ -171,9 +182,10 @@ export async function listIntercomByKey(
           ELSE 3
         END,
         ic.created_at
-      LIMIT $2 OFFSET $3`,
+      LIMIT $3 OFFSET $4`,
     args: [
       keyValue,
+      epoch,
       limit,
       offset,
     ],
