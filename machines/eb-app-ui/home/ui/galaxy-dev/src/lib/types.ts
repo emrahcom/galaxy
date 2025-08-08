@@ -194,6 +194,7 @@ export interface IntercomMessage222 {
   intercom_attr: {
     [key: string]: string;
   };
+  created_at: string;
   expired_at: string;
 }
 
