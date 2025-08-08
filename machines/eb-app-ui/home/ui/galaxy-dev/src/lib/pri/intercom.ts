@@ -1,10 +1,10 @@
-import { getById, list } from "$lib/api";
+import { getById, listByValue } from "$lib/api";
 import { isOver } from "$lib/common";
 import type { IntercomMessage222 } from "$lib/types";
 
 // -----------------------------------------------------------------------------
 export function updateMessageList() {
-  const list: IntercomMessage222[] = [];
+  const messages: IntercomMessage222[] = [];
 
   for (const key in globalThis.localStorage) {
     try {
@@ -14,13 +14,13 @@ export function updateMessageList() {
       if (!value) throw "empty message";
 
       const parsedValue = JSON.parse(value) as IntercomMessage222;
-      list.push(parsedValue);
+      messages.push(parsedValue);
     } catch {
       globalThis.localStorage.removeItem(key);
     }
   }
 
-  const sortedList = [...list].sort((a, b) => {
+  const sortedMessages = [...messages].sort((a, b) => {
     const dateA = a.intercom_attr.sent_at || "";
     const dateB = b.intercom_attr.sent_at || "";
 
@@ -29,7 +29,7 @@ export function updateMessageList() {
     else return 0;
   });
 
-  return sortedList;
+  return sortedMessages;
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +55,25 @@ export async function watchCall(msgId: string) {
 // Their logics are completely the same.
 // -----------------------------------------------------------------------------
 export const watchPhone = watchCall;
+
+// -----------------------------------------------------------------------------
+function setMessageTime(msg: IntercomMessage222) {
+  try {
+    const date = new Date(msg.created_at);
+    const epoch = date.getTime();
+    if (isNaN(epoch)) throw "invalid date";
+
+    const last = globalThis.localStorage.getItem("intercom_last_at");
+
+    if (isNaN(Number(last))) {
+      globalThis.localStorage.setItem("intercom_last_at", String(epoch));
+    } else if (epoch > Number(last)) {
+      globalThis.localStorage.setItem("intercom_last_at", String(epoch));
+    }
+  } catch {
+    // do nothing
+  }
+}
 
 // -----------------------------------------------------------------------------
 function addCallMessage(msg: IntercomMessage222) {
@@ -114,12 +133,14 @@ export async function intercomHandler() {
     if (now - Number(checkedAt) > 3000) {
       globalThis.localStorage.setItem("intercom_checked_at", String(now));
 
-      const messages: IntercomMessage222[] = await list(
+      const messages: IntercomMessage222[] = await listByValue(
         "/api/pri/intercom/list",
-        10,
+        globalThis.localStorage.getItem("intercom_last_at") || "0",
       );
 
       for (const msg of messages) {
+        setMessageTime(msg);
+
         if (msg.message_type === "call") {
           addCallMessage(msg);
         } else if (msg.message_type === "phone") {
