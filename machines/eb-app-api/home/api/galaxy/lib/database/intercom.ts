@@ -39,8 +39,8 @@ export async function getIntercom(identityId: string, intercomId: string) {
   // ic.identity_id is the system user in this case.
   const sql = {
     text: `
-      SELECT ic.id, co.name as contact_name, status, message_type,
-        intercom_attr, created_at, expired_at
+      SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
+        ic.intercom_attr, ic.created_at, ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
@@ -93,30 +93,30 @@ export async function listIntercom(
   // ic.identity_id is the system user in this case.
   const sql = {
     text: `
-      SELECT ic.id, co.name as contact_name, status, message_type,
+      SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
         CASE
-          WHEN message_type = 'text' THEN
+          WHEN ic.message_type = 'text' THEN
             jsonb_build_object(
               'message', convert_from(
-                           decode(intercom_attr->>'message', 'base64'),
+                           decode(ic.intercom_attr->>'message', 'base64'),
                            'UTF8'
                          )
             )
-          ELSE intercom_attr
+          ELSE ic.intercom_attr
         END AS intercom_attr,
-        created_at, expired_at
+        ic.created_at, ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
       WHERE ic.remote_id = $1
-        AND expired_at > now()
-        AND status = 'none'
+        AND ic.expired_at > now()
+        AND ic.status = 'none'
         AND (
-          message_type != 'text' OR
-          created_at > to_timestamp($2)
+          ic.message_type != 'text' OR
+          ic.created_at > to_timestamp($2)
         )
       ORDER BY
-        CASE message_type
+        CASE ic.message_type
           WHEN 'call' THEN 1
           WHEN 'phone' THEN 1
           WHEN 'text' THEN 2
@@ -148,18 +148,18 @@ export async function listIntercomByKey(
   // ic.identity_id is the system user in this case.
   const sql = {
     text: `
-      SELECT ic.id, co.name as contact_name, status, message_type,
+      SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
         CASE
-          WHEN message_type = 'text' THEN
+          WHEN ic.message_type = 'text' THEN
             jsonb_build_object(
               'message', convert_from(
-                           decode(intercom_attr->>'message', 'base64'),
+                           decode(ic.intercom_attr->>'message', 'base64'),
                            'UTF8'
                          )
             )
-          ELSE intercom_attr
+          ELSE ic.intercom_attr
         END AS intercom_attr,
-        created_at, expired_at
+        ic.created_at, ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
@@ -168,14 +168,14 @@ export async function listIntercomByKey(
                             WHERE value = $1
                               AND enabled
                            )
-        AND expired_at > now()
-        AND status = 'none'
+        AND ic.expired_at > now()
+        AND ic.status = 'none'
         AND (
-          message_type != 'text' OR
-          created_at > to_timestamp($2)
+          ic.message_type != 'text' OR
+          ic.created_at > to_timestamp($2)
         )
       ORDER BY
-        CASE message_type
+        CASE ic.message_type
           WHEN 'call' THEN 1
           WHEN 'phone' THEN 1
           WHEN 'text' THEN 2
