@@ -119,10 +119,7 @@ export async function listIntercom(
       WHERE ic.remote_id = $1
         AND ic.expired_at > now()
         AND ic.status = 'none'
-        AND (
-          ic.message_type != 'text' OR
-          ic.created_at > to_timestamp($2)
-        )
+        AND ic.created_at > to_timestamp($2)
       ORDER BY
         CASE ic.message_type
           WHEN 'call' THEN 1
