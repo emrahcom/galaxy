@@ -11,7 +11,7 @@ export type CandidateStatus = "pending" | "rejected";
 export type DomainAuthType = "none" | "token" | "jaas";
 export type IntercomStatus = "none" | "seen" | "accepted" | "rejected";
 export type InviteTo = "audience" | "member";
-export type Message = "call" | "phone";
+export type Message = "call" | "phone" | "text";
 export type Schedule = "permanent" | "scheduled" | "ephemeral";
 
 // -----------------------------------------------------------------------------
