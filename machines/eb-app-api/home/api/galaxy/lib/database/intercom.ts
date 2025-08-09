@@ -41,9 +41,9 @@ export async function getIntercom(identityId: string, intercomId: string) {
     text: `
       SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
         ic.intercom_attr, ic.created_at,
-        (
+        TRUNC(
           EXTRACT(EPOCH FROM ic.created_at) * 1000000
-        )::bigint AS microsec_created_at,
+        ) AS microsec_created_at,
         ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
@@ -109,9 +109,9 @@ export async function listIntercom(
           ELSE ic.intercom_attr
         END AS intercom_attr,
         ic.created_at,
-        (
+        TRUNC(
           EXTRACT(EPOCH FROM ic.created_at) * 1000000
-        )::bigint AS microsec_created_at,
+        ) AS microsec_created_at,
         ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
@@ -168,9 +168,9 @@ export async function listIntercomByKey(
           ELSE ic.intercom_attr
         END AS intercom_attr,
         ic.created_at,
-        (
+        TRUNC(
           EXTRACT(EPOCH FROM ic.created_at) * 1000000
-        )::bigint AS microsec_created_at,
+        ) AS microsec_created_at,
         ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
