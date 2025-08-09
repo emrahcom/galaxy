@@ -27,11 +27,11 @@ async function getAttrByCode(req: Request): Promise<unknown> {
 async function listByKey(req: Request): Promise<unknown> {
   const pl = await req.json();
   const keyValue = pl.key_value;
-  const epoch = Number(pl.value) ? Number(pl.value) / 1000 : 0;
+  const microsec = Number(pl.value) || 0;
   const limit = 10;
   const offset = 0;
 
-  return await listIntercomByKey(keyValue, epoch, limit, offset);
+  return await listIntercomByKey(keyValue, microsec, limit, offset);
 }
 
 // -----------------------------------------------------------------------------
