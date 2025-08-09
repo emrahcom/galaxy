@@ -21,7 +21,7 @@ export function updateMessageList() {
   }
 
   // Call and phone messages are always before the text messages.
-  // The text messages should be ordered according their creation time.
+  // The text messages should be ordered according to their creation times.
   const sortedMessages = [...messages].sort((a, b) => {
     let dateA = Number(a.microsec_created_at) || 0;
     let dateB = Number(b.microsec_created_at) || 0;
@@ -36,32 +36,27 @@ export function updateMessageList() {
     else return 0;
   });
 
-  return sortedMessages;
+  // Show only the first 5 messages.
+  return sortedMessages.slice(0, 5);
 }
 
 // -----------------------------------------------------------------------------
-export async function watchCall(msgId: string) {
+export async function watchMessage(msgId: string, interval = 2000) {
   try {
-    // this will fail if the call message is already deleted
+    // This will fail if the message is already deleted.
     const msg = await getById("/api/pri/intercom/get", msgId);
     if (msg.status !== "none") throw "invalid status";
 
     const expiredAt = new Date(msg.expired_at);
-    if (isOver(expiredAt)) throw "expired call";
+    if (isOver(expiredAt)) throw "expired message";
 
     setTimeout(() => {
-      watchCall(msgId);
-    }, 2000);
+      watchMessage(msgId);
+    }, interval);
   } catch {
-    delCallMessage(msgId);
+    delMessage(msgId);
   }
 }
-
-// -----------------------------------------------------------------------------
-// watchPhone is an alias for watchCall.
-// Their logics are completely the same.
-// -----------------------------------------------------------------------------
-export const watchPhone = watchCall;
 
 // -----------------------------------------------------------------------------
 function setMessageTime(msg: IntercomMessage222) {
@@ -85,7 +80,7 @@ function setMessageTime(msg: IntercomMessage222) {
 }
 
 // -----------------------------------------------------------------------------
-function addCallMessage(msg: IntercomMessage222) {
+function addMessage(msg: IntercomMessage222) {
   try {
     const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
     if (isExist) return;
@@ -98,28 +93,9 @@ function addCallMessage(msg: IntercomMessage222) {
 }
 
 // -----------------------------------------------------------------------------
-// addPhoneMessage is an alias for addCallMessage.
-// Their logics are completely the same.
-// -----------------------------------------------------------------------------
-const addPhoneMessage = addCallMessage;
-
-// -----------------------------------------------------------------------------
-function delCallMessage(msgId: string) {
+function delMessage(msgId: string) {
   try {
     globalThis.localStorage.removeItem(`msg-${msgId}`);
-    document.dispatchEvent(new CustomEvent("internalMessage"));
-  } catch {
-    // do nothing
-  }
-}
-
-// -----------------------------------------------------------------------------
-function addTextMessage(msg: IntercomMessage222) {
-  try {
-    const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
-    if (isExist) return;
-
-    globalThis.localStorage.setItem(`msg-${msg.id}`, JSON.stringify(msg));
     document.dispatchEvent(new CustomEvent("internalMessage"));
   } catch {
     // do nothing
@@ -150,12 +126,12 @@ export async function intercomHandler() {
       for (const msg of messages) {
         setMessageTime(msg);
 
-        if (msg.message_type === "call") {
-          addCallMessage(msg);
-        } else if (msg.message_type === "phone") {
-          addPhoneMessage(msg);
-        } else if (msg.message_type === "text") {
-          addTextMessage(msg);
+        if (
+          msg.message_type === "call" ||
+          msg.message_type === "phone" ||
+          msg.message_type === "text"
+        ) {
+          addMessage(msg);
         }
       }
     }
