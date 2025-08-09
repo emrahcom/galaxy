@@ -40,7 +40,11 @@ export async function getIntercom(identityId: string, intercomId: string) {
   const sql = {
     text: `
       SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
-        ic.intercom_attr, ic.created_at, ic.expired_at
+        ic.intercom_attr, ic.created_at,
+        (
+          EXTRACT(EPOCH FROM ic.created_at) * 1000000
+        )::bigint AS microsec_created_at,
+        ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
@@ -85,7 +89,7 @@ export async function getIntercomAttrByCode(code: string, intercomId: string) {
 // -----------------------------------------------------------------------------
 export async function listIntercom(
   identityId: string,
-  epoch: number,
+  microsec: number,
   limit: number,
   offset: number,
 ) {
@@ -104,7 +108,11 @@ export async function listIntercom(
             )
           ELSE ic.intercom_attr
         END AS intercom_attr,
-        ic.created_at, ic.expired_at
+        ic.created_at,
+        (
+          EXTRACT(EPOCH FROM ic.created_at) * 1000000
+        )::bigint AS microsec_created_at,
+        ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
@@ -126,7 +134,7 @@ export async function listIntercom(
       LIMIT $3 OFFSET $4`,
     args: [
       identityId,
-      epoch,
+      microsec / 1000000,
       limit,
       offset,
     ],
@@ -140,7 +148,7 @@ export async function listIntercom(
 // -----------------------------------------------------------------------------
 export async function listIntercomByKey(
   keyValue: string,
-  epoch: number,
+  microsec: number,
   limit: number,
   offset: number,
 ) {
@@ -159,7 +167,11 @@ export async function listIntercomByKey(
             )
           ELSE ic.intercom_attr
         END AS intercom_attr,
-        ic.created_at, ic.expired_at
+        ic.created_at,
+        (
+          EXTRACT(EPOCH FROM ic.created_at) * 1000000
+        )::bigint AS microsec_created_at,
+        ic.expired_at
       FROM intercom ic
         LEFT JOIN contact co ON co.identity_id = ic.remote_id
                                 AND co.remote_id = ic.identity_id
@@ -185,7 +197,7 @@ export async function listIntercomByKey(
       LIMIT $3 OFFSET $4`,
     args: [
       keyValue,
-      epoch,
+      microsec / 1000000,
       limit,
       offset,
     ],
