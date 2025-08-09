@@ -195,6 +195,7 @@ export interface IntercomMessage222 {
     [key: string]: string;
   };
   created_at: string;
+  microsec_created_at: number;
   expired_at: string;
 }
 
