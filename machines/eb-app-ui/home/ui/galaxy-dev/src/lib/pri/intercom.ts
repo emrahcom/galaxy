@@ -63,12 +63,12 @@ function setMessageTime(msg: IntercomMessage222) {
     const epoch = date.getTime();
     if (isNaN(epoch)) throw "invalid date";
 
-    const last = globalThis.localStorage.getItem("intercom_last_at");
+    const last = globalThis.localStorage.getItem("intercom_last_msg_at");
 
     if (isNaN(Number(last))) {
-      globalThis.localStorage.setItem("intercom_last_at", String(epoch));
+      globalThis.localStorage.setItem("intercom_last_msg_at", String(epoch));
     } else if (epoch > Number(last)) {
-      globalThis.localStorage.setItem("intercom_last_at", String(epoch));
+      globalThis.localStorage.setItem("intercom_last_msg_at", String(epoch));
     }
   } catch {
     // do nothing
@@ -135,7 +135,7 @@ export async function intercomHandler() {
 
       const messages: IntercomMessage222[] = await listByValue(
         "/api/pri/intercom/list",
-        globalThis.localStorage.getItem("intercom_last_at") || "0",
+        globalThis.localStorage.getItem("intercom_last_msg_at") || "0",
       );
 
       for (const msg of messages) {
