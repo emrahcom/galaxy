@@ -59,16 +59,12 @@ export const watchPhone = watchCall;
 // -----------------------------------------------------------------------------
 function setMessageTime(msg: IntercomMessage222) {
   try {
-    const date = new Date(msg.created_at);
-    const epoch = date.getTime();
-    if (isNaN(epoch)) throw "invalid date";
-
     const last = globalThis.localStorage.getItem("intercom_last_msg_at");
 
     if (isNaN(Number(last))) {
-      globalThis.localStorage.setItem("intercom_last_msg_at", String(epoch));
-    } else if (epoch > Number(last)) {
-      globalThis.localStorage.setItem("intercom_last_msg_at", String(epoch));
+      globalThis.localStorage.setItem("intercom_last_msg_at", String(msg.microsec_created_at));
+    } else if (msg.microsec_created_at > Number(last)) {
+      globalThis.localStorage.setItem("intercom_last_msg_at", String(msg.microsec_created_at));
     }
   } catch {
     // do nothing
