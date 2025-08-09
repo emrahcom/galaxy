@@ -20,9 +20,11 @@ export function updateMessageList() {
     }
   }
 
+  // Call and phone messages are always before the text messages.
+  // The text messages should be ordered according their creation time.
   const sortedMessages = [...messages].sort((a, b) => {
     const dateA = a.message_type === "text" ? a.microsec_created_at || 0 : 0;
-    const dateB = b.message_type === "text" ? b.microsec_created_at || 0 : 0;
+    const dateB = b.message_type === "text" ? b.microsec_created_at || 0 : 1;
 
     if (dateA > dateB) return -1;
     else if (dateA < dateB) return 1;
