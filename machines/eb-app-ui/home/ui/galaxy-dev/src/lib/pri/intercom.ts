@@ -66,15 +66,9 @@ function setMessageTime(msg: IntercomMessage222) {
     const last = globalThis.localStorage.getItem("intercom_last_msg_at");
 
     if (isNaN(Number(last))) {
-      globalThis.localStorage.setItem(
-        "intercom_last_msg_at",
-        String(epoch / 1000),
-      );
+      globalThis.localStorage.setItem("intercom_last_msg_at", String(epoch));
     } else if (epoch > Number(last)) {
-      globalThis.localStorage.setItem(
-        "intercom_last_msg_at",
-        String(epoch / 1000),
-      );
+      globalThis.localStorage.setItem("intercom_last_msg_at", String(epoch));
     }
   } catch {
     // do nothing
