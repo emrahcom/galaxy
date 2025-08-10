@@ -121,12 +121,12 @@ export async function intercomHandler() {
       for (const msg of messages) {
         setLastMessageTime(msg);
 
-        if (msg.message_type === "call" || msg.message_type === "phone") {
+        if (
+          msg.message_type === "call" ||
+          msg.message_type === "phone") ||
+          msg.message_type === "text") ||
+        ) {
           addMessage(msg);
-          watchMessage(msg.id, 2000);
-        } else if (msg.message_type === "text") {
-          addMessage(msg);
-          watchMessage(msg.id, 60000);
         }
       }
     }
