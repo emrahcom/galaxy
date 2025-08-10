@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { Toast } from "bootstrap";
   import { actionById } from "$lib/api";
+  import { delMessage } from "$lib/pri/intercom";
   import type { IntercomMessage222 } from "$lib/types";
 
   interface Props {
@@ -23,52 +24,54 @@
       ring = document.getElementById(`ring-${msg.id}`) as HTMLAudioElement;
       if (ring) ring.play();
     } catch {
-      // do nothing
+      // Do nothing
     }
   });
 
   // ---------------------------------------------------------------------------
+  // The message will be removed from the storage in the join page.
+  // ---------------------------------------------------------------------------
   function accept() {
     try {
-      // stop ringing without waiting for the status update
+      // Stop ringing without waiting for the status update.
       if (ring) ring.pause();
 
-      // close toast
+      // Close toast.
       if (toast) Toast.getOrCreateInstance(toast).hide();
     } catch {
-      // do nothing
-      // localStorage will be deleted in join page
+      // Do nothing.
+      // localStorage will be deleted in join page.
     }
   }
 
   // ---------------------------------------------------------------------------
   async function reject() {
     try {
-      // stop ringing without waiting for the status update
+      // Stop ringing without waiting for the status update.
       if (ring) ring.pause();
 
-      // close toast
+      // Close toast.
       if (toast) Toast.getOrCreateInstance(toast).hide();
 
-      // set message status to rejected
+      // Set message status to rejected.
       await actionById("/api/pri/intercom/set/rejected", msg.id);
     } finally {
-      // remove the message from the storage to inform other tabs
-      globalThis.localStorage.removeItem(`msg-${msg.id}`);
+      // Remove the message from the storage and inform other tabs.
+      delMessage(msg.id);
     }
   }
 
   // ---------------------------------------------------------------------------
   async function close() {
     try {
-      // stop ringing without waiting for the status update
+      // Stop ringing without waiting for the status update.
       if (ring) ring.pause();
 
-      // set message status to seen
+      // Set message status to seen.
       await actionById("/api/pri/intercom/set/seen", msg.id);
     } finally {
-      // remove the message from the storage to inform other tabs
-      globalThis.localStorage.removeItem(`msg-${msg.id}`);
+      // Remove the message from the storage to inform other tabs.
+      delMessage(msg.id);
     }
   }
 </script>
