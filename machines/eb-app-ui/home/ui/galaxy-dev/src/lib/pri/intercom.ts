@@ -37,9 +37,12 @@ export function updateMessageList() {
   });
 
   // Show only the first 5 messages.
+  // Phone and direct calls have always higher priority.
   return sortedMessages.slice(-5);
 }
 
+// -----------------------------------------------------------------------------
+// The last message time will be used as the starting poing in the next request.
 // -----------------------------------------------------------------------------
 function setLastMessageTime(msg: IntercomMessage222) {
   try {
@@ -57,6 +60,8 @@ function setLastMessageTime(msg: IntercomMessage222) {
 }
 
 // -----------------------------------------------------------------------------
+// Add the message object to the local storage.
+// -----------------------------------------------------------------------------
 function addMessage(msg: IntercomMessage222) {
   try {
     const isExist = globalThis.localStorage.getItem(`msg-${msg.id}`);
@@ -70,6 +75,8 @@ function addMessage(msg: IntercomMessage222) {
 }
 
 // -----------------------------------------------------------------------------
+// Remove the message object from the local storage.
+// -----------------------------------------------------------------------------
 export function delMessage(msgId: string) {
   try {
     globalThis.localStorage.removeItem(`msg-${msgId}`);
@@ -79,6 +86,9 @@ export function delMessage(msgId: string) {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Watching will happen inside the popup when the message becomes visible.
+// No watching for unvisible messages.
 // -----------------------------------------------------------------------------
 export async function watchMessage(msgId: string, interval = 2000) {
   try {
