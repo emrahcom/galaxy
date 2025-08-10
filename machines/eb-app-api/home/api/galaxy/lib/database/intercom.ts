@@ -33,6 +33,9 @@ export async function getIntercomForOwner(
 
 // -----------------------------------------------------------------------------
 // Consumer is the callee.
+//
+// Epoch time in query output and on the client-side is microsecond (as integer)
+// but second (as float) in Postgres...
 // -----------------------------------------------------------------------------
 export async function getIntercom(identityId: string, intercomId: string) {
   // There will be no contact if this call is from a public phone.
@@ -86,6 +89,9 @@ export async function getIntercomAttrByCode(code: string, intercomId: string) {
 
 // -----------------------------------------------------------------------------
 // Consumer is the callee.
+//
+// Epoch time in query output and on the client-side is microsecond (as integer)
+// but second (as float) in Postgres...
 // -----------------------------------------------------------------------------
 export async function listIntercom(
   identityId: string,
@@ -142,6 +148,9 @@ export async function listIntercom(
 
 // -----------------------------------------------------------------------------
 // Consumer is the callee with an identity key.
+//
+// Epoch time in query output and on the client-side is microsecond (as integer)
+// but second (as float) in Postgres...
 // -----------------------------------------------------------------------------
 export async function listIntercomByKey(
   keyValue: string,
