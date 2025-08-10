@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { Toast } from "bootstrap";
   import { actionById } from "$lib/api";
+  import { delMessage } from "$lib/pri/intercom";
   import type { IntercomMessage222 } from "$lib/types";
 
   interface Props {
@@ -22,18 +23,18 @@
       sound = document.getElementById(`sound-${msg.id}`) as HTMLAudioElement;
       if (sound) sound.play();
     } catch {
-      // do nothing
+      // Do nothing
     }
   });
 
   // ---------------------------------------------------------------------------
   async function close() {
     try {
-      // set message status to seen
+      // Set message status to seen.
       await actionById("/api/pri/intercom/set/seen", msg.id);
     } finally {
-      // remove the message from the storage to inform other tabs
-      globalThis.localStorage.removeItem(`msg-${msg.id}`);
+      // Remove the message from the storage to inform other tabs.
+      delMessage(msg.id);
     }
   }
 </script>
