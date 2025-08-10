@@ -132,9 +132,9 @@ export async function intercomHandler() {
         setLastMessageTime(msg);
 
         if (
+          msg.message_type === "text" ||
           msg.message_type === "call" ||
-          msg.message_type === "phone" ||
-          msg.message_type === "text"
+          msg.message_type === "phone"
         ) {
           addMessage(msg);
         }
