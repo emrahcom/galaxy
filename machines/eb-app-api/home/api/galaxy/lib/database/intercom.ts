@@ -155,6 +155,8 @@ export async function listIntercom(
 // Epoch time in query output and on the client-side is microsecond (as integer)
 // but second (as float) in Postgres...
 //
+// microsec is expected as 0 in the current Chrome extension implementation.
+//
 // message in jsonb is base64 encoded. Not because of the security reason, to
 // get clear output in database backups.
 // -----------------------------------------------------------------------------
@@ -194,10 +196,7 @@ export async function listIntercomByKey(
                            )
         AND ic.expired_at > now()
         AND ic.status = 'none'
-        AND (
-          ic.message_type != 'text' OR
-          ic.created_at > to_timestamp($2)
-        )
+        AND ic.created_at > to_timestamp($2)
       ORDER BY
         CASE ic.message_type
           WHEN 'call' THEN 1
