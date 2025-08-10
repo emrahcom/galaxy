@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { actionById } from "$lib/api";
+  import { delMessage } from "$lib/pri/intercom";
   import type { IntercomMessage222 } from "$lib/types";
   import Spinner from "$lib/components/common/spinner.svelte";
   import Subheader from "$lib/components/common/subheader-center.svelte";
@@ -15,7 +16,7 @@
     const url = msg.intercom_attr.owner_url;
 
     await actionById("/api/pri/intercom/set/accepted", msgId);
-    globalThis.localStorage.removeItem(`msg-${msgId}`);
+    delMessage(msgId);
 
     globalThis.location.replace(url);
   }
