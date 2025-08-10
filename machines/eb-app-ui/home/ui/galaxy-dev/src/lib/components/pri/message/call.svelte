@@ -58,7 +58,7 @@
       // Set message status to rejected.
       await actionById("/api/pri/intercom/set/rejected", msg.id);
     } finally {
-      // Remove the message from the storage to inform other tabs.
+      // Remove the message from the storage and inform other tabs.
       delMessage(msg.id);
     }
   }
@@ -72,7 +72,7 @@
       // Set message status to seen.
       await actionById("/api/pri/intercom/set/seen", msg.id);
     } finally {
-      // Remove the message from the storage to inform other tabs.
+      // Remove the message from the storage and inform other tabs.
       delMessage(msg.id);
     }
   }
