@@ -70,7 +70,7 @@ function addMessage(msg: IntercomMessage222) {
 }
 
 // -----------------------------------------------------------------------------
-function delMessage(msgId: string) {
+export function delMessage(msgId: string) {
   try {
     globalThis.localStorage.removeItem(`msg-${msgId}`);
     document.dispatchEvent(new CustomEvent("internalMessage"));
