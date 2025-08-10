@@ -92,6 +92,9 @@ export async function getIntercomAttrByCode(code: string, intercomId: string) {
 //
 // Epoch time in query output and on the client-side is microsecond (as integer)
 // but second (as float) in Postgres...
+//
+// message in jsonb is base64 encoded. Not because of the security reason, to
+// get clear output in database backups.
 // -----------------------------------------------------------------------------
 export async function listIntercom(
   identityId: string,
@@ -151,6 +154,9 @@ export async function listIntercom(
 //
 // Epoch time in query output and on the client-side is microsecond (as integer)
 // but second (as float) in Postgres...
+//
+// message in jsonb is base64 encoded. Not because of the security reason, to
+// get clear output in database backups.
 // -----------------------------------------------------------------------------
 export async function listIntercomByKey(
   keyValue: string,
