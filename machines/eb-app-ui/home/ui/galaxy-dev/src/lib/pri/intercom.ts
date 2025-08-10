@@ -123,8 +123,8 @@ export async function intercomHandler() {
 
         if (
           msg.message_type === "call" ||
-          msg.message_type === "phone") ||
-          msg.message_type === "text") ||
+          msg.message_type === "phone" ||
+          msg.message_type === "text"
         ) {
           addMessage(msg);
         }
