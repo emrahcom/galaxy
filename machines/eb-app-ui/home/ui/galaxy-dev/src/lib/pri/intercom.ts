@@ -41,34 +41,11 @@ export function updateMessageList() {
 }
 
 // -----------------------------------------------------------------------------
-export async function watchMessage(msgId: string, interval = 2000) {
-  try {
-    // This will fail if the message is already deleted.
-    const msg = await getById("/api/pri/intercom/get", msgId);
-    if (msg.status !== "none") throw "invalid status";
-
-    const expiredAt = new Date(msg.expired_at);
-    if (isOver(expiredAt)) throw "expired message";
-
-    setTimeout(() => {
-      watchMessage(msgId);
-    }, interval);
-  } catch {
-    delMessage(msgId);
-  }
-}
-
-// -----------------------------------------------------------------------------
-function setMessageTime(msg: IntercomMessage222) {
+function setLastMessageTime(msg: IntercomMessage222) {
   try {
     const last = globalThis.localStorage.getItem("intercom_last_msg_at");
 
-    if (isNaN(Number(last))) {
-      globalThis.localStorage.setItem(
-        "intercom_last_msg_at",
-        String(msg.microsec_created_at),
-      );
-    } else if (msg.microsec_created_at > Number(last)) {
+    if (isNaN(Number(last)) || msg.microsec_created_at > Number(last)) {
       globalThis.localStorage.setItem(
         "intercom_last_msg_at",
         String(msg.microsec_created_at),
@@ -103,6 +80,24 @@ function delMessage(msgId: string) {
 }
 
 // -----------------------------------------------------------------------------
+export async function watchMessage(msgId: string, interval = 2000) {
+  try {
+    // This will fail if the message is already deleted.
+    const msg = await getById("/api/pri/intercom/get", msgId);
+    if (msg.status !== "none") throw "invalid status";
+
+    const expiredAt = new Date(msg.expired_at);
+    if (isOver(expiredAt)) throw "expired message";
+
+    setTimeout(() => {
+      watchMessage(msgId, interval);
+    }, interval);
+  } catch {
+    delMessage(msgId);
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Trigger a select query on the server side (postgres), /api/pri/intercom/list
 // -----------------------------------------------------------------------------
 export async function intercomHandler() {
@@ -124,14 +119,14 @@ export async function intercomHandler() {
       );
 
       for (const msg of messages) {
-        setMessageTime(msg);
+        setLastMessageTime(msg);
 
-        if (
-          msg.message_type === "call" ||
-          msg.message_type === "phone" ||
-          msg.message_type === "text"
-        ) {
+        if (msg.message_type === "call" || msg.message_type === "phone") {
           addMessage(msg);
+          watchMessage(msg.id, 2000);
+        } else if (msg.message_type === "text") {
+          addMessage(msg);
+          watchMessage(msg.id, 60000);
         }
       }
     }
