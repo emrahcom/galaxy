@@ -37,7 +37,7 @@ export function updateMessageList() {
   });
 
   // Show only the first 5 messages.
-  return sortedMessages.slice(0, 5);
+  return sortedMessages.slice(-5);
 }
 
 // -----------------------------------------------------------------------------
