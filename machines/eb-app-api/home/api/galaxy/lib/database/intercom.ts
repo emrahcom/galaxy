@@ -43,7 +43,17 @@ export async function getIntercom(identityId: string, intercomId: string) {
   const sql = {
     text: `
       SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
-        ic.intercom_attr, ic.created_at,
+        CASE
+          WHEN ic.message_type = 'text' THEN
+            jsonb_build_object(
+              'message', convert_from(
+                           decode(ic.intercom_attr->>'message', 'base64'),
+                           'UTF8'
+                         )
+            )
+          ELSE ic.intercom_attr
+        END AS intercom_attr,
+        ic.created_at,
         TRUNC(
           EXTRACT(EPOCH FROM ic.created_at) * 1000000
         ) AS microsec_created_at,
