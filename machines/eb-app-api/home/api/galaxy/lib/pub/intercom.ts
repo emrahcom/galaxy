@@ -6,6 +6,7 @@ import {
   delIntercomByCode,
   delIntercomByKey,
   getIntercomAttrByCode,
+  getIntercomByKey,
   getIntercomForOwner,
   listIntercomByKey,
   setStatusIntercomByKey,
@@ -21,6 +22,15 @@ async function getAttrByCode(req: Request): Promise<unknown> {
   const intercomId = pl.id;
 
   return await getIntercomAttrByCode(code, intercomId);
+}
+
+// -----------------------------------------------------------------------------
+async function getByKey(req: Request): Promise<unknown> {
+  const pl = await req.json();
+  const keyValue = pl.key_value;
+  const intercomId = pl.id;
+
+  return await getIntercomByKey(keyValue, intercomId);
 }
 
 // -----------------------------------------------------------------------------
@@ -113,6 +123,8 @@ async function ringByCode(req: Request): Promise<unknown> {
 export default async function (req: Request, path: string): Promise<Response> {
   if (path === `${PRE}/get/attr/bycode`) {
     return await wrapper(getAttrByCode, req);
+  } else if (path === `${PRE}/get/bykey`) {
+    return await wrapper(getByKey, req);
   } else if (path === `${PRE}/list/bykey`) {
     return await wrapper(listByKey, req);
   } else if (path === `${PRE}/del/bycode`) {
