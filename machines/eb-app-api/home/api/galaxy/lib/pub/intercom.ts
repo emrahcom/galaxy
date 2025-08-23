@@ -63,6 +63,17 @@ async function setRejectedByKey(req: Request): Promise<unknown> {
 }
 
 // -----------------------------------------------------------------------------
+async function setSeenByKey(req: Request): Promise<unknown> {
+  const pl = await req.json();
+  const keyValue = pl.key_value;
+  const intercomId = pl.id;
+
+  // The optional fourth argument is "ifNone".
+  // Update as "seen" if the current status is "none". Otherwise, dont update.
+  return await setStatusIntercomByKey(keyValue, intercomId, "seen", true);
+}
+
+// -----------------------------------------------------------------------------
 async function delByCode(req: Request): Promise<unknown> {
   const pl = await req.json();
   const code = pl.code;
@@ -137,6 +148,8 @@ export default async function (req: Request, path: string): Promise<Response> {
     return await wrapper(setAcceptedByKey, req);
   } else if (path === `${PRE}/set/rejected/bykey`) {
     return await wrapper(setRejectedByKey, req);
+  } else if (path === `${PRE}/set/seen/bykey`) {
+    return await wrapper(setSeenByKey, req);
   } else if (path === `${PRE}/call/ring/bykey`) {
     return await wrapper(ringByKey, req);
   } else if (path === `${PRE}/phone/ring/bycode`) {
