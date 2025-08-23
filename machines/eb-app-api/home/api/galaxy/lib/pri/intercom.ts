@@ -78,7 +78,9 @@ async function setSeen(req: Request, identityId: string): Promise<unknown> {
   const pl = await req.json();
   const intercomId = pl.id;
 
-  return await setStatusIntercom(identityId, intercomId, "seen");
+  // The optional fourth argument is "ifNone".
+  // Update as "seen" if the current status is "none". Otherwise, dont update.
+  return await setStatusIntercom(identityId, intercomId, "seen", true);
 }
 
 // -----------------------------------------------------------------------------
