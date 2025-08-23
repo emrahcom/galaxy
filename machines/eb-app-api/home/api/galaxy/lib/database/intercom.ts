@@ -348,6 +348,7 @@ export async function setStatusIntercom(
   identityId: string,
   intercomId: string,
   status: IntercomStatus,
+  ifNone = false,
 ) {
   const sql = {
     text: `
@@ -355,11 +356,13 @@ export async function setStatusIntercom(
       SET status = $3
       WHERE id = $2
         AND remote_id = $1
+        AND (status = 'none' OR $4 is false)
       RETURNING id, now() as at`,
     args: [
       identityId,
       intercomId,
       status,
+      ifNone,
     ],
   };
 
@@ -373,6 +376,7 @@ export async function setStatusIntercomByKey(
   keyValue: string,
   intercomId: string,
   status: IntercomStatus,
+  ifNone = false,
 ) {
   const sql = {
     text: `
@@ -384,11 +388,13 @@ export async function setStatusIntercomByKey(
                          WHERE value = $1
                            AND enabled
                         )
+        AND (status = 'none' OR $4 is false)
       RETURNING id, now() as at`,
     args: [
       keyValue,
       intercomId,
       status,
+      ifNone,
     ],
   };
 
