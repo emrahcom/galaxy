@@ -503,6 +503,7 @@ export async function textContact(
   // Check the text message.
   if (!message) throw "empty message";
   if (message.length > 8000) throw "message is too long";
+  const messageBytes = new TextEncoder().encode(message);
 
   const sql = {
     text: `
@@ -517,7 +518,7 @@ export async function textContact(
     args: [
       identityId,
       remoteId,
-      message,
+      messageBytes,
     ],
   };
 
@@ -539,6 +540,7 @@ export async function textContactByKey(
   // Check the text message.
   if (!message) throw "empty message";
   if (message.length > 8000) throw "message is too long";
+  const messageBytes = new TextEncoder().encode(message);
 
   const sql = {
     text: `
@@ -558,7 +560,7 @@ export async function textContactByKey(
     args: [
       keyValue,
       remoteId,
-      message,
+      messageBytes,
     ],
   };
 
