@@ -2,16 +2,16 @@
   "version": "5",
   "specifiers": {
     "jsr:@db/postgres@*": "0.19.5",
-    "jsr:@emrahcom/jwt@*": "0.4.5",
+    "jsr:@emrahcom/jwt@*": "0.4.6",
     "jsr:@std/bytes@^1.0.5": "1.0.6",
     "jsr:@std/crypto@^1.0.4": "1.0.5",
     "jsr:@std/encoding@*": "1.0.10",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/encoding@^1.0.9": "1.0.10",
     "jsr:@std/fmt@^1.0.6": "1.0.8",
-    "jsr:@std/internal@^1.0.9": "1.0.10",
-    "jsr:@std/path@^1.0.8": "1.1.1",
-    "npm:nodemailer@*": "7.0.5"
+    "jsr:@std/internal@^1.0.10": "1.0.10",
+    "jsr:@std/path@^1.0.8": "1.1.2",
+    "npm:nodemailer@*": "7.0.6"
   },
   "jsr": {
     "@db/postgres@0.19.5": {
@@ -24,8 +24,8 @@
         "jsr:@std/path"
       ]
     },
-    "@emrahcom/jwt@0.4.5": {
-      "integrity": "1b0fa5b714a6a02e1faffa15b37218f63313c29a30d1c52942057e2d461d0edc",
+    "@emrahcom/jwt@0.4.6": {
+      "integrity": "d1e7c6e654df640499a7da392af02aae7ea46cdc81594bac62fbbad903d0d2bd",
       "dependencies": [
         "jsr:@std/encoding@^1.0.10"
       ]
@@ -45,16 +45,16 @@
     "@std/internal@1.0.10": {
       "integrity": "e3be62ce42cab0e177c27698e5d9800122f67b766a0bea6ca4867886cbde8cf7"
     },
-    "@std/path@1.1.1": {
-      "integrity": "fe00026bd3a7e6a27f73709b83c607798be40e20c81dde655ce34052fd82ec76",
+    "@std/path@1.1.2": {
+      "integrity": "c0b13b97dfe06546d5e16bf3966b1cadf92e1cc83e56ba5476ad8b498d9e3038",
       "dependencies": [
         "jsr:@std/internal"
       ]
     }
   },
   "npm": {
-    "nodemailer@7.0.5": {
-      "integrity": "sha512-nsrh2lO3j4GkLLXoeEksAMgAOqxOv6QumNRVQTJwKH4nuiww6iC2y7GyANs9kRAxCexg3+lTWM3PZ91iLlVjfg=="
+    "nodemailer@7.0.6": {
+      "integrity": "sha512-F44uVzgwo49xboqbFgBGkRaiMgtoBrBEWCVincJPK9+S9Adkzt/wXCLKbf7dxucmxfTI5gHGB+bEmdyzN6QKjw=="
     }
   }
 }
