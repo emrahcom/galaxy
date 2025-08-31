@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { Toast } from "bootstrap";
   import { actionById } from "$lib/api";
-  import { delMessage, watchMessage } from "$lib/pri/intercom";
+  import { delMessage, watchTextMessage } from "$lib/pri/intercom";
   import type { IntercomMessage222 } from "$lib/types";
 
   interface Props {
@@ -14,7 +14,7 @@
   let toast: HTMLElement;
   let sound: HTMLAudioElement;
 
-  watchMessage(msg.id, 60000);
+  watchTextMessage(msg.id);
 
   // ---------------------------------------------------------------------------
   onMount(() => {

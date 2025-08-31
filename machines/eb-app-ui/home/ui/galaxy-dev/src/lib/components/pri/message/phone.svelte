@@ -15,7 +15,7 @@
   let toast: HTMLElement;
   let ring: HTMLAudioElement;
 
-  watchMessage(msg.id, 2000);
+  watchMessage(msg.id);
 
   // ---------------------------------------------------------------------------
   onMount(() => {

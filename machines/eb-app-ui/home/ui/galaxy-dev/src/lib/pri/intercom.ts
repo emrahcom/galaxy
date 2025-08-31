@@ -108,6 +108,30 @@ export async function watchMessage(msgId: string, interval = 2000) {
 }
 
 // -----------------------------------------------------------------------------
+// Watching will happen inside the popup when the message becomes visible.
+// No watching for unvisible messages. There is a ramp up in text message
+// watching.
+// -----------------------------------------------------------------------------
+export async function watchTextMessage(msgId: string, interval = 2000) {
+  try {
+    // This will fail if the message is already deleted.
+    const msg = await getById("/api/pri/intercom/get", msgId);
+    if (msg.status !== "none") throw "invalid status";
+
+    const expiredAt = new Date(msg.expired_at);
+    if (isOver(expiredAt)) throw "expired message";
+
+    const nextInterval = 2 * interval > 600000 ? 600000 : 2 * interval;
+
+    setTimeout(() => {
+      watchTextMessage(msgId, nextInterval);
+    }, nextInterval);
+  } catch {
+    delMessage(msgId);
+  }
+}
+
+// -----------------------------------------------------------------------------
 // Trigger a select query on the server side (postgres), /api/pri/intercom/list
 // -----------------------------------------------------------------------------
 export async function intercomHandler() {
