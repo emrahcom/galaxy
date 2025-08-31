@@ -34,4 +34,5 @@
 
 - Add tests for direct call
 - Add tests for phone
+- Add tests for text message
 - Add tests for extension related endpoints
