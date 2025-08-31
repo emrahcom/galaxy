@@ -2,14 +2,14 @@
   "version": "5",
   "specifiers": {
     "jsr:@db/postgres@*": "0.19.5",
-    "jsr:@emrahcom/jwt@*": "0.4.2",
+    "jsr:@emrahcom/jwt@*": "0.4.5",
     "jsr:@std/bytes@^1.0.5": "1.0.6",
     "jsr:@std/crypto@^1.0.4": "1.0.5",
     "jsr:@std/encoding@*": "1.0.10",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/encoding@^1.0.9": "1.0.10",
     "jsr:@std/fmt@^1.0.6": "1.0.8",
-    "jsr:@std/internal@^1.0.9": "1.0.9",
+    "jsr:@std/internal@^1.0.9": "1.0.10",
     "jsr:@std/path@^1.0.8": "1.1.1",
     "npm:nodemailer@*": "7.0.5"
   },
@@ -24,8 +24,8 @@
         "jsr:@std/path"
       ]
     },
-    "@emrahcom/jwt@0.4.2": {
-      "integrity": "f26e26d88f8acbcb6d19d71b403acd3c5bd09829057e12cd66438f0b5dd13b34",
+    "@emrahcom/jwt@0.4.5": {
+      "integrity": "1b0fa5b714a6a02e1faffa15b37218f63313c29a30d1c52942057e2d461d0edc",
       "dependencies": [
         "jsr:@std/encoding@^1.0.10"
       ]
@@ -42,8 +42,8 @@
     "@std/fmt@1.0.8": {
       "integrity": "71e1fc498787e4434d213647a6e43e794af4fd393ef8f52062246e06f7e372b7"
     },
-    "@std/internal@1.0.9": {
-      "integrity": "bdfb97f83e4db7a13e8faab26fb1958d1b80cc64366501af78a0aee151696eb8"
+    "@std/internal@1.0.10": {
+      "integrity": "e3be62ce42cab0e177c27698e5d9800122f67b766a0bea6ca4867886cbde8cf7"
     },
     "@std/path@1.1.1": {
       "integrity": "fe00026bd3a7e6a27f73709b83c607798be40e20c81dde655ce34052fd82ec76",
