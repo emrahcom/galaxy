@@ -88,7 +88,7 @@
         {#if p.meeting_info}
           <p
             class="d-inline-block card-text text-muted text-start text-truncate bg-light w-auto"
-            style="max-width: 90%; white-space: pre"
+            style="max-width: 90%; white-space: pre-wrap"
           >
             {p.meeting_info}
           </p>

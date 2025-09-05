@@ -23,7 +23,7 @@
   <textarea
     id={name}
     class="form-control"
-    style="height: 128px; white-space: pre"
+    style="height: 128px; white-space: pre-wrap"
     {name}
     placeholder=""
     bind:value
