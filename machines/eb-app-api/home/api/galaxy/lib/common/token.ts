@@ -1,7 +1,7 @@
-import { decodeBase64 } from "jsr:@std/encoding";
-import { create, getNumericDate } from "jsr:@emrahcom/jwt";
-import type { Payload } from "jsr:@emrahcom/jwt";
-import type { Algorithm } from "jsr:@emrahcom/jwt/algorithm";
+import { decodeBase64 } from "@std/encoding";
+import { create, getNumericDate } from "@emrahcom/jwt";
+import type { Payload } from "@emrahcom/jwt";
+import type { Algorithm } from "@emrahcom/jwt/algorithm";
 
 // -----------------------------------------------------------------------------
 export async function generateCryptoKeyHS(
