@@ -1,4 +1,4 @@
-import { Transaction } from "jsr:@db/postgres";
+import { Transaction } from "@db/postgres";
 import { fetch } from "./common.ts";
 import type { Attr, MeetingSessionForReminder } from "./types.ts";
 
