@@ -1,3 +1,9 @@
 {
+  "imports": {
+    "@db/postgres": "jsr:@db/postgres@^0.19.5",
+    "@emrahcom/jwt": "jsr:@emrahcom/jwt@^0.4.7",
+    "@std/encoding": "jsr:@std/encoding@^1.0.10",
+    "nodemailer": "npm:nodemailer@^7.0.6"
+  },
   "nodeModulesDir": "auto"
 }
