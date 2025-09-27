@@ -5,7 +5,7 @@ import {
   getContactByIdentity,
   getContactIdentity,
 } from "../database/contact.ts";
-import { createTransport } from "npm:nodemailer";
+import { createTransport } from "nodemailer";
 import type { MeetingSessionForReminder } from "../database/types.ts";
 
 // -----------------------------------------------------------------------------
