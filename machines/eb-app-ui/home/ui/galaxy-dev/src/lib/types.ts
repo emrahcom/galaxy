@@ -188,6 +188,7 @@ export interface IntercomCall {
 // -----------------------------------------------------------------------------
 export interface IntercomMessage222 {
   id: string;
+  contact_id: string | null;
   contact_name: string | null;
   status: IntercomStatus;
   message_type: Message;
