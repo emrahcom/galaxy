@@ -42,7 +42,8 @@ export async function getIntercom(identityId: string, intercomId: string) {
   // ic.identity_id is the system user in this case.
   const sql = {
     text: `
-      SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
+      SELECT ic.id, co.id as contact_id, co.name as contact_name, ic.status,
+        ic.message_type,
         CASE
           WHEN ic.message_type = 'text' THEN
             jsonb_build_object(
@@ -86,7 +87,8 @@ export async function getIntercomByKey(keyValue: string, intercomId: string) {
   // ic.identity_id is the system user in this case.
   const sql = {
     text: `
-      SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
+      SELECT ic.id, co.id as contact_id, co.name as contact_name, ic.status,
+        ic.message_type,
         CASE
           WHEN ic.message_type = 'text' THEN
             jsonb_build_object(
@@ -164,7 +166,8 @@ export async function listIntercom(
   // ic.identity_id is the system user in this case.
   const sql = {
     text: `
-      SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
+      SELECT ic.id, co.id as contact_id, co.name as contact_name, ic.status,
+        ic.message_type,
         CASE
           WHEN ic.message_type = 'text' THEN
             jsonb_build_object(
@@ -228,7 +231,8 @@ export async function listIntercomByKey(
   // ic.identity_id is the system user in this case.
   const sql = {
     text: `
-      SELECT ic.id, co.name as contact_name, ic.status, ic.message_type,
+      SELECT ic.id, co.id as contact_id, co.name as contact_name, ic.status,
+        ic.message_type,
         CASE
           WHEN ic.message_type = 'text' THEN
             jsonb_build_object(
