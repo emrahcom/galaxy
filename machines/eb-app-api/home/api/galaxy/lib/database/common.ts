@@ -1,5 +1,5 @@
-import { Pool } from "jsr:@db/postgres";
-import { QueryArguments, QueryObjectResult } from "jsr:@db/postgres";
+import { Pool } from "@db/postgres";
+import { QueryArguments, QueryObjectResult } from "@db/postgres";
 import {
   DB_HOST,
   DB_NAME,
