@@ -15,7 +15,7 @@
 - Info text for contact?
 - Instant text messages through extension
 - Direct call to a group (ring every members at the same time and put them on
-  the same meeting
+  the same meeting)
 
 ## Bugs
 
