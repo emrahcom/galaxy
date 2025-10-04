@@ -43,5 +43,5 @@ set-letsencrypt-cert mydomain.corp,app.mydomain.corp,id.mydomain.corp
 
 #### test
 
-- try `forget password` and check mailbox.
-- add and remove meetings
+- Try `forget password` and check mailbox.
+- Add and remove meetings
