@@ -11,39 +11,23 @@
           "type": "string",
           "format": "email",
           "title": "Email",
+          "minLength": 6,
+          "maxLength": 320,
+          "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
           "ory.sh/kratos": {
             "credentials": {
-              "password": {
-                "identifier": true
-              },
-              "webauthn": {
-                "identifier": true
-              },
-              "totp": {
-                "account_name": true
-              },
-              "code": {
-                "identifier": true,
-                "via": "email"
-              },
-              "passkey": {
-                "display_name": true
-              }
+              "password": { "identifier": true },
+              "webauthn": { "identifier": true },
+              "totp": { "account_name": true },
+              "code": { "identifier": true, "via": "email" },
+              "passkey": { "display_name": true }
             },
-            "recovery": {
-              "via": "email"
-            },
-            "verification": {
-              "via": "email"
-            }
-          },
-          "minLength": 6,
-          "maxLength": 320
+            "recovery": { "via": "email" },
+            "verification": { "via": "email" }
+          }
         }
       },
-      "required": [
-        "email"
-      ],
+      "required": ["email"],
       "additionalProperties": false
     }
   }

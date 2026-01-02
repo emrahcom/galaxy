@@ -1,4 +1,4 @@
-version: v1.3.1
+version: v25.4.0
 
 dsn: "postgres://kratos:___DB_PASSWD___@eb-postgres:5432/kratos?\
       sslmode=disable&max_conns=20&max_idle_conns=4"
@@ -33,6 +33,8 @@ selfservice:
       enabled: true
     link:
       enabled: true
+      config:
+        lifespan: 1h
     code:
       enabled: true
       passwordless_enabled: true
@@ -124,7 +126,8 @@ selfservice:
 log:
   level: warning
   format: text
-  leak_sensitive_values: true
+  leak_sensitive_values: false
+  redaction_text: ""
 
 secrets:
   cookie:

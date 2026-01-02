@@ -7,3 +7,16 @@ For STARTTLS SMTP server:
 For SMTPS server:
   courier.smtp.connection_uri:
   smtps://name%40maildomain.com:url_encoded_passwd@mailmydomain.corp:465/
+
+
+## identity schema
+
+- https://github.com/ory/kratos/blob/master/contrib/quickstart/kratos/email-password/identity.schema.json
+- https://json-schema.org/specification-links#draft-7
+- https://www.ory.com/docs/kratos/manage-identities/overview
+
+
+## config
+
+- https://github.com/ory/kratos/blob/master/contrib/quickstart/kratos/email-password/kratos.yml
+- https://www.ory.com/docs/kratos/reference/configuration
