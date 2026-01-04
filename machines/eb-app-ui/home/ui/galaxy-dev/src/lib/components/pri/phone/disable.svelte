@@ -19,7 +19,7 @@
   let disabled = $state(false);
 
   const domain_name = $derived(
-    p.domain_enabled ? p.domain_name : `${p.domain_name} - DISABLED`
+    p.domain_enabled ? p.domain_name : `${p.domain_name} - DISABLED`,
   );
 
   // ---------------------------------------------------------------------------
