@@ -7,7 +7,7 @@
     contacts: Contact[];
   }
 
-  let { contacts }: Props = $props();
+  const { contacts }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

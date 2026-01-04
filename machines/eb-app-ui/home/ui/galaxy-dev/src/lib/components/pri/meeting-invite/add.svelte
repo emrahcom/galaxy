@@ -18,7 +18,7 @@
     meeting: Meeting;
   }
 
-  let { meeting }: Props = $props();
+  const { meeting }: Props = $props();
 
   const date = new Date();
 

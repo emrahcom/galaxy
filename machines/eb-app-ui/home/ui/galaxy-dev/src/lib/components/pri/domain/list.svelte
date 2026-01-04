@@ -10,7 +10,7 @@
     candidacies: DomainPartnerCandidacy[];
   }
 
-  let { domains, candidacies }: Props = $props();
+  const { domains, candidacies }: Props = $props();
 
   const isEmpty = !(domains.length || candidacies.length);
 </script>

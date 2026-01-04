@@ -10,7 +10,7 @@
     candidacies: MeetingMemberCandidacy[];
   }
 
-  let { meetings, candidacies }: Props = $props();
+  const { meetings, candidacies }: Props = $props();
 
   const isEmpty = !(meetings.length || candidacies.length);
 </script>

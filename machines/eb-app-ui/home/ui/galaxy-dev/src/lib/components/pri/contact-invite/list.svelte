@@ -8,7 +8,7 @@
     invites: ContactInvite[];
   }
 
-  let { invites }: Props = $props();
+  const { invites }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

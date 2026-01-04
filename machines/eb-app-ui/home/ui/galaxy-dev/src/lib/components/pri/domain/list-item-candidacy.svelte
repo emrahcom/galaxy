@@ -7,7 +7,7 @@
     p: DomainPartnerCandidacy;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

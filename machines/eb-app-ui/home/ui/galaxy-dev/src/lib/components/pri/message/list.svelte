@@ -8,7 +8,7 @@
     messages: IntercomMessage222[];
   }
 
-  let { messages }: Props = $props();
+  const { messages }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

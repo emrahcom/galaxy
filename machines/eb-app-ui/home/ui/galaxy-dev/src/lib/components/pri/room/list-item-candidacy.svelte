@@ -7,7 +7,7 @@
     p: RoomPartnerCandidacy;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

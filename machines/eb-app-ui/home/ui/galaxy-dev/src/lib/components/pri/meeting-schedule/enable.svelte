@@ -15,7 +15,7 @@
     p: MeetingSchedule;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   const date0 = $state(toLocaleDate(p.schedule_attr.started_at));
   const interval = $state(

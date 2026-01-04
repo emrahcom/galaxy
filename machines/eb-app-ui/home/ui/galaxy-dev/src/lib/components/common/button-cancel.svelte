@@ -5,7 +5,7 @@
     onclick: (e: MouseEvent) => void;
   }
 
-  let { disabled = false, label = "Cancel", onclick }: Props = $props();
+  const { disabled = false, label = "Cancel", onclick }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

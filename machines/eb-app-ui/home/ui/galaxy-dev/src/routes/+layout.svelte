@@ -15,7 +15,7 @@
     children: Snippet;
   }
 
-  let { children }: Props = $props();
+  const { children }: Props = $props();
 
   let messages = $state([] as IntercomMessage222[]);
 

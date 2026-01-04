@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Show schedules" }: Props = $props();
+  const { href, title = "Show schedules" }: Props = $props();
 
   const icon = "bi-clock";
 </script>

@@ -6,7 +6,7 @@
     effect?: string;
   }
 
-  let { children, effect = "border" }: Props = $props();
+  const { children, effect = "border" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

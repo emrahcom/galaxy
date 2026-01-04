@@ -9,7 +9,7 @@
     invites: RoomInvite[];
   }
 
-  let { invites }: Props = $props();
+  const { invites }: Props = $props();
 
   const room_id = $page.params.room_uuid;
 </script>

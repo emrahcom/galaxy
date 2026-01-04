@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Set member level to guest" }: Props = $props();
+  const { href, title = "Set member level to guest" }: Props = $props();
 
   const icon = "bi-arrow-bar-down";
 </script>

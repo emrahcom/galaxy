@@ -24,7 +24,7 @@
     p: Domain;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   // set default if there is no value
   if (!p.domain_attr.url) p.domain_attr.url = "";

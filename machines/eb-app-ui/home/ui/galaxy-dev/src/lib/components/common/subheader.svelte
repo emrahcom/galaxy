@@ -22,7 +22,7 @@
     subheader?: string;
   }
 
-  let {
+  const {
     hrefAdd = "",
     hrefAddTitle = "Add",
     hrefBack = "",

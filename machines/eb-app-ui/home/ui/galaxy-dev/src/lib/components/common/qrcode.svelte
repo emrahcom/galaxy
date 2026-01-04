@@ -5,7 +5,7 @@
     data: string;
   }
 
-  let { data }: Props = $props();
+  const { data }: Props = $props();
 
   let canvas: HTMLCanvasElement;
 

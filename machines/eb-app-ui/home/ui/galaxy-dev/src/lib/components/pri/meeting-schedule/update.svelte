@@ -27,7 +27,7 @@
     p: MeetingSchedule;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   const timezoneOffset = new Date().getTimezoneOffset();
   const defaultDuration = Number(p.schedule_attr.duration);

@@ -13,7 +13,7 @@
     isExist: boolean;
   }
 
-  let { invite, isExist }: Props = $props();
+  const { invite, isExist }: Props = $props();
 
   let warning = $state(false);
   let disabled = $state(false);

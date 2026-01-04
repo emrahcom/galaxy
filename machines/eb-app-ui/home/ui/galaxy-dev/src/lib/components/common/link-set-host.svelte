@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Set member level to host" }: Props = $props();
+  const { href, title = "Set member level to host" }: Props = $props();
 
   const icon = "bi-arrow-bar-up";
 </script>

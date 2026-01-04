@@ -29,7 +29,7 @@
     meeting: Meeting;
   }
 
-  let { meeting }: Props = $props();
+  const { meeting }: Props = $props();
 
   const hash = $page.url.hash;
 

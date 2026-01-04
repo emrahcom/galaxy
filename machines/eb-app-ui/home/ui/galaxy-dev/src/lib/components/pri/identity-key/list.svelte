@@ -8,7 +8,7 @@
     keys: IdentityKey333[];
   }
 
-  let { keys }: Props = $props();
+  const { keys }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

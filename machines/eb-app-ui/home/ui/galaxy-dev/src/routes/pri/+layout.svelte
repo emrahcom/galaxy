@@ -5,7 +5,7 @@
     children: Snippet;
   }
 
-  let { children }: Props = $props();
+  const { children }: Props = $props();
 
   const KRATOS_FQDN = globalThis.localStorage.getItem("kratos_fqdn");
   const loginUrl = `https://${KRATOS_FQDN}/self-service/login/browser`;

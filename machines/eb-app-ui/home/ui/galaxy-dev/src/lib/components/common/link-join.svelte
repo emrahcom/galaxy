@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Join" }: Props = $props();
+  const { href, title = "Join" }: Props = $props();
 
   const icon = "bi-link-45deg";
 </script>

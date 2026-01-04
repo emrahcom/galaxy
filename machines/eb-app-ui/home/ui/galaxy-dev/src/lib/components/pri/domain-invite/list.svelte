@@ -9,7 +9,7 @@
     invites: DomainInvite[];
   }
 
-  let { invites }: Props = $props();
+  const { invites }: Props = $props();
 
   const domain_id = $page.params.domain_uuid;
 </script>

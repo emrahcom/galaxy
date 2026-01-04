@@ -12,7 +12,7 @@
     domain: Domain;
   }
 
-  let { domain }: Props = $props();
+  const { domain }: Props = $props();
 
   const date = new Date();
 

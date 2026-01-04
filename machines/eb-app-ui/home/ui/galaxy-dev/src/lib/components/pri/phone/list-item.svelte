@@ -12,7 +12,7 @@
     p: Phone;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   // ---------------------------------------------------------------------------
   function copy(code: string) {

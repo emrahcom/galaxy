@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Enable" }: Props = $props();
+  const { href, title = "Enable" }: Props = $props();
 
   const icon = "bi-check-lg";
 </script>

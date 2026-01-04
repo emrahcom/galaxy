@@ -9,7 +9,7 @@
     msg: IntercomMessage222;
   }
 
-  let { msg }: Props = $props();
+  const { msg }: Props = $props();
 
   const href = `/pri/call/join/${msg.id}`;
   let toast: HTMLElement;

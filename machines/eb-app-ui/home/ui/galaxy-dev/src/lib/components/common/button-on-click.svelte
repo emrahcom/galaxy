@@ -4,7 +4,7 @@
     onclick: (e: MouseEvent) => void;
   }
 
-  let { label = "Click", onclick }: Props = $props();
+  const { label = "Click", onclick }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

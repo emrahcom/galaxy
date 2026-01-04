@@ -13,7 +13,7 @@
     domain: Domain;
   }
 
-  let { domain }: Props = $props();
+  const { domain }: Props = $props();
 
   const pr = listById("/api/pri/contact/list/bydomain", domain.id, 1000).then(
     (items: Contact[]) => {

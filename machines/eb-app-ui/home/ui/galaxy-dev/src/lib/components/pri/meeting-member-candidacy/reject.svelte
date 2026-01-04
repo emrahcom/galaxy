@@ -12,7 +12,7 @@
     p: MeetingMemberCandidacy;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   let warning = $state(false);
   let disabled = $state(false);

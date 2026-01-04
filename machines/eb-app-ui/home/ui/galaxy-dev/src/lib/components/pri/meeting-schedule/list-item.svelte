@@ -10,7 +10,7 @@
     p: MeetingSchedule;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   // ---------------------------------------------------------------------------
   function getDays(repDays: string) {

@@ -8,7 +8,7 @@
     phones: Phone[];
   }
 
-  let { phones }: Props = $props();
+  const { phones }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

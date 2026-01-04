@@ -3,7 +3,7 @@
     subheader: string;
   }
 
-  let { subheader }: Props = $props();
+  const { subheader }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

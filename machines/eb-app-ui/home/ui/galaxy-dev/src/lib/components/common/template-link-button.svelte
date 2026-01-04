@@ -8,7 +8,7 @@
     title?: string;
   }
 
-  let { href, icon = "bi-question", title = "?" }: Props = $props();
+  const { href, icon = "bi-question", title = "?" }: Props = $props();
 
   onMount(() => {
     setTimeout(activateTooltips, 200);

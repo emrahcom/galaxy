@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Show keys" }: Props = $props();
+  const { href, title = "Show keys" }: Props = $props();
 
   const icon = "bi-key";
 </script>

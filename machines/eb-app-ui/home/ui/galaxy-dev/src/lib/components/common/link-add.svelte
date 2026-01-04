@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Add" }: Props = $props();
+  const { href, title = "Add" }: Props = $props();
 
   const icon = "bi-plus";
 </script>

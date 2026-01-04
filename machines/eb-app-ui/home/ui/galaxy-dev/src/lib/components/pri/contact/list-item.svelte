@@ -10,7 +10,7 @@
     p: Contact;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   const PERIOD_API_REQUEST = 30000;
   const PERIOD_UI_REFRESH = 10000;

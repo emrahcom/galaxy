@@ -12,7 +12,7 @@
     p: MeetingInvite;
   }
 
-  let { p }: Props = $props();
+  const { p }: Props = $props();
 
   // ---------------------------------------------------------------------------
   function copyForMember(code: string) {

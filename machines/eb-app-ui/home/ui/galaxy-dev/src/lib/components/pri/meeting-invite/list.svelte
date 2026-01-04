@@ -9,7 +9,7 @@
     invites: MeetingInvite[];
   }
 
-  let { invites }: Props = $props();
+  const { invites }: Props = $props();
 
   const meeting_id = $page.params.meeting_uuid;
 </script>

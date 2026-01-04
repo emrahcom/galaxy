@@ -8,7 +8,7 @@
     profiles: Profile[];
   }
 
-  let { profiles }: Props = $props();
+  const { profiles }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

@@ -4,7 +4,7 @@
     label?: string;
   }
 
-  let { disabled = false, label = "Submit" }: Props = $props();
+  const { disabled = false, label = "Submit" }: Props = $props();
 </script>
 
 <!-- -------------------------------------------------------------------------->

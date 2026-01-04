@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Send message" }: Props = $props();
+  const { href, title = "Send message" }: Props = $props();
 
   const icon = "bi-chat-left-dots";
 </script>

@@ -9,7 +9,7 @@
     schedules: MeetingSchedule[];
   }
 
-  let { schedules }: Props = $props();
+  const { schedules }: Props = $props();
 
   const meeting_id = $page.params.meeting_uuid;
 </script>

@@ -6,7 +6,7 @@
     title?: string;
   }
 
-  let { href, title = "Set as default profile" }: Props = $props();
+  const { href, title = "Set as default profile" }: Props = $props();
 
   const icon = "bi-person-check";
 </script>
