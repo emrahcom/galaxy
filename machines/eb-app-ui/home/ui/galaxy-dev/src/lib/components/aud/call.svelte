@@ -23,7 +23,7 @@
   let ring: IntercomRing;
   let ringCounter = 0;
   let publicUrl = "";
-  let payload = $derived({
+  const payload = $derived({
     code: p.code,
     id: "",
   });

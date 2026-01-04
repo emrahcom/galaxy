@@ -18,7 +18,7 @@
   const REFRESH_SEC = 60;
 
   let warning = $state(false);
-  let started_at = new Date(Date.now() + p.waiting_time * 1000);
+  let started_at = $derived(new Date(Date.now() + p.waiting_time * 1000));
   let remainingTime = $state("");
   let counter = 0;
 
