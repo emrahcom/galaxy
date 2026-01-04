@@ -13,14 +13,14 @@
     p: Phone;
   }
 
-  let { p }: Props = $props();
-
-  let warning = $state(false);
-  let disabled = $state(false);
+  const { p }: Props = $props();
 
   const domain_name = $derived(
     p.domain_enabled ? p.domain_name : `${p.domain_name} - DISABLED`,
   );
+
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function cancel() {

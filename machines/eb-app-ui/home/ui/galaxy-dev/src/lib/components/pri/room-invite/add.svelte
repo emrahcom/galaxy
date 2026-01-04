@@ -12,16 +12,16 @@
     room: Room;
   }
 
-  let { room }: Props = $props();
+  const { room }: Props = $props();
 
   const date = new Date();
-
-  let warning = $state(false);
-  let disabled = $state(false);
-  let p = $derived({
+  const p = $derived({
     name: `invite-${date.getTime() % 10000000000}`,
     room_id: room.id,
   });
+
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function cancel() {

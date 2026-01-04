@@ -13,13 +13,14 @@
     isExist: boolean;
   }
 
-  let { invite, isExist }: Props = $props();
+  const { invite, isExist }: Props = $props();
+
+  const p = $derived({
+    code: invite.code,
+  });
 
   let warning = $state(false);
   let disabled = $state(false);
-  let p = $derived({
-    code: invite.code,
-  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

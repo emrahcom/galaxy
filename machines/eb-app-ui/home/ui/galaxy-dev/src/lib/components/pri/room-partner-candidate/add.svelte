@@ -13,7 +13,12 @@
     room: Room;
   }
 
-  let { room }: Props = $props();
+  const { room }: Props = $props();
+
+  const p = $derived({
+    contact_id: "",
+    room_id: room.id,
+  });
 
   const pr = $derived(
     listById("/api/pri/contact/list/byroom", room.id, 1000).then(
@@ -28,10 +33,6 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  let p = $derived({
-    contact_id: "",
-    room_id: room.id,
-  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

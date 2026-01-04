@@ -9,7 +9,7 @@
     candidates: RoomPartnerCandidate[];
   }
 
-  let { partners, candidates }: Props = $props();
+  const { partners, candidates }: Props = $props();
 
   const isEmpty = $derived(!(partners.length || candidates.length));
 </script>
