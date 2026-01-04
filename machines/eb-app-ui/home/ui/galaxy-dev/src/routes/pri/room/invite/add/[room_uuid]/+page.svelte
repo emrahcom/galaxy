@@ -7,7 +7,7 @@
 
   const roomId = $page.params.room_uuid;
 
-  const pr = getById("/api/pri/room/get", roomId);
+  const pr = getById("/api/pri/room/get", roomId || "");
 </script>
 
 <!-- -------------------------------------------------------------------------->

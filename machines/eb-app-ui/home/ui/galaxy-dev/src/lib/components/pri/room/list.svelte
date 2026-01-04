@@ -12,7 +12,7 @@
 
   let { rooms, candidacies }: Props = $props();
 
-  const isEmpty = !(rooms.length || candidacies.length);
+  const isEmpty = $derived(!(rooms.length || candidacies.length));
 </script>
 
 <!-- -------------------------------------------------------------------------->

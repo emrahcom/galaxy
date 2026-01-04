@@ -12,10 +12,11 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  // Validate the date which comes from the path. Throw an error if the date is
-  // not valid to stop execution of remaining codes and wait for redirection.
+  // Validate the date which comes from the path. If the date is not valid then
+  // throw an error to stop execution of remaining codes and wait for
+  // redirection.
   try {
-    const date = toLocaleDate($page.params.date);
+    const date = toLocaleDate($page.params.date || "");
 
     if (date != $page.params.date) {
       globalThis.location.href = `/pri/calendar/month/${date}`;

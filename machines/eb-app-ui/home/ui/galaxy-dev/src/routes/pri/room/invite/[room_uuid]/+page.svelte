@@ -6,7 +6,7 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const roomId = $page.params.room_uuid;
+  const roomId = $page.params.room_uuid || "";
   let roomName = $state("");
 
   const pr1 = getById("/api/pri/room/get", roomId).then((item: Room) => {

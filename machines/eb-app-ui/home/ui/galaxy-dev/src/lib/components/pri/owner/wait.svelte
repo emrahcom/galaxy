@@ -37,7 +37,10 @@
     if (counter > REFRESH_SEC) {
       counter = 0;
 
-      await getById("/api/pri/meeting/schedule/get/bymeeting", p.meeting_id)
+      await getById(
+        "/api/pri/meeting/schedule/get/bymeeting",
+        p.meeting_id || "",
+      )
         .then((s) => {
           p = s;
           started_at = new Date(Date.now() + p.waiting_time * 1000);

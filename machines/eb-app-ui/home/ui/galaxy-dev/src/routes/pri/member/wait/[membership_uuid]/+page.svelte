@@ -6,7 +6,7 @@
   import Wait from "$lib/components/pri/member/wait.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const membershipId = $page.params.membership_uuid;
+  const membershipId = $page.params.membership_uuid || "";
 
   const pr = getById(
     "/api/pri/meeting/schedule/get/bymembership",

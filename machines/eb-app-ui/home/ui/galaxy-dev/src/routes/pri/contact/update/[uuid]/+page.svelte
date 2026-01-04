@@ -5,7 +5,7 @@
   import Update from "$lib/components/pri/contact/update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = getById("/api/pri/contact/get", $page.params.uuid);
+  const pr = getById("/api/pri/contact/get", $page.params.uuid || "");
 </script>
 
 <!-- -------------------------------------------------------------------------->

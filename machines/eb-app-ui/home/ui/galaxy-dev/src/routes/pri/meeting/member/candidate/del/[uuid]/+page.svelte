@@ -7,7 +7,7 @@
 
   const pr = getById(
     "/api/pri/meeting/member/candidate/get",
-    $page.params.uuid,
+    $page.params.uuid || "",
   );
 </script>
 

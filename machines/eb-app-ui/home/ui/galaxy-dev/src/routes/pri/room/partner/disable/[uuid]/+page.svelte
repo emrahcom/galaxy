@@ -5,7 +5,7 @@
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = getById("/api/pri/room/partner/get", $page.params.uuid);
+  const pr = getById("/api/pri/room/partner/get", $page.params.uuid || "");
 </script>
 
 <!-- -------------------------------------------------------------------------->

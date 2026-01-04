@@ -21,7 +21,7 @@
     globalThis.location.replace(url);
   }
 
-  const pr = join($page.params.uuid);
+  const pr = join($page.params.uuid || "");
 </script>
 
 <!-- -------------------------------------------------------------------------->

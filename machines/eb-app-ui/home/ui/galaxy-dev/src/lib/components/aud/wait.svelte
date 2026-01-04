@@ -35,7 +35,7 @@
     if (counter > REFRESH_SEC) {
       counter = 0;
 
-      await getByCode("/api/pub/meeting/schedule/get/bycode", p.code)
+      await getByCode("/api/pub/meeting/schedule/get/bycode", p.code || "")
         .then((s) => {
           p = s;
           started_at = new Date(Date.now() + p.waiting_time * 1000);

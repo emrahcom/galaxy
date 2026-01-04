@@ -6,7 +6,7 @@
   import Wait from "$lib/components/aud/wait.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const code = $page.params.code;
+  const code = $page.params.code || "";
 
   const pr = getByCode("/api/pub/meeting/schedule/get/bycode", code);
 

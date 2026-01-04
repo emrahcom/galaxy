@@ -5,7 +5,7 @@
   import Update from "$lib/components/pri/phone/update.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const pr = getById("/api/pri/phone/get", $page.params.uuid);
+  const pr = getById("/api/pri/phone/get", $page.params.uuid || "");
 </script>
 
 <!-- -------------------------------------------------------------------------->

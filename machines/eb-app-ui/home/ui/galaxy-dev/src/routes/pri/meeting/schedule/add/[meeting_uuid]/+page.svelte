@@ -5,7 +5,7 @@
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const meetingId = $page.params.meeting_uuid;
+  const meetingId = $page.params.meeting_uuid || "";
 
   const pr = getById("/api/pri/meeting/get", meetingId);
 </script>

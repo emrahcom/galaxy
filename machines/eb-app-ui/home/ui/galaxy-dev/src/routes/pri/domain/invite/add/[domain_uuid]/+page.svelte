@@ -5,7 +5,7 @@
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const domainId = $page.params.domain_uuid;
+  const domainId = $page.params.domain_uuid || "";
 
   const pr = getById("/api/pri/domain/get", domainId);
 </script>

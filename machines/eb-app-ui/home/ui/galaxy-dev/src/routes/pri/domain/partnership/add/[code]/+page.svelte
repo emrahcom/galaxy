@@ -6,7 +6,7 @@
   import Subheader from "$lib/components/common/subheader-center.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const code = $page.params.code;
+  const code = $page.params.code || "";
 
   const pr1 = getByCode("/api/pri/domain/invite/get/bycode", code);
   const pr2 = getByCode("/api/pri/domain/partnership/check/bycode", code);

@@ -18,9 +18,9 @@
   let warning = $state(false);
   let disabled = $state(false);
 
-  if (!p.domain_enabled) {
-    p.domain_name = `${p.domain_name} - DISABLED`;
-  }
+  const domain_name = $derived(
+    p.domain_enabled ? p.domain_name : `${p.domain_name} - DISABLED`,
+  );
 
   // ---------------------------------------------------------------------------
   function cancel() {
@@ -56,7 +56,7 @@
       <Text
         name="domain_name"
         label="Jitsi Domain Name"
-        value={p.domain_name}
+        value={domain_name}
         disabled={true}
         readonly={true}
       />

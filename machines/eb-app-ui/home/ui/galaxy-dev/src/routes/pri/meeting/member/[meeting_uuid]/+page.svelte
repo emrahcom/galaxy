@@ -6,7 +6,7 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const meetingId = $page.params.meeting_uuid;
+  const meetingId = $page.params.meeting_uuid || "";
   let meetingName = $state("");
 
   const pr1 = getById("/api/pri/meeting/get", meetingId).then(

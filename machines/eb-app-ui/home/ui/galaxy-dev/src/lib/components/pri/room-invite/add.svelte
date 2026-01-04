@@ -18,7 +18,7 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  let p = $state({
+  let p = $derived({
     name: `invite-${date.getTime() % 10000000000}`,
     room_id: room.id,
   });

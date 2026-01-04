@@ -23,10 +23,10 @@
   let ring: IntercomRing;
   let ringCounter = 0;
   let publicUrl = "";
-  let payload = {
+  let payload = $derived({
     code: p.code,
     id: "",
-  };
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

@@ -6,7 +6,7 @@
   import Subheader from "$lib/components/common/subheader.svelte";
   import Warning from "$lib/components/common/alert-warning.svelte";
 
-  const domainId = $page.params.domain_uuid;
+  const domainId = $page.params.domain_uuid || "";
   let domainName = $state("");
 
   const pr1 = getById("/api/pri/domain/get", domainId).then((item: Domain) => {
