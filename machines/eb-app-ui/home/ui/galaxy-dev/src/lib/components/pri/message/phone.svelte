@@ -16,7 +16,7 @@
   let ring: HTMLAudioElement;
 
   $effect(() => {
-    watchTextMessage(msg.id);
+    watchMessage(msg.id);
   });
 
   // ---------------------------------------------------------------------------
