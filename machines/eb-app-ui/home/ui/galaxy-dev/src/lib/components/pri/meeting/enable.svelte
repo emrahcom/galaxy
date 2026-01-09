@@ -20,7 +20,9 @@
 
   let warning = $state(false);
   let disabled = $state(false);
+  // svelte-ignore state_referenced_locally
   let domainName = $state(p.domain_name);
+  // svelte-ignore state_referenced_locally
   let roomName = $state(`${p.room_name} on ${p.domain_name}`);
   let profile = $state("");
 

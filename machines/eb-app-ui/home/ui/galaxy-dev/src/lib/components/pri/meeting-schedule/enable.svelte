@@ -18,54 +18,108 @@
   const { p }: Props = $props();
 
   const date0 = $derived(toLocaleDate(p.schedule_attr.started_at));
+
   const interval = $derived(
     toLocaleInterval(
       p.schedule_attr.started_at,
       Number(p.schedule_attr.duration),
     ),
   );
-  let date1 = $state("");
-  let every = $state("");
-  let times = $state("1 time");
-  let d0 = $state(false);
-  let d1 = $state(false);
-  let d2 = $state(false);
-  let d3 = $state(false);
-  let d4 = $state(false);
-  let d5 = $state(false);
-  let d6 = $state(false);
-  let warning = $state(false);
-  let disabled = $state(false);
 
-  $effect(() => {
+  const date1 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return toLocaleDate(p.schedule_attr.rep_end_at);
+    }
+
+    return "";
+  });
+
+  const every = $derived.by(() => {
     if (p.schedule_attr.type === "d") {
       if (p.schedule_attr.rep_every === "1") {
-        every = "1 day";
+        return "1 day";
       } else {
-        every = `${p.schedule_attr.rep_every} days`;
-      }
-
-      if (p.schedule_attr.rep_end_x !== "1") {
-        times = `${p.schedule_attr.rep_end_x} times`;
+        return `${p.schedule_attr.rep_every} days`;
       }
     } else if (p.schedule_attr.type === "w") {
-      date1 = toLocaleDate(p.schedule_attr.rep_end_at);
-
       if (p.schedule_attr.rep_every === "1") {
-        every = "1 week";
+        return "1 week";
       } else {
-        every = `${p.schedule_attr.rep_every} weeks`;
+        return `${p.schedule_attr.rep_every} weeks`;
       }
-
-      d0 = p.schedule_attr.rep_days[0] === "1";
-      d1 = p.schedule_attr.rep_days[1] === "1";
-      d2 = p.schedule_attr.rep_days[2] === "1";
-      d3 = p.schedule_attr.rep_days[3] === "1";
-      d4 = p.schedule_attr.rep_days[4] === "1";
-      d5 = p.schedule_attr.rep_days[5] === "1";
-      d6 = p.schedule_attr.rep_days[6] === "1";
     }
+
+    return "";
   });
+
+  const times = $derived.by(() => {
+    if (p.schedule_attr.type === "d") {
+      if (p.schedule_attr.rep_end_x !== "1") {
+        return `${p.schedule_attr.rep_end_x} times`;
+      }
+    }
+
+    return "1 time";
+  });
+
+  const d0 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return p.schedule_attr.rep_days[0] === "1";
+    }
+
+    return false;
+  });
+
+  const d1 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return p.schedule_attr.rep_days[1] === "1";
+    }
+
+    return false;
+  });
+
+  const d2 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return p.schedule_attr.rep_days[2] === "1";
+    }
+
+    return false;
+  });
+
+  const d3 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return p.schedule_attr.rep_days[3] === "1";
+    }
+
+    return false;
+  });
+
+  const d4 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return p.schedule_attr.rep_days[4] === "1";
+    }
+
+    return false;
+  });
+
+  const d5 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return p.schedule_attr.rep_days[5] === "1";
+    }
+
+    return false;
+  });
+
+  const d6 = $derived.by(() => {
+    if (p.schedule_attr.type === "w") {
+      return p.schedule_attr.rep_days[6] === "1";
+    }
+
+    return false;
+  });
+
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function cancel() {

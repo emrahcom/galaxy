@@ -21,9 +21,8 @@
     value = $bindable(),
   }: Props = $props();
 
-  const options = Array.from(
-    { length: max - min + 1 },
-    (_, index) => min + index,
+  const options = $derived(
+    Array.from({ length: max - min + 1 }, (_, index) => min + index),
   );
 </script>
 

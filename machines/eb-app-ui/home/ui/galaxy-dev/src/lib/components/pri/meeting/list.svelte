@@ -12,7 +12,7 @@
 
   const { meetings, candidacies }: Props = $props();
 
-  const isEmpty = !(meetings.length || candidacies.length);
+  const isEmpty = $derived(!(meetings.length || candidacies.length));
 </script>
 
 <!-- -------------------------------------------------------------------------->

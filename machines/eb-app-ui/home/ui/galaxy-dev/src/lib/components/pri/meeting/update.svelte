@@ -24,40 +24,50 @@
 
   let warning = $state(false);
   let disabled = $state(false);
+  // svelte-ignore state_referenced_locally
   let domainId = $state(p.domain_id);
+  // svelte-ignore state_referenced_locally
   let roomId = $state(p.room_id);
+  // svelte-ignore state_referenced_locally
   let roomStatic = $state(!p.room_ephemeral);
+  // svelte-ignore state_referenced_locally
   let scheduleType = $state(p.schedule_type);
 
-  const pr1 = list("/api/pri/profile/list", 100).then((items: Profile[]) => {
-    return items.map((i) => {
-      let desc: string;
+  const pr1 = $derived(
+    list("/api/pri/profile/list", 100).then((items: Profile[]) => {
+      return items.map((i) => {
+        let desc: string;
 
-      if (i.email) {
-        desc = `${i.name} (${i.email})`;
-      } else {
-        desc = i.name;
-      }
+        if (i.email) {
+          desc = `${i.name} (${i.email})`;
+        } else {
+          desc = i.name;
+        }
 
-      return [i.id, desc];
-    });
-  });
+        return [i.id, desc];
+      });
+    }),
+  );
 
-  const pr2 = list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
-    return items.map((i) => [
-      i.id,
-      `${i.name}${i.enabled ? "" : " - DISABLED"}`,
-    ]);
-  });
+  const pr2 = $derived(
+    list("/api/pri/domain/list", 100).then((items: Domain333[]) => {
+      return items.map((i) => [
+        i.id,
+        `${i.name}${i.enabled ? "" : " - DISABLED"}`,
+      ]);
+    }),
+  );
 
-  const pr3 = list("/api/pri/room/list", 100).then((items: Room333[]) => {
-    return items.map((i) => [
-      i.id,
-      `${i.name} on ${i.domain_name}${
-        i.enabled && i.chain_enabled ? "" : " - DISABLED"
-      }`,
-    ]);
-  });
+  const pr3 = $derived(
+    list("/api/pri/room/list", 100).then((items: Room333[]) => {
+      return items.map((i) => [
+        i.id,
+        `${i.name} on ${i.domain_name}${
+          i.enabled && i.chain_enabled ? "" : " - DISABLED"
+        }`,
+      ]);
+    }),
+  );
 
   // ---------------------------------------------------------------------------
   function cancel() {

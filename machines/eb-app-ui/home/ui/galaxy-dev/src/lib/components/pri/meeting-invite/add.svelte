@@ -24,6 +24,7 @@
 
   let warning = $state(false);
   let disabled = $state(false);
+  // svelte-ignore state_referenced_locally
   let p = $state({
     name: `invite-${date.getTime() % 10000000000}`,
     meeting_id: meeting.id,
