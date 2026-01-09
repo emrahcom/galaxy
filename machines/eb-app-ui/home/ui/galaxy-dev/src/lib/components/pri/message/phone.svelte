@@ -15,7 +15,9 @@
   let toast: HTMLElement;
   let ring: HTMLAudioElement;
 
-  watchMessage(msg.id);
+  $effect(() => {
+    watchTextMessage(msg.id);
+  });
 
   // ---------------------------------------------------------------------------
   onMount(() => {
