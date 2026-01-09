@@ -11,7 +11,7 @@
 
   const { msg }: Props = $props();
 
-  const href = `/pri/phone/join/${msg.id}`;
+  const href = $derived(`/pri/phone/join/${msg.id}`);
   let toast: HTMLElement;
   let ring: HTMLAudioElement;
 
