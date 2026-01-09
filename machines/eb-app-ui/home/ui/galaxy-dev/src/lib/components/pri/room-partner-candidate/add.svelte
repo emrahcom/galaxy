@@ -15,11 +15,6 @@
 
   const { room }: Props = $props();
 
-  const p = $derived({
-    contact_id: "",
-    room_id: room.id,
-  });
-
   const pr = $derived(
     listById("/api/pri/contact/list/byroom", room.id, 1000).then(
       (items: Contact[]) => {
@@ -30,6 +25,13 @@
       },
     ),
   );
+
+  let p = $state({
+    contact_id: "",
+    get room_id() {
+      return room.id;
+    },
+  });
 
   let warning = $state(false);
   let disabled = $state(false);

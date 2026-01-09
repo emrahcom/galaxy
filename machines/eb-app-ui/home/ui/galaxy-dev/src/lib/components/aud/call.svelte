@@ -16,9 +16,11 @@
 
   const { p }: Props = $props();
 
-  const payload = $derived({
-    code: p.code,
+  let payload = $state({
     id: "",
+    get code() {
+      return p.code;
+    },
   });
 
   let warning = $state(false);

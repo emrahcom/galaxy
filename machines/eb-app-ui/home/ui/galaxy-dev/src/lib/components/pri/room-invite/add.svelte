@@ -15,9 +15,12 @@
   const { room }: Props = $props();
 
   const date = new Date();
-  const p = $derived({
+
+  let p = $state({
     name: `invite-${date.getTime() % 10000000000}`,
-    room_id: room.id,
+    get room_id() {
+      return room.id;
+    },
   });
 
   let warning = $state(false);

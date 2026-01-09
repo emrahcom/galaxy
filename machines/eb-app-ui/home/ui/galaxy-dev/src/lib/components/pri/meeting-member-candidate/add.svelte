@@ -28,14 +28,16 @@
     ),
   );
 
-  let warning = $state(false);
-  let disabled = $state(false);
-  // svelte-ignore state_referenced_locally
   let p = $state({
     contact_id: "",
-    meeting_id: meeting.id,
     join_as: "guest",
+    get meeting_id() {
+      return meeting.id;
+    },
   });
+
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function cancel() {

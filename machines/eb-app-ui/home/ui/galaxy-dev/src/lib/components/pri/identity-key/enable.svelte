@@ -14,7 +14,7 @@
 
   const { p }: Props = $props();
 
-  const domainDisplayName = $derived.by(() => {
+  const domain_name = $derived.by(() => {
     if (!p.domain_enabled) {
       return `${p.domain_name} - DISABLED`;
     }
@@ -59,7 +59,7 @@
       <Text
         name="domain_name"
         label="Jitsi Domain Name"
-        value={domainDisplayName}
+        value={domain_name}
         disabled={true}
         readonly={true}
       />

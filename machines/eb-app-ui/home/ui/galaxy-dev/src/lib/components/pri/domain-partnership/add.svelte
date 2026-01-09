@@ -15,7 +15,7 @@
 
   const { invite, isExist }: Props = $props();
 
-  let p = $derived({
+  const p = $derived({
     code: invite.code,
   });
 
