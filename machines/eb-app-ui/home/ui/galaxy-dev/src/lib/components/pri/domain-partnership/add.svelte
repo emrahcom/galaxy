@@ -15,11 +15,12 @@
 
   const { invite, isExist }: Props = $props();
 
-  let warning = $state(false);
-  let disabled = $state(false);
-  let p = $state({
+  let p = $derived({
     code: invite.code,
   });
+
+  let warning = $state(false);
+  let disabled = $state(false);
 
   // ---------------------------------------------------------------------------
   function cancel() {

@@ -15,21 +15,26 @@
 
   const { domain }: Props = $props();
 
-  const pr = listById("/api/pri/contact/list/bydomain", domain.id, 1000).then(
-    (items: Contact[]) => {
-      return items.map((i) => [
-        i.id,
-        `${i.name}${i.profile_email ? ` (${i.profile_email})` : ""}`,
-      ]);
-    },
+  const pr = $derived(
+    listById("/api/pri/contact/list/bydomain", domain.id, 1000).then(
+      (items: Contact[]) => {
+        return items.map((i) => [
+          i.id,
+          `${i.name}${i.profile_email ? ` (${i.profile_email})` : ""}`,
+        ]);
+      },
+    ),
   );
+
+  let p = $state({
+    contact_id: "",
+    get domain_id() {
+      return domain.id;
+    },
+  });
 
   let warning = $state(false);
   let disabled = $state(false);
-  let p = $state({
-    contact_id: "",
-    domain_id: domain.id,
-  });
 
   // ---------------------------------------------------------------------------
   function cancel() {
