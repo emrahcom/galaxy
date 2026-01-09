@@ -31,10 +31,10 @@
       return `${p.room_name} on ${p.domain_name} - DISABLED`;
     }
 
-    return $state(`${p.room_name} on ${p.domain_name}`);
+    return `${p.room_name} on ${p.domain_name}`;
   });
 
-  const profile = #derived.by(() => {
+  const profile = $derived.by(() => {
     if (p.profile_email) {
       return `${p.profile_name || ""} (${p.profile_email})`;
     }
