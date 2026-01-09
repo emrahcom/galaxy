@@ -17,8 +17,8 @@
 
   const { p }: Props = $props();
 
-  const date0 = $state(toLocaleDate(p.schedule_attr.started_at));
-  const interval = $state(
+  const date0 = $derived(toLocaleDate(p.schedule_attr.started_at));
+  const interval = $derived(
     toLocaleInterval(
       p.schedule_attr.started_at,
       Number(p.schedule_attr.duration),
@@ -37,33 +37,35 @@
   let warning = $state(false);
   let disabled = $state(false);
 
-  if (p.schedule_attr.type === "d") {
-    if (p.schedule_attr.rep_every === "1") {
-      every = "1 day";
-    } else {
-      every = `${p.schedule_attr.rep_every} days`;
-    }
+  $effect(() => {
+    if (p.schedule_attr.type === "d") {
+      if (p.schedule_attr.rep_every === "1") {
+        every = "1 day";
+      } else {
+        every = `${p.schedule_attr.rep_every} days`;
+      }
 
-    if (p.schedule_attr.rep_end_x !== "1") {
-      times = `${p.schedule_attr.rep_end_x} times`;
-    }
-  } else if (p.schedule_attr.type === "w") {
-    date1 = toLocaleDate(p.schedule_attr.rep_end_at);
+      if (p.schedule_attr.rep_end_x !== "1") {
+        times = `${p.schedule_attr.rep_end_x} times`;
+      }
+    } else if (p.schedule_attr.type === "w") {
+      date1 = toLocaleDate(p.schedule_attr.rep_end_at);
 
-    if (p.schedule_attr.rep_every === "1") {
-      every = "1 week";
-    } else {
-      every = `${p.schedule_attr.rep_every} weeks`;
-    }
+      if (p.schedule_attr.rep_every === "1") {
+        every = "1 week";
+      } else {
+        every = `${p.schedule_attr.rep_every} weeks`;
+      }
 
-    d0 = p.schedule_attr.rep_days[0] === "1";
-    d1 = p.schedule_attr.rep_days[1] === "1";
-    d2 = p.schedule_attr.rep_days[2] === "1";
-    d3 = p.schedule_attr.rep_days[3] === "1";
-    d4 = p.schedule_attr.rep_days[4] === "1";
-    d5 = p.schedule_attr.rep_days[5] === "1";
-    d6 = p.schedule_attr.rep_days[6] === "1";
-  }
+      d0 = p.schedule_attr.rep_days[0] === "1";
+      d1 = p.schedule_attr.rep_days[1] === "1";
+      d2 = p.schedule_attr.rep_days[2] === "1";
+      d3 = p.schedule_attr.rep_days[3] === "1";
+      d4 = p.schedule_attr.rep_days[4] === "1";
+      d5 = p.schedule_attr.rep_days[5] === "1";
+      d6 = p.schedule_attr.rep_days[6] === "1";
+    }
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

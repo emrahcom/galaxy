@@ -19,11 +19,13 @@
   let disabled = $state(false);
   let profile = $state("");
 
-  if (p.profile_email) {
-    profile = `${p.profile_name || ""} (${p.profile_email})`;
-  } else {
-    profile = p.profile_name || "";
-  }
+  $effect(() => {
+    if (p.profile_email) {
+      profile = `${p.profile_name || ""} (${p.profile_email})`;
+    } else {
+      profile = p.profile_name || "";
+    }
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {

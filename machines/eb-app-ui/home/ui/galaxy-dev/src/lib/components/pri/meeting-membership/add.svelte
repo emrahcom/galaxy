@@ -17,26 +17,31 @@
 
   const { invite, isExist }: Props = $props();
 
-  let _schedules = "";
-  for (const s of invite.session_list) {
-    const startTime = new Date(s[0]);
-    const localStartTime = startTime.toLocaleString(undefined, {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    const endTime = new Date(s[1]);
-    const diff = endTime.getTime() - startTime.getTime();
-    const minutes = Math.round(diff / (1000 * 60));
+  const schedules = $derived.by(() => {
+    let _schedules = "";
 
-    _schedules = `${_schedules}\n${localStartTime} (${minutes} min)`;
-  }
-  const schedules = _schedules.trim();
+    for (const s of invite.session_list) {
+      const startTime = new Date(s[0]);
+      const localStartTime = startTime.toLocaleString(undefined, {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const endTime = new Date(s[1]);
+      const diff = endTime.getTime() - startTime.getTime();
+      const minutes = Math.round(diff / (1000 * 60));
+
+      _schedules = `${_schedules}\n${localStartTime} (${minutes} min)`;
+    }
+
+    return _schedules.trim();
+  });
 
   let warning = $state(false);
   let disabled = $state(false);
+  // svelte-ignore state_referenced_locally
   let p = $state({
     code: invite.code,
     profile_id: "",
