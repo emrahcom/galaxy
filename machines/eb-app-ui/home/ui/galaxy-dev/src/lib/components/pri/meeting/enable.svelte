@@ -18,26 +18,32 @@
 
   const { p }: Props = $props();
 
+  const domainName = $derived.by(() => {
+    if (!p.domain_enabled) {
+      return `${p.domain_name} - DISABLED`;
+    }
+
+    return p.domain_name;
+  });
+
+  const roomName = $derived.by(() => {
+    if (!p.domain_enabled || !p.room_enabled) {
+      return `${p.room_name} on ${p.domain_name} - DISABLED`;
+    }
+
+    return $state(`${p.room_name} on ${p.domain_name}`);
+  });
+
+  const profile = #derived.by(() => {
+    if (p.profile_email) {
+      return `${p.profile_name || ""} (${p.profile_email})`;
+    }
+
+    return p.profile_name || "";
+  });
+
   let warning = $state(false);
   let disabled = $state(false);
-  // svelte-ignore state_referenced_locally
-  let domainName = $state(p.domain_name);
-  // svelte-ignore state_referenced_locally
-  let roomName = $state(`${p.room_name} on ${p.domain_name}`);
-  let profile = $state("");
-
-  if (p.profile_email) {
-    profile = `${p.profile_name || ""} (${p.profile_email})`;
-  } else {
-    profile = p.profile_name || "";
-  }
-
-  if (!p.domain_enabled) {
-    domainName = `${p.domain_name} - DISABLED`;
-  }
-  if (!p.domain_enabled || !p.room_enabled) {
-    roomName = `${p.room_name} on ${p.domain_name} - DISABLED`;
-  }
 
   // ---------------------------------------------------------------------------
   function cancel() {
