@@ -41,7 +41,6 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  // svelte-ignore state_referenced_locally
   let p = $state({
     code: invite.code,
     profile_id: "",

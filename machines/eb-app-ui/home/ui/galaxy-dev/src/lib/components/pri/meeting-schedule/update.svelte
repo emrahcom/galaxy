@@ -34,70 +34,55 @@
   const _date0 = $derived(toLocaleDate(p.schedule_attr.started_at));
   const notBefore = $derived(_date0 < getToday() ? _date0 : getToday());
 
-  // svelte-ignore state_referenced_locally
   let duration = $state(Number(p.schedule_attr.duration));
-  // svelte-ignore state_referenced_locally
   let date0 = $state(toLocaleDate(p.schedule_attr.started_at));
-  // svelte-ignore state_referenced_locally
   let date1 = $state(
     p.schedule_attr.rep_end_at
       ? toLocaleDate(p.schedule_attr.rep_end_at)
       : toLocaleDate(p.schedule_attr.started_at),
   );
-  // svelte-ignore state_referenced_locally
   let time0 = $state(toLocaleTime(p.schedule_attr.started_at));
-  // svelte-ignore state_referenced_locally
   let time1 = $state(
     getEndTime(
       toLocaleTime(p.schedule_attr.started_at),
       Number(p.schedule_attr.duration),
     ),
   );
-  // svelte-ignore state_referenced_locally
   let allDay = $state(
     isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration),
   );
-  // svelte-ignore state_referenced_locally
   let every = $state(Number(p.schedule_attr.rep_every) || 1);
-  // svelte-ignore state_referenced_locally
   let times = $state(Number(p.schedule_attr.rep_end_x) || 10);
-  // svelte-ignore state_referenced_locally
   let d0 = $state(
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[0]))
       : false,
   );
-  // svelte-ignore state_referenced_locally
   let d1 = $state(
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[1]))
       : false,
   );
-  // svelte-ignore state_referenced_locally
   let d2 = $state(
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[2]))
       : false,
   );
-  // svelte-ignore state_referenced_locally
   let d3 = $state(
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[3]))
       : false,
   );
-  // svelte-ignore state_referenced_locally
   let d4 = $state(
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[4]))
       : false,
   );
-  // svelte-ignore state_referenced_locally
   let d5 = $state(
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[5]))
       : false,
   );
-  // svelte-ignore state_referenced_locally
   let d6 = $state(
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[6]))

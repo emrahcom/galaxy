@@ -14,7 +14,6 @@
 
   let { p }: Props = $props();
 
-  // svelte-ignore state_referenced_locally
   let started_at = new Date(Date.now() + p.waiting_time * 1000);
 
   const hash = $page.url.hash;

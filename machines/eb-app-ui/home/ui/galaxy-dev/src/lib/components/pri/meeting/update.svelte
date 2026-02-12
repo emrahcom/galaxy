@@ -24,13 +24,9 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  // svelte-ignore state_referenced_locally
   let domainId = $state(p.domain_id);
-  // svelte-ignore state_referenced_locally
   let roomId = $state(p.room_id);
-  // svelte-ignore state_referenced_locally
   let roomStatic = $state(!p.room_ephemeral);
-  // svelte-ignore state_referenced_locally
   let scheduleType = $state(p.schedule_type);
 
   const pr1 = $derived(
