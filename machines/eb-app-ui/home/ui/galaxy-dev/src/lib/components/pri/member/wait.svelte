@@ -14,8 +14,10 @@
 
   let { p }: Props = $props();
 
-  // svelte-ignore state_referenced_locally
-  let started_at = new Date(Date.now() + p.waiting_time * 1000);
+  let started_at = new Date(Date.now() + 80 * 1000);
+  $effect(() => {
+    started_at = new Date(Date.now() + p.waiting_time * 1000);
+  });
 
   const hash = $page.url.hash;
   const REFRESH_SEC = 60;
