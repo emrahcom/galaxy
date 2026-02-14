@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { untrack } from 'svelte';
+  import { untrack } from "svelte";
   import { FORM_WIDTH } from "$lib/config";
   import {
     AUTH_TYPE_OPTIONS,

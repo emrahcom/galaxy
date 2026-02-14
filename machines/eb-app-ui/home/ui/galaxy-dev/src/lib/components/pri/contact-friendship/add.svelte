@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { untrack } from 'svelte';
+  import { untrack } from "svelte";
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
   import type { ContactInvite111 } from "$lib/types";
@@ -19,10 +19,12 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  let p = $state(untrack(() => ({
-    name: invite.profile_name,
-    code: invite.code,
-  })));
+  let p = $state(
+    untrack(() => ({
+      name: invite.profile_name,
+      code: invite.code,
+    })),
+  );
 
   // ---------------------------------------------------------------------------
   function cancel() {

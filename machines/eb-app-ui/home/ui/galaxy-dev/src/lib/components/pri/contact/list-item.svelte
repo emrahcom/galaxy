@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { untrack } from 'svelte';
+  import { untrack } from "svelte";
   import { list } from "$lib/api";
   import type { Contact, ContactStatus } from "$lib/types";
   import Call from "$lib/components/common/link-call.svelte";

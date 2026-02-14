@@ -20,9 +20,9 @@
 
   const focusedDay = $derived(getCalendarDay(firstDay, week, day));
   const dayOfMonth = $derived(Number(focusedDay.slice(-2)));
-  const meetings = $derived(calendar.filter(
-    (m) => focusedDay === toLocaleDate(m.started_at),
-  ));
+  const meetings = $derived(
+    calendar.filter((m) => focusedDay === toLocaleDate(m.started_at)),
+  );
 
   const month = $derived(dayOfMonth === 1 ? toLocaleMonthName(focusedDay) : "");
 
