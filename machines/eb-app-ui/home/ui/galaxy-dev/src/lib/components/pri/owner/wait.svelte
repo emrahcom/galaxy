@@ -14,9 +14,9 @@
 
   let { p }: Props = $props();
 
-  let started_at = new date(date.now() + 80 * 1000);
+  let started_at = new Date(Date.now() + 80 * 1000);
   $effect(() => {
-    started_at = new date(date.now() + p.waiting_time * 1000);
+    started_at = new Date(Date.now() + p.waiting_time * 1000);
   });
 
   const hash = $page.url.hash;
