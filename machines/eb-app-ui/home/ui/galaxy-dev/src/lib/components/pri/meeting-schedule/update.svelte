@@ -37,58 +37,78 @@
 
   let duration = $state(untrack(() => Number(p.schedule_attr.duration)));
   let date0 = $state(untrack(() => toLocaleDate(p.schedule_attr.started_at)));
-  let date1 = $state(untrack(() =>
-    p.schedule_attr.rep_end_at
-      ? toLocaleDate(p.schedule_attr.rep_end_at)
-      : toLocaleDate(p.schedule_attr.started_at),
-  ));
-  let time0 = $state(untrack(() => toLocaleTime(p.schedule_attr.started_at)));
-  let time1 = $state(untrack(() =>
-    getEndTime(
-      toLocaleTime(p.schedule_attr.started_at),
-      Number(p.schedule_attr.duration),
+  let date1 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_end_at
+        ? toLocaleDate(p.schedule_attr.rep_end_at)
+        : toLocaleDate(p.schedule_attr.started_at),
     ),
-  ));
-  let allDay = $state(untrack(() =>
-    isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration),
-  ));
+  );
+  let time0 = $state(untrack(() => toLocaleTime(p.schedule_attr.started_at)));
+  let time1 = $state(
+    untrack(() =>
+      getEndTime(
+        toLocaleTime(p.schedule_attr.started_at),
+        Number(p.schedule_attr.duration),
+      ),
+    ),
+  );
+  let allDay = $state(
+    untrack(() =>
+      isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration),
+    ),
+  );
   let every = $state(untrack(() => Number(p.schedule_attr.rep_every) || 1));
   let times = $state(untrack(() => Number(p.schedule_attr.rep_end_x) || 10));
-  let d0 = $state(untrack(() =>
-    p.schedule_attr.rep_days
-      ? Boolean(Number(p.schedule_attr.rep_days[0]))
-      : false,
-  ));
-  let d1 = $state(untrack(() =>
-    p.schedule_attr.rep_days
-      ? Boolean(Number(p.schedule_attr.rep_days[1]))
-      : false,
-  ));
-  let d2 = $state(untrack(() =>
-    p.schedule_attr.rep_days
-      ? Boolean(Number(p.schedule_attr.rep_days[2]))
-      : false,
-  ));
-  let d3 = $state(untrack(() =>
-    p.schedule_attr.rep_days
-      ? Boolean(Number(p.schedule_attr.rep_days[3]))
-      : false,
-  ));
-  let d4 = $state(untrack(() =>
-    p.schedule_attr.rep_days
-      ? Boolean(Number(p.schedule_attr.rep_days[4]))
-      : false,
-  ));
-  let d5 = $state(untrack(() =>
-    p.schedule_attr.rep_days
-      ? Boolean(Number(p.schedule_attr.rep_days[5]))
-      : false,
-  ));
-  let d6 = $state(untrack(() =>
-    p.schedule_attr.rep_days
-      ? Boolean(Number(p.schedule_attr.rep_days[6]))
-      : false,
-  ));
+  let d0 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_days
+        ? Boolean(Number(p.schedule_attr.rep_days[0]))
+        : false,
+    ),
+  );
+  let d1 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_days
+        ? Boolean(Number(p.schedule_attr.rep_days[1]))
+        : false,
+    ),
+  );
+  let d2 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_days
+        ? Boolean(Number(p.schedule_attr.rep_days[2]))
+        : false,
+    ),
+  );
+  let d3 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_days
+        ? Boolean(Number(p.schedule_attr.rep_days[3]))
+        : false,
+    ),
+  );
+  let d4 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_days
+        ? Boolean(Number(p.schedule_attr.rep_days[4]))
+        : false,
+    ),
+  );
+  let d5 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_days
+        ? Boolean(Number(p.schedule_attr.rep_days[5]))
+        : false,
+    ),
+  );
+  let d6 = $state(
+    untrack(() =>
+      p.schedule_attr.rep_days
+        ? Boolean(Number(p.schedule_attr.rep_days[6]))
+        : false,
+    ),
+  );
   let warning = $state(false);
   let disabled = $state(false);
 
