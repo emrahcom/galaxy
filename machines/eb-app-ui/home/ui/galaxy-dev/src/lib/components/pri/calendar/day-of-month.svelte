@@ -18,21 +18,23 @@
 
   const { calendar, calendarDay, day, firstDay, today, week }: Props = $props();
 
-  const focusedDay = getCalendarDay(firstDay, week, day);
-  const dayOfMonth = Number(focusedDay.slice(-2));
-  const meetings = calendar.filter(
+  const focusedDay = $derived(getCalendarDay(firstDay, week, day));
+  const dayOfMonth = $derived(Number(focusedDay.slice(-2)));
+  const meetings = $derived(calendar.filter(
     (m) => focusedDay === toLocaleDate(m.started_at),
-  );
+  ));
 
-  let month = $state("");
-  if (dayOfMonth === 1) month = toLocaleMonthName(focusedDay);
+  const month = $derived(dayOfMonth === 1 ? toLocaleMonthName(focusedDay) : "");
 
-  let bgColor = $state("");
-  if (today === focusedDay) {
-    bgColor = "bg-primary-subtle";
-  } else if (focusedDay < today) {
-    bgColor = "bg-light";
-  }
+  const bgColor = $derived.by(() => {
+    if (today === focusedDay) {
+      return "bg-primary-subtle";
+    } else if (focusedDay < today) {
+      return "bg-light";
+    }
+
+    return "";
+  });
 
   // ---------------------------------------------------------------------------
   function generateHref(m: MeetingSchedule222) {
