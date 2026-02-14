@@ -10,7 +10,7 @@
   let canvas: HTMLCanvasElement;
 
   $effect(() => {
-    toCanvas(canvas, data);
+    if (canvas && data) toCanvas(canvas, data);
   });
 </script>
 
