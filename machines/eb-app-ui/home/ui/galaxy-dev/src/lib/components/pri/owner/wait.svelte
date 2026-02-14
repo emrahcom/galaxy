@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { untrack } from "svelte";
   import { page } from "$app/stores";
   import { FORM_WIDTH } from "$lib/config";
   import { epochToIntervalString, showLocaleDatetime } from "$lib/common";
@@ -15,8 +14,10 @@
 
   let { p }: Props = $props();
 
-  // svelte-ignore state_referenced_locally
-  let started_at = new Date(Date.now() + p.waiting_time * 1000);
+  let started_at = new date(date.now() + 80 * 1000);
+  $effect(() => {
+    started_at = new date(date.now() + p.waiting_time * 1000);
+  });
 
   const hash = $page.url.hash;
   const REFRESH_SEC = 60;
