@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from "svelte";
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
   import {
@@ -24,13 +25,14 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  // svelte-ignore state_referenced_locally
   let p = $state({
     name: `invite-${date.getTime() % 10000000000}`,
-    meeting_id: meeting.id,
     invite_to: "audience",
     join_as: "guest",
     disposable: true,
+    get meeting_id() {
+      return meeting.id;
+    }),
   });
 
   // ---------------------------------------------------------------------------

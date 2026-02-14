@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from "svelte";
   import { page } from "$app/stores";
   import { FORM_WIDTH } from "$lib/config";
   import { epochToIntervalString, showLocaleDatetime } from "$lib/common";

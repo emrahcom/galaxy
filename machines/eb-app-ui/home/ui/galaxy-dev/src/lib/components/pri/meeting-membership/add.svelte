@@ -43,7 +43,7 @@
   let disabled = $state(false);
   let p = $state({
     profile_id: "",
-    get code(): {
+    get code() {
       return invite.code;
     },
   });
