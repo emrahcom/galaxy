@@ -19,8 +19,10 @@
   let warning = $state(false);
   let disabled = $state(false);
   let p = $state({
-    code: invite.code,
     name: invite.profile_name,
+    get code() {
+      return invite.code;
+    },
   });
 
   // ---------------------------------------------------------------------------
