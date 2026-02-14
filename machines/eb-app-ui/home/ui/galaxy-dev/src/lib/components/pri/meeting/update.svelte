@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from "svelte";
   import { FORM_WIDTH } from "$lib/config";
   import { action, list } from "$lib/api";
   import {
@@ -24,14 +25,10 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  // svelte-ignore state_referenced_locally
-  let domainId = $state(p.domain_id);
-  // svelte-ignore state_referenced_locally
-  let roomId = $state(p.room_id);
-  // svelte-ignore state_referenced_locally
-  let roomStatic = $state(!p.room_ephemeral);
-  // svelte-ignore state_referenced_locally
-  let scheduleType = $state(p.schedule_type);
+  let domainId = $state(untrack(() => p.domain_id));
+  let roomId = $state(untrack(() => p.room_id));
+  let roomStatic = $state(untrack(() => !p.room_ephemeral));
+  let scheduleType = $state(untrack(() => p.schedule_type));
 
   const pr1 = $derived(
     list("/api/pri/profile/list", 100).then((items: Profile[]) => {
