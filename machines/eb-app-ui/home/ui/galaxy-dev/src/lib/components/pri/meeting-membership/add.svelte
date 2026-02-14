@@ -41,10 +41,11 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  // svelte-ignore state_referenced_locally
   let p = $state({
-    code: invite.code,
     profile_id: "",
+    get code(): {
+      return invite.code;
+    },
   });
 
   const pr1 = get("/api/pri/profile/get/default").then((item: Profile) => {
