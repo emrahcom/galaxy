@@ -19,6 +19,7 @@
   function initialStatus(seconds: number) {
     if (seconds < 100) return 1;
     else if (seconds < 3600) return 2;
+
     return 0;
   }
 
