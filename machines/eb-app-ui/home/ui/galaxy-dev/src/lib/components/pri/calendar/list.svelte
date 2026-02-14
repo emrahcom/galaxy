@@ -18,9 +18,9 @@
   const DAYS = [0, 1, 2, 3, 4, 5, 6];
   const WEEKS = [0, 1, 2, 3, 4, 5];
 
-  const calendarDay = toLocaleDate(date);
-  const firstOfMonth = getFirstDayOfMonth(date);
-  const firstDay = getFirstDayOfWeek(firstOfMonth);
+  const calendarDay = $derived(toLocaleDate(date));
+  const firstOfMonth = $derived(getFirstDayOfMonth(date));
+  const firstDay = $derived(getFirstDayOfWeek(firstOfMonth));
   const today = getToday();
 </script>
 
