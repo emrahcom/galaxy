@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { list } from "$lib/api";
   import type { Contact, ContactStatus } from "$lib/types";
   import Call from "$lib/components/common/link-call.svelte";
@@ -15,11 +16,15 @@
   const PERIOD_API_REQUEST = 30000;
   const PERIOD_UI_REFRESH = 10000;
 
-  const status = $derived.by(() => {
-    if (p.seen_second_ago < 100) return 1;
-    else if (p.seen_second_ago < 3600) return 2;
-    else return 0;
-  });
+  function initialStatus(seconds: number) {
+    if (seconds < 100) return 1;
+    else if (seconds < 3600) return 2;
+    return 0;
+  }
+
+  // Generate the initial status value using p.seen_second_ago but not update
+  // its value again when p.seen_second_ago changes (untrack).
+  let status = $state(untrack(() => initialStatus(p.seen_second_ago)));
 
   // ---------------------------------------------------------------------------
   // even all items run this function periodically, only one of them sends an
