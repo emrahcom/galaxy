@@ -19,12 +19,12 @@
 
   let warning = $state(false);
   let disabled = $state(false);
-  let p = $state(
-    untrack(() => ({
-      name: invite.profile_name,
-      code: invite.code,
-    })),
-  );
+  let p = $state({
+    name: untrack(() => invite.profile_name),
+    get code() {
+      return invite.code;
+    },
+  });
 
   // ---------------------------------------------------------------------------
   function cancel() {
