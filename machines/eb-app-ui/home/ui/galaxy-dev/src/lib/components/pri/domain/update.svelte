@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from 'svelte';
   import { FORM_WIDTH } from "$lib/config";
   import {
     AUTH_TYPE_OPTIONS,
@@ -25,7 +26,7 @@
   }
 
   const { p: _p }: Props = $props();
-  let p = $state(_p);
+  let p = $state(untrack(() => _p));
 
   // set default if there is no value
   if (!p.domain_attr.url) p.domain_attr.url = "";
