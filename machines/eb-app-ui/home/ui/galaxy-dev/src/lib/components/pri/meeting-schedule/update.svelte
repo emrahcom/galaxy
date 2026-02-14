@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from "svelte";
   import { FORM_WIDTH } from "$lib/config";
   import { action } from "$lib/api";
   import {
@@ -34,75 +35,60 @@
   const _date0 = $derived(toLocaleDate(p.schedule_attr.started_at));
   const notBefore = $derived(_date0 < getToday() ? _date0 : getToday());
 
-  // svelte-ignore state_referenced_locally
-  let duration = $state(Number(p.schedule_attr.duration));
-  // svelte-ignore state_referenced_locally
-  let date0 = $state(toLocaleDate(p.schedule_attr.started_at));
-  // svelte-ignore state_referenced_locally
-  let date1 = $state(
+  let duration = $state(untrack(() => Number(p.schedule_attr.duration)));
+  let date0 = $state(untrack(() => toLocaleDate(p.schedule_attr.started_at)));
+  let date1 = $state(untrack(() =>
     p.schedule_attr.rep_end_at
       ? toLocaleDate(p.schedule_attr.rep_end_at)
       : toLocaleDate(p.schedule_attr.started_at),
-  );
-  // svelte-ignore state_referenced_locally
-  let time0 = $state(toLocaleTime(p.schedule_attr.started_at));
-  // svelte-ignore state_referenced_locally
-  let time1 = $state(
+  ));
+  let time0 = $state(untrack(() => toLocaleTime(p.schedule_attr.started_at)));
+  let time1 = $state(untrack(() =>
     getEndTime(
       toLocaleTime(p.schedule_attr.started_at),
       Number(p.schedule_attr.duration),
     ),
-  );
-  // svelte-ignore state_referenced_locally
-  let allDay = $state(
+  ));
+  let allDay = $state(untrack(() =>
     isAllDay(p.schedule_attr.started_at, p.schedule_attr.duration),
-  );
-  // svelte-ignore state_referenced_locally
-  let every = $state(Number(p.schedule_attr.rep_every) || 1);
-  // svelte-ignore state_referenced_locally
-  let times = $state(Number(p.schedule_attr.rep_end_x) || 10);
-  // svelte-ignore state_referenced_locally
-  let d0 = $state(
+  ));
+  let every = $state(untrack(() => Number(p.schedule_attr.rep_every) || 1));
+  let times = $state(untrack(() => Number(p.schedule_attr.rep_end_x) || 10));
+  let d0 = $state(untrack(() =>
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[0]))
       : false,
-  );
-  // svelte-ignore state_referenced_locally
-  let d1 = $state(
+  ));
+  let d1 = $state(untrack(() =>
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[1]))
       : false,
-  );
-  // svelte-ignore state_referenced_locally
-  let d2 = $state(
+  ));
+  let d2 = $state(untrack(() =>
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[2]))
       : false,
-  );
-  // svelte-ignore state_referenced_locally
-  let d3 = $state(
+  ));
+  let d3 = $state(untrack(() =>
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[3]))
       : false,
-  );
-  // svelte-ignore state_referenced_locally
-  let d4 = $state(
+  ));
+  let d4 = $state(untrack(() =>
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[4]))
       : false,
-  );
-  // svelte-ignore state_referenced_locally
-  let d5 = $state(
+  ));
+  let d5 = $state(untrack(() =>
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[5]))
       : false,
-  );
-  // svelte-ignore state_referenced_locally
-  let d6 = $state(
+  ));
+  let d6 = $state(untrack(() =>
     p.schedule_attr.rep_days
       ? Boolean(Number(p.schedule_attr.rep_days[6]))
       : false,
-  );
+  ));
   let warning = $state(false);
   let disabled = $state(false);
 
