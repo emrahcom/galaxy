@@ -18,7 +18,7 @@
 <!-- -------------------------------------------------------------------------->
 <section id="list">
   <div class="row mx-auto mt-2 g-3">
-    {#each domains as p (p.id)}
+    {#each domains as p (p.partnership_id)}
       <Item {p} />
     {/each}
 
