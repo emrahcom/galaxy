@@ -16,6 +16,9 @@
 
   const { p }: Props = $props();
 
+  // Create the session list without duplicated sessions. There may be
+  // duplicated sessions in the original list if multiple schedules are created
+  // for the same period.
   const sessionList = $derived([...new Set(p.session_list)].slice(0, 3));
 </script>
 
