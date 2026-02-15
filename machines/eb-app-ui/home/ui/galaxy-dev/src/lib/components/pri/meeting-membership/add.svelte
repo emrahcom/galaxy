@@ -18,6 +18,9 @@
 
   const { invite, isExist }: Props = $props();
 
+  // Create the session list without duplicated sessions. There may be
+  // duplicated sessions in the original list if multiple schedules are created
+  // for the same period.
   const sessionList = $derived.by(() => {
     const map = new SvelteMap<string, [string, string]>();
 
