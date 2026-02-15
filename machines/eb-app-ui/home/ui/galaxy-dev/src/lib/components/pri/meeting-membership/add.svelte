@@ -17,11 +17,11 @@
 
   const { invite, isExist }: Props = $props();
 
+  const sessionList = $derived([...new Map(invite.session_list).values()]);
   const schedules = $derived.by(() => {
-    let _schedules = "";
-
-    for (const s of invite.session_list) {
+    const _schedules = sessionList.map((s) => {
       const startTime = new Date(s[0]);
+      const endTime = new Date(s[1]);
       const localStartTime = startTime.toLocaleString(undefined, {
         year: "numeric",
         month: "2-digit",
@@ -29,14 +29,13 @@
         hour: "2-digit",
         minute: "2-digit",
       });
-      const endTime = new Date(s[1]);
       const diff = endTime.getTime() - startTime.getTime();
       const minutes = Math.round(diff / (1000 * 60));
 
-      _schedules = `${_schedules}\n${localStartTime} (${minutes} min)`;
-    }
+      return `${localStartTime} (${minutes} min)`;
+    });
 
-    return _schedules.trim();
+    return _schedules.join("\n");
   });
 
   let warning = $state(false);
@@ -107,7 +106,7 @@
           disabled={true}
           readonly={true}
         />
-        {#if invite.session_list.length > 1}
+        {#if sessionList.length > 1}
           <Textarea
             name="meeting_schedule"
             label="Schedules"
@@ -115,7 +114,7 @@
             disabled={true}
             readonly={true}
           />
-        {:else if invite.session_list.length === 1}
+        {:else if sessionList.length === 1}
           <Text
             name="meeting_schedule"
             label="Schedule"
