@@ -1,11 +1,28 @@
 <script lang="ts">
+  import { SvelteMap } from "svelte/reactivity";
+
   interface Props {
     disabled?: boolean;
     options: string[][];
     value: string;
   }
 
-  let { disabled = false, options, value = $bindable() }: Props = $props();
+  let {
+    disabled = false,
+    options: _options,
+    value = $bindable(),
+  }: Props = $props();
+
+  // Filter out duplicated options
+  const options = $derived.by(() => {
+    const map = new SvelteMap<string, string[]>();
+
+    for (const opt of _options) {
+      map.set(opt[0], opt);
+    }
+
+    return [...map.values()];
+  });
 </script>
 
 <!-- -------------------------------------------------------------------------->
@@ -19,6 +36,6 @@
       value={opt[0]}
       {disabled}
     />
-    <label class="form-check-label" for={opt[0]}>{opt[1]}</label>
+    <label class="form-check-label" for={opt[0]}>{opt[1] || ""}</label>
   </div>
 {/each}
