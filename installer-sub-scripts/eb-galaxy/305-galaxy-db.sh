@@ -25,8 +25,8 @@ curl -sf "$LOGGER/?text=$APP_TEMPLATE-galaxy-db" || true
 # ------------------------------------------------------------------------------
 # BACKUP
 # ------------------------------------------------------------------------------
-[[ -f $ROOTFS/etc/postgresql/15/main/pg_hba.conf ]] && \
-    cp $ROOTFS/etc/postgresql/15/main/pg_hba.conf \
+[[ -f $ROOTFS/etc/postgresql/17/main/pg_hba.conf ]] && \
+    cp $ROOTFS/etc/postgresql/17/main/pg_hba.conf \
         $OLD_FILES/pg_hba.conf.before_galaxy
 
 # ------------------------------------------------------------------------------
@@ -116,11 +116,11 @@ EOS
 # ------------------------------------------------------------------------------
 lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
-sed -i '/galaxy/d' /etc/postgresql/15/main/pg_hba.conf
+sed -i '/galaxy/d' /etc/postgresql/17/main/pg_hba.conf
 EOS
 
-cat etc/postgresql/15/main/pg_hba.conf.galaxy \
-    >>$ROOTFS/etc/postgresql/15/main/pg_hba.conf
+cat etc/postgresql/17/main/pg_hba.conf.galaxy \
+    >>$ROOTFS/etc/postgresql/17/main/pg_hba.conf
 
 # ------------------------------------------------------------------------------
 # RESTART POSTGRESQL SERVICE
