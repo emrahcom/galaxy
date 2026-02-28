@@ -53,7 +53,7 @@ needing to open any websites.
 
 ### Prerequisites
 
-- `Debian 12 Bookworm` server\
+- `Debian 13 Trixie` server\
   _Use a dedicated server, not shared one... It will be heavily customized._
 - At least 2 GB RAM and 8 GB disk space
 - An `FQDN` for the web application. e.g. `app.galaxy.corp`
@@ -99,7 +99,7 @@ Run the following commands as `root`:
   ```
 
 ```bash
-wget https://raw.githubusercontent.com/emrahcom/bookworm-lxc-base/main/installer/eb
+wget https://raw.githubusercontent.com/emrahcom/lxc-trixie-base/main/installer/eb
 wget https://raw.githubusercontent.com/emrahcom/galaxy/main/installer/eb-galaxy.conf
 
 export GALAXY_FQDN="app.galaxy.corp"

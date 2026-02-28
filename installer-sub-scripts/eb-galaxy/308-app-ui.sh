@@ -54,8 +54,8 @@ fi
 # ------------------------------------------------------------------------------
 # stop the template container if it's running
 set +e
-lxc-stop -n $TAG-bookworm
-lxc-wait -n $TAG-bookworm -s STOPPED
+lxc-stop -n $TAG-trixie
+lxc-wait -n $TAG-trixie -s STOPPED
 set -e
 
 # remove the old container if exists
@@ -68,7 +68,7 @@ sleep 1
 set -e
 
 # create the new one
-lxc-copy -n $TAG-bookworm -N $MACH -p /var/lib/lxc/
+lxc-copy -n $TAG-trixie -N $MACH -p /var/lib/lxc/
 
 # the shared directories
 mkdir -p $SHARED/cache
