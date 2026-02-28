@@ -78,13 +78,14 @@ su -l postgres <<EOSS
 EOSS
 EOS
 
-cp $MACHINES/$TAG-app-api/home/api/galaxy/database/*.sql $ROOTFS/root/
+cp $MACHINES/$TAG-app-api/home/api/galaxy/database/*.sql $ROOTFS/usr/local/src/
 
 [[ -z "$IS_DB_EXIST" ]] && lxc-attach -n $TAG-postgres -- zsh <<EOS
 set -e
 su -l postgres <<EOSS
     createdb -T template0 -O galaxy -E UTF-8 -l en_US.UTF-8 galaxy
-    psql -v ON_ERROR_STOP=1 -d galaxy -e -f /root/02-create-galaxy-tables.sql
+    psql -v ON_ERROR_STOP=1 -d galaxy -e \
+      -f /usr/local/src/02-create-galaxy-tables.sql
 EOSS
 EOS
 
