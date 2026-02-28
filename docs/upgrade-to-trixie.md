@@ -1,11 +1,13 @@
 # Upgrade to Trixie
 
-Upgrading from `Debian 12 Bookworm` to `Debian 13 Trixie`. Before starting, get
-a backup of the database. See the [backup](backup.md) guide.
+Upgrading from `Debian 12 Bookworm` to `Debian 13 Trixie`.
+
+Before starting, get a backup of the database. See the [backup](backup.md)
+guide.
 
 ## OS upgrade
 
-Update `/etc/apt/sources/list` for Trixie and upgrade the operating system.
+Update `/etc/apt/sources.list` for Trixie and upgrade the operating system.
 
 ```bash
 apt-get update
@@ -74,7 +76,7 @@ lxc-stop eb-app-api
 lxc-stop eb-kratos
 lxc-ls -f
 
-# attach the Postgres container
+# attach to the Postgres container
 lxc-attach eb-postgres
 
 # Edit /etc/apt/sources.list
@@ -106,10 +108,10 @@ Test it using the web interface. It should work without any issue.
 
 ## Clean up
 
-Attach the Postgres container and remove the old cluster:
+Attach to the Postgres container and remove the old cluster:
 
 ```bash
-# attach the Postgres container
+# attach to the Postgres container
 lxc-attach eb-postgres
 
 pg_dropcluster 15 main
