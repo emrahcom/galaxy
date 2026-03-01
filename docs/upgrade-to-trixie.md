@@ -14,7 +14,7 @@ apt-get update
 apt-get update -dy
 apt-get dist-upgrade -dy
 
-apt-get update
+apt-get upgrade
 apt-get dist-upgrade
 
 reboot
