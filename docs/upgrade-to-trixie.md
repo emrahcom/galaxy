@@ -53,21 +53,9 @@ Update `eb-galaxy.conf` for Trixie:
 #export REINSTALL_TRIXIE_IF_EXISTS=true
 ```
 
-## Upgrade Galaxy
-
-```bash
-bash eb eb-galaxy.conf
-
-reboot
-```
-
-## Second test
-
-Test it using the web interface. It should work without any issue.
-
 ## Upgrade Postgres
 
-The Postgres container is still based on `Debian 12 Bookworm`. To upgrade it:
+Upgrade the Postgres container:
 
 ```bash
 lxc-stop eb-reverse-proxy
@@ -80,37 +68,76 @@ lxc-ls -f
 lxc-attach eb-postgres
 
 # Edit /etc/apt/sources.list
-# Replace bookworm with trixie
+# Replace "bookworm" with "trixie"
 vim /etc/apt/sources.list
 
 apt-get update
 apt-get upgrade -dy
 apt-get dist-upgrade -dy
 
+# Accept upgrading the cluster from 15 to 17 when asked
 apt-get upgrade
 apt-get dist-upgrade
 
 # Copy customizations
 cp /etc/postgresql/15/main/conf.d/eb-listen.conf /etc/postgresql/17/main/conf.d/
 
-exit
-```
-
-Reboot after waiting ~1 min.
-
-```bash
+# Reboot "the container" after waiting ~1 min
 reboot
 ```
 
-## Third test
+## Upgrade Galaxy
+
+The following should be uncommented in `eb-galaxy.conf` during upgrading. Revert
+them after the upgrading.
+
+```
+export REINSTALL_TRIXIE_IF_EXISTS=true
+export REINSTALL_KRATOS_IF_EXISTS=true
+export REINSTALL_APP_API_IF_EXISTS=true
+export REINSTALL_APP_UI_IF_EXISTS=true
+export REINSTALL_REVERSE_PROXY_IF_EXISTS=true
+```
+
+Run the installer:
+
+```bash
+bash eb eb-galaxy.conf
+
+# Update certificates according the domains
+set-letsencrypt-cert app.galaxy.corp,id.galaxy.corp
+
+reboot
+```
+
+## Second test
 
 Test it using the web interface. It should work without any issue.
 
 ## Clean up
 
+Update the mountpoint in `eb-postgres`:
+
+```bash
+lxc-stop eb-reverse-proxy
+lxc-stop eb-app-ui
+lxc-stop eb-app-api
+lxc-stop eb-kratos
+lxc-stop eb-postgres
+lxc-ls -f
+```
+
+Update the mountpoint in `/var/lib/lxc/eb-postgres/config` as:
+
+```
+lxc.mount.entry = /usr/local/eb/cache/trixie-apt-archives var/cache/apt/archives none bind 0 0
+```
+
 Attach to the Postgres container and remove the old cluster:
 
 ```bash
+lxc-start eb-postgres
+
 # attach to the Postgres container
 lxc-attach eb-postgres
 
