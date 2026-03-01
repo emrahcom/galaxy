@@ -104,7 +104,7 @@ Run the installer:
 ```bash
 bash eb eb-galaxy.conf
 
-# Update certificates according the domains
+# Update certificates according to domains
 set-letsencrypt-cert app.galaxy.corp,id.galaxy.corp
 
 reboot
@@ -146,10 +146,11 @@ pg_dropcluster 15 main
 exit
 ```
 
-Remove the Bookworm container
+Remove the Bookworm container and the old archive:
 
 ```bash
 lxc-destroy eb-bookworm
+rm -rf /usr/local/eb/cache/bookworm-apt-archives
 ```
 
 Reboot
