@@ -49,6 +49,9 @@ lxc-start eb-kratos
 lxc-start eb-app-api
 lxc-start eb-app-ui
 lxc-start eb-reverse-proxy
+
+# wait until all containers get an IP and test UI
+lxc-ls -f
 ```
 
 ### restore
@@ -95,4 +98,7 @@ lxc-start eb-kratos
 lxc-start eb-app-api
 lxc-start eb-app-ui
 lxc-start eb-reverse-proxy
+
+# wait until all containers get an IP and test UI
+lxc-ls -f
 ```
