@@ -1,10 +1,12 @@
 import { mailMeetingSession } from "../common/mail.ts";
 import { listMeetingSessionForReminder } from "../database/meeting-session.ts";
+import { Timers } from "./types.ts";
 
 // -----------------------------------------------------------------------------
 // Run every 30 seconds
 // -----------------------------------------------------------------------------
 async function remindMeetingSession(
+  t: Timers,
   signal: AbortSignal,
   lastCheckTime = "2024-10-01T00:00:00.000Z",
 ) {
@@ -26,14 +28,19 @@ async function remindMeetingSession(
   }
 
   if (signal.aborted) return;
-  setTimeout(() => remindMeetingSession(signal, lastCheckTime), 30 * 1000);
+
+  clearTimeout(t.cronjob);
+  t.cronjob = setTimeout(
+    () => remindMeetingSession(t, signal, lastCheckTime),
+    30 * 1000,
+  );
 }
 
 // -----------------------------------------------------------------------------
-export default function (signal: AbortSignal) {
+export default function (t: Timers, signal: AbortSignal) {
   console.log("cronjob is started");
 
   // dont wait for async functions
   // each function has its own cycle
-  remindMeetingSession(signal);
+  remindMeetingSession(t, signal);
 }

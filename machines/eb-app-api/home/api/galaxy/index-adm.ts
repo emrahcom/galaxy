@@ -1,5 +1,6 @@
 import { HOSTNAME, PORT_ADMIN } from "./config.ts";
 import { methodNotAllowed, notFound } from "./lib/http/response.ts";
+import { Timers } from "./lib/adm/types.ts";
 import migrate from "./lib/adm/migration.ts";
 import doit from "./lib/adm/housekeeping.ts";
 import cronjob from "./lib/adm/cronjob.ts";
@@ -8,6 +9,11 @@ import config from "./lib/adm/config-kratos.ts";
 import identity from "./lib/adm/identity-kratos.ts";
 
 const PRE = "/api/adm";
+
+const timers: Timers = {
+  cronjob: 0,
+  housekeeping: 0,
+};
 
 // -----------------------------------------------------------------------------
 async function migration() {
@@ -22,7 +28,7 @@ async function migration() {
 }
 
 // -----------------------------------------------------------------------------
-async function housekeeping(signal: AbortSignal) {
+async function housekeeping(t: Timers, signal: AbortSignal) {
   if (signal.aborted) return;
 
   try {
@@ -32,7 +38,9 @@ async function housekeeping(signal: AbortSignal) {
   }
 
   if (signal.aborted) return;
-  setTimeout(() => housekeeping(signal), 10 * 60 * 1000);
+
+  clearTimeout(t.housekeeping);
+  t.housekeeping = setTimeout(() => housekeeping(t, signal), 10 * 60 * 1000);
 }
 
 // -----------------------------------------------------------------------------
@@ -68,16 +76,20 @@ async function main() {
   if (!isMigrated) Deno.exit(1);
 
   const controller = new AbortController();
-  const shutdown = () => controller.abort();
+  const shutdown = () => {
+    controller.abort();
+    clearTimeout(timers.cronjob);
+    clearTimeout(timers.housekeeping);
+  };
   Deno.addSignalListener("SIGINT", shutdown);
   Deno.addSignalListener("SIGTERM", shutdown);
 
   try {
     // start the housekeeping cycle
-    housekeeping(controller.signal);
+    housekeeping(timers, controller.signal);
 
     // start the cronjob cycle
-    cronjob(controller.signal);
+    cronjob(timers, controller.signal);
 
     // start the API server
     const server = Deno.serve({
