@@ -5,8 +5,11 @@ import { listMeetingSessionForReminder } from "../database/meeting-session.ts";
 // Run every 30 seconds
 // -----------------------------------------------------------------------------
 async function remindMeetingSession(
+  signal: AbortSignal,
   lastCheckTime = "2024-10-01T00:00:00.000Z",
 ) {
+  if (signal.aborted) return;
+
   try {
     const rows = await listMeetingSessionForReminder(lastCheckTime);
 
@@ -20,16 +23,17 @@ async function remindMeetingSession(
     }
   } catch (e) {
     console.log(e);
-  } finally {
-    setTimeout(() => remindMeetingSession(lastCheckTime), 30 * 1000);
   }
+
+  if (signal.aborted) return;
+  setTimeout(() => remindMeetingSession(signal, lastCheckTime), 30 * 1000);
 }
 
 // -----------------------------------------------------------------------------
-export default function () {
+export default function (signal: AbortSignal) {
   console.log("cronjob is started");
 
   // dont wait for async functions
   // each function has its own cycle
-  remindMeetingSession();
+  remindMeetingSession(signal);
 }

@@ -22,13 +22,17 @@ async function migration() {
 }
 
 // -----------------------------------------------------------------------------
-async function housekeeping() {
+async function housekeeping(signal: AbortSignal) {
+  if (signal.aborted) return;
+
   try {
     await doit();
-  } finally {
-    // rerun in 10 min
-    setTimeout(housekeeping, 10 * 60 * 1000);
+  } catch {
+    // do nothing
   }
+
+  if (signal.aborted) return;
+  setTimeout(() => housekeeping(signal), 10 * 60 * 1000);
 }
 
 // -----------------------------------------------------------------------------
@@ -59,15 +63,9 @@ async function handler(req: Request): Promise<Response> {
 
 // -----------------------------------------------------------------------------
 async function main() {
-  // migrate the database before starting if needed
+  // ensure database schema is up-to-date before starting
   const isMigrated = await migration();
   if (!isMigrated) Deno.exit(1);
-
-  // start the housekeeping cycle
-  housekeeping();
-
-  // start the cronjob cycle
-  cronjob();
 
   const controller = new AbortController();
   const shutdown = () => controller.abort();
@@ -75,6 +73,12 @@ async function main() {
   Deno.addSignalListener("SIGTERM", shutdown);
 
   try {
+    // start the housekeeping cycle
+    housekeeping(controller.signal);
+
+    // start the cronjob cycle
+    cronjob(controller.signal);
+
     // start the API server
     const server = Deno.serve({
       hostname: HOSTNAME,
