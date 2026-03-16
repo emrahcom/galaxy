@@ -11,8 +11,8 @@ import identity from "./lib/adm/identity-kratos.ts";
 const PRE = "/api/adm";
 
 const timers: Timers = {
-  cronjob: 0,
   housekeeping: 0,
+  cronjobRemindMeetingSession: 0,
 };
 
 // -----------------------------------------------------------------------------
@@ -77,8 +77,8 @@ async function main() {
   const controller = new AbortController();
   const shutdown = () => {
     controller.abort();
-    clearTimeout(timers.cronjob);
     clearTimeout(timers.housekeeping);
+    clearTimeout(timers.cronjobRemindMeetingSession);
   };
   Deno.addSignalListener("SIGINT", shutdown);
   Deno.addSignalListener("SIGTERM", shutdown);

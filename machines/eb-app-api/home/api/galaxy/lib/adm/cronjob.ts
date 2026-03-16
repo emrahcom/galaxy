@@ -31,7 +31,7 @@ async function remindMeetingSession(
 
   if (signal.aborted) return;
 
-  t.cronjob = setTimeout(
+  t.cronjobRemindMeetingSession = setTimeout(
     () => remindMeetingSession(t, signal, lastCheckTime),
     30 * 1000,
   );
