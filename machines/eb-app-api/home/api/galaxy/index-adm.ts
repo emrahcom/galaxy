@@ -39,6 +39,7 @@ async function housekeeping(t: Timers, signal: AbortSignal) {
 
   if (signal.aborted) return;
 
+  // rerun in 10 min
   t.housekeeping = setTimeout(() => housekeeping(t, signal), 10 * 60 * 1000);
 }
 
