@@ -16,6 +16,8 @@ async function remindMeetingSession(
     const rows = await listMeetingSessionForReminder(lastCheckTime);
 
     for (const row of rows) {
+      if (signal.aborted) break;
+
       // Dont care failed mail.
       // Wait for each mail before processing the next one.
       // For now, I dont want to send all mails at the same second. One by one.
@@ -29,7 +31,6 @@ async function remindMeetingSession(
 
   if (signal.aborted) return;
 
-  clearTimeout(t.cronjob);
   t.cronjob = setTimeout(
     () => remindMeetingSession(t, signal, lastCheckTime),
     30 * 1000,
