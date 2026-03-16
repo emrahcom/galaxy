@@ -69,11 +69,25 @@ async function main() {
   // start the cronjob cycle
   cronjob();
 
-  // start API
-  Deno.serve({
-    hostname: HOSTNAME,
-    port: PORT_ADMIN,
-  }, handler);
+  const controller = new AbortController();
+  const shutdown = () => controller.abort();
+  Deno.addSignalListener("SIGINT", shutdown);
+  Deno.addSignalListener("SIGTERM", shutdown);
+
+  try {
+    // start the API server
+    const server = Deno.serve({
+      hostname: HOSTNAME,
+      port: PORT_ADMIN,
+      signal: controller.signal,
+    }, handler);
+
+    // wait the server until the clean shutdown.
+    await server.finished;
+  } finally {
+    Deno.removeSignalListener("SIGINT", shutdown);
+    Deno.removeSignalListener("SIGTERM", shutdown);
+  }
 }
 
 // -----------------------------------------------------------------------------
