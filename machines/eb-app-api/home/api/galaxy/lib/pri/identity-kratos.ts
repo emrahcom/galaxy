@@ -1,4 +1,4 @@
-import { KRATOS_ORIGIN } from "../../config.ts";
+import { KRATOS_ORIGIN } from "../../config.kratos.ts";
 
 // -----------------------------------------------------------------------------
 export async function getIdentityId(req: Request): Promise<string | undefined> {
