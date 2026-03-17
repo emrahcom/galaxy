@@ -5,7 +5,7 @@ Jitsi meetings, meeting schedules and attendees.
 
 This version has a built-in identity management system. Check
 [Galaxy-kc](https://github.com/emrahcom/galaxy-kc) for version that uses
-`Keycloak` as the identity management system.
+an OIDC provider as the identity management system such as `Keycloak`.
 
 ### Try it
 

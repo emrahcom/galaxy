@@ -38,10 +38,10 @@ INSERT INTO metadata VALUES ('database_version', '20250802.01');
 -- -----------------------------------------------------------------------------
 -- IDENTITY
 --
--- - Email comes from Kratos (after verification) or Keycloak depending on the
---   selected identity provider. This is the valid email address for sending
---   messages. Email in profile is only for meeting sessions and is not
---   trustable.
+-- - Email comes from Kratos (after verification) or the OIDC provider
+--   depending on the selected identity provider. This is the valid email
+--   address for sending messages. Email in the profile table is only for
+--   meeting sessions and is not trustable.
 --
 -- identity_attr {
 --   email: string,
