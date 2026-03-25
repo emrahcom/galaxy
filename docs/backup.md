@@ -17,10 +17,13 @@ lxc-ls -f
 
 ```bash
 lxc-attach eb-postgres
+mkdir -p /home/backup
+chown postgres:postgres /home/backup
+
 su -l postgres
 
-pg_dump kratos >/tmp/kratos_$(date +'%Y%m%d').sql
-pg_dump galaxy >/tmp/galaxy_$(date +'%Y%m%d').sql
+pg_dump kratos >/home/backup/kratos_$(date +'%Y%m%d').sql
+pg_dump galaxy >/home/backup/galaxy_$(date +'%Y%m%d').sql
 
 exit
 exit
@@ -28,8 +31,8 @@ exit
 cd
 DATE=$(date +'%Y%m%d')
 mkdir -p ~/backup/$DATE
-mv /var/lib/lxc/eb-postgres/rootfs/tmp/kratos_*.sql ~/backup/$DATE/
-mv /var/lib/lxc/eb-postgres/rootfs/tmp/galaxy_*.sql ~/backup/$DATE/
+mv /var/lib/lxc/eb-postgres/rootfs/home/backup/kratos_*.sql ~/backup/$DATE/
+mv /var/lib/lxc/eb-postgres/rootfs/home/backup/galaxy_*.sql ~/backup/$DATE/
 chown root: ~/backup/$DATE -R
 
 df -h
