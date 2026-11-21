@@ -1,4 +1,4 @@
 export interface Timers {
-  housekeeping: number;
-  cronjobRemindMeetingSession: number;
+  housekeeping: ReturnType<typeof setTimeout> | undefined;
+  cronjobRemindMeetingSession: ReturnType<typeof setTimeout> | undefined;
 }
